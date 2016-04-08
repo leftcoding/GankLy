@@ -3,14 +3,17 @@ package com.gank.gankly.ui.web;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.gank.gankly.R;
 import com.gank.gankly.base.BaseActivity;
+import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +24,9 @@ public class WebActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bind(R.id.web_progress_bar)
+    ProgressBar mProgressBar;
 
     private String mUrl;
     private String mTitle;
@@ -99,15 +105,32 @@ public class WebActivity extends BaseActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
         }
+
     };
 
     WebChromeClient webChromeClient = new WebChromeClient() {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            super.onProgressChanged(view, newProgress);
-            if(newProgress == 0){
-
+            KLog.d("newProgress:" + newProgress);
+            if (newProgress == 100) {
+                mProgressBar.setVisibility(View.GONE);
+            } else {
+                if (mProgressBar.getVisibility() == View.GONE)
+                    mProgressBar.setVisibility(View.VISIBLE);
+                mProgressBar.setProgress(newProgress);
             }
+            super.onProgressChanged(view, newProgress);
         }
     };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mWebView != null && mWebView.canGoBack()) {
+                mWebView.goBack();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
