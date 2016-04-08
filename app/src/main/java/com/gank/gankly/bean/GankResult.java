@@ -1,0 +1,30 @@
+package com.gank.gankly.bean;
+
+import com.gank.gankly.utils.ListUtils;
+
+import java.util.List;
+
+/**
+ * Create by LingYan on 2016-04-06
+ */
+public class GankResult extends BaseResult {
+
+    private List<ResultsBean> results;
+
+
+    public List<ResultsBean> getResults() {
+        return results;
+    }
+
+    public void setResults(List<ResultsBean> results) {
+        this.results = results;
+    }
+
+    public boolean isEmpty(){
+        return ListUtils.isListEmpty(results);
+    }
+
+    public int getSize(){
+        return ListUtils.getListSize(results);
+    }
+}

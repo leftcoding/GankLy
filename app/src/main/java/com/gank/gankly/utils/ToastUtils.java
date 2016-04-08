@@ -26,14 +26,14 @@ public class ToastUtils {
     private static void show(String msg, int duration) {
         cancel();
         mToast = Toast.makeText(App.getContext(), msg, duration);
-        mToast.setGravity(Gravity.BOTTOM | Gravity.START, 0, 0);
+        mToast.setGravity(Gravity.CENTER , 0, 0);
         mToast.show();
     }
 
     private static void show(int resText, int duration) {
         cancel();
         mToast = Toast.makeText(App.getContext(), resText, duration);
-        mToast.setGravity(Gravity.BOTTOM | Gravity.START, 0, 0);
+        mToast.setGravity(Gravity.CENTER , 0, 0);
         mToast.show();
     }
 
