@@ -58,7 +58,6 @@ public class GankDetailsAdapter extends BaseAdapter {
         ResultsBean bean = mResults.get(position);
         holder.txtDesc.setText(bean.getDesc());
         holder.txtTime.setText(bean.getPublishedAt());
-        holder.txtUrl.setText(bean.getUrl());
         holder.txtWho.setText(bean.getWho());
         return convertView;
 
@@ -67,13 +66,8 @@ public class GankDetailsAdapter extends BaseAdapter {
     static class ViewHolder {
         @Bind(R.id.welfare_txt_desc)
         TextView txtDesc;
-
         @Bind(R.id.welfare_txt_publishedAt)
         TextView txtTime;
-
-        @Bind(R.id.welfare_txt_url)
-        TextView txtUrl;
-
         @Bind(R.id.welfare_txt_who)
         TextView txtWho;
 

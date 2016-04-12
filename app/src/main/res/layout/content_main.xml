@@ -21,30 +21,4 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!--<RadioGroup-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/home_rb_android"-->
-    <!--style="@style/home_rb"-->
-    <!--android:text="android" />-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/home_rb_ios"-->
-    <!--style="@style/home_rb"-->
-    <!--android:text="ios" />-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/home_rb_welfare"-->
-    <!--style="@style/home_rb"-->
-    <!--android:text="福利" />-->
-
-    <!--<RadioButton-->
-    <!--android:id="@+id/home_rb_all"-->
-    <!--style="@style/home_rb"-->
-    <!--android:text="all" />-->
-    <!--</RadioGroup>-->
-
 </LinearLayout>

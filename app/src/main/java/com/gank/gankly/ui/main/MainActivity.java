@@ -1,20 +1,28 @@
 package com.gank.gankly.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.base.BaseActivity;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.collect.CollectActivity;
+import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -34,26 +42,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Bind(R.id.home_view_pager)
     ViewPager mViewPager;
 
-    GankPagerAdapter mPagerAdapter;
-    List<Fragment> mList;
+    @Bind(R.id.navigation)
+    NavigationView mNavigationView;
 
-    List<String> mTitles;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    GankPagerAdapter mPagerAdapter;
+
+    private List<Fragment> mList;
+    private List<String> mTitles;
+    private long mKeyTime;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         KLog.d("onCreate");
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initValues();
+        initView();
+        bindLister();
+        KLog.d("--onCreate-- over");
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_main;
-    }
-
-
-    @Override
-    protected void initValues() {
+    private void initValues() {
         mList = new ArrayList<>();
         mList.add(new WelfareFragment());
         mList.add(new WelfareFragment());
@@ -72,7 +86,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mViewPager.addOnPageChangeListener(this);
 
         initTabLayout();
-
     }
 
     private void initTabLayout() {
@@ -83,15 +96,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
     }
 
-    @Override
-    protected void initView() {
+    private void initView() {
         mToolbar.setTitle("首页");
         setSupportActionBar(mToolbar);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
-    @Override
-    protected void bindLister() {
+    private void bindLister() {
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                menuItem.setChecked(true); // 改变item选中状态
+                if (menuItem.getItemId() == R.id.navigation_collect) {
+                    startActivity(new Intent(MainActivity.this, CollectActivity.class));
+                }
+                mDrawerLayout.closeDrawers();
+                return true;
+            }
+        });
 
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mDrawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
     private void fetchDate() {
@@ -162,5 +195,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            if ((System.currentTimeMillis() - mKeyTime) > 2000) {
+                mKeyTime = System.currentTimeMillis();
+                ToastUtils.showToast("再按一次退出GankLy");
+                return false;
+            } else {
+                finish();
+                System.exit(0);
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

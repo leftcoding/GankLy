@@ -5,39 +5,37 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.base.ToolbarActivity;
+import com.gank.gankly.ui.base.BaseActivity;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
-public class AboutActivity extends ToolbarActivity implements View.OnClickListener{
+public class AboutActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+        ButterKnife.bind(this);
+        initValues();
+        initView();
+        bindLister();
+    }
+
+
+    private void initValues() {
 
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_about;
-    }
-
-    @Override
-    protected void initValues() {
-
-    }
-
-    @Override
-    protected void initView() {
+    private void initView() {
         mToolbar.setTitle("about");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //显示返回箭头
     }
 
-    @Override
-    protected void bindLister() {
+    private void bindLister() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

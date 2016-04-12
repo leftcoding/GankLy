@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.base.BaseFragment;
+import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
@@ -132,8 +132,6 @@ public class MeiZiFragment extends BaseFragment {
                 fetchDate(mPage);
             }
         });
-
-
     }
 
     private void onDownRefresh() {

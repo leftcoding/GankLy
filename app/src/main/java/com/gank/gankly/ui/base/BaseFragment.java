@@ -1,4 +1,4 @@
-package com.gank.gankly.base;
+package com.gank.gankly.ui.base;
 
 import android.app.Activity;
 import android.os.Bundle;

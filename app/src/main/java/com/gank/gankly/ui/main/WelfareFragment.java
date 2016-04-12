@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.main;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,11 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.base.BaseFragment;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.socks.library.KLog;
 
@@ -138,7 +137,7 @@ public class WelfareFragment extends BaseFragment {
     }
 
     private void fetchDate(int page) {
-        Subscriber<GankResult> subscrriber = new Subscriber<GankResult>() {
+        Subscriber<GankResult> subscriber = new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mPtrFrameLayout.refreshComplete();
@@ -160,7 +159,6 @@ public class WelfareFragment extends BaseFragment {
                     }
                     mResults.addAll(gankResult.getResults());
                 }
-                KLog.d("Size:" + gankResult.getSize());
                 if (gankResult.getSize() < mLimit) {
                     mLoadMore.loadMoreFinish(false, false);
                 } else {
@@ -172,7 +170,7 @@ public class WelfareFragment extends BaseFragment {
 
         switch (curType) {
             case Constants.IOS:
-                GankRetrofit.getInstance().fetchIos(mLimit, page, subscrriber);
+                GankRetrofit.getInstance().fetchIos(mLimit, page, subscriber);
                 break;
             case Constants.ANDROID:
                 GankRetrofit.getInstance().fetchAndroid(mLimit, page, new Subscriber<GankResult>() {
@@ -245,12 +243,13 @@ public class WelfareFragment extends BaseFragment {
 
     @OnItemClick(R.id.recycler_view)
     void onItemClick(int position) {
-        Intent intent = new Intent(mActivity, WebActivity.class);
+//        Intent intent = new Intent(mActivity, WebActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("title", mResults.get(position).getDesc());
         bundle.putString("url", mResults.get(position).getUrl());
-        intent.putExtras(bundle);
-        mActivity.startActivity(intent);
+//        intent.putExtras(bundle);
+//        mActivity.startActivity(intent);
+        WebActivity.startWebActivity(mActivity, bundle);
     }
 
     @Override
@@ -267,4 +266,5 @@ public class WelfareFragment extends BaseFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 }

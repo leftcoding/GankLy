@@ -1,19 +1,28 @@
 package com.gank.gankly.ui.web;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.base.BaseActivity;
+import com.gank.gankly.data.entity.UrlCollect;
+import com.gank.gankly.data.entity.UrlCollectDao;
+import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
+
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,29 +39,29 @@ public class WebActivity extends BaseActivity {
 
     private String mUrl;
     private String mTitle;
+    private UrlCollectDao mUrlCollectDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
         ButterKnife.bind(this);
+        initValues();
+        initView();
+        bindLister();
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_web;
-    }
-
-    @Override
-    protected void initValues() {
+    private void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mUrl = bundle.getString("url");
             mTitle = bundle.getString("title");
         }
+
+        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
     }
 
-    @Override
-    protected void initView() {
+    private void initView() {
         WebSettings settings = mWebView.getSettings();
         //支持获取手势焦点，输入用户名、密码或其他
         mWebView.requestFocusFromTouch();
@@ -71,16 +80,32 @@ public class WebActivity extends BaseActivity {
         settings.setLoadsImagesAutomatically(true);  //支持自动加载图片
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
-        mWebView.setWebViewClient(webViewClient);
-        mWebView.setWebChromeClient(webChromeClient);
+        mWebView.setWebViewClient(new MyWebViewClient());
+        mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.loadUrl(mUrl);
     }
 
-    @Override
-    protected void bindLister() {
+    private void bindLister() {
         mToolbar.setTitle(mTitle);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //显示返回箭头
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
+        }
+
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.welfare_collect) {
+                    addUrl();
+                } else if (itemId == R.id.welfare_share) {
+                    KLog.d("--分享--");
+                }
+                return false;
+            }
+        });
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,7 +114,14 @@ public class WebActivity extends BaseActivity {
         });
     }
 
-    WebViewClient webViewClient = new WebViewClient() {
+    private void addUrl() {
+        UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date());
+        mUrlCollectDao.insert(urlCollect);
+        ToastUtils.showToast("收藏成功");
+    }
+
+
+    public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             mWebView.loadUrl(url);
@@ -105,13 +137,14 @@ public class WebActivity extends BaseActivity {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
         }
+    }
 
-    };
-
-    WebChromeClient webChromeClient = new WebChromeClient() {
+    public class MyWebChromeClient extends android.webkit.WebChromeClient {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
-            KLog.d("newProgress:" + newProgress);
+            if (mProgressBar == null) {
+                return;
+            }
             if (newProgress == 100) {
                 mProgressBar.setVisibility(View.GONE);
             } else {
@@ -121,7 +154,26 @@ public class WebActivity extends BaseActivity {
             }
             super.onProgressChanged(view, newProgress);
         }
-    };
+
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_welfare, menu);
+        return true;
+    }
+
+    public static void startWebActivity(Activity activity, Bundle bundle) {
+        Intent intent = new Intent(activity, WebActivity.class);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        activity.startActivity(intent);
+    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -132,5 +184,15 @@ public class WebActivity extends BaseActivity {
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mWebView != null) {
+            mWebView.destroy();
+            mWebView = null;
+        }
+        ButterKnife.unbind(this);
     }
 }
