@@ -8,14 +8,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <!--<com.gank.gankly.widget.RotateLoading-->
-    <!--android:id="@+id/rotate_loading"-->
-    <!--android:layout_width="80dp"-->
-    <!--android:layout_height="80dp"-->
-    <!--app:loading_color="@color/colorPrimary"-->
-    <!--app:loading_speed="8"-->
-    <!--app:loading_width="5dp"-->
-    <!--/>-->
     <fr.castorflex.android.circularprogressbar.CircularProgressBar
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

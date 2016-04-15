@@ -20,6 +20,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.about.AboutActivity;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectActivity;
 import com.gank.gankly.utils.ToastUtils;
@@ -57,14 +58,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        KLog.d("onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initValues();
         initView();
         bindLister();
-        KLog.d("--onCreate-- over");
     }
 
     private void initValues() {
@@ -97,7 +96,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initView() {
-        mToolbar.setTitle("首页");
+        mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
@@ -151,9 +150,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home:
-
-                break;
 
             default:
                 break;
@@ -191,6 +187,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, AboutActivity.class));
             return true;
         }
 

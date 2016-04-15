@@ -1,6 +1,9 @@
 package com.gank.gankly.network;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.gank.gankly.bean.GankResult;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +21,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
+ * Retrofit请求封装
  * Create by LingYan on 2016-04-06
  */
 public class GankRetrofit {
@@ -27,9 +31,16 @@ public class GankRetrofit {
     public static GankRetrofit instance;
     public GankApi gankApi;
 
+    final static Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .serializeNulls()
+            .create();
+
     private GankRetrofit() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
+        builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
+        builder.interceptors().add(new LoggingInterceptor()); //打印请求log
         builder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Interceptor.Chain chain) throws IOException {
@@ -39,14 +50,14 @@ public class GankRetrofit {
                         .header("Content-Type", "application/json")
                         .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
                         .build();
-
+//                KLog.d(chain.proceed(request).body().string());
                 return chain.proceed(request);
             }
         });
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
@@ -93,6 +104,4 @@ public class GankRetrofit {
         Observable<GankResult> observable = gankApi.fetchBenefitsGoods(limit, page);
         toSubscribe(observable, subscriber);
     }
-
-
 }

@@ -64,11 +64,11 @@ public class GankDetailsAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
-        @Bind(R.id.welfare_txt_desc)
+        @Bind(R.id.goods_txt_title)
         TextView txtDesc;
-        @Bind(R.id.welfare_txt_publishedAt)
+        @Bind(R.id.goods_txt_author_time)
         TextView txtTime;
-        @Bind(R.id.welfare_txt_who)
+        @Bind(R.id.goods_txt_author)
         TextView txtWho;
 
         ViewHolder(View view) {

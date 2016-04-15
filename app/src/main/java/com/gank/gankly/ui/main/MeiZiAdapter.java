@@ -78,8 +78,6 @@ public class MeiZiAdapter extends BaseAdapter {
         @Bind(R.id.meizi_img_picture)
         RatioImageView imgMeizi;
 
-        @Bind(R.id.meizi_ll)
-        View card;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

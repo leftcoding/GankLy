@@ -33,7 +33,7 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import rx.Subscriber;
 
 public class WelfareFragment extends BaseFragment {
-    private static final int mLimit = 10;
+    private static final int mLimit = 20;
 
     @Bind(R.id.recycler_view)
     ListView mListView;
@@ -66,7 +66,6 @@ public class WelfareFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        KLog.d("onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_welfare, container, false);
         ButterKnife.bind(this, rootView);
         return rootView;
@@ -243,12 +242,9 @@ public class WelfareFragment extends BaseFragment {
 
     @OnItemClick(R.id.recycler_view)
     void onItemClick(int position) {
-//        Intent intent = new Intent(mActivity, WebActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("title", mResults.get(position).getDesc());
         bundle.putString("url", mResults.get(position).getUrl());
-//        intent.putExtras(bundle);
-//        mActivity.startActivity(intent);
         WebActivity.startWebActivity(mActivity, bundle);
     }
 

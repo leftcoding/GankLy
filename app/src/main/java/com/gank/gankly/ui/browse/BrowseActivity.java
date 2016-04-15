@@ -1,26 +1,32 @@
-package com.gank.gankly.ui.about;
+package com.gank.gankly.ui.browse;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.widget.RotateLoading;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class AboutActivity extends BaseActivity implements View.OnClickListener {
+public class BrowseActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.rotateloading)
-    RotateLoading mRotateLoading;
+    @Bind(R.id.pager)
+    ViewPager mViewPager;
+
+    private ArrayList<String> images;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_browse_picture);
         ButterKnife.bind(this);
         initValues();
         initView();
@@ -29,11 +35,12 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
 
     private void initValues() {
-        mRotateLoading.start();
+        images = new ArrayList<>();
+
     }
 
     private void initView() {
-        mToolbar.setTitle("about");
+        mToolbar.setTitle("返回");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //显示返回箭头
     }
@@ -48,12 +55,27 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
+    private class PagerAdapter extends FragmentStatePagerAdapter {
+
+        public PagerAdapter() {
+            super(getSupportFragmentManager());
+        }
+
+        @Override
+        public int getCount() {
+            return images.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return BrowseFragment.newInstance("", position);
+        }
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.home:
-                onBackPressed();
-                break;
 
             default:
                 break;

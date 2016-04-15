@@ -14,7 +14,7 @@ import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.ListUtils;
-import com.gank.gankly.utils.ToastUtils;
+import com.gank.gankly.widget.DeleteDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreContainer;
 import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 
-public class CollectActivity extends BaseActivity {
+public class CollectActivity extends BaseActivity implements DeleteDialog.DialogListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.recycler_view)
@@ -47,8 +47,10 @@ public class CollectActivity extends BaseActivity {
     View mMain;
 
     private UrlCollectDao mUrlCollectDao;
-    private List<UrlCollect> mList;
     private CollectAdapter mCollectAdapter;
+
+    private List<UrlCollect> mList;
+    private int mLongClick = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,11 +149,14 @@ public class CollectActivity extends BaseActivity {
 
     @OnItemLongClick(R.id.recycler_view)
     boolean onItemLongClick(int position) {
-        UrlCollect urlCollect = mList.get(position);
-        mUrlCollectDao.deleteByKey(urlCollect.getId());
-        mList.remove(position);
-        mCollectAdapter.notifyDataSetChanged();
-        ToastUtils.showToast("删除成功!");
+        mLongClick = position;
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "是否确认删除？");
+        bundle.putString("content", mList.get(position).getComment());
+        DeleteDialog deleteDialog = new DeleteDialog();
+        deleteDialog.setListener(this);
+        deleteDialog.setArguments(bundle);
+        deleteDialog.show(getSupportFragmentManager(), "delete");
         return true;
     }
 
@@ -160,4 +165,15 @@ public class CollectActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onNavigationClick() {
+        UrlCollect urlCollect = mList.get(mLongClick);
+        mUrlCollectDao.deleteByKey(urlCollect.getId());
+        mList.remove(mLongClick);
+        mCollectAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onCancelClick() {
+    }
 }

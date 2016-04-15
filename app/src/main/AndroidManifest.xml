@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gank.gankly">
+          package="com.gank.gankly">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- ShareSdk-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:name=".App"
@@ -14,16 +22,56 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.about.AboutActivity" />
-        <activity android:name=".ui.web.WebActivity" />
-        <activity android:name=".ui.collect.CollectActivity" />
+        <activity android:name=".ui.about.AboutActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
+        <activity android:name=".ui.web.WebActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
+        <activity android:name=".ui.collect.CollectActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+        <activity android:name=".ui.browse.BrowseActivity"
+                  android:screenOrientation="portrait"
+                  android:launchMode="singleTask"/>
+        <!--sharesdk -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <intent-filter>
+                <data android:scheme="db-7t9qC1IUuqSU7aBHw" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="tencent1105257405" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name="com.gank.gankly.wxapi.WXEntryActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true" />
     </application>
 
 </manifest>

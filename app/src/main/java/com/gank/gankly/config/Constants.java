@@ -6,6 +6,6 @@ package com.gank.gankly.config;
 public interface Constants {
     String ANDROID = "android";
     String IOS = "ios";
-    String WELFRAE = "welfare";
+    String WELFRAE = "妹子";
     String ALL = "all";
 }

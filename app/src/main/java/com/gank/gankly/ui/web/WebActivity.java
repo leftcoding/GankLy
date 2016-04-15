@@ -20,12 +20,16 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.tencent.qq.QQ;
 
 public class WebActivity extends BaseActivity {
     @Bind(R.id.web_view)
@@ -100,7 +104,7 @@ public class WebActivity extends BaseActivity {
                 if (itemId == R.id.welfare_collect) {
                     addUrl();
                 } else if (itemId == R.id.welfare_share) {
-                    KLog.d("--分享--");
+                    showShare(mTitle, mWebView.getUrl(), mTitle, null);
                 }
                 return false;
             }
@@ -119,7 +123,6 @@ public class WebActivity extends BaseActivity {
         mUrlCollectDao.insert(urlCollect);
         ToastUtils.showToast("收藏成功");
     }
-
 
     public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
@@ -145,12 +148,12 @@ public class WebActivity extends BaseActivity {
             if (mProgressBar == null) {
                 return;
             }
+            mProgressBar.setProgress(newProgress);
+
             if (newProgress == 100) {
                 mProgressBar.setVisibility(View.GONE);
             } else {
-                if (mProgressBar.getVisibility() == View.GONE)
-                    mProgressBar.setVisibility(View.VISIBLE);
-                mProgressBar.setProgress(newProgress);
+                mProgressBar.setVisibility(View.VISIBLE);
             }
             super.onProgressChanged(view, newProgress);
         }
@@ -161,10 +164,37 @@ public class WebActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_welfare, menu);
-        return true;
+    /**
+     * 演示调用ShareSDK执行分享
+     */
+    public static void showShare(String title, String titleUrl, String text, String imgUrl) {
+        Platform.ShareParams sp = new Platform.ShareParams();
+        sp.setTitle("Android干货分享");
+        sp.setTitleUrl(titleUrl); // 标题的超链接
+        sp.setText(text);
+        sp.setImageUrl("http://www.uisheji.com/wp-content/uploads/2012/12/05/mza_3859585171796455226.175x175-75.png");
+//        sp.setSite("发布分享的网站名称");
+//        sp.setSiteUrl("发布分享网站的地址");
+        Platform qzone = ShareSDK.getPlatform(QQ.NAME);
+        // 设置分享事件回调
+        qzone.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+
+            }
+        });
+        // 执行图文分享
+        qzone.share(sp);
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
@@ -173,6 +203,12 @@ public class WebActivity extends BaseActivity {
             intent.putExtras(bundle);
         }
         activity.startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_welfare, menu);
+        return true;
     }
 
     @Override

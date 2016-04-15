@@ -7,6 +7,7 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
+ * 接口api
  * Create by LingYan on 2016-04-06
  */
 public interface GankApi {
