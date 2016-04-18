@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
           package="com.gank.gankly">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,59 +20,71 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.gank.gankly.config.MyGlideModule"
+            android:value="GlideModule"/>
+
         <activity
             android:name=".ui.main.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.about.AboutActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
-        <activity android:name=".ui.web.WebActivity" android:screenOrientation="portrait" android:launchMode="singleTask"/>
-        <activity android:name=".ui.collect.CollectActivity"
-                  android:screenOrientation="portrait"
-                  android:launchMode="singleTask"/>
-        <activity android:name=".ui.browse.BrowseActivity"
-                  android:screenOrientation="portrait"
-                  android:launchMode="singleTask"/>
-        <!--sharesdk -->
+        <activity
+            android:name=".ui.about.AboutActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.web.WebActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.collect.CollectActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.browse.BrowseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <!--ShareSdk -->
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
-                <data android:scheme="db-7t9qC1IUuqSU7aBHw" />
-                <action android:name="android.intent.action.VIEW" />
+                <data android:scheme="db-7t9qC1IUuqSU7aBHw"/>
+                <action android:name="android.intent.action.VIEW"/>
+
                 <category android:name="android.intent.category.BROWSABLE"/>
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
-                <data android:scheme="tencent1105257405" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="tencent1105257405"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <!-- 调用新浪原生SDK，需要注册的回调activity -->
             <intent-filter>
-                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
 
         <!-- 微信分享回调 -->
         <activity
             android:name="com.gank.gankly.wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>

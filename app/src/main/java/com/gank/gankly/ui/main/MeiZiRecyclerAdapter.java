@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.widget.RatioImageView;
@@ -26,6 +27,16 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private Activity mContext;
     private LayoutInflater inflater;
 
+    private MeiZiOnClick mMeiZiOnClick;
+
+    public interface MeiZiOnClick {
+        void onClick(View view, ResultsBean bean);
+    }
+
+    public void setMeiZiOnClick(MeiZiOnClick meiZiOnClick) {
+        mMeiZiOnClick = meiZiOnClick;
+    }
+
     public MeiZiRecyclerAdapter(Activity context) {
         inflater = LayoutInflater.from(context);
         mContext = context;
@@ -42,11 +53,12 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
         holder.txtDesc.setText(bean.getDesc());
+        holder.bean = bean;
         Glide.with(mContext)
                 .load(bean.getUrl())
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
-
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imgMeizi);
     }
 
@@ -69,18 +81,24 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         notifyDataSetChanged();
     }
 
-    static class GoodsViewHolder extends RecyclerView.ViewHolder {
+    class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.meizi_txt_time)
         TextView txtDesc;
 
         @Bind(R.id.meizi_img_picture)
         RatioImageView imgMeizi;
-
+        ResultsBean bean;
 
         public GoodsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             imgMeizi.setOriginalSize(50, 50);
+            imgMeizi.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mMeiZiOnClick.onClick(v, bean);
         }
     }
 

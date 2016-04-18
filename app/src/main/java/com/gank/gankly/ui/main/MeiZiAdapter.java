@@ -25,11 +25,13 @@ public class MeiZiAdapter extends BaseAdapter {
     private Activity mContext;
     private LayoutInflater inflater;
 
+
     public MeiZiAdapter(Activity context, List<ResultsBean> results) {
         mResults = results;
         inflater = LayoutInflater.from(context);
         mContext = context;
     }
+
 
     @Override
     public int getCount() {
@@ -68,6 +70,7 @@ public class MeiZiAdapter extends BaseAdapter {
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
                 .into(holder.imgMeizi);
+
         return convertView;
     }
 

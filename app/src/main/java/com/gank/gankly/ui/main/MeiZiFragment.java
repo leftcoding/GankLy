@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.browse.BrowseActivity;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -92,6 +94,7 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         initRecycler();
         mResults = new ArrayList<>();
         mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
+        mRecyclerAdapter.setMeiZiOnClick(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
@@ -212,9 +215,18 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         }
     }
 
-
     @Override
     public void onRefresh() {
         onDownRefresh();
+    }
+
+    @Override
+    public void onClick(View view, ResultsBean bean) {
+        KLog.d("--onClick--");
+        Bundle bundle = new Bundle();
+        bundle.putString("url", bean.getUrl());
+        Intent intent = new Intent(mActivity, BrowseActivity.class);
+        intent.putExtras(bundle);
+        mActivity.startActivity(intent);
     }
 }
