@@ -1,4 +1,4 @@
-package com.gank.gankly.config;
+package com.gank.gankly.config.glide;
 
 import android.content.Context;
 import android.os.Environment;

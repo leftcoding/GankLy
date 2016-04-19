@@ -12,6 +12,8 @@
     <color name="text_999999">#ff999999</color>
     <color name="text_555555">#ff555555</color>
 
+    <color name="color_2f">#2f2f2f</color>
+
 
     <!--  jianshu   -->
     <color name="Blue">#55a5e3</color>
@@ -56,7 +58,7 @@
     <color name="cadetblue">#5f9ea0</color>
     <color name="chartreuse">#7fff00</color>
     <color name="chocolate">#d2691e</color>
-    <color name="color_2f">#2f2f2f</color>
+
     <color name="color_3a">#3a3a3a</color>
     <color name="color_88">#888888</color>
     <color name="color_978582">#978582</color>

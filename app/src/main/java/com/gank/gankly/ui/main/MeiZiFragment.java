@@ -16,9 +16,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
-import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,26 +25,18 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
+public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private View rootView;
-
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
     private List<ResultsBean> mResults;
 
-    private boolean isCanRefresh;
-    private boolean isRefreshed;
-
-    private boolean mIsFirstTimeTouchBottom = true;
-
     private int mLimit = 20;
     private int mPage = 1;
-    private int lastVisibleItem;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
 
     public MeiZiFragment() {
@@ -59,16 +49,6 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         this.mActivity = (MainActivity) activity;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (rootView == null) {
-            rootView = inflater.inflate(R.layout.fragment_meizi, container, false);
-            ButterKnife.bind(this, rootView);
-        }
-        return rootView;
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,12 +57,15 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         setHasOptionsMenu(true);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_meizi,container,false);
+        ButterKnife.bind(this,view);
+        return view;
+    }
 
     private void parseArguments() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            isCanRefresh = bundle.getBoolean("isCanRefresh", false);
-        }
     }
 
     @Override
@@ -103,6 +86,11 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
     @Override
     protected void bindLister() {
 
+    }
+
+    @Override
+    protected void initDate() {
+        onDownRefresh();
     }
 
     private void onDownRefresh() {
@@ -132,7 +120,6 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
-                isRefreshed = true;
             }
 
             @Override
@@ -142,7 +129,6 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
 
             @Override
             public void onNext(GankResult gankResult) {
-                KLog.d("getSize:" + gankResult.getSize() + ",mPage:" + mPage);
                 if (!gankResult.isEmpty()) {
                     if (mPage == 1) {
                         mResults.clear();
@@ -164,9 +150,6 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        if (null != rootView) {
-            ((ViewGroup) rootView.getParent()).removeView(rootView);
-        }
     }
 
     @Override
@@ -174,11 +157,9 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         super.onDestroy();
     }
 
-    public static MeiZiFragment newInstance(boolean isCanRefresh, String type) {
+    public static MeiZiFragment newInstance() {
         MeiZiFragment fragment = new MeiZiFragment();
         Bundle args = new Bundle();
-        args.putBoolean("isCanRefresh", isCanRefresh);
-        args.putString("type", type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -207,7 +188,7 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
         mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
         for (int position : positions) {
             if (position == mStaggeredGridLayoutManager.getItemCount() - 1) {
-//                mSwipeRefreshLayout.setRefreshing(true);
+                mSwipeRefreshLayout.setRefreshing(true);
                 mPage = mPage + 1;
                 fetchDate(mPage);
                 break;
@@ -222,7 +203,6 @@ public class MeiZiFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     @Override
     public void onClick(View view, ResultsBean bean) {
-        KLog.d("--onClick--");
         Bundle bundle = new Bundle();
         bundle.putString("url", bean.getUrl());
         Intent intent = new Intent(mActivity, BrowseActivity.class);

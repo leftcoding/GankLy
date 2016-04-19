@@ -8,23 +8,19 @@ import android.view.ViewGroup;
 import java.util.List;
 
 public class GankPagerAdapter extends FragmentStatePagerAdapter {
-    List<Fragment> mFragments;
-    List<String> mTitles;
+    private List<LazyFragment> mFragments;
+    private List<String> titles;
 
-    public GankPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public GankPagerAdapter(FragmentManager fm, List<LazyFragment> fragments,List<String> titles) {
         super(fm);
         mFragments = fragments;
-        mTitles = titles;
+        this.titles = titles;
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        String title = mTitles.get(position);
-        if (position == 2) {
-            return MeiZiFragment.newInstance(true, title);
-        }
-        return WelfareFragment.newInstance(true, title);
+        return mFragments.get(position);
     }
 
     @Override
@@ -44,7 +40,6 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mTitles.get(position);
+        return titles.get(position);
     }
-
 }

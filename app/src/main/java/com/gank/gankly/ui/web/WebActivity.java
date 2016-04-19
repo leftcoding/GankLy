@@ -84,6 +84,7 @@ public class WebActivity extends BaseActivity {
         settings.setLoadsImagesAutomatically(true);  //支持自动加载图片
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
 
+
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
         mWebView.loadUrl(mUrl);
@@ -121,7 +122,7 @@ public class WebActivity extends BaseActivity {
     private void addUrl() {
         UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date());
         mUrlCollectDao.insert(urlCollect);
-        ToastUtils.showToast("收藏成功");
+        ToastUtils.showToast(R.string.collect_success);
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient {

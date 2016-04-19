@@ -13,7 +13,6 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
-import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.socks.library.KLog;
 
@@ -32,7 +31,7 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import rx.Subscriber;
 
-public class WelfareFragment extends BaseFragment {
+public class WelfareFragment extends LazyFragment {
     private static final int mLimit = 20;
 
     @Bind(R.id.recycler_view)
@@ -48,8 +47,6 @@ public class WelfareFragment extends BaseFragment {
     private GankDetailsAdapter mGankDetailsAdapter;
     private List<ResultsBean> mResults;
 
-    private boolean isCanRefresh;
-    private boolean isRefreshed;
     private String curType = Constants.ANDROID;
     private int mPage = 1;
 
@@ -57,18 +54,18 @@ public class WelfareFragment extends BaseFragment {
 
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_welfare, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.mActivity = (MainActivity) activity;
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_welfare, container, false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 
     @Override
@@ -80,23 +77,11 @@ public class WelfareFragment extends BaseFragment {
     }
 
     private void parseArguments() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            isCanRefresh = bundle.getBoolean("isCanRefresh", false);
-            curType = bundle.getString("type");
-        }
     }
 
     @Override
     protected void initValues() {
-        if (isCanRefresh && !isRefreshed) {
-            mPtrFrameLayout.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPtrFrameLayout.autoRefresh();
-                }
-            }, 150);
-        }
+
     }
 
     @Override
@@ -130,6 +115,16 @@ public class WelfareFragment extends BaseFragment {
         });
     }
 
+    @Override
+    protected void initDate() {
+        mPtrFrameLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrameLayout.autoRefresh();
+            }
+        }, 150);
+    }
+
     private void onDownRefresh() {
         mPage = 1;
         fetchDate(mPage);
@@ -140,7 +135,6 @@ public class WelfareFragment extends BaseFragment {
             @Override
             public void onCompleted() {
                 mPtrFrameLayout.refreshComplete();
-                isRefreshed = true;
             }
 
             @Override
@@ -176,7 +170,6 @@ public class WelfareFragment extends BaseFragment {
                     @Override
                     public void onCompleted() {
                         mPtrFrameLayout.refreshComplete();
-                        isRefreshed = true;
                     }
 
                     @Override
@@ -208,7 +201,6 @@ public class WelfareFragment extends BaseFragment {
                     @Override
                     public void onCompleted() {
                         mPtrFrameLayout.refreshComplete();
-                        isRefreshed = true;
                     }
 
                     @Override
@@ -254,11 +246,9 @@ public class WelfareFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    public static WelfareFragment newInstance(boolean isCanRefresh, String type) {
+    public static WelfareFragment newInstance() {
         WelfareFragment fragment = new WelfareFragment();
         Bundle args = new Bundle();
-        args.putBoolean("isCanRefresh", isCanRefresh);
-        args.putString("type", type);
         fragment.setArguments(args);
         return fragment;
     }

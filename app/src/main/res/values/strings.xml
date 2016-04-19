@@ -12,4 +12,7 @@
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
+    <string name="collect_success">收藏成功</string>
+
+    <string name="app_again_out">再按一次退出GankLy</string>
 </resources>

@@ -40,7 +40,7 @@ public class GankRetrofit {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
-        builder.interceptors().add(new LoggingInterceptor()); //打印请求log
+//        builder.interceptors().add(new LoggingInterceptor()); //打印请求log
         builder.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Interceptor.Chain chain) throws IOException {

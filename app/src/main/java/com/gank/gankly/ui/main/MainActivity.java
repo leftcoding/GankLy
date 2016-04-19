@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,21 +16,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.about.AboutActivity;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectActivity;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     @Bind(R.id.toolbar)
@@ -51,7 +46,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     GankPagerAdapter mPagerAdapter;
 
-    private List<Fragment> mList;
+    private List<LazyFragment> mList;
     private List<String> mTitles;
     private long mKeyTime;
 
@@ -126,27 +121,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         });
     }
 
-    private void fetchDate() {
-        KLog.d("fetchDate");
-        GankRetrofit.getInstance().fetchAndroid(10, 1, new Subscriber<GankResult>() {
-            @Override
-            public void onCompleted() {
-                KLog.d("fetchAndroid fetchDate onCompleted");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                KLog.e("fetchAndroid fetchDate onError" + e);
-            }
-
-            @Override
-            public void onNext(GankResult gankResult) {
-                KLog.d(gankResult);
-            }
-        });
-
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -173,19 +147,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, AboutActivity.class));
             return true;
@@ -203,7 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
             if ((System.currentTimeMillis() - mKeyTime) > 2000) {
                 mKeyTime = System.currentTimeMillis();
-                ToastUtils.showToast("再按一次退出GankLy");
+                ToastUtils.showToast(R.string.app_again_out);
                 return false;
             } else {
                 finish();

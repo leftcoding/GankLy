@@ -21,7 +21,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
-            android:name="com.gank.gankly.config.MyGlideModule"
+            android:name="com.gank.gankly.config.glide.MyGlideModule"
+            android:value="GlideModule"/>
+        <meta-data
+            android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"
             android:value="GlideModule"/>
 
         <activity

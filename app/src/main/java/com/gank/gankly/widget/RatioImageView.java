@@ -23,6 +23,10 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
+/**
+ * 固定图片大小
+ * Create by LingYan on 2016-4-19
+ */
 public class RatioImageView extends ImageView {
 
     private int originalWidth;
@@ -50,7 +54,8 @@ public class RatioImageView extends ImageView {
     }
 
 
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (originalWidth > 0 && originalHeight > 0) {
             float ratio = (float) originalWidth / (float) originalHeight;
 
@@ -63,8 +68,7 @@ public class RatioImageView extends ImageView {
             }
 
             setMeasuredDimension(width, height);
-        }
-        else {
+        } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

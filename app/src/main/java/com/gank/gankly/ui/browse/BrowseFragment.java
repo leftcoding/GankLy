@@ -2,34 +2,28 @@ package com.gank.gankly.ui.browse;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.base.BaseFragment;
-import com.socks.library.KLog;
-
-import java.io.File;
+import com.gank.gankly.widget.ProgressImageView;
+import com.gank.gankly.widget.TouchImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-    @Bind(R.id.browse_img)
-    ImageView mImageView;
+    @Bind(R.id.browse_progress)
+    ProgressImageView mProgressImageView;
+    @Bind(R.id.touch_img)
+    TouchImageView mTouchImageView;
 
-
-    private BaseActivity mActivity;
+    private BrowseActivity mActivity;
     private String mUrl;
-    private String mIndex;
-    private String diskCache = Environment.getExternalStorageDirectory().getAbsolutePath() + "/GankLy/cache/img";
 
     public BrowseFragment() {
 
@@ -38,7 +32,7 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.mActivity = (BaseActivity) activity;
+        this.mActivity = (BrowseActivity) activity;
     }
 
     @Nullable
@@ -66,24 +60,14 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     }
 
+
     @Override
     protected void initValues() {
     }
 
     @Override
     protected void initViews() {
-        KLog.d("mUrl:" + mUrl);
-        int last = mUrl.lastIndexOf("/");
-        String sub = mUrl.substring(last + 1, mUrl.length());
-        KLog.d("last:" + last + "sub:" + sub);
-        sub = diskCache + "/" + sub;
-        KLog.d("sub:" + sub);
-        File file = new File(sub);
-//        if (file.isDirectory()) {
-        Glide.with(this).load(mUrl).into(mImageView);
-//        } else {
-//            KLog.d("file not directory");
-//        }
+        mProgressImageView.load(mUrl, BrowseFragment.this, mTouchImageView);
     }
 
     @Override
@@ -123,4 +107,5 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
     public void onRefresh() {
         onDownRefresh();
     }
+
 }

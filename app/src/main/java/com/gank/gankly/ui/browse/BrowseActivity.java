@@ -23,9 +23,7 @@ public class BrowseActivity extends BaseActivity implements View.OnClickListener
     ViewPager mViewPager;
 
     private ArrayList<BrowseFragment> images;
-
     private PagerAdapter mPagerAdapter;
-
     private String mUrl;
 
 
