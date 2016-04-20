@@ -4,7 +4,7 @@
         <item
             android:id="@+id/navigation_settings"
             android:checked="true"
-            android:icon="@drawable/navigation_settings"
+            android:icon="@drawable/navigation_setting"
             android:title="@string/navigation_settings" />
 
         <item

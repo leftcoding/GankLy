@@ -2,36 +2,28 @@ package com.gank.gankly.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.ProgressTarget;
 
-/**
- * Created by xudshen on 16/2/22.
- */
 public class ProgressImageView extends RelativeLayout {
     private boolean showProgressText = true, showProgressBar = true;
     private TextView progressTextView;
-    private ImageView imageView;
+    private TouchImageView imageView;
     private ProgressBar progressBar;
-    private ProgressTarget<String, GlideDrawable> target;
-
-    private ViewTarget<TouchImageView, GlideDrawable> viewTarget;
+    private ProgressTarget<String, Bitmap> target;
 
     public ProgressImageView(Context context) {
         super(context);
@@ -67,35 +59,30 @@ public class ProgressImageView extends RelativeLayout {
     protected void onFinishInflate() {
         super.onFinishInflate();
 
-        imageView = (ImageView) getChildAt(0);
+        imageView = (TouchImageView) getChildAt(0);
 
         progressBar = (ProgressBar) getChildAt(1);
         if (!showProgressBar) progressBar.setVisibility(GONE);
         progressTextView = (TextView) getChildAt(2);
         if (!showProgressText) progressTextView.setVisibility(GONE);
 
-        target = new MyProgressTarget<>(new GlideDrawableImageViewTarget(imageView), progressBar, imageView, progressTextView);
+//        target = new MyProgressTarget<>(new GlideDrawableImageViewTarget(imageView), progressBar, imageView, progressTextView);
+        target = new MyProgressTarget<>(new BitmapImageViewTarget(imageView), progressBar, progressTextView);
     }
 
-    public void load(String url, Fragment fragment, final TouchImageView imageView) {
+    public void load(String url, Fragment fragment) {
 //        if (url.endsWith("gif")) {
         target.setModel(url); // update target's cache
 
-        viewTarget = new ViewTarget<TouchImageView, GlideDrawable>(imageView) {
-            @Override
-            public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                imageView.setImageDrawable(resource.getCurrent());
-            }
-        };
-
-        Glide.with(fragment).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE)
+        Glide.with(fragment).load(url)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.placeholder_loading)
                 .error(R.drawable.placeholder_failed)
-                .sizeMultiplier(0.6f)
+//                .sizeMultiplier(0.6f)
                 .fitCenter() // needs explicit transformation, because we're using a custom target
-                .crossFade()
-//                    .into(target);
-                .into(viewTarget);
+//                .crossFade()
+                .into(target);
 //        }
     }
 
@@ -115,12 +102,11 @@ public class ProgressImageView extends RelativeLayout {
     private static class MyProgressTarget<Z> extends ProgressTarget<String, Z> {
         private final TextView text;
         private final ProgressBar progress;
-        private final ImageView image;
 
-        public MyProgressTarget(Target<Z> target, ProgressBar progress, ImageView image, TextView text) {
+        public MyProgressTarget(Target<Z> target, ProgressBar progress, TextView text) {
             super(target);
             this.progress = progress;
-            this.image = image;
+//            this.image = image;
             this.text = text;
         }
 

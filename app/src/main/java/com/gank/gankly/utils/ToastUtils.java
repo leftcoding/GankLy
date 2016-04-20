@@ -11,8 +11,7 @@ import com.gank.gankly.App;
 public class ToastUtils {
     private static Toast mToast;
 
-    public ToastUtils() {
-
+    private ToastUtils() {
     }
 
     public static void showToast(String msg) {
@@ -23,23 +22,37 @@ public class ToastUtils {
         show(resText, Toast.LENGTH_SHORT);
     }
 
+    public static void longBottom(int resText) {
+        show(resText, Toast.LENGTH_LONG, Gravity.BOTTOM);
+    }
+
+    public static void longToast(int resText) {
+        show(resText, Toast.LENGTH_LONG);
+    }
+
     private static void show(String msg, int duration) {
         cancel();
         mToast = Toast.makeText(App.getContext(), msg, duration);
-        mToast.setGravity(Gravity.CENTER , 0, 0);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }
 
     private static void show(int resText, int duration) {
         cancel();
         mToast = Toast.makeText(App.getContext(), resText, duration);
-        mToast.setGravity(Gravity.CENTER , 0, 0);
+        mToast.setGravity(Gravity.CENTER, 0, 0);
+        mToast.show();
+    }
+
+    private static void show(int resText, int duration, int gravity) {
+        cancel();
+        mToast = Toast.makeText(App.getContext(), resText, duration);
+        mToast.setGravity(gravity, 0, 0);
         mToast.show();
     }
 
 
     private static void cancel() {
-//        check();
         if (mToast != null) {
             mToast.cancel();
             mToast = null;

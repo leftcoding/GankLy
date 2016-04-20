@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.main.ios;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -11,8 +11,10 @@ import android.widget.ListView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.main.GankDetailsAdapter;
+import com.gank.gankly.ui.main.LazyFragment;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.socks.library.KLog;
 
@@ -31,9 +33,8 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import rx.Subscriber;
 
-public class WelfareFragment extends LazyFragment {
+public class IosFragment extends LazyFragment {
     private static final int mLimit = 20;
-    private static final String TYPE = "curType";
 
     @Bind(R.id.recycler_view)
     ListView mListView;
@@ -48,10 +49,9 @@ public class WelfareFragment extends LazyFragment {
     private GankDetailsAdapter mGankDetailsAdapter;
     private List<ResultsBean> mResults;
 
-    private String curType = Constants.ANDROID;
     private int mPage = 1;
 
-    public WelfareFragment() {
+    public IosFragment() {
 
     }
 
@@ -78,12 +78,6 @@ public class WelfareFragment extends LazyFragment {
     }
 
     private void parseArguments() {
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            if (bundle.containsKey(TYPE)) {
-                curType = bundle.getString(TYPE);
-            }
-        }
     }
 
     @Override
@@ -168,72 +162,7 @@ public class WelfareFragment extends LazyFragment {
             }
         };
 
-        switch (curType) {
-            case Constants.ANDROID:
-                GankRetrofit.getInstance().fetchAndroid(mLimit, page, new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mPtrFrameLayout.refreshComplete();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e("e:" + e.toString() + "," + e);
-                        mPtrFrameLayout.refreshComplete();
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        if (!gankResult.isEmpty()) {
-                            if (mPage == 1) {
-                                mResults.clear();
-                            }
-                            mResults.addAll(gankResult.getResults());
-                        }
-
-                        if (gankResult.getSize() < mLimit) {
-                            mLoadMore.loadMoreFinish(false, false);
-                        } else {
-                            mLoadMore.loadMoreFinish(false, true);
-                        }
-                        mGankDetailsAdapter.notifyDataSetChanged();
-                    }
-                });
-                break;
-            case Constants.ALL:
-                GankRetrofit.getInstance().fetchAll(mLimit, mPage, new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mPtrFrameLayout.refreshComplete();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e("e:" + e.toString() + "," + e);
-                        mPtrFrameLayout.refreshComplete();
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        if (!gankResult.isEmpty()) {
-                            if (mPage == 1) {
-                                mResults.clear();
-                            }
-                            mResults.addAll(gankResult.getResults());
-                        }
-
-                        if (gankResult.getSize() < mLimit) {
-                            mLoadMore.loadMoreFinish(false, false);
-                        } else {
-                            mLoadMore.loadMoreFinish(false, true);
-                        }
-                        mGankDetailsAdapter.notifyDataSetChanged();
-                    }
-                });
-                break;
-            default:
-                break;
-        }
+        GankRetrofit.getInstance().fetchIos(mLimit, page, subscriber);
     }
 
     @OnItemClick(R.id.recycler_view)
@@ -250,10 +179,9 @@ public class WelfareFragment extends LazyFragment {
         ButterKnife.unbind(this);
     }
 
-    public static WelfareFragment newInstance(String curType) {
-        WelfareFragment fragment = new WelfareFragment();
+    public static IosFragment newInstance() {
+        IosFragment fragment = new IosFragment();
         Bundle args = new Bundle();
-        args.putString(TYPE, curType);
         fragment.setArguments(args);
         return fragment;
     }

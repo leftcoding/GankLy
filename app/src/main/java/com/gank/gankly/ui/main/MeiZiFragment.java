@@ -17,6 +17,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.browse.BrowseActivity;
+import com.gank.gankly.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,11 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     private MainActivity mActivity;
     private List<ResultsBean> mResults;
 
-    private int mLimit = 20;
+    private static final int mLimit = 20;
     private int mPage = 1;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
+    private boolean isLoadMore = true;
+    private boolean isLoading = false;
 
     public MeiZiFragment() {
 
@@ -60,8 +63,8 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_meizi,container,false);
-        ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_meizi, container, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -119,11 +122,13 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         GankRetrofit.getInstance().fetchWelfare(mLimit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
+                isLoading = false;
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
             @Override
             public void onError(Throwable e) {
+                isLoading = false;
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
@@ -134,6 +139,10 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                         mResults.clear();
                     }
                     mResults.addAll(gankResult.getResults());
+                }
+                if (gankResult.getSize() < mLimit) {
+                    isLoadMore = false;
+                    ToastUtils.longBottom(R.string.loading_pic_no_more);
                 }
 
                 mRecyclerAdapter.updateItems(mResults, false);
@@ -164,6 +173,9 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         return fragment;
     }
 
+    /**
+     * 单行
+     */
 //    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
 //        @Override
 //        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -183,11 +195,15 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
 //        }
 //    };
 
+    /**
+     * 多行
+     */
     private void onScrollStateChanged() {
         int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
         mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
         for (int position : positions) {
-            if (position == mStaggeredGridLayoutManager.getItemCount() - 1) {
+            if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !isLoading) {
+                isLoading = true;
                 mSwipeRefreshLayout.setRefreshing(true);
                 mPage = mPage + 1;
                 fetchDate(mPage);
@@ -209,4 +225,5 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         intent.putExtras(bundle);
         mActivity.startActivity(intent);
     }
+
 }

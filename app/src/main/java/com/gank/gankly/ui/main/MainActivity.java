@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.about.AboutActivity;
@@ -29,16 +30,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
-    @Bind(R.id.toolbar)
+    @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.tabLayout)
+    @Bind(R.id.main_tabLayout)
     TabLayout mTabLayout;
 
-    @Bind(R.id.home_view_pager)
+    @Bind(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    @Bind(R.id.navigation)
+    @Bind(R.id.main_navigation)
     NavigationView mNavigationView;
 
     @Bind(R.id.drawer_layout)
@@ -88,6 +89,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
+        mTabLayout.setBackgroundColor(App.getAppColor(R.color.colorPrimary));
+
     }
 
     private void initView() {
@@ -147,7 +150,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

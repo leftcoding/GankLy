@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-    @Bind(R.id.browse_progress)
+    @Bind(R.id.progress_img)
     ProgressImageView mProgressImageView;
     @Bind(R.id.touch_img)
     TouchImageView mTouchImageView;
@@ -67,7 +67,30 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
 
     @Override
     protected void initViews() {
-        mProgressImageView.load(mUrl, BrowseFragment.this, mTouchImageView);
+        mProgressImageView.load(mUrl,BrowseFragment.this);
+//        Glide.with(this).load(mUrl)
+//                .asBitmap()
+//                .into(new SimpleTarget<Bitmap>() {
+//                    @Override
+//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+//                        KLog.d("onResourceReady");
+//                        if (null != resource) {
+//                            mTouchImageView.setImageBitmap(resource);
+//                            //maybeStartPostponedEnterTransition();
+//                        } else {
+//                            //getActivity().supportFinishAfterTransition();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
+//                        super.onLoadFailed(e, errorDrawable);
+//                        KLog.d("onLoadFailed"+e);
+////                maybeStartPostponedEnterTransition();
+////                getActivity().supportFinishAfterTransition();
+//                    }
+//                });
+
     }
 
     @Override

@@ -20,7 +20,10 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return mFragments.get(position);
+        if(position == 2){
+            return MeiZiFragment.newInstance();
+        }
+        return WelfareFragment.newInstance(titles.get(position));
     }
 
     @Override

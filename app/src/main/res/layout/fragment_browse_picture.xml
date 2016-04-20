@@ -5,15 +5,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
-
     <com.gank.gankly.widget.ProgressImageView
-        android:id="@+id/browse_progress"
-        style="@style/ProgressImageViewStyle"
-        />
-
-    <com.gank.gankly.widget.TouchImageView
-        android:id="@+id/touch_img"
+        android:id="@+id/progress_img"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"/>
+
+    <!--<com.gank.gankly.widget.TouchImageView-->
+        <!--android:id="@+id/touch_img"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
 </LinearLayout>

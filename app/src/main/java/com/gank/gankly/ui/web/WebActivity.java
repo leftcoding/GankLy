@@ -208,7 +208,7 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_welfare, menu);
+        getMenuInflater().inflate(R.menu.welfare, menu);
         return true;
     }
 
