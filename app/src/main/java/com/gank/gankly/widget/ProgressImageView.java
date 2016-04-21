@@ -24,6 +24,7 @@ public class ProgressImageView extends RelativeLayout {
     private TouchImageView imageView;
     private ProgressBar progressBar;
     private ProgressTarget<String, Bitmap> target;
+    private ImageViewOnClick mImageViewOnClick;
 
     public ProgressImageView(Context context) {
         super(context);
@@ -55,12 +56,25 @@ public class ProgressImageView extends RelativeLayout {
         }
     }
 
+    public void setImageViewOnClick(ImageViewOnClick imageViewOnClick) {
+        mImageViewOnClick = imageViewOnClick;
+    }
+
+    public interface ImageViewOnClick {
+        void onImageClick(View v);
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
 
         imageView = (TouchImageView) getChildAt(0);
-
+        imageView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mImageViewOnClick.onImageClick(v);
+            }
+        });
         progressBar = (ProgressBar) getChildAt(1);
         if (!showProgressBar) progressBar.setVisibility(GONE);
         progressTextView = (TextView) getChildAt(2);

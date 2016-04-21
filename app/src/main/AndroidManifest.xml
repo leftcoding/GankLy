@@ -52,7 +52,9 @@
         <activity
             android:name=".ui.browse.BrowseActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/BrowseThemeBase"
+            />
         <!--ShareSdk -->
         <activity
             android:name="com.mob.tools.MobUIShell"

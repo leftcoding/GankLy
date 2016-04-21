@@ -26,6 +26,10 @@ public class ToastUtils {
         show(resText, Toast.LENGTH_LONG, Gravity.BOTTOM);
     }
 
+    public static void shortBottom(int resText) {
+        show(resText, Toast.LENGTH_SHORT, Gravity.BOTTOM);
+    }
+
     public static void longToast(int resText) {
         show(resText, Toast.LENGTH_LONG);
     }
@@ -47,7 +51,7 @@ public class ToastUtils {
     private static void show(int resText, int duration, int gravity) {
         cancel();
         mToast = Toast.makeText(App.getContext(), resText, duration);
-        mToast.setGravity(gravity, 0, 0);
+        mToast.setGravity(gravity, 0, 100);
         mToast.show();
     }
 

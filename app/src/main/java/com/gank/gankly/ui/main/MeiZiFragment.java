@@ -14,13 +14,10 @@ import android.view.ViewGroup;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.utils.ToastUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,13 +31,12 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
-    private List<ResultsBean> mResults;
+//    private ArrayList<ResultsBean> mResults;
 
     private static final int mLimit = 20;
     private int mPage = 1;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
-    private boolean isLoading = false;
 
     public MeiZiFragment() {
 
@@ -78,7 +74,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     @Override
     protected void initViews() {
         initRecycler();
-        mResults = new ArrayList<>();
+//        mResults = new ArrayList<>();
         mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
         mRecyclerAdapter.setMeiZiOnClick(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
@@ -122,13 +118,12 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         GankRetrofit.getInstance().fetchWelfare(mLimit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
-                isLoading = false;
                 mSwipeRefreshLayout.setRefreshing(false);
+                mPage = mPage + 1;
             }
 
             @Override
             public void onError(Throwable e) {
-                isLoading = false;
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
@@ -136,16 +131,18 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
             public void onNext(GankResult gankResult) {
                 if (!gankResult.isEmpty()) {
                     if (mPage == 1) {
-                        mResults.clear();
+//                        mResults.clear();
+                        MeiziArrayList.getInstance().clear();
                     }
-                    mResults.addAll(gankResult.getResults());
+//                    mResults.addAll(gankResult.getResults());
+                    MeiziArrayList.getInstance().addAll(gankResult.getResults());
                 }
                 if (gankResult.getSize() < mLimit) {
                     isLoadMore = false;
                     ToastUtils.longBottom(R.string.loading_pic_no_more);
                 }
 
-                mRecyclerAdapter.updateItems(mResults, false);
+                mRecyclerAdapter.updateItems(MeiziArrayList.getInstance().getArrayList());
             }
         });
     }
@@ -202,10 +199,8 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
         mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
         for (int position : positions) {
-            if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !isLoading) {
-                isLoading = true;
+            if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(true);
-                mPage = mPage + 1;
                 fetchDate(mPage);
                 break;
             }
@@ -218,9 +213,10 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     }
 
     @Override
-    public void onClick(View view, ResultsBean bean) {
+    public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("url", bean.getUrl());
+        bundle.putInt("position", position);
+        bundle.putInt("page", mPage);
         Intent intent = new Intent(mActivity, BrowseActivity.class);
         intent.putExtras(bundle);
         mActivity.startActivity(intent);

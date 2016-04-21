@@ -21,6 +21,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.about.AboutActivity;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectActivity;
+import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -174,11 +175,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             }
             if ((System.currentTimeMillis() - mKeyTime) > 2000) {
                 mKeyTime = System.currentTimeMillis();
-                ToastUtils.showToast(R.string.app_again_out);
+                ToastUtils.shortBottom(R.string.app_again_out);
                 return false;
             } else {
-                finish();
-                System.exit(0);
+                AppUtils.killProcess();
             }
         }
         return super.onKeyDown(keyCode, event);

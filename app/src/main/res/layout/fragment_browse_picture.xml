@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.gank.gankly.widget.ProgressImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/progress_img"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-    <com.gank.gankly.widget.ProgressImageView
-        android:id="@+id/progress_img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <!--<com.gank.gankly.widget.TouchImageView-->
-        <!--android:id="@+id/touch_img"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--/>-->
-</LinearLayout>
+    android:background="@color/color_2f"/>

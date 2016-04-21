@@ -2,12 +2,13 @@ package com.gank.gankly.bean;
 
 import com.gank.gankly.utils.ListUtils;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Create by LingYan on 2016-04-06
  */
-public class GankResult extends BaseResult {
+public class GankResult extends BaseResult implements Serializable{
 
     private List<ResultsBean> results;
 

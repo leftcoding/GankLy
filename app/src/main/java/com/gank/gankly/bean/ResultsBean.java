@@ -1,6 +1,8 @@
 package com.gank.gankly.bean;
 
-public class ResultsBean {
+import java.io.Serializable;
+
+public class ResultsBean implements Serializable{
         private String _id;
         private String _ns;
         private String createdAt;

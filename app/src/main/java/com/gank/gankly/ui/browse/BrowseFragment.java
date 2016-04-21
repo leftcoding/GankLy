@@ -3,7 +3,6 @@ package com.gank.gankly.ui.browse;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,22 +10,17 @@ import android.view.ViewGroup;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.widget.ProgressImageView;
-import com.gank.gankly.widget.TouchImageView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class BrowseFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick{
     @Bind(R.id.progress_img)
     ProgressImageView mProgressImageView;
-    @Bind(R.id.touch_img)
-    TouchImageView mTouchImageView;
-
     private BrowseActivity mActivity;
     private String mUrl;
 
     public BrowseFragment() {
-
     }
 
     @Override
@@ -57,49 +51,24 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
         if (bundle != null) {
             mUrl = bundle.getString("url");
         }
-
     }
 
 
     @Override
     protected void initValues() {
+        mProgressImageView.load(mUrl, BrowseFragment.this);
     }
 
     @Override
     protected void initViews() {
-        mProgressImageView.load(mUrl,BrowseFragment.this);
-//        Glide.with(this).load(mUrl)
-//                .asBitmap()
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-//                        KLog.d("onResourceReady");
-//                        if (null != resource) {
-//                            mTouchImageView.setImageBitmap(resource);
-//                            //maybeStartPostponedEnterTransition();
-//                        } else {
-//                            //getActivity().supportFinishAfterTransition();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onLoadFailed(Exception e, Drawable errorDrawable) {
-//                        super.onLoadFailed(e, errorDrawable);
-//                        KLog.d("onLoadFailed"+e);
-////                maybeStartPostponedEnterTransition();
-////                getActivity().supportFinishAfterTransition();
-//                    }
-//                });
 
     }
 
     @Override
     protected void bindLister() {
-
+        mProgressImageView.setImageViewOnClick(this);
     }
 
-    private void onDownRefresh() {
-    }
 
     @Override
     public void onStop() {
@@ -125,10 +94,8 @@ public class BrowseFragment extends BaseFragment implements SwipeRefreshLayout.O
         return fragment;
     }
 
-
     @Override
-    public void onRefresh() {
-        onDownRefresh();
+    public void onImageClick(View v) {
+        mActivity.switchToolbar();
     }
-
 }

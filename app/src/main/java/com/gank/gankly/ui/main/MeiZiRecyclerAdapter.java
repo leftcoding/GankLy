@@ -30,7 +30,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private MeiZiOnClick mMeiZiOnClick;
 
     public interface MeiZiOnClick {
-        void onClick(View view, ResultsBean bean);
+        void onClick(View view, int position);
     }
 
     public void setMeiZiOnClick(MeiZiOnClick meiZiOnClick) {
@@ -53,7 +53,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
         holder.txtDesc.setText(bean.getDesc());
-        holder.bean = bean;
+        holder.position = position;
         Glide.with(mContext)
                 .load(bean.getUrl())
                 .centerCrop()
@@ -75,7 +75,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         return 0;
     }
 
-    public void updateItems(List<ResultsBean> goods, boolean animated) {
+    public void updateItems(List<ResultsBean> goods) {
         mResults.clear();
         mResults.addAll(goods);
         notifyDataSetChanged();
@@ -87,7 +87,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
         @Bind(R.id.meizi_img_picture)
         RatioImageView imgMeizi;
-        ResultsBean bean;
+        int position;
 
         public GoodsViewHolder(View itemView) {
             super(itemView);
@@ -98,7 +98,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
         @Override
         public void onClick(View v) {
-            mMeiZiOnClick.onClick(v, bean);
+            mMeiZiOnClick.onClick(v, position);
         }
     }
 

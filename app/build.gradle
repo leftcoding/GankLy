@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.gank.gankly"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -15,6 +15,8 @@ android {
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关闭
     lintOptions {
         abortOnError false
+        disable "InvalidPackage"
+        lintConfig file("lint.xml")
     }
 
     // java版本
