@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnItemClick;
 import butterknife.OnItemLongClick;
 import de.greenrobot.dao.query.QueryBuilder;
@@ -52,70 +51,6 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     private List<UrlCollect> mList;
     private int mLongClick = 0;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_collcet);
-        ButterKnife.bind(this);
-        initValues();
-        initView();
-        bindLister();
-    }
-
-    private void initValues() {
-        mList = new ArrayList<>();
-        mCollectAdapter = new CollectAdapter(this, mList);
-        mListView.setAdapter(mCollectAdapter);
-
-        List<UrlCollect> _list = queryData();
-        if (!ListUtils.isListEmpty(_list)) {
-            mList.addAll(_list);
-            mCollectAdapter.notifyDataSetChanged();
-        }
-        showListView();
-    }
-
-    private void initView() {
-        mToolbar.setTitle(R.string.navigation_settings);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
-        }
-
-
-    }
-
-    private void bindLister() {
-        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, mListView, header);
-            }
-
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-
-            }
-        });
-
-        mLoadMore.useDefaultFooter();
-        mLoadMore.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-            }
-        });
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
-        mPtrFrameLayout.setEnabled(false);
-        mLoadMore.loadMoreFinish(false, false);
-    }
 
     private List<UrlCollect> queryData() {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
@@ -175,5 +110,66 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
 
     @Override
     public void onCancelClick() {
+    }
+
+    @Override
+    protected int getContentId() {
+        return R.layout.activity_collcet;
+    }
+
+    @Override
+    protected void initViews() {
+        mList = new ArrayList<>();
+        mCollectAdapter = new CollectAdapter(this, mList);
+        mListView.setAdapter(mCollectAdapter);
+
+        List<UrlCollect> _list = queryData();
+        if (!ListUtils.isListEmpty(_list)) {
+            mList.addAll(_list);
+            mCollectAdapter.notifyDataSetChanged();
+        }
+        showListView();
+    }
+
+    @Override
+    protected void bindListener() {
+        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return PtrDefaultHandler.checkContentCanBePulledDown(frame, mListView, header);
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+
+            }
+        });
+
+        mLoadMore.useDefaultFooter();
+        mLoadMore.setLoadMoreHandler(new LoadMoreHandler() {
+            @Override
+            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
+            }
+        });
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        mPtrFrameLayout.setEnabled(false);
+        mLoadMore.loadMoreFinish(false, false);
+    }
+
+    @Override
+    protected void initValues() {
+        mToolbar.setTitle(R.string.navigation_settings);
+        setSupportActionBar(mToolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
+        }
     }
 }

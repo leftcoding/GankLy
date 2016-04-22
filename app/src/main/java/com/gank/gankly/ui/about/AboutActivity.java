@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.about;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -9,43 +8,12 @@ import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.widget.RotateLoading;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class AboutActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.rotateloading)
     RotateLoading mRotateLoading;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
-        ButterKnife.bind(this);
-        initValues();
-        initView();
-        bindLister();
-    }
-
-
-    private void initValues() {
-        mRotateLoading.start();
-    }
-
-    private void initView() {
-        mToolbar.setTitle("about");
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //显示返回箭头
-    }
-
-    private void bindLister() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
 
 
     @Override
@@ -59,4 +27,33 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
+
+    @Override
+    protected int getContentId() {
+        return R.layout.activity_about;
+    }
+
+    @Override
+    protected void initViews() {
+        mRotateLoading.start();
+        mToolbar.setTitle("about");
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //显示返回箭头
+    }
+
+    @Override
+    protected void bindListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+    @Override
+    protected void initValues() {
+
+    }
+
 }
