@@ -104,4 +104,9 @@ public class GankRetrofit {
         Observable<GankResult> observable = gankApi.fetchBenefitsGoods(limit, page);
         toSubscribe(observable, subscriber);
     }
+
+    public void fetchVideo(int limit, int page, Subscriber<GankResult> subscriber) {
+        Observable<GankResult> observable = gankApi.fetchVideo(limit, page);
+        toSubscribe(observable, subscriber);
+    }
 }

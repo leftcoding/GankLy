@@ -15,7 +15,6 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_video"
-            android:checked="true"
             android:icon="@drawable/navigation_video"
             android:title="@string/navigation_video"/>
     </group>
@@ -25,7 +24,6 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_settings"
-            android:checked="true"
             android:icon="@drawable/navigation_setting"
             android:title="@string/navigation_settings"/>
 

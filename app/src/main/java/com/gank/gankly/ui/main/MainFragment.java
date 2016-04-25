@@ -1,33 +1,30 @@
 package com.gank.gankly.ui.main;
 
 import android.app.Activity;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.main.meizi.MeiZiFragment;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-04-22
  */
 public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     private static final String TAG = "MainFragment";
-
 
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -38,24 +35,23 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Bind(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    GankPagerAdapter mPagerAdapter;
-
-
+    private GankPagerAdapter mPagerAdapter;
     private MainActivity mActivity;
     private List<String> mTitles;
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mActivity = (MainActivity) activity;
+    private static MainFragment sMainFragment;
+
+    public static MainFragment getInstance() {
+        if (sMainFragment == null) {
+            sMainFragment = new MainFragment();
+        }
+        return sMainFragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.include_app_head, container, false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -80,24 +76,28 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.include_app_head;
+    }
+
+
+    @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new WelfareFragment());
+        mList.add(new WFragment());
         mList.add(new WelfareFragment());
         mList.add(new MeiZiFragment());
-        mList.add(new WelfareFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.ANDROID);
         mTitles.add(Constants.IOS);
         mTitles.add(Constants.WELFRAE);
-        mTitles.add(Constants.ALL);
-
+        KLog.d("--initValues--");
         mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(), mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
-
+        KLog.d("addOnPageChangeListener after");
         initTabLayout();
     }
 

@@ -31,6 +31,9 @@ import in.srain.cube.views.ptr.loadmore.LoadMoreContainer;
 import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
 import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 
+/**
+ * Create by LingYan on 2016-4-25
+ */
 public class CollectActivity extends BaseActivity implements DeleteDialog.DialogListener {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -57,14 +60,6 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
         QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
         return queryBuilder.list();
-    }
-
-    private void onDownRefresh() {
-
-    }
-
-    private void showLoading() {
-
     }
 
     private void showListView() {

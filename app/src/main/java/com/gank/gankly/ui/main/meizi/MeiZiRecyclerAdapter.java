@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.main.meizi;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

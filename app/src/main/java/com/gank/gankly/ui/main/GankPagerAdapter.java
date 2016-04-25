@@ -5,13 +5,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.main.meizi.MeiZiFragment;
+import com.socks.library.KLog;
+
 import java.util.List;
 
 public class GankPagerAdapter extends FragmentStatePagerAdapter {
     private List<LazyFragment> mFragments;
     private List<String> titles;
 
-    public GankPagerAdapter(FragmentManager fm, List<LazyFragment> fragments,List<String> titles) {
+    public GankPagerAdapter(FragmentManager fm, List<LazyFragment> fragments, List<String> titles) {
         super(fm);
         mFragments = fragments;
         this.titles = titles;
@@ -20,10 +24,13 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if(position == 2){
+        KLog.d("--getItem--:" + position);
+        if (position == 2) {
             return MeiZiFragment.newInstance();
+        } else if (position == 1) {
+            return WelfareFragment.newInstance(titles.get(position));
         }
-        return WelfareFragment.newInstance(titles.get(position));
+        return WFragment.newInstance(titles.get(position));
     }
 
     @Override

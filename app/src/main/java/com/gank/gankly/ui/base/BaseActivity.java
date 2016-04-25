@@ -29,8 +29,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         bindListener();
     }
 
-    public void add(Fragment fragment, Bundle bundle) {
-        addFragment(fragment, bundle, "", R.id.main_frame_layout, false);
+    public void add(Fragment fragment) {
+        addFragment(fragment, null, "", R.id.main_frame_layout, false);
+    }
+
+    public void replace(Fragment fragment) {
+        FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        mFragmentTransaction.replace(R.id.main_frame_layout, fragment).commit();
+    }
+
+    public void addHideFragment(Fragment from, Fragment to) {
+        addHideFragment(from, to, R.id.main_frame_layout, null, "", false);
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -65,9 +75,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void addFragment(Fragment fragment, Bundle bundle, String tag,
                              int contentId, boolean isAnimation) {
-//        if (isOpenMore()) {
-//            return;
-//        }
+        if (isOpenMore() || fragment == null) {
+            return;
+        }
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
 //        if (isAnimation) {
@@ -95,7 +105,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initValues();
 
     private boolean isOpenMore() {
-        if (System.currentTimeMillis() - mLastTime <= 500) {
+        if (System.currentTimeMillis() - mLastTime <= 100) {
             mLastTime = System.currentTimeMillis();
             return true;
         }

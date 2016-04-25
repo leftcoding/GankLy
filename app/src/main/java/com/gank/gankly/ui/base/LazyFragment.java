@@ -1,10 +1,7 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
-import com.gank.gankly.ui.base.BaseFragment;
-import com.socks.library.KLog;
 
 public abstract class LazyFragment extends BaseFragment {
     private boolean isVisible = false; //是否可见
@@ -47,11 +44,9 @@ public abstract class LazyFragment extends BaseFragment {
     protected abstract void initDate();
 
     private void lazyLoadData() {
-        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView:" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }
-        KLog.d("完成数据第一次加载" + "   " + this.getClass().getSimpleName());
         initDate();
         isFirstLoad = false;
     }

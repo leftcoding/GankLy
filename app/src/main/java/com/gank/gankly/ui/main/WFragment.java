@@ -5,47 +5,49 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.MeiziArrayList;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
+import com.gank.gankly.ui.main.meizi.MeiZiRecyclerAdapter;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
+public class WFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private MeiZiRecyclerAdapter mRecyclerAdapter;
+    private GankAdapter mRecyclerAdapter;
     private MainActivity mActivity;
-//    private ArrayList<ResultsBean> mResults;
 
     private static final int mLimit = 20;
     private int mPage = 1;
-    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
+    private static final String TYPE = "curType";
+    private String curType = Constants.ANDROID;
+    private int mLastPosition;
 
-    public MeiZiFragment() {
+    public WFragment() {
 
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mActivity = (MainActivity) activity;
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        this.mActivity = (MainActivity) context;
     }
 
     @Override
@@ -56,15 +58,13 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         setHasOptionsMenu(true);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_meizi, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
     private void parseArguments() {
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            if (bundle.containsKey(TYPE)) {
+                curType = bundle.getString(TYPE);
+            }
+        }
     }
 
     @Override
@@ -73,18 +73,19 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
 
     @Override
     protected void initViews() {
-        initRecycler();
-//        mResults = new ArrayList<>();
-        mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
-        mRecyclerAdapter.setMeiZiOnClick(this);
+        mRecyclerAdapter = new GankAdapter(mActivity);
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+        initRecycler();
     }
 
     @Override
     protected void bindLister() {
 
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_meizi;
     }
 
     @Override
@@ -95,27 +96,34 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     private void onDownRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
         mPage = 1;
-        fetchDate(mPage);
+        fetchDate();
     }
 
     private void initRecycler() {
-        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    MeiZiFragment.this.onScrollStateChanged();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mLastPosition + 1 == mRecyclerAdapter.getItemCount() && !mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    fetchDate();
                 }
             }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
-    private void fetchDate(int page) {
-        GankRetrofit.getInstance().fetchWelfare(mLimit, page, new Subscriber<GankResult>() {
+    private void fetchDate() {
+        GankRetrofit.getInstance().fetchAndroid(mLimit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -131,10 +139,8 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
             public void onNext(GankResult gankResult) {
                 if (!gankResult.isEmpty()) {
                     if (mPage == 1) {
-//                        mResults.clear();
                         MeiziArrayList.getInstance().clear();
                     }
-//                    mResults.addAll(gankResult.getResults());
                     MeiziArrayList.getInstance().addAll(gankResult.getResults());
                 }
                 if (gankResult.getSize() < mLimit) {
@@ -163,48 +169,13 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         super.onDestroy();
     }
 
-    public static MeiZiFragment newInstance() {
-        MeiZiFragment fragment = new MeiZiFragment();
+
+    public static WFragment newInstance(String curType) {
+        WFragment fragment = new WFragment();
         Bundle args = new Bundle();
+        args.putString(TYPE, curType);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    /**
-     * 单行
-     */
-//    private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
-//        @Override
-//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//            lastVisibleItem = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-//        }
-//
-//        @Override
-//        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//            super.onScrollStateChanged(recyclerView, newState);
-//            if (newState == RecyclerView.SCROLL_STATE_IDLE
-//                    && lastVisibleItem + 1 == mRecyclerAdapter.getItemCount()) {
-//                mSwipeRefreshLayout.setRefreshing(true);
-//                mPage = mPage + 1;
-//                fetchDate(mPage);
-//            }
-//        }
-//    };
-
-    /**
-     * 多行
-     */
-    private void onScrollStateChanged() {
-        int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
-        mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
-        for (int position : positions) {
-            if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(true);
-                fetchDate(mPage);
-                break;
-            }
-        }
     }
 
     @Override

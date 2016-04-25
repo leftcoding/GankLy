@@ -2,17 +2,19 @@ package com.gank.gankly.ui.main;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.socks.library.KLog;
 
@@ -22,51 +24,33 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.loadmore.LoadMoreContainer;
-import in.srain.cube.views.ptr.loadmore.LoadMoreHandler;
-import in.srain.cube.views.ptr.loadmore.LoadMoreListViewContainer;
 import rx.Subscriber;
 
-public class WelfareFragment extends LazyFragment {
+public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener {
     private static final int mLimit = 20;
     private static final String TYPE = "curType";
 
-    @Bind(R.id.recycler_view)
-    ListView mListView;
-
-    @Bind(R.id.welfare_frame)
-    PtrClassicFrameLayout mPtrFrameLayout;
-
-    @Bind(R.id.welfare_load_more)
-    LoadMoreListViewContainer mLoadMore;
+    @Bind(R.id.meizi_recycler_view)
+    RecyclerView mRecyclerView;
+    @Bind(R.id.meizi_swipe_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     private MainActivity mActivity;
-    private GankDetailsAdapter mGankDetailsAdapter;
+    private GankAdapter mGankAdapter;
     private List<ResultsBean> mResults;
 
     private String curType = Constants.ANDROID;
     private int mPage = 1;
+    private int mLastPosition;
 
     public WelfareFragment() {
 
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_welfare, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mActivity = (MainActivity) activity;
+    public void onAttach(Activity context) {
+        super.onAttach(context);
+        this.mActivity = (MainActivity) context;
     }
 
     @Override
@@ -94,92 +78,75 @@ public class WelfareFragment extends LazyFragment {
     @Override
     protected void initViews() {
         mResults = new ArrayList<>();
-        mGankDetailsAdapter = new GankDetailsAdapter(mActivity, mResults);
-        mListView.setAdapter(mGankDetailsAdapter);
+        mGankAdapter = new GankAdapter(mActivity);
+        mRecyclerView.setAdapter(mGankAdapter);
+        initRecycler();
+    }
+
+    private void initRecycler() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mLastPosition + 1 == mGankAdapter.getItemCount() ) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    fetchDate();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
     @Override
     protected void bindLister() {
-        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                return PtrDefaultHandler.checkContentCanBePulledDown(frame, mListView, header);
-            }
 
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                onDownRefresh();
-            }
-        });
-
-        mLoadMore.useDefaultFooter();
-        mLoadMore.setLoadMoreHandler(new LoadMoreHandler() {
-            @Override
-            public void onLoadMore(LoadMoreContainer loadMoreContainer) {
-                mPage = mPage + 1;
-                fetchDate(mPage);
-            }
-        });
     }
 
     @Override
     protected void initDate() {
-        mPtrFrameLayout.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPtrFrameLayout.autoRefresh();
+                onDownRefresh();
             }
         }, 150);
     }
 
-    private void onDownRefresh() {
-        mPage = 1;
-        fetchDate(mPage);
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_meizi;
     }
 
-    private void fetchDate(int page) {
-        Subscriber<GankResult> subscriber = new Subscriber<GankResult>() {
-            @Override
-            public void onCompleted() {
-                mPtrFrameLayout.refreshComplete();
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                KLog.e("e:" + e.toString() + "," + e);
-                mPtrFrameLayout.refreshComplete();
-                mLoadMore.loadMoreError(0, "刷新失败");
-            }
+    private void onDownRefresh() {
+//        mSwipeRefreshLayout.setRefreshing(true);
+        mPage = 1;
+        fetchDate();
+    }
 
-            @Override
-            public void onNext(GankResult gankResult) {
-                if (!gankResult.isEmpty()) {
-                    if (mPage == 1) {
-                        mResults.clear();
-                    }
-                    mResults.addAll(gankResult.getResults());
-                }
-                if (gankResult.getSize() < mLimit) {
-                    mLoadMore.loadMoreFinish(false, false);
-                } else {
-                    mLoadMore.loadMoreFinish(false, true);
-                }
-                mGankDetailsAdapter.notifyDataSetChanged();
-            }
-        };
-
+    private void fetchDate() {
         switch (curType) {
             case Constants.ANDROID:
-                GankRetrofit.getInstance().fetchAndroid(mLimit, page, new Subscriber<GankResult>() {
+                GankRetrofit.getInstance().fetchAndroid(mLimit, mPage, new Subscriber<GankResult>() {
                     @Override
                     public void onCompleted() {
-                        mPtrFrameLayout.refreshComplete();
+//                mSwipeRefreshLayout.setRefreshing(false);
+                        mPage = mPage + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e("e:" + e.toString() + "," + e);
-                        mPtrFrameLayout.refreshComplete();
+//                mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -192,25 +159,26 @@ public class WelfareFragment extends LazyFragment {
                         }
 
                         if (gankResult.getSize() < mLimit) {
-                            mLoadMore.loadMoreFinish(false, false);
+
                         } else {
-                            mLoadMore.loadMoreFinish(false, true);
+
                         }
-                        mGankDetailsAdapter.notifyDataSetChanged();
+                        mGankAdapter.updateItems(mResults);
                     }
                 });
                 break;
-            case Constants.ALL:
-                GankRetrofit.getInstance().fetchAll(mLimit, mPage, new Subscriber<GankResult>() {
+            case Constants.IOS:
+                GankRetrofit.getInstance().fetchIos(mLimit, mPage, new Subscriber<GankResult>() {
                     @Override
                     public void onCompleted() {
-                        mPtrFrameLayout.refreshComplete();
+//                mSwipeRefreshLayout.setRefreshing(false);
+                        mPage = mPage + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e("e:" + e.toString() + "," + e);
-                        mPtrFrameLayout.refreshComplete();
+//                mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -223,11 +191,11 @@ public class WelfareFragment extends LazyFragment {
                         }
 
                         if (gankResult.getSize() < mLimit) {
-                            mLoadMore.loadMoreFinish(false, false);
+
                         } else {
-                            mLoadMore.loadMoreFinish(false, true);
+
                         }
-                        mGankDetailsAdapter.notifyDataSetChanged();
+                        mGankAdapter.updateItems(mResults);
                     }
                 });
                 break;
@@ -258,4 +226,8 @@ public class WelfareFragment extends LazyFragment {
         return fragment;
     }
 
+    @Override
+    public void onRefresh() {
+        onDownRefresh();
+    }
 }

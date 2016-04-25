@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.MeiziArrayList;
+import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.RxSaveImage;
@@ -28,6 +29,9 @@ import butterknife.Bind;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
+/**
+ * Create by LingYan on 2016-4-25
+ */
 public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private static final int SYSTEM_UI_BASE_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -41,8 +45,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     Toolbar mToolbar;
     @Bind(R.id.pager)
     ViewPager mViewPager;
-//    @Bind(R.id.appbar)
-//    AppBarLayout mAppBarLayout;
 
     private PagerAdapter mPagerAdapter;
     private int mPosition;
@@ -107,31 +109,18 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     @Override
-    protected void initViews() {
+    protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mPosition = bundle.getInt("position");
             mPage = bundle.getInt("page");
         }
-
-        KLog.d("mPostion:" + mPosition);
     }
 
     @Override
-    protected void bindListener() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
-
-    @Override
-    protected void initValues() {
+    protected void initViews() {
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
-//        mAppBarLayout.setAlpha(0.7f);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
@@ -144,6 +133,17 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         mViewPager.addOnPageChangeListener(this);
         mPagerAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void bindListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
@@ -159,7 +159,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         @Override
         public Fragment getItem(int position) {
             mPosition = position;
-            return BrowseFragment.newInstance(MeiziArrayList.getInstance().getResultBean(position).getUrl());
+            ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
+            return BrowseFragment.newInstance(bean.getUrl());
         }
 
     }

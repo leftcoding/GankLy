@@ -1,11 +1,9 @@
 package com.gank.gankly.ui.browse;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
@@ -24,18 +22,23 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mActivity = (BrowseActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (BrowseActivity) context;
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_browse_picture, container, false);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
+//    @Override
+//    public void onAttach(Activity activity) {
+//        super.onAttach(activity);
+//    }
+
+//    @Nullable
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        View rootView = inflater.inflate(R.layout.fragment_browse_picture, container, false);
+//        ButterKnife.bind(this, rootView);
+//        return rootView;
+//    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,6 +70,11 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
     @Override
     protected void bindLister() {
         mProgressImageView.setImageViewOnClick(this);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_browse_picture;
     }
 
 

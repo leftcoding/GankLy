@@ -34,4 +34,10 @@ public interface GankApi {
             @Path("limit") int limit,
             @Path("page") int page
     );
+
+    @GET("休息视频/{limit}/{page}")
+    Observable<GankResult> fetchVideo(
+            @Path("limit") int limit,
+            @Path("page") int page
+    );
 }
