@@ -7,20 +7,13 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <!--<FrameLayout-->
-    <!--android:id="@+id/main_frame_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"/>-->
-
-    <!--<include layout="@layout/include_app_head"/>-->
-
-    <!--<include layout="@layout/activity_main_center"/>-->
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/main_navigation"
         android:layout_width="wrap_content"

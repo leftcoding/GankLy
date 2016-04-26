@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.about.AboutActivity;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectActivity;
 import com.gank.gankly.ui.main.video.VideoFragment;
@@ -22,7 +21,6 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity {
     @Bind(R.id.main_navigation)
     NavigationView mNavigationView;
-
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
@@ -31,17 +29,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, AboutActivity.class));
-            return true;
-        }
+//        int id = item.getItemId();
+//        if (id == R.id.action_settings) {
+//            startActivity(new Intent(this, AboutActivity.class));
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -86,7 +84,7 @@ public class MainActivity extends BaseActivity {
                         startActivity(new Intent(MainActivity.this, CollectActivity.class));
                         break;
                     case R.id.navigation_video:
-                        fragmentTo = VideoFragment.getIntance();
+                        fragmentTo = VideoFragment.getInstance();
                         break;
                     case R.id.navigation_home:
                         fragmentTo = MainFragment.getInstance();

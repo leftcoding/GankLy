@@ -3,6 +3,8 @@ package com.gank.gankly.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.socks.library.KLog;
+
 public abstract class LazyFragment extends BaseFragment {
     private boolean isVisible = false; //是否可见
     private boolean isView = false; //是否建立视图关系
@@ -44,6 +46,7 @@ public abstract class LazyFragment extends BaseFragment {
     protected abstract void initDate();
 
     private void lazyLoadData() {
+        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView:" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }

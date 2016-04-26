@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -133,70 +134,50 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void fetchDate() {
+        Subscriber<GankResult> subscriber = new Subscriber<GankResult>() {
+            @Override
+            public void onCompleted() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                mPage = mPage + 1;
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e("e:" + e.toString() + "," + e);
+                mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
+                        .setActionTextColor(App.getAppColor(R.color.Blue))
+                        .setAction(R.string.retry, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onDownRefresh();
+                            }
+                        }).show();
+            }
+
+            @Override
+            public void onNext(GankResult gankResult) {
+                if (!gankResult.isEmpty()) {
+                    if (mPage == 1) {
+                        mResults.clear();
+                    }
+                    mResults.addAll(gankResult.getResults());
+                }
+
+                if (gankResult.getSize() < mLimit) {
+
+                } else {
+
+                }
+                mGankAdapter.updateItems(mResults);
+            }
+        };
         switch (curType) {
             case Constants.ANDROID:
-                GankRetrofit.getInstance().fetchAndroid(mLimit, mPage, new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mPage = mPage + 1;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e("e:" + e.toString() + "," + e);
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        if (!gankResult.isEmpty()) {
-                            if (mPage == 1) {
-                                mResults.clear();
-                            }
-                            mResults.addAll(gankResult.getResults());
-                        }
-
-                        if (gankResult.getSize() < mLimit) {
-
-                        } else {
-
-                        }
-                        mGankAdapter.updateItems(mResults);
-                    }
-                });
+                GankRetrofit.getInstance().fetchAndroid(mLimit, mPage, subscriber);
                 break;
             case Constants.IOS:
-                GankRetrofit.getInstance().fetchIos(mLimit, mPage, new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        mPage = mPage + 1;
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e("e:" + e.toString() + "," + e);
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        if (!gankResult.isEmpty()) {
-                            if (mPage == 1) {
-                                mResults.clear();
-                            }
-                            mResults.addAll(gankResult.getResults());
-                        }
-
-                        if (gankResult.getSize() < mLimit) {
-
-                        } else {
-
-                        }
-                        mGankAdapter.updateItems(mResults);
-                    }
-                });
+                GankRetrofit.getInstance().fetchIos(mLimit, mPage, subscriber);
                 break;
             default:
                 break;
@@ -224,7 +205,6 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void onClick(View view, int position) {
-        KLog.d("onItemClick");
         Bundle bundle = new Bundle();
         bundle.putString("title", mResults.get(position).getDesc());
         bundle.putString("url", mResults.get(position).getUrl());

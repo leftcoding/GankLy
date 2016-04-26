@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -65,6 +67,16 @@ public class WebActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            // 这些视频需要hack CSS才能达到全屏播放的效果
+            if (url.contains("www.vmovier.com")) {
+                injectCSS("vmovier.css");
+            }
+            else if (url.contains("video.weibo.com")) {
+                injectCSS("weibo.css");
+            }
+            else if (url.contains("m.miaopai.com")) {
+                injectCSS("miaopai.css");
+            }
         }
     }
 
@@ -92,6 +104,28 @@ public class WebActivity extends BaseActivity {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             return true;
+        }
+    }
+
+    // Inject CSS method: read style.css from assets folder
+    // Append stylesheet to document head
+    private void injectCSS(String filename) {
+        try {
+            InputStream inputStream = this.getAssets().open(filename);
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            inputStream.close();
+            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
+            mWebView.loadUrl("javascript:(function() {" +
+                    "var parent = document.getElementsByTagName('head').item(0);" +
+                    "var style = document.createElement('style');" +
+                    "style.type = 'text/css';" +
+                    // Tell the browser to BASE64-decode the string into your script !!!
+                    "style.innerHTML = window.atob('" + encoded + "');" +
+                    "parent.appendChild(style)" +
+                    "})()");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

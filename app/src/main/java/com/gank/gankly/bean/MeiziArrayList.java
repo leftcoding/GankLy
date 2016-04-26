@@ -11,9 +11,15 @@ import java.util.List;
 public class MeiziArrayList {
     private static MeiziArrayList sMeiziArrayList;
     private List<ResultsBean> mArrayList;
+    private int mPage = 0;
 
     private MeiziArrayList() {
         mArrayList = new ArrayList<>();
+    }
+
+    public MeiziArrayList(List<ResultsBean> arrayList, int page) {
+        mArrayList = arrayList;
+        mPage = page;
     }
 
     public static MeiziArrayList getInstance() {
@@ -42,6 +48,14 @@ public class MeiziArrayList {
 
     public List<ResultsBean> getArrayList() {
         return mArrayList;
+    }
+
+    public int getPage() {
+        return mPage;
+    }
+
+    public void setPage(int page) {
+        this.mPage = page;
     }
 
     public ResultsBean getResultBean(int position) {

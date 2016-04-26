@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -133,6 +134,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                 if (gankResult.getSize() < mLimit) {
                     isLoadMore = false;
                     ToastUtils.longBottom(R.string.loading_pic_no_more);
+                    Snackbar.make(mRecyclerView, R.string.loading_pic_no_more, Snackbar.LENGTH_LONG).show();
                 }
 
                 mRecyclerAdapter.updateItems(MeiziArrayList.getInstance().getArrayList());

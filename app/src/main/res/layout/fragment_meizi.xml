@@ -17,32 +17,4 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </android.support.v4.widget.SwipeRefreshLayout>
-
-
-    <!--<in.srain.cube.views.ptr.PtrClassicFrameLayout-->
-    <!--xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/welfare_frame"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--cube_ptr:ptr_duration_to_close="200"-->
-    <!--cube_ptr:ptr_duration_to_close_header="500"-->
-    <!--cube_ptr:ptr_keep_header_when_refresh="true"-->
-    <!--cube_ptr:ptr_pull_to_fresh="false"-->
-    <!--cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"-->
-    <!--cube_ptr:ptr_resistance="1.6">-->
-
-    <!--<in.srain.cube.views.ptr.loadmore.LoadMoreRecycleViewContainer-->
-    <!--android:id="@+id/welfare_load_more"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@color/cube_mints_white">-->
-
-    <!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/meizi_recycler_view"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--/>-->
-    <!--</in.srain.cube.views.ptr.loadmore.LoadMoreRecycleViewContainer>-->
-    <!--</in.srain.cube.views.ptr.PtrClassicFrameLayout>-->
-
 </RelativeLayout>

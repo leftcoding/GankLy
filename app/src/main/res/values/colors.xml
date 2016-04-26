@@ -13,10 +13,11 @@
     <color name="text_555555">#ff555555</color>
 
     <color name="color_2f">#2f2f2f</color>
+    <color name="Blue">#55a5e3</color>
 
 
     <!--  jianshu   -->
-    <color name="Blue">#55a5e3</color>
+
     <color name="Blue_translucent">#5555a5e3</color>
     <color name="a2_black_color">#2a2a2a</color>
     <color name="abc_search_url_text_normal">#7fa87f</color>

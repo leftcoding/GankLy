@@ -44,7 +44,8 @@
         <activity
             android:name=".ui.web.WebActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".ui.collect.CollectActivity"
             android:launchMode="singleTask"
@@ -54,6 +55,11 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BrowseThemeBase"
+            />
+        <activity
+            android:name=".ui.web.WebVideoViewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
             />
         <!--ShareSdk -->
         <activity
