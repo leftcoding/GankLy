@@ -17,13 +17,14 @@ import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.MeiZiOnClick;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiRecyclerAdapter.MeiZiOnClick {
+public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -54,14 +55,6 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         setRetainInstance(true);
         setHasOptionsMenu(true);
     }
-
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.fragment_meizi, container, false);
-//        ButterKnife.bind(this, view);
-//        return view;
-//    }
 
     private void parseArguments() {
     }

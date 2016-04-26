@@ -1,12 +1,12 @@
 package com.gank.gankly.ui.main;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -23,10 +23,12 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import rx.Subscriber;
 
-public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener {
+/**
+ * Create by LingYan on 2016-4-26
+ */
+public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiOnClick {
     private static final int mLimit = 20;
     private static final String TYPE = "curType";
 
@@ -48,7 +50,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void onAttach(Activity context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (MainActivity) context;
     }
@@ -78,9 +80,26 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     protected void initViews() {
         mResults = new ArrayList<>();
-        mGankAdapter = new GankAdapter(mActivity);
+        mGankAdapter = new GankAdapter();
+        mGankAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mGankAdapter);
         initRecycler();
+    }
+
+    @Override
+    protected void bindLister() {
+
+    }
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_meizi;
+    }
+
+    @Override
+    protected void initDate() {
+        onDownRefresh();
     }
 
     private void initRecycler() {
@@ -90,7 +109,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mLastPosition + 1 == mGankAdapter.getItemCount() ) {
+                        && mLastPosition + 1 == mGankAdapter.getItemCount() && !mSwipeRefreshLayout.isRefreshing()) {
                     mSwipeRefreshLayout.setRefreshing(true);
                     fetchDate();
                 }
@@ -106,29 +125,9 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
-    @Override
-    protected void bindLister() {
-
-    }
-
-    @Override
-    protected void initDate() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onDownRefresh();
-            }
-        }, 150);
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_meizi;
-    }
-
 
     private void onDownRefresh() {
-//        mSwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(true);
         mPage = 1;
         fetchDate();
     }
@@ -139,14 +138,14 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
                 GankRetrofit.getInstance().fetchAndroid(mLimit, mPage, new Subscriber<GankResult>() {
                     @Override
                     public void onCompleted() {
-//                mSwipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                         mPage = mPage + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e("e:" + e.toString() + "," + e);
-//                mSwipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -171,14 +170,14 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
                 GankRetrofit.getInstance().fetchIos(mLimit, mPage, new Subscriber<GankResult>() {
                     @Override
                     public void onCompleted() {
-//                mSwipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                         mPage = mPage + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e("e:" + e.toString() + "," + e);
-//                mSwipeRefreshLayout.setRefreshing(false);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     @Override
@@ -204,14 +203,6 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         }
     }
 
-    @OnItemClick(R.id.recycler_view)
-    void onItemClick(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putString("title", mResults.get(position).getDesc());
-        bundle.putString("url", mResults.get(position).getUrl());
-        WebActivity.startWebActivity(mActivity, bundle);
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -229,5 +220,14 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         onDownRefresh();
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        KLog.d("onItemClick");
+        Bundle bundle = new Bundle();
+        bundle.putString("title", mResults.get(position).getDesc());
+        bundle.putString("url", mResults.get(position).getUrl());
+        WebActivity.startWebActivity(mActivity, bundle);
     }
 }

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -24,13 +23,10 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        KLog.d("--getItem--:" + position);
         if (position == 2) {
             return MeiZiFragment.newInstance();
-        } else if (position == 1) {
-            return WelfareFragment.newInstance(titles.get(position));
         }
-        return WFragment.newInstance(titles.get(position));
+        return WelfareFragment.newInstance(titles.get(position));
     }
 
     @Override

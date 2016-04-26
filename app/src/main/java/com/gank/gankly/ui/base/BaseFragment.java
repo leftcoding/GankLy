@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.socks.library.KLog;
-
 import butterknife.ButterKnife;
 
 
@@ -26,13 +24,11 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        KLog.d("getLayoutId()" + getLayoutId());
         return inflater.inflate(getLayoutId(), container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        KLog.d("");
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
@@ -40,7 +36,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        KLog.d("");
         super.onActivityCreated(savedInstanceState);
         initValues();
         initViews();

@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.main;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -13,7 +13,6 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,17 +27,14 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
-
     @Bind(R.id.main_tabLayout)
     TabLayout mTabLayout;
-
     @Bind(R.id.main_view_pager)
     ViewPager mViewPager;
 
     private GankPagerAdapter mPagerAdapter;
     private MainActivity mActivity;
     private List<String> mTitles;
-
     private static MainFragment sMainFragment;
 
     public static MainFragment getInstance() {
@@ -49,7 +45,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @Override
-    public void onAttach(Activity context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
     }
@@ -84,7 +80,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new WFragment());
+        mList.add(new WelfareFragment());
         mList.add(new WelfareFragment());
         mList.add(new MeiZiFragment());
 
@@ -92,12 +88,10 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         mTitles.add(Constants.ANDROID);
         mTitles.add(Constants.IOS);
         mTitles.add(Constants.WELFRAE);
-        KLog.d("--initValues--");
         mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(), mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
-        KLog.d("addOnPageChangeListener after");
         initTabLayout();
     }
 
