@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.ui.main.MeiZiOnClick;
+import com.gank.gankly.ui.main.RecyclerOnClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdapter.GankViewHolder> {
     private List<ResultsBean> mResults;
-    private MeiZiOnClick mMeiZiOnClick;
+    private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
 
     public VideoRecyclerAdapter(Context context) {
@@ -73,7 +73,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdap
         return mResults;
     }
 
-    public void setOnItemClickListener(MeiZiOnClick onItemClickListener) {
+    public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
         mMeiZiOnClick = onItemClickListener;
     }
 

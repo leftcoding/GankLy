@@ -29,7 +29,7 @@ import rx.Subscriber;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiOnClick {
+public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
     private static final int mLimit = 20;
     private static final String TYPE = "curType";
 

@@ -33,6 +33,11 @@ public class MeiziArrayList {
         mArrayList.addAll(list);
     }
 
+    public void addBeanAndPage(List<ResultsBean> list, int page) {
+        mArrayList.addAll(list);
+        mPage = page;
+    }
+
     public void remove(int position) {
         if (ListUtils.isListEmpty(mArrayList)) return;
         mArrayList.remove(position);

@@ -18,7 +18,7 @@ import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.MeiZiOnClick;
+import com.gank.gankly.ui.main.RecyclerOnClick;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.socks.library.KLog;
 
@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-04-25
  */
-public class VideoFragment extends BaseFragment implements MeiZiOnClick, SwipeRefreshLayout.OnRefreshListener {
+public class VideoFragment extends BaseFragment implements RecyclerOnClick, SwipeRefreshLayout.OnRefreshListener {
     private int mLimit = 20;
     private int mPage;
     private static VideoFragment sVideoFragment;
@@ -207,8 +207,7 @@ public class VideoFragment extends BaseFragment implements MeiZiOnClick, SwipeRe
         if (gankResult != null) {
             int page = MeiziArrayList.getInstance().getPage();
             if (page == 0 || page < mPage) {
-                MeiziArrayList.getInstance().addAll(gankResult.getResults());
-                MeiziArrayList.getInstance().setPage(mPage);
+                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
             }
         }
     }

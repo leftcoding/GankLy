@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  */
 public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder> {
     private List<ResultsBean> mResults;
-    private MeiZiOnClick mMeiZiOnClick;
+    private RecyclerOnClick mMeiZiOnClick;
 
     public GankAdapter() {
         mResults = new ArrayList<>();
@@ -52,7 +52,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(MeiZiOnClick onItemClickListener) {
+    public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
         KLog.d("setOnItemClickListener");
         mMeiZiOnClick = onItemClickListener;
     }

@@ -18,14 +18,14 @@ import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.MeiZiOnClick;
+import com.gank.gankly.ui.main.RecyclerOnClick;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiZiOnClick {
+public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
