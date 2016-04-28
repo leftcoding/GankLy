@@ -12,10 +12,12 @@
     <color name="text_999999">#ff999999</color>
     <color name="text_555555">#ff555555</color>
 
-    <color name="color_2f">#2f2f2f</color>
+    <color name="color_2f">#ff2f2f2f</color>
     <color name="Blue">#55a5e3</color>
-
-
+    <color name="book_item_divider">#112f2f2f</color>
+    <color name="book_item_name">#ff00A0DC</color>
+    <color name="book_item_title">#ff494949</color>
+    <color name="book_recycler_item_bg">#ffe5e5e5</color>
     <!--  jianshu   -->
 
     <color name="Blue_translucent">#5555a5e3</color>

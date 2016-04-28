@@ -1,5 +1,7 @@
 package com.gank.gankly.bean;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 public class ResultsBean implements Serializable{
@@ -87,6 +89,9 @@ public class ResultsBean implements Serializable{
         }
 
         public String getWho() {
+            if(TextUtils.isEmpty(who)){
+                return "网页";
+            }
             return who;
         }
 

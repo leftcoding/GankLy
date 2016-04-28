@@ -63,7 +63,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         int p = MeiziArrayList.getInstance().size() - 5;
         if (position == p) {
             if (isLoadMore) {
-                fetchDate(mPage);
+                fetchDate();
             }
         }
     }
@@ -75,8 +75,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         }
     }
 
-    private void fetchDate(int page) {
-        GankRetrofit.getInstance().fetchWelfare(mLimit, page, new Subscriber<GankResult>() {
+    private void fetchDate() {
+        GankRetrofit.getInstance().fetchWelfare(mLimit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mPage = mPage + 1;
@@ -158,10 +158,11 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
         @Override
         public Fragment getItem(int position) {
-            mPosition = position;
             ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
             return BrowseFragment.newInstance(bean.getUrl());
         }
+
+
 
     }
 

@@ -81,7 +81,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     protected void initViews() {
         mResults = new ArrayList<>();
-        mGankAdapter = new GankAdapter();
+        mGankAdapter = new GankAdapter(mActivity);
         mGankAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mGankAdapter);
         initRecycler();
@@ -105,6 +105,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void initRecycler() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+//        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

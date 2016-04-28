@@ -25,6 +25,7 @@ import android.widget.ImageView;
 
 /**
  * 固定图片大小
+ * pick from drakeet https://github.com/drakeet
  * Create by LingYan on 2016-4-19
  */
 public class RatioImageView extends ImageView {

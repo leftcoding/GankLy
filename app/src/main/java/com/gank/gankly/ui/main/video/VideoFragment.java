@@ -15,12 +15,15 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.MeiziArrayList;
+import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.main.RecyclerOnClick;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.socks.library.KLog;
+
+import java.util.List;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -125,39 +128,6 @@ public class VideoFragment extends BaseFragment implements RecyclerOnClick, Swip
     }
 
     private void fetchVideo() {
-        KLog.d("mPage:" + mPage);
-//        Subscriber<GankResult> subscriber = new Subscriber<GankResult>() {
-//            @Override
-//            public void onCompleted() {
-//                mSwipeRefresh.setRefreshing(false);
-//                mPage = mPage + 1;
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                mSwipeRefresh.setRefreshing(false);
-//                KLog.e(e + "" + e.toString());
-//                Snackbar.make(mCoordinatorLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG).show();
-//            }
-//
-//            @Override
-//            public void onNext(GankResult gankResult) {
-//                if (!gankResult.isEmpty()) {
-//                    if (mPage == 1) {
-//                        mList.clear();
-//                    }
-//                    mList.addAll(gankResult.getResults());
-//                    mVideoRecyclerAdapter.updateItems(mList);
-//                }
-//
-//                if (gankResult.getSize() < mLimit) {
-//                    Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
-//                }
-//            }
-//        };
-
-//        GankRetrofit.getInstance().fetchVideo(mLimit, mPage, subscriber);
-
         final Observable<GankResult> video = GankRetrofit.getInstance()
                 .getGankService().fetchVideo(mLimit, mPage);
         Observable<GankResult> image = GankRetrofit.getInstance()
@@ -173,7 +143,6 @@ public class VideoFragment extends BaseFragment implements RecyclerOnClick, Swip
                 .subscribe(new Subscriber<GankResult>() {
                     @Override
                     public void onCompleted() {
-                        KLog.d("onCompleted");
                         mSwipeRefresh.setRefreshing(false);
                         mPage = mPage + 1;
                     }
@@ -186,7 +155,6 @@ public class VideoFragment extends BaseFragment implements RecyclerOnClick, Swip
 
                     @Override
                     public void onNext(GankResult gankResult) {
-                        KLog.d("onNext");
                         if (!gankResult.isEmpty()) {
                             if (mPage == 1) {
                                 mVideoRecyclerAdapter.clear();
@@ -222,8 +190,9 @@ public class VideoFragment extends BaseFragment implements RecyclerOnClick, Swip
     @Override
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", mVideoRecyclerAdapter.getResults().get(position).getDesc());
-        bundle.putString("url", mVideoRecyclerAdapter.getResults().get(position).getUrl());
+        List<ResultsBean> list = mVideoRecyclerAdapter.getResults();
+        bundle.putString("title", list.get(position).getDesc());
+        bundle.putString("url", list.get(position).getUrl());
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
     }
 

@@ -9,18 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.ui.main.RecyclerOnClick;
+import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 视频
  * Create by LingYan on 2016-04-25
  */
 public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdapter.GankViewHolder> {
@@ -44,12 +48,14 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdap
         ResultsBean bean = mResults.get(position);
         holder.position = position;
         holder.txtDesc.setText(bean.getDesc());
-        holder.txtTime.setText(bean.getPublishedAt());
-        holder.txtWho.setText(bean.getWho());
+        Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
+        holder.txtTime.setText(App.getAppResources().getString(R.string.item_date_author,
+                bean.getWho(), DateUtils.getFormatDateStr(date)));
 
         Glide.with(mContext)
                 .load(MeiziArrayList.getInstance().getArrayList().get(position).getUrl())
                 .asBitmap()
+                .fitCenter()
                 .into(holder.mImageView);
     }
 
@@ -82,8 +88,6 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdap
         TextView txtDesc;
         @Bind(R.id.goods_txt_author_time)
         TextView txtTime;
-        @Bind(R.id.goods_txt_author)
-        TextView txtWho;
         @Bind(R.id.goods_img_bg)
         ImageView mImageView;
         int position;

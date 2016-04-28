@@ -22,7 +22,6 @@
     <string name="collect_success">收藏成功</string>
 
     <string name="meizi_save">保存</string>
-    <string name="meizi_more">更多</string>
     <string name="meizi_picture_save_path">保存图片路径:%s</string>
 
     <string name="web_refresh">刷新</string>
@@ -30,7 +29,12 @@
     <string name="web_open_browser">用浏览器打开</string>
     <string name="web_open_failed">浏览器打开失败</string>
 
+    <!-- tips -->
     <string name="tip_copy_success">复制成功</string>
     <string name="tip_server_error">服务器加载失败，妹子不来了</string>
-    <string name="tip_no_more_load">所有妹子都呈现在你眼睛了，没有更多</string>
+    <string name="tip_no_more_load">所有妹子都呈现在你眼前了</string>
+
+    <!-- item -->
+    <string name="item_date_author">图：%1$s on %2$s</string>
+    <string name="item_book_author">%1$s on %2$s</string>
 </resources>

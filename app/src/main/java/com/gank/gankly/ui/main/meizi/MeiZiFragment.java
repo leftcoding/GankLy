@@ -20,6 +20,7 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.main.RecyclerOnClick;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,7 +91,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     private void onDownRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
         mPage = 1;
-        fetchDate(mPage);
+        fetchDate();
     }
 
     private void initRecycler() {
@@ -110,8 +111,8 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
-    private void fetchDate(int page) {
-        GankRetrofit.getInstance().fetchWelfare(mLimit, page, new Subscriber<GankResult>() {
+    private void fetchDate() {
+        GankRetrofit.getInstance().fetchWelfare(mLimit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -120,6 +121,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
 
@@ -129,7 +131,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                     if (mPage == 1) {
                         MeiziArrayList.getInstance().clear();
                     }
-                    MeiziArrayList.getInstance().addAll(gankResult.getResults());
+                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
                 }
                 if (gankResult.getSize() < mLimit) {
                     isLoadMore = false;
@@ -171,7 +173,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         for (int position : positions) {
             if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !mSwipeRefreshLayout.isRefreshing()) {
                 mSwipeRefreshLayout.setRefreshing(true);
-                fetchDate(mPage);
+                fetchDate();
                 break;
             }
         }
