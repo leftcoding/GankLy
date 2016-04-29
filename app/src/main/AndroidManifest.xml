@@ -61,6 +61,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             />
+
         <!--ShareSdk -->
         <activity
             android:name="com.mob.tools.MobUIShell"

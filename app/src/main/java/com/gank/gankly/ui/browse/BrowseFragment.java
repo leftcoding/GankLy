@@ -27,19 +27,6 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
         this.mActivity = (BrowseActivity) context;
     }
 
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//    }
-
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        View rootView = inflater.inflate(R.layout.fragment_browse_picture, container, false);
-//        ButterKnife.bind(this, rootView);
-//        return rootView;
-//    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

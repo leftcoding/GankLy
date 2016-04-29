@@ -81,7 +81,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new WelfareFragment());
-        mList.add(new WelfareFragment());
+        mList.add(new IosFragment());
         mList.add(new MeiZiFragment());
 
         mTitles = new ArrayList<>();

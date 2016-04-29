@@ -12,8 +12,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:background="?attr/selectableItemBackground"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -24,9 +24,9 @@
                 android:id="@+id/goods_img_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@null"
                 android:scaleType="centerCrop"
-                android:src="@drawable/item_default_img"
-                android:contentDescription="@null"/>
+                android:src="@drawable/item_default_img"/>
 
         </RelativeLayout>
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -52,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/goods_txt_title"
-                android:gravity="center_vertical"
-                >
+                android:gravity="center_vertical">
+
                 <TextView
                     android:id="@+id/goods_txt_author_time"
                     android:layout_width="match_parent"

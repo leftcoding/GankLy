@@ -14,12 +14,12 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.RecyclerOnClick;
+import com.gank.gankly.ui.main.MeiziOnClick;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.socks.library.KLog;
 
@@ -35,7 +35,7 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-04-25
  */
-public class VideoFragment extends BaseFragment implements RecyclerOnClick, SwipeRefreshLayout.OnRefreshListener {
+public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener {
     private int mLimit = 20;
     private int mPage;
     private static VideoFragment sVideoFragment;
@@ -167,8 +167,6 @@ public class VideoFragment extends BaseFragment implements RecyclerOnClick, Swip
                         }
                     }
                 });
-
-
     }
 
     private void addImages(GankResult gankResult) {

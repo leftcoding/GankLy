@@ -1,5 +1,7 @@
-package com.gank.gankly.bean;
+package com.gank.gankly.config;
 
+import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.utils.ListUtils;
 
 import java.util.ArrayList;
@@ -68,5 +70,23 @@ public class MeiziArrayList {
             return null;
         }
         return mArrayList.get(position);
+    }
+
+    public void setArrayList(GankResult result, int page) {
+        if (result == null) return;
+        List<ResultsBean> list = result.getResults();
+        if (!ListUtils.isListEmpty(list)) {
+            if (mPage == 0 || mPage < page) {
+                addBeanAndPage(list, page);
+            }
+        }
+    }
+
+    public void setArrayListSort(List<ResultsBean> list, int page) {
+        if (!ListUtils.isListEmpty(list)) {
+            if (mPage == 0 || mPage < page) {
+                addBeanAndPage(list, page);
+            }
+        }
     }
 }

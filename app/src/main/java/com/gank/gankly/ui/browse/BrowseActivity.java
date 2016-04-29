@@ -15,12 +15,13 @@ import android.view.animation.DecelerateInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ToastUtils;
+import com.gank.gankly.widget.DepthPageTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -128,6 +129,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
         mPagerAdapter = new PagerAdapter();
         mViewPager.setAdapter(mPagerAdapter);
+//        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.setCurrentItem(mPosition);
         mViewPager.addOnPageChangeListener(this);
@@ -161,9 +164,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
             return BrowseFragment.newInstance(bean.getUrl());
         }
-
-
-
     }
 
     @Override
@@ -233,5 +233,11 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         } else {
             showSystemUi();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        overridePendingTransition( R.anim.alpha_in,R.anim.alpha_out);
     }
 }

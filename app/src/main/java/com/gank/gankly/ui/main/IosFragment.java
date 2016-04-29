@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +19,8 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.socks.library.KLog;
 
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
@@ -31,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
+public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
     private static final int mLimit = 20;
     private static final String TYPE = "curType";
 
@@ -41,13 +42,13 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     private MainActivity mActivity;
-    private GankAdapter mGankAdapter;
+    private GankAdapter mRecyclerAdapter;
 
     private int mPage = 1;
     private int mLastPosition;
     private boolean isLoadMore = true;
 
-    public WelfareFragment() {
+    public IosFragment() {
 
     }
 
@@ -66,6 +67,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void parseArguments() {
+
     }
 
     @Override
@@ -75,8 +77,9 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initViews() {
-        mGankAdapter = new GankAdapter(mActivity);
-        mGankAdapter.setOnItemClickListener(this);
+        mRecyclerAdapter = new GankAdapter(mActivity);
+        mRecyclerAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mRecyclerAdapter);
         initRecycler();
     }
 
@@ -98,15 +101,12 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void initRecycler() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setAdapter(mGankAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mLastPosition + 1 == mGankAdapter.getItemCount() && !mSwipeRefreshLayout.isRefreshing()) {
+                        && mLastPosition + 1 == mRecyclerAdapter.getItemCount() && !mSwipeRefreshLayout.isRefreshing()) {
                     if (isLoadMore) {
                         mSwipeRefreshLayout.setRefreshing(true);
                         fetchDate();
@@ -133,14 +133,15 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void fetchDate() {
         final Observable<GankResult> video = GankRetrofit.getInstance()
-                .getGankService().fetchAndroidGoods(mLimit, mPage);
+                .getGankService().fetchIosGoods(mLimit, mPage);
         Observable<GankResult> image = GankRetrofit.getInstance()
                 .getGankService().fetchBenefitsGoods(mLimit, mPage);
 
         Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
             @Override
             public GankResult call(GankResult gankResult, GankResult gankResult2) {
-                MeiziArrayList.getInstance().setArrayList(gankResult2, mPage);
+                List<ResultsBean> objs = gankResult2.getResults();
+                MeiziArrayList.getInstance().setArrayListSort(objs, mPage);
                 return gankResult;
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -169,9 +170,9 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
                     public void onNext(GankResult gankResult) {
                         if (!gankResult.isEmpty()) {
                             if (mPage == 1) {
-                                mGankAdapter.clear();
+                                mRecyclerAdapter.clear();
                             }
-                            mGankAdapter.updateItems(gankResult.getResults());
+                            mRecyclerAdapter.updateItems(gankResult.getResults());
                         }
 
                         if (gankResult.getSize() < mLimit) {
@@ -187,8 +188,8 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         ButterKnife.unbind(this);
     }
 
-    public static WelfareFragment newInstance() {
-        WelfareFragment fragment = new WelfareFragment();
+    public static IosFragment newInstance() {
+        IosFragment fragment = new IosFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

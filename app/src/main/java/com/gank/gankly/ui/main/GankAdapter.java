@@ -10,11 +10,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.utils.DateUtils;
 import com.gank.gankly.widget.RatioImageView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     private List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
+
 
     public GankAdapter(Context context) {
         mResults = new ArrayList<>();
@@ -43,14 +45,26 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     @Override
     public void onBindViewHolder(GankViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
-        holder.position = position;
+        holder.mBean = bean;
         holder.txtDesc.setText(bean.getDesc());
 
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtName.setText(bean.getWho());
         holder.txtTime.setText(DateUtils.getFormatDateStr(date));
         holder.txtFrom.setText(bean.getSource());
-        Glide.with(mContext).load(R.drawable.item_left_img).centerCrop().into(holder.img);
+        int size = MeiziArrayList.getInstance().getArrayList().size();
+        if (position > size) {
+            position = position % size;
+        }
+
+        List<ResultsBean> list = MeiziArrayList.getInstance().getArrayList();
+        Collections.shuffle(list);
+        if (position < size) {
+            Glide.with(mContext)
+                    .load(list.get(position).getUrl())
+                    .centerCrop()
+                    .into(holder.img);
+        }
     }
 
     @Override
@@ -59,12 +73,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     public void updateItems(List<ResultsBean> results) {
-        mResults = results;
-        notifyDataSetChanged();
+        mResults.addAll(results);
+        notifyItemInserted(mResults.size());
+    }
+
+    public void clear() {
+        if (mResults != null) {
+            mResults.clear();
+        }
     }
 
     public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
-        KLog.d("setOnItemClickListener");
         mMeiZiOnClick = onItemClickListener;
     }
 
@@ -79,19 +98,18 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         TextView txtFrom;
         @Bind(R.id.ri_img)
         RatioImageView img;
-        int position;
+        ResultsBean mBean;
 
         public GankViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
-//            img.setOriginalSize(51,53);
         }
 
         @Override
         public void onClick(View v) {
             if (mMeiZiOnClick != null) {
-                mMeiZiOnClick.onClick(v, position);
+                mMeiZiOnClick.onClick(v, mBean);
             }
         }
     }

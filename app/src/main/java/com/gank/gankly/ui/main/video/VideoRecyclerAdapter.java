@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.MeiziArrayList;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.ui.main.RecyclerOnClick;
+import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.ui.main.MeiziOnClick;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
  */
 public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdapter.GankViewHolder> {
     private List<ResultsBean> mResults;
-    private RecyclerOnClick mMeiZiOnClick;
+    private MeiziOnClick mMeiZiOnClick;
     private Context mContext;
 
     public VideoRecyclerAdapter(Context context) {
@@ -52,11 +52,17 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdap
         holder.txtTime.setText(App.getAppResources().getString(R.string.item_date_author,
                 bean.getWho(), DateUtils.getFormatDateStr(date)));
 
-        Glide.with(mContext)
-                .load(MeiziArrayList.getInstance().getArrayList().get(position).getUrl())
-                .asBitmap()
-                .fitCenter()
-                .into(holder.mImageView);
+        int size = MeiziArrayList.getInstance().getArrayList().size();
+        if (position > size) {
+            position = position % size;
+        }
+        if (position < size) {
+            Glide.with(mContext)
+                    .load(MeiziArrayList.getInstance().getArrayList().get(position).getUrl())
+                    .asBitmap()
+                    .fitCenter()
+                    .into(holder.mImageView);
+        }
     }
 
     @Override
@@ -79,7 +85,7 @@ public class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdap
         return mResults;
     }
 
-    public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
+    public void setOnItemClickListener(MeiziOnClick onItemClickListener) {
         mMeiZiOnClick = onItemClickListener;
     }
 

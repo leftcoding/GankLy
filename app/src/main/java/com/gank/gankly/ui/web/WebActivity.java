@@ -70,11 +70,9 @@ public class WebActivity extends BaseActivity {
             // 这些视频需要hack CSS才能达到全屏播放的效果
             if (url.contains("www.vmovier.com")) {
                 injectCSS("vmovier.css");
-            }
-            else if (url.contains("video.weibo.com")) {
+            } else if (url.contains("video.weibo.com")) {
                 injectCSS("weibo.css");
-            }
-            else if (url.contains("m.miaopai.com")) {
+            } else if (url.contains("m.miaopai.com")) {
                 injectCSS("miaopai.css");
             }
         }
@@ -228,7 +226,8 @@ public class WebActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         ActionBar bar = getSupportActionBar();
         if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
+            bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
+            bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

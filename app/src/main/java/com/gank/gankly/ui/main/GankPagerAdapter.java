@@ -23,10 +23,14 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 2) {
-            return MeiZiFragment.newInstance();
+        switch (position) {
+            case 1:
+                return IosFragment.newInstance();
+            case 2:
+                return MeiZiFragment.newInstance();
+            default:
+                return WelfareFragment.newInstance();
         }
-        return WelfareFragment.newInstance(titles.get(position));
     }
 
     @Override

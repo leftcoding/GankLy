@@ -13,20 +13,19 @@ import android.view.View;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.MeiziArrayList;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.RecyclerOnClick;
-import com.gank.gankly.utils.ToastUtils;
+import com.gank.gankly.ui.main.MeiziOnClick;
 import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 
-public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
+public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -135,7 +134,6 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                 }
                 if (gankResult.getSize() < mLimit) {
                     isLoadMore = false;
-                    ToastUtils.longBottom(R.string.loading_pic_no_more);
                     Snackbar.make(mRecyclerView, R.string.loading_pic_no_more, Snackbar.LENGTH_LONG).show();
                 }
 
@@ -193,5 +191,4 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
         intent.putExtras(bundle);
         mActivity.startActivity(intent);
     }
-
 }

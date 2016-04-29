@@ -13,6 +13,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
         <LinearLayout
@@ -23,14 +24,16 @@
             <com.gank.gankly.widget.RatioImageView
                 android:id="@+id/ri_img"
                 android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignParentLeft="true"/>
+                android:layout_height="120dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:padding="5dp">
+                android:paddingBottom="0dp"
+                android:paddingEnd="5dp"
+                android:paddingStart="5dp"
+                android:paddingTop="5dp">
 
                 <TextView
                     android:id="@+id/goods_txt_title"
@@ -44,25 +47,37 @@
                     android:textColor="@color/book_item_title"
                     android:textSize="16sp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="5dp">
+                    android:paddingEnd="5dp"
+                    android:paddingStart="5dp">
+
+                    <TextView
+                        android:id="@+id/goods_txt_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/book_time"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textSize="13sp"/>
 
                     <TextView
                         android:id="@+id/goods_txt_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/book_browser"
+                        android:layout_alignParentEnd="true"
                         android:drawablePadding="5dp"
+                        android:drawableStart="@drawable/book_browser"
+                        android:ellipsize="end"
+                        android:maxLines="1"
                         android:text=""
                         android:textSize="13sp"/>
-                </LinearLayout>
 
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -82,13 +97,6 @@
                 android:text=""
                 android:textColor="@color/book_item_name"
                 android:textSize="15sp"/>
-
-            <TextView
-                android:id="@+id/goods_txt_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:text=""/>
         </LinearLayout>
     </LinearLayout>
 

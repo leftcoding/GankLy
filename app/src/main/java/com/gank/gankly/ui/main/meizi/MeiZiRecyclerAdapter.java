@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.ui.main.RecyclerOnClick;
+import com.gank.gankly.ui.main.MeiziOnClick;
 import com.gank.gankly.widget.RatioImageView;
 
 import java.util.ArrayList;
@@ -28,10 +28,10 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private Activity mContext;
     private LayoutInflater inflater;
 
-    private RecyclerOnClick mMeiZiOnClick;
+    private MeiziOnClick mMeiZiOnClick;
 
 
-    public void setMeiZiOnClick(RecyclerOnClick meiZiOnClick) {
+    public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
         mMeiZiOnClick = meiZiOnClick;
     }
 
@@ -55,7 +55,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         Glide.with(mContext)
                 .load(bean.getUrl())
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imgMeizi);
     }
