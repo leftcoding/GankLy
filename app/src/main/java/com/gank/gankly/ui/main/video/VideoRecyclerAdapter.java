@@ -13,7 +13,7 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.ui.main.MeiziOnClick;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;

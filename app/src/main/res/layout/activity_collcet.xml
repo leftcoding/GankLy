@@ -15,7 +15,7 @@
 
         <include layout="@layout/item_head"/>
 
-        <include layout="@layout/fragment_welfare"/>
+        <include layout="@layout/fragment_meizi"/>
     </LinearLayout>
 
     <include

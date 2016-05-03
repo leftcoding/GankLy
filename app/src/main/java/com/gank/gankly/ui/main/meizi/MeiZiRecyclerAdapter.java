@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.ui.main.MeiziOnClick;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.widget.RatioImageView;
 
 import java.util.ArrayList;

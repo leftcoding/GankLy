@@ -14,6 +14,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;

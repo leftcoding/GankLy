@@ -18,7 +18,7 @@ import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.MeiziOnClick;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.socks.library.KLog;
 
 import butterknife.Bind;

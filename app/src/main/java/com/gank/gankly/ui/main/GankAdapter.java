@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
 import com.gank.gankly.widget.RatioImageView;
 

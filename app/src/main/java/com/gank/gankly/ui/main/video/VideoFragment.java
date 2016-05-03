@@ -19,7 +19,7 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.MeiziOnClick;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.socks.library.KLog;
 
