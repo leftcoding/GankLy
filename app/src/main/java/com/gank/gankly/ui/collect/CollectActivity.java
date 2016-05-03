@@ -1,5 +1,7 @@
 package com.gank.gankly.ui.collect;
 
+import android.os.Handler;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +17,7 @@ import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.DeleteDialog;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
@@ -37,17 +39,15 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     @Bind(R.id.collect_main)
     View mMain;
 
+    private static final int M_LIMIT = 10;
+
     private UrlCollectDao mUrlCollectDao;
     private CollectAdapter mCollectAdapter;
     private List<UrlCollect> mList;
     private int mLostPosition;
-
     private int mPage = 0;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient mClient;
+    private boolean isLoadMore = true;
+
 
     //    @OnItemClick(R.id.recycler_view)
     void onItemClick(int position) {
@@ -113,11 +113,19 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     protected void initViews() {
         mCollectAdapter = new CollectAdapter(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new RecycleViewDivider(this, R.drawable.shape_item_divider));
         mRecyclerView.setAdapter(mCollectAdapter);
+        mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
         updateDate();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showListView();
+            }
+        }, 500);
     }
 
     @Override
@@ -128,7 +136,10 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && mLostPosition + 1 == mCollectAdapter.getItemCount()
                         && !mSwipeRefreshLayout.isRefreshing()) {
-                    updateDate();
+                    if (isLoadMore) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        updateDate();
+                    }
                 }
             }
 
@@ -154,18 +165,26 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     public void updateDate() {
         mList = queryData();
         if (!ListUtils.isListEmpty(mList)) {
-            showListView();
+            if (mPage == 0) {
+
+            }
             mCollectAdapter.updateItems(mList);
+            mPage = mPage + 1;
+            int size = mList.size();
+            if (size < M_LIMIT) {
+                isLoadMore = false;
+                Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
+            }
         }
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     private List<UrlCollect> queryData() {
-        mPage = mPage + 1;
+        int offSet = mPage * M_LIMIT;
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
-        queryBuilder.limit(10).offset(1);
+        queryBuilder.offset(offSet).limit(M_LIMIT);
         return queryBuilder.list();
     }
 

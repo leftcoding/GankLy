@@ -75,6 +75,8 @@ public class MainActivity extends BaseActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_collect:
                         startActivity(new Intent(MainActivity.this, CollectActivity.class));
+                        menuItem.setChecked(false);
+                        menuItem.setCheckable(false);
                         break;
                     case R.id.navigation_video:
                         fragmentTo = VideoFragment.getInstance();
@@ -85,7 +87,6 @@ public class MainActivity extends BaseActivity {
                     default:
                         break;
                 }
-                menuItem.setChecked(true); // 改变item选中状态
                 switchFragment(fragmentTo);
                 return true;
             }

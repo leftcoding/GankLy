@@ -8,6 +8,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ *
+ * Create by LingYan on 2016/5/3
+ */
 public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
