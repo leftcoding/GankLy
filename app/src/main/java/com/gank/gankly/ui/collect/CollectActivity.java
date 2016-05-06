@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.collect;
 
-import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -17,6 +16,7 @@ import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.DeleteDialog;
+import com.gank.gankly.widget.LoadingLayoutView;
 import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
@@ -34,10 +34,10 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.collect_loading)
-    View mLoadingView;
     @Bind(R.id.collect_main)
     View mMain;
+    @Bind(R.id.loading_view)
+    LoadingLayoutView mLoadingLayoutView;
 
     private static final int M_LIMIT = 10;
 
@@ -120,16 +120,12 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
         updateDate();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showListView();
-            }
-        }, 500);
     }
 
     @Override
     protected void bindListener() {
+        mLoadingLayoutView.setLoading(this);
+
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -158,7 +154,7 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     }
 
     private void showListView() {
-        mLoadingView.setVisibility(View.GONE);
+        mLoadingLayoutView.setVisibility(View.GONE);
         mMain.setVisibility(View.VISIBLE);
     }
 
@@ -166,7 +162,7 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
         mList = queryData();
         if (!ListUtils.isListEmpty(mList)) {
             if (mPage == 0) {
-
+                mCollectAdapter.clear();
             }
             mCollectAdapter.updateItems(mList);
             mPage = mPage + 1;
@@ -177,6 +173,7 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
             }
         }
         mSwipeRefreshLayout.setRefreshing(false);
+        showListView();
     }
 
     private List<UrlCollect> queryData() {
@@ -197,4 +194,5 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     public void onStop() {
         super.onStop();
     }
+
 }

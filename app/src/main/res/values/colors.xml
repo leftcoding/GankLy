@@ -7,6 +7,7 @@
     <color name="home_bottom_bg">#ffffffff</color>
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
+    <color name="transparent">#00000000</color>
 
     <color name="text_default">#ff2F2F2F</color>
     <color name="text_999999">#ff999999</color>
@@ -21,6 +22,8 @@
     <color name="book_recycler_item_bg">#ffe5e5e5</color>
 
     <color name="collect_item_title">#323232</color>
+
+    <color name="standard_text_color_blue_a">#3b77b4</color>
 
     <!--  jianshu   -->
 

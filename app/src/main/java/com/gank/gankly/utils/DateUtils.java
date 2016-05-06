@@ -19,6 +19,14 @@ public class DateUtils {
         return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
     }
 
+    public static String getFormatDate(final Date date) {
+        if (null == date) {
+            return null;
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        return sdf.format(date);
+    }
+
     public static Date formatDateFromStr(final String dateStr) {
         Date date = new Date();
         if (!TextUtils.isEmpty(dateStr)) {
