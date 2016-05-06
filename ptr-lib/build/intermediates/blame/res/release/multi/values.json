@@ -1,0 +1,1157 @@
+[
+    {
+        "outputFile": "E:\\GankLy\\ptr-lib\\build\\intermediates\\res\\merged\\release\\values\\values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 6,
+                    "endColumn": 19,
+                    "endOffset": 218
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_photo_strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 435,
+                        "endLine": 10,
+                        "endColumn": 19,
+                        "endOffset": 598
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 7,
+                    "startColumn": 4,
+                    "startOffset": 223,
+                    "endColumn": 49,
+                    "endOffset": 268
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 49,
+                        "endOffset": 100
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 8,
+                    "startColumn": 4,
+                    "startOffset": 273,
+                    "endColumn": 47,
+                    "endOffset": 316
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 105,
+                        "endColumn": 47,
+                        "endOffset": 148
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 9,
+                    "startColumn": 4,
+                    "startOffset": 321,
+                    "endColumn": 57,
+                    "endOffset": 374
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 38,
+                        "startColumn": 4,
+                        "startOffset": 1641,
+                        "endColumn": 57,
+                        "endOffset": 1694
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 379,
+                    "endColumn": 55,
+                    "endOffset": 430
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 26,
+                        "startColumn": 4,
+                        "startOffset": 1058,
+                        "endColumn": 55,
+                        "endOffset": 1109
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 11,
+                    "startColumn": 4,
+                    "startOffset": 435,
+                    "endColumn": 56,
+                    "endOffset": 487
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 20,
+                        "startColumn": 4,
+                        "startOffset": 768,
+                        "endColumn": 56,
+                        "endOffset": 820
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 12,
+                    "startColumn": 4,
+                    "startOffset": 492,
+                    "endColumn": 56,
+                    "endOffset": 544
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 28,
+                        "startColumn": 4,
+                        "startOffset": 1154,
+                        "endColumn": 56,
+                        "endOffset": 1206
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 13,
+                    "startColumn": 4,
+                    "startOffset": 549,
+                    "endColumn": 57,
+                    "endOffset": 602
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 22,
+                        "startColumn": 4,
+                        "startOffset": 866,
+                        "endColumn": 57,
+                        "endOffset": 919
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 14,
+                    "startColumn": 4,
+                    "startOffset": 607,
+                    "endColumn": 57,
+                    "endOffset": 660
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 36,
+                        "startColumn": 4,
+                        "startOffset": 1535,
+                        "endColumn": 57,
+                        "endOffset": 1588
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 15,
+                    "startColumn": 4,
+                    "startOffset": 665,
+                    "endColumn": 58,
+                    "endOffset": 719
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 34,
+                        "startColumn": 4,
+                        "startOffset": 1435,
+                        "endColumn": 58,
+                        "endOffset": 1489
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 16,
+                    "startColumn": 4,
+                    "startOffset": 724,
+                    "endColumn": 52,
+                    "endOffset": 772
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 32,
+                        "startColumn": 4,
+                        "startOffset": 1340,
+                        "endColumn": 52,
+                        "endOffset": 1388
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 17,
+                    "startColumn": 4,
+                    "startOffset": 777,
+                    "endColumn": 54,
+                    "endOffset": 827
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 30,
+                        "startColumn": 4,
+                        "startOffset": 1249,
+                        "endColumn": 54,
+                        "endOffset": 1299
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 18,
+                    "startColumn": 4,
+                    "startOffset": 832,
+                    "endColumn": 55,
+                    "endOffset": 883
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_colors_holo.xml",
+                    "position": {
+                        "startLine": 24,
+                        "startColumn": 4,
+                        "startOffset": 963,
+                        "endColumn": 55,
+                        "endOffset": 1014
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 19,
+                    "startColumn": 4,
+                    "startOffset": 888,
+                    "endColumn": 51,
+                    "endOffset": 935
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 107,
+                        "endColumn": 51,
+                        "endOffset": 154
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 20,
+                    "startColumn": 4,
+                    "startOffset": 940,
+                    "endColumn": 51,
+                    "endOffset": 987
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 600,
+                        "endColumn": 51,
+                        "endOffset": 647
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 21,
+                    "startColumn": 4,
+                    "startOffset": 992,
+                    "endColumn": 51,
+                    "endOffset": 1039
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 211,
+                        "endColumn": 51,
+                        "endOffset": 258
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 1044,
+                    "endColumn": 51,
+                    "endOffset": 1091
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 263,
+                        "endColumn": 51,
+                        "endOffset": 310
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 23,
+                    "startColumn": 4,
+                    "startOffset": 1096,
+                    "endColumn": 64,
+                    "endOffset": 1156
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 418,
+                        "endColumn": 64,
+                        "endOffset": 478
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 24,
+                    "startColumn": 4,
+                    "startOffset": 1161,
+                    "endColumn": 60,
+                    "endOffset": 1217
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 483,
+                        "endColumn": 60,
+                        "endOffset": 539
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 25,
+                    "startColumn": 4,
+                    "startOffset": 1222,
+                    "endColumn": 50,
+                    "endOffset": 1268
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 367,
+                        "endColumn": 50,
+                        "endOffset": 413
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 26,
+                    "startColumn": 4,
+                    "startOffset": 1273,
+                    "endColumn": 51,
+                    "endOffset": 1320
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 159,
+                        "endColumn": 51,
+                        "endOffset": 206
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 27,
+                    "startColumn": 4,
+                    "startOffset": 1325,
+                    "endColumn": 51,
+                    "endOffset": 1372
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 315,
+                        "endColumn": 51,
+                        "endOffset": 362
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 28,
+                    "startColumn": 4,
+                    "startOffset": 1377,
+                    "endColumn": 55,
+                    "endOffset": 1428
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 544,
+                        "endColumn": 55,
+                        "endOffset": 595
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 29,
+                    "startColumn": 4,
+                    "startOffset": 1433,
+                    "endColumn": 50,
+                    "endOffset": 1479
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_colors.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endColumn": 50,
+                        "endOffset": 102
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 30,
+                    "startColumn": 4,
+                    "startOffset": 1484,
+                    "endColumn": 45,
+                    "endOffset": 1525
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 153,
+                        "endColumn": 45,
+                        "endOffset": 194
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 31,
+                    "startColumn": 4,
+                    "startOffset": 1530,
+                    "endColumn": 53,
+                    "endOffset": 1579
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 199,
+                        "endColumn": 53,
+                        "endOffset": 248
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 39,
+                    "startColumn": 4,
+                    "startOffset": 3490,
+                    "endColumn": 57,
+                    "endOffset": 3543
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 253,
+                        "endColumn": 57,
+                        "endOffset": 306
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 40,
+                    "startColumn": 4,
+                    "startOffset": 3548,
+                    "endColumn": 55,
+                    "endOffset": 3599
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 311,
+                        "endColumn": 55,
+                        "endOffset": 362
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 41,
+                    "startColumn": 4,
+                    "startOffset": 3604,
+                    "endColumn": 64,
+                    "endOffset": 3664
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_dimens.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 111,
+                        "endColumn": 64,
+                        "endOffset": 171
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 3669,
+                    "endColumn": 55,
+                    "endOffset": 3720
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_dimens.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 55,
+                        "endOffset": 106
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 43,
+                    "startColumn": 4,
+                    "startOffset": 3725,
+                    "endColumn": 74,
+                    "endOffset": 3795
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 327,
+                        "endColumn": 74,
+                        "endOffset": 397
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 44,
+                    "startColumn": 4,
+                    "startOffset": 3800,
+                    "endColumn": 75,
+                    "endOffset": 3871
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 402,
+                        "endColumn": 75,
+                        "endOffset": 473
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 45,
+                    "startColumn": 4,
+                    "startOffset": 3876,
+                    "endColumn": 71,
+                    "endOffset": 3943
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 478,
+                        "endColumn": 71,
+                        "endOffset": 545
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 46,
+                    "startColumn": 4,
+                    "startOffset": 3948,
+                    "endColumn": 65,
+                    "endOffset": 4009
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\build\\intermediates\\exploded-aar\\com.android.support\\recyclerview-v7\\23.2.1\\res\\values\\values.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 550,
+                        "endColumn": 65,
+                        "endOffset": 611
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 47,
+                    "startColumn": 4,
+                    "startOffset": 4014,
+                    "endColumn": 52,
+                    "endOffset": 4062
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 367,
+                        "endColumn": 52,
+                        "endOffset": 415
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 4067,
+                    "endColumn": 51,
+                    "endOffset": 4114
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 420,
+                        "endColumn": 51,
+                        "endOffset": 467
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 49,
+                    "startColumn": 4,
+                    "startOffset": 4119,
+                    "endColumn": 75,
+                    "endOffset": 4190
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_mints_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endColumn": 75,
+                        "endOffset": 127
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 50,
+                    "startColumn": 4,
+                    "startOffset": 4195,
+                    "endColumn": 77,
+                    "endOffset": 4268
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_photo_strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 357,
+                        "endColumn": 77,
+                        "endOffset": 430
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 51,
+                    "startColumn": 4,
+                    "startOffset": 4273,
+                    "endColumn": 97,
+                    "endOffset": 4366
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_photo_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 165,
+                        "endColumn": 97,
+                        "endOffset": 258
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 52,
+                    "startColumn": 4,
+                    "startOffset": 4371,
+                    "endColumn": 109,
+                    "endOffset": 4476
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_photo_strings.xml",
+                    "position": {
+                        "startLine": 2,
+                        "startColumn": 4,
+                        "startOffset": 55,
+                        "endColumn": 109,
+                        "endOffset": 160
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 53,
+                    "startColumn": 4,
+                    "startOffset": 4481,
+                    "endColumn": 93,
+                    "endOffset": 4570
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_photo_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 263,
+                        "endColumn": 93,
+                        "endOffset": 352
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 4575,
+                    "endColumn": 57,
+                    "endOffset": 4628
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 12,
+                        "startColumn": 4,
+                        "startOffset": 605,
+                        "endColumn": 62,
+                        "endOffset": 663
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 55,
+                    "startColumn": 4,
+                    "startOffset": 4633,
+                    "endColumn": 62,
+                    "endOffset": 4691
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 9,
+                        "startColumn": 4,
+                        "startOffset": 400,
+                        "endColumn": 67,
+                        "endOffset": 463
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 56,
+                    "startColumn": 4,
+                    "startOffset": 4696,
+                    "endColumn": 61,
+                    "endOffset": 4753
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 11,
+                        "startColumn": 4,
+                        "startOffset": 537,
+                        "endColumn": 66,
+                        "endOffset": 599
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 57,
+                    "startColumn": 4,
+                    "startOffset": 4758,
+                    "endColumn": 56,
+                    "endOffset": 4810
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 59,
+                        "endColumn": 56,
+                        "endOffset": 111
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 58,
+                    "startColumn": 4,
+                    "startOffset": 4815,
+                    "endColumn": 78,
+                    "endOffset": 4889
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 117,
+                        "endColumn": 78,
+                        "endOffset": 191
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 59,
+                    "startColumn": 4,
+                    "startOffset": 4894,
+                    "endColumn": 62,
+                    "endOffset": 4952
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 334,
+                        "endColumn": 62,
+                        "endOffset": 392
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 60,
+                    "startColumn": 4,
+                    "startOffset": 4957,
+                    "endColumn": 59,
+                    "endOffset": 5012
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 273,
+                        "endColumn": 59,
+                        "endOffset": 328
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 61,
+                    "startColumn": 4,
+                    "startOffset": 5017,
+                    "endColumn": 74,
+                    "endOffset": 5087
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 197,
+                        "endColumn": 74,
+                        "endOffset": 267
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 62,
+                    "startColumn": 4,
+                    "startOffset": 5092,
+                    "endColumn": 61,
+                    "endOffset": 5149
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_ptr_string.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 469,
+                        "endColumn": 66,
+                        "endOffset": 531
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 63,
+                    "startColumn": 4,
+                    "startOffset": 5154,
+                    "endColumn": 86,
+                    "endOffset": 5236
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 124,
+                        "endColumn": 86,
+                        "endOffset": 206
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 64,
+                    "startColumn": 4,
+                    "startOffset": 5241,
+                    "endColumn": 81,
+                    "endOffset": 5318
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_strings.xml",
+                    "position": {
+                        "startLine": 7,
+                        "startColumn": 4,
+                        "startOffset": 369,
+                        "endColumn": 81,
+                        "endOffset": 446
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 65,
+                    "startColumn": 4,
+                    "startOffset": 5323,
+                    "endColumn": 77,
+                    "endOffset": 5396
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_strings.xml",
+                    "position": {
+                        "startLine": 6,
+                        "startColumn": 4,
+                        "startOffset": 291,
+                        "endColumn": 77,
+                        "endOffset": 364
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 66,
+                    "startColumn": 4,
+                    "startOffset": 5401,
+                    "endColumn": 79,
+                    "endOffset": 5476
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 211,
+                        "endColumn": 79,
+                        "endOffset": 286
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 67,
+                    "startColumn": 4,
+                    "startOffset": 5481,
+                    "endColumn": 67,
+                    "endOffset": 5544
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 56,
+                        "endColumn": 67,
+                        "endOffset": 119
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 68,
+                    "startColumn": 4,
+                    "startOffset": 5549,
+                    "endColumn": 52,
+                    "endOffset": 5597
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_values.xml",
+                    "position": {
+                        "startLine": 10,
+                        "startColumn": 4,
+                        "startOffset": 472,
+                        "endColumn": 52,
+                        "endOffset": 520
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 69,
+                    "startColumn": 4,
+                    "startOffset": 5602,
+                    "endLine": 71,
+                    "endColumn": 12,
+                    "endOffset": 5735
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_styles.xml",
+                    "position": {
+                        "startLine": 13,
+                        "startColumn": 4,
+                        "startOffset": 520,
+                        "endLine": 15,
+                        "endColumn": 12,
+                        "endOffset": 653
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 72,
+                    "startColumn": 4,
+                    "startOffset": 5740,
+                    "endLine": 75,
+                    "endColumn": 12,
+                    "endOffset": 5932
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_styles.xml",
+                    "position": {
+                        "startLine": 8,
+                        "startColumn": 4,
+                        "startOffset": 322,
+                        "endLine": 11,
+                        "endColumn": 12,
+                        "endOffset": 514
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 76,
+                    "startColumn": 4,
+                    "startOffset": 5937,
+                    "endLine": 79,
+                    "endColumn": 12,
+                    "endOffset": 6138
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_core_styles.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 115,
+                        "endLine": 6,
+                        "endColumn": 12,
+                        "endOffset": 316
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 80,
+                    "startColumn": 4,
+                    "startOffset": 6143,
+                    "endLine": 85,
+                    "endColumn": 12,
+                    "endOffset": 6437
+                },
+                "from": {
+                    "file": "E:\\GankLy\\ptr-lib\\res\\values\\cube_dialog_styles.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 115,
+                        "endLine": 8,
+                        "endColumn": 12,
+                        "endOffset": 409
+                    }
+                }
+            }
+        ]
+    }
+]

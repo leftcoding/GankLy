@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/meizi_save"
+        android:icon="@drawable/meizi_save"
+        android:orderInCategory="100"
+        android:title="@string/meizi_save"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/meizi_more"
+        android:orderInCategory="100"
+        android:title="@string/more"
+        app:showAsAction="never"/>
+</menu>

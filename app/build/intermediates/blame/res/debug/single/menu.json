@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\menu\\welfare_menu.xml",
+        "source": "E:\\GankLy\\app\\src\\main\\res\\menu\\welfare_menu.xml"
+    },
+    {
+        "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\menu\\main.xml",
+        "source": "E:\\GankLy\\app\\src\\main\\res\\menu\\main.xml"
+    },
+    {
+        "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\menu\\meizi_menu.xml",
+        "source": "E:\\GankLy\\app\\src\\main\\res\\menu\\meizi_menu.xml"
+    },
+    {
+        "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\menu\\drawer.xml",
+        "source": "E:\\GankLy\\app\\src\\main\\res\\menu\\drawer.xml"
+    }
+]

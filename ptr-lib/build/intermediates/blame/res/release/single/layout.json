@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\GankLy\\ptr-lib\\build\\intermediates\\res\\merged\\release\\layout\\cube_ptr_simple_loading.xml",
+        "source": "E:\\GankLy\\ptr-lib\\res\\layout\\cube_ptr_simple_loading.xml"
+    },
+    {
+        "merged": "E:\\GankLy\\ptr-lib\\build\\intermediates\\res\\merged\\release\\layout\\cube_views_load_more_default_footer.xml",
+        "source": "E:\\GankLy\\ptr-lib\\res\\layout\\cube_views_load_more_default_footer.xml"
+    },
+    {
+        "merged": "E:\\GankLy\\ptr-lib\\build\\intermediates\\res\\merged\\release\\layout\\cube_ptr_classic_default_header.xml",
+        "source": "E:\\GankLy\\ptr-lib\\res\\layout\\cube_ptr_classic_default_header.xml"
+    }
+]
