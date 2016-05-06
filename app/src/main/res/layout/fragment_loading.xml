@@ -4,19 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:gravity="center"
+    android:clickable="true"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/loading_pb"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
+    <LinearLayout
+        android:id="@+id/loading_ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/loading"/>
+        <ProgressBar
+            android:id="@+id/loading_pb"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"/>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/loading_rl_error"
@@ -24,12 +32,24 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/loading_txt_error"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/loading_error"/>
+
         <TextView
             android:id="@+id/loading_txt_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/loading_error"/>
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/loading_error"
+            android:textColor="@color/text_666666"
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/loading_btn_retry"
@@ -37,7 +57,33 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/loading_txt_error"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
             android:text="@string/loading_retry"/>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/loading_rl_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/loading_txt_empty"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/loading_empty"/>
+
+        <TextView
+            android:id="@+id/loading_txt_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:text="@string/loading_empty"
+            android:textColor="@color/text_666666"
+            android:textSize="18sp"/>
+    </RelativeLayout>
 </LinearLayout>
