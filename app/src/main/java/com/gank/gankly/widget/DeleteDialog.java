@@ -23,8 +23,6 @@ import butterknife.OnClick;
  * Create by LingYan on 2016-04-13
  */
 public class DeleteDialog extends DialogFragment {
-    @Bind(R.id.dialog_delete_txt_title)
-    TextView txtTitle;
     @Bind(R.id.dialog_delete_txt_content)
     TextView txtContent;
 
@@ -73,9 +71,7 @@ public class DeleteDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String title = bundle.getString("title");
             String content = bundle.getString("content");
-            txtTitle.setText(title);
             txtContent.setText(content);
         }
     }

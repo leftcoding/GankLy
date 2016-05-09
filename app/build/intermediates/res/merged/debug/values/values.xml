@@ -706,6 +706,7 @@
     <color name="slategrey">#708090</color>
     <color name="snow">#fffafa</color>
     <color name="springgreen">#00ff7f</color>
+    <color name="standard_text_color_blue_a">#3b77b4</color>
     <color name="steelblue">#4682b4</color>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
@@ -734,6 +735,7 @@
     <color name="tomato">#ff6347</color>
     <color name="transaction">#00000000</color>
     <color name="translucence">#7f000000</color>
+    <color name="transparent">#00000000</color>
     <color name="turquoise">#40e0d0</color>
     <color name="violet">#ee82ee</color>
     <color name="vpi__background_holo_dark">#ff000000</color>
@@ -1031,7 +1033,8 @@
     <string name="item_book_author">%1$s on %2$s</string>
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="loading">拼命加载中…</string>
-    <string name="loading_error">加载出错</string>
+    <string name="loading_empty">暂无数据</string>
+    <string name="loading_error">加载失败，点击底下按钮 \n 重新获取数据</string>
     <string name="loading_pic_no_more">╮(╯_╰)╭，妹子都加载完了！</string>
     <string name="loading_retry">重试</string>
     <string name="meizi_picture_save_path">保存图片路径:%s</string>
@@ -1048,6 +1051,7 @@
     <string name="tip_copy_success">复制成功</string>
     <string name="tip_no_more_load">所有妹子都呈现在你眼前了</string>
     <string name="tip_server_error">服务器加载失败，妹子不来了</string>
+    <string name="tip_to_delete">是否确认删除？</string>
     <string name="web_copy_url">复制链接</string>
     <string name="web_open_browser">用浏览器打开</string>
     <string name="web_open_failed">浏览器打开失败</string>

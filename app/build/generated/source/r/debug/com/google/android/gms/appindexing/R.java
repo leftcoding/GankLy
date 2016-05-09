@@ -23,12 +23,12 @@ public final class R {
 		public static final int common_signin_btn_light_text_disabled = 0x7f0c00a9;
 		public static final int common_signin_btn_light_text_focused = 0x7f0c00aa;
 		public static final int common_signin_btn_light_text_pressed = 0x7f0c00ab;
-		public static final int common_signin_btn_text_dark = 0x7f0c02e5;
-		public static final int common_signin_btn_text_light = 0x7f0c02e6;
+		public static final int common_signin_btn_text_dark = 0x7f0c02e7;
+		public static final int common_signin_btn_text_light = 0x7f0c02e8;
 	}
 	public static final class drawable {
-		public static final int common_full_open_on_phone = 0x7f02004e;
-		public static final int common_ic_googleplayservices = 0x7f02004f;
+		public static final int common_full_open_on_phone = 0x7f020051;
+		public static final int common_ic_googleplayservices = 0x7f020052;
 	}
 	public static final class id {
 		public static final int adjust_height = 0x7f0d0033;

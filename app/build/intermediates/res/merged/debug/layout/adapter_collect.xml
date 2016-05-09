@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
+    android:background="?attr/selectableItemBackground"
     android:paddingTop="5dp">
 
     <TextView
@@ -27,7 +28,7 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
         android:text="测井就是测试"
-        android:textColor="@color/book_item_title"/>
+        android:textColor="@color/collect_item_title"/>
 
     <TextView
         android:id="@+id/collect_txt_time"

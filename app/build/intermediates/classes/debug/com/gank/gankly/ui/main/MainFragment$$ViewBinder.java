@@ -10,10 +10,10 @@ public class MainFragment$$ViewBinder<T extends com.gank.gankly.ui.main.MainFrag
     View view;
     view = finder.findRequiredView(source, 2131558513, "field 'mToolbar'");
     target.mToolbar = finder.castView(view, 2131558513, "field 'mToolbar'");
-    view = finder.findRequiredView(source, 2131558575, "field 'mTabLayout'");
-    target.mTabLayout = finder.castView(view, 2131558575, "field 'mTabLayout'");
-    view = finder.findRequiredView(source, 2131558576, "field 'mViewPager'");
-    target.mViewPager = finder.castView(view, 2131558576, "field 'mViewPager'");
+    view = finder.findRequiredView(source, 2131558578, "field 'mTabLayout'");
+    target.mTabLayout = finder.castView(view, 2131558578, "field 'mTabLayout'");
+    view = finder.findRequiredView(source, 2131558579, "field 'mViewPager'");
+    target.mViewPager = finder.castView(view, 2131558579, "field 'mViewPager'");
   }
 
   @Override public void unbind(T target) {

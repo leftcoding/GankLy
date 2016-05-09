@@ -27,9 +27,11 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField "String", "pwd", '"Gank"'
             minifyEnabled false
         }
         release {
+
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

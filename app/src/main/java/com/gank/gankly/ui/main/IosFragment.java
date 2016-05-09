@@ -13,6 +13,7 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.GankRetrofit;
@@ -206,6 +207,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         Bundle bundle = new Bundle();
         bundle.putString("title", bean.getDesc());
         bundle.putString("url", bean.getUrl());
+        bundle.putString("type", Constants.IOS);
         WebActivity.startWebActivity(mActivity, bundle);
     }
 }

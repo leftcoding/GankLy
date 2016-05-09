@@ -4,29 +4,34 @@
     api-level="23"
     density="xxhdpi"
     format="7"
-    timestamp="77923132390523" >
+    timestamp="31214130104037" >
 
     <task
         name="javac"
-        duration="1971" />
+        duration="851" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="871" />
+        duration="6" />
     <task
         name="verifier"
-        duration="669" />
+        duration="1" />
 
     <artifact
-        location="E:\GankLy\app\build\outputs\apk\app-debug.apk"
-        type="MAIN" />
+        location="E:\GankLy\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+        type="DEX" />
 
-    <build timestamp="77923132390523" >
+    <build timestamp="30567543077057" >
         <artifact
             location="E:\GankLy\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
+    </build>
+    <build timestamp="31214130104037" >
+        <artifact
+            location="E:\GankLy\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_4\classes.dex"
+            type="DEX" />
     </build>
 
 </instant-run>

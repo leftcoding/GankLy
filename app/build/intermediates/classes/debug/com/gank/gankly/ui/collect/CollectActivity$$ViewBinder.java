@@ -14,17 +14,17 @@ public class CollectActivity$$ViewBinder<T extends com.gank.gankly.ui.collect.Co
     target.mRecyclerView = finder.castView(view, 2131558515, "field 'mRecyclerView'");
     view = finder.findRequiredView(source, 2131558514, "field 'mSwipeRefreshLayout'");
     target.mSwipeRefreshLayout = finder.castView(view, 2131558514, "field 'mSwipeRefreshLayout'");
-    view = finder.findRequiredView(source, 2131558516, "field 'mLoadingView'");
-    target.mLoadingView = view;
     view = finder.findRequiredView(source, 2131558511, "field 'mMain'");
     target.mMain = view;
+    view = finder.findRequiredView(source, 2131558516, "field 'mLoadingLayoutView'");
+    target.mLoadingLayoutView = finder.castView(view, 2131558516, "field 'mLoadingLayoutView'");
   }
 
   @Override public void unbind(T target) {
     target.mToolbar = null;
     target.mRecyclerView = null;
     target.mSwipeRefreshLayout = null;
-    target.mLoadingView = null;
     target.mMain = null;
+    target.mLoadingLayoutView = null;
   }
 }

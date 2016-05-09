@@ -8,4 +8,5 @@ public interface Constants {
     String IOS = "ios";
     String WELFRAE = "福利";
     String ALL = "all";
+    String VIDEO = "video";
 }

@@ -64,7 +64,7 @@ public final class R {
 		public static final int cube_mints_main_color = 0x7f0c00c7;
 		public static final int cube_mints_white = 0x7f0c00c8;
 		public static final int lite_blue = 0x7f0c01db;
-		public static final int window_background = 0x7f0c02d9;
+		public static final int window_background = 0x7f0c02db;
 	}
 	public static final class dimen {
 		public static final int activity_horizontal_margin = 0x7f08004b;
@@ -76,21 +76,21 @@ public final class R {
 		public static final int item_touch_helper_swipe_escape_velocity = 0x7f08006f;
 	}
 	public static final class drawable {
-		public static final int icon_tau = 0x7f020055;
-		public static final int loading_01 = 0x7f020058;
-		public static final int loading_02 = 0x7f020059;
-		public static final int loading_03 = 0x7f02005a;
-		public static final int loading_04 = 0x7f02005b;
-		public static final int loading_05 = 0x7f02005c;
-		public static final int loading_06 = 0x7f02005d;
-		public static final int loading_07 = 0x7f02005e;
-		public static final int loading_08 = 0x7f02005f;
-		public static final int loading_09 = 0x7f020060;
-		public static final int loading_10 = 0x7f020061;
-		public static final int loading_11 = 0x7f020062;
-		public static final int loading_12 = 0x7f020063;
-		public static final int ptr_rotate_arrow = 0x7f02006d;
-		public static final int table_loading = 0x7f020071;
+		public static final int icon_tau = 0x7f020058;
+		public static final int loading_01 = 0x7f02005b;
+		public static final int loading_02 = 0x7f02005c;
+		public static final int loading_03 = 0x7f02005d;
+		public static final int loading_04 = 0x7f02005e;
+		public static final int loading_05 = 0x7f02005f;
+		public static final int loading_06 = 0x7f020060;
+		public static final int loading_07 = 0x7f020061;
+		public static final int loading_08 = 0x7f020062;
+		public static final int loading_09 = 0x7f020063;
+		public static final int loading_10 = 0x7f020064;
+		public static final int loading_11 = 0x7f020065;
+		public static final int loading_12 = 0x7f020066;
+		public static final int ptr_rotate_arrow = 0x7f020072;
+		public static final int table_loading = 0x7f020076;
 	}
 	public static final class id {
 		public static final int cube_views_load_more_default_footer_text_view = 0x7f0d0092;

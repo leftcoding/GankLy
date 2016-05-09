@@ -14,6 +14,7 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.GankRetrofit;
@@ -34,7 +35,6 @@ import rx.schedulers.Schedulers;
  */
 public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
     private static final int mLimit = 20;
-    private static final String TYPE = "curType";
 
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
@@ -85,7 +85,6 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     protected void bindLister() {
 
     }
-
 
     @Override
     protected int getLayoutId() {
@@ -205,6 +204,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         Bundle bundle = new Bundle();
         bundle.putString("title", bean.getDesc());
         bundle.putString("url", bean.getUrl());
+        bundle.putString("type", Constants.ANDROID);
         WebActivity.startWebActivity(mActivity, bundle);
     }
 }

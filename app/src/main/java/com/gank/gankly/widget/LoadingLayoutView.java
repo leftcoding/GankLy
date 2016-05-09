@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.gank.gankly.R;
-import com.socks.library.KLog;
 
 /**
  * Create by LingYan on 2016-05-06
@@ -51,7 +50,6 @@ public class LoadingLayoutView extends LinearLayout implements OnClickListener {
     }
 
     private void initView(Context context) {
-        KLog.d("initView");
         View rootView = LayoutInflater.from(context).inflate(R.layout.fragment_loading, this, true);
         btnRetry = (Button) rootView.findViewById(R.id.loading_btn_retry);
         viewLoading = (LinearLayout) rootView.findViewById(R.id.loading_ll_loading);

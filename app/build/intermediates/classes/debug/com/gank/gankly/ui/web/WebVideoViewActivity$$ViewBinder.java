@@ -8,8 +8,8 @@ import butterknife.ButterKnife.ViewBinder;
 public class WebVideoViewActivity$$ViewBinder<T extends com.gank.gankly.ui.web.WebVideoViewActivity> implements ViewBinder<T> {
   @Override public void bind(final Finder finder, final T target, Object source) {
     View view;
-    view = finder.findRequiredView(source, 2131558571, "field 'mLoveVideoView'");
-    target.mLoveVideoView = finder.castView(view, 2131558571, "field 'mLoveVideoView'");
+    view = finder.findRequiredView(source, 2131558574, "field 'mLoveVideoView'");
+    target.mLoveVideoView = finder.castView(view, 2131558574, "field 'mLoveVideoView'");
   }
 
   @Override public void unbind(T target) {

@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
@@ -45,9 +46,10 @@ public class WebActivity extends BaseActivity {
     private String mUrl;
     private String mTitle;
     private UrlCollectDao mUrlCollectDao;
+    private String mType;
 
     private void addUrl() {
-        UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date());
+        UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date(), mType);
         mUrlCollectDao.insert(urlCollect);
         ToastUtils.showToast(R.string.collect_success);
     }
@@ -243,6 +245,7 @@ public class WebActivity extends BaseActivity {
         if (bundle != null) {
             mUrl = bundle.getString("url");
             mTitle = bundle.getString("title");
+            mType = bundle.getString("type", Constants.ALL);
         }
 
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.UrlCollect;
+import com.gank.gankly.listener.ItemClick;
+import com.gank.gankly.listener.ItemLongClick;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import butterknife.ButterKnife;
 public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectHolderView> {
     private List<UrlCollect> mList;
     private Context mContext;
+    private ItemLongClick mItemLongClick;
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
@@ -37,6 +40,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     @Override
     public void onBindViewHolder(CollectHolderView holder, int position) {
         UrlCollect urlCollect = mList.get(position);
+        holder.mUrlCollect = urlCollect;
         holder.title.setText(urlCollect.getComment());
     }
 
@@ -46,7 +50,16 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
 
     public void updateItems(List<UrlCollect> list) {
         mList.addAll(list);
-        notifyItemInserted(mList.size());
+        notifyItemRangeInserted(mList.size(), list.size());
+    }
+
+    public void deleteItem(int item) {
+        mList.remove(item);
+        notifyItemRemoved(item);
+    }
+
+    public void setItemLongClick(ItemClick itemLongClick) {
+        mItemLongClick = (ItemLongClick) itemLongClick;
     }
 
     @Override
@@ -54,18 +67,32 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         return mList.size();
     }
 
-    static class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @Bind(R.id.collect_txt_title)
         TextView title;
+        UrlCollect mUrlCollect;
 
         public CollectHolderView(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
         @Override
         public void onClick(View v) {
+            if (mItemLongClick != null) {
+                mItemLongClick.onClick(getAdapterPosition(), mUrlCollect);
+            }
+        }
 
+        @Override
+        public boolean onLongClick(View v) {
+            if (mItemLongClick != null) {
+                mItemLongClick.onLongClick(getAdapterPosition(), mUrlCollect);
+            }
+            return true;
         }
     }
 }

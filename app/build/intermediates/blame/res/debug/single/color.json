@@ -12,6 +12,10 @@
         "source": "E:\\GankLy\\app\\build\\intermediates\\exploded-aar\\com.google.android.gms\\play-services-basement\\8.1.0\\res\\color\\common_signin_btn_text_light.xml"
     },
     {
+        "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\color\\default_btn_txt_color.xml",
+        "source": "E:\\GankLy\\app\\src\\main\\res\\color\\default_btn_txt_color.xml"
+    },
+    {
         "merged": "E:\\GankLy\\app\\build\\intermediates\\res\\merged\\debug\\color\\abc_primary_text_disable_only_material_dark.xml",
         "source": "E:\\GankLy\\app\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\23.2.1\\res\\color\\abc_primary_text_disable_only_material_dark.xml"
     },
