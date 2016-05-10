@@ -1,45 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
     android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingRight="10dp"
     android:paddingTop="5dp">
 
-    <TextView
-        android:id="@+id/collect_txt_type"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/collect_rl_top"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="android"
-        android:background="@drawable/shape_item_collect_type"
-        android:textColor="@color/white"
-        android:padding="5dp"
-        android:textSize="12sp"/>
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/collect_user_img"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_user_defaults"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/collect_user_img"
+            android:paddingEnd="0dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/collect_txt_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:text="网页"
+                android:textColor="@color/book_item_name"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/collect_txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/collect_txt_author"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="2016-5-10"
+                android:textColor="@color/darksalmon"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/collect_txt_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/collect_txt_time"
+                android:background="@drawable/shape_item_collect_type"
+                android:gravity="center"
+                android:text="android"
+                android:textColor="@color/white"
+                android:textSize="12sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/collect_txt_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/collect_rl_top"
         android:ellipsize="end"
         android:maxLines="3"
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingStart="10dp"
+        android:paddingTop="5dp"
         android:text="测井就是测试"
-        android:textColor="@color/collect_item_title"/>
+        android:textColor="@color/collect_item_title"
+        android:textSize="16sp"/>
 
-    <TextView
-        android:id="@+id/collect_txt_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:paddingBottom="10dp"
-        android:textSize="12sp"
-        android:paddingTop="10dp"
-        android:text="LeftCoding 16:59:08"
-        android:textColor="@color/text_555555"/>
-</LinearLayout>
+</RelativeLayout>

@@ -12,6 +12,10 @@ import java.util.Locale;
  * Create by LingYan on 2016-04-28
  */
 public class DateUtils {
+    public static final String TYPE_ONE = "yyyy/MM/dd";
+    public static final String TYPE_TWO = "yyyy-MM-dd";
+
+
     public static String getFormatDateStr(final Date date) {
         if (null == date) {
             return null;
@@ -19,11 +23,17 @@ public class DateUtils {
         return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
     }
 
-    public static String getFormatDate(final Date date) {
-        if (null == date) {
+    public static String getFormatDate(final Date date, String type) {
+        if (null == date || TextUtils.isEmpty(type)) {
             return null;
         }
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        SimpleDateFormat sdf;
+        try {
+            sdf = new SimpleDateFormat(type, Locale.getDefault());
+        } catch (Exception e) {
+//            throw new RuntimeException(e);
+            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        }
         return sdf.format(date);
     }
 
@@ -57,4 +67,5 @@ public class DateUtils {
         }
         return "0";
     }
+
 }

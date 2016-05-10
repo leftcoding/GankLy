@@ -26,6 +26,7 @@ public class MyDaoGenerator {
         note.addStringProperty("comment");
         note.addDateProperty("date");
         note.addStringProperty("g_type");
+        note.addStringProperty("g_author");
     }
 
     private static void addCustomerOrder(Schema schema) {

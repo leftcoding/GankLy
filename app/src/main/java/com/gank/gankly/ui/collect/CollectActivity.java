@@ -180,8 +180,8 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
 
     @Override
     public void onLongClick(int position, Object object) {
-        mLongClick = position;
         UrlCollect urlCollect = (UrlCollect) object;
+        mLongClick = position;
         mUrlCollect = urlCollect;
         Bundle bundle = new Bundle();
         bundle.putString("content", urlCollect.getComment());

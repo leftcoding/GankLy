@@ -16,12 +16,13 @@
 
     <color name="color_2f">#ff2f2f2f</color>
     <color name="Blue">#55a5e3</color>
-    <color name="book_item_divider">#112f2f2f</color>
+    <color name="book_item_divider">#dddddd</color>
     <color name="book_item_name">#ff00A0DC</color>
     <color name="book_item_title">#ff494949</color>
     <color name="book_recycler_item_bg">#ffe5e5e5</color>
 
     <color name="collect_item_title">#323232</color>
+    <color name="collect_item_time">#e9967a</color>
 
     <color name="standard_text_color_blue_a">#3b77b4</color>
 

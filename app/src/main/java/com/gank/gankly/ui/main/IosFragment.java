@@ -208,6 +208,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         bundle.putString("title", bean.getDesc());
         bundle.putString("url", bean.getUrl());
         bundle.putString("type", Constants.IOS);
+        bundle.putString("author",bean.getWho());
         WebActivity.startWebActivity(mActivity, bundle);
     }
 }

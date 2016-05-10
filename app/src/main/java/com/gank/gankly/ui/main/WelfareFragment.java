@@ -205,6 +205,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         bundle.putString("title", bean.getDesc());
         bundle.putString("url", bean.getUrl());
         bundle.putString("type", Constants.ANDROID);
+        bundle.putString("author",bean.getWho());
         WebActivity.startWebActivity(mActivity, bundle);
     }
 }

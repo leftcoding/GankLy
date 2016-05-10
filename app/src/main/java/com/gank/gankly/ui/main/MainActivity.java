@@ -84,6 +84,9 @@ public class MainActivity extends BaseActivity {
                     case R.id.navigation_home:
                         fragmentTo = MainFragment.getInstance();
                         break;
+                    case R.id.navigation_about:
+                        fragmentTo = AboutFragment.getInstance();
+                        break;
                     default:
                         break;
                 }

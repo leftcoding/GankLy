@@ -19,7 +19,7 @@ import de.greenrobot.dao.identityscope.IdentityScopeType;
  * Master of DAO (schema version 1000): knows all DAOs.
  */
 public class DaoMaster extends AbstractDaoMaster {
-    public static final int SCHEMA_VERSION = 2;
+    public static final int SCHEMA_VERSION = 3;
 
     /**
      * Creates underlying database table using DAOs.
@@ -65,7 +65,14 @@ public class DaoMaster extends AbstractDaoMaster {
             Log.i("greenDAO", "Upgrading schema from version " + oldVersion + " to " + newVersion + " by dropping all tables");
 //            dropAllTables(db, true);
 //            onCreate(db);
-            db.execSQL("ALTER TABLE " + UrlCollectDao.TABLENAME + " add \"g_type\" TEXT");
+            switch (newVersion) {
+                case 2:
+                    db.execSQL("ALTER TABLE " + UrlCollectDao.TABLENAME + " add \"g_type\" TEXT");
+                case 3:
+                    db.execSQL("ALTER TABLE " + UrlCollectDao.TABLENAME + " add \"g_author\" TEXT");
+            }
+
+
         }
     }
 

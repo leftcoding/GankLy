@@ -31,5 +31,10 @@
             android:id="@+id/navigation_collect"
             android:icon="@drawable/navigation_collect"
             android:title="@string/navigation_collect"/>
+
+        <item
+            android:id="@+id/navigation_about"
+            android:icon="@drawable/navigation_about"
+            android:title="@string/navigation_about"/>
     </group>
 </menu>

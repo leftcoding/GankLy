@@ -28,6 +28,7 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
         public final static Property Comment = new Property(2, String.class, "comment", false, "COMMENT");
         public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
         public final static Property G_type = new Property(4, String.class, "g_type", false, "G_TYPE");
+        public final static Property G_author = new Property(5, String.class, "g_author", false, "G_AUTHOR");
     };
 
 
@@ -47,7 +48,8 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
                 "\"URL\" TEXT NOT NULL ," + // 1: url
                 "\"COMMENT\" TEXT," + // 2: comment
                 "\"DATE\" INTEGER," + // 3: date
-                "\"G_TYPE\" TEXT);"); // 4: g_type
+                "\"G_TYPE\" TEXT," + // 4: g_type
+                "\"G_AUTHOR\" TEXT);"); // 5: g_author
     }
 
     /** Drops the underlying database table. */
@@ -81,6 +83,11 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
         if (g_type != null) {
             stmt.bindString(5, g_type);
         }
+
+        String g_author = entity.getG_author();
+        if (g_author != null) {
+            stmt.bindString(6, g_author);
+        }
     }
 
     /** @inheritdoc */
@@ -97,7 +104,8 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
                 cursor.getString(offset + 1), // url
                 cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // comment
                 cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // date
-                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // g_type
+                cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // g_type
+                cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // g_author
         );
         return entity;
     }
@@ -110,6 +118,7 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
         entity.setComment(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setDate(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
         entity.setG_type(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setG_author(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
     }
 
     /** @inheritdoc */
