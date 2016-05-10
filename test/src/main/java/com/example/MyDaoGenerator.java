@@ -14,7 +14,7 @@ public class MyDaoGenerator {
         Schema schema = new Schema(1, "com.gank.gankly");
 
         addNote(schema);
-        addCustomerOrder(schema);
+//        addCustomerOrder(schema);
 
         new DaoGenerator().generateAll(schema, "E:/GankLy/app/src/main/java");
     }
@@ -25,6 +25,7 @@ public class MyDaoGenerator {
         note.addStringProperty("url").notNull();
         note.addStringProperty("comment");
         note.addDateProperty("date");
+        note.addStringProperty("g_type");
     }
 
     private static void addCustomerOrder(Schema schema) {
