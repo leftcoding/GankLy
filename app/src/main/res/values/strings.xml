@@ -31,15 +31,16 @@
     <string name="web_open_browser">用浏览器打开</string>
     <string name="web_open_failed">浏览器打开失败</string>
 
-    <!-- tips -->
     <string name="tip_copy_success">复制成功</string>
     <string name="tip_server_error">服务器加载失败，妹子不来了</string>
     <string name="tip_no_more_load">所有妹子都呈现在你眼前了</string>
     <string name="tip_to_delete">是否确认删除？</string>
 
-    <!-- item -->
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="item_book_author">%1$s on %2$s</string>
 
     <string name="collect_item_author">%1$s</string>
+
+    <string name="about_describe">GankLy \n关于程序员的干货，每天基本上都有新的知识点，妹子图片，搞笑视频（主要看妹子）。 \n目的  \n做这个App的目的主要是为了学习和巩固知识（让自己能走的更远），
+        同样也希望能帮助一些需要帮助的人。\n  感谢 \n@daimajia提供接口，另外感谢下@drakket @xiongwei-git 还有一些网上不认识的朋友。 </string>
 </resources>

@@ -2,10 +2,12 @@ package com.gank.gankly.ui.main;
 
 
 import android.content.Context;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
 
@@ -17,6 +19,8 @@ import butterknife.Bind;
 public class AboutFragment extends BaseFragment {
     @Bind(R.id.about_toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.about_collapsing)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     public static AboutFragment sAboutFragment;
     public MainActivity mActivity;
@@ -41,9 +45,11 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
+        mCollapsingToolbarLayout.setTitle(App.getAppString(R.string.navigation_about));
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
+            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

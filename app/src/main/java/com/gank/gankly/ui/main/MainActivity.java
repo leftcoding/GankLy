@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.main;
 
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -11,7 +10,7 @@ import android.view.MenuItem;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.ui.collect.CollectActivity;
+import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -74,9 +73,7 @@ public class MainActivity extends BaseActivity {
                 Fragment fragmentTo = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_collect:
-                        startActivity(new Intent(MainActivity.this, CollectActivity.class));
-                        menuItem.setChecked(false);
-                        menuItem.setCheckable(false);
+                        fragmentTo = CollectFragment.getInstance();
                         break;
                     case R.id.navigation_video:
                         fragmentTo = VideoFragment.getInstance();

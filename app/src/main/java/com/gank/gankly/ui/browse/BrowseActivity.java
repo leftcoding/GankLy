@@ -16,6 +16,7 @@ import android.view.animation.DecelerateInterpolator;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseActivity;
@@ -51,7 +52,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private int mPosition;
     private int mPage;
 
-    private int mLimit = 10;
     private boolean isLoadMore = true;
 
     @Override
@@ -77,25 +77,26 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void fetchDate() {
-        GankRetrofit.getInstance().fetchWelfare(mLimit, mPage, new Subscriber<GankResult>() {
+        final int limit = Constants.MEIZI_LIMIT;
+        mPage = MeiziArrayList.getInstance().getPage();
+        KLog.d("mPage:" + mPage);
+        mPage = mPage + 1;
+        GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
-                mPage = mPage + 1;
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastUtils.showToast(R.string.tip_server_error);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
                 if (!gankResult.isEmpty()) {
-                    if (mPage == 1) {
-                        MeiziArrayList.getInstance().clear();
-                    }
-                    MeiziArrayList.getInstance().addAll(gankResult.getResults());
+                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
                 }
-                if (gankResult.getSize() < mLimit) {
+                if (gankResult.getSize() < limit) {
                     isLoadMore = false;
                     ToastUtils.longBottom(R.string.loading_pic_no_more);
                 }
@@ -114,7 +115,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mPosition = bundle.getInt("position");
-            mPage = bundle.getInt("page");
         }
     }
 
@@ -186,7 +186,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void saveImagePath() {
-        String mUrl = MeiziArrayList.getInstance().getResultBean(mPosition).getUrl();
+        int position = mViewPager.getCurrentItem();
+        String mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
         RxSaveImage.saveImage(this, mUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Uri>() {
@@ -238,6 +239,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     @Override
     protected void onResume() {
         super.onResume();
-        overridePendingTransition( R.anim.alpha_in,R.anim.alpha_out);
+        overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
     }
 }

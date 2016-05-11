@@ -1,8 +1,8 @@
 package com.gank.gankly.widget;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.collect.CollectActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +25,7 @@ public class DeleteDialog extends DialogFragment {
     @Bind(R.id.dialog_delete_txt_content)
     TextView txtContent;
 
-    private CollectActivity mCollectActivity;
+    private Context mContext;
     private DialogListener listener;
     private DialogFragment mDialogFragment;
 
@@ -44,9 +43,9 @@ public class DeleteDialog extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mCollectActivity = (CollectActivity) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
     }
 
     @Override
@@ -58,10 +57,10 @@ public class DeleteDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        LayoutInflater inflater = LayoutInflater.from(mCollectActivity);
+        LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.dialog_delete, null);
         ButterKnife.bind(this, view);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mCollectActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(view);
         return builder.create();
     }

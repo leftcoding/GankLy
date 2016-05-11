@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.main.meizi;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,16 +13,16 @@ import android.view.View;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.listener.MeiziOnClick;
 import com.socks.library.KLog;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import rx.Subscriber;
 
 public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick {
@@ -34,17 +34,15 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
 
-    private static final int mLimit = 20;
     private int mPage = 1;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
 
     public MeiZiFragment() {
-
     }
 
     @Override
-    public void onAttach(Activity context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (MainActivity) context;
     }
@@ -111,7 +109,8 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     }
 
     private void fetchDate() {
-        GankRetrofit.getInstance().fetchWelfare(mLimit, mPage, new Subscriber<GankResult>() {
+        final int limit = Constants.MEIZI_LIMIT;
+        GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -122,6 +121,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
             public void onError(Throwable e) {
                 KLog.e(e);
                 mSwipeRefreshLayout.setRefreshing(false);
+                Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -132,7 +132,7 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                     }
                     MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
                 }
-                if (gankResult.getSize() < mLimit) {
+                if (gankResult.getSize() < limit) {
                     isLoadMore = false;
                     Snackbar.make(mRecyclerView, R.string.loading_pic_no_more, Snackbar.LENGTH_LONG).show();
                 }
@@ -140,22 +140,6 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
                 mRecyclerAdapter.updateItems(MeiziArrayList.getInstance().getArrayList());
             }
         });
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     public static MeiZiFragment newInstance() {
@@ -186,7 +170,6 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
-        bundle.putInt("page", mPage);
         Intent intent = new Intent(mActivity, BrowseActivity.class);
         intent.putExtras(bundle);
         mActivity.startActivity(intent);

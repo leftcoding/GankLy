@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -29,6 +28,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private LayoutInflater inflater;
 
     private MeiziOnClick mMeiZiOnClick;
+//    private List<Integer> heights;
 
 
     public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
@@ -39,6 +39,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         inflater = LayoutInflater.from(context);
         mContext = context;
         mResults = new ArrayList<>();
+//        heights = new ArrayList<>();
     }
 
     @Override
@@ -50,11 +51,14 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     @Override
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
-        holder.txtDesc.setText(bean.getDesc());
         holder.position = position;
+//        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();//得到item的LayoutParams布局参数
+//        params.height = heights.get(position);//把随机的高度赋予item布局
+//        holder.itemView.setLayoutParams(params);//把params设置给item布局
+
         Glide.with(mContext)
                 .load(bean.getUrl())
-                .centerCrop()
+//                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.imgMeizi);
     }
@@ -79,9 +83,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.meizi_txt_time)
-        TextView txtDesc;
-
         @Bind(R.id.meizi_img_picture)
         RatioImageView imgMeizi;
         int position;

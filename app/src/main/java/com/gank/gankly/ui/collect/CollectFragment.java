@@ -1,5 +1,6 @@
 package com.gank.gankly.ui.collect;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.gank.gankly.App;
@@ -16,7 +16,8 @@ import com.gank.gankly.R;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.listener.ItemLongClick;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.DeleteDialog;
@@ -31,7 +32,7 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Create by LingYan on 2016-4-25
  */
-public class CollectActivity extends BaseActivity implements DeleteDialog.DialogListener, SwipeRefreshLayout.OnRefreshListener, ItemLongClick {
+public class CollectFragment extends BaseFragment implements DeleteDialog.DialogListener, SwipeRefreshLayout.OnRefreshListener, ItemLongClick {
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
     @Bind(R.id.meizi_recycler_view)
@@ -45,6 +46,7 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
 
     private static final int PAGE_LIMIT = 10;
 
+    private MainActivity mActivity;
     private UrlCollectDao mUrlCollectDao;
     private CollectAdapter mCollectAdapter;
     private int mLostPosition;
@@ -52,10 +54,19 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     private boolean isLoadMore = true;
     private int mLongClick;
     private UrlCollect mUrlCollect;
+    private static CollectFragment sCollectFragment;
+
+    public static CollectFragment getInstance() {
+        if (sCollectFragment == null) {
+            sCollectFragment = new CollectFragment();
+        }
+        return sCollectFragment;
+    }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -69,44 +80,45 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     }
 
     @Override
-    protected int getContentId() {
-        return R.layout.activity_collcet;
-    }
-
-    @Override
     protected void initValues() {
 //        mToolbar.setTitle(R.string.navigation_collect);
-        setTitle(R.string.navigation_collect);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
+        mActivity.setTitle(R.string.navigation_collect);
+        mActivity.setSupportActionBar(mToolbar);
+        ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                mActivity.openDrawer();
             }
         });
     }
 
     @Override
     protected void initViews() {
-        mCollectAdapter = new CollectAdapter(this);
+        mCollectAdapter = new CollectAdapter(mActivity);
         mCollectAdapter.setItemLongClick(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(this, R.drawable.shape_item_divider));
+        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mRecyclerView.setAdapter(mCollectAdapter);
         mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
         updateDate();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                showListView();
+//            }
+//        },2000);
     }
 
     @Override
-    protected void bindListener() {
+    protected void bindLister() {
         mLoadingLayoutView.setLoading(this);
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -128,6 +140,11 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
                 mLostPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_collcet;
     }
 
 
@@ -156,7 +173,6 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
             }
         }
         mSwipeRefreshLayout.setRefreshing(false);
-        showListView();
     }
 
     private List<UrlCollect> queryData() {
@@ -169,16 +185,6 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
     public void onLongClick(int position, Object object) {
         UrlCollect urlCollect = (UrlCollect) object;
         mLongClick = position;
@@ -188,7 +194,7 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
         DeleteDialog deleteDialog = new DeleteDialog();
         deleteDialog.setListener(this);
         deleteDialog.setArguments(bundle);
-        deleteDialog.show(getSupportFragmentManager(), "delete");
+        deleteDialog.show(mActivity.getSupportFragmentManager(), "delete");
     }
 
     @Override
@@ -197,6 +203,6 @@ public class CollectActivity extends BaseActivity implements DeleteDialog.Dialog
         Bundle bundle = new Bundle();
         bundle.putString("title", urlCollect.getComment());
         bundle.putString("url", urlCollect.getUrl());
-        WebActivity.startWebActivity(CollectActivity.this, bundle);
+        WebActivity.startWebActivity(mActivity, bundle);
     }
 }

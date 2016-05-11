@@ -9,4 +9,6 @@ public interface Constants {
     String WELFRAE = "福利";
     String ALL = "all";
     String VIDEO = "video";
+
+    int MEIZI_LIMIT = 20;
 }

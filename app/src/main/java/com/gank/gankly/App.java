@@ -49,6 +49,10 @@ public class App extends Application {
         return mContext.getApplicationContext().getResources().getColor(id);
     }
 
+    public static String getAppString(int res) {
+        return getAppResources().getString(res);
+    }
+
     public static SQLiteDatabase getDatabase() {
         return db;
     }
