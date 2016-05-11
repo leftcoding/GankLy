@@ -59,6 +59,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             ab.setDisplayHomeAsUpEnabled(true);
         }
+        mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
     }
 
     @Override
@@ -80,7 +81,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new WelfareFragment());
+        mList.add(new AndroidFragment());
         mList.add(new IosFragment());
         mList.add(new MeiZiFragment());
 

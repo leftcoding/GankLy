@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -28,6 +29,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import de.greenrobot.dao.query.QueryBuilder;
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
 /**
  * Create by LingYan on 2016-4-25
@@ -86,6 +88,7 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
+            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -105,16 +108,14 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
         mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mRecyclerView.setAdapter(mCollectAdapter);
         mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
+        mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
+        mRecyclerView.getItemAnimator().setAddDuration(500);
+        mRecyclerView.getItemAnimator().setRemoveDuration(500);
+
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
         updateDate();
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                showListView();
-//            }
-//        },2000);
     }
 
     @Override
@@ -150,6 +151,7 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
 
     @Override
     public void onRefresh() {
+        mPage = 0;
         updateDate();
     }
 

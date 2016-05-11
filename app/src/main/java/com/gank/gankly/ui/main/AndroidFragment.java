@@ -5,10 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -24,6 +24,8 @@ import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +35,7 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
+public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
     private static final int mLimit = 20;
 
     @Bind(R.id.meizi_recycler_view)
@@ -48,7 +50,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
     private int mLastPosition;
     private boolean isLoadMore = true;
 
-    public WelfareFragment() {
+    public AndroidFragment() {
 
     }
 
@@ -98,9 +100,7 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void initRecycler() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setAdapter(mGankAdapter);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -120,6 +120,14 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
                 mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
+
+        mRecyclerView.setItemAnimator(new ScaleInAnimator());
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
+        alphaAdapter.setFirstOnly(true);
+        alphaAdapter.setDuration(500);
+        alphaAdapter.setInterpolator(new OvershootInterpolator(.5f));
+        mRecyclerView.setAdapter(alphaAdapter);
+
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
@@ -187,8 +195,8 @@ public class WelfareFragment extends LazyFragment implements SwipeRefreshLayout.
         ButterKnife.unbind(this);
     }
 
-    public static WelfareFragment newInstance() {
-        WelfareFragment fragment = new WelfareFragment();
+    public static AndroidFragment newInstance() {
+        AndroidFragment fragment = new AndroidFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;

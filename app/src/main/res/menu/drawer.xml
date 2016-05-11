@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <group
         android:id="@+id/group_home"
         android:checkableBehavior="single">
@@ -8,15 +9,16 @@
             android:checked="true"
             android:icon="@drawable/navigation_home"
             android:title="@string/navigation_home"/>
-    </group>
 
-    <group
-        android:id="@+id/group_other"
-        android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_video"
             android:icon="@drawable/navigation_video"
             android:title="@string/navigation_video"/>
+
+        <item
+            android:id="@+id/navigation_collect"
+            android:icon="@drawable/navigation_collect"
+            android:title="@string/navigation_collect"/>
     </group>
 
     <group
@@ -26,11 +28,6 @@
             android:id="@+id/navigation_settings"
             android:icon="@drawable/navigation_setting"
             android:title="@string/navigation_settings"/>
-
-        <item
-            android:id="@+id/navigation_collect"
-            android:icon="@drawable/navigation_collect"
-            android:title="@string/navigation_collect"/>
 
         <item
             android:id="@+id/navigation_about"

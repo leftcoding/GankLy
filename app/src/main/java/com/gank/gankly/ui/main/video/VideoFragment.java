@@ -180,7 +180,6 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
 
 
     @Override
-
     protected int getLayoutId() {
         return R.layout.fragment_video;
     }

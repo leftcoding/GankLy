@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:text="网页"
+                android:text=""
                 android:textColor="@color/book_item_name"
                 android:textSize="14sp"/>
 
@@ -50,9 +50,8 @@
                 android:layout_toEndOf="@id/collect_txt_author"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:text="2016-5-10"
-                android:textColor="@color/darksalmon"
-                android:textSize="14sp"/>
+                android:text=""
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/collect_txt_type"
@@ -62,7 +61,7 @@
                 android:layout_toEndOf="@id/collect_txt_time"
                 android:background="@drawable/shape_item_collect_type"
                 android:gravity="center"
-                android:text="android"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="12sp"/>
         </RelativeLayout>
@@ -75,10 +74,11 @@
         android:layout_below="@id/collect_rl_top"
         android:ellipsize="end"
         android:maxLines="3"
-        android:paddingBottom="10dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="0dp"
         android:paddingStart="10dp"
         android:paddingTop="5dp"
-        android:text="测井就是测试"
+        android:text=""
         android:textColor="@color/collect_item_title"
         android:textSize="16sp"/>
 

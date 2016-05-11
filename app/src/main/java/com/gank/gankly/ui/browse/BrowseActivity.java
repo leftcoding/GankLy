@@ -79,7 +79,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private void fetchDate() {
         final int limit = Constants.MEIZI_LIMIT;
         mPage = MeiziArrayList.getInstance().getPage();
-        KLog.d("mPage:" + mPage);
         mPage = mPage + 1;
         GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
             @Override

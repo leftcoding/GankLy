@@ -52,10 +52,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
         holder.position = position;
-//        ViewGroup.LayoutParams params = holder.itemView.getLayoutParams();//得到item的LayoutParams布局参数
-//        params.height = heights.get(position);//把随机的高度赋予item布局
-//        holder.itemView.setLayoutParams(params);//把params设置给item布局
-
+        holder.imgMeizi.setMinimumHeight(500 + (int) (200 * Math.random()));
         Glide.with(mContext)
                 .load(bean.getUrl())
 //                .fitCenter()
@@ -90,7 +87,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         public GoodsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            imgMeizi.setOriginalSize(50, 50);
+//            imgMeizi.setOriginalSize(50, 50);
             imgMeizi.setOnClickListener(this);
         }
 

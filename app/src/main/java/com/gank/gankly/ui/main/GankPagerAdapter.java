@@ -29,7 +29,7 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
             case 2:
                 return MeiZiFragment.newInstance();
             default:
-                return WelfareFragment.newInstance();
+                return AndroidFragment.newInstance();
         }
     }
 

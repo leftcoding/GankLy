@@ -27,15 +27,7 @@ public class WebVideoViewActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            mUrl = bundle.getString("url");
-        }
-        if (!TextUtils.isEmpty(mUrl)) {
-            mLoveVideoView.loadUrl(mUrl);
-        } else {
-            ToastUtils.showToast(R.string.tip_server_error);
-        }
+
     }
 
     @Override
@@ -45,7 +37,15 @@ public class WebVideoViewActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mUrl = bundle.getString("url");
+        }
+        if (!TextUtils.isEmpty(mUrl)) {
+            mLoveVideoView.loadUrl(mUrl);
+        } else {
+            ToastUtils.showToast(R.string.tip_server_error);
+        }
     }
 
     public static void startWebActivity(Context packageContext, Bundle bundle) {
