@@ -47,16 +47,16 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
     LoadingLayoutView mLoadingLayoutView;
 
     private static final int PAGE_LIMIT = 10;
+    private static CollectFragment sCollectFragment;
 
     private MainActivity mActivity;
     private UrlCollectDao mUrlCollectDao;
     private CollectAdapter mCollectAdapter;
+    private UrlCollect mUrlCollect;
     private int mLostPosition;
     private int mPage = 0;
-    private boolean isLoadMore = true;
     private int mLongClick;
-    private UrlCollect mUrlCollect;
-    private static CollectFragment sCollectFragment;
+    private boolean isLoadMore = true;
 
     public static CollectFragment getInstance() {
         if (sCollectFragment == null) {
@@ -78,12 +78,7 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
     }
 
     @Override
-    public void onCancelClick() {
-    }
-
-    @Override
     protected void initValues() {
-//        mToolbar.setTitle(R.string.navigation_collect);
         mActivity.setTitle(R.string.navigation_collect);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -170,11 +165,17 @@ public class CollectFragment extends BaseFragment implements DeleteDialog.Dialog
             mPage = mPage + 1;
             int size = mList.size();
             if (size < PAGE_LIMIT) {
-                isLoadMore = false;
-                Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
+                noLoadMore();
             }
+        } else {
+            noLoadMore();
         }
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void noLoadMore() {
+        isLoadMore = false;
+        Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
     }
 
     private List<UrlCollect> queryData() {

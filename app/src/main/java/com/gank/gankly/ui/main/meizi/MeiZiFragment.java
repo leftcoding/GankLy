@@ -25,6 +25,9 @@ import com.socks.library.KLog;
 import butterknife.Bind;
 import rx.Subscriber;
 
+/**
+ * Create by LingYan on 2016-5-12
+ */
 public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
