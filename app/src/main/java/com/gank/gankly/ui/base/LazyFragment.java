@@ -3,6 +3,9 @@ package com.gank.gankly.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+/**
+ * Create by LingYan on 2016-5-12
+ */
 public abstract class LazyFragment extends BaseFragment {
     private boolean isVisible = false; //是否可见
     private boolean isView = false; //是否建立视图关系

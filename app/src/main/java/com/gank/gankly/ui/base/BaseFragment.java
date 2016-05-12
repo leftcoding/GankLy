@@ -8,13 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gank.gankly.ui.presenter.BasePresenter;
+
 import butterknife.ButterKnife;
 
 
 /**
  * Create by LingYan on 2016-04-05
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
+    protected P mPresenter;
 
     @Override
     public void onAttach(Context context) {
@@ -31,15 +34,14 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
+        initValues();
+        initViews();
+        bindLister();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initValues();
-        initViews();
-        bindLister();
     }
 
     protected abstract void initValues();

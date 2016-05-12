@@ -70,6 +70,11 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     }
 
     public void updateItems(List<UrlCollect> list) {
+        mList.clear();
+        addItems(list);
+    }
+
+    public void addItems(List<UrlCollect> list) {
         mList.addAll(list);
         notifyItemRangeInserted(mList.size(), list.size());
     }

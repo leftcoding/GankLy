@@ -26,12 +26,7 @@ public class LoadingLayoutView extends LinearLayout implements OnClickListener {
     LinearLayout viewEmpty;
 
     private Context mContext;
-    //    private LoadingClick mLoadingClick;
     private SwipeRefreshLayout.OnRefreshListener mOnRefreshListener;
-
-//    public interface LoadingClick {
-//        void loadingClick(View view);
-//    }
 
     public LoadingLayoutView(Context context) {
         super(context);
@@ -57,7 +52,7 @@ public class LoadingLayoutView extends LinearLayout implements OnClickListener {
         viewEmpty = (LinearLayout) rootView.findViewById(R.id.loading_rl_empty);
 
         btnRetry.setOnClickListener(this);
-        initStatus(ERROR);
+        initStatus(LOADING);
     }
 
     private void initStatus(int status) {
@@ -93,10 +88,6 @@ public class LoadingLayoutView extends LinearLayout implements OnClickListener {
     public void setStatus(int status) {
         initStatus(status);
     }
-
-//    public void setLoading(LoadingClick loading) {
-//        mLoadingClick = loading;
-//    }
 
     public void setLoading(SwipeRefreshLayout.OnRefreshListener onRefreshListener) {
         mOnRefreshListener = onRefreshListener;
