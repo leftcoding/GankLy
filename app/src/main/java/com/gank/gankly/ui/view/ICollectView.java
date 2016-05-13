@@ -19,5 +19,4 @@ public interface ICollectView<T extends UrlCollect> extends ISwipeRefreshView {
 
     boolean isListEmpty();
 
-    ViewStatus getCurStatus();
 }

@@ -14,7 +14,9 @@ import com.gank.gankly.config.glide.GlideRoundTransform;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.listener.ItemLongClick;
+import com.gank.gankly.ui.base.BaseViewHolder;
 import com.gank.gankly.utils.DateUtils;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,11 +28,16 @@ import butterknife.ButterKnife;
 /**
  * Create by LingYan on 2016-04-11
  */
-public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectHolderView> {
+public class CollectAdapter extends RecyclerView.Adapter<BaseViewHolder> {
     private final String color = "#00A0DC";
     private List<UrlCollect> mList;
     private Context mContext;
     private ItemLongClick mItemLongClick;
+
+    private static final int IS_HEADER = 2;
+    private static final int IS_FOOTER = 3;
+    private static final int IS_NORMAL = 1;
+
     private Integer[] imgs = {R.drawable.ic_collect_default_1, R.drawable.ic_collect_default_2,
             R.drawable.ic_collect_default_3, R.drawable.ic_collect_default_4,
             R.drawable.ic_collect_default_5, R.drawable.ic_collect_default_6,
@@ -42,27 +49,20 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     }
 
     @Override
-    public CollectHolderView onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.adapter_collect, parent, false);
-        return new CollectHolderView(view);
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == IS_FOOTER || mList.size() == 0) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.layout_item_footer, parent, false);
+            return new FooterHolderView(view);
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.adapter_collect, parent, false);
+            return new CollectHolderView(view);
+        }
     }
 
     @Override
-    public void onBindViewHolder(CollectHolderView holder, int position) {
-        UrlCollect urlCollect = mList.get(position);
-        holder.mUrlCollect = urlCollect;
-        holder.title.setText(urlCollect.getComment());
-        Date date = urlCollect.getDate();
-
-        holder.time.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_TWO));
-        holder.type.setText(urlCollect.getG_type());
-        holder.author.setText(urlCollect.getG_author());
-
-        int index = position % imgs.length;
-        Glide.with(mContext)
-                .load(imgs[index])
-                .transform(new GlideRoundTransform(mContext, 10))
-                .into(holder.userPicture);
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
+        holder.setDataOnView(position);
     }
 
     public void clear() {
@@ -70,12 +70,14 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     }
 
     public void updateItems(List<UrlCollect> list) {
-        mList.clear();
+        KLog.d("updateItems");
         addItems(list);
     }
 
     public void addItems(List<UrlCollect> list) {
+        KLog.d("addItems");
         mList.addAll(list);
+        KLog.d("mlist:" + mList.size());
         notifyItemRangeInserted(mList.size(), list.size());
     }
 
@@ -90,11 +92,21 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return mList.size() + 1;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position == mList.size() && position != 0) {
+            return IS_FOOTER;
+        } else if (position == 0) {
+            return IS_HEADER;
+        } else {
+            return IS_NORMAL;
+        }
+    }
 
-    class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    class CollectHolderView extends BaseViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @Bind(R.id.collect_txt_title)
         TextView title;
         @Bind(R.id.collect_txt_time)
@@ -116,6 +128,23 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         }
 
         @Override
+        public void setDataOnView(int position) {
+            UrlCollect urlCollect = mList.get(position);
+            mUrlCollect = urlCollect;
+            title.setText(urlCollect.getComment());
+            Date date = urlCollect.getDate();
+            time.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_TWO));
+            type.setText(urlCollect.getG_type());
+            author.setText(urlCollect.getG_author());
+
+            int index = position % imgs.length;
+            Glide.with(mContext)
+                    .load(imgs[index])
+                    .transform(new GlideRoundTransform(mContext, 10))
+                    .into(userPicture);
+        }
+
+        @Override
         public void onClick(View v) {
             if (mItemLongClick != null) {
                 mItemLongClick.onClick(getAdapterPosition(), mUrlCollect);
@@ -128,6 +157,18 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
                 mItemLongClick.onLongClick(getAdapterPosition(), mUrlCollect);
             }
             return true;
+        }
+    }
+
+    class FooterHolderView extends BaseViewHolder {
+
+        public FooterHolderView(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void setDataOnView(int position) {
+
         }
     }
 }

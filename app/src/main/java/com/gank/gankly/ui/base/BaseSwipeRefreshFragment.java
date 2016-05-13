@@ -65,7 +65,22 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     }
 
     @Override
-    public void showView() {
+    public boolean isDisNetWorkView() {
+        return false;
+    }
 
+    @Override
+    public boolean isEmptyView() {
+        return false;
+    }
+
+    @Override
+    public boolean isLoading() {
+        return false;
+    }
+
+    @Override
+    public boolean isShowView() {
+        return false;
     }
 }

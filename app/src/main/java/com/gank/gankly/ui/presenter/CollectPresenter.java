@@ -5,9 +5,9 @@ import android.app.Activity;
 import com.gank.gankly.App;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.ui.view.IBaseView;
 import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
     }
 
     public void fetchDate(int page) {
+        KLog.d("fetchDate:" + page);
         if (page == 0) {
             isMore = true;
         }
@@ -44,7 +45,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {
-                if (mIView.getCurStatus() != IBaseView.ViewStatus.SHOW) {
+                if (!mIView.isShowView()) {
                     mIView.showView();
                 }
                 mIView.refillDate(list);
@@ -61,7 +62,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
             if (mPage > 0) {
                 mIView.hasNoMoreDate();
             } else {
-                if (mIView.getCurStatus() != IBaseView.ViewStatus.EMPTY) {
+                if (!mIView.isEmptyView()) {
                     mIView.showEmpty();
                 }
             }

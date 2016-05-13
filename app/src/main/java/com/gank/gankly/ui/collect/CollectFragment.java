@@ -30,11 +30,13 @@ import java.util.List;
 import butterknife.Bind;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 
+import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+
 /**
  * Create by LingYan on 2016-4-25
  */
 public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> implements DeleteDialog.DialogListener,
-        SwipeRefreshLayout.OnRefreshListener, ItemLongClick, ICollectView<UrlCollect> {
+        OnRefreshListener, ItemLongClick, ICollectView<UrlCollect> {
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
     @Bind(R.id.meizi_recycler_view)
@@ -44,22 +46,14 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     @Bind(R.id.loading_view)
     LoadingLayoutView mLoadingLayoutView;
 
-    private static CollectFragment sCollectFragment;
-
     private MainActivity mActivity;
     private CollectAdapter mCollectAdapter;
     private UrlCollect mUrlCollect;
+
     private int mLostPosition;
     private int mPage = 0;
     private int mLongClick;
-    private ViewStatus mCurStatus = ViewStatus.LOADING;
-
-    public static CollectFragment getInstance() {
-        if (sCollectFragment == null) {
-            sCollectFragment = new CollectFragment();
-        }
-        return sCollectFragment;
-    }
+    private ViewStatus mCurStatus;
 
     @Override
     public void onAttach(Context context) {
@@ -73,8 +67,17 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
         mPresenter.deleteByKey(mUrlCollect.getId());
     }
 
+    public static CollectFragment newInstance() {
+        Bundle args = new Bundle();
+        args.putBoolean("toRefresh", true);
+        CollectFragment fragment = new CollectFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     protected void initValues() {
+        mCurStatus = ViewStatus.LOADING;
         mActivity.setTitle(R.string.navigation_collect);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -106,7 +109,8 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
-        mPresenter.fetchDate(mPage);
+        mLoadingLayoutView.setVisibility(View.GONE);
+//        onRefresh();
     }
 
     @Override
@@ -147,6 +151,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
         mPage = 0;
         mPresenter.fetchDate(mPage);
     }
@@ -176,6 +181,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void refillDate(List<UrlCollect> list) {
+        mCollectAdapter.clear();
         mCollectAdapter.updateItems(list);
     }
 
@@ -199,10 +205,10 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void showView() {
-        super.showView();
         mCurStatus = ViewStatus.SHOW;
         mLoadingLayoutView.setVisibility(View.GONE);
     }
+
 
     @Override
     public void fetchFinish() {
@@ -221,7 +227,12 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     }
 
     @Override
-    public ViewStatus getCurStatus() {
-        return mCurStatus;
+    public boolean isEmptyView() {
+        return mCurStatus == ViewStatus.EMPTY;
+    }
+
+    @Override
+    public boolean isShowView() {
+        return mCurStatus == ViewStatus.SHOW;
     }
 }

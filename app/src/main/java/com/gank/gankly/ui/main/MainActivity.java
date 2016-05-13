@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity {
                 Fragment fragmentTo = null;
                 switch (menuItem.getItemId()) {
                     case R.id.navigation_collect:
-                        fragmentTo = CollectFragment.getInstance();
+                        fragmentTo = CollectFragment.newInstance();
                         break;
                     case R.id.navigation_video:
                         fragmentTo = VideoFragment.getInstance();
