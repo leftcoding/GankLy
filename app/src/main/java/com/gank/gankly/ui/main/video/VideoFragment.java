@@ -69,7 +69,6 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void initValues() {
-        KLog.d("initValues");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -124,7 +123,6 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     }
 
     private void onDownRefresh() {
-        KLog.d("onDownRefresh");
         mPage = 1;
         fetchVideo();
     }
