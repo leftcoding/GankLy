@@ -69,7 +69,6 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     public static CollectFragment newInstance() {
         Bundle args = new Bundle();
-        args.putBoolean("toRefresh", true);
         CollectFragment fragment = new CollectFragment();
         fragment.setArguments(args);
         return fragment;
@@ -109,8 +108,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
-        mLoadingLayoutView.setVisibility(View.GONE);
-//        onRefresh();
+        onRefresh();
     }
 
     @Override
@@ -235,4 +233,5 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     public boolean isShowView() {
         return mCurStatus == ViewStatus.SHOW;
     }
+
 }

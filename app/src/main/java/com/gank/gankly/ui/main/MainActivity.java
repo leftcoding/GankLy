@@ -14,6 +14,7 @@ import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import butterknife.Bind;
 
@@ -87,6 +88,7 @@ public class MainActivity extends BaseActivity {
                     default:
                         break;
                 }
+                KLog.d("fragmentTo:" + fragmentTo.hashCode() + "id:" + fragmentTo.getId());
                 switchFragment(fragmentTo);
                 return true;
             }

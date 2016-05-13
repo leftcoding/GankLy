@@ -7,7 +7,6 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
     }
 
     public void fetchDate(int page) {
-        KLog.d("fetchDate:" + page);
         if (page == 0) {
             isMore = true;
         }

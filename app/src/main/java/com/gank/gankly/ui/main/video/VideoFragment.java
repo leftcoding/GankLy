@@ -16,10 +16,10 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.socks.library.KLog;
 
@@ -69,6 +69,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void initValues() {
+        KLog.d("initValues");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -123,6 +124,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     }
 
     private void onDownRefresh() {
+        KLog.d("onDownRefresh");
         mPage = 1;
         fetchVideo();
     }
