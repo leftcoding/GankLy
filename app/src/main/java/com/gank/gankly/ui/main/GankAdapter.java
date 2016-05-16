@@ -52,7 +52,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtName.setText(bean.getWho());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_ONE));
-        holder.txtFrom.setText(bean.getSource());
         int size = MeiziArrayList.getInstance().getArrayList().size();
         if (position > size) {
             position = position % size;
@@ -95,8 +94,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         TextView txtName;
         @Bind(R.id.goods_txt_time)
         TextView txtTime;
-        @Bind(R.id.goods_txt_from)
-        TextView txtFrom;
         @Bind(R.id.ri_img)
         RatioImageView img;
         ResultsBean mBean;

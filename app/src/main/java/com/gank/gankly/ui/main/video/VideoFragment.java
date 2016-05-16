@@ -50,7 +50,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     SwipeRefreshLayout mSwipeRefresh;
 
     private MainActivity mActivity;
-    private VideoRecyclerAdapter mVideoRecyclerAdapter;
+    private VideoAdapter mVideoRecyclerAdapter;
     private int mLastPosition;
 
 
@@ -87,7 +87,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
             barLayout.setDisplayHomeAsUpEnabled(true);
         }
 
-        mVideoRecyclerAdapter = new VideoRecyclerAdapter(mActivity);
+        mVideoRecyclerAdapter = new VideoAdapter(mActivity);
         mVideoRecyclerAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mVideoRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));

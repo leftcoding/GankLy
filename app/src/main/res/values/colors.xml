@@ -28,6 +28,7 @@
 
     <color name="standard_text_color_blue_a">#3b77b4</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
+    <color name="video_item_black_light_bg">#553a3a3a</color>
 
     <!--  jianshu   -->
 
@@ -47,7 +48,6 @@
     <color name="bg_black">#3f3f3f</color>
     <color name="bg_black_darker">#2f2f2f</color>
     <color name="bg_black_height">#262626</color>
-    <color name="bg_black_light">#3a3a3a</color>
     <color name="bg_white">#ffffff</color>
     <color name="bisque">#ffe4c4</color>
     <color name="black_dark_lightest">#3a3a3a</color>
