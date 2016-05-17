@@ -1,27 +1,23 @@
 package com.example;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MyClass {
     private long mLastTime;
 
     public static void main(String[] args) throws InterruptedException {
-        long mLastTime = 0;
         MyClass myClass = new MyClass();
-        List<String> list = null;
-        list = new ArrayList<>();
-        System.out.println(isListEmpty(list));
 
-        System.out.println(new Date());
+        System.out.println("" + getSuffixImageName("http://ww4.sinaimg.cn/large/610dc034jw1f3litmfts1j20qo0hsac7.jpg"));
+    }
 
-        for (int i = 0; i < 3; i++) {
-            if(i == 2){
-                Thread.sleep(1000);
-            }
-            System.out.println("check:" + myClass.checkMore());
-        }
+    public static String getSuffixImageName(String url) {
+//        if (!TextUtils.isEmpty(url)) {
+        String[] strings = url.split("/");
+//        }
+        int size = strings.length;
+        return strings[size - 1];
+//        return null;
     }
 
     public static <E> boolean isListEmpty(List<E> list) {

@@ -23,7 +23,7 @@
     <string name="collect_success">收藏成功</string>
 
     <string name="meizi_save">保存</string>
-    <string name="meizi_picture_save_path">保存图片路径:%s</string>
+    <string name="meizi_picture_save_path">图片已保存,保存图片路径:%s</string>
 
     <string name="web_refresh">刷新</string>
     <string name="web_copy_url">复制链接</string>
