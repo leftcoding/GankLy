@@ -16,6 +16,11 @@
             android:title="@string/navigation_video"/>
 
         <item
+            android:id="@+id/navigation_gift"
+            android:icon="@drawable/navigation_gift"
+            android:title="@string/navigation_gift"/>
+
+        <item
             android:id="@+id/navigation_collect"
             android:icon="@drawable/navigation_collect"
             android:title="@string/navigation_collect"/>
