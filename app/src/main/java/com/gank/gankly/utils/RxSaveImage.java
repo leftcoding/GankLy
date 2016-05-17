@@ -35,7 +35,7 @@ public class RxSaveImage {
                             .load(url)
                             .asBitmap()
                             .atMost()
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                             .skipMemoryCache(true)
                             .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .get();
@@ -53,16 +53,18 @@ public class RxSaveImage {
                 if (!appDir.exists()) {
                     appDir.mkdir();
                 }
-                String fileName = System.currentTimeMillis() + ".jpg";
+                String fileName = url.hashCode() + ".jpg";
                 File file = new File(appDir, fileName);
-                try {
-                    FileOutputStream fos = new FileOutputStream(file);
-                    assert bitmap != null;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                    fos.flush();
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (!file.exists()) {
+                    try {
+                        FileOutputStream fos = new FileOutputStream(file);
+                        assert bitmap != null;
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                        fos.flush();
+                        fos.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 Uri uri = Uri.fromFile(file);

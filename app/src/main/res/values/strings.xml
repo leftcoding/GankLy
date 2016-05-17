@@ -2,7 +2,6 @@
     <string name="app_name">GankLy</string>
     <string name="action_settings">Settings</string>
     <string name="app_again_out">再按一次退出GankLy</string>
-    <string name="more">更多</string>
     <string name="retry">重试</string>
 
     <string name="navigation_collect">收藏</string>
@@ -35,6 +34,8 @@
     <string name="tip_server_error">服务器加载失败，妹子不来了</string>
     <string name="tip_no_more_load">所有妹子都呈现在你眼前了</string>
     <string name="tip_to_delete">是否确认删除？</string>
+    <string name="tip_share_empty_text">分享内容不能为空</string>
+    <string name="tip_img_path_error">保存图片地址出错</string>
 
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="item_book_author">%1$s on %2$s</string>

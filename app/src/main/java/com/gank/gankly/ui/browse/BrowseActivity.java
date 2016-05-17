@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.RxSaveImage;
+import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.DepthPageTransformer;
 import com.socks.library.KLog;
@@ -53,6 +55,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private int mPage;
 
     private boolean isLoadMore = true;
+    private String imgPath;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -175,16 +178,18 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.meizi_save:
-                saveImagePath();
+                saveImagePath(false);
                 break;
-
+            case R.id.meizi_share:
+                saveImagePath(true);
+                break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveImagePath() {
+    private void saveImagePath(final boolean isShare) {
         int position = mViewPager.getCurrentItem();
         String mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
         RxSaveImage.saveImage(this, mUrl)
@@ -202,11 +207,24 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
                     @Override
                     public void onNext(Uri uri) {
-                        File appDir = new File(Environment.getExternalStorageDirectory(), "GankLy_pic");
-                        String msg = String.format(getString(R.string.meizi_picture_save_path), appDir.getAbsolutePath());
-                        ToastUtils.showToast(msg);
+                        String imgPath = getImagePath();
+                        if (TextUtils.isEmpty(imgPath)) {
+                            ToastUtils.showToast(R.string.tip_img_path_error);
+                            return;
+                        }
+                        if (isShare) {
+                            ShareUtils.shareSingleImage(BrowseActivity.this, uri);
+                        } else {
+                            String msg = String.format(getString(R.string.meizi_picture_save_path), imgPath);
+                            ToastUtils.showToast(msg);
+                        }
                     }
                 });
+    }
+
+    private String getImagePath() {
+        File appDir = new File(Environment.getExternalStorageDirectory(), "GankLy_pic");
+        return appDir.getAbsolutePath();
     }
 
     private void hideSystemUi() {
