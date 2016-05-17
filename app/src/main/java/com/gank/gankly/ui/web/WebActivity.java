@@ -24,7 +24,6 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
-import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 
 import java.io.InputStream;
@@ -128,7 +127,8 @@ public class WebActivity extends BaseActivity {
                 addUrl();
                 return true;
             case R.id.welfare_share:
-                ShareUtils.getInstance().shareQQ(mTitle, mWebView.getUrl(), "干货分享", "");
+//                ShareUtils.getInstance().shareQQ(mTitle, mWebView.getUrl(), "干货分享", "");
+                shareText(null);
                 return true;
             case R.id.welfare_copy_url:
                 AppUtils.copyText(this, mWebView.getUrl());
@@ -155,6 +155,17 @@ public class WebActivity extends BaseActivity {
         } else {
             ToastUtils.showToast(R.string.web_open_failed);
         }
+    }
+
+    //分享文字
+    public void shareText(String str) {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is my Share text.");
+        shareIntent.setType("text/plain");
+
+        //设置分享列表的标题，并且每次都显示分享列表
+        startActivity(Intent.createChooser(shareIntent, "分享到"));
     }
 
     @Override

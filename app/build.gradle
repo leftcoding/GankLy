@@ -3,7 +3,6 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "com.gank.gankly"
         minSdkVersion 19
@@ -11,35 +10,39 @@ android {
         versionCode 1
         versionName "1.0"
     }
-
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关闭
     lintOptions {
         abortOnError false
         disable "InvalidPackage"
         lintConfig file("lint.xml")
     }
-
     // java版本
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
-
+    signingConfigs {
+        release {
+            keyAlias 'leftcoding_lingyan'
+            keyPassword 'ly137387869'
+            storeFile file('E:/Gankly_img/gankly.jks')
+            storePassword 'ly137387869'
+        }
+    }
     buildTypes {
         debug {
-            buildConfigField "String", "pwd", '"Gank"'
             minifyEnabled false
         }
         release {
-
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'
@@ -61,8 +64,6 @@ dependencies {
     //图片库
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.bumptech.glide:okhttp-integration:1.4.0'
-    //刷新库
-    compile project(':ptr-lib')
     //数据库
     compile 'de.greenrobot:greendao:2.1.0'
     compile 'de.greenrobot:greendao-generator:2.1.0'

@@ -36,10 +36,10 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
         queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
         queryBuilder.offset(offSet).limit(mLimit);
-        toView(queryBuilder.list());
+        handleView(queryBuilder.list());
     }
 
-    private void toView(List<UrlCollect> list) {
+    private void handleView(List<UrlCollect> list) {
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {

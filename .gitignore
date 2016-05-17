@@ -1,3 +1,4 @@
+/app/proguard-rules.pro
 # Built application files
 *.apk
 *.ap_

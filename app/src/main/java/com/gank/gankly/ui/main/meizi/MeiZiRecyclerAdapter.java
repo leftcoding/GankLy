@@ -28,7 +28,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private LayoutInflater inflater;
 
     private MeiziOnClick mMeiZiOnClick;
-//    private List<Integer> heights;
 
 
     public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
@@ -39,7 +38,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         inflater = LayoutInflater.from(context);
         mContext = context;
         mResults = new ArrayList<>();
-//        heights = new ArrayList<>();
     }
 
     @Override
