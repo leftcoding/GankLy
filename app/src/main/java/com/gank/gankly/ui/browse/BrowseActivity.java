@@ -19,8 +19,10 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.main.meizi.GiftFragment;
 import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -55,7 +57,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private int mPage;
 
     private boolean isLoadMore = true;
-    private String imgPath;
+    private String mViewsModel;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -64,10 +66,12 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     @Override
     public void onPageSelected(int position) {
-        int p = MeiziArrayList.getInstance().size() - 5;
-        if (position == p) {
-            if (isLoadMore) {
-                fetchDate();
+        if (ViewsModel.GANK.equals(mViewsModel)) {
+            int p = MeiziArrayList.getInstance().size() - 5;
+            if (position == p) {
+                if (isLoadMore) {
+                    fetchDate();
+                }
             }
         }
     }
@@ -116,7 +120,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mPosition = bundle.getInt("position");
+            mPosition = bundle.getInt("position",0);
+            mViewsModel = bundle.getString("viewsModel", ViewsModel.GANK);
         }
     }
 
@@ -158,13 +163,22 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
         @Override
         public int getCount() {
-            return MeiziArrayList.getInstance().size();
+            if (ViewsModel.GANK.equals(mViewsModel)) {
+                return MeiziArrayList.getInstance().size();
+            } else {
+                return GiftFragment.getInstance().getList().size();
+            }
         }
 
         @Override
         public Fragment getItem(int position) {
-            ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
-            return BrowseFragment.newInstance(bean.getUrl());
+            if (ViewsModel.GANK.equals(mViewsModel)) {
+                ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
+                return BrowseFragment.newInstance(bean.getUrl());
+            } else {
+                return BrowseFragment.newInstance(GiftFragment.getInstance()
+                        .getList().get(position).getImgUrl());
+            }
         }
     }
 

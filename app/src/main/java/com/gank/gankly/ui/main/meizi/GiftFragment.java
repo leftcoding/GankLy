@@ -1,26 +1,24 @@
 package com.gank.gankly.ui.main.meizi;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.config.Constants;
-import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.bean.GiftBean;
+import com.gank.gankly.bean.GiftResult;
+import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.socks.library.KLog;
 
@@ -29,14 +27,21 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.IllegalFormatException;
+import java.util.List;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
+import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-05-17
  */
-public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick {
+public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, ItemClick {
     private static GiftFragment sGiftFragment;
 
     @Bind(R.id.toolbar)
@@ -46,15 +51,21 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private MeiZiRecyclerAdapter mRecyclerAdapter;
+    private GiftAdapter mAdapter;
     private MainActivity mActivity;
 
-    private int mPage = 1;
-    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
+    private static final int timeout = 50 * 1000;
 
-    private static final int timeout = 5 * 1000;
-    public static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
+    private static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
+    private String url = "http://www.mzitu.com/mm/page/";
+
+    private int mCurPage = 1;
+    private int mPages = 1;
+    private int mLastPosition = 0;
+    private int mDetailsPageCount = 1;
+    private int mCurDetailsPage = 1;
+    private boolean isForLoading = false;
 
     public GiftFragment() {
     }
@@ -88,10 +99,21 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     protected void initValues() {
         mActivity.setTitle(R.string.navigation_gift);
         mActivity.setSupportActionBar(mToolbar);
+        ProgressBar progressBar = new ProgressBar(mActivity, null,
+                android.R.attr.progressBarStyleSmallInverse);
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(60, 60);
+        params.gravity = Gravity.END;
+        params.setMargins(0, 0, 20, 0);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
+            bar.setDisplayShowCustomEnabled(true);
+            bar.setCustomView(progressBar, params);
         }
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,9 +124,9 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initViews() {
-        mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
-        mRecyclerAdapter.setMeiZiOnClick(this);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
+        mAdapter = new GiftAdapter(mActivity);
+        mAdapter.setOnItemClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
         initRecycler();
     }
 
@@ -125,21 +147,27 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
 
     private void onDownRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        mPage = 1;
-//        fetchDate();
+        mCurPage = 1;
+        fetchPageNum();
     }
 
     private void initRecycler() {
-        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    GiftFragment.this.onScrollStateChanged();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mAdapter.getItemCount())
+                        && !mSwipeRefreshLayout.isRefreshing()) {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                    fetchPageNum();
                 }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                mLastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -150,7 +178,7 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String url = "http://www.mzitu.com/63571";
+                String url = "http://www.mzitu.com/54285/1";
                 Document doc = null;
                 try {
                     doc = Jsoup.connect(url)
@@ -171,60 +199,253 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
                 }
 
                 links = doc.select(".pagenavi a[href]");
-                KLog.d("pagenavi:" + links.size());
+                KLog.d("pagenavi，size:" + links.size());
                 for (int i = 0; i < links.size(); i++) {
-                    KLog.d("pagenavi:" + links.get(i).text());
+                    KLog.d("pagenavi:" + links.get(i).text() + "," + links.get(i).attr("href"));
+
                 }
-//                KLog.d("pagenavi:" + links.get(links.size() - 2).text());
             }
         }).start();
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                String url = "http://www.mzitu.com/mm/page/1";
+//                try {
+//                    Document doc = Jsoup.connect(url)
+//                            .userAgent(DESKTOP_USERAGENT)
+//                            .timeout(timeout)
+//                            .get();
+//
+//                    Elements links = doc.select("#pins > li > a");
+//                    KLog.d("page num:" + links.size());
+//                    for (int i = 0; i < links.size(); i++) {
+//                        String href = links.get(i).attr("href");
+//                        KLog.d("href:" + href);
+//                    }
+//                    links = doc.select("#pins a img");
+//                    for (int i = 0; i < links.size(); i++) {
+//                        String img = links.get(i).attr("data-original");
+//                        KLog.d("img:" + img);
+//                    }
+//
+//                    try {
+//                        links = doc.select(".time");
+//                        KLog.d("time:" + links.get(0).text());
+//
+//                        links = doc.select(".view");
+//                        KLog.d("time:" + links.get(0).text());
+//                    } catch (Exception e) {
+//                        throw new RuntimeException(e);
+//                    }
+//
+//                    links = doc.select(".pagenavi a[href]");
+//                    KLog.d("pagenavi，size:" + links.size());
+//                    for (int i = 0; i < links.size(); i++) {
+//                        KLog.d("pagenavi:" + isNumeric(links.get(i).text()) + "," + links.get(i).attr("href"));
+//                    }
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
+
     }
 
+    private void fetchPageNum() {
+        Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+            @Override
+            public void call(Subscriber<? super GiftResult> subscriber) {
+                try {
+                    try {
+                        if (mCurPage > mPages) {
+                            return;
+                        }
+                        String _url = url + mCurPage;
+                        KLog.d("_url:" + _url);
+                        Document doc = Jsoup.connect(_url)
+                                .userAgent(DESKTOP_USERAGENT)
+                                .timeout(timeout)
+                                .get();
+                        int num = getPageNum(doc);
+                        subscriber.onNext(new GiftResult(num, getCountPage(doc)));
+                    } catch (IOException e) {
+                        KLog.e(e);
+                    }
+                } catch (Exception e) {
+                    KLog.e(e);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
-    private void fetchDate() {
-        final int limit = Constants.MEIZI_LIMIT;
-        GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
+        observable.subscribe(new Subscriber<GiftResult>() {
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
-                mPage = mPage + 1;
             }
 
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG).show();
             }
 
             @Override
-            public void onNext(GankResult gankResult) {
-                if (!gankResult.isEmpty()) {
-                    if (mPage == 1) {
-                        MeiziArrayList.getInstance().clear();
+            public void onNext(GiftResult giftResult) {
+                if (giftResult != null) {
+                    if (giftResult.getSize() > 0) {
+                        if (mCurPage == 1) {
+                            mAdapter.clear();
+                        }
+                        mAdapter.updateItems(giftResult.getList());
                     }
-                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
+                    mPages = giftResult.getNum();
+                    KLog.d("mPages:" + mPages);
                 }
-                if (gankResult.getSize() < limit) {
-                    isLoadMore = false;
-                    Snackbar.make(mRecyclerView, R.string.loading_pic_no_more, Snackbar.LENGTH_LONG).show();
-                }
-
-                mRecyclerAdapter.updateItems(MeiziArrayList.getInstance().getArrayList());
             }
         });
     }
 
-    private void onScrollStateChanged() {
-        int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
-        mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
-        for (int position : positions) {
-            if (position == mStaggeredGridLayoutManager.getItemCount() - 1 && isLoadMore && !mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(true);
-                fetchDate();
+    private void fetchCount(final String url) {
+        Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+            @Override
+            public void call(Subscriber<? super GiftResult> subscriber) {
+                try {
+                    try {
+                        if (mCurPage > mPages) {
+                            return;
+                        }
+                        KLog.d("url:" + url);
+                        Document doc = Jsoup.connect(url)
+                                .userAgent(DESKTOP_USERAGENT)
+                                .timeout(timeout)
+                                .get();
+                        subscriber.onNext(new GiftResult(0, getCount(doc)));
+                    } catch (IOException e) {
+                        KLog.e(e);
+                    }
+                } catch (Exception e) {
+                    KLog.e(e);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+
+        observable.subscribe(new Subscriber<GiftResult>() {
+            @Override
+            public void onCompleted() {
+                mSwipeRefreshLayout.setRefreshing(false);
+                KLog.d("mCurPage:" + mCurPage + ",mPages:" + mPages);
+                if (mCurPage <= mPages) {
+                    mCurPage = mCurPage + 1;
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e(e);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onNext(GiftResult giftResult) {
+                if (giftResult != null) {
+                    if (giftResult.getSize() > 0) {
+                        if (mCurPage == 1) {
+                            mAdapter.clear();
+                        }
+                        mAdapter.updateItems(giftResult.getList());
+                    }
+                    mPages = giftResult.getNum();
+                    KLog.d("mPages:" + mPages);
+                }
+            }
+        });
+    }
+
+    private int getPageNum(Document doc) {
+        int p = 0;
+        if (doc != null) {
+            Elements count = doc.select(".pagenavi a[href]");
+            int size = count.size();
+            if (size > 0) {
+                for (int i = size - 1; i >= 0; i--) {
+                    String num = count.get(i).text();
+                    if (isNumeric(num)) {
+                        try {
+                            return Integer.parseInt(num);
+                        } catch (IllegalFormatException e) {
+                            KLog.e(e);
+                        }
+                    }
+                }
+            }
+        }
+        return p;
+    }
+
+    private List<GiftBean> getCountPage(Document doc) {
+        List<GiftBean> list = null;
+        if (doc == null) {
+            return null;
+        }
+        Elements count = doc.select("#pins > li > a");
+        Elements img = doc.select("#pins a img");
+        Elements times = doc.select(".time");
+        Elements views = doc.select(".view");
+
+        int countSize = count.size();
+        int imgSize = img.size();
+        int size = countSize > imgSize ? imgSize : countSize;
+        KLog.d("links:" + size);
+
+        if (size > 0) {
+            list = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                String imgUrl = img.get(i).attr("data-original");
+                String title = img.get(i).attr("alt");
+                String url = count.get(i).attr("href");
+                String time = times.get(i).text();
+                String view = views.get(i).text();
+                if (!TextUtils.isEmpty(imgUrl) && !TextUtils.isEmpty(url)) {
+                    list.add(new GiftBean(imgUrl, url, time, view, title));
+                }
+            }
+        }
+        return list;
+    }
+
+    private List<GiftBean> getCount(Document doc) {
+        List<GiftBean> list;
+        if (doc == null) {
+            return null;
+        }
+        list = new ArrayList<>();
+        Elements pages = doc.select(".pagenavi a[href]");
+        int size = pages.size();
+        for (int i = size - 1; i > 0; i--) {
+            String page = pages.get(i).text();
+            if (isNumeric(page)) {
+                mDetailsPageCount = Integer.parseInt(page);
                 break;
             }
         }
+
+        if (mDetailsPageCount > 0) {
+            for (int i = mCurDetailsPage; mCurDetailsPage < mDetailsPageCount; mCurDetailsPage++) {
+                Elements links = doc.select(".main-image img[src$=.jpg]");
+                list.add(new GiftBean(links.get(i).attr("src")));
+
+            }
+        }
+        return list;
+    }
+
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 
     @Override
@@ -233,11 +454,12 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onClick(View view, int position) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
-        Intent intent = new Intent(mActivity, BrowseActivity.class);
-        intent.putExtras(bundle);
-        mActivity.startActivity(intent);
+    public void onClick(int position, Object object) {
+        GiftBean giftBean = (GiftBean) object;
+        fetchCount(giftBean.getUrl());
+    }
+
+    public List<GiftBean> getList() {
+        return mAdapter.getResults();
     }
 }

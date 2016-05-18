@@ -26,9 +26,10 @@ import rx.schedulers.Schedulers;
  */
 public class GankRetrofit {
     private static final String BASE_URL = "http://gank.io/api/data/";
+    private static final String GIFT_BASE_URL = "http://www.mzitu.com/";
+
     private static final int DEFAULT_OUT_TIME = 12;
 
-    public static GankRetrofit instance;
     public GankApi gankApi;
 
     final static Gson gson = new GsonBuilder()
@@ -64,6 +65,7 @@ public class GankRetrofit {
 
         gankApi = retrofit.create(GankApi.class);
     }
+
 
     //在访问HttpMethods时创建单例
     private static class SingletonHolder {
