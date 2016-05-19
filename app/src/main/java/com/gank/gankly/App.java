@@ -9,8 +9,6 @@ import com.facebook.stetho.Stetho;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
 
-import cn.sharesdk.framework.ShareSDK;
-
 /**
  * Create by LingYan on 2016-04-01
  */
@@ -27,9 +25,6 @@ public class App extends Application {
         mContext = this;
         //初始化Chrome Stetho
         Stetho.initializeWithDefaults(this);
-
-        // 初始化ShareSDK
-        ShareSDK.initSDK(this);
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
         db = helper.getWritableDatabase();

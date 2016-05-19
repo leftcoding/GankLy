@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
@@ -17,4 +16,16 @@
         android:layout_height="wrap_content"
         android:background="#2f000000"
         android:fitsSystemWindows="true"/>
+
+    <TextView
+        android:id="@+id/progress_txt_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
 </merge>

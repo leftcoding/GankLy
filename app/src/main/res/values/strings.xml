@@ -25,6 +25,7 @@
 
     <string name="meizi_save">保存</string>
     <string name="meizi_picture_save_path">图片已保存,保存图片路径:%s</string>
+    <string name="meizi_limit_page">%1$d / %2$d</string>
 
     <string name="web_refresh">刷新</string>
     <string name="web_copy_url">复制链接</string>
@@ -41,8 +42,6 @@
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="item_book_author">%1$s on %2$s</string>
 
-    <string name="collect_item_author">%1$s</string>
-
-    <string name="about_describe">GankLy \n关于程序员的干货，每天基本上都有新的知识点，妹子图片，搞笑视频（主要看妹子）。 \n目的  \n做这个App的目的主要是为了学习和巩固知识，
-        同样也希望能帮助一些需要帮助的人。\n  感谢 \n@daimajia提供接口，另外感谢下@drakket @xiongwei-git 还有一些网上不认识的朋友。 </string>
+    <string name="about_app_str">GankLy \n该应用是一个关于程序员的干货，基本上应用每天都有会有新Android、ios等知识点，还有福（mei）利（zi）、精彩视频等让你放松的视觉享受，后期有时间还会加入其他的知识点。由于时间、能力有限，还有许多不足的地方，请大家多多指教。</string>
+    <string name="about_thanks_str">感谢 \n应用中用到的大部分接口均来自 http://gank.io，在这里感谢daimajia的无私贡献。应用中部分代码参考来着@drakket @xiongwei-git，还有帮助我过我的人，以及网上的分享。同样，我也希望我的应用可以帮助一些人。</string>
 </resources>

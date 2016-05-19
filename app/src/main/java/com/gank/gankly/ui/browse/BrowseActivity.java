@@ -13,9 +13,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.TextView;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
@@ -30,6 +33,7 @@ import com.gank.gankly.widget.DepthPageTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.Subscriber;
@@ -47,6 +51,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
+    @Bind(R.id.progress_txt_page)
+    TextView txtLimit;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.pager)
@@ -58,10 +64,14 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     private boolean isLoadMore = true;
     private String mViewsModel;
+    private List<GiftBean> mGiftList;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+        if (ViewsModel.Gift.equals(mViewsModel)) {
+            txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
+                    position + 1, mGiftList.size()));
+        }
     }
 
     @Override
@@ -120,8 +130,12 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mPosition = bundle.getInt("position",0);
-            mViewsModel = bundle.getString("viewsModel", ViewsModel.GANK);
+            mPosition = bundle.getInt("position", 0);
+            mViewsModel = bundle.getString(ViewsModel.Gift, ViewsModel.GANK);
+        }
+
+        if (ViewsModel.Gift.equals(mViewsModel)) {
+            mGiftList = GiftFragment.getInstance().getList();
         }
     }
 
@@ -176,6 +190,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
                 ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
                 return BrowseFragment.newInstance(bean.getUrl());
             } else {
+
                 return BrowseFragment.newInstance(GiftFragment.getInstance()
                         .getList().get(position).getImgUrl());
             }

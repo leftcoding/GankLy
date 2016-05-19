@@ -44,6 +44,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -53,9 +54,18 @@
                 android:lineSpacingExtra="5dp"
                 android:paddingEnd="10dp"
                 android:paddingStart="10dp"
-                android:text="@string/about_describe"
+                android:text="@string/about_app_str"
                 android:textColor="@color/text_default"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="5dp"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:text="@string/about_thanks_str"
+                android:textColor="@color/text_default"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,11 +78,10 @@
                     android:lineSpacingExtra="5dp"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"
-                    android:text="另外也可以直接访问代码家的网站"
+                    android:text="干货"
                     android:textColor="@color/text_default"/>
 
                 <TextView
-                    android:id="@+id/about_txt_site"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -84,12 +93,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:text="妹子图"
+                    android:textColor="@color/text_default"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:autoLink="web"
+                    android:text="http://www.mzitu.com/mm"
+                    android:textColor="@color/text_default"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:lineSpacingExtra="5dp"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"
@@ -99,7 +131,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:autoLink="web"
                     android:text="https://github.com/leftcoding/GankLy"
                     android:textColor="@color/text_default"/>

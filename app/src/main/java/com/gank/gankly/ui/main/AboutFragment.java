@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
 
@@ -45,7 +44,7 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void initViews() {
-        mCollapsingToolbarLayout.setTitle(App.getAppString(R.string.navigation_about));
+//        mCollapsingToolbarLayout.setTitle(App.getAppString(R.string.navigation_about));
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
