@@ -207,10 +207,10 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.meizi_save:
-                saveImagePath(false);
+                saveImagePath(getImageUrl(), false);
                 break;
             case R.id.meizi_share:
-                saveImagePath(true);
+                saveImagePath(getImageUrl(), true);
                 break;
             default:
                 break;
@@ -218,10 +218,19 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveImagePath(final boolean isShare) {
+    private String getImageUrl() {
         int position = mViewPager.getCurrentItem();
-        String mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
-        RxSaveImage.saveImage(this, mUrl)
+        String mUrl;
+        if (ViewsModel.GANK.equals(mViewsModel)) {
+            mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
+        } else {
+            mUrl = mGiftList.get(position).getImgUrl();
+        }
+        return mUrl;
+    }
+
+    private void saveImagePath(String imgUrl, final boolean isShare) {
+        RxSaveImage.saveImage(this, imgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Uri>() {
                     @Override

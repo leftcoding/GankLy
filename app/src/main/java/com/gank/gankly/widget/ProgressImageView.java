@@ -18,6 +18,10 @@ import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.ProgressTarget;
 
+/**
+ * Glide image with progress
+ * Create by LingYan on 2016-5-19
+ */
 public class ProgressImageView extends RelativeLayout {
     private boolean showProgressText = true, showProgressBar = true;
     private TextView progressTextView;

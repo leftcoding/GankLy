@@ -124,11 +124,14 @@
 -dontwarn butterknife.internal.**
 -keep class **$$ViewBinder { *; }
 -keepclasseswithmembernames class * {
-   @butterknife.* <fields>;
+    @butterknife.* <fields>;
 }
 -keepclasseswithmembernames class * {
- @butterknife.* <methods>;
+    @butterknife.* <methods>;
 }
+
+#################### Jsoup ####################
+-keeppackagenames org.jsoup.nodes
 
 #################### Umeng ####################
 -dontshrink

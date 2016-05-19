@@ -11,9 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -21,9 +19,11 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.GiftResult;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.view.IBaseView;
+import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
 
 import org.jsoup.Jsoup;
@@ -46,15 +46,17 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-05-17
  */
-public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, ItemClick {
+public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ItemClick {
     private static GiftFragment sGiftFragment;
 
-    @Bind(R.id.toolbar)
+    @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.recycler_view)
+    @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.swipe_refresh)
+    @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.loading_view)
+    LoadingLayoutView mLoadingLayoutView;
 
     private GiftAdapter mAdapter;
     private MainActivity mActivity;
@@ -71,6 +73,7 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     private ProgressDialog mDialog;
     private int progress;
     private int mClickPosition;
+    private IBaseView.ViewStatus mViewStatus = IBaseView.ViewStatus.LOADING;
 
     public GiftFragment() {
     }
@@ -104,20 +107,11 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     protected void initValues() {
         mActivity.setTitle(R.string.navigation_gift);
         mActivity.setSupportActionBar(mToolbar);
-        ProgressBar progressBar = new ProgressBar(mActivity, null,
-                android.R.attr.progressBarStyleSmallInverse);
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminate(true);
 
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(60, 60);
-        params.gravity = Gravity.END;
-        params.setMargins(0, 0, 20, 0);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
             bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             bar.setDisplayHomeAsUpEnabled(true);
-            bar.setDisplayShowCustomEnabled(true);
-            bar.setCustomView(progressBar, params);
         }
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -126,6 +120,7 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
                 mActivity.openDrawer();
             }
         });
+        onDownRefresh();
     }
 
     @Override
@@ -143,12 +138,7 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_video;
-    }
-
-    @Override
-    protected void initDate() {
-        onDownRefresh();
+        return R.layout.activity_collcet;
     }
 
     private void onDownRefresh() {
@@ -239,6 +229,10 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
                 mSwipeRefreshLayout.setRefreshing(false);
                 if (mCurPage <= mPages) {
                     mCurPage = mCurPage + 1;
+                }
+                if (IBaseView.ViewStatus.SHOW != mViewStatus) {
+                    mViewStatus = IBaseView.ViewStatus.SHOW;
+                    showView();
                 }
             }
 
@@ -454,6 +448,10 @@ public class GiftFragment extends LazyFragment implements SwipeRefreshLayout.OnR
     public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         return pattern.matcher(str).matches();
+    }
+
+    private void showView() {
+        mLoadingLayoutView.setVisibility(View.GONE);
     }
 
     @Override

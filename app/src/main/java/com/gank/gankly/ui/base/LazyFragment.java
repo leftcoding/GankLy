@@ -3,6 +3,8 @@ package com.gank.gankly.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.socks.library.KLog;
+
 /**
  * Create by LingYan on 2016-5-12
  */
@@ -35,6 +37,7 @@ public abstract class LazyFragment extends BaseFragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        KLog.d("isVisibleToUser:"+isVisibleToUser);
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadData();
@@ -47,6 +50,7 @@ public abstract class LazyFragment extends BaseFragment {
     protected abstract void initDate();
 
     private void lazyLoadData() {
+        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }
