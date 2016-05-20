@@ -19,42 +19,66 @@ import butterknife.ButterKnife;
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
     protected P mPresenter;
 
-    @Override
-    public void onAttach(Context context) {
+//    private CompositeSubscription mCompositeSubscription;
+//
+//
+//    public CompositeSubscription getCompositeSubscription() {
+//        if (this.mCompositeSubscription == null) {
+//            this.mCompositeSubscription = new CompositeSubscription();
+//        }
+//
+//        return this.mCompositeSubscription;
+//    }
+
+
+//    public void addSubscription(Subscription s) {
+//        CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+//        mCompositeSubscription.add(s);
+//    }
+
+//    public void unSubscribe() {
+//        if (this.mCompositeSubscription != null) {
+//    KLog.d("unsubscribe");
+//    this.mCompositeSubscription.unsubscribe();
+//}
+
+@Override
+public void onAttach(Context context){
         super.onAttach(context);
-    }
+        }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
-    }
+@Nullable
+@Override
+public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+        return inflater.inflate(getLayoutId(),container,false);
+        }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+@Override
+public void onViewCreated(View view,@Nullable Bundle savedInstanceState){
+        super.onViewCreated(view,savedInstanceState);
+        ButterKnife.bind(this,view);
         initValues();
         initViews();
         bindLister();
-    }
+        }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+@Override
+public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-    }
+        }
 
-    protected abstract void initValues();
+protected abstract void initValues();
 
-    protected abstract void initViews();
+protected abstract void initViews();
 
-    protected abstract void bindLister();
+protected abstract void bindLister();
 
-    protected abstract int getLayoutId();
+protected abstract int getLayoutId();
 
-    @Override
-    public void onDestroyView() {
+@Override
+public void onDestroyView(){
         super.onDestroyView();
         ButterKnife.unbind(this);
-    }
-}
+//        unSubscribe();
+        }
+        }

@@ -5,13 +5,9 @@ import com.gank.gankly.bean.GankResult;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -26,7 +22,6 @@ import rx.schedulers.Schedulers;
  */
 public class GankRetrofit {
     private static final String BASE_URL = "http://gank.io/api/data/";
-    private static final String GIFT_BASE_URL = "http://www.mzitu.com/";
 
     private static final int DEFAULT_OUT_TIME = 12;
 
@@ -42,19 +37,19 @@ public class GankRetrofit {
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
 //        builder.interceptors().add(new LoggingInterceptor()); //打印请求log
-        builder.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
-
-                Request request = original.newBuilder()
-                        .header("Content-Type", "application/json")
-                        .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
-                        .build();
+//        builder.addInterceptor(new Interceptor() {
+//            @Override
+//            public Response intercept(Interceptor.Chain chain) throws IOException {
+//                Request original = chain.request();
+//
+//                Request request = original.newBuilder()
+//                        .header("Content-Type", "application/json")
+//                        .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
+//                        .build();
 //                KLog.d(chain.proceed(request).body().string());
-                return chain.proceed(request);
-            }
-        });
+//                return chain.proceed(request);
+//            }
+//        });
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())

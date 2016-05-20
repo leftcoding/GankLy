@@ -2,6 +2,7 @@ package com.gank.gankly.ui.main.meizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 
 import com.gank.gankly.App;
@@ -23,6 +25,7 @@ import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.view.IBaseView;
+import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
 
@@ -39,6 +42,7 @@ import java.util.regex.Pattern;
 import butterknife.Bind;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -74,6 +78,9 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private int progress;
     private int mClickPosition;
     private IBaseView.ViewStatus mViewStatus = IBaseView.ViewStatus.LOADING;
+    private RxUtils mRxUtils = new RxUtils();
+    private boolean isUnSubscribe;
+    private Subscription s;
 
     public GiftFragment() {
     }
@@ -178,6 +185,24 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mDialog.setMessage(App.getAppString(R.string.loading));
         mDialog.setIndeterminate(false);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                KLog.d("onCancel");
+                progress = 0;
+                mRxUtils.unsubscribe();
+            }
+        });
+        mDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    KLog.d("KEYCODE_BACK");
+                }
+                return false;
+            }
+        });
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
@@ -221,7 +246,10 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 subscriber.onCompleted();
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .retry(3);
 
         observable.subscribe(new Subscriber<GiftResult>() {
             @Override
@@ -256,11 +284,28 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
     }
-
+    //我对你的爱就像
     private void fetchImagePage(final String url) {
-        Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+        s = Observable.create(new Observable.OnSubscribe<GiftResult>() {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
+                subscriber.add(new Subscription() {
+                    @Override
+                    public void unsubscribe() {
+                        KLog.d("unsubscribe");
+                        isUnSubscribe = true;
+                    }
+
+                    @Override
+                    public boolean isUnsubscribed() {
+                        return false;
+                    }
+                });
+
+                if (s != null && !s.isUnsubscribed()) {
+
+                }
+
                 try {
                     if (mCurPage > mPages) {
                         return;
@@ -270,35 +315,39 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                             .timeout(timeout)
                             .get();
                     subscriber.onNext(new GiftResult(0, getImageCount(url, doc)));
-                } catch (IOException e) {
-                    KLog.e(e);
+                } catch (Exception e) {
+                    KLog.e(e.toString() + e);
                 }
                 subscriber.onCompleted();
             }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
 
-        observable.subscribe(new Subscriber<GiftResult>() {
-            @Override
-            public void onCompleted() {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onNext(GiftResult giftResult) {
-                if (giftResult != null) {
-                    if (giftResult.getSize() > 0) {
-                        setMax(giftResult.getList().size());
-                        fetchImages(giftResult.getList());
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GiftResult>() {
+                    @Override
+                    public void onCompleted() {
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
-                }
-            }
-        });
+
+                    @Override
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onNext(GiftResult giftResult) {
+                        if (giftResult != null) {
+                            if (giftResult.getSize() > 0) {
+                                setMax(giftResult.getList().size());
+                                fetchImages(giftResult.getList());
+                            }
+                        }
+                    }
+                });
+        mRxUtils.manage(s);
     }
 
     private int getBigPageNum(Document doc) {
@@ -353,6 +402,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private List<GiftBean> getImageCount(String url, Document doc) {
+        KLog.d("getImageCount" + ",isUnSubscribe:" + isUnSubscribe);
         List<GiftBean> list;
         if (doc == null) {
             return null;
