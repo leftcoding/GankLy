@@ -20,7 +20,9 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.view.IBaseView;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
+import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -48,10 +50,13 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     RecyclerView mRecyclerView;
     @Bind(R.id.swipe_refresh)
     SwipeRefreshLayout mSwipeRefresh;
+    @Bind(R.id.loading_layout)
+    LoadingLayoutView mLoadingLayoutView;
 
     private MainActivity mActivity;
     private VideoAdapter mVideoRecyclerAdapter;
     private int mLastPosition;
+    private IBaseView.ViewStatus mCurStatus = IBaseView.ViewStatus.LOADING;
 
 
     public static VideoFragment getInstance() {
@@ -145,6 +150,9 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
                     public void onCompleted() {
                         mSwipeRefresh.setRefreshing(false);
                         mPage = mPage + 1;
+                        if (mCurStatus != IBaseView.ViewStatus.SHOW) {
+                            mCurStatus = IBaseView.ViewStatus.SHOW;
+                        }
                     }
 
                     @Override
@@ -177,7 +185,6 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
             }
         }
     }
-
 
     @Override
     protected int getLayoutId() {

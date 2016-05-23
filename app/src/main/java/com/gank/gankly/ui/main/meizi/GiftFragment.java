@@ -80,7 +80,8 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private IBaseView.ViewStatus mViewStatus = IBaseView.ViewStatus.LOADING;
     private RxUtils mRxUtils = new RxUtils();
     private boolean isUnSubscribe;
-    private Subscription s;
+    private Subscription mSubscription;
+    private boolean isLoading;
 
     public GiftFragment() {
     }
@@ -186,12 +187,13 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mDialog.setMessage(App.getAppString(R.string.loading));
         mDialog.setIndeterminate(false);
         mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setProgress(0);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 KLog.d("onCancel");
-                progress = 0;
-                mRxUtils.unsubscribe();
+//                mRxUtils.unsubscribe();
+                unSubscribe();
             }
         });
         mDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -227,13 +229,14 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void fetchPageCount() {
+        KLog.d("mCurPage:" + mCurPage + ",mPages:" + mPages);
+        if (mCurPage > mPages) {
+            return;
+        }
         Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
                 try {
-                    if (mCurPage > mPages) {
-                        return;
-                    }
                     String _url = url + mCurPage;
                     Document doc = Jsoup.connect(_url)
                             .userAgent(DESKTOP_USERAGENT)
@@ -248,16 +251,13 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .retry(3);
+                .observeOn(AndroidSchedulers.mainThread());
 
         observable.subscribe(new Subscriber<GiftResult>() {
             @Override
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (mCurPage <= mPages) {
-                    mCurPage = mCurPage + 1;
-                }
+                mCurPage = mCurPage + 1;
                 if (IBaseView.ViewStatus.SHOW != mViewStatus) {
                     mViewStatus = IBaseView.ViewStatus.SHOW;
                     showView();
@@ -280,36 +280,18 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         mAdapter.updateItems(giftResult.getList());
                     }
                     mPages = giftResult.getNum();
+                    KLog.d("mPages:" + mPages);
                 }
             }
         });
     }
-    //我对你的爱就像
-    private void fetchImagePage(final String url) {
-        s = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+
+    private void fetchImagePages(final String url) {
+        KLog.d("url:" + url);
+        mSubscription = Observable.create(new Observable.OnSubscribe<GiftResult>() {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
-                subscriber.add(new Subscription() {
-                    @Override
-                    public void unsubscribe() {
-                        KLog.d("unsubscribe");
-                        isUnSubscribe = true;
-                    }
-
-                    @Override
-                    public boolean isUnsubscribed() {
-                        return false;
-                    }
-                });
-
-                if (s != null && !s.isUnsubscribed()) {
-
-                }
-
                 try {
-                    if (mCurPage > mPages) {
-                        return;
-                    }
                     Document doc = Jsoup.connect(url)
                             .userAgent(DESKTOP_USERAGENT)
                             .timeout(timeout)
@@ -320,14 +302,12 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 }
                 subscriber.onCompleted();
             }
-
-
-        })
-                .subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GiftResult>() {
                     @Override
                     public void onCompleted() {
+                        KLog.d("onCompleted");
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
 
@@ -339,21 +319,34 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                     @Override
                     public void onNext(GiftResult giftResult) {
-                        if (giftResult != null) {
-                            if (giftResult.getSize() > 0) {
-                                setMax(giftResult.getList().size());
-                                fetchImages(giftResult.getList());
-                            }
+                        KLog.d("onNext");
+                        if (giftResult != null && giftResult.getSize() > 0) {
+                            setMax(giftResult.getSize());
+                            fetchImages(giftResult.getList());
                         }
                     }
                 });
-        mRxUtils.manage(s);
+    }
+
+    private void unSubscribe() {
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            isUnSubscribe = true;
+            initProgress();
+        }
+    }
+
+    private void initProgress() {
+        progress = 0;
+        setMax(progress);
+        setProgress(progress);
     }
 
     private int getBigPageNum(Document doc) {
         int p = 0;
         if (doc != null) {
-            Elements count = doc.select(".pagenavi a[href]");
+            Elements count = doc.select(".nav-links a[href]");
+
             int size = count.size();
             if (size > 0) {
                 for (int i = size - 1; i >= 0; i--) {
@@ -402,7 +395,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private List<GiftBean> getImageCount(String url, Document doc) {
-        KLog.d("getImageCount" + ",isUnSubscribe:" + isUnSubscribe);
+        KLog.d("getImageCount");
         List<GiftBean> list;
         if (doc == null) {
             return null;
@@ -438,14 +431,13 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     @Override
                     public void call(Subscriber<? super List<GiftBean>> subscriber) {
                         try {
-                            if (mCurPage > mPages) {
-                                return;
+                            if (!isUnSubscribe) {
+                                Document doc = Jsoup.connect(url)
+                                        .userAgent(DESKTOP_USERAGENT)
+                                        .timeout(timeout)
+                                        .get();
+                                subscriber.onNext(getImageCountList(doc));
                             }
-                            Document doc = Jsoup.connect(url)
-                                    .userAgent(DESKTOP_USERAGENT)
-                                    .timeout(timeout)
-                                    .get();
-                            subscriber.onNext(getImageCountList(doc));
                         } catch (IOException e) {
                             KLog.e(e);
                         }
@@ -459,13 +451,17 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 .subscribe(new Subscriber<List<GiftBean>>() {
                     @Override
                     public void onCompleted() {
+                        KLog.d("onCompleted");
                         disDialog();
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        Bundle bundle = new Bundle();
-                        Intent intent = new Intent(mActivity, BrowseActivity.class);
-                        bundle.putString(ViewsModel.Gift, ViewsModel.Gift);
-                        intent.putExtras(bundle);
-                        mActivity.startActivity(intent);
+                        if (!isUnSubscribe) {
+                            Bundle bundle = new Bundle();
+                            Intent intent = new Intent(mActivity, BrowseActivity.class);
+                            bundle.putString(ViewsModel.Gift, ViewsModel.Gift);
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        } else {
+                            isUnSubscribe = false;
+                        }
                     }
 
                     @Override
@@ -476,6 +472,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                     @Override
                     public void onNext(List<GiftBean> giftResult) {
+                        KLog.d("onNext,isUnSubscribe:" + isUnSubscribe);
                         if (giftResult != null && giftResult.size() > 0) {
                             mImageCountList.addAll(giftResult);
                         }
@@ -511,14 +508,18 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onClick(int position, Object object) {
-        if (mClickPosition != position) {
+        if (mClickPosition != position || isLoading) {
             mClickPosition = position;
             mImageCountList.clear();
             progress = 0;
+            setProgress(progress);
+            setMax(progress);
+            isLoading = false;
         }
+        isLoading = true;
         GiftBean giftBean = (GiftBean) object;
         showDialog();
-        fetchImagePage(giftBean.getUrl());
+        fetchImagePages(giftBean.getUrl());
     }
 
     public List<GiftBean> getList() {

@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,6 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
         holder.position = position;
         holder.txtDesc.setText(bean.getTitle());
         holder.txtAuthor.setText(bean.getTime());
-        KLog.d("url->:" + bean.getImgUrl());
         Glide.with(mContext)
                 .load(bean.getImgUrl())
                 .asBitmap()

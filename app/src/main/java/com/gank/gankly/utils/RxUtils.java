@@ -9,6 +9,10 @@ import rx.subscriptions.CompositeSubscription;
 public class RxUtils {
     private CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
+    public CompositeSubscription getCompositeSubscription() {
+        return mCompositeSubscription;
+    }
+
     public void manage(Subscription subscription) {
         mCompositeSubscription.add(subscription);
     }
