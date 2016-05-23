@@ -1,5 +1,6 @@
 package com.gank.gankly.ui.view;
 
+import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 
 import java.util.List;
@@ -19,4 +20,5 @@ public interface ICollectView<T extends UrlCollect> extends ISwipeRefreshView {
 
     boolean isListEmpty();
 
+    ViewStatus getCurViewStatus();
 }

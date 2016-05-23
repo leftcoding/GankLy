@@ -12,20 +12,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.GiftResult;
+import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.view.IBaseView;
-import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
 
@@ -77,8 +75,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private ProgressDialog mDialog;
     private int progress;
     private int mClickPosition;
-    private IBaseView.ViewStatus mViewStatus = IBaseView.ViewStatus.LOADING;
-    private RxUtils mRxUtils = new RxUtils();
+    private ViewStatus mViewStatus = ViewStatus.LOADING;
     private boolean isUnSubscribe;
     private Subscription mSubscription;
     private boolean isLoading;
@@ -191,18 +188,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                KLog.d("onCancel");
-//                mRxUtils.unsubscribe();
                 unSubscribe();
-            }
-        });
-        mDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    KLog.d("KEYCODE_BACK");
-                }
-                return false;
             }
         });
         if (!mDialog.isShowing()) {
@@ -229,7 +215,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private void fetchPageCount() {
-        KLog.d("mCurPage:" + mCurPage + ",mPages:" + mPages);
         if (mCurPage > mPages) {
             return;
         }
@@ -258,8 +243,8 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             public void onCompleted() {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mCurPage = mCurPage + 1;
-                if (IBaseView.ViewStatus.SHOW != mViewStatus) {
-                    mViewStatus = IBaseView.ViewStatus.SHOW;
+                if (ViewStatus.SHOW != mViewStatus) {
+                    mViewStatus = ViewStatus.SHOW;
                     showView();
                 }
             }
@@ -280,14 +265,12 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                         mAdapter.updateItems(giftResult.getList());
                     }
                     mPages = giftResult.getNum();
-                    KLog.d("mPages:" + mPages);
                 }
             }
         });
     }
 
     private void fetchImagePages(final String url) {
-        KLog.d("url:" + url);
         mSubscription = Observable.create(new Observable.OnSubscribe<GiftResult>() {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
@@ -307,7 +290,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 .subscribe(new Subscriber<GiftResult>() {
                     @Override
                     public void onCompleted() {
-                        KLog.d("onCompleted");
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
 
@@ -319,7 +301,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                     @Override
                     public void onNext(GiftResult giftResult) {
-                        KLog.d("onNext");
                         if (giftResult != null && giftResult.getSize() > 0) {
                             setMax(giftResult.getSize());
                             fetchImages(giftResult.getList());
@@ -395,7 +376,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     private List<GiftBean> getImageCount(String url, Document doc) {
-        KLog.d("getImageCount");
         List<GiftBean> list;
         if (doc == null) {
             return null;
@@ -451,7 +431,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 .subscribe(new Subscriber<List<GiftBean>>() {
                     @Override
                     public void onCompleted() {
-                        KLog.d("onCompleted");
                         disDialog();
                         if (!isUnSubscribe) {
                             Bundle bundle = new Bundle();
@@ -472,7 +451,6 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                     @Override
                     public void onNext(List<GiftBean> giftResult) {
-                        KLog.d("onNext,isUnSubscribe:" + isUnSubscribe);
                         if (giftResult != null && giftResult.size() > 0) {
                             mImageCountList.addAll(giftResult);
                         }

@@ -6,7 +6,7 @@ package com.gank.gankly.ui.view;
 public interface ISwipeRefreshView extends IBaseView {
     void onError(Throwable e);
 
-    void onSuccess();
+    void onCompleted();
 
     void hideRefresh();
 

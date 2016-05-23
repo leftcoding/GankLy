@@ -40,7 +40,7 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     }
 
     @Override
-    public void onSuccess() {
+    public void onCompleted() {
 
     }
 
@@ -60,27 +60,12 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     }
 
     @Override
+    public void showView() {
+
+    }
+
+    @Override
     public void showDisNetWork() {
 
-    }
-
-    @Override
-    public boolean isDisNetWorkView() {
-        return false;
-    }
-
-    @Override
-    public boolean isEmptyView() {
-        return false;
-    }
-
-    @Override
-    public boolean isLoading() {
-        return false;
-    }
-
-    @Override
-    public boolean isShowView() {
-        return false;
     }
 }

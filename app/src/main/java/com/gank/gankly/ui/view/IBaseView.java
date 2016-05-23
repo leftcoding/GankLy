@@ -9,16 +9,4 @@ public interface IBaseView {
     void showDisNetWork();
 
     void showView();
-
-    enum ViewStatus {
-        EMPTY, SHOW, DISNETWORK, LOADING
-    }
-
-    boolean isLoading();
-
-    boolean isEmptyView();
-
-    boolean isDisNetWorkView();
-
-    boolean isShowView();
 }

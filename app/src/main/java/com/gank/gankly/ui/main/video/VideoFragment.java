@@ -13,14 +13,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.network.GankRetrofit;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.view.IBaseView;
+import com.gank.gankly.ui.presenter.VideoPresenter;
+import com.gank.gankly.ui.view.IVideoView;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
@@ -28,16 +27,11 @@ import com.socks.library.KLog;
 import java.util.List;
 
 import butterknife.Bind;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-04-25
  */
-public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener {
+public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener, IVideoView<ResultsBean> {
     private int mLimit = 20;
     private int mPage;
     private static VideoFragment sVideoFragment;
@@ -53,10 +47,11 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     @Bind(R.id.loading_layout)
     LoadingLayoutView mLoadingLayoutView;
 
+    private VideoPresenter mPresenter;
     private MainActivity mActivity;
     private VideoAdapter mVideoRecyclerAdapter;
     private int mLastPosition;
-    private IBaseView.ViewStatus mCurStatus = IBaseView.ViewStatus.LOADING;
+    private ViewStatus mCurStatus = ViewStatus.LOADING;
 
 
     public static VideoFragment getInstance() {
@@ -70,6 +65,11 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new VideoPresenter(mActivity, this);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mVideoRecyclerAdapter.getItemCount())
                         && !mSwipeRefresh.isRefreshing()) {
                     mSwipeRefresh.setRefreshing(true);
-                    fetchVideo();
+                    mPresenter.fetchDate(mPage, mLimit);
                 }
             }
 
@@ -129,61 +129,7 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
 
     private void onDownRefresh() {
         mPage = 1;
-        fetchVideo();
-    }
-
-    private void fetchVideo() {
-        final Observable<GankResult> video = GankRetrofit.getInstance()
-                .getGankService().fetchVideo(mLimit, mPage);
-        Observable<GankResult> image = GankRetrofit.getInstance()
-                .getGankService().fetchBenefitsGoods(mLimit, mPage);
-
-        Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
-            @Override
-            public GankResult call(GankResult gankResult, GankResult gankResult2) {
-                addImages(gankResult2);
-                return gankResult;
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mSwipeRefresh.setRefreshing(false);
-                        mPage = mPage + 1;
-                        if (mCurStatus != IBaseView.ViewStatus.SHOW) {
-                            mCurStatus = IBaseView.ViewStatus.SHOW;
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                        mSwipeRefresh.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        if (!gankResult.isEmpty()) {
-                            if (mPage == 1) {
-                                mVideoRecyclerAdapter.clear();
-                            }
-                            mVideoRecyclerAdapter.updateItems(gankResult.getResults());
-                        }
-
-                        if (gankResult.getSize() < mLimit) {
-                            Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
-                        }
-                    }
-                });
-    }
-
-    private void addImages(GankResult gankResult) {
-        if (gankResult != null) {
-            int page = MeiziArrayList.getInstance().getPage();
-            if (page == 0 || page < mPage) {
-                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
-            }
-        }
+        mPresenter.fetchDate(mPage, mLimit);
     }
 
     @Override
@@ -202,7 +148,58 @@ public class VideoFragment extends BaseFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void onRefresh() {
-        mPage = 1;
-        fetchVideo();
+        onDownRefresh();
+    }
+
+    @Override
+    public void refillDate(List list) {
+        mVideoRecyclerAdapter.updateItems(list);
+    }
+
+    @Override
+    public void appendMoreDate(List<ResultsBean> list) {
+        mVideoRecyclerAdapter.addItems(list);
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+        Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public ViewStatus getCurViewStatus() {
+        return mCurStatus;
+    }
+
+
+    @Override
+    public void hideRefresh() {
+        super.hideRefresh();
+        mSwipeRefresh.setRefreshing(false);
+    }
+
+    @Override
+    public void showRefresh() {
+        super.showRefresh();
+        mSwipeRefresh.setRefreshing(true);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        super.onError(e);
+        KLog.e(e);
+    }
+
+    @Override
+    public void onCompleted() {
+        super.onCompleted();
+        mPage = mPage + 1;
+    }
+
+    @Override
+    public void showView() {
+        super.showView();
+        mLoadingLayoutView.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 }

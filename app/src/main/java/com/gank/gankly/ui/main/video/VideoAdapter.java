@@ -65,8 +65,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     public void updateItems(List<ResultsBean> getResults) {
+        clear();
+        addItems(getResults);
+    }
+
+    public void addItems(List<ResultsBean> getResults) {
         mResults.addAll(getResults);
-        notifyDataSetChanged();
+        int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
+        notifyItemRangeInserted(position, getResults.size());
     }
 
     public void clear() {

@@ -14,6 +14,7 @@ import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
@@ -225,13 +226,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     }
 
     @Override
-    public boolean isEmptyView() {
-        return mCurStatus == ViewStatus.EMPTY;
+    public ViewStatus getCurViewStatus() {
+        return mCurStatus;
     }
-
-    @Override
-    public boolean isShowView() {
-        return mCurStatus == ViewStatus.SHOW;
-    }
-
 }
