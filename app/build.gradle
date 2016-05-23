@@ -22,12 +22,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_7
     }
     signingConfigs {
-        release {
-            keyAlias 'leftcoding_lingyan'
-            keyPassword 'ly137387869'
-            storeFile file('E:/Gankly_img/gankly.jks')
-            storePassword 'ly137387869'
-        }
+
     }
     buildTypes {
         debug {
@@ -35,8 +30,10 @@ android {
         }
         release {
             minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 }
