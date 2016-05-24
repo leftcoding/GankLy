@@ -61,6 +61,11 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseArguments();

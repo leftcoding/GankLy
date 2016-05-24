@@ -5,9 +5,9 @@ import com.gank.gankly.bean.ResultsBean;
 import java.util.List;
 
 /**
- * Create by LingYan on 2016-05-23
+ * Create by LingYan on 2016-05-24
  */
-public interface IVideoView<T extends ResultsBean> extends ISwipeRefreshView {
+public interface IIosView<T extends ResultsBean> extends ISwipeRefreshView {
     void refillDate(List<T> list);
 
     void appendMoreDate(List<T> list);

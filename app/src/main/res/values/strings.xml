@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">GankLy</string>
-    <string name="action_settings">Settings</string>
     <string name="app_again_out">再按一次退出GankLy</string>
     <string name="retry">重试</string>
 
@@ -9,7 +8,7 @@
     <string name="navigation_share">分享</string>
     <string name="navigation_other">其他</string>
     <string name="navigation_video">休息视频</string>
-    <string name="navigation_gift">真.福利</string>
+    <string name="navigation_gift">美しい妹</string>
     <string name="navigation_home">首页</string>
     <string name="navigation_about">关于</string>
 
@@ -41,6 +40,10 @@
 
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="item_book_author">%1$s on %2$s</string>
+
+    <string name="share_to">"分享到.."</string>
+
+    <string name="setting_auto_check">自动检查更新</string>
 
     <string name="about_app_str">GankLy \n该应用是一个关于程序员的干货，基本上应用每天都有会有新Android、ios等知识点，还有福（mei）利（zi）、精彩视频等让你放松的视觉享受，后期有时间还会加入其他的知识点。由于时间、能力有限，还有许多不足的地方，请大家多多指教。</string>
     <string name="about_thanks_str">感谢 \n应用中用到的大部分接口均来自 http://gank.io，在这里感谢daimajia的无私贡献。应用中部分代码参考来着@drakket @xiongwei-git，还有帮助我过我的人，以及网上的分享。同样，我也希望我的应用可以帮助一些人。</string>

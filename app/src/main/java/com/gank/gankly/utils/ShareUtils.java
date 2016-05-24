@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 
 /**
@@ -30,12 +31,12 @@ public class ShareUtils {
             ToastUtils.showToast(R.string.tip_share_empty_text);
             return;
         }
-        share = title + share + " [Gankly]";
+        share = title + "! " + share + " [Gankly]";
         Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, share);
         shareIntent.setType("text/plain");
-        context.startActivity(Intent.createChooser(shareIntent, "分享到"));
+        context.startActivity(Intent.createChooser(shareIntent, App.getAppString(R.string.share_to)));
     }
 
     public static void shareSingleImage(Context context, Uri result) {

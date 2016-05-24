@@ -51,6 +51,11 @@ public class MeiZiFragment extends LazyFragment implements SwipeRefreshLayout.On
     }
 
     @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseArguments();
