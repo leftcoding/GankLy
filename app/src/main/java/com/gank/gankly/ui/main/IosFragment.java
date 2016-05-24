@@ -202,6 +202,11 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
     }

@@ -13,5 +13,6 @@
         android:id="@+id/meizi_img_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:transitionName="@string/meizi_picture_save_path"
         android:scaleType="centerCrop"/>
 </android.support.v7.widget.CardView>

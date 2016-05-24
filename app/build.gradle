@@ -5,17 +5,19 @@ android {
     buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.gank.gankly"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
+
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关闭
     lintOptions {
         abortOnError false
         disable "InvalidPackage"
         lintConfig file("lint.xml")
     }
+
     // java版本
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7

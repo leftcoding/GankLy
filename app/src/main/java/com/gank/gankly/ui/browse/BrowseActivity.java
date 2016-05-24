@@ -63,7 +63,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private int mPage;
 
     private boolean isLoadMore = true;
-    private String mViewsModel;
+    private String mViewsModel = ViewsModel.GANK;
     private List<GiftBean> mGiftList;
 
     @Override

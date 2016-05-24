@@ -25,7 +25,7 @@
         android:layout_marginBottom="20dp"
         android:layout_gravity="bottom"
         android:gravity="center"
-        android:text=""
+        android:transitionName="@string/meizi_limit_page"
         android:textColor="@color/white"
         android:textSize="16sp"/>
 </merge>
