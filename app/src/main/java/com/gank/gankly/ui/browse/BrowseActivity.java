@@ -20,7 +20,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.network.GankRetrofit;
@@ -94,7 +93,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void fetchDate() {
-        final int limit = Constants.MEIZI_LIMIT;
+        final int limit = 20;
         mPage = MeiziArrayList.getInstance().getPage();
         mPage = mPage + 1;
         GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
@@ -133,7 +132,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             mPosition = bundle.getInt("position", 0);
             mViewsModel = bundle.getString(ViewsModel.Gift, ViewsModel.GANK);
         }
-
+        KLog.d("mPosition:" + mPosition);
         if (ViewsModel.Gift.equals(mViewsModel)) {
             mGiftList = GiftFragment.getInstance().getList();
         }
@@ -168,7 +167,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         });
     }
 
-
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter() {
@@ -190,7 +188,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
                 ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
                 return BrowseFragment.newInstance(bean.getUrl());
             } else {
-
                 return BrowseFragment.newInstance(GiftFragment.getInstance()
                         .getList().get(position).getImgUrl());
             }

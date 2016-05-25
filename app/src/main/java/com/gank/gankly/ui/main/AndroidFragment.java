@@ -15,7 +15,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
@@ -145,16 +144,15 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void fetchDate() {
-        final Observable<GankResult> video = GankRetrofit.getInstance()
+        final Observable<GankResult> androidGoods = GankRetrofit.getInstance()
                 .getGankService().fetchAndroidGoods(mLimit, mPage);
-        Observable<GankResult> image = GankRetrofit.getInstance()
+        Observable<GankResult> imgs = GankRetrofit.getInstance()
                 .getGankService().fetchBenefitsGoods(mLimit, mPage);
 
-        Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
+        Observable.zip(androidGoods, imgs, new Func2<GankResult, GankResult, GankResult>() {
             @Override
-            public GankResult call(GankResult gankResult, GankResult gankResult2) {
-                MeiziArrayList.getInstance().setArrayList(gankResult2, mPage);
-                return gankResult;
+            public GankResult call(GankResult androidGoods, GankResult imgs) {
+                return androidGoods;
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GankResult>() {
@@ -218,7 +216,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         bundle.putString("title", bean.getDesc());
         bundle.putString("url", bean.getUrl());
         bundle.putString("type", Constants.ANDROID);
-        bundle.putString("author",bean.getWho());
+        bundle.putString("author", bean.getWho());
         WebActivity.startWebActivity(mActivity, bundle);
     }
 }

@@ -29,7 +29,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
     private MeiziOnClick mMeiZiOnClick;
 
-
     public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
         mMeiZiOnClick = meiZiOnClick;
     }
@@ -72,9 +71,20 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     }
 
     public void updateItems(List<ResultsBean> goods) {
-        mResults.clear();
+        clear();
+        addItems(goods);
+    }
+
+    public void clear() {
+        if (mResults != null) {
+            mResults.clear();
+        }
+    }
+
+    public void addItems(List<ResultsBean> goods) {
         mResults.addAll(goods);
-        notifyDataSetChanged();
+        int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
+        notifyItemRangeInserted(position, goods.size());
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

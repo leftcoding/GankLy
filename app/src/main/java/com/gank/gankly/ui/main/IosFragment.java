@@ -83,7 +83,8 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mLastPosition + 1 == mRecyclerAdapter.getItemCount() && !mSwipeRefreshLayout.isRefreshing()) {
+                        && mLastPosition + 1 == mRecyclerAdapter.getItemCount()
+                        && !mSwipeRefreshLayout.isRefreshing()) {
                     if (isLoadMore) {
                         toRefresh();
                     }
@@ -93,7 +94,8 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                LinearLayoutManager layoutManager = ((LinearLayoutManager) recyclerView.getLayoutManager());
+                mLastPosition = layoutManager.findLastVisibleItemPosition();
             }
         });
     }

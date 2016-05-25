@@ -7,16 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
 import com.gank.gankly.widget.RatioImageView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -52,19 +49,19 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtName.setText(bean.getWho());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_ONE));
-        int size = MeiziArrayList.getInstance().getArrayList().size();
-        if (position > size) {
-            position = position % size;
-        }
-
-        List<ResultsBean> list = MeiziArrayList.getInstance().getArrayList();
-        Collections.shuffle(list);
-        if (position < size) {
-            Glide.with(mContext)
-                    .load(list.get(position).getUrl())
-                    .centerCrop()
-                    .into(holder.img);
-        }
+//        int size = MeiziArrayList.getInstance().getArrayList().size();
+//        if (position > size) {
+//            position = position % size;
+//        }
+//
+//        List<ResultsBean> list = MeiziArrayList.getInstance().getArrayList();
+//        Collections.shuffle(list);
+//        if (position < size) {
+//            Glide.with(mContext)
+//                    .load(list.get(position).getUrl())
+//                    .centerCrop()
+//                    .into(holder.img);
+//        }
     }
 
     @Override

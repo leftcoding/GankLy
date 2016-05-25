@@ -1,8 +1,8 @@
 package com.gank.gankly.config;
 
-import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.utils.ListUtils;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +13,12 @@ import java.util.List;
 public class MeiziArrayList {
     private static MeiziArrayList sMeiziArrayList;
     private List<ResultsBean> mArrayList;
+    private List<ResultsBean> mMeiziList;
     private int mPage = 0;
 
     private MeiziArrayList() {
         mArrayList = new ArrayList<>();
-    }
-
-    public MeiziArrayList(List<ResultsBean> arrayList, int page) {
-        mArrayList = arrayList;
-        mPage = page;
+        mMeiziList = new ArrayList<>();
     }
 
     public static MeiziArrayList getInstance() {
@@ -31,18 +28,14 @@ public class MeiziArrayList {
         return sMeiziArrayList;
     }
 
-    public void addAll(List<ResultsBean> list) {
-        mArrayList.addAll(list);
-    }
-
     public void addBeanAndPage(List<ResultsBean> list, int page) {
-        mArrayList.addAll(list);
-        mPage = page;
-    }
-
-    public void remove(int position) {
-        if (ListUtils.isListEmpty(mArrayList)) return;
-        mArrayList.remove(position);
+        KLog.d("page:" + page + ",mPage:" + mPage);
+        if (mPage < page) {
+            KLog.d("mPage < page:" + page);
+            mArrayList.addAll(list);
+            mPage = page;
+        }
+        KLog.d("--end--page:" + page);
     }
 
     public void clear() {
@@ -61,32 +54,10 @@ public class MeiziArrayList {
         return mPage;
     }
 
-    public void setPage(int page) {
-        this.mPage = page;
-    }
-
     public ResultsBean getResultBean(int position) {
         if (ListUtils.isListEmpty(mArrayList)) {
             return null;
         }
         return mArrayList.get(position);
-    }
-
-    public void setArrayList(GankResult result, int page) {
-        if (result == null) return;
-        List<ResultsBean> list = result.getResults();
-        if (!ListUtils.isListEmpty(list)) {
-            if (mPage == 0 || mPage < page) {
-                addBeanAndPage(list, page);
-            }
-        }
-    }
-
-    public void setArrayListSort(List<ResultsBean> list, int page) {
-        if (!ListUtils.isListEmpty(list)) {
-            if (mPage == 0 || mPage < page) {
-                addBeanAndPage(list, page);
-            }
-        }
     }
 }
