@@ -28,26 +28,36 @@ public class MeiziArrayList {
         return sMeiziArrayList;
     }
 
+    public void addGiftItems(List<ResultsBean> list) {
+        if (ListUtils.isListEmpty(mArrayList)) {
+            mArrayList.addAll(list);
+        }
+    }
+
     public void addBeanAndPage(List<ResultsBean> list, int page) {
         KLog.d("page:" + page + ",mPage:" + mPage);
         if (mPage < page) {
             KLog.d("mPage < page:" + page);
-            mArrayList.addAll(list);
+            mMeiziList.addAll(list);
             mPage = page;
         }
         KLog.d("--end--page:" + page);
     }
 
     public void clear() {
-        mArrayList.clear();
+        mMeiziList.clear();
     }
 
     public int size() {
-        return mArrayList.size();
+        return mMeiziList.size();
+    }
+
+    public List<ResultsBean> getImagesList() {
+        return mArrayList;
     }
 
     public List<ResultsBean> getArrayList() {
-        return mArrayList;
+        return mMeiziList;
     }
 
     public int getPage() {
@@ -55,9 +65,9 @@ public class MeiziArrayList {
     }
 
     public ResultsBean getResultBean(int position) {
-        if (ListUtils.isListEmpty(mArrayList)) {
+        if (ListUtils.isListEmpty(mMeiziList)) {
             return null;
         }
-        return mArrayList.get(position);
+        return mMeiziList.get(position);
     }
 }

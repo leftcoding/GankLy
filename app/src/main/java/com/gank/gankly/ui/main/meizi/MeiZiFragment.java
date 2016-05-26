@@ -13,7 +13,6 @@ import android.view.View;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
@@ -156,13 +155,11 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     @Override
     public void refillDate(List<ResultsBean> list) {
         mRecyclerAdapter.updateItems(list);
-        MeiziArrayList.getInstance().addBeanAndPage(list, mPage);
     }
 
     @Override
     public void appendMoreDate(List<ResultsBean> list) {
         mRecyclerAdapter.addItems(list);
-        MeiziArrayList.getInstance().addBeanAndPage(list, mPage);
     }
 
     @Override

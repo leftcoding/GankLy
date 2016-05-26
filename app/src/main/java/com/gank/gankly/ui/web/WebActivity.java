@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -40,15 +41,17 @@ public class WebActivity extends BaseActivity {
     WebView mWebView;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-
     @Bind(R.id.web_progress_bar)
     ProgressBar mProgressBar;
+    @Bind(R.id.web_main)
+    View mView;
 
     private String mUrl;
     private String mTitle;
     private UrlCollectDao mUrlCollectDao;
     private String mType;
     private String mAuthor;
+    private boolean isSelect;
 
     @Override
     protected int getContentId() {
@@ -125,7 +128,13 @@ public class WebActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.welfare_collect:
-                addUrl();
+                if (isSelect) {
+                    item.setIcon(R.drawable.navigation_collect_nor);
+                } else {
+                    item.setIcon(R.drawable.navigation_collect_prs);
+                    addUrl();
+                }
+                isSelect = !isSelect;
                 return true;
             case R.id.welfare_share:
                 ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
@@ -171,7 +180,8 @@ public class WebActivity extends BaseActivity {
     private void addUrl() {
         UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date(), mType, mAuthor);
         mUrlCollectDao.insert(urlCollect);
-        ToastUtils.showToast(R.string.collect_success);
+//        ToastUtils.showToast(R.string.collect_success);
+        Snackbar.make(mView, R.string.collect_success, Snackbar.LENGTH_SHORT).show();
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient {

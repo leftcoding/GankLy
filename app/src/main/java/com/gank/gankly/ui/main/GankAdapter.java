@@ -7,13 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
 import com.gank.gankly.widget.RatioImageView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -49,19 +52,15 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtName.setText(bean.getWho());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_ONE));
-//        int size = MeiziArrayList.getInstance().getArrayList().size();
-//        if (position > size) {
-//            position = position % size;
-//        }
-//
-//        List<ResultsBean> list = MeiziArrayList.getInstance().getArrayList();
-//        Collections.shuffle(list);
-//        if (position < size) {
-//            Glide.with(mContext)
-//                    .load(list.get(position).getUrl())
-//                    .centerCrop()
-//                    .into(holder.img);
-//        }
+        if (position > holder.mSize) {
+            position = position % holder.mSize;
+        }
+        if (position < holder.mSize) {
+            Glide.with(mContext)
+                    .load(holder.list.get(position).getUrl())
+                    .centerCrop()
+                    .into(holder.img);
+        }
     }
 
     @Override
@@ -94,11 +93,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         @Bind(R.id.ri_img)
         RatioImageView img;
         ResultsBean mBean;
+        int mSize;
+        List<ResultsBean> list;
 
         public GankViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
+            mSize = MeiziArrayList.getInstance().getImagesList().size();
+            list = MeiziArrayList.getInstance().getImagesList();
+            Collections.shuffle(list);
         }
 
         @Override

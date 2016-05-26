@@ -4,9 +4,9 @@ import android.app.Activity;
 
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.view.IIosView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -33,12 +33,12 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
     public void fetchDate(final int page) {
         this.mPage = page;
-        Observable<GankResult> video = GankRetrofit.getInstance()
+        Observable<GankResult> iosGoods = GankRetrofit.getInstance()
                 .getGankService().fetchIosGoods(limit, page);
         Observable<GankResult> image = GankRetrofit.getInstance()
                 .getGankService().fetchBenefitsGoods(limit, page);
 
-        Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
+        Observable.zip(iosGoods, image, new Func2<GankResult, GankResult, GankResult>() {
             @Override
             public GankResult call(GankResult gankResult, GankResult gankResult2) {
                 List<ResultsBean> list = gankResult2.getResults();
@@ -69,7 +69,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
 
     public void fetchBenefitsGoods(int page) {
-        KLog.d("page：" + page);
         this.mPage = page;
         mIView.showRefresh();
         GankRetrofit.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
@@ -88,17 +87,19 @@ public class IosPresenter extends BasePresenter<IIosView> {
             @Override
             public void onNext(GankResult gankResult) {
                 toNext(gankResult);
+                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
             }
         });
     }
 
     private void toNext(GankResult gankResult) {
         if (!gankResult.isEmpty()) {
+            List<ResultsBean> list = gankResult.getResults();
             if (mPage == 1) {
                 mIView.clear();
-                mIView.refillDate(gankResult.getResults());
+                mIView.refillDate(list);
             } else {
-                mIView.appendMoreDate(gankResult.getResults());
+                mIView.appendMoreDate(list);
             }
             if (gankResult.getSize() < limit) {
                 mIView.hasNoMoreDate();

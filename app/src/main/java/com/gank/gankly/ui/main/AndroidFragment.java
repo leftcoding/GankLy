@@ -15,6 +15,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.GankRetrofit;
 import com.gank.gankly.ui.base.LazyFragment;
@@ -146,12 +147,13 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     private void fetchDate() {
         final Observable<GankResult> androidGoods = GankRetrofit.getInstance()
                 .getGankService().fetchAndroidGoods(mLimit, mPage);
-        Observable<GankResult> imgs = GankRetrofit.getInstance()
+        Observable<GankResult> images = GankRetrofit.getInstance()
                 .getGankService().fetchBenefitsGoods(mLimit, mPage);
 
-        Observable.zip(androidGoods, imgs, new Func2<GankResult, GankResult, GankResult>() {
+        Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
             @Override
-            public GankResult call(GankResult androidGoods, GankResult imgs) {
+            public GankResult call(GankResult androidGoods, GankResult images) {
+                MeiziArrayList.getInstance().addGiftItems(images.getResults());
                 return androidGoods;
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())

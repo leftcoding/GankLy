@@ -59,7 +59,7 @@
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/book_btn"
+            android:background="@drawable/book_btn_selector"
             android:text="@string/loading_retry"
             android:textColor="@color/default_btn_txt_color"
             android:textSize="12sp"/>

@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/welfare_collect"
-        android:icon="@drawable/navigation_collect"
+        android:icon="@drawable/navigation_collect_nor"
         android:orderInCategory="100"
         android:title="@string/navigation_settings"
         app:showAsAction="ifRoom"/>
