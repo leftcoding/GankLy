@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -25,11 +26,14 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
+import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -51,7 +55,13 @@ public class WebActivity extends BaseActivity {
     private UrlCollectDao mUrlCollectDao;
     private String mType;
     private String mAuthor;
-    private boolean isSelect;
+    private boolean isCollect;
+    private UrlCollect mUrlCollect;
+    private CollectStates mStates = CollectStates.NORMAL;
+
+    enum CollectStates {
+        NORMAL, COLLECT, UN_COLLECT
+    }
 
     @Override
     protected int getContentId() {
@@ -108,6 +118,13 @@ public class WebActivity extends BaseActivity {
             mAuthor = bundle.getString("author");
         }
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
+        List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
+        if (!ListUtils.isListEmpty(list)) {
+            isCollect = true;
+            mUrlCollect = list.get(0);
+            mStates = CollectStates.COLLECT;
+        }
+        KLog.d("isCollect:" + isCollect);
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
@@ -120,7 +137,9 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        KLog.d("onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.welfare_menu, menu);
+        switchCollectIcon(menu.findItem(R.id.welfare_collect));
         return true;
     }
 
@@ -128,13 +147,18 @@ public class WebActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.welfare_collect:
-                if (isSelect) {
-                    item.setIcon(R.drawable.navigation_collect_nor);
+                if (!isCollect) {
+                    Snackbar.make(mView, R.string.collect_success, Snackbar.LENGTH_SHORT).show();
                 } else {
-                    item.setIcon(R.drawable.navigation_collect_prs);
-                    addUrl();
+                    Snackbar.make(mView, R.string.collect_cancel, Snackbar.LENGTH_SHORT).show();
                 }
-                isSelect = !isSelect;
+                if (mStates != CollectStates.COLLECT) {
+                    mStates = CollectStates.COLLECT;
+                } else {
+                    mStates = CollectStates.UN_COLLECT;
+                }
+                isCollect = !isCollect;
+                switchCollectIcon(item);
                 return true;
             case R.id.welfare_share:
                 ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
@@ -153,6 +177,14 @@ public class WebActivity extends BaseActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void switchCollectIcon(MenuItem item) {
+        if (isCollect) {
+            item.setIcon(R.drawable.navigation_collect_prs);
+        } else {
+            item.setIcon(R.drawable.navigation_collect_nor);
+        }
     }
 
     private void openBrowser(String url) {
@@ -177,17 +209,22 @@ public class WebActivity extends BaseActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void addUrl() {
-        UrlCollect urlCollect = new UrlCollect(null, mWebView.getUrl(), mTitle, new Date(), mType, mAuthor);
+    private void collectUrl() {
+        UrlCollect urlCollect = new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
         mUrlCollectDao.insert(urlCollect);
-//        ToastUtils.showToast(R.string.collect_success);
-        Snackbar.make(mView, R.string.collect_success, Snackbar.LENGTH_SHORT).show();
+    }
+
+    private void cancelCollect() {
+        KLog.d("cancelCollect" + mUrlCollect.getId());
+        mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            mWebView.loadUrl(url);
+            if (!TextUtils.isEmpty(url)) {
+                mWebView.loadUrl(url);
+            }
             return true;
         }
 
@@ -259,6 +296,16 @@ public class WebActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        KLog.d("onStop,mStates:" + mStates);
+        super.onStop();
+        if (mStates == CollectStates.COLLECT) {
+            collectUrl();
+        } else if (mStates == CollectStates.UN_COLLECT) {
+            cancelCollect();
+        }
+    }
 
     @Override
     protected void onDestroy() {
