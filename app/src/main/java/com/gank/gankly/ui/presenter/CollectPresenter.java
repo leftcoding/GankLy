@@ -3,11 +3,13 @@ package com.gank.gankly.ui.presenter;
 import android.app.Activity;
 
 import com.gank.gankly.App;
+import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -19,32 +21,39 @@ import de.greenrobot.dao.query.QueryBuilder;
 public class CollectPresenter extends BasePresenter<ICollectView> {
     private UrlCollectDao mUrlCollectDao;
     QueryBuilder<UrlCollect> queryBuilder;
-    private int mLimit = 10;
+    private static final int LIMIT = 10;
     private int mPage = 0;
-    private boolean isMore = true;
+    private ViewStatus mViewStatus;
 
     public CollectPresenter(Activity mActivity, ICollectView view) {
         super(mActivity, view);
     }
 
-    public void fetchDate(int page) {
-        if (page == 0) {
-            isMore = true;
-        }
-        mPage = page;
-        int offSet = page * mLimit;
+    public void fetchDate(int offset) {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
-        queryBuilder.offset(offSet).limit(mLimit);
-        handleView(queryBuilder.list());
+        queryBuilder.offset(offset).limit(LIMIT);
+        callView(queryBuilder.list());
     }
 
-    private void handleView(List<UrlCollect> list) {
+    public void fetchCollect(int page, int refresh, ViewStatus viewStatus) {
+        mIView.showRefresh();
+        mPage = page;
+        mViewStatus = viewStatus;
+        int offset = 0;
+        if (refresh == RefreshStatus.UP) {
+            offset = page * LIMIT;
+        }
+        fetchDate(offset);
+    }
+
+    private void callView(List<UrlCollect> list) {
+        mIView.hideRefresh();
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {
-                if (mIView.getCurViewStatus() != ViewStatus.SHOW) {
+                if (mViewStatus != ViewStatus.SHOW) {
                     mIView.showView();
                 }
                 mIView.refillDate(list);
@@ -52,8 +61,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
                 mIView.appendMoreDate(list);
             }
 
-            if (size < mLimit) {
-                isMore = false;
+            if (size < LIMIT) {
                 mIView.hasNoMoreDate();
             }
             mIView.fetchFinish();
@@ -61,23 +69,17 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
             if (mPage > 0) {
                 mIView.hasNoMoreDate();
             } else {
-                if (mIView.getCurViewStatus() != ViewStatus.EMPTY) {
+                if (mViewStatus != ViewStatus.EMPTY) {
                     mIView.showEmpty();
                 }
             }
-            isMore = false;
         }
-        mIView.hideRefresh();
     }
 
-    public void deleteByKey(long id) {
+    public void deleteByKey(long id, int size) {
         mUrlCollectDao.deleteByKey(id);
-        if (mIView.isListEmpty()) {
+        if (size == 0) {
             mIView.showEmpty();
         }
-    }
-
-    public boolean isLoadMore() {
-        return isMore;
     }
 }

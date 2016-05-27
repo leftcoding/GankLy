@@ -132,7 +132,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             mPosition = bundle.getInt("position", 0);
             mViewsModel = bundle.getString(ViewsModel.Gift, ViewsModel.GANK);
         }
-        KLog.d("mPosition:" + mPosition);
         if (ViewsModel.Gift.equals(mViewsModel)) {
             mGiftList = GiftFragment.getInstance().getList();
         }

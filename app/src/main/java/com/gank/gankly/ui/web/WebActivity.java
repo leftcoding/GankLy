@@ -27,9 +27,9 @@ import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ListUtils;
+import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -41,6 +41,9 @@ import butterknife.Bind;
  * Create by LingYan on 2016-5-10
  */
 public class WebActivity extends BaseActivity {
+    public static final int FROM_MAIN = 0;
+    public static final int FROM_COLLECT = 1;
+
     @Bind(R.id.web_view)
     WebView mWebView;
     @Bind(R.id.toolbar)
@@ -56,8 +59,10 @@ public class WebActivity extends BaseActivity {
     private String mType;
     private String mAuthor;
     private boolean isCollect;
+    private boolean isInitCollect;
     private UrlCollect mUrlCollect;
     private CollectStates mStates = CollectStates.NORMAL;
+    private int mFromType;
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -116,15 +121,15 @@ public class WebActivity extends BaseActivity {
             mTitle = bundle.getString("title");
             mType = bundle.getString("type", Constants.ALL);
             mAuthor = bundle.getString("author");
+            mFromType = bundle.getInt("from_type");
         }
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
         if (!ListUtils.isListEmpty(list)) {
+            isInitCollect = true;
             isCollect = true;
             mUrlCollect = list.get(0);
-            mStates = CollectStates.COLLECT;
         }
-        KLog.d("isCollect:" + isCollect);
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
@@ -137,7 +142,6 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        KLog.d("onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.welfare_menu, menu);
         switchCollectIcon(menu.findItem(R.id.welfare_collect));
         return true;
@@ -147,16 +151,19 @@ public class WebActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.welfare_collect:
+                mStates = CollectStates.NORMAL;
                 if (!isCollect) {
+                    if (!isInitCollect) {
+                        mStates = CollectStates.COLLECT;
+                    }
                     Snackbar.make(mView, R.string.collect_success, Snackbar.LENGTH_SHORT).show();
                 } else {
+                    if (isInitCollect) {
+                        mStates = CollectStates.UN_COLLECT;
+                    }
                     Snackbar.make(mView, R.string.collect_cancel, Snackbar.LENGTH_SHORT).show();
                 }
-                if (mStates != CollectStates.COLLECT) {
-                    mStates = CollectStates.COLLECT;
-                } else {
-                    mStates = CollectStates.UN_COLLECT;
-                }
+
                 isCollect = !isCollect;
                 switchCollectIcon(item);
                 return true;
@@ -215,7 +222,6 @@ public class WebActivity extends BaseActivity {
     }
 
     private void cancelCollect() {
-        KLog.d("cancelCollect" + mUrlCollect.getId());
         mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
@@ -298,12 +304,14 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void onStop() {
-        KLog.d("onStop,mStates:" + mStates);
         super.onStop();
         if (mStates == CollectStates.COLLECT) {
             collectUrl();
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
+            if (mFromType == FROM_COLLECT) {
+                RxUtils.getInstance().OUnCollect();
+            }
         }
     }
 

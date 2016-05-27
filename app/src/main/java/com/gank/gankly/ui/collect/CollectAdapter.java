@@ -65,17 +65,18 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     }
 
     public void clear() {
+        notifyItemMoved(0, mList.size());
         mList.clear();
     }
 
     public void updateItems(List<UrlCollect> list) {
-        mList.clear();
+        clear();
         addItems(list);
     }
 
     public void addItems(List<UrlCollect> list) {
         mList.addAll(list);
-        notifyItemRangeInserted(mList.size() - 1, list.size());
+        notifyDataSetChanged();
     }
 
     public void deleteItem(int item) {

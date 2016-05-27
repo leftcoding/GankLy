@@ -103,6 +103,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mVideoRecyclerAdapter.getItemCount())
                         && !mSwipeRefresh.isRefreshing()) {
                     mSwipeRefresh.setRefreshing(true);
+                    mPresenter.setViewStatus(mCurStatus);
                     mPresenter.fetchDate(mPage, mLimit);
                 }
             }
@@ -129,6 +130,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
 
     private void onDownRefresh() {
         mPage = 1;
+        mPresenter.setViewStatus(mCurStatus);
         mPresenter.fetchDate(mPage, mLimit);
     }
 
@@ -165,12 +167,6 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     public void hasNoMoreDate() {
         Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
     }
-
-    @Override
-    public ViewStatus getCurViewStatus() {
-        return mCurStatus;
-    }
-
 
     @Override
     public void hideRefresh() {

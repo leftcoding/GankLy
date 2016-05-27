@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.ui.presenter.BasePresenter;
 import com.gank.gankly.ui.view.ISwipeRefreshView;
 
@@ -78,10 +77,5 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     @Override
     public void clear() {
 
-    }
-
-    @Override
-    public ViewStatus getCurViewStatus() {
-        return ViewStatus.LOADING;
     }
 }

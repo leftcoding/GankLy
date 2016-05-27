@@ -35,13 +35,10 @@ public class MeiziArrayList {
     }
 
     public void addBeanAndPage(List<ResultsBean> list, int page) {
-        KLog.d("page:" + page + ",mPage:" + mPage);
         if (mPage < page) {
-            KLog.d("mPage < page:" + page);
             mMeiziList.addAll(list);
             mPage = page;
         }
-        KLog.d("--end--page:" + page);
     }
 
     public void clear() {

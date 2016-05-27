@@ -144,7 +144,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
 
     @Override
     public void onClick(View view, int position) {
-        KLog.d("position:" + position);
         Bundle bundle = new Bundle();
         bundle.putInt("position", position);
         Intent intent = new Intent(mActivity, BrowseActivity.class);

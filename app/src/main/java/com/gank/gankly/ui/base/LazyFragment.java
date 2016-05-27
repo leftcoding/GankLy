@@ -39,7 +39,6 @@ public abstract class LazyFragment<P extends BasePresenter> extends BaseSwipeRef
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-        KLog.d("isVisibleToUser:" + isVisibleToUser);
         if (isVisibleToUser) {
             isVisible = true;
             lazyLoadData();

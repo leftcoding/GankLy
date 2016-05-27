@@ -14,6 +14,8 @@ import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.bean.RxCollect;
+import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
@@ -22,6 +24,7 @@ import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.presenter.CollectPresenter;
 import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.LoadingLayoutView;
 import com.gank.gankly.widget.RecycleViewDivider;
@@ -30,6 +33,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import rx.Subscriber;
 
 import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
@@ -38,6 +42,7 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
  */
 public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> implements DeleteDialog.DialogListener,
         OnRefreshListener, ItemLongClick, ICollectView<UrlCollect> {
+
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
     @Bind(R.id.meizi_recycler_view)
@@ -54,7 +59,10 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     private int mLostPosition;
     private int mPage = 0;
     private int mLongClick;
-    private ViewStatus mCurStatus;
+    private int mClick = -1;
+    private ViewStatus mCurViewStatus;
+    private boolean hasMore = true;
+    private long mDeleteId;
 
     @Override
     public void onAttach(Context context) {
@@ -63,9 +71,36 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        RxUtils.getInstance().unCollect(new Subscriber<RxCollect>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(RxCollect rxCollect) {
+                if (rxCollect.isCollect()) {
+                    onDelete(mClick);
+                }
+            }
+        });
+    }
+
+    @Override
     public void onNavigationClick() {
-        mCollectAdapter.deleteItem(mLongClick);
-        mPresenter.deleteByKey(mUrlCollect.getId());
+        onDelete(mLongClick);
+    }
+
+    private void onDelete(int item) {
+        mCollectAdapter.deleteItem(item);
+        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
     }
 
     public static CollectFragment newInstance() {
@@ -77,7 +112,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     protected void initValues() {
-        mCurStatus = ViewStatus.LOADING;
+        mCurViewStatus = ViewStatus.LOADING;
         mActivity.setTitle(R.string.navigation_collect);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -122,9 +157,8 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && mLostPosition + 1 == mCollectAdapter.getItemCount()
                         && !mSwipeRefreshLayout.isRefreshing()) {
-                    if (mPresenter.isLoadMore()) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                        mPresenter.fetchDate(mPage);
+                    if (hasMore) {
+                        onDownRefresh();
                     }
                 }
             }
@@ -132,7 +166,8 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mLostPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                mLostPosition = manager.findLastVisibleItemPosition();
             }
         });
     }
@@ -147,21 +182,23 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
         mPresenter = new CollectPresenter(mActivity, this);
     }
 
-
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
         mPage = 0;
-        mPresenter.fetchDate(mPage);
+        mPresenter.fetchCollect(mPage, RefreshStatus.DOWN, mCurViewStatus);
+    }
+
+    private void onDownRefresh() {
+        mPresenter.fetchCollect(mPage, RefreshStatus.UP, mCurViewStatus);
     }
 
     @Override
     public void onLongClick(int position, Object object) {
-        UrlCollect urlCollect = (UrlCollect) object;
         mLongClick = position;
-        mUrlCollect = urlCollect;
+        mUrlCollect = (UrlCollect) object;
+        mDeleteId = mUrlCollect.getId();
         Bundle bundle = new Bundle();
-        bundle.putString("content", urlCollect.getComment());
+        bundle.putString("content", mUrlCollect.getComment());
         DeleteDialog deleteDialog = new DeleteDialog();
         deleteDialog.setListener(this);
         deleteDialog.setArguments(bundle);
@@ -170,17 +207,19 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void onClick(int position, Object object) {
+        mClick = position;
         UrlCollect urlCollect = (UrlCollect) object;
+        mDeleteId = urlCollect.getId();
         Bundle bundle = new Bundle();
         bundle.putString("title", urlCollect.getComment());
         bundle.putString("url", urlCollect.getUrl());
+        bundle.putInt("from_type", WebActivity.FROM_COLLECT);
         WebActivity.startWebActivity(mActivity, bundle);
     }
 
 
     @Override
     public void refillDate(List<UrlCollect> list) {
-        mCollectAdapter.clear();
         mCollectAdapter.updateItems(list);
     }
 
@@ -191,23 +230,23 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void hasNoMoreDate() {
+        hasMore = false;
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showEmpty() {
         super.showEmpty();
-        mCurStatus = ViewStatus.EMPTY;
+        mCurViewStatus = ViewStatus.EMPTY;
         mLoadingLayoutView.setVisibility(View.VISIBLE);
         mLoadingLayoutView.setStatus(LoadingLayoutView.EMPTY);
     }
 
     @Override
     public void showView() {
-        mCurStatus = ViewStatus.SHOW;
+        mCurViewStatus = ViewStatus.SHOW;
         mLoadingLayoutView.setVisibility(View.GONE);
     }
-
 
     @Override
     public void fetchFinish() {
@@ -215,18 +254,14 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     }
 
     @Override
+    public void showRefresh() {
+        super.showRefresh();
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
     public void hideRefresh() {
         super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public boolean isListEmpty() {
-        return mCollectAdapter.getItemCount() == 0;
-    }
-
-    @Override
-    public ViewStatus getCurViewStatus() {
-        return mCurStatus;
     }
 }

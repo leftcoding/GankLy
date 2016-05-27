@@ -18,6 +18,8 @@ import rx.schedulers.Schedulers;
  * Create by LingYan on 2016-05-23
  */
 public class VideoPresenter extends BasePresenter<IVideoView> {
+    private ViewStatus mViewStatus;
+
     public VideoPresenter(Activity mActivity, IVideoView view) {
         super(mActivity, view);
     }
@@ -52,7 +54,7 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
-                if (mIView.getCurViewStatus() != ViewStatus.SHOW) {
+                if (mViewStatus != ViewStatus.SHOW) {
                     mIView.showView();
                 }
                 mIView.onCompleted();
@@ -79,5 +81,9 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
                 }
             }
         };
+    }
+
+    public void setViewStatus(ViewStatus viewStatus) {
+        mViewStatus = viewStatus;
     }
 }
