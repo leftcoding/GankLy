@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.view.IIosView;
 
 import java.util.List;
@@ -33,9 +33,9 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
     public void fetchDate(final int page) {
         this.mPage = page;
-        Observable<GankResult> iosGoods = GankRetrofit.getInstance()
+        Observable<GankResult> iosGoods = GankApi.getInstance()
                 .getGankService().fetchIosGoods(limit, page);
-        Observable<GankResult> image = GankRetrofit.getInstance()
+        Observable<GankResult> image = GankApi.getInstance()
                 .getGankService().fetchBenefitsGoods(limit, page);
 
         Observable.zip(iosGoods, image, new Func2<GankResult, GankResult, GankResult>() {
@@ -71,7 +71,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
     public void fetchBenefitsGoods(int page) {
         this.mPage = page;
         mIView.showRefresh();
-        GankRetrofit.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
+        GankApi.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();

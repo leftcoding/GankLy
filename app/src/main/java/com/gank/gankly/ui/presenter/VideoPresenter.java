@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewStatus;
-import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.view.IVideoView;
 
 import rx.Observable;
@@ -25,9 +25,9 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
     }
 
     public void fetchDate(final int mPage, final int limit) {
-        Observable<GankResult> video = GankRetrofit.getInstance()
+        Observable<GankResult> video = GankApi.getInstance()
                 .getGankService().fetchVideo(limit, mPage);
-        Observable<GankResult> image = GankRetrofit.getInstance()
+        Observable<GankResult> image = GankApi.getInstance()
                 .getGankService().fetchBenefitsGoods(limit, mPage);
         Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
             @Override

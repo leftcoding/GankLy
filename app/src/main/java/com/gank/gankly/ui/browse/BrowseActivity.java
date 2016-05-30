@@ -22,7 +22,7 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewsModel;
-import com.gank.gankly.network.GankRetrofit;
+import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.main.meizi.GiftFragment;
 import com.gank.gankly.utils.RxSaveImage;
@@ -96,7 +96,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         final int limit = 20;
         mPage = MeiziArrayList.getInstance().getPage();
         mPage = mPage + 1;
-        GankRetrofit.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
+        GankApi.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
             }

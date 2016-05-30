@@ -1,7 +1,8 @@
-package com.gank.gankly.network;
+package com.gank.gankly.network.api;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.network.service.GankService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -20,19 +21,18 @@ import rx.schedulers.Schedulers;
  * Retrofit请求封装
  * Create by LingYan on 2016-04-06
  */
-public class GankRetrofit {
+public class GankApi {
     private static final String BASE_URL = "http://gank.io/api/data/";
-
     private static final int DEFAULT_OUT_TIME = 12;
 
-    public GankApi gankApi;
+    public GankService gankApi;
 
     final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
             .serializeNulls()
             .create();
 
-    private GankRetrofit() {
+    private GankApi() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
@@ -58,21 +58,20 @@ public class GankRetrofit {
                 .baseUrl(BASE_URL)
                 .build();
 
-        gankApi = retrofit.create(GankApi.class);
+        gankApi = retrofit.create(GankService.class);
     }
-
 
     //在访问HttpMethods时创建单例
     private static class SingletonHolder {
-        private static final GankRetrofit INSTANCE = new GankRetrofit();
+        private static final GankApi INSTANCE = new GankApi();
     }
 
     //获取单例
-    public static GankRetrofit getInstance() {
+    public static GankApi getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
-    public GankApi getGankService() {
+    public GankService getGankService() {
         return gankApi;
     }
 

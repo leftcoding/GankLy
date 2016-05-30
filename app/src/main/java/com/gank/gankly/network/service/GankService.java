@@ -1,4 +1,4 @@
-package com.gank.gankly.network;
+package com.gank.gankly.network.service;
 
 import com.gank.gankly.bean.GankResult;
 
@@ -7,10 +7,9 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * 接口api
  * Create by LingYan on 2016-04-06
  */
-public interface GankApi {
+public interface GankService {
     @GET("Android/{limit}/{page}")
     Observable<GankResult> fetchAndroidGoods(
             @Path("limit") int limit,
