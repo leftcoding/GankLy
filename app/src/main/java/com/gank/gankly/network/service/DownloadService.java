@@ -10,7 +10,7 @@ import rx.Observable;
  */
 public interface DownloadService {
     @Streaming
-    @GET("com.ss.android.article.news.apk")
+    @GET("168licai.apk")
     Observable<ResponseBody> downApk();
 }
 

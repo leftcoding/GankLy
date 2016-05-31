@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.main;
 
 import android.content.Context;
-import android.os.Environment;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -15,11 +14,10 @@ import com.gank.gankly.network.service.DownloadService;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
+import com.gank.gankly.utils.FileUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -141,8 +139,6 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     private void getRun_1() {
-        KLog.d("getRun");
-
         final ProgressListener progressListener = new ProgressListener() {
             @Override
             public void update(long bytesRead, long contentLength, boolean done) {
@@ -173,7 +169,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl("http://f3.market.xiaomi.com/download/AppStore/0c4d1b415a0d548e439665596eff312555bdc1e69/")
+                .baseUrl("https://coding.net/u/leftcoding/p/Gank/git/raw/master/")
                 .build();
 
         Observable<ResponseBody> call = retrofit.create(DownloadService.class).downApk();
@@ -201,34 +197,15 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                     public void onNext(InputStream response) {
                         KLog.d("response");
                         try {
-                            writeFile(response, "gankly.apk");
+                            FileUtils.writeFile(response, "gankly.apk");
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            KLog.e(e);
                         }
                     }
                 });
     }
 
-    public static void writeFile(InputStream in, String fileName) throws IOException {
-        final File file = new File(Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/" + "GankLy/" + fileName);
-        KLog.d(file.getAbsolutePath());
-        if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
-        } else {
-            file.delete();
-        }
 
-        FileOutputStream out = new FileOutputStream(file);
-        byte[] buffer = new byte[1024 * 128];
-        int len = -1;
-        while ((len = in.read(buffer)) != -1) {
-            out.write(buffer, 0, len);
-        }
-        out.flush();
-        out.close();
-        in.close();
-    }
 //
 //    private static class ProgressResponseBody extends ResponseBody {
 //
