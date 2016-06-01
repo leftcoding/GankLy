@@ -45,7 +45,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c38f935-6d90-4a01-80a5-62e6703df6a9" name="Default" comment="1.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_1.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_2.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/proguard-rules.pro" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" />
@@ -176,8 +176,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19266056">
-              <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.2038835">
+              <caret line="5" column="66" selection-start-line="5" selection-start-column="66" selection-end-line="5" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -2585,8 +2585,12 @@
     <property name="ExportApk.BuildType" value="release" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\GankLy\app" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\GankLy\art" />
+      <recent name="E:\GankLy\app\src\main\java\com\gank\gankly\network" />
+      <recent name="E:\GankLy\app\src\main\res\layout" />
+      <recent name="E:\GankLy\app\src\main\res\drawable-xxxhdpi" />
+      <recent name="E:\GankLy\app\src\main\res" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.gank.gankly.ui.main" />
@@ -2595,12 +2599,8 @@
       <recent name="com.gank.gankly.ui.collect" />
       <recent name="com.gank.gankly.widget" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="E:\GankLy\art" />
-      <recent name="E:\GankLy\app\src\main\java\com\gank\gankly\network" />
-      <recent name="E:\GankLy\app\src\main\res\layout" />
-      <recent name="E:\GankLy\app\src\main\res\drawable-xxxhdpi" />
-      <recent name="E:\GankLy\app\src\main\res" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\GankLy\app" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -3204,7 +3204,13 @@
       <option name="project" value="LOCAL" />
       <updated>1464744296872</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="1.add app screen img">
+      <created>1464745044666</created>
+      <option name="number" value="00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1464745044666</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3253,7 +3259,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.CollectActivity 添加loadingview 布局&#10;2.添加LoadingView 布局用来控制 加载 空 失败布局" />
     <MESSAGE value="1.修改数据，添加type ，为collect做准备，&#10;2.空界面视图没做。明天记得改。&#10;3.解决collectadapter  点击错位。" />
     <MESSAGE value="1.CollectAdapter 重新布局&#10;2.增加AboutFragment" />
     <MESSAGE value="1.AboutFragment 完成初稿&#10;2.CollectFragment 修改完成" />
@@ -3278,7 +3283,8 @@
     <MESSAGE value="1.add download function" />
     <MESSAGE value="1.add download apk" />
     <MESSAGE value="1.check version and update apk&#10;2.app screen shot" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.check version and update apk&#10;2.app screen shot" />
+    <MESSAGE value="1.add app screen img" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.add app screen img" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3658,8 +3664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19266056">
-          <caret line="5" column="60" selection-start-line="5" selection-start-column="60" selection-end-line="5" selection-end-column="60" />
+        <state vertical-scroll-proportion="0.2038835">
+          <caret line="5" column="66" selection-start-line="5" selection-start-column="66" selection-end-line="5" selection-end-column="66" />
           <folding />
         </state>
       </provider>
