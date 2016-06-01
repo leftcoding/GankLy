@@ -45,7 +45,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c38f935-6d90-4a01-80a5-62e6703df6a9" name="Default" comment="1.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_3.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_4.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/art/img_5.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/art/Screenshot_2016-06-01-09-20-12_com.gank.gankly.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/art/Screenshot_2016-06-01-09-20-18_com.gank.gankly.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/art/Screenshot_2016-06-01-09-20-22_com.gank.gankly.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/art/Screenshot_2016-06-01-09-20-27_com.gank.gankly.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/art/Screenshot_2016-06-01-09-20-34_com.gank.gankly.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/art/img_1.png" afterPath="$PROJECT_DIR$/art/img_1.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/proguard-rules.pro" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" />
@@ -177,7 +185,7 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.2038835">
-              <caret line="5" column="66" selection-start-line="5" selection-start-column="66" selection-end-line="5" selection-end-column="66" />
+              <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
               <folding />
             </state>
           </provider>
@@ -3210,7 +3218,13 @@
       <option name="project" value="LOCAL" />
       <updated>1464745044666</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="1.img">
+      <created>1464745201063</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1464745201063</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3259,7 +3273,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.修改数据，添加type ，为collect做准备，&#10;2.空界面视图没做。明天记得改。&#10;3.解决collectadapter  点击错位。" />
     <MESSAGE value="1.CollectAdapter 重新布局&#10;2.增加AboutFragment" />
     <MESSAGE value="1.AboutFragment 完成初稿&#10;2.CollectFragment 修改完成" />
     <MESSAGE value="1.初步所有完成界面，数据读取。" />
@@ -3284,7 +3297,8 @@
     <MESSAGE value="1.add download apk" />
     <MESSAGE value="1.check version and update apk&#10;2.app screen shot" />
     <MESSAGE value="1.add app screen img" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.add app screen img" />
+    <MESSAGE value="1.img" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.img" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3665,7 +3679,7 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2038835">
-          <caret line="5" column="66" selection-start-line="5" selection-start-column="66" selection-end-line="5" selection-end-column="66" />
+          <caret line="5" column="3" selection-start-line="5" selection-start-column="3" selection-end-line="5" selection-end-column="3" />
           <folding />
         </state>
       </provider>
