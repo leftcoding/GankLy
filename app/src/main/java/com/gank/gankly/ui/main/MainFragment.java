@@ -162,8 +162,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             public void onNext(CheckVersion checkVersion) {
                 KLog.d("onNext, " + checkVersion.getCode() + AppUtils.getVersionCode(mActivity));
                 int curVersion = AppUtils.getVersionCode(mActivity);
-//                if (checkVersion.getCode() > curVersion) {
-                if (checkVersion.getCode() == 1) {
+                if (checkVersion.getCode() > curVersion) {
                     downloadApk();
                 }
             }
