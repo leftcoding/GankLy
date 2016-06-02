@@ -6,8 +6,11 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+<<<<<<< HEAD
 import com.socks.library.KLog;
 
+=======
+>>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 import java.util.List;
 
 /**
@@ -41,6 +44,7 @@ public class AppUtils {
         ClipData clipData = ClipData.newPlainText("GankLy_copy", text);
         manager.setPrimaryClip(clipData);
     }
+<<<<<<< HEAD
 
     public static int getVersionCode(Context context) {
         int currentVersionCode = 0;
@@ -54,4 +58,6 @@ public class AppUtils {
         }
         return currentVersionCode;
     }
+=======
+>>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 }
