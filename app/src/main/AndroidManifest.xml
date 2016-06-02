@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.gank.gankly">
+
+    <uses-permission android:name="com.company.app.fileprovider.READ"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.gank.gankly.config.glide.MyGlideModule"
+            android:value="GlideModule"/>
+        <meta-data
+            android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"
+            android:value="GlideModule"/>
+
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.web.WebActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.browse.BrowseActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/BrowseThemeBase"/>
+        <activity
+            android:name=".ui.web.WebVideoViewActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"/>
+    </application>
+</manifest>
