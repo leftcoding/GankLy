@@ -9,22 +9,15 @@ import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-<<<<<<< HEAD
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.api.DownloadApi;
-=======
-import com.gank.gankly.config.Constants;
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 import com.gank.gankly.network.service.DownloadService;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
-<<<<<<< HEAD
 import com.gank.gankly.utils.AppUtils;
-=======
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 import com.gank.gankly.utils.FileUtils;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
@@ -43,21 +36,14 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
-<<<<<<< HEAD
 import rx.functions.Action1;
-=======
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-04-22
  */
-<<<<<<< HEAD
 public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener, DownloadProgressListener {
-=======
-public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
     private static final String TAG = "MainFragment";
 
     @Bind(R.id.main_toolbar)
@@ -72,11 +58,8 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     private List<String> mTitles;
     private static MainFragment sMainFragment;
 
-<<<<<<< HEAD
     DownloadApi downloadApi;
 
-=======
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
     public static MainFragment getInstance() {
         if (sMainFragment == null) {
             sMainFragment = new MainFragment();
@@ -100,12 +83,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             ab.setDisplayHomeAsUpEnabled(true);
         }
         mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
-<<<<<<< HEAD
-//        getRun_1();
         checkVersion();
-=======
-        getRun_1();
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
     }
 
     @Override
@@ -167,7 +145,6 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
     }
 
-<<<<<<< HEAD
     private void checkVersion() {
         downloadApi = new DownloadApi(this);
         downloadApi.checkVersion(new Subscriber<CheckVersion>() {
@@ -185,7 +162,8 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             public void onNext(CheckVersion checkVersion) {
                 KLog.d("onNext, " + checkVersion.getCode() + AppUtils.getVersionCode(mActivity));
                 int curVersion = AppUtils.getVersionCode(mActivity);
-                if (checkVersion.getCode() > curVersion) {
+//                if (checkVersion.getCode() > curVersion) {
+                if (checkVersion.getCode() == 1) {
                     downloadApk();
                 }
             }
@@ -196,9 +174,13 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
         downloadApi.downloadApk(new Action1<InputStream>() {
             @Override
             public void call(InputStream inputStream) {
-                KLog.d("call");
+                try {
+                    FileUtils.writeFile(inputStream, "gankly.apk");
+                } catch (IOException e) {
+                    KLog.e(e);
+                }
             }
-        }, new Subscriber() {
+        }, new Subscriber<Object>() {
             @Override
             public void onCompleted() {
                 KLog.d("onCompleted");
@@ -206,18 +188,16 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
             @Override
             public void onError(Throwable e) {
-                KLog.d(e);
+                KLog.e(e);
             }
 
             @Override
-            public void onNext(Object o) {
-                KLog.d("0");
+            public void onNext(Object inputStream) {
+                KLog.d("onNext");
             }
         });
     }
 
-=======
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
     private void getRun_1() {
         final ProgressListener progressListener = new ProgressListener() {
             @Override
@@ -231,8 +211,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)
-                .connectTimeout(70, TimeUnit.SECONDS)
-
+                .connectTimeout(15, TimeUnit.SECONDS)
 
 //                .addNetworkInterceptor(new Interceptor() {
 //                    @Override
@@ -249,17 +228,10 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-<<<<<<< HEAD
                 .baseUrl("https://coding.net/u/leftcoding/p/Gank/git/")
                 .build();
 
         Observable<ResponseBody> call = retrofit.create(DownloadService.class).downloadApk();
-=======
-                .baseUrl("https://coding.net/u/leftcoding/p/Gank/git/raw/master/")
-                .build();
-
-        Observable<ResponseBody> call = retrofit.create(DownloadService.class).downApk();
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
         call.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .map(new Func1<ResponseBody, InputStream>() {
@@ -292,14 +264,10 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
                 });
     }
 
-<<<<<<< HEAD
     @Override
     public void update(long bytesRead, long contentLength, boolean done) {
-
+        KLog.d("bytesRead:" + bytesRead + ",contentLength:" + contentLength + ",done:" + done);
     }
-
-=======
->>>>>>> ba456322f78a58bea1ad2febbfee870809b766d1
 
 //
 //    private static class ProgressResponseBody extends ResponseBody {
