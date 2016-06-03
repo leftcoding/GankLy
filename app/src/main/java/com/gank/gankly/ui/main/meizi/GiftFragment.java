@@ -110,7 +110,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     protected void initValues() {
-        mActivity.setTitle(R.string.navigation_gift);
+        mToolbar.setTitle(R.string.navigation_gift);
         mActivity.setSupportActionBar(mToolbar);
 
         ActionBar bar = mActivity.getSupportActionBar();

@@ -5,9 +5,7 @@ import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
 
@@ -19,8 +17,6 @@ import butterknife.Bind;
 public class SettingFragment extends BaseFragment {
     @Bind(R.id.setting_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.setting_txt_version)
-    TextView txtVersion;
 
     public static SettingFragment sAboutFragment;
     public MainActivity mActivity;
@@ -40,12 +36,11 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     protected void initValues() {
-        txtVersion.setText("V 1.0");
     }
 
     @Override
     protected void initViews() {
-        mActivity.setTitle(App.getAppString(R.string.navigation_settings));
+        mToolbar.setTitle(R.string.navigation_settings);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
