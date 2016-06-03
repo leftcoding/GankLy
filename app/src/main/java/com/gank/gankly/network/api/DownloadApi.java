@@ -8,6 +8,7 @@ import com.gank.gankly.network.service.DownloadService;
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -27,13 +28,23 @@ public class DownloadApi {
     private static final String BASE_URL = "http://gank.leftyan.com/";
     private DownloadService mDownloadService;
 
+    public DownloadApi() {
+        init(null);
+    }
+
     public DownloadApi(DownloadProgressListener listener) {
         DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(listener);
+        init(interceptor);
+    }
+
+    private void init(Interceptor interceptor) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.retryOnConnectionFailure(true);
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
-        builder.addInterceptor(interceptor);
+        if (interceptor != null) {
+            builder.addInterceptor(interceptor);
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())

@@ -14,9 +14,11 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.api.DownloadApi;
 import com.gank.gankly.network.service.DownloadService;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
+import com.gank.gankly.ui.presenter.LauncherPresenter;
+import com.gank.gankly.ui.view.ILauncher;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.FileUtils;
 import com.google.gson.Gson;
@@ -43,7 +45,8 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-04-22
  */
-public class MainFragment extends BaseFragment implements ViewPager.OnPageChangeListener, DownloadProgressListener {
+public class MainFragment extends BaseSwipeRefreshFragment<LauncherPresenter> implements
+        ViewPager.OnPageChangeListener, DownloadProgressListener, ILauncher {
     private static final String TAG = "MainFragment";
 
     @Bind(R.id.main_toolbar)
@@ -58,7 +61,8 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     private List<String> mTitles;
     private static MainFragment sMainFragment;
 
-    DownloadApi downloadApi;
+    private DownloadApi downloadApi;
+    private LauncherPresenter mPresenter;
 
     public static MainFragment getInstance() {
         if (sMainFragment == null) {
@@ -74,6 +78,11 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     }
 
     @Override
+    protected void initPresenter() {
+
+    }
+
+    @Override
     protected void initViews() {
         mToolbar.setTitle(R.string.app_name);
         mActivity.setSupportActionBar(mToolbar);
@@ -83,7 +92,7 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
             ab.setDisplayHomeAsUpEnabled(true);
         }
         mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
-        checkVersion();
+//        checkVersion();
     }
 
     @Override
@@ -256,5 +265,15 @@ public class MainFragment extends BaseFragment implements ViewPager.OnPageChange
     @Override
     public void update(long bytesRead, long contentLength, boolean done) {
         KLog.d("bytesRead:" + bytesRead + ",contentLength:" + contentLength + ",done:" + done);
+    }
+
+    @Override
+    public void refillDate() {
+
+    }
+
+    @Override
+    public void callUpdate(CheckVersion checkVersion) {
+
     }
 }

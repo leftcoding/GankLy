@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 
 import com.gank.gankly.ui.presenter.BasePresenter;
 import com.gank.gankly.ui.view.ISwipeRefreshView;
-import com.socks.library.KLog;
 
 /**
  * Create by LingYan on 2016-5-12
@@ -51,7 +50,7 @@ public abstract class LazyFragment<P extends BasePresenter> extends BaseSwipeRef
     protected abstract void initDate();
 
     private void lazyLoadData() {
-        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView" + isView);
+//        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }

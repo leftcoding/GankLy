@@ -59,7 +59,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     private int mLostPosition;
     private int mPage = 0;
     private int mLongClick;
-    private int mClick = -1;
+    private int mClickPosition = -1;
     private ViewStatus mCurViewStatus;
     private boolean hasMore = true;
     private long mDeleteId;
@@ -87,7 +87,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
             @Override
             public void onNext(RxCollect rxCollect) {
                 if (rxCollect.isCollect()) {
-                    onDelete(mClick);
+                    onDelete(mClickPosition);
                 }
             }
         });
@@ -207,7 +207,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     public void onClick(int position, Object object) {
-        mClick = position;
+        mClickPosition = position;
         UrlCollect urlCollect = (UrlCollect) object;
         mDeleteId = urlCollect.getId();
         Bundle bundle = new Bundle();

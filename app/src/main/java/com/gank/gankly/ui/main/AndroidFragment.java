@@ -20,6 +20,7 @@ import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.utils.NetworkUtils;
 import com.socks.library.KLog;
 
 import butterknife.Bind;
@@ -194,12 +195,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
                 });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
     public static AndroidFragment newInstance() {
         AndroidFragment fragment = new AndroidFragment();
         Bundle args = new Bundle();
@@ -210,6 +205,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         onDownRefresh();
+        KLog.d("isMobileNetwork:" + NetworkUtils.isMobileNetwork(mActivity)
+                + ", isNetworkAvailable:" + NetworkUtils.isNetworkAvailable(mActivity)
+                + ", isWiFi:" + NetworkUtils.isWiFi(mActivity)
+                + ", isWiFiEnabled:" + NetworkUtils.isWiFiEnabled(mActivity));
     }
 
     @Override
@@ -220,5 +219,11 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         bundle.putString("type", Constants.ANDROID);
         bundle.putString("author", bean.getWho());
         WebActivity.startWebActivity(mActivity, bundle);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

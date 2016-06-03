@@ -54,4 +54,16 @@ public class AppUtils {
         }
         return currentVersionCode;
     }
+
+    public static String getVersionName(Context context) {
+        String appVersionName = "";
+        PackageManager manager = context.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
+            appVersionName = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            KLog.e(e);
+        }
+        return appVersionName;
+    }
 }

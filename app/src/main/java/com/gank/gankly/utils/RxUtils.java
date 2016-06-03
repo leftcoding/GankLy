@@ -47,7 +47,7 @@ public class RxUtils {
         }
     }
 
-    public void OUnCollect() {
+    public void OnUnCollect() {
         Observable.create(new Observable.OnSubscribe<RxCollect>() {
             @Override
             public void call(Subscriber<? super RxCollect> subscriber) {

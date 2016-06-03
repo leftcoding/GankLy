@@ -310,7 +310,7 @@ public class WebActivity extends BaseActivity {
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
             if (mFromType == FROM_COLLECT) {
-                RxUtils.getInstance().OUnCollect();
+                RxUtils.getInstance().OnUnCollect();
             }
         }
     }

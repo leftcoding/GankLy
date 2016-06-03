@@ -27,9 +27,9 @@
 
         <RelativeLayout
             android:id="@+id/setting_rl_auto_check"
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:gravity="center_vertical"
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="自动检查更新"
+                android:text="@string/setting_auto_check"
                 android:textColor="@color/text_default"
                 android:textSize="16sp"/>
 
@@ -70,16 +70,17 @@
                 android:id="@+id/setting_txt_check_version"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="检查更新"
+                android:text="@string/setting_check_version"
                 android:textColor="@color/text_default"
                 android:textSize="16sp"/>
 
             <TextView
+                android:id="@+id/setting_txt_current_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_txt_check_version"
                 android:layout_marginTop="3dp"
-                android:text="当前版本 1.0"
+                android:text=""
                 android:textSize="12sp"/>
         </RelativeLayout>
 

@@ -7,6 +7,15 @@ public class CheckVersion {
     private int code;
     private String version;
     private String url;
+    private String changelog;
+
+    public String getChangelog() {
+        return changelog;
+    }
+
+    public void setChangelog(String changelog) {
+        this.changelog = changelog;
+    }
 
     public int getCode() {
         return code;

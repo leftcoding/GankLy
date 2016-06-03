@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.gank.gankly.R;
+import com.gank.gankly.ui.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 
@@ -15,14 +16,16 @@ import butterknife.ButterKnife;
 /**
  * Create by LingYan on 2016-04-05
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     private long mLastTime;
     private Fragment mContent = null;
+    protected P mPresenter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
+        initPresenter();
         ButterKnife.bind(this);
         initValues();
         initViews();
@@ -63,12 +66,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(tag)) {
                 mFragmentTransaction.addToBackStack(tag);
             }
-            if (!to.isAdded()) { // 先判断是否被add过
+            if (!to.isAdded()) {
                 mFragmentTransaction.hide(from).add(contentAreaId, to)
-                        .commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
+                        .commitAllowingStateLoss();
             } else {
                 mFragmentTransaction.hide(from).show(to)
-                        .commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
+                        .commitAllowingStateLoss();
             }
         }
     }
@@ -103,6 +106,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void bindListener();
 
     protected abstract void initValues();
+
+    protected void initPresenter() {
+
+    }
 
     private boolean isOpenMore() {
         if (System.currentTimeMillis() - mLastTime <= 100) {

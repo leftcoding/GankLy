@@ -116,6 +116,12 @@ public class MainActivity extends BaseActivity {
         add(mCurFragment);
     }
 
+    @Override
+    protected void initPresenter() {
+        super.initPresenter();
+
+    }
+
     public void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
