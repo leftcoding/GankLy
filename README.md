@@ -15,6 +15,6 @@ V1.0
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_5.png)
 
 ##感谢
-*@代码家 提供接口
-*瓶子的友情帮助
-*Google
+* @代码家 提供接口
+* 瓶子的友情帮助
+* Google
