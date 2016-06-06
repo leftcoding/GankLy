@@ -49,6 +49,12 @@
     <string name="setting_check_version">检查更新</string>
     <string name="setting_current_version">当前版本 %1$s</string>
 
+    <string name="preference_category_base_settings">基本设置</string>
+    <string name="preference_category_help">帮助</string>
+
+    <string name="preference_off">OFF</string>
+    <string name="preference_on">ON</string>
+
     <string name="about_app_str">GankLy \n该应用是一个关于程序员的干货，基本上应用每天都有会有新Android、ios等知识点，还有福（mei）利（zi）、精彩视频等让你放松的视觉享受，后期有时间还会加入其他的知识点。由于时间、能力有限，还有许多不足的地方，请大家多多指教。</string>
     <string name="about_thanks_str">感谢 \n应用中用到的大部分接口均来自 http://gank.io，在这里感谢daimajia的无私贡献。应用中部分代码参考来着@drakket @xiongwei-git，还有帮助我过我的人，以及网上的分享。同样，我也希望我的应用可以帮助一些人。</string>
 </resources>

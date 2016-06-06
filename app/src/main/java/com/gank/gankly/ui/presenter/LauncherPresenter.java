@@ -8,7 +8,10 @@ import com.gank.gankly.ui.view.ILauncher;
 import com.gank.gankly.utils.AppUtils;
 import com.socks.library.KLog;
 
+import java.io.InputStream;
+
 import rx.Subscriber;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-06-01
@@ -22,7 +25,6 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
     }
 
     public void checkVersion() {
-        KLog.d("checkVersion");
         mDownloadApi.checkVersion(new Subscriber<CheckVersion>() {
             @Override
             public void onCompleted() {
@@ -41,5 +43,9 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
                 }
             }
         });
+    }
+
+    public void downloadApk(Action1<InputStream> next, Subscriber subscriber) {
+        mDownloadApi.downloadApk(next, subscriber);
     }
 }

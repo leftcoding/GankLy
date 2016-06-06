@@ -6,9 +6,16 @@
         <attr name="shadow_position" format="integer"/>
         <attr name="loading_speed" format="integer"/>
     </declare-styleable>
+
     <!--glide 自定义控件 带进度条-->
     <declare-styleable name="ProgressImageView">
-        <attr name="showProgressText" format="boolean" />
-        <attr name="showProgressBar" format="boolean" />
+        <attr name="showProgressText" format="boolean"/>
+        <attr name="showProgressBar" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="preferenceSwitch">
+        <attr name="check" format="boolean"/>
+        <attr name="text_on" format="string"/>
+        <attr name="text_off" format="string"/>
     </declare-styleable>
 </resources>

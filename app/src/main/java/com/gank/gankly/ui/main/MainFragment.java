@@ -79,7 +79,8 @@ public class MainFragment extends BaseSwipeRefreshFragment<LauncherPresenter> im
 
     @Override
     protected void initPresenter() {
-
+        mPresenter = new LauncherPresenter(mActivity, this);
+        mPresenter.checkVersion();
     }
 
     @Override
@@ -179,7 +180,7 @@ public class MainFragment extends BaseSwipeRefreshFragment<LauncherPresenter> im
     }
 
     private void downloadApk() {
-        downloadApi.downloadApk(new Action1<InputStream>() {
+        mPresenter.downloadApk(new Action1<InputStream>() {
             @Override
             public void call(InputStream inputStream) {
                 try {
@@ -274,6 +275,10 @@ public class MainFragment extends BaseSwipeRefreshFragment<LauncherPresenter> im
 
     @Override
     public void callUpdate(CheckVersion checkVersion) {
-
+        KLog.d("checkVersion:" + checkVersion.getCode());
+        int curAppVersion = AppUtils.getVersionCode(mActivity);
+        if (checkVersion.getCode() > curAppVersion) {
+            downloadApk();
+        }
     }
 }

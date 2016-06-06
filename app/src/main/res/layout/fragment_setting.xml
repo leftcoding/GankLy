@@ -3,8 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?attr/selectableItemBackground">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/setting_appbar"
@@ -25,39 +24,16 @@
         android:layout_below="@id/setting_appbar"
         android:background="@color/white">
 
-        <RelativeLayout
-            android:id="@+id/setting_rl_auto_check"
+        <com.gank.gankly.widget.ItemSwitchView
+            android:id="@+id/setting_switch_check"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:paddingBottom="10dp"
-            android:paddingEnd="15dp"
-            android:paddingStart="15dp"
-            android:paddingTop="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/setting_auto_check"
-                android:textColor="@color/text_default"
-                android:textSize="16sp"/>
-
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+            android:layout_height="wrap_content"/>
 
         <RelativeLayout
             android:id="@+id/setting_rl_check_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/setting_rl_auto_check"
+            android:layout_below="@id/setting_switch_check"
             android:layout_marginTop="5dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"

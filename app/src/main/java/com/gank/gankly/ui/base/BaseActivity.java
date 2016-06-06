@@ -1,5 +1,7 @@
 package com.gank.gankly.ui.base;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -109,6 +111,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected void initPresenter() {
 
+    }
+
+    public void gotoActivity(Class<? extends Activity> cls, boolean isFinish) {
+        Intent intent = new Intent(this, cls);
+        startActivity(intent);
+        if (isFinish) {
+            finish();
+        }
     }
 
     private boolean isOpenMore() {

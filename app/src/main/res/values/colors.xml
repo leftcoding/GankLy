@@ -30,6 +30,8 @@
     <color name="accent_material_light">@color/material_deep_teal_500</color>
     <color name="video_item_black_light_bg">#553a3a3a</color>
 
+    <color name="setting_line_bg">#80bebebe</color>
+
     <!--  jianshu   -->
 
     <color name="Blue_translucent">#5555a5e3</color>

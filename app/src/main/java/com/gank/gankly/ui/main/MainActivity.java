@@ -49,6 +49,7 @@ public class MainActivity extends BaseActivity {
                 ToastUtils.shortBottom(R.string.app_again_out);
                 return false;
             } else {
+                finish();
                 AppUtils.killProcess();
             }
         }
@@ -124,5 +125,10 @@ public class MainActivity extends BaseActivity {
 
     public void openDrawer() {
         mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
