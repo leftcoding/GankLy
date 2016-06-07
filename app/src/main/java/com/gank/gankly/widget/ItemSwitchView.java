@@ -48,9 +48,6 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         txtName = (TextView) view.findViewById(R.id.item_switch_txt_name);
         mSwitch = (Switch) view.findViewById(R.id.item_switch_auto_check);
         viItem = view.findViewById(R.id.setting_rl_auto_check);
-
-        viItem.setOnClickListener(this);
-        mSwitch.setOnCheckedChangeListener(this);
     }
 
     public void setTextName(String name) {
@@ -60,10 +57,6 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     public void setViewSwitch(boolean isCheck) {
         this.isCheck = isCheck;
         mSwitch.setChecked(isCheck);
-    }
-
-    public boolean getViewSwitch() {
-        return isCheck;
     }
 
     public void setOnSwitch(OnSwitch onSwitch) {
@@ -88,6 +81,13 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        viItem.setOnClickListener(this);
+        mSwitch.setOnCheckedChangeListener(this);
     }
 
     @Override

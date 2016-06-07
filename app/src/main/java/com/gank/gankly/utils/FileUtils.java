@@ -1,7 +1,5 @@
 package com.gank.gankly.utils;
 
-import android.os.Environment;
-
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -14,9 +12,7 @@ import java.io.InputStream;
  */
 public class FileUtils {
 
-    public static void writeFile(InputStream in, String fileName) throws IOException {
-        final File file = new File(Environment.getExternalStorageDirectory()
-                .getAbsolutePath()  + "/GankLy/" + fileName);
+    public static void writeFile(InputStream in, File file) throws IOException {
         KLog.d(file.getAbsolutePath());
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();

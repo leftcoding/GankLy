@@ -24,7 +24,7 @@ import rx.schedulers.Schedulers;
  * Create by LingYan on 2016-05-30
  */
 public class DownloadApi {
-    private static final int DEFAULT_OUT_TIME = 30;
+    private static final int DEFAULT_OUT_TIME = 60;
     private static final String BASE_URL = "http://gank.leftyan.com/";
     private DownloadService mDownloadService;
 

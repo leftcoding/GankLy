@@ -16,7 +16,7 @@ import com.socks.library.KLog;
  * Create by LingYan on 2016-04-01
  */
 public class App extends Application {
-    private static final int PERFERENCES_VERSION = 1;
+    private static final int PREFERENCES_VERSION = 1;
     private static final String DB_NAME = "gank.db";
 
     public static Context mContext;
@@ -41,9 +41,9 @@ public class App extends Application {
     private void initPreferences() {
         int version = GanklyPreferences.getInt(Preferences.APP_VERSION, 1);
         KLog.d("version:" + version);
-        if (version < PERFERENCES_VERSION) {
+        if (version < PREFERENCES_VERSION) {
             GanklyPreferences.clear();
-            GanklyPreferences.putInt(Preferences.APP_VERSION, PERFERENCES_VERSION);
+            GanklyPreferences.putInt(Preferences.APP_VERSION, PREFERENCES_VERSION);
         }
     }
 

@@ -13,9 +13,8 @@
         <attr name="showProgressBar" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="preferenceSwitch">
-        <attr name="check" format="boolean"/>
-        <attr name="text_on" format="string"/>
-        <attr name="text_off" format="string"/>
+    <declare-styleable name="ItemSwitchView">
+        <attr name="name" format="string"/>
+        <attr name="summary" format="string"/>
     </declare-styleable>
 </resources>

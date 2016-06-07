@@ -33,10 +33,4 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
-    <style name="SwitchPreference">
-        <item name="check">true</item>
-        <item name="text_on">@string/preference_on</item>
-        <item name="text_off">@string/preference_off</item>
-    </style>
-
 </resources>
