@@ -9,10 +9,21 @@
     android:layout_marginTop="5dp"
     card_view:cardCornerRadius="4dp">
 
-    <com.gank.gankly.widget.RatioImageView
-        android:id="@+id/meizi_img_picture"
+    <RelativeLayout
+        android:id="@+id/meizi_card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:transitionName="@string/meizi_picture_save_path"
-        android:scaleType="centerCrop"/>
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/meizi_img_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
+    </RelativeLayout>
+    <!--<com.gank.gankly.widget.RatioImageView-->
+    <!--android:id="@+id/meizi_img_picture"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:transitionName="@string/meizi_picture_save_path"-->
+    <!--android:scaleType="centerCrop"/>-->
 </android.support.v7.widget.CardView>

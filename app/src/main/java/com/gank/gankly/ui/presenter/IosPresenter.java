@@ -7,6 +7,7 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.view.IIosView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -69,23 +70,27 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
 
     public void fetchBenefitsGoods(int page) {
+        KLog.d("fetchBenefitsGoods");
         this.mPage = page;
         mIView.showRefresh();
         GankApi.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
+                KLog.d("onCompleted");
                 mIView.hideRefresh();
                 mIView.onCompleted();
             }
 
             @Override
             public void onError(Throwable e) {
+                KLog.d("onError");
                 mIView.hideRefresh();
                 mIView.onError(e);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
+                KLog.d("onNext");
                 toNext(gankResult);
                 MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
             }

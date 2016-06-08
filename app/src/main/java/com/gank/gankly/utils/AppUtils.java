@@ -5,7 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.util.DisplayMetrics;
 
+import com.gank.gankly.App;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -65,5 +67,10 @@ public class AppUtils {
             KLog.e(e);
         }
         return appVersionName;
+    }
+
+    public static int getDisplayWidth() {
+        DisplayMetrics dm = App.getContext().getResources().getDisplayMetrics();
+        return dm.widthPixels;
     }
 }

@@ -34,6 +34,7 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
 
@@ -41,6 +42,8 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
     private IosPresenter mPresenter;
+    private int mLastVisiblePosition;
+    private int mFirstPosition;
 
     public MeiZiFragment() {
     }
@@ -79,21 +82,60 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
     @Override
     protected void bindLister() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    MeiZiFragment.this.onScrollStateChanged();
+        mRecyclerView.addOnScrollListener(
+                new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                        super.onScrollStateChanged(recyclerView, newState);
+                        int visibleItemCount = mStaggeredGridLayoutManager.getChildCount();
+                        int totalItemCount = mStaggeredGridLayoutManager.getItemCount();
+                        if (visibleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE
+                                && (mLastVisiblePosition) >= totalItemCount - 1) {
+                            if (isLoadMore) {
+                                toRefresh();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        StaggeredGridLayoutManager staggeredGridLayoutManager = mStaggeredGridLayoutManager;
+                        int[] lastPositions = new int[staggeredGridLayoutManager.getSpanCount()];
+                        staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
+                        mLastVisiblePosition = findMaxPosition(lastPositions);
+                        mFirstPosition = findMinPosition(lastPositions);
+                        KLog.d("mLastVisiblePosition:" + mLastVisiblePosition + ",mFirstPosition:" + mFirstPosition);
+                    }
                 }
+        );
+    }
+
+    private int findMaxPosition(int[] lastPositions) {
+        int maxPosition = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value > maxPosition) {
+                maxPosition = value;
             }
-        });
+        }
+        return maxPosition;
+    }
+
+    private int findMinPosition(int[] lastPositions) {
+        int min = lastPositions[0];
+        for (int value : lastPositions) {
+            if (value < min) {
+                min = value;
+            }
+        }
+        return min;
     }
 
     @Override
