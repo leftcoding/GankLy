@@ -70,7 +70,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
 
     public void fetchBenefitsGoods(int page) {
-        KLog.d("fetchBenefitsGoods");
         this.mPage = page;
         mIView.showRefresh();
         GankApi.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {

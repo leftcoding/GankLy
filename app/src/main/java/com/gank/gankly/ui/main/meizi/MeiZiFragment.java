@@ -42,8 +42,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private boolean isLoadMore = true;
     private IosPresenter mPresenter;
-    private int mLastVisiblePosition;
-    private int mFirstPosition;
 
     public MeiZiFragment() {
     }
@@ -94,25 +92,24 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
-                        int visibleItemCount = mStaggeredGridLayoutManager.getChildCount();
-                        int totalItemCount = mStaggeredGridLayoutManager.getItemCount();
-                        if (visibleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE
-                                && (mLastVisiblePosition) >= totalItemCount - 1) {
-                            if (isLoadMore) {
-                                toRefresh();
-                            }
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE ) {
+                            MeiZiFragment.this.onScrollStateChanged();
                         }
                     }
 
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-                        StaggeredGridLayoutManager staggeredGridLayoutManager = mStaggeredGridLayoutManager;
-                        int[] lastPositions = new int[staggeredGridLayoutManager.getSpanCount()];
-                        staggeredGridLayoutManager.findLastVisibleItemPositions(lastPositions);
-                        mLastVisiblePosition = findMaxPosition(lastPositions);
-                        mFirstPosition = findMinPosition(lastPositions);
-                        KLog.d("mLastVisiblePosition:" + mLastVisiblePosition + ",mFirstPosition:" + mFirstPosition);
+//                        int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
+//                        mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
+//                        KLog.d("scrolled to " + Arrays.toString(positions));
+//                        for (int position : positions) {
+//                            if (position == mStaggeredGridLayoutManager.getItemCount() - 1) {
+//                                KLog.d("hit bottom and trying to fetch more");
+//                                toRefresh();
+//                                break;
+//                            }
+//                        }
                     }
                 }
         );
