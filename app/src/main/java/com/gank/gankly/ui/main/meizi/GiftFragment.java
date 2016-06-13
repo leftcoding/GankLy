@@ -21,9 +21,12 @@ import com.gank.gankly.bean.GiftResult;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.presenter.GiftPresenter;
+import com.gank.gankly.ui.view.IGiftView;
+import com.gank.gankly.utils.StringUtils;
 import com.gank.gankly.widget.LoadingLayoutView;
 import com.socks.library.KLog;
 
@@ -35,7 +38,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import rx.Observable;
@@ -48,7 +50,7 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-05-17
  */
-public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ItemClick {
+public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefreshLayout.OnRefreshListener, ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;
 
     @Bind(R.id.main_toolbar)
@@ -79,6 +81,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     private boolean isUnSubscribe;
     private Subscription mSubscription;
     private boolean isLoading;
+    private GiftPresenter mPresenter;
 
     public GiftFragment() {
     }
@@ -97,15 +100,15 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        parseArguments();
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
+    protected void initPresenter() {
+        mPresenter = new GiftPresenter(mActivity, this);
     }
 
-    private void parseArguments() {
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -332,7 +335,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             if (size > 0) {
                 for (int i = size - 1; i >= 0; i--) {
                     String num = count.get(i).text();
-                    if (isNumeric(num)) {
+                    if (StringUtils.isNumeric(num)) {
                         try {
                             return Integer.parseInt(num);
                         } catch (IllegalFormatException e) {
@@ -385,7 +388,7 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         int size = pages.size();
         for (int i = size - 1; i > 0; i--) {
             String page = pages.get(i).text();
-            if (isNumeric(page)) {
+            if (StringUtils.isNumeric(page)) {
                 mDetailsPageCount = Integer.parseInt(page);
                 break;
             }
@@ -469,14 +472,37 @@ public class GiftFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         return giftBeen;
     }
 
-
-    public static boolean isNumeric(String str) {
-        Pattern pattern = Pattern.compile("[0-9]*");
-        return pattern.matcher(str).matches();
+    @Override
+    public void showView() {
+        mLoadingLayoutView.setVisibility(View.GONE);
     }
 
-    private void showView() {
-        mLoadingLayoutView.setVisibility(View.GONE);
+    @Override
+    public void hideRefresh() {
+        super.hideRefresh();
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onCompleted() {
+        super.onCompleted();
+        mPages = mPresenter.getPages();
+        mCurPage = mCurPage + 1;
+        if (ViewStatus.SHOW != mViewStatus) {
+            mViewStatus = ViewStatus.SHOW;
+            showView();
+        }
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        mAdapter.clear();
+    }
+
+    @Override
+    public void refillDate(List<GiftBean> list) {
+        mAdapter.updateItems(list);
     }
 
     @Override

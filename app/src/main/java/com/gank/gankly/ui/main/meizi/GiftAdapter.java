@@ -20,7 +20,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * 视频
  * Create by LingYan on 2016-04-25
  */
 public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder> {

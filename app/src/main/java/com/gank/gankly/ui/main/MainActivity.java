@@ -18,6 +18,9 @@ import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.Bind;
 
+/**
+ * Create by LingYan on 2016-6-13
+ */
 public class MainActivity extends BaseActivity {
     @Bind(R.id.main_navigation)
     NavigationView mNavigationView;
@@ -26,35 +29,6 @@ public class MainActivity extends BaseActivity {
 
     private long mKeyTime;
     private Fragment mCurFragment;
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-                mDrawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-            if ((System.currentTimeMillis() - mKeyTime) > 2000) {
-                mKeyTime = System.currentTimeMillis();
-                ToastUtils.shortBottom(R.string.app_again_out);
-                return false;
-            } else {
-                finish();
-                AppUtils.killProcess();
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
 
     @Override
     protected int getContentId() {
@@ -121,6 +95,35 @@ public class MainActivity extends BaseActivity {
     protected void initPresenter() {
         super.initPresenter();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+                mDrawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+            if ((System.currentTimeMillis() - mKeyTime) > 2000) {
+                mKeyTime = System.currentTimeMillis();
+                ToastUtils.shortBottom(R.string.app_again_out);
+                return false;
+            } else {
+                finish();
+                AppUtils.killProcess();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void openDrawer() {

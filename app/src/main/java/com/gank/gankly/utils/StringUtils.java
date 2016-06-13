@@ -1,18 +1,14 @@
 package com.gank.gankly.utils;
 
-import android.text.TextUtils;
+import java.util.regex.Pattern;
 
 /**
  * Create by LingYan on 2016-05-17
  */
 public class StringUtils {
-    public static String getSuffixImageName(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return null;
-        }
 
-        String[] strings = url.split("/");
-        int size = strings.length;
-        return strings[size - 1];
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 }

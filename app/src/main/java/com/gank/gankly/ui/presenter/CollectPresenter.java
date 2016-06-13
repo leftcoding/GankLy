@@ -9,7 +9,6 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import de.greenrobot.dao.query.QueryBuilder;
  */
 public class CollectPresenter extends BasePresenter<ICollectView> {
     private UrlCollectDao mUrlCollectDao;
-    QueryBuilder<UrlCollect> queryBuilder;
+    private QueryBuilder<UrlCollect> queryBuilder;
     private static final int LIMIT = 10;
     private int mPage = 0;
     private ViewStatus mViewStatus;
