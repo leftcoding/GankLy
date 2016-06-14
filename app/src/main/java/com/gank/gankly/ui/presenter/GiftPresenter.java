@@ -20,7 +20,9 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -31,6 +33,10 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     private static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
     private String url = "http://www.mzitu.com/mm/page/";
     private int mPages;
+    private Subscription mSubscription;
+    private int mDetailsPageCount = 1;
+    private int progress;
+    private boolean isUnSubscribe;
 
     public GiftPresenter(Activity mActivity, IGiftView view) {
         super(mActivity, view);
@@ -134,6 +140,149 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             }
         }
         return list;
+    }
+
+    public void fetchImagePages(final String url) {
+        mSubscription = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+            @Override
+            public void call(Subscriber<? super GiftResult> subscriber) {
+                try {
+                    Document doc = Jsoup.connect(url)
+                            .userAgent(DESKTOP_USERAGENT)
+                            .timeout(timeout)
+                            .get();
+                    subscriber.onNext(new GiftResult(0, getImageCount(url, doc)));
+                } catch (Exception e) {
+                    KLog.e(e.toString() + e);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GiftResult>() {
+                    @Override
+                    public void onCompleted() {
+                        mIView.hideRefresh();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mIView.hideRefresh();
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onNext(GiftResult giftResult) {
+                        if (giftResult != null && giftResult.getSize() > 0) {
+                            mIView.setMax(giftResult.getSize());
+                            fetchImages(giftResult.getList());
+                        }
+                    }
+                });
+    }
+
+    private List<GiftBean> getImageCount(String url, Document doc) {
+        List<GiftBean> list;
+        if (doc == null) {
+            return null;
+        }
+        list = new ArrayList<>();
+        Elements pages = doc.select(".pagenavi a[href]");
+        int size = pages.size();
+        for (int i = size - 1; i > 0; i--) {
+            String page = pages.get(i).text();
+            if (StringUtils.isNumeric(page)) {
+                mDetailsPageCount = Integer.parseInt(page);
+                break;
+            }
+        }
+
+        if (mDetailsPageCount > 0) {
+            for (int i = 1; i <= mDetailsPageCount; i++) {
+                String _url = url + "/" + i;
+                list.add(new GiftBean(_url));
+            }
+        }
+
+        return list;
+    }
+
+    private void fetchImages(List<GiftBean> list) {
+        Observable.from(list).flatMap(new Func1<GiftBean, Observable<List<GiftBean>>>() {
+            @Override
+            public Observable<List<GiftBean>> call(GiftBean giftBean) {
+                final String url = giftBean.getImgUrl();
+                mIView.setProgress(progress++);
+                return Observable.create(new Observable.OnSubscribe<List<GiftBean>>() {
+                    @Override
+                    public void call(Subscriber<? super List<GiftBean>> subscriber) {
+                        try {
+                            if (!isUnSubscribe) {
+                                Document doc = Jsoup.connect(url)
+                                        .userAgent(DESKTOP_USERAGENT)
+                                        .timeout(timeout)
+                                        .get();
+                                subscriber.onNext(getImageCountList(doc));
+                            }
+                        } catch (IOException e) {
+                            KLog.e(e);
+                        }
+                        subscriber.onCompleted();
+                    }
+                });
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<List<GiftBean>>() {
+                    @Override
+                    public void onCompleted() {
+                        mIView.disDialog();
+                        if (!isUnSubscribe) {
+                            mIView.gotoBrowseActivity();
+                        } else {
+                            isUnSubscribe = false;
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mIView.hideRefresh();
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onNext(List<GiftBean> giftResult) {
+                        if (giftResult != null && giftResult.size() > 0) {
+                            mIView.refillImagesCount(giftResult);
+                        }
+                    }
+                });
+    }
+
+    private List<GiftBean> getImageCountList(Document doc) {
+        List<GiftBean> giftBeen = null;
+        if (doc != null) {
+            giftBeen = new ArrayList<>();
+            Elements links = doc.select(".main-image img[src$=.jpg]");
+            String img = links.get(0).attr("src");
+            giftBeen.add(new GiftBean(img));
+        }
+        return giftBeen;
+    }
+
+    public void unSubscribe() {
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            isUnSubscribe = true;
+            initProgress();
+        }
+    }
+
+    public void initProgress() {
+        progress = 0;
+        mIView.setMax(progress);
+        mIView.setProgress(progress);
     }
 
     public int getPages() {

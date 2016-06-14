@@ -17,6 +17,7 @@
     <string name="loading">拼命加载中&#8230;</string>
     <string name="loading_pic_no_more">╮(╯_╰)╭，妹子都加载完了！</string>
     <string name="loading_empty">暂无数据</string>
+    <string name="loading_meizi_images">正在解析图片地址</string>
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>

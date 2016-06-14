@@ -100,39 +100,9 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                         super.onScrolled(recyclerView, dx, dy);
-//                        int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
-//                        mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
-//                        KLog.d("scrolled to " + Arrays.toString(positions));
-//                        for (int position : positions) {
-//                            if (position == mStaggeredGridLayoutManager.getItemCount() - 1) {
-//                                KLog.d("hit bottom and trying to fetch more");
-//                                toRefresh();
-//                                break;
-//                            }
-//                        }
                     }
                 }
         );
-    }
-
-    private int findMaxPosition(int[] lastPositions) {
-        int maxPosition = lastPositions[0];
-        for (int value : lastPositions) {
-            if (value > maxPosition) {
-                maxPosition = value;
-            }
-        }
-        return maxPosition;
-    }
-
-    private int findMinPosition(int[] lastPositions) {
-        int min = lastPositions[0];
-        for (int value : lastPositions) {
-            if (value < min) {
-                min = value;
-            }
-        }
-        return min;
     }
 
     @Override

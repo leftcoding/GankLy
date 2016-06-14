@@ -9,4 +9,14 @@ import java.util.List;
  */
 public interface IGiftView extends ISwipeRefreshView {
     void refillDate(List<GiftBean> list);
+
+    void refillImagesCount(List<GiftBean> giftResult);
+
+    void gotoBrowseActivity();
+
+    void setMax(int max);
+
+    void setProgress(int value);
+
+    void disDialog();
 }
