@@ -145,7 +145,6 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     protected void bindLister() {
-//        mLoadingLayoutView.setLoading(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
