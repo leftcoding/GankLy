@@ -16,7 +16,6 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.config.RefreshStatus;
-import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
@@ -26,7 +25,7 @@ import com.gank.gankly.ui.view.ICollectView;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.DeleteDialog;
-import com.gank.gankly.widget.LoadingLayoutView;
+import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
@@ -50,17 +49,14 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.loading_view)
-    LoadingLayoutView mLoadingLayoutView;
-
+    MultipleStatusView mMultipleStatusView;
     private MainActivity mActivity;
     private CollectAdapter mCollectAdapter;
-    private UrlCollect mUrlCollect;
 
     private int mLostPosition;
     private int mPage = 0;
     private int mLongClick;
     private int mClickPosition = -1;
-    private ViewStatus mCurViewStatus;
     private boolean hasMore = true;
     private long mDeleteId;
 
@@ -112,7 +108,6 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
 
     @Override
     protected void initValues() {
-        mCurViewStatus = ViewStatus.LOADING;
         mActivity.setTitle(R.string.navigation_collect);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -144,13 +139,13 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
 
+        mMultipleStatusView.showLoading();
         onRefresh();
     }
 
     @Override
     protected void bindLister() {
-        mLoadingLayoutView.setLoading(this);
-
+//        mLoadingLayoutView.setLoading(this);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -185,17 +180,17 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     @Override
     public void onRefresh() {
         mPage = 0;
-        mPresenter.fetchCollect(mPage, RefreshStatus.DOWN, mCurViewStatus);
+        mPresenter.fetchCollect(mPage, RefreshStatus.DOWN);
     }
 
     private void onDownRefresh() {
-        mPresenter.fetchCollect(mPage, RefreshStatus.UP, mCurViewStatus);
+        mPresenter.fetchCollect(mPage, RefreshStatus.UP);
     }
 
     @Override
     public void onLongClick(int position, Object object) {
         mLongClick = position;
-        mUrlCollect = (UrlCollect) object;
+        UrlCollect mUrlCollect = (UrlCollect) object;
         mDeleteId = mUrlCollect.getId();
         Bundle bundle = new Bundle();
         bundle.putString("content", mUrlCollect.getComment());
@@ -237,15 +232,12 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     @Override
     public void showEmpty() {
         super.showEmpty();
-        mCurViewStatus = ViewStatus.EMPTY;
-        mLoadingLayoutView.setVisibility(View.VISIBLE);
-        mLoadingLayoutView.setStatus(LoadingLayoutView.EMPTY);
+        mMultipleStatusView.showEmpty();
     }
 
     @Override
     public void showView() {
-        mCurViewStatus = ViewStatus.SHOW;
-        mLoadingLayoutView.setVisibility(View.GONE);
+        mMultipleStatusView.showContent();
     }
 
     @Override

@@ -24,7 +24,7 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.presenter.GiftPresenter;
 import com.gank.gankly.ui.view.IGiftView;
-import com.gank.gankly.widget.LoadingLayoutView;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,8 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.loading_view)
-    LoadingLayoutView mLoadingLayoutView;
+//    LoadingLayoutView mLoadingLayoutView;
+    MultipleStatusView mMultipleStatusView;
 
     private GiftAdapter mAdapter;
     private MainActivity mActivity;
@@ -104,6 +105,8 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
                 mActivity.openDrawer();
             }
         });
+
+        mMultipleStatusView.showLoading();
         onDownRefresh();
     }
 
@@ -182,7 +185,8 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
 
     @Override
     public void showView() {
-        mLoadingLayoutView.setVisibility(View.GONE);
+//        mLoadingLayoutView.setVisibility(View.GONE);
+        mMultipleStatusView.showContent();
     }
 
     @Override

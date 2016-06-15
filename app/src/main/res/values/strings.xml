@@ -18,6 +18,7 @@
     <string name="loading_pic_no_more">╮(╯_╰)╭，妹子都加载完了！</string>
     <string name="loading_empty">暂无数据</string>
     <string name="loading_meizi_images">正在解析图片地址</string>
+    <string name="loading_network_failure">Wi-Fi和移动数据已断开</string>
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
@@ -42,6 +43,7 @@
     <string name="tip_share_empty_text">分享内容不能为空</string>
     <string name="tip_img_path_error">保存图片地址出错</string>
     <string name="tip_no_new_version">已经最新版本</string>
+    <string name="tip_connected_again">请连接网络后，点击空白刷新</string>
 
     <string name="item_date_author">图：%1$s on %2$s</string>
     <string name="item_book_author">%1$s on %2$s</string>

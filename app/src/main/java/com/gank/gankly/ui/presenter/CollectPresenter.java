@@ -36,10 +36,9 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
         callView(queryBuilder.list());
     }
 
-    public void fetchCollect(int page, int refresh, ViewStatus viewStatus) {
+    public void fetchCollect(int page, int refresh) {
         mIView.showRefresh();
         mPage = page;
-        mViewStatus = viewStatus;
         int offset = 0;
         if (refresh == RefreshStatus.UP) {
             offset = page * LIMIT;
@@ -52,13 +51,11 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {
-                if (mViewStatus != ViewStatus.SHOW) {
-                    mIView.showView();
-                }
                 mIView.refillDate(list);
             } else {
                 mIView.appendMoreDate(list);
             }
+            mIView.showView();
 
             if (size < LIMIT) {
                 mIView.hasNoMoreDate();

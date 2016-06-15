@@ -13,8 +13,17 @@
         <attr name="showProgressBar" format="boolean"/>
     </declare-styleable>
 
+    <!-- 选择开关 -->
     <declare-styleable name="ItemSwitchView">
         <attr name="name" format="string"/>
         <attr name="summary" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="MultipleStatusView">
+        <attr name="content_view" format="reference"/>
+        <attr name="loading_view" format="reference"/>
+        <attr name="empty_view" format="reference"/>
+        <attr name="error_view" format="reference"/>
+        <attr name="no_network_view" format="reference"/>
     </declare-styleable>
 </resources>
