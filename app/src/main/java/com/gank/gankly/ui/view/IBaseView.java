@@ -8,5 +8,7 @@ public interface IBaseView {
 
     void showDisNetWork();
 
-    void showView();
+    void showContent();
+
+    void showError();
 }

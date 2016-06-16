@@ -235,7 +235,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     }
 
     @Override
-    public void showView() {
+    public void showContent() {
         mMultipleStatusView.showContent();
     }
 

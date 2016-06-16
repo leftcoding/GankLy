@@ -30,7 +30,6 @@ import android.webkit.WebViewClient;
 import java.io.InputStream;
 
 /**
- *
  * pick from drakeet  https://github.com/drakeet
  * Created by LingYan on 2016-4-26
  */
@@ -72,7 +71,6 @@ public class LoveVideoView extends WebView {
 
     }
 
-
     private class LoveClient extends WebViewClient {
 
         @Override
@@ -80,7 +78,6 @@ public class LoveVideoView extends WebView {
             view.loadUrl(url);
             return true;
         }
-
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -94,8 +91,26 @@ public class LoveVideoView extends WebView {
                 injectCSS("miaopai.css");
             }
         }
+
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+        }
     }
 
+    private class Chrome extends WebChromeClient
+            implements MediaPlayer.OnCompletionListener {
+
+        @Override
+        public void onCompletion(MediaPlayer player) {
+            if (player != null) {
+                if (player.isPlaying()) player.stop();
+                player.reset();
+                player.release();
+                player = null;
+            }
+        }
+    }
 
     // Inject CSS method: read style.css from assets folder
     // Append stylesheet to document head
@@ -116,21 +131,6 @@ public class LoveVideoView extends WebView {
                     "})()");
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-
-    private class Chrome extends WebChromeClient
-            implements MediaPlayer.OnCompletionListener {
-
-        @Override
-        public void onCompletion(MediaPlayer player) {
-            if (player != null) {
-                if (player.isPlaying()) player.stop();
-                player.reset();
-                player.release();
-                player = null;
-            }
         }
     }
 }

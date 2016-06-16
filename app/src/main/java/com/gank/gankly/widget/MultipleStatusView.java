@@ -109,7 +109,6 @@ public class MultipleStatusView extends RelativeLayout {
     }
 
     public void showEmpty() {
-        KLog.d("showEmpty");
         mViewStatus = STATUS_EMPTY;
         if (mEmptyView == null) {
             mEmptyView = mInflater.inflate(mEmptyViewId, null);
@@ -122,7 +121,7 @@ public class MultipleStatusView extends RelativeLayout {
         mViewStatus = STATUS_NO_NETWORK;
         if (mNoNetworkView == null) {
             mNoNetworkView = mInflater.inflate(mNoNetworkViewId, null);
-            mNoNetworkView.findViewById(R.id.no_network_txt).setOnClickListener(new OnClickListener() {
+            mNoNetworkView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     tryClick(v);
@@ -137,13 +136,18 @@ public class MultipleStatusView extends RelativeLayout {
         mViewStatus = STATUS_ERROR;
         if (mErrorView == null) {
             mErrorView = mInflater.inflate(mErrorViewId, null);
+            mErrorView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tryClick(v);
+                }
+            });
             addView(mErrorView, 0, mLayoutParams);
         }
         showView(mViewStatus);
     }
 
     private void showView(int viewStatus) {
-        KLog.d("viewStatus:" + viewStatus);
         if (mContentView != null) {
             mContentView.setVisibility(viewStatus == STATUS_CONTENT ? View.VISIBLE : View.GONE);
         }

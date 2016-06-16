@@ -28,10 +28,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
         super(mActivity, view);
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
-    }
-
     public void fetchDate(final int page) {
         this.mPage = page;
         Observable<GankResult> iosGoods = GankApi.getInstance()
@@ -75,14 +71,18 @@ public class IosPresenter extends BasePresenter<IIosView> {
         GankApi.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
                 mIView.hideRefresh();
                 mIView.onCompleted();
             }
 
             @Override
             public void onError(Throwable e) {
-                KLog.d("onError");
+                KLog.e("onError，" + e.getLocalizedMessage() + e);
+                if (!isNetworkAvailable()) {
+                    KLog.d("网络问题");
+                } else {
+                    KLog.d("服务器问题");
+                }
                 mIView.hideRefresh();
                 mIView.onError(e);
             }

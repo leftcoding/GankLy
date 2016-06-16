@@ -9,17 +9,15 @@ import android.telephony.TelephonyManager;
  * Create by LingYan on 2016-6-3
  */
 public class NetworkUtils {
+
     /**
      * 判断网络连接是否可用
-     *
-     * @param context context
-     * @return boolean
      */
     public static boolean isNetworkAvailable(Context context) {
         return (context.getSystemService(Context.CONNECTIVITY_SERVICE) !=
                 null) && ((
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE))
-                .getActiveNetworkInfo()!= null);
+                .getActiveNetworkInfo() != null);
     }
 
     /**

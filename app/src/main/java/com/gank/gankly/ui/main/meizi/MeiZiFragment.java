@@ -19,7 +19,6 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.presenter.IosPresenter;
 import com.gank.gankly.ui.view.IIosView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -187,7 +186,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
 
     @Override
     public void onError(Throwable e) {
-        KLog.e(e);
         super.onError(e);
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))

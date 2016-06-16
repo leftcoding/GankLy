@@ -60,12 +60,17 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     }
 
     @Override
-    public void showView() {
+    public void showContent() {
 
     }
 
     @Override
     public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
 
     }
 

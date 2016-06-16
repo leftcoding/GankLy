@@ -193,8 +193,8 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     }
 
     @Override
-    public void showView() {
-        super.showView();
+    public void showContent() {
+        super.showContent();
         mLoadingLayoutView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
     }

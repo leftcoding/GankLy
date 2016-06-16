@@ -55,7 +55,7 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
             public void onCompleted() {
                 mIView.hideRefresh();
                 if (mViewStatus != ViewStatus.SHOW) {
-                    mIView.showView();
+                    mIView.showContent();
                 }
                 mIView.onCompleted();
             }

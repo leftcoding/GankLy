@@ -55,7 +55,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
             } else {
                 mIView.appendMoreDate(list);
             }
-            mIView.showView();
+            mIView.showContent();
 
             if (size < LIMIT) {
                 mIView.hasNoMoreDate();

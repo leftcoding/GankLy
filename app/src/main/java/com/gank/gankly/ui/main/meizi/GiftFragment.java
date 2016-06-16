@@ -44,7 +44,6 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.loading_view)
-//    LoadingLayoutView mLoadingLayoutView;
     MultipleStatusView mMultipleStatusView;
 
     private GiftAdapter mAdapter;
@@ -184,7 +183,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     }
 
     @Override
-    public void showView() {
+    public void showContent() {
 //        mLoadingLayoutView.setVisibility(View.GONE);
         mMultipleStatusView.showContent();
     }
@@ -202,7 +201,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
         mCurPage = mCurPage + 1;
         if (ViewStatus.SHOW != mViewStatus) {
             mViewStatus = ViewStatus.SHOW;
-            showView();
+            showContent();
         }
     }
 
