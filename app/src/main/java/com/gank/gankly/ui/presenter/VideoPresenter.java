@@ -63,7 +63,7 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
             @Override
             public void onError(Throwable e) {
                 mIView.hideRefresh();
-                mIView.onError(e);
+                mIView.onError(e, "");
             }
 
             @Override

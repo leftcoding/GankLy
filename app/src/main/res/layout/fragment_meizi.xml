@@ -10,10 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/meizi_recycler_view"
+        <com.gank.gankly.widget.MultipleStatusView
+            android:id="@+id/meizi_multiple_status_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/book_recycler_item_bg"/>
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/meizi_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/book_recycler_item_bg"/>
+        </com.gank.gankly.widget.MultipleStatusView>
     </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

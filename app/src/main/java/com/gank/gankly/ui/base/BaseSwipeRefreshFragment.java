@@ -35,7 +35,7 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     protected abstract void initPresenter();
 
     @Override
-    public void onError(Throwable e) {
+    public void onError(Throwable e, String errorString) {
 
     }
 

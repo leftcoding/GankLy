@@ -19,6 +19,8 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.presenter.IosPresenter;
 import com.gank.gankly.ui.view.IIosView;
+import com.gank.gankly.widget.MultipleStatusView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -32,14 +34,13 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-
+    @Bind(R.id.meizi_multiple_status_view)
+    MultipleStatusView mMultipleStatusView;
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
 
-    private int mPage = 1;
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
-    private boolean isLoadMore = true;
     private IosPresenter mPresenter;
 
     public MeiZiFragment() {
@@ -49,11 +50,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (MainActivity) context;
-    }
-
-    @Override
-    protected void initPresenter() {
-        mPresenter = new IosPresenter(mActivity, this);
     }
 
     @Override
@@ -86,12 +82,19 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
 
     @Override
     protected void bindLister() {
+        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
+            @Override
+            public void retry(View v) {
+                mMultipleStatusView.showLoading();
+                onDownRefresh();
+            }
+        });
         mRecyclerView.addOnScrollListener(
                 new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                         super.onScrollStateChanged(recyclerView, newState);
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE ) {
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                             MeiZiFragment.this.onScrollStateChanged();
                         }
                     }
@@ -114,13 +117,19 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
         onDownRefresh();
     }
 
-    private void onDownRefresh() {
-        mPage = 1;
-        toRefresh();
+    @Override
+    protected void initPresenter() {
+        mPresenter = new IosPresenter(mActivity, this);
     }
 
-    private void toRefresh() {
-        mPresenter.fetchBenefitsGoods(mPage);
+    private void onDownRefresh() {
+        KLog.d("onDownRefresh");
+        mPresenter.fetchGirl();
+    }
+
+    private void onNextRefresh() {
+        KLog.d("onNextRefresh");
+        mPresenter.fetchNextGirl();
     }
 
 
@@ -137,10 +146,8 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
         for (int position : positions) {
             if (position == mStaggeredGridLayoutManager.getItemCount() - 1
                     && !mSwipeRefreshLayout.isRefreshing()) {
-                if (isLoadMore) {
-                    toRefresh();
-                    break;
-                }
+                onNextRefresh();
+                break;
             }
         }
     }
@@ -172,7 +179,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     @Override
     public void hasNoMoreDate() {
         super.hasNoMoreDate();
-        isLoadMore = false;
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .show();
@@ -181,12 +187,11 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     @Override
     public void onCompleted() {
         super.onCompleted();
-        mPage = mPage + 1;
     }
 
     @Override
-    public void onError(Throwable e) {
-        super.onError(e);
+    public void onError(Throwable e, String errorString) {
+        super.onError(e, errorString);
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
@@ -207,6 +212,30 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     public void showRefresh() {
         super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void showContent() {
+        super.showContent();
+        mMultipleStatusView.showContent();
+    }
+
+    @Override
+    public void showDisNetWork() {
+        super.showDisNetWork();
+        mMultipleStatusView.showNoNetwork();
+    }
+
+    @Override
+    public void showEmpty() {
+        super.showEmpty();
+        mMultipleStatusView.showEmpty();
+    }
+
+    @Override
+    public void showError() {
+        super.showError();
+        mMultipleStatusView.showError();
     }
 
     @Override

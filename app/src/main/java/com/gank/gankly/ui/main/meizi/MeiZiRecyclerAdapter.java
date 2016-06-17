@@ -18,9 +18,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,35 +31,8 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private Activity mContext;
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
-    private Map<String, Size> widths = new HashMap<>();
 
     private MeiziOnClick mMeiZiOnClick;
-
-    public class Size {
-        int height;
-        int width;
-
-        public int getHeight() {
-            return height;
-        }
-
-        public void setHeight(int height) {
-            this.height = height;
-        }
-
-        public int getWidth() {
-            return width;
-        }
-
-        public void setWidth(int width) {
-            this.width = width;
-        }
-
-        public Size(int height, int width) {
-            this.height = height;
-            this.width = width;
-        }
-    }
 
     public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
         mMeiZiOnClick = meiZiOnClick;
@@ -71,7 +42,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         inflater = LayoutInflater.from(context);
         mContext = context;
         mResults = new ArrayList<>();
-//        setHasStableIds(true);
     }
 
     @Override
@@ -82,12 +52,9 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
     @Override
     public void onBindViewHolder(final GoodsViewHolder holder, final int position) {
-//        final int pos = position;
 
         final ResultsBean bean = mResults.get(position);
-//        holder.imgMeizi.setMinimumHeight(500 + (int) (200 * Math.random()));
         final String url = bean.getUrl();
-        KLog.d("BitmapImageViewTarget.SIZE_ORIGINAL:" + BitmapImageViewTarget.SIZE_ORIGINAL);
 
         Glide.with(mContext)
                 .load(url)
@@ -99,7 +66,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
     private class DriverViewTarget extends BitmapImageViewTarget {
         private ImageView image;
-        private String url;
 
         public DriverViewTarget(ImageView view) {
             super(view);
@@ -109,11 +75,9 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         @Override
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
             int viewWidth = mScreenWidth;
-//            float scale = resource.getWidth() / (viewWidth * 1.0f);
-//            int viewHeight = (int) (resource.getHeight() * scale);
-            KLog.d(" resource.getHeight():" + resource.getHeight() + ",resource.getWidth():" + resource.getWidth());
+//            KLog.d(" resource.getHeight():" + resource.getHeight() + ",resource.getWidth():" + resource.getWidth());
             int viewHeight = resource.getHeight() * viewWidth / resource.getWidth();
-            KLog.d("viewHeight:" + viewHeight);
+//            KLog.d("viewHeight:" + viewHeight);
             setCardViewLayoutParams(viewWidth, viewHeight);
             super.onResourceReady(resource, glideAnimation);
         }
@@ -154,30 +118,22 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         mResults.addAll(goods);
         int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
         notifyItemRangeInserted(position, goods.size());
-//        notifyDataSetChanged();
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.meizi_img_picture)
-//        RatioImageView imgMeizi;
-                        ImageView imgMeizi;
-        @Bind(R.id.meizi_card_view)
-        View mLayout;
+        ImageView imgMeizi;
 
         public GoodsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            imgMeizi.setOriginalSize(50, 50);
             imgMeizi.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (mMeiZiOnClick != null) {
-                int p = getAdapterPosition();
-                KLog.d("getAdapterPosition:" + p + ",getAdapterPosition:"
-                        + getAdapterPosition());
-                mMeiZiOnClick.onClick(v, p);
+                mMeiZiOnClick.onClick(v, getAdapterPosition());
             }
         }
     }

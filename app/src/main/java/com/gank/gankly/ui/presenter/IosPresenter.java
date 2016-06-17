@@ -2,6 +2,8 @@ package com.gank.gankly.ui.presenter;
 
 import android.app.Activity;
 
+import com.gank.gankly.App;
+import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
@@ -23,6 +25,8 @@ import rx.schedulers.Schedulers;
 public class IosPresenter extends BasePresenter<IIosView> {
     private int limit = 20;
     private int mPage;
+    private int mGirlCurPage = 1;
+    private boolean isGirlLoadMore;
 
     public IosPresenter(Activity mActivity, IIosView view) {
         super(mActivity, view);
@@ -54,62 +58,95 @@ public class IosPresenter extends BasePresenter<IIosView> {
                     @Override
                     public void onError(Throwable e) {
                         mIView.hideRefresh();
-                        mIView.onError(e);
+                        mIView.onError(e, "");
                     }
 
                     @Override
                     public void onNext(GankResult gankResult) {
-                        toNext(gankResult);
+                        toNext(page, gankResult);
                     }
                 });
     }
 
 
-    public void fetchBenefitsGoods(int page) {
-        this.mPage = page;
+    public void fetchNextGirl() {
+        KLog.d("isGirlLoadMore:" + isGirlLoadMore);
+        if (isGirlLoadMore) {
+            fetchGirlDate(mGirlCurPage);
+        }
+    }
+
+    public void fetchGirl() {
+        mGirlCurPage = 1;
+        fetchGirlDate(mGirlCurPage);
+    }
+
+    private void fetchGirlDate(final int page) {
         mIView.showRefresh();
         GankApi.getInstance().fetchWelfare(limit, page, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.onCompleted();
+                mGirlCurPage = mGirlCurPage + 1;
             }
 
             @Override
             public void onError(Throwable e) {
-                KLog.e("onError，" + e.getLocalizedMessage() + e);
-                if (!isNetworkAvailable()) {
-                    KLog.d("网络问题");
-                } else {
-                    KLog.d("服务器问题");
-                }
+                KLog.e("onError，" + e);
                 mIView.hideRefresh();
-                mIView.onError(e);
+                boolean isError;
+                if (!isNetworkAvailable()) {
+                    isError = false;
+                } else {
+                    isError = true;
+                }
+                toError(page, isError, e);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
-                KLog.d("onNext");
-                toNext(gankResult);
-                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
+                toNext(page, gankResult);
+                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), page);
             }
         });
     }
 
-    private void toNext(GankResult gankResult) {
+    private void toError(int page, boolean isError, Throwable e) {
+        int resId = R.string.tip_server_error;
+
+        if (page > 1) {
+            if (!isError) {
+                resId = R.string.loading_network_failure;
+            }
+            mIView.onError(e, App.getAppString(resId));
+        } else {
+            if (isError) {
+                mIView.showError();
+            } else {
+                mIView.showDisNetWork();
+            }
+        }
+    }
+
+    private void toNext(int page, GankResult gankResult) {
         if (!gankResult.isEmpty()) {
             List<ResultsBean> list = gankResult.getResults();
-            if (mPage == 1) {
+            if (page == 1) {
                 mIView.clear();
                 mIView.refillDate(list);
             } else {
                 mIView.appendMoreDate(list);
             }
             if (gankResult.getSize() < limit) {
+                isGirlLoadMore = false;
                 mIView.hasNoMoreDate();
+            } else {
+                isGirlLoadMore = true;
             }
         } else {
-            if (mPage <= 1) {
+            isGirlLoadMore = false;
+            if (page <= 1) {
                 mIView.showEmpty();
             } else {
                 mIView.hasNoMoreDate();

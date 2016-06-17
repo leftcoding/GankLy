@@ -181,8 +181,8 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     }
 
     @Override
-    public void onError(Throwable e) {
-        super.onError(e);
+    public void onError(Throwable e,String errorString) {
+        super.onError(e,errorString);
         KLog.e(e);
     }
 

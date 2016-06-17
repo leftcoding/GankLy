@@ -18,7 +18,6 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.presenter.IosPresenter;
 import com.gank.gankly.ui.view.IIosView;
 import com.gank.gankly.ui.web.WebActivity;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -172,9 +171,8 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     }
 
     @Override
-    public void onError(Throwable e) {
-        KLog.e(e);
-        super.onError(e);
+    public void onError(Throwable e,String errorString) {
+        super.onError(e,errorString);
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
