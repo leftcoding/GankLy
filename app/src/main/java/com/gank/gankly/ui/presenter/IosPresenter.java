@@ -24,7 +24,6 @@ import rx.schedulers.Schedulers;
  */
 public class IosPresenter extends BasePresenter<IIosView> {
     private int limit = 20;
-    private int mPage;
     private int mGirlCurPage = 1;
     private boolean isGirlLoadMore;
 
@@ -33,7 +32,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
     }
 
     public void fetchDate(final int page) {
-        this.mPage = page;
         Observable<GankResult> iosGoods = GankApi.getInstance()
                 .getGankService().fetchIosGoods(limit, page);
         Observable<GankResult> image = GankApi.getInstance()
@@ -43,7 +41,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
             @Override
             public GankResult call(GankResult gankResult, GankResult gankResult2) {
                 List<ResultsBean> list = gankResult2.getResults();
-//                MeiziArrayList.getInstance().addBeanAndPage(list, mPage);
                 return gankResult;
             }
         }).subscribeOn(Schedulers.io())
@@ -70,13 +67,13 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
 
     public void fetchNextGirl() {
-        KLog.d("isGirlLoadMore:" + isGirlLoadMore);
         if (isGirlLoadMore) {
             fetchGirlDate(mGirlCurPage);
         }
     }
 
     public void fetchGirl() {
+        KLog.d("fetchGirl");
         mGirlCurPage = 1;
         fetchGirlDate(mGirlCurPage);
     }
@@ -87,6 +84,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
+                mIView.showContent();
                 mIView.onCompleted();
                 mGirlCurPage = mGirlCurPage + 1;
             }
@@ -95,33 +93,32 @@ public class IosPresenter extends BasePresenter<IIosView> {
             public void onError(Throwable e) {
                 KLog.e("onError，" + e);
                 mIView.hideRefresh();
-                boolean isError;
-                if (!isNetworkAvailable()) {
-                    isError = false;
-                } else {
-                    isError = true;
-                }
-                toError(page, isError, e);
+                boolean isNetWork = isNetworkAvailable();
+                toError(page, isNetWork, e);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
+                KLog.d("gankResult:" + gankResult.getSize());
                 toNext(page, gankResult);
                 MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), page);
             }
         });
     }
 
-    private void toError(int page, boolean isError, Throwable e) {
-        int resId = R.string.tip_server_error;
-
-        if (page > 1) {
-            if (!isError) {
-                resId = R.string.loading_network_failure;
+    private void toError(int page, boolean isNetWork, Throwable e) {
+        KLog.d("isNetWork:" + isNetWork + ",page:" + page);
+        int size = MeiziArrayList.getInstance().size();
+        if (page > 1 || size > 0) {
+            int resId = R.string.loading_network_failure;
+            if (isNetWork) {
+                resId = R.string.tip_server_error;
+                KLog.d("resId:" + resId);
             }
             mIView.onError(e, App.getAppString(resId));
         } else {
-            if (isError) {
+            KLog.d("MeiziArrayList.getInstance().size():" + MeiziArrayList.getInstance().size());
+            if (isNetWork) {
                 mIView.showError();
             } else {
                 mIView.showDisNetWork();

@@ -20,7 +20,6 @@ import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.presenter.IosPresenter;
 import com.gank.gankly.ui.view.IIosView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -123,15 +122,12 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     }
 
     private void onDownRefresh() {
-        KLog.d("onDownRefresh");
         mPresenter.fetchGirl();
     }
 
     private void onNextRefresh() {
-        KLog.d("onNextRefresh");
         mPresenter.fetchNextGirl();
     }
-
 
     public static MeiZiFragment newInstance() {
         MeiZiFragment fragment = new MeiZiFragment();
