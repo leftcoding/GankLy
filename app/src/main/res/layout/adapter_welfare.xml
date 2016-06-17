@@ -26,8 +26,8 @@
             android:layout_weight="2"
             android:orientation="vertical"
             android:paddingBottom="0dp"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
+            android:paddingEnd="4dp"
+            android:paddingStart="4dp"
             android:paddingTop="5dp">
 
             <TextView
@@ -37,8 +37,8 @@
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:text=""
                 android:textColor="@color/book_item_title"
                 android:textSize="16sp"/>
@@ -47,9 +47,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingEnd="5dp"
+                android:paddingEnd="4dp"
                 android:paddingBottom="5dp"
-                android:paddingStart="5dp">
+                android:paddingStart="4dp">
 
                 <TextView
                     android:id="@+id/goods_txt_time"
