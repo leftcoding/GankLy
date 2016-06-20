@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.presenter;
+package com.gank.gankly.presenter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,7 @@ import android.os.Environment;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.api.DownloadApi;
-import com.gank.gankly.ui.view.ILauncher;
+import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.FileUtils;
 import com.socks.library.KLog;

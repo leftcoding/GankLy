@@ -87,6 +87,9 @@ public class GankApi {
     }
 
     public void fetchIos(int limit, int page, Subscriber<GankResult> subscriber) {
+        if (subscriber == null) {
+            throw new RuntimeException("subscriber is null");
+        }
         Observable<GankResult> observable = gankApi.fetchIosGoods(limit, page);
         toSubscribe(observable, subscriber);
     }

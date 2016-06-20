@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.view;
+package com.gank.gankly.view;
 
 import com.gank.gankly.data.entity.UrlCollect;
 

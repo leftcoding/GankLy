@@ -14,9 +14,11 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
+import com.gank.gankly.presenter.RefreshPresenter;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.presenter.IosPresenter;
-import com.gank.gankly.ui.view.IIosView;
+import com.gank.gankly.presenter.IosPresenter;
+import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
+import com.gank.gankly.view.IIosView;
 import com.gank.gankly.ui.web.WebActivity;
 
 import java.util.List;
@@ -26,7 +28,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick, IIosView<ResultsBean> {
+public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefreshLayout.OnRefreshListener,
+        RecyclerOnClick, IIosView<ResultsBean> {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -35,10 +38,8 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     private MainActivity mActivity;
     private GankAdapter mRecyclerAdapter;
 
-    private int mPage = 1;
     private int mLastPosition;
-    private boolean isLoadMore = true;
-    private IosPresenter mPresenter;
+    private RefreshPresenter mPresenter;
 
     public IosFragment() {
 
@@ -52,7 +53,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     protected void initPresenter() {
-        mPresenter = new IosPresenter(mActivity, this);
+        mPresenter = new IosGoodsPresenterImpl(mActivity, this);
     }
 
     @Override
@@ -84,9 +85,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && mLastPosition + 1 == mRecyclerAdapter.getItemCount()
                         && !mSwipeRefreshLayout.isRefreshing()) {
-                    if (isLoadMore) {
-                        toRefresh();
-                    }
+                    mPresenter.fetchMore();
                 }
             }
 
@@ -106,23 +105,13 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     protected void initDate() {
-        onDownRefresh();
+        mPresenter.fetchNew();
     }
 
     private void initRecycler() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-    }
-
-    private void onDownRefresh() {
-        mPage = 1;
-        toRefresh();
-    }
-
-    private void toRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.fetchDate(mPage);
     }
 
     public static IosFragment newInstance() {
@@ -134,7 +123,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     public void onRefresh() {
-        onDownRefresh();
+        mPresenter.fetchNew();
     }
 
     @Override
@@ -160,25 +149,23 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     @Override
     public void hasNoMoreDate() {
         super.hasNoMoreDate();
-        isLoadMore = false;
         Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void onCompleted() {
         super.onCompleted();
-        mPage = mPage + 1;
     }
 
     @Override
-    public void onError(Throwable e,String errorString) {
-        super.onError(e,errorString);
-        Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
+    public void onError(Throwable e, String errorString) {
+        super.onError(e, errorString);
+        Snackbar.make(mSwipeRefreshLayout, errorString, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onDownRefresh();
+                        mPresenter.fetchMore();
                     }
                 }).show();
     }

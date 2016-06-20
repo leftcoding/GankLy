@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.view;
+package com.gank.gankly.view;
 
 /**
  * Create by LingYan on 2016-05-12

@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gank.gankly.ui.presenter.BasePresenter;
+import com.gank.gankly.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 

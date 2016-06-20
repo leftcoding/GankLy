@@ -1,11 +1,11 @@
-package com.gank.gankly.ui.presenter;
+package com.gank.gankly.presenter;
 
 import android.app.Activity;
 import android.text.TextUtils;
 
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.GiftResult;
-import com.gank.gankly.ui.view.IGiftView;
+import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.utils.StringUtils;
 import com.socks.library.KLog;
 

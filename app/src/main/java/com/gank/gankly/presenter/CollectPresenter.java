@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.presenter;
+package com.gank.gankly.presenter;
 
 import android.app.Activity;
 
@@ -7,7 +7,7 @@ import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.ui.view.ICollectView;
+import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
 
 import java.util.List;

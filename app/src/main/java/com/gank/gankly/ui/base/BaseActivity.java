@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.presenter.BasePresenter;
+import com.gank.gankly.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
 

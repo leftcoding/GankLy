@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.gank.gankly.ui.presenter.BasePresenter;
-import com.gank.gankly.ui.view.ISwipeRefreshView;
+import com.gank.gankly.presenter.BasePresenter;
+import com.gank.gankly.view.ISwipeRefreshView;
 
 
 /**

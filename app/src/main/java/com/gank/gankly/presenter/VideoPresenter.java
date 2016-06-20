@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.presenter;
+package com.gank.gankly.presenter;
 
 import android.app.Activity;
 
@@ -6,7 +6,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.network.api.GankApi;
-import com.gank.gankly.ui.view.IVideoView;
+import com.gank.gankly.view.IVideoView;
 
 import rx.Observable;
 import rx.Subscriber;

@@ -16,8 +16,8 @@ import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
-import com.gank.gankly.ui.presenter.LauncherPresenter;
-import com.gank.gankly.ui.view.ILauncher;
+import com.gank.gankly.presenter.LauncherPresenter;
+import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.socks.library.KLog;
 

@@ -1,9 +1,9 @@
-package com.gank.gankly.ui.presenter;
+package com.gank.gankly.presenter;
 
 import android.app.Activity;
 import android.content.Context;
 
-import com.gank.gankly.ui.view.IBaseView;
+import com.gank.gankly.view.IBaseView;
 import com.gank.gankly.utils.NetworkUtils;
 
 /**

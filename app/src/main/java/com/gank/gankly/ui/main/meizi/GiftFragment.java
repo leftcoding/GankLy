@@ -22,8 +22,8 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.presenter.GiftPresenter;
-import com.gank.gankly.ui.view.IGiftView;
+import com.gank.gankly.presenter.GiftPresenter;
+import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.ArrayList;

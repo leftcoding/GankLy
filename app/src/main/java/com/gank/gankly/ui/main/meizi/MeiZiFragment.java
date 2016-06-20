@@ -17,8 +17,8 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.presenter.IosPresenter;
-import com.gank.gankly.ui.view.IIosView;
+import com.gank.gankly.presenter.IosPresenter;
+import com.gank.gankly.view.IIosView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;

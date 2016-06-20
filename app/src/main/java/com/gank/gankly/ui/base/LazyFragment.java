@@ -3,8 +3,8 @@ package com.gank.gankly.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.gank.gankly.ui.presenter.BasePresenter;
-import com.gank.gankly.ui.view.ISwipeRefreshView;
+import com.gank.gankly.presenter.BasePresenter;
+import com.gank.gankly.view.ISwipeRefreshView;
 
 /**
  * Create by LingYan on 2016-5-12
