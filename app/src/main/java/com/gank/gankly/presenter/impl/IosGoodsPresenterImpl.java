@@ -67,7 +67,6 @@ public class IosGoodsPresenterImpl extends BaseFetchDataPresenter<IIosView<Resul
             }
             mIView.onError(e, App.getAppString(resId));
         } else {
-            KLog.d("MeiziArrayList.getInstance().size():" + MeiziArrayList.getInstance().size());
             if (isNetWork) {
                 mIView.showError();
             } else {

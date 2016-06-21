@@ -24,6 +24,8 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
     TextView txtSummary;
     @Bind(R.id.item_rl_update_version)
     View mView;
+    @Bind(R.id.item_view_txt_new_version)
+    TextView txtVersion;
     @BindString(R.string.setting_check_version)
     String mName;
 
@@ -50,8 +52,12 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
         super(context, attrs, defStyleAttr);
         View view = LayoutInflater.from(context).inflate(R.layout.view_item_text, this);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemSwitchView);
-        mName = array.getString(R.styleable.ItemSwitchView_name);
-        mSummary = array.getString(R.styleable.ItemSwitchView_summary);
+        try {
+            mName = array.getString(R.styleable.ItemSwitchView_name);
+            mSummary = array.getString(R.styleable.ItemSwitchView_summary);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         ButterKnife.bind(this, view);
         array.recycle();
     }
@@ -62,6 +68,10 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
 
     public void setTxtSummary(String res) {
         txtSummary.setText(res);
+    }
+
+    public void showVersion() {
+        txtVersion.setVisibility(View.VISIBLE);
     }
 
     @Override

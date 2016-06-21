@@ -15,11 +15,11 @@ import com.socks.library.KLog;
  * Create by LingYan on 2016-06-15
  */
 public class MultipleStatusView extends RelativeLayout {
-    private static final int STATUS_CONTENT = 0X01;
-    private static final int STATUS_ERROR = 0X02;
-    private static final int STATUS_LOADING = 0X03;
-    private static final int STATUS_NO_NETWORK = 0X04;
-    private static final int STATUS_EMPTY = 0X05;
+    public static final int STATUS_CONTENT = 0x01;
+    public static final int STATUS_ERROR = 0x02;
+    public static final int STATUS_LOADING = 0x03;
+    public static final int STATUS_NO_NETWORK = 0x04;
+    public static final int STATUS_EMPTY = 0x05;
 
     private int mContentViewId;
     private int mErrorViewId;
@@ -155,8 +155,6 @@ public class MultipleStatusView extends RelativeLayout {
             mLoadingView.setVisibility(viewStatus == STATUS_LOADING ? View.VISIBLE : View.GONE);
         }
         if (mEmptyView != null) {
-            boolean b = viewStatus == STATUS_EMPTY;
-            KLog.d("viewStatus == STATUS_EMPTY :" + b);
             mEmptyView.setVisibility(viewStatus == STATUS_EMPTY ? View.VISIBLE : View.GONE);
         }
         if (mErrorView != null) {
@@ -165,6 +163,10 @@ public class MultipleStatusView extends RelativeLayout {
         if (mNoNetworkView != null) {
             mNoNetworkView.setVisibility(viewStatus == STATUS_NO_NETWORK ? View.VISIBLE : View.GONE);
         }
+    }
+
+    public int getViewStatus() {
+        return mViewStatus;
     }
 
 }

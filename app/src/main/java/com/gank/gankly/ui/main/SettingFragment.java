@@ -11,12 +11,12 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.presenter.LauncherPresenter;
-import com.gank.gankly.view.ILauncher;
+import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.ToastUtils;
+import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
 
@@ -91,6 +91,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment<LauncherPresenter>
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTxtSummary(summary);
+        if (App.isNewVersion()) {
+            itemUpdate.showVersion();
+        }
         itemUpdate.setUpdateListener(new ItemTextView.UpdateListener() {
             @Override
             public void onUpdate() {

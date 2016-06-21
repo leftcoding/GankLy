@@ -18,6 +18,7 @@ import com.socks.library.KLog;
 public class App extends Application {
     private static final int PREFERENCES_VERSION = 1;
     private static final String DB_NAME = "gank.db";
+    public static boolean isNewVersion;
 
     public static Context mContext;
     private static SQLiteDatabase db;
@@ -69,5 +70,13 @@ public class App extends Application {
 
     public static DaoSession getDaoSession() {
         return daoSession;
+    }
+
+    public static boolean isNewVersion() {
+        return isNewVersion;
+    }
+
+    public static void setNewVersion(boolean newVersion) {
+        isNewVersion = newVersion;
     }
 }

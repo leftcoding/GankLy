@@ -23,9 +23,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_txt_name"
-        android:text="@string/setting_auto_check"
+        android:text=""
         android:textColor="@color/text_999999"
         android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/item_view_txt_new_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@id/item_view_txt_name"
+        android:background="@drawable/shape_new_version"
+        android:contentDescription="@string/app_name"
+        android:paddingEnd="3dp"
+        android:paddingStart="3dp"
+        android:text="@string/app_new_version"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"

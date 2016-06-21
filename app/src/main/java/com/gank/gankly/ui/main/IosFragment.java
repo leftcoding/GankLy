@@ -14,12 +14,13 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.presenter.RefreshPresenter;
-import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.presenter.IosPresenter;
+import com.gank.gankly.presenter.RefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
-import com.gank.gankly.view.IIosView;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.view.IIosView;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.meizi_multiple_status_view)
+    MultipleStatusView mMultipleStatusView;
 
     private MainActivity mActivity;
     private GankAdapter mRecyclerAdapter;
@@ -78,6 +81,12 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     protected void bindLister() {
+        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
+            @Override
+            public void retry(View v) {
+                initFetch();
+            }
+        });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -105,7 +114,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     protected void initDate() {
-        mPresenter.fetchNew();
+        initFetch();
     }
 
     private void initRecycler() {
@@ -121,8 +130,13 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
         return fragment;
     }
 
+    private void initFetch() {
+        mPresenter.fetchNew();
+    }
+
     @Override
     public void onRefresh() {
+        showRefresh();
         mPresenter.fetchNew();
     }
 
@@ -155,6 +169,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     @Override
     public void onCompleted() {
         super.onCompleted();
+        mMultipleStatusView.showContent();
     }
 
     @Override
@@ -168,6 +183,24 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
                         mPresenter.fetchMore();
                     }
                 }).show();
+    }
+
+    @Override
+    public void showError() {
+        super.showError();
+        mMultipleStatusView.showError();
+    }
+
+    @Override
+    public void showEmpty() {
+        super.showEmpty();
+        mMultipleStatusView.showEmpty();
+    }
+
+    @Override
+    public void showContent() {
+        super.showContent();
+        mMultipleStatusView.showContent();
     }
 
     @Override
