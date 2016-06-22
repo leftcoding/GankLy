@@ -57,6 +57,7 @@ public class IosGoodsPresenterImpl extends BaseFetchDataPresenter<IIosView<Resul
 
     @Override
     public void onError(Throwable e) {
+        KLog.e(e);
         mIView.hideRefresh();
         int size = MeiziArrayList.getInstance().size();
         boolean isNetWork = isNetworkAvailable();

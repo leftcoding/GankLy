@@ -90,7 +90,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment<LauncherPresenter>
 
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
-        itemUpdate.setTxtSummary(summary);
+        itemUpdate.setTextSummary(summary);
+        itemUpdate.setTextName(R.string.setting_auto_check);
         if (App.isNewVersion()) {
             itemUpdate.showVersion();
         }

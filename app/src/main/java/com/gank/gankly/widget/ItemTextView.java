@@ -62,12 +62,24 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
         array.recycle();
     }
 
+    public void setTextName(int resId) {
+        txtName.setText(resId);
+    }
+
     public void setTextName(String res) {
         txtName.setText(res);
     }
 
-    public void setTxtSummary(String res) {
+    public void setTextSummary(String res) {
         txtSummary.setText(res);
+    }
+
+    public void setNameSize(int size) {
+        txtName.setTextSize(size);
+    }
+
+    public void setSummarySize(int size) {
+        txtSummary.setTextSize(size);
     }
 
     public void showVersion() {

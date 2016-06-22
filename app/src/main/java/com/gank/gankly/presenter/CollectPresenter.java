@@ -4,11 +4,10 @@ import android.app.Activity;
 
 import com.gank.gankly.App;
 import com.gank.gankly.config.RefreshStatus;
-import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.utils.ListUtils;
+import com.gank.gankly.view.ICollectView;
 
 import java.util.List;
 
@@ -17,20 +16,18 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter extends BasePresenter<ICollectView> {
+public class CollectPresenter extends BasePresenter<ICollectView<UrlCollect>> {
     private UrlCollectDao mUrlCollectDao;
-    private QueryBuilder<UrlCollect> queryBuilder;
     private static final int LIMIT = 10;
     private int mPage = 0;
-    private ViewStatus mViewStatus;
 
-    public CollectPresenter(Activity mActivity, ICollectView view) {
+    public CollectPresenter(Activity mActivity, ICollectView<UrlCollect> view) {
         super(mActivity, view);
     }
 
     public void fetchDate(int offset) {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
-        queryBuilder = mUrlCollectDao.queryBuilder();
+        QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
         queryBuilder.offset(offset).limit(LIMIT);
         callView(queryBuilder.list());
@@ -65,9 +62,7 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
             if (mPage > 0) {
                 mIView.hasNoMoreDate();
             } else {
-                if (mViewStatus != ViewStatus.EMPTY) {
-                    mIView.showEmpty();
-                }
+                mIView.showEmpty();
             }
         }
     }

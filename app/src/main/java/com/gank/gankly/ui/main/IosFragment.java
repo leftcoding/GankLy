@@ -204,6 +204,12 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     }
 
     @Override
+    public void showDisNetWork() {
+        super.showDisNetWork();
+        mMultipleStatusView.showNoNetwork();
+    }
+
+    @Override
     public void hideRefresh() {
         super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);

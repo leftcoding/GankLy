@@ -52,7 +52,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtName.setText(bean.getWho());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_ONE));
-        if (position > holder.mSize) {
+        if (position > holder.mSize && holder.mSize != 0) {
             position = position % holder.mSize;
         }
         if (position < holder.mSize) {

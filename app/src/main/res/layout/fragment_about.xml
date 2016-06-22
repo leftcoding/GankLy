@@ -5,6 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -44,7 +45,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
             android:orientation="vertical">
 
             <TextView
@@ -52,8 +52,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="5dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
                 android:text="@string/about_app_str"
                 android:textColor="@color/text_default"/>
 
@@ -62,29 +62,30 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:lineSpacingExtra="5dp"
-                android:paddingEnd="10dp"
-                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
                 android:text="@string/about_thanks_str"
                 android:textColor="@color/text_default"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:lineSpacingExtra="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
                     android:text="干货"
-                    android:textColor="@color/text_default"/>
+                    android:textColor="@color/text_default"
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:autoLink="web"
                     android:text="http://gank.io"
                     android:textColor="@color/text_default"/>
@@ -93,21 +94,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:lineSpacingExtra="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
                     android:text="妹子图"
-                    android:textColor="@color/text_default"/>
+                    android:textColor="@color/text_default"
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
                     android:autoLink="web"
                     android:text="http://www.mzitu.com/mm"
                     android:textColor="@color/text_default"/>
@@ -116,23 +117,46 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:lineSpacingExtra="5dp"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
                     android:text="我的github"
-                    android:textColor="@color/text_default"/>
+                    android:textColor="@color/text_default"
+                    android:textSize="14sp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
                     android:autoLink="web"
                     android:text="https://github.com/leftcoding/GankLy"
+                    android:textColor="@color/text_default"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:lineSpacingExtra="5dp"
+                    android:text="联系方式"
+                    android:textColor="@color/text_default"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:autoLink="web"
+                    android:text="137387869@qq.com"
                     android:textColor="@color/text_default"/>
             </LinearLayout>
         </LinearLayout>
