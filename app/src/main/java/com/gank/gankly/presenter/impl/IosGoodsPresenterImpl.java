@@ -78,7 +78,6 @@ public class IosGoodsPresenterImpl extends BaseFetchDataPresenter<IIosView<Resul
 
     @Override
     public void onNext(List<ResultsBean> list) {
-        KLog.d("list.size:" + list.size());
         if (mIosCurPage == 1) {
             mIView.clear();
             mIView.refillDate(list);

@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -138,7 +139,9 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     }
 
     private void initRecycler() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(StaggeredGridLayoutManager.VERTICAL, 2);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -184,7 +187,6 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
 
     @Override
     public void showContent() {
-//        mLoadingLayoutView.setVisibility(View.GONE);
         mMultipleStatusView.showContent();
     }
 
