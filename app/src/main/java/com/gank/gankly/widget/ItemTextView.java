@@ -15,6 +15,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
+ * 关于自定义文本Item
  * Create by LingYan on 2016-06-06
  */
 public class ItemTextView extends RelativeLayout {

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -20,10 +19,10 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
+import com.gank.gankly.presenter.GiftPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.presenter.GiftPresenter;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -59,6 +58,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     private ViewStatus mViewStatus = ViewStatus.LOADING;
     private boolean isLoading;
     private GiftPresenter mPresenter;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
 
     public GiftFragment() {
     }
@@ -139,17 +139,36 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
     }
 
     private void initRecycler() {
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(StaggeredGridLayoutManager.VERTICAL, 2);
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mAdapter.getItemCount())
-                        && !mSwipeRefreshLayout.isRefreshing()) {
-                    if (mCurPage <= mPages) {
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mAdapter.getItemCount())
+//                        && !mSwipeRefreshLayout.isRefreshing()) {
+//                    if (mCurPage <= mPages) {
+//                        toRefresh();
+//                    }
+//                }
+//                StaggeredGridLayoutManager staggeredGridLayoutManager =
+//                        (StaggeredGridLayoutManager) mLayoutManager;
+                int[] first = new int[mStaggeredGridLayoutManager.getSpanCount()];
+                int[] last = new int[mStaggeredGridLayoutManager.getSpanCount()];
+                mStaggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(last);
+                mStaggeredGridLayoutManager.findFirstCompletelyVisibleItemPositions(first);
+                for (int i : first) {
+                    if (i == 0) {
+                        mSwipeRefreshLayout.setEnabled(true);
+                        break;
+                    }
+                }
+                for (int i : last) {
+                    if (i == mAdapter.getItemCount() - 1) {
                         toRefresh();
+                        break;
                     }
                 }
             }
@@ -157,7 +176,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements SwipeRefre
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mLastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
+//                mLastPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findLastVisibleItemPosition();
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);

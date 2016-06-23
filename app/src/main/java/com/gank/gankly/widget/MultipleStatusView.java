@@ -12,6 +12,7 @@ import com.gank.gankly.R;
 import com.socks.library.KLog;
 
 /**
+ * 包括Loading Empty Error DisNetWork界面
  * Create by LingYan on 2016-06-15
  */
 public class MultipleStatusView extends RelativeLayout {
