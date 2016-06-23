@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
-    android:clickable="true"
     android:paddingEnd="10dp"
     android:paddingStart="15dp"
     android:paddingTop="10dp">
@@ -14,7 +13,7 @@
         android:id="@+id/item_view_txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="自动更新"
+        android:text=""
         android:textColor="@color/text_default"
         android:textSize="16sp"/>
 
@@ -23,8 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_txt_name"
-        android:text="V。，123123"
+        android:text=""
         android:textColor="@color/text_999999"
+        android:layout_marginTop="5dp"
         android:textSize="14sp"/>
 
     <TextView

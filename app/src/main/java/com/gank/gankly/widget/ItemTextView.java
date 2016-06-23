@@ -8,33 +8,32 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 
 import butterknife.Bind;
-import butterknife.BindString;
 import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-06-06
  */
-public class ItemTextView extends RelativeLayout implements View.OnClickListener {
+public class ItemTextView extends RelativeLayout {
     @Bind(R.id.item_view_txt_name)
-    TextView txtName;
+    TextView txtTitle;
     @Bind(R.id.item_view_txt_summary)
     TextView txtSummary;
     @Bind(R.id.item_rl_update_version)
     View mView;
     @Bind(R.id.item_view_txt_new_version)
     TextView txtVersion;
-    @BindString(R.string.setting_check_version)
-    String mName;
 
-    private UpdateListener mUpdateListener;
     private String mSummary;
+    private String mTitle;
+    private int mTitleSize;
+    private int mSummarySize;
+    private int mTitleColor;
+    private int mSummaryColor;
 
-    public interface UpdateListener {
-        void onUpdate();
-    }
 
     public ItemTextView(Context context) {
         this(context, null);
@@ -44,17 +43,18 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
         this(context, attrs, 0);
     }
 
-    public void setUpdateListener(UpdateListener listener) {
-        this.mUpdateListener = listener;
-    }
 
     public ItemTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View view = LayoutInflater.from(context).inflate(R.layout.view_item_text, this);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemSwitchView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemTextView);
         try {
-            mName = array.getString(R.styleable.ItemSwitchView_name);
-            mSummary = array.getString(R.styleable.ItemSwitchView_summary);
+            mTitle = array.getString(R.styleable.ItemTextView_TextTitle);
+            mSummary = array.getString(R.styleable.ItemTextView_TextSummary);
+            mTitleSize = array.getInteger(R.styleable.ItemTextView_TextTitleSize, 16);
+            mSummarySize = array.getInteger(R.styleable.ItemTextView_TextSummarySize, 14);
+            mTitleColor = array.getColor(R.styleable.ItemTextView_TextTitleColor, App.getAppColor(R.color.text_default));
+            mSummaryColor = array.getColor(R.styleable.ItemTextView_TextSummaryColor, App.getAppColor(R.color.text_999999));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -63,11 +63,11 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
     }
 
     public void setTextName(int resId) {
-        txtName.setText(resId);
+        txtTitle.setText(resId);
     }
 
     public void setTextName(String res) {
-        txtName.setText(res);
+        txtTitle.setText(res);
     }
 
     public void setTextSummary(String res) {
@@ -75,7 +75,7 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
     }
 
     public void setNameSize(int size) {
-        txtName.setTextSize(size);
+        txtTitle.setTextSize(size);
     }
 
     public void setSummarySize(int size) {
@@ -89,22 +89,11 @@ public class ItemTextView extends RelativeLayout implements View.OnClickListener
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
-        txtName.setText(mName);
+        txtTitle.setText(mTitle);
         txtSummary.setText(mSummary);
-        mView.setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.item_rl_update_version:
-                if (mUpdateListener != null) {
-                    mUpdateListener.onUpdate();
-                }
-                break;
-
-            default:
-                break;
-        }
+        txtTitle.setTextColor(mTitleColor);
+        txtSummary.setTextColor(mSummaryColor);
+        txtTitle.setTextSize(mTitleSize);
+        txtSummary.setTextSize(mSummarySize);
     }
 }

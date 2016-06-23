@@ -33,39 +33,7 @@
             android:id="@+id/setting_item_text_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/setting_switch_check"
-            app:name="更新失败"
-            app:summary="更新中。。。"/>
-        <!--<RelativeLayout-->
-        <!--android:id="@+id/setting_rl_check_version"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/setting_switch_check"-->
-        <!--android:layout_marginTop="5dp"-->
-        <!--android:background="?attr/selectableItemBackground"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:paddingBottom="15dp"-->
-        <!--android:paddingEnd="15dp"-->
-        <!--android:paddingStart="15dp"-->
-        <!--android:paddingTop="15dp">-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/setting_txt_check_version"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/setting_check_version"-->
-        <!--android:textColor="@color/text_default"-->
-        <!--android:textSize="16sp"/>-->
-
-        <!--<TextView-->
-        <!--android:id="@+id/setting_txt_current_version"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_below="@id/setting_txt_check_version"-->
-        <!--android:layout_marginTop="3dp"-->
-        <!--android:text=""-->
-        <!--android:textSize="12sp"/>-->
-        <!--</RelativeLayout>-->
+            android:layout_below="@id/setting_switch_check"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -73,6 +41,6 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:text="© GankLy"/>
+            android:text="@string/app_website"/>
     </RelativeLayout>
 </RelativeLayout>

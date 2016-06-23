@@ -21,6 +21,7 @@ import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Create by LingYan on 2016-05-10
@@ -95,12 +96,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment<LauncherPresenter>
         if (App.isNewVersion()) {
             itemUpdate.showVersion();
         }
-        itemUpdate.setUpdateListener(new ItemTextView.UpdateListener() {
-            @Override
-            public void onUpdate() {
-                mPresenter.checkVersion();
-            }
-        });
+    }
+
+    @OnClick(R.id.setting_item_text_update)
+    void clikUpdate() {
+        mPresenter.checkVersion();
     }
 
     @Override

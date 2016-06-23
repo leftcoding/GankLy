@@ -3,6 +3,7 @@
     <string name="app_again_out">再按一次退出GankLy</string>
     <string name="retry">重试</string>
     <string name="app_new_version">NEW</string>
+    <string name="app_website">© GankLy</string>
 
     <string name="navigation_collect">收藏</string>
     <string name="navigation_settings">设置</string>
@@ -55,6 +56,14 @@
     <string name="preference_category_base_settings">基本设置</string>
     <string name="preference_category_help">帮助</string>
 
-    <string name="about_app_str">GankLy是一个关于程序员知识的干货，基于学习和分享的应用。 \应用基本上每天都有会有新Android、ios等知识点以及福（mei）利（zi）、精彩视频等，让你在精神和视觉上都有不同的享受，后期有时间还会加入其他的知识点。由于时间、能力有限，还有许多不足的地方，请大家多多指教。</string>
-    <string name="about_thanks_str">GankLy中用到的大部分接口均来自 http://gank.io，在这里感谢daimajia的无私贡献。应用中部分代码参考来着@drakket @xiongwei-git，还有帮助我过我的人，以及网上的分享。同样，我也希望我的应用可以帮助一些人。</string>
+    <string name="about_gank">干货</string>
+    <string name="about_gank_url">http://gank.io</string>
+    <string name="about_mzitu">妹子图</string>
+    <string name="about_mzitu_url">http://www.mzitu.com/mm</string>
+    <string name="about_my_github">我的github</string>
+    <string name="about_my_github_url">https://github.com/leftcoding/GankLy</string>
+    <string name="about_contact">联系方式</string>
+    <string name="about_contact_email">137387869@qq.com</string>
+    <string name="about_app_str">GankLy是一个关于程序猿的干货，基于学习和分享的应用。基本上每天都有会有新Android、ios等内容，以及福（mei）利（zi）、精彩视频等，让你在精神和视觉上都有不同的享受，后期有时间还会加入其他的语言干货。由于时间和能力有限，还有许多不足的地方，请大家多多指教。</string>
+    <string name="about_thanks_str">GankLy里用到的大部分接口均来自 http://gank.io，在这里感谢@daimajia @drakket @xiongwei-git的无私帮助。</string>
 </resources>
