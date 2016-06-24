@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.base;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +20,11 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
     private static final int S = 2;
     private static final int G = 3;
 
-    private int mCurManager = 1;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView mRecyclerView;
     private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
+    private Context mContext;
+    private int mCurManager = 1;
     private boolean isLoading = false;
 
     public BaseSwipeRefreshLayout(Context context) {
@@ -33,44 +33,40 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
 
     public BaseSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mContext = context;
         init();
     }
 
     private void init() {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.view_swiperefresh, null);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.view_swiperefresh, this, true);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && !isLoading
-                        && mOnSwipeRefRecyclerViewListener != null) {
-                    int count = mRecyclerView.getAdapter().getItemCount() - 1;
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mOnSwipeRefRecyclerViewListener != null
+                        && !isLoading) {
+                    int count = recyclerView.getAdapter().getItemCount() - 1;
                     switch (mCurManager) {
                         case L:
-                            int lastPosition = ((LinearLayoutManager) mLayoutManager).findLastCompletelyVisibleItemPosition();
-                            int firstPosition = ((LinearLayoutManager) mLayoutManager).findFirstCompletelyVisibleItemPosition();
-                            if (firstPosition == 0) {
-                                setEnabled(true);
-                            } else if (lastPosition == count) {
+                            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
+                            if (linearLayoutManager.findLastCompletelyVisibleItemPosition()== count) {
                                 loadMore();
-                            } else {
-                                setEnabled(false);
+                            }
+                            break;
+                        case G:
+                            GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+                            if (gridLayoutManager.findLastCompletelyVisibleItemPosition() == 0) {
+                                loadMore();
                             }
                             break;
                         case S:
                             StaggeredGridLayoutManager staggeredGridLayoutManager =
-                                    (StaggeredGridLayoutManager) mLayoutManager;
+                                    (StaggeredGridLayoutManager) layoutManager;
                             int[] first = new int[staggeredGridLayoutManager.getSpanCount()];
                             int[] last = new int[staggeredGridLayoutManager.getSpanCount()];
                             staggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(last);
                             staggeredGridLayoutManager.findFirstCompletelyVisibleItemPositions(first);
-                            for (int i : first) {
-                                if (i == 0) {
-                                    setEnabled(true);
-                                    break;
-                                }
-                            }
                             for (int i : last) {
                                 if (i == count) {
                                     loadMore();
@@ -78,11 +74,7 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
                                 }
                             }
                             break;
-                        case G:
-                            break;
                     }
-                } else {
-                    setEnabled(false);
                 }
             }
 
@@ -98,8 +90,12 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
         mOnSwipeRefRecyclerViewListener.onLoadMore();
     }
 
-    public void setLayoutManager(@NonNull RecyclerView.LayoutManager layoutManager) {
-        this.mLayoutManager = layoutManager;
+    public void finishLoad() {
+        isLoading = false;
+    }
+
+    public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
+        this.layoutManager = layoutManager;
         if (layoutManager instanceof LinearLayoutManager) {
             mCurManager = L;
         } else if (layoutManager instanceof GridLayoutManager) {

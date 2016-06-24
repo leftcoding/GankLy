@@ -284,8 +284,4 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
         mIView.setMax(progress);
         mIView.setProgress(progress);
     }
-
-    public int getPages() {
-        return mPages;
-    }
 }
