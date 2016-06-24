@@ -24,7 +24,6 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
