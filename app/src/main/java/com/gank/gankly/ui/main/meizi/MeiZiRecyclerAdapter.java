@@ -18,7 +18,9 @@ import com.gank.gankly.utils.AppUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -31,6 +33,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private Activity mContext;
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
+    private Map<String, Integer> heights = new HashMap<>();
 
     private MeiziOnClick mMeiZiOnClick;
 
@@ -52,7 +55,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
     @Override
     public void onBindViewHolder(final GoodsViewHolder holder, final int position) {
-
         final ResultsBean bean = mResults.get(position);
         final String url = bean.getUrl();
 
@@ -61,23 +63,33 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
                 .asBitmap()
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
 //                .override(BitmapImageViewTarget.SIZE_ORIGINAL, BitmapImageViewTarget.SIZE_ORIGINAL)
-                .into(new DriverViewTarget(holder.imgMeizi));
+                .into(new DriverViewTarget(holder.imgMeizi, url));
     }
 
     private class DriverViewTarget extends BitmapImageViewTarget {
         private ImageView image;
+        private String url;
 
-        public DriverViewTarget(ImageView view) {
+        public DriverViewTarget(ImageView view, String url) {
             super(view);
             this.image = view;
+            this.url = url;
         }
 
         @Override
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
             int viewWidth = mScreenWidth;
 //            KLog.d(" resource.getHeight():" + resource.getHeight() + ",resource.getWidth():" + resource.getWidth());
-            int viewHeight = resource.getHeight() * viewWidth / resource.getWidth();
-//            KLog.d("viewHeight:" + viewHeight);
+            int viewHeight;
+            KLog.d("heights.containsKey(url):" + heights.containsKey(url) + ",url:" + url);
+            if (heights.containsKey(url) && url != null) {
+                viewHeight = heights.get(url);
+            } else {
+                viewHeight = resource.getHeight() * viewWidth / resource.getWidth();
+                heights.put(url, viewHeight);
+            }
+
+            KLog.d("viewHeight:" + viewHeight);
             setCardViewLayoutParams(viewWidth, viewHeight);
             super.onResourceReady(resource, glideAnimation);
         }

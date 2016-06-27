@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,19 +58,20 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
     }
 
     public void updateItems(List<GiftBean> getResults) {
-        mResults.addAll(getResults);
-        notifyDataSetChanged();
-        KLog.d("mResults:" + mResults.size());
+//        mResults.addAll(getResults);
+        int size = mResults.size();
+        for (int i = 0; i < getResults.size(); i++) {
+            size = size + i;
+            mResults.add(getResults.get(i));
+            notifyItemInserted(size);
+        }
+//        notifyDataSetChanged();
     }
 
     public void clear() {
         if (mResults != null) {
             mResults.clear();
         }
-    }
-
-    public List<GiftBean> getResults() {
-        return mResults;
     }
 
     public void setOnItemClickListener(ItemClick onItemClickListener) {
