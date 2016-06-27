@@ -99,8 +99,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
             }
         });
 
-        mMultipleStatusView.showLoading();
-        onDownRefresh();
+        initRefresh();
     }
 
     @Override
@@ -116,6 +115,11 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_gift;
+    }
+
+    private void initRefresh() {
+        mMultipleStatusView.showLoading();
+        onDownRefresh();
     }
 
     private void onDownRefresh() {
@@ -144,7 +148,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
             @Override
             public void onLoadMore() {
-                        toRefresh();
+                toRefresh();
             }
         });
 

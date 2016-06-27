@@ -7,8 +7,10 @@ public class MyClass {
 
     public static void main(String[] args) throws InterruptedException {
         MyClass myClass = new MyClass();
-
-        System.out.println("" + getSuffixImageName("http://ww4.sinaimg.cn/large/610dc034jw1f3litmfts1j20qo0hsac7.jpg"));
+        int s = 10 & 2;
+        int ss = 5 << 2;
+        System.out.print("s:" + s + ",0xFF:" + 0xFF + ",5>>2:"+ss);
+//        System.out.println("" + getSuffixImageName("http://ww4.sinaimg.cn/large/610dc034jw1f3litmfts1j20qo0hsac7.jpg"));
     }
 
     public static String getSuffixImageName(String url) {
