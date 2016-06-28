@@ -50,7 +50,7 @@
     <ImageView
         android:id="@+id/meizi_img_picture"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:contentDescription="@null"
         android:elevation="@dimen/activity_horizontal_margin"
         android:scaleType="centerCrop"/>

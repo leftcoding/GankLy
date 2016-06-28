@@ -70,6 +70,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
     }
 
     public void fetchNextGirl() {
+        KLog.d("fetchNextGirl," + isGirlLoadMore + ",mGirlCurPage:" + mGirlCurPage);
         if (isGirlLoadMore) {
             fetchGirlDate(mGirlCurPage);
         }

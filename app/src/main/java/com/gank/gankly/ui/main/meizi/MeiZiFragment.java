@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -14,10 +13,11 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
+import com.gank.gankly.presenter.IosPresenter;
+import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.presenter.IosPresenter;
 import com.gank.gankly.view.IIosView;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -29,12 +29,14 @@ import butterknife.Bind;
  * Create by LingYan on 2016-5-12
  */
 public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick, IIosView<ResultsBean> {
-    @Bind(R.id.meizi_recycler_view)
-    RecyclerView mRecyclerView;
-    @Bind(R.id.meizi_swipe_refresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.meizi_multiple_status_view)
+//    @Bind(R.id.meizi_recycler_view)
+//    RecyclerView mRecyclerView;
+//    @Bind(R.id.meizi_swipe_refresh)
+//    SwipeRefreshLayout mSwipeRefreshLayout;
+    @Bind(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
+    @Bind(R.id.swipe_refresh)
+    BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
@@ -66,17 +68,17 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
     protected void initViews() {
         mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
         mRecyclerAdapter.setMeiZiOnClick(this);
-        mRecyclerView.setAdapter(mRecyclerAdapter);
         initRecycler();
     }
 
     private void initRecycler() {
         mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(mStaggeredGridLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
+        mSwipeRefreshLayout.setLayoutManager(mStaggeredGridLayoutManager);
+        mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+        mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
     }
 
     @Override
@@ -88,31 +90,43 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRe
                 onDownRefresh();
             }
         });
-        mRecyclerView.addOnScrollListener(
-                new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        super.onScrollStateChanged(recyclerView, newState);
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            MeiZiFragment.this.onScrollStateChanged();
-                        }
-                    }
+        mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+            @Override
+            public void onRefresh() {
+                onDownRefresh();
+            }
 
-                    @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                        super.onScrolled(recyclerView, dx, dy);
-                    }
-                }
-        );
+            @Override
+            public void onLoadMore() {
+                onNextRefresh();
+            }
+        });
+//        mRecyclerView.addOnScrollListener(
+//                new RecyclerView.OnScrollListener() {
+//                    @Override
+//                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                        super.onScrollStateChanged(recyclerView, newState);
+//                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+//                            MeiZiFragment.this.onScrollStateChanged();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                        super.onScrolled(recyclerView, dx, dy);
+//                    }
+//                }
+//        );
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_meizi;
+        return R.layout.view_swiperefresh_recycler;
     }
 
     @Override
     protected void initDate() {
+        mMultipleStatusView.showLoading();
         onDownRefresh();
     }
 

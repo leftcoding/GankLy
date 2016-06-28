@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.gank.gankly.R;
@@ -33,6 +34,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     private Activity mContext;
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
+    private int mScreenHeight = AppUtils.getDisplayWidth() / 2;
     private Map<String, Integer> heights = new HashMap<>();
 
     private MeiziOnClick mMeiZiOnClick;
@@ -61,18 +63,18 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         Glide.with(mContext)
                 .load(url)
                 .asBitmap()
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .override(BitmapImageViewTarget.SIZE_ORIGINAL, BitmapImageViewTarget.SIZE_ORIGINAL)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .override(mScreenWidth, mScreenHeight)//设置宽高一致，后期改动不大
                 .into(new DriverViewTarget(holder.imgMeizi, url));
     }
 
     private class DriverViewTarget extends BitmapImageViewTarget {
-        private ImageView image;
+        private ImageView mImageView;
         private String url;
 
-        public DriverViewTarget(ImageView view, String url) {
-            super(view);
-            this.image = view;
+        public DriverViewTarget(ImageView image, String url) {
+            super(image);
+            this.mImageView = image;
             this.url = url;
         }
 
@@ -81,7 +83,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
             int viewWidth = mScreenWidth;
 //            KLog.d(" resource.getHeight():" + resource.getHeight() + ",resource.getWidth():" + resource.getWidth());
             int viewHeight;
-            KLog.d("heights.containsKey(url):" + heights.containsKey(url) + ",url:" + url);
             if (heights.containsKey(url) && url != null) {
                 viewHeight = heights.get(url);
             } else {
@@ -95,10 +96,10 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         }
 
         private void setCardViewLayoutParams(int width, int height) {
-            ViewGroup.LayoutParams layoutParams = image.getLayoutParams();
+            ViewGroup.LayoutParams layoutParams = mImageView.getLayoutParams();
             layoutParams.width = width;
             layoutParams.height = height;
-            image.setLayoutParams(layoutParams);
+            mImageView.setLayoutParams(layoutParams);
         }
     }
 
