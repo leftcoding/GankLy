@@ -98,10 +98,6 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
         mOnSwipeRefRecyclerViewListener.onLoadMore();
     }
 
-    public void finishLoad() {
-        isLoading = false;
-    }
-
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
         this.layoutManager = layoutManager;
         if (layoutManager instanceof LinearLayoutManager) {

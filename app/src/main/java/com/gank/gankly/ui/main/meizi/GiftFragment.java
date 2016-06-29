@@ -127,11 +127,11 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     private void onFetchNew() {
         mCurPage = 1;
-        mPresenter.fetchPageCount(mCurPage);
+        mPresenter.fetchNew(mCurPage);
     }
 
     private void onFetchNext() {
-        mPresenter.fetchPageCount(mCurPage);
+        mPresenter.fetchNext(mCurPage);
     }
 
     private void initRecycler() {
@@ -192,7 +192,6 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
         super.onCompleted();
         mCurPage = mCurPage + 1;
         showContent();
-        mSwipeRefreshLayout.finishLoad();
     }
 
     @Override
@@ -203,9 +202,6 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     @Override
     public void refillDate(List<GiftBean> list) {
-        if (mCurPage == 1) {
-            clear();
-        }
         mAdapter.updateItems(list);
     }
 
