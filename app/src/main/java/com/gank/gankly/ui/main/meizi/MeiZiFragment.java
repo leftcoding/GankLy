@@ -28,11 +28,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-5-12
  */
-public class MeiZiFragment extends LazyFragment<IosPresenter> implements SwipeRefreshLayout.OnRefreshListener, MeiziOnClick, IIosView<ResultsBean> {
-//    @Bind(R.id.meizi_recycler_view)
-//    RecyclerView mRecyclerView;
-//    @Bind(R.id.meizi_swipe_refresh)
-//    SwipeRefreshLayout mSwipeRefreshLayout;
+public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOnClick,
+        SwipeRefreshLayout.OnRefreshListener, IIosView<ResultsBean> {
     @Bind(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @Bind(R.id.swipe_refresh)

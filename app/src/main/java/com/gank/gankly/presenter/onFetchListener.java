@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Create by LingYan on 2016-06-20
  */
-public interface onFetchListener<P> {
+public interface OnFetchListener<P> {
     void onCompleted();
 
     void onError(Throwable e);

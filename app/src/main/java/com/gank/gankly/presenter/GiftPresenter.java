@@ -43,6 +43,9 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     }
 
     public void fetchPageCount(final int mCurPage) {
+        if (mCurPage > mPages) {
+            return;
+        }
         Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
@@ -80,9 +83,6 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             public void onNext(GiftResult giftResult) {
                 if (giftResult != null) {
                     if (giftResult.getSize() > 0) {
-                        if (mCurPage == 1) {
-                            mIView.clear();
-                        }
                         mIView.refillDate(giftResult.getList());
                     }
                     mPages = giftResult.getNum();
@@ -283,5 +283,9 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
         progress = 0;
         mIView.setMax(progress);
         mIView.setProgress(progress);
+    }
+
+    public int getCountPages() {
+        return mPages;
     }
 }

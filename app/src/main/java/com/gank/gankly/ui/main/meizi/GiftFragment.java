@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -58,7 +57,11 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     public static GiftFragment getInstance() {
         if (sGiftFragment == null) {
-            sGiftFragment = new GiftFragment();
+            synchronized (GiftFragment.class) {
+                if (sGiftFragment == null) {
+                    sGiftFragment = new GiftFragment();
+                }
+            }
         }
         return sGiftFragment;
     }
@@ -83,6 +86,13 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     @Override
     protected void initValues() {
+        mImageCountList = new ArrayList<>();
+
+        initRefresh();
+    }
+
+    @Override
+    protected void initViews() {
         mToolbar.setTitle(R.string.navigation_gift);
         mActivity.setSupportActionBar(mToolbar);
 
@@ -92,24 +102,17 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
             bar.setDisplayHomeAsUpEnabled(true);
         }
 
+        initRecycler();
+    }
+
+    @Override
+    protected void bindLister() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.openDrawer();
             }
         });
-
-        initRefresh();
-    }
-
-    @Override
-    protected void initViews() {
-        mImageCountList = new ArrayList<>();
-        initRecycler();
-    }
-
-    @Override
-    protected void bindLister() {
     }
 
     @Override
@@ -119,16 +122,15 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     private void initRefresh() {
         mMultipleStatusView.showLoading();
-        onDownRefresh();
+        onFetchNew();
     }
 
-    private void onDownRefresh() {
+    private void onFetchNew() {
         mCurPage = 1;
-        toRefresh();
+        mPresenter.fetchPageCount(mCurPage);
     }
 
-    private void toRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
+    private void onFetchNext() {
         mPresenter.fetchPageCount(mCurPage);
     }
 
@@ -138,17 +140,12 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
         mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        onDownRefresh();
-                    }
-                });
+                onFetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                toRefresh();
+                onFetchNext();
             }
         });
 
@@ -206,6 +203,9 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     @Override
     public void refillDate(List<GiftBean> list) {
+        if (mCurPage == 1) {
+            clear();
+        }
         mAdapter.updateItems(list);
     }
 

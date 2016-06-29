@@ -4,7 +4,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.model.IosModel;
 import com.gank.gankly.network.api.GankApi;
-import com.gank.gankly.presenter.onFetchListener;
+import com.gank.gankly.presenter.OnFetchListener;
 
 import rx.Subscriber;
 
@@ -12,9 +12,9 @@ import rx.Subscriber;
  * Create by LingYan on 2016-06-20
  */
 public class IosModelImpl implements IosModel {
-    private onFetchListener<ResultsBean> mListener;
+    private OnFetchListener<ResultsBean> mListener;
 
-    public IosModelImpl(onFetchListener<ResultsBean> listener) {
+    public IosModelImpl(OnFetchListener<ResultsBean> listener) {
         this.mListener = listener;
     }
 
