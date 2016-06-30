@@ -48,8 +48,6 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     private int mCurPage = 1;
     private List<GiftBean> mImageCountList;
     private ProgressDialog mDialog;
-    private int mClickPosition;
-    private boolean isLoading;
     private GiftPresenter mPresenter;
 
     public GiftFragment() {
@@ -131,6 +129,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     }
 
     private void onFetchNext() {
+        showRefresh();
         mPresenter.fetchNext(mCurPage);
     }
 
@@ -188,6 +187,12 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     }
 
     @Override
+    public void showRefresh() {
+        super.showRefresh();
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
     public void onCompleted() {
         super.onCompleted();
         mCurPage = mCurPage + 1;
@@ -227,6 +232,12 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     }
 
     @Override
+    public void setNextPage(int page) {
+        this.mCurPage = page;
+    }
+
+
+    @Override
     public void refillImagesCount(List<GiftBean> giftResult) {
         mImageCountList.addAll(giftResult);
     }
@@ -242,16 +253,10 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     @Override
     public void onClick(int position, Object object) {
-        if (mClickPosition != position || isLoading) {
-            mClickPosition = position;
-            mImageCountList.clear();
-            isLoading = false;
-            mPresenter.initProgress();
-        }
         showDialog();
-        isLoading = true;
+        mImageCountList.clear();
         GiftBean giftBean = (GiftBean) object;
-        mPresenter.fetchImagePages(giftBean.getUrl());
+        mPresenter.fetchImagePageList(giftBean.getUrl());
     }
 
     public List<GiftBean> getList() {

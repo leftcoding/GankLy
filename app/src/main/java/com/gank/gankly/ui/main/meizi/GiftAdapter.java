@@ -39,8 +39,8 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
     }
 
     @Override
-    public void onBindViewHolder(GankViewHolder holder, int position) {
-        GiftBean bean = mResults.get(position);
+    public void onBindViewHolder(final GankViewHolder holder, int position) {
+        final GiftBean bean = mResults.get(position);
         holder.mGiftBean = bean;
         holder.position = position;
         holder.txtDesc.setText(bean.getTitle());

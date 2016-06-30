@@ -19,4 +19,7 @@ public interface IGiftView extends ISwipeRefreshView {
     void setProgress(int value);
 
     void disDialog();
+
+    void setNextPage(int page);
+
 }
