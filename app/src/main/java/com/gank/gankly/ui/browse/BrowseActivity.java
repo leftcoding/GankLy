@@ -134,6 +134,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         }
         if (ViewsModel.Gift.equals(mViewsModel)) {
             mGiftList = GiftFragment.getInstance().getList();
+            KLog.d("mGiftList:" + mGiftList.size());
         }
     }
 

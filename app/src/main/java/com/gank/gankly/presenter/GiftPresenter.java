@@ -9,25 +9,20 @@ import com.gank.gankly.model.impl.GiftModeImpl;
 import com.gank.gankly.view.IGiftView;
 import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
-import rx.Subscription;
 
 /**
  * Create by LingYan on 2016-06-13
  */
 public class GiftPresenter extends BasePresenter<IGiftView> {
-    private static final int timeout = 50 * 1000;
-    private static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
-    private String url = "http://www.mzitu.com/mm/page/";
     private int mPages;
-    private Subscription mSubscription;
-    private int mDetailsPageCount = 1;
     private int progress;
     private boolean isUnSubscribe;
     private GiftModel mGiftModel;
-    private String mCurUrl;
+    private List<GiftBean> girls = new ArrayList<>();
 
     public GiftPresenter(Activity mActivity, IGiftView view) {
         super(mActivity, view);
@@ -76,25 +71,6 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             fetchNew(page);
         }
     }
-
-//    new Subscriber<GiftResult>() {
-//        @Override
-//        public void onCompleted() {
-//            listener.onCompleted();
-//        }
-//
-//        @Override
-//        public void onError(Throwable e) {
-//            listener.onError(e);
-//        }
-//
-//        @Override
-//        public void onNext(GiftResult giftResult) {
-//            if (giftResult != null && giftResult.getSize() > 0) {
-//                listener.setMaxValue(maxImagePageNum);
-//            }
-//        }
-//    }
 
     public void fetchImagePageList(final String url) {
         KLog.d("fetchImagePageList");
@@ -191,10 +167,12 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
         KLog.d("fetchImagesList");
         isUnSubscribe = false;
         mGiftModel.setIsUnSubscribe(isUnSubscribe);
+        girls.clear();
         Subscriber<List<GiftBean>> subscriber = new Subscriber<List<GiftBean>>() {
             @Override
             public void onCompleted() {
                 mIView.disDialog();
+                mIView.refillImagesCount(girls);
                 if (!isUnSubscribe) {
                     mIView.gotoBrowseActivity();
                 } else {
@@ -211,7 +189,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             @Override
             public void onNext(List<GiftBean> giftResult) {
                 if (giftResult != null && giftResult.size() > 0) {
-                    mIView.refillImagesCount(giftResult);
+                    girls.addAll(giftResult);
                 }
             }
         };

@@ -204,7 +204,6 @@ public class GiftModeImpl implements GiftModel {
             String img = links.get(0).attr("src");
             giftBeen.add(new GiftBean(img));
         }
-        KLog.d("giftBeen:" + giftBeen.size());
         return giftBeen;
     }
 

@@ -16,7 +16,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.utils.AppUtils;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,7 +89,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
                 heights.put(url, viewHeight);
             }
 
-            KLog.d("viewHeight:" + viewHeight);
+//            KLog.d("viewHeight:" + viewHeight);
             setCardViewLayoutParams(viewWidth, viewHeight);
             super.onResourceReady(resource, glideAnimation);
         }

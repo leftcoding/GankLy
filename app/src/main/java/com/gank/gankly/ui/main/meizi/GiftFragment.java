@@ -6,10 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -17,12 +14,13 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.GiftPresenter;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +30,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-05-17
  */
-public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick, IGiftView {
+public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;
-
-    @Bind(R.id.main_toolbar)
-    Toolbar mToolbar;
     @Bind(R.id.meizi_swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.loading_view)
@@ -46,22 +41,26 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     private MainActivity mActivity;
 
     private int mCurPage = 1;
-    private List<GiftBean> mImageCountList;
+    private List<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
     private GiftPresenter mPresenter;
 
     public GiftFragment() {
+        KLog.d("GiftFragment");
     }
 
     public static GiftFragment getInstance() {
         if (sGiftFragment == null) {
-            synchronized (GiftFragment.class) {
-                if (sGiftFragment == null) {
-                    sGiftFragment = new GiftFragment();
-                }
-            }
+            sGiftFragment = new GiftFragment();
         }
         return sGiftFragment;
+    }
+
+    public static GiftFragment newInstance() {
+        Bundle args = new Bundle();
+        GiftFragment fragment = new GiftFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -84,33 +83,22 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
 
     @Override
     protected void initValues() {
-        mImageCountList = new ArrayList<>();
-
         initRefresh();
     }
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.navigation_gift);
-        mActivity.setSupportActionBar(mToolbar);
-
-        ActionBar bar = mActivity.getSupportActionBar();
-        if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-
         initRecycler();
     }
 
     @Override
     protected void bindLister() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
+
+    }
+
+    @Override
+    protected void initDate() {
+        initRefresh();
     }
 
     @Override
@@ -240,6 +228,7 @@ public class GiftFragment extends BaseSwipeRefreshFragment implements ItemClick,
     @Override
     public void refillImagesCount(List<GiftBean> giftResult) {
         mImageCountList.addAll(giftResult);
+        KLog.d("giftResult:" + mImageCountList.size());
     }
 
     @Override

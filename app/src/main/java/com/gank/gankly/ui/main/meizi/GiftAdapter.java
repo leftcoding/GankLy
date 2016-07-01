@@ -58,14 +58,12 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
     }
 
     public void updateItems(List<GiftBean> getResults) {
-//        mResults.addAll(getResults);
         int size = mResults.size();
         for (int i = 0; i < getResults.size(); i++) {
             size = size + i;
             mResults.add(getResults.get(i));
             notifyItemInserted(size);
         }
-//        notifyDataSetChanged();
     }
 
     public void clear() {

@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
-import com.gank.gankly.ui.main.meizi.GiftFragment;
+import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -61,7 +61,8 @@ public class MainActivity extends BaseActivity {
                         fragmentTo = AboutFragment.getInstance();
                         break;
                     case R.id.navigation_gift:
-                        fragmentTo = GiftFragment.getInstance();
+//                        fragmentTo = GiftFragment.getInstance();
+                        fragmentTo = GirlsFragment.getInstance();
                         break;
                     case R.id.navigation_settings:
                         fragmentTo = SettingFragment.getInstance();

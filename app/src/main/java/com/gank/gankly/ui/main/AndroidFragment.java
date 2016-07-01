@@ -52,7 +52,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     private boolean isLoadMore = true;
 
     public AndroidFragment() {
-
     }
 
     @Override
