@@ -5,14 +5,12 @@ import android.support.annotation.Nullable;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.socks.library.KLog;
 
 /**
  * Create by LingYan on 2016-07-01
  */
 public class DailyMeiziFragment extends LazyFragment {
     public DailyMeiziFragment() {
-        KLog.d("DailyMeiziFragment");
     }
 
     @Override

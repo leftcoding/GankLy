@@ -71,4 +71,5 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     //jsoup
     compile 'org.jsoup:jsoup:1.9.1'
+    compile 'se.emilsjolander:stickylistheaders:2.7.0'
 }
