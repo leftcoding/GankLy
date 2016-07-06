@@ -31,7 +31,7 @@ public class GirlsAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return GiftFragment.getInstance();
             case 1:
-                return DailyMeiziFragment.newInstance();
+                return DailyMeiziFragment.getInstance();
             default:
                 return null;
         }

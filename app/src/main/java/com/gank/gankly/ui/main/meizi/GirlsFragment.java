@@ -99,7 +99,7 @@ public class GirlsFragment extends BaseSwipeRefreshFragment<LauncherPresenter> i
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new GiftFragment());
-        mList.add(new DailyMeiziFragment());
+        mList.add(DailyMeiziFragment.getInstance());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.QINGCHUN);

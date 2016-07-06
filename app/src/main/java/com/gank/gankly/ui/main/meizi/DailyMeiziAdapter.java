@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.listener.ItemClick;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,11 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
 
     @Override
     public void onBindViewHolder(DailyMeiziAdapter.DailyMeiziHolder holder, int position) {
-
-
+        DailyMeiziBean dailyMeiziBean = mDailyMeiziBeanList.get(position);
+        holder.dailyMeiziBean = dailyMeiziBean;
+        if (dailyMeiziBean != null) {
+            holder.txtTitle.setText(dailyMeiziBean.getTitle());
+        }
     }
 
     public void setOnItemClickListener(ItemClick onItemClickListener) {
@@ -48,9 +52,18 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         return mDailyMeiziBeanList.size();
     }
 
+    public void updateItem(List<DailyMeiziBean> mDailyMeiziBeanList) {
+        KLog.d("mDailyMeiziBeanList.size:" + mDailyMeiziBeanList.size());
+        this.mDailyMeiziBeanList.clear();
+        this.mDailyMeiziBeanList = mDailyMeiziBeanList;
+//        notifyItemRangeChanged(0, mDailyMeiziBeanList.size());
+        notifyDataSetChanged();
+    }
+
     public class DailyMeiziHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @Bind(R.id.daily_meizi_title)
         TextView txtTitle;
+        DailyMeiziBean dailyMeiziBean;
 
         public DailyMeiziHolder(View itemView) {
             super(itemView);
@@ -61,7 +74,7 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         @Override
         public void onClick(View v) {
             if (mMeiZiOnClick != null) {
-                mMeiZiOnClick.onClick(getAdapterPosition(), v);
+                mMeiZiOnClick.onClick(getAdapterPosition(), dailyMeiziBean);
             }
         }
     }

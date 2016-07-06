@@ -7,4 +7,8 @@ import java.util.List;
  */
 public interface IDailyMeiziView<P> extends ISwipeRefreshView {
     void refillDate(List<P> list);
+
+    void gotoBrowseActivity();
+
+    void disDialog();
 }

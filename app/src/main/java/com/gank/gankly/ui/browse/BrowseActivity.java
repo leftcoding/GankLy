@@ -24,6 +24,7 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.main.meizi.DailyMeiziFragment;
 import com.gank.gankly.ui.main.meizi.GiftFragment;
 import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
@@ -68,6 +69,9 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         if (ViewsModel.Gift.equals(mViewsModel)) {
+            txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
+                    position + 1, mGiftList.size()));
+        }else if(ViewsModel.Daily.equals(mViewsModel)){
             txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
                     position + 1, mGiftList.size()));
         }
@@ -134,7 +138,9 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         }
         if (ViewsModel.Gift.equals(mViewsModel)) {
             mGiftList = GiftFragment.getInstance().getList();
-            KLog.d("mGiftList:" + mGiftList.size());
+        }
+        if (ViewsModel.Daily.equals(mViewsModel)) {
+            mGiftList = DailyMeiziFragment.getInstance().getList();
         }
     }
 
@@ -177,6 +183,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         public int getCount() {
             if (ViewsModel.GANK.equals(mViewsModel)) {
                 return MeiziArrayList.getInstance().size();
+            } else if (ViewsModel.Daily.equals(mViewsModel)) {
+                return mGiftList.size();
             } else {
                 return GiftFragment.getInstance().getList().size();
             }
@@ -187,6 +195,9 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             if (ViewsModel.GANK.equals(mViewsModel)) {
                 ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
                 return BrowseFragment.newInstance(bean.getUrl());
+            } else if (ViewsModel.Daily.equals(mViewsModel)) {
+                return BrowseFragment.newInstance(DailyMeiziFragment.getInstance()
+                        .getList().get(position).getImgUrl());
             } else {
                 return BrowseFragment.newInstance(GiftFragment.getInstance()
                         .getList().get(position).getImgUrl());
@@ -220,6 +231,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         String mUrl;
         if (ViewsModel.GANK.equals(mViewsModel)) {
             mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
+        } else if (ViewsModel.Daily.equals(mViewsModel)) {
+            mUrl = mGiftList.get(position).getImgUrl();
         } else {
             mUrl = mGiftList.get(position).getImgUrl();
         }

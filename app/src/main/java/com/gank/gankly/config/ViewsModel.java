@@ -6,4 +6,5 @@ package com.gank.gankly.config;
 public interface ViewsModel {
     String GANK = "GANK";
     String Gift = "gift";
+    String Daily = "daily";
 }
