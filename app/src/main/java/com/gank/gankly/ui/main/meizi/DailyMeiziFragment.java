@@ -181,7 +181,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
     }
 
     public List<GiftBean> getList() {
-        KLog.d("mPresenter:" + mPresenter.getList().size());
         return mPresenter.getList();
     }
 }

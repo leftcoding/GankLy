@@ -36,7 +36,6 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
         mModel.fetchDailyMeizi(new Subscriber<List<DailyMeiziBean>>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
                 mIView.hideRefresh();
             }
 
@@ -47,7 +46,6 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onNext(List<DailyMeiziBean> giftResult) {
-                KLog.d("giftResult:" + giftResult.size());
                 if (ListUtils.getListSize(giftResult) > 0) {
                     mIView.refillDate(giftResult);
                 } else {
@@ -84,7 +82,6 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
     @Override
     public List<GiftBean> getList() {
-        KLog.d("mDailyMeiziBeanList:" + mDailyMeiziBeanList.size());
         return mDailyMeiziBeanList;
     }
 
@@ -93,7 +90,6 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
         mModel.fetchImageList(dailyMeiziBeen, new Subscriber<List<GiftBean>>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
                 mIView.disDialog();
                 mIView.gotoBrowseActivity();
             }
