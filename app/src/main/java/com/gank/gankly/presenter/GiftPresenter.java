@@ -164,7 +164,6 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
 //    }
 
     private void fetchImagesList(List<GiftBean> list) {
-        KLog.d("fetchImagesList");
         isUnSubscribe = false;
         mGiftModel.setIsUnSubscribe(isUnSubscribe);
         girls.clear();
@@ -194,68 +193,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             }
         };
         mGiftModel.fetchImagesList(list, subscriber, mIView);
-//        Observable.from(list).flatMap(new Func1<GiftBean, Observable<List<GiftBean>>>() {
-//            @Override
-//            public Observable<List<GiftBean>> call(GiftBean giftBean) {
-//                final String url = giftBean.getImgUrl();
-//                mIView.setProgress(progress++);
-//                return Observable.create(new Observable.OnSubscribe<List<GiftBean>>() {
-//                    @Override
-//                    public void call(Subscriber<? super List<GiftBean>> subscriber) {
-//                        try {
-//                            if (!isUnSubscribe) {
-//                                Document doc = Jsoup.connect(url)
-//                                        .userAgent(DESKTOP_USERAGENT)
-//                                        .timeout(timeout)
-//                                        .get();
-//                                subscriber.onNext(getImageCountList(doc));
-//                            }
-//                        } catch (IOException e) {
-//                            KLog.e(e);
-//                        }
-//                        subscriber.onCompleted();
-//                    }
-//                });
-//            }
-//        })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<List<GiftBean>>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        mIView.disDialog();
-//                        if (!isUnSubscribe) {
-//                            mIView.gotoBrowseActivity();
-//                        } else {
-//                            isUnSubscribe = false;
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mIView.hideRefresh();
-//                        KLog.e(e);
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<GiftBean> giftResult) {
-//                        if (giftResult != null && giftResult.size() > 0) {
-//                            mIView.refillImagesCount(giftResult);
-//                        }
-//                    }
-//                });
     }
-
-//    private List<GiftBean> getImageCountList(Document doc) {
-//        List<GiftBean> giftBeen = null;
-//        if (doc != null) {
-//            giftBeen = new ArrayList<>();
-//            Elements links = doc.select(".main-image img[src$=.jpg]");
-//            String img = links.get(0).attr("src");
-//            giftBeen.add(new GiftBean(img));
-//        }
-//        return giftBeen;
-//    }
 
     public void unSubscribe() {
         if (mGiftModel.getSubscription() != null) {

@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.listener.ItemClick;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +52,8 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
     }
 
     public void updateItem(List<DailyMeiziBean> mDailyMeiziBeanList) {
-        KLog.d("mDailyMeiziBeanList.size:" + mDailyMeiziBeanList.size());
         this.mDailyMeiziBeanList.clear();
         this.mDailyMeiziBeanList = mDailyMeiziBeanList;
-//        notifyItemRangeChanged(0, mDailyMeiziBeanList.size());
         notifyDataSetChanged();
     }
 

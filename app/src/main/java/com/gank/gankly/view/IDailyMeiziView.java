@@ -11,4 +11,8 @@ public interface IDailyMeiziView<P> extends ISwipeRefreshView {
     void gotoBrowseActivity();
 
     void disDialog();
+
+    void setProgressValue(int value);
+
+    void setMax(int value);
 }

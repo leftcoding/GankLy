@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Subscriber;
+import rx.Subscription;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-07-05
@@ -24,6 +26,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
         implements DailyMeiziPresenter {
     private DailyMeiziModel mModel;
     private List<GiftBean> mDailyMeiziBeanList = new ArrayList<>();
+    private int progress;
 
     public DailyMeiziPresenterImpl(Activity mActivity, IDailyMeiziView<DailyMeiziBean> view) {
         super(mActivity, view);
@@ -62,6 +65,10 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
     @Override
     public void fetchImageUrls(String url) {
+        progress = 0;
+        mIView.setMax(progress);
+        mIView.setProgressValue(progress);
+        mModel.setUnSubscribe(false);
         mModel.fetchImageUrls(url, new Subscriber<List<GiftBean>>() {
             @Override
             public void onCompleted() {
@@ -75,6 +82,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onNext(List<GiftBean> dailyMeiziBeen) {
+                mIView.setMax(dailyMeiziBeen.size());
                 fetchImageList(dailyMeiziBeen);
             }
         });
@@ -85,13 +93,29 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
         return mDailyMeiziBeanList;
     }
 
+    @Override
+    public void unSubscribe() {
+        Subscription subscriptions = mModel.getSubscription();
+        if (subscriptions != null && !subscriptions.isUnsubscribed()) {
+            subscriptions.unsubscribe();
+        }
+    }
+
     private void fetchImageList(List<GiftBean> dailyMeiziBeen) {
         mDailyMeiziBeanList.clear();
-        mModel.fetchImageList(dailyMeiziBeen, new Subscriber<List<GiftBean>>() {
+        Action1<Integer> action1 = new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                mIView.setProgressValue(integer);
+            }
+        };
+        mModel.fetchImageList(dailyMeiziBeen, action1, new Subscriber<List<GiftBean>>() {
             @Override
             public void onCompleted() {
                 mIView.disDialog();
-                mIView.gotoBrowseActivity();
+                if (!mModel.getUnSubscribe()) {
+                    mIView.gotoBrowseActivity();
+                }
             }
 
             @Override
@@ -101,7 +125,9 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onNext(List<GiftBean> list) {
-                mDailyMeiziBeanList.addAll(list);
+                if (!ListUtils.isListEmpty(list)) {
+                    mDailyMeiziBeanList.addAll(list);
+                }
             }
         });
     }

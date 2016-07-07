@@ -2,9 +2,11 @@ package com.gank.gankly.ui.main.meizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.gank.gankly.App;
@@ -21,7 +23,7 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.view.IDailyMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
+import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
@@ -74,14 +76,12 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
 
     @Override
     protected void initPresenter() {
-        KLog.d("initPresenter");
         mPresenter = new DailyMeiziPresenterImpl(mActivity, this);
         mPresenter.fetchNew();
     }
 
     @Override
     protected void initValues() {
-        KLog.d("initValues");
     }
 
     @Override
@@ -93,7 +93,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
         mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
-                KLog.d("onRefresh");
                 mPresenter.fetchNew();
             }
 
@@ -103,6 +102,8 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
             }
         });
         mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
+        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mDailyMeiziAdapter.setOnItemClickListener(this);
     }
 
@@ -116,18 +117,44 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
 
     }
 
-    private void creatDialog() {
+    private void createDialog() {
         if (mDialog == null) {
             mDialog = new ProgressDialog(mActivity);
         }
-        mDialog.setMessage(App.getAppString(R.string.loading));
-        mDialog.show();
+        mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
+        mDialog.setIndeterminate(false);
+        mDialog.setCanceledOnTouchOutside(true);
+        mDialog.setProgress(0);
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                mPresenter.unSubscribe();
+            }
+        });
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
     }
 
     @Override
     public void disDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void setProgressValue(int value) {
+        if (mDialog != null) {
+            mDialog.setProgress(value);
+        }
+    }
+
+    @Override
+    public void setMax(int value) {
+        if (mDialog != null) {
+            mDialog.setMax(value);
         }
     }
 
@@ -150,7 +177,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
 
     @Override
     public void gotoBrowseActivity() {
-        KLog.d("gotoBrowseActivity");
         Bundle bundle = new Bundle();
         Intent intent = new Intent(mActivity, BrowseActivity.class);
         bundle.putString(ViewsModel.Gift, ViewsModel.Daily);
@@ -170,12 +196,11 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
     }
 
 
-
     @Override
     public void onClick(int position, Object object) {
         DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
         if (dailyMeiziBean.getUrl() != null) {
-            creatDialog();
+            createDialog();
             mPresenter.fetchImageUrls(dailyMeiziBean.getUrl());
         }
     }

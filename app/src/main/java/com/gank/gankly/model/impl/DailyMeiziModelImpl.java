@@ -20,6 +20,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -29,6 +30,7 @@ import rx.schedulers.Schedulers;
 public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziModel {
     private Subscription mSubscription;
     private boolean isUnSubscribe;
+    private int progress;
 
     public DailyMeiziModelImpl() {
 
@@ -85,13 +87,12 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
     }
 
     @Override
-    public void fetchImageList(List<GiftBean> list, Subscriber<List<GiftBean>> _subscriber) {
-        KLog.d("list:" + list.size());
+    public void fetchImageList(List<GiftBean> list, final Action1<Integer> action1, Subscriber<List<GiftBean>> _subscriber) {
+        progress = 0;
         mSubscription = Observable.from(list).flatMap(new Func1<GiftBean, Observable<List<GiftBean>>>() {
             @Override
             public Observable<List<GiftBean>> call(GiftBean giftBean) {
                 final String url = giftBean.getImgUrl();
-//                iGiftView.setProgress(progress++);
                 return Observable.create(new Observable.OnSubscribe<List<GiftBean>>() {
                     @Override
                     public void call(Subscriber<? super List<GiftBean>> subscriber) {
@@ -102,6 +103,7 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
                                         .timeout(timeout)
                                         .get();
                                 subscriber.onNext(getImageCountList(doc));
+                                action1.call(progress++);
                             }
                         } catch (IOException e) {
                             KLog.e(e);
@@ -114,6 +116,21 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(_subscriber);
+    }
+
+    @Override
+    public Subscription getSubscription() {
+        return mSubscription;
+    }
+
+    @Override
+    public void setUnSubscribe(boolean unSubscribe) {
+        isUnSubscribe = unSubscribe;
+    }
+
+    @Override
+    public boolean getUnSubscribe() {
+        return isUnSubscribe;
     }
 
     private int getImageUrlsMax(Document doc) {

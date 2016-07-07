@@ -11,4 +11,6 @@ public interface DailyMeiziPresenter extends RefreshPresenter {
     void fetchImageUrls(String url);
 
     List<GiftBean> getList();
+
+    void unSubscribe();
 }
