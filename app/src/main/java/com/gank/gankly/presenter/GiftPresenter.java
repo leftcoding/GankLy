@@ -73,7 +73,6 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     }
 
     public void fetchImagePageList(final String url) {
-        KLog.d("fetchImagePageList");
         initProgress();
         Subscriber<GiftResult> subscriber = new Subscriber<GiftResult>() {
             @Override
@@ -97,71 +96,6 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
         };
         mGiftModel.fetchImagesPageList(url, subscriber);
     }
-
-//    public void fetchImagePages(final String url) {
-//        mSubscription = Observable.create(new Observable.OnSubscribe<GiftResult>() {
-//            @Override
-//            public void call(Subscriber<? super GiftResult> subscriber) {
-//                try {
-//                    Document doc = Jsoup.connect(url)
-//                            .userAgent(DESKTOP_USERAGENT)
-//                            .timeout(timeout)
-//                            .get();
-//                    subscriber.onNext(new GiftResult(0, getImageCount(url, doc)));
-//                } catch (Exception e) {
-//                    KLog.e(e.toString() + e);
-//                }
-//                subscriber.onCompleted();
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<GiftResult>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        mIView.hideRefresh();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        mIView.hideRefresh();
-//                        KLog.e(e);
-//                    }
-//
-//                    @Override
-//                    public void onNext(GiftResult giftResult) {
-//                        if (giftResult != null && giftResult.getSize() > 0) {
-//                            mIView.setMax(giftResult.getSize());
-//                            fetchImages(giftResult.getList());
-//                        }
-//                    }
-//                });
-//    }
-
-//    private List<GiftBean> getImageCount(String url, Document doc) {
-//        List<GiftBean> list;
-//        if (doc == null) {
-//            return null;
-//        }
-//        list = new ArrayList<>();
-//        Elements pages = doc.select(".pagenavi a[href]");
-//        int size = pages.size();
-//        for (int i = size - 1; i > 0; i--) {
-//            String page = pages.get(i).text();
-//            if (StringUtils.isNumeric(page)) {
-//                mDetailsPageCount = Integer.parseInt(page);
-//                break;
-//            }
-//        }
-//
-//        if (mDetailsPageCount > 0) {
-//            for (int i = 1; i <= mDetailsPageCount; i++) {
-//                String _url = url + "/" + i;
-//                list.add(new GiftBean(_url));
-//            }
-//        }
-//
-//        return list;
-//    }
 
     private void fetchImagesList(List<GiftBean> list) {
         isUnSubscribe = false;
