@@ -50,7 +50,6 @@ public abstract class LazyFragment<P extends BasePresenter> extends BaseSwipeRef
     protected abstract void initDate();
 
     private void lazyLoadData() {
-//        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }

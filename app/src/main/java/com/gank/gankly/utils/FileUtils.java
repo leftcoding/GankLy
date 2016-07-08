@@ -1,7 +1,5 @@
 package com.gank.gankly.utils;
 
-import com.socks.library.KLog;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,7 +11,6 @@ import java.io.InputStream;
 public class FileUtils {
 
     public static void writeFile(InputStream in, File file) throws IOException {
-        KLog.d(file.getAbsolutePath());
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         } else {

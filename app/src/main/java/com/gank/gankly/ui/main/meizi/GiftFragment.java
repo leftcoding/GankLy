@@ -20,7 +20,6 @@ import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +45,6 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private GiftPresenter mPresenter;
 
     public GiftFragment() {
-        KLog.d("GiftFragment");
     }
 
     public static GiftFragment getInstance() {
@@ -228,7 +226,6 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @Override
     public void refillImagesCount(List<GiftBean> giftResult) {
         mImageCountList.addAll(giftResult);
-        KLog.d("giftResult:" + mImageCountList.size());
     }
 
     @Override

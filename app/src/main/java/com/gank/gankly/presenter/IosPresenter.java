@@ -70,7 +70,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
     }
 
     public void fetchNextGirl() {
-        KLog.d("fetchNextGirl," + isGirlLoadMore + ",mGirlCurPage:" + mGirlCurPage);
         if (isGirlLoadMore) {
             fetchGirlDate(mGirlCurPage);
         }
@@ -102,7 +101,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
             @Override
             public void onNext(GankResult gankResult) {
-                KLog.d("gankResult:" + gankResult.getSize());
                 toNext(page, gankResult);
                 MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), page);
             }
@@ -110,7 +108,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
     }
 
     private void toError(int page, boolean isNetWork, Throwable e) {
-        KLog.d("isNetWork:" + isNetWork + ",page:" + page);
         int size = MeiziArrayList.getInstance().size();
         if (page > 1 || size > 0) {
             int resId = R.string.loading_network_failure;
@@ -119,7 +116,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
             }
             mIView.onError(e, App.getAppString(resId));
         } else {
-            KLog.d("MeiziArrayList.getInstance().size():" + MeiziArrayList.getInstance().size());
             if (isNetWork) {
                 mIView.showError();
             } else {

@@ -20,9 +20,6 @@ public class DownloadProgressInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response originalResponse = chain.proceed(chain.request());
-//        KLog.d(originalResponse.headers().toString());
-//        KLog.d(originalResponse.body().string());
-//        KLog.d(originalResponse.message());
         return originalResponse.newBuilder()
                 .body(new DownloadProgressResponseBody(originalResponse.body(), listener))
                 .build();

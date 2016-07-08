@@ -204,10 +204,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onRefresh() {
         onDownRefresh();
-        KLog.d("isMobileNetwork:" + NetworkUtils.isMobileNetwork(mActivity)
-                + ", isNetworkAvailable:" + NetworkUtils.isNetworkAvailable(mActivity)
-                + ", isWiFi:" + NetworkUtils.isWiFi(mActivity)
-                + ", isWiFiEnabled:" + NetworkUtils.isWiFiEnabled(mActivity));
     }
 
     @Override

@@ -80,7 +80,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         @Override
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
             int viewWidth = mScreenWidth;
-//            KLog.d(" resource.getHeight():" + resource.getHeight() + ",resource.getWidth():" + resource.getWidth());
             int viewHeight;
             if (heights.containsKey(url) && url != null) {
                 viewHeight = heights.get(url);
@@ -89,7 +88,6 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
                 heights.put(url, viewHeight);
             }
 
-//            KLog.d("viewHeight:" + viewHeight);
             setCardViewLayoutParams(viewWidth, viewHeight);
             super.onResourceReady(resource, glideAnimation);
         }

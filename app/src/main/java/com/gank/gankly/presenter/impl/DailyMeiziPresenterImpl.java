@@ -72,7 +72,6 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
         mModel.fetchImageUrls(url, new Subscriber<List<GiftBean>>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
             }
 
             @Override

@@ -154,7 +154,6 @@ public class MainFragment extends BaseSwipeRefreshFragment<LauncherPresenter> im
 
     @Override
     public void noNewVersion() {
-//        ToastUtils.showToast(R.string.tip_no_new_version);
     }
 
     @Override
