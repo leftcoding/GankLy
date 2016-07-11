@@ -61,7 +61,6 @@ public class MainActivity extends BaseActivity {
                         fragmentTo = AboutFragment.getInstance();
                         break;
                     case R.id.navigation_gift:
-//                        fragmentTo = GiftFragment.getInstance();
                         fragmentTo = GirlsFragment.getInstance();
                         break;
                     case R.id.navigation_settings:
