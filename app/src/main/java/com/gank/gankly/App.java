@@ -11,6 +11,7 @@ import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.socks.library.KLog;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -23,7 +24,6 @@ public class App extends Application {
 
     public static Context mContext;
     private static SQLiteDatabase db;
-    private static DaoSession daoSession;
 
     @Override
     public void onCreate() {
@@ -32,13 +32,22 @@ public class App extends Application {
 
         initPreferences();
 
+        //数据库Chrome上调试
         Stetho.initializeWithDefaults(this);
 
+        //GreenDao
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
         db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
+
+        //Bugly 测试：true
+
+        CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
+
     }
+
+    private static DaoSession daoSession;
 
     private void initPreferences() {
         int version = GanklyPreferences.getInt(Preferences.APP_VERSION, 1);

@@ -8,9 +8,9 @@ import com.gank.gankly.model.DailyMeiziModel;
 import com.gank.gankly.model.impl.DailyMeiziModelImpl;
 import com.gank.gankly.presenter.BaseFetchDataPresenter;
 import com.gank.gankly.presenter.DailyMeiziPresenter;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.view.IDailyMeiziView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onError(Throwable e) {
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override
@@ -76,7 +76,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onError(Throwable e) {
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override
@@ -119,7 +119,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
             @Override
             public void onError(Throwable e) {
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override

@@ -8,8 +8,8 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.api.GankApi;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IIosView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
             @Override
             public void onError(Throwable e) {
-                KLog.e("onError，" + e);
+                CrashUtils.crashReport(e);
                 mIView.hideRefresh();
                 boolean isNetWork = isNetworkAvailable();
                 toError(page, isNetWork, e);

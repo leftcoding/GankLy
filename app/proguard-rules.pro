@@ -199,6 +199,10 @@
 -keep class com.linkedin.** { *; }
 -keepattributes Signature
 
+#################### Bugly ####################
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+
 #################### ShareSdK ####################
 -keep class android.net.http.SslError
 -keep class android.webkit.**{*;}

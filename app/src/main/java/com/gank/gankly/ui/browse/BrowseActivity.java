@@ -26,12 +26,12 @@ import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.main.meizi.DailyMeiziFragment;
 import com.gank.gankly.ui.main.meizi.GiftFragment;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.DepthPageTransformer;
-import com.socks.library.KLog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -259,7 +259,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
                     @Override
                     public void onError(Throwable e) {
-                        KLog.e("e" + e);
+                        CrashUtils.crashReport(e);
                         ToastUtils.showToast(e.getMessage() + "\n再试试...");
                     }
 

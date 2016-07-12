@@ -6,7 +6,7 @@ import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.model.BaseMeziModel;
 import com.gank.gankly.model.DailyMeiziModel;
-import com.socks.library.KLog;
+import com.gank.gankly.utils.CrashUtils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -49,7 +49,7 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
                             .get();
                     subscriber.onNext(getMonthList(doc));
                 } catch (IOException e) {
-                    KLog.e(e);
+                    CrashUtils.crashReport(e);
                 }
                 subscriber.onCompleted();
             }
@@ -75,7 +75,7 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
                     List<GiftBean> list = getImageUrls(url, max);
                     subscriber.onNext(list);
                 } catch (IOException e) {
-                    KLog.e(e);
+                    CrashUtils.crashReport(e);
                 }
                 subscriber.onCompleted();
             }
@@ -106,7 +106,7 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
                                 action1.call(progress++);
                             }
                         } catch (IOException e) {
-                            KLog.e(e);
+                            CrashUtils.crashReport(e);
                         }
                         subscriber.onCompleted();
                     }

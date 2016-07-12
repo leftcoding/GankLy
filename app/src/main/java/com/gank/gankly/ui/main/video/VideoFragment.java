@@ -16,13 +16,13 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.listener.MeiziOnClick;
+import com.gank.gankly.presenter.VideoPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.presenter.VideoPresenter;
-import com.gank.gankly.view.IVideoView;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
+import com.gank.gankly.utils.CrashUtils;
+import com.gank.gankly.view.IVideoView;
 import com.gank.gankly.widget.LoadingLayoutView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -183,7 +183,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     @Override
     public void onError(Throwable e,String errorString) {
         super.onError(e,errorString);
-        KLog.e(e);
+        CrashUtils.crashReport(e);
     }
 
     @Override

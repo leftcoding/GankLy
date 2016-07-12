@@ -10,8 +10,8 @@ import com.gank.gankly.model.IosModel;
 import com.gank.gankly.model.impl.IosModelImpl;
 import com.gank.gankly.presenter.BaseFetchDataPresenter;
 import com.gank.gankly.presenter.RefreshPresenter;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IIosView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class IosGoodsPresenterImpl extends BaseFetchDataPresenter<IIosView<Resul
 
     @Override
     public void onError(Throwable e) {
-        KLog.e(e);
+        CrashUtils.crashReport(e);
         mIView.hideRefresh();
         int size = MeiziArrayList.getInstance().size();
         boolean isNetWork = isNetworkAvailable();

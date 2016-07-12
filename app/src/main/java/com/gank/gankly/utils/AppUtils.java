@@ -52,7 +52,7 @@ public class AppUtils {
 //            String appVersionName = info.versionName;
             currentVersionCode = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
-            KLog.e(e);
+            CrashUtils.crashReport(e);
         }
         return currentVersionCode;
     }
@@ -64,7 +64,7 @@ public class AppUtils {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             appVersionName = info.versionName;
         } catch (PackageManager.NameNotFoundException e) {
-            KLog.e(e);
+            CrashUtils.crashReport(e);
         }
         return appVersionName;
     }

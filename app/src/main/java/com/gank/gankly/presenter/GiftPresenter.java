@@ -6,8 +6,8 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.GiftResult;
 import com.gank.gankly.model.GiftModel;
 import com.gank.gankly.model.impl.GiftModeImpl;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IGiftView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             @Override
             public void onError(Throwable e) {
                 mIView.hideRefresh();
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override
@@ -83,7 +83,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             @Override
             public void onError(Throwable e) {
                 mIView.hideRefresh();
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override
@@ -116,7 +116,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             @Override
             public void onError(Throwable e) {
                 mIView.hideRefresh();
-                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
 
             @Override
