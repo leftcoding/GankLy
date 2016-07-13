@@ -23,12 +23,14 @@ import rx.schedulers.Schedulers;
  */
 public class VideoPresenter extends BasePresenter<IVideoView<List<ResultsBean>>> {
     private ViewStatus mViewStatus;
+    private int mPage = 1;
 
     public VideoPresenter(Activity mActivity, IVideoView<List<ResultsBean>> view) {
         super(mActivity, view);
     }
 
     public void fetchDate(final int mPage, final int limit) {
+        this.mPage = mPage;
         Observable<GankResult> video = GankApi.getInstance()
                 .getGankService().fetchVideo(limit, mPage);
         Observable<GankResult> image = GankApi.getInstance()
@@ -53,7 +55,7 @@ public class VideoPresenter extends BasePresenter<IVideoView<List<ResultsBean>>>
         }
     }
 
-    private Subscriber<GankResult> onSubscriber(final int mPage, final int limit) {
+    private Subscriber<GankResult> onSubscriber(final int page, final int limit) {
         return new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
@@ -61,6 +63,8 @@ public class VideoPresenter extends BasePresenter<IVideoView<List<ResultsBean>>>
                 if (mViewStatus != ViewStatus.SHOW) {
                     mIView.showContent();
                 }
+                mPage = page + 1;
+                mIView.getNextPage(mPage);
             }
 
             @Override
@@ -73,7 +77,7 @@ public class VideoPresenter extends BasePresenter<IVideoView<List<ResultsBean>>>
             @Override
             public void onNext(GankResult gankResult) {
                 if (!gankResult.isEmpty()) {
-                    if (mPage == 1) {
+                    if (page == 1) {
                         mIView.refillDate(gankResult.getResults());
                     } else {
                         mIView.appendMoreDate(gankResult.getResults());

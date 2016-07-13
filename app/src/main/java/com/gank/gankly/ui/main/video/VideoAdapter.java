@@ -47,7 +47,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         holder.txtDesc.setText(bean.getDesc());
         holder.txtAuthor.setText(bean.getWho());
         int size = MeiziArrayList.getInstance().getArrayList().size();
-        if (position > size) {
+        if (position > size && size > 0) {
             position = position % size;
         }
         if (position < size) {

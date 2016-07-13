@@ -8,5 +8,5 @@ public interface IVideoView<T> extends ISwipeRefreshView {
 
     void appendMoreDate(T list);
 
-    void showRefreshError(String error);
+    void getNextPage(int page);
 }

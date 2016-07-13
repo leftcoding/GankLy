@@ -31,7 +31,7 @@ import butterknife.Bind;
  * Create by LingYan on 2016-04-25
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, IVideoView<ResultsBean> {
+        SwipeRefreshLayout.OnRefreshListener, IVideoView<List<ResultsBean>> {
     private int mLimit = 20;
     private int mPage;
     private static VideoFragment sVideoFragment;
@@ -100,7 +100,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition + 1 == mVideoRecyclerAdapter.getItemCount())
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition == mVideoRecyclerAdapter.getItemCount() - 1)
                         && !mSwipeRefresh.isRefreshing()) {
                     mSwipeRefresh.setRefreshing(true);
                     mPresenter.setViewStatus(mCurStatus);
@@ -111,7 +111,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
+                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
             }
         });
         mSwipeRefresh.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
@@ -154,13 +154,18 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     }
 
     @Override
-    public void refillDate(List list) {
+    public void refillDate(List<ResultsBean> list) {
         mVideoRecyclerAdapter.updateItems(list);
     }
 
     @Override
     public void appendMoreDate(List<ResultsBean> list) {
         mVideoRecyclerAdapter.addItems(list);
+    }
+
+    @Override
+    public void getNextPage(int page) {
+        mPage = page;
     }
 
     @Override
