@@ -3,13 +3,10 @@ package com.gank.gankly.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.gank.gankly.presenter.BasePresenter;
-import com.gank.gankly.view.ISwipeRefreshView;
-
 /**
  * Create by LingYan on 2016-5-12
  */
-public abstract class LazyFragment<P extends BasePresenter> extends BaseSwipeRefreshFragment<P> implements ISwipeRefreshView {
+public abstract class LazyFragment extends BaseSwipeRefreshFragment {
     private boolean isVisible = false; //是否可见
     private boolean isView = false; //是否建立视图关系
     private boolean isFirstLoad = true; //是否第一次加载

@@ -16,14 +16,15 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter extends BasePresenter<ICollectView<UrlCollect>> {
+public class CollectPresenter extends BasePresenter<ICollectView> {
     private UrlCollectDao mUrlCollectDao;
     private static final int LIMIT = 10;
     private int mPage = 0;
 
-    public CollectPresenter(Activity mActivity, ICollectView<UrlCollect> view) {
+    public CollectPresenter(Activity mActivity, ICollectView view) {
         super(mActivity, view);
     }
+
 
     public void fetchDate(int offset) {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();

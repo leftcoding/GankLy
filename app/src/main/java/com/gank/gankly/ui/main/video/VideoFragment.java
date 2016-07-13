@@ -20,7 +20,6 @@ import com.gank.gankly.presenter.VideoPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
-import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IVideoView;
 import com.gank.gankly.widget.LoadingLayoutView;
 
@@ -31,7 +30,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-04-25
  */
-public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener, IVideoView<ResultsBean> {
+public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
+        SwipeRefreshLayout.OnRefreshListener, IVideoView<ResultsBean> {
     private int mLimit = 20;
     private int mPage;
     private static VideoFragment sVideoFragment;
@@ -164,6 +164,11 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     }
 
     @Override
+    public void showRefreshError(String error) {
+        Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
     public void hasNoMoreDate() {
         Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
     }
@@ -178,18 +183,6 @@ public class VideoFragment extends BaseSwipeRefreshFragment<VideoPresenter> impl
     public void showRefresh() {
         super.showRefresh();
         mSwipeRefresh.setRefreshing(true);
-    }
-
-    @Override
-    public void onError(Throwable e,String errorString) {
-        super.onError(e,errorString);
-        CrashUtils.crashReport(e);
-    }
-
-    @Override
-    public void onCompleted() {
-        super.onCompleted();
-        mPage = mPage + 1;
     }
 
     @Override

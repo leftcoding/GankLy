@@ -18,12 +18,12 @@ import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
+import com.gank.gankly.presenter.CollectPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.presenter.CollectPresenter;
-import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
+import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
@@ -39,8 +39,8 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 /**
  * Create by LingYan on 2016-4-25
  */
-public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> implements DeleteDialog.DialogListener,
-        OnRefreshListener, ItemLongClick, ICollectView<UrlCollect> {
+public class CollectFragment extends BaseSwipeRefreshFragment implements
+        DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, ICollectView<List<UrlCollect>> {
 
     @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
@@ -52,6 +52,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment<CollectPresenter> 
     MultipleStatusView mMultipleStatusView;
     private MainActivity mActivity;
     private CollectAdapter mCollectAdapter;
+    private CollectPresenter mPresenter;
 
     private int mLostPosition;
     private int mPage = 0;

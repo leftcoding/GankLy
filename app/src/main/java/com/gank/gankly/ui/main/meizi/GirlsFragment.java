@@ -29,7 +29,7 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-07-01
  */
-public class GirlsFragment extends BaseSwipeRefreshFragment<LauncherPresenter> implements
+public class GirlsFragment extends BaseSwipeRefreshFragment implements
         ViewPager.OnPageChangeListener, DownloadProgressListener, ILauncher {
     private static final String TAG = "MainFragment";
 
@@ -43,6 +43,7 @@ public class GirlsFragment extends BaseSwipeRefreshFragment<LauncherPresenter> i
     private GirlsAdapter mPagerAdapter;
     private MainActivity mActivity;
     private List<String> mTitles;
+    private LauncherPresenter mPresenter;
     private static GirlsFragment sMainFragment;
 
     public static GirlsFragment getInstance() {

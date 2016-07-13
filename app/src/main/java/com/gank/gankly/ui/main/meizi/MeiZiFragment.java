@@ -13,12 +13,13 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.presenter.IosPresenter;
+import com.gank.gankly.presenter.IBaseRefreshPresenter;
+import com.gank.gankly.presenter.impl.MeiziPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.view.IIosView;
+import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
@@ -28,8 +29,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-5-12
  */
-public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, IIosView<ResultsBean> {
+public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
+        SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
     @Bind(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @Bind(R.id.swipe_refresh)
@@ -39,7 +40,8 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
     private MainActivity mActivity;
 
     private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
-    private IosPresenter mPresenter;
+    private IBaseRefreshPresenter mPresenter;
+    private int mPage = 1;
 
     public MeiZiFragment() {
     }
@@ -98,22 +100,6 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
                 onNextRefresh();
             }
         });
-//        mRecyclerView.addOnScrollListener(
-//                new RecyclerView.OnScrollListener() {
-//                    @Override
-//                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                        super.onScrollStateChanged(recyclerView, newState);
-//                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-//                            MeiZiFragment.this.onScrollStateChanged();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                        super.onScrolled(recyclerView, dx, dy);
-//                    }
-//                }
-//        );
     }
 
     @Override
@@ -129,15 +115,16 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
 
     @Override
     protected void initPresenter() {
-        mPresenter = new IosPresenter(mActivity, this);
+        mPresenter = new MeiziPresenterImpl(mActivity, this);
     }
 
     private void onDownRefresh() {
-        mPresenter.fetchGirl();
+        mPage = 1;
+        mPresenter.fetchNew(mPage);
     }
 
     private void onNextRefresh() {
-        mPresenter.fetchNextGirl();
+        mPresenter.fetchMore(mPage);
     }
 
     public static MeiZiFragment newInstance() {
@@ -147,20 +134,9 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
         return fragment;
     }
 
-    private void onScrollStateChanged() {
-        int[] positions = new int[mStaggeredGridLayoutManager.getSpanCount()];
-        mStaggeredGridLayoutManager.findLastVisibleItemPositions(positions);
-        for (int position : positions) {
-            if (position == mStaggeredGridLayoutManager.getItemCount() - 1
-                    && !mSwipeRefreshLayout.isRefreshing()) {
-                onNextRefresh();
-                break;
-            }
-        }
-    }
-
     @Override
     public void onRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
         onDownRefresh();
     }
 
@@ -184,6 +160,11 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
     }
 
     @Override
+    public void getNextPage(int page) {
+        mPage = page;
+    }
+
+    @Override
     public void hasNoMoreDate() {
         super.hasNoMoreDate();
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
@@ -192,13 +173,7 @@ public class MeiZiFragment extends LazyFragment<IosPresenter> implements MeiziOn
     }
 
     @Override
-    public void onCompleted() {
-        super.onCompleted();
-    }
-
-    @Override
-    public void onError(Throwable e, String errorString) {
-        super.onError(e, errorString);
+    public void showRefreshError(String errorStr) {
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {

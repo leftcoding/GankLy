@@ -26,7 +26,7 @@ import butterknife.OnClick;
 /**
  * Create by LingYan on 2016-05-10
  */
-public class SettingFragment extends BaseSwipeRefreshFragment<LauncherPresenter> implements ILauncher {
+public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
     @Bind(R.id.setting_toolbar)
     Toolbar mToolbar;
     @Bind(R.id.setting_switch_check)
@@ -35,6 +35,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment<LauncherPresenter>
     ItemTextView itemUpdate;
 
     public static SettingFragment sAboutFragment;
+    private LauncherPresenter mPresenter;
     public MainActivity mActivity;
     private ProgressDialog mDialog;
 

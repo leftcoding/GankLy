@@ -35,7 +35,8 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener, RecyclerOnClick {
+public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
+        RecyclerOnClick {
     private static final int mLimit = 20;
 
     @Bind(R.id.meizi_recycler_view)

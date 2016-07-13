@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -32,8 +33,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-07-01
  */
-public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> implements
-        IDailyMeiziView<DailyMeiziBean>, ItemClick {
+public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<List<DailyMeiziBean>>,
+        ItemClick {
     private DailyMeiziPresenter mPresenter;
     private MainActivity mActivity;
 
@@ -64,7 +65,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
-
     }
 
     @Override
@@ -77,7 +77,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
     @Override
     protected void initPresenter() {
         mPresenter = new DailyMeiziPresenterImpl(mActivity, this);
-        mPresenter.fetchNew();
     }
 
     @Override
@@ -114,7 +113,8 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
 
     @Override
     protected void initDate() {
-
+        mMultipleStatusView.showLoading();
+        mPresenter.fetchNew();
     }
 
     private void createDialog() {
@@ -163,13 +163,6 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
         return R.layout.fragment_gift;
     }
 
-    public static DailyMeiziFragment newInstance() {
-        Bundle args = new Bundle();
-        DailyMeiziFragment fragment = new DailyMeiziFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void refillDate(List<DailyMeiziBean> list) {
         mDailyMeiziAdapter.updateItem(list);
@@ -185,23 +178,24 @@ public class DailyMeiziFragment extends LazyFragment<DailyMeiziPresenterImpl> im
     }
 
     @Override
-    public void onCompleted() {
-        super.onCompleted();
-    }
-
-    @Override
     public void hideRefresh() {
         super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    @Override
+    public void showContent() {
+        super.showContent();
+        mMultipleStatusView.showContent();
+    }
 
     @Override
     public void onClick(int position, Object object) {
         DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
-        if (dailyMeiziBean.getUrl() != null) {
+        String url = dailyMeiziBean.getUrl();
+        if (!TextUtils.isEmpty(url)) {
             createDialog();
-            mPresenter.fetchImageUrls(dailyMeiziBean.getUrl());
+            mPresenter.fetchImageUrls(url);
         }
     }
 

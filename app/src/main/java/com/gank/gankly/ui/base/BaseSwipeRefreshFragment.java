@@ -5,15 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.view.ISwipeRefreshView;
 
 
 /**
  * Create by LingYan on 2016-04-05
  */
-public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends BaseFragment<P>
-        implements ISwipeRefreshView {
+public abstract class BaseSwipeRefreshFragment extends BaseFragment implements ISwipeRefreshView {
 
     @Override
     public void onAttach(Context context) {
@@ -33,16 +31,6 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
     }
 
     protected abstract void initPresenter();
-
-    @Override
-    public void onError(Throwable e, String errorString) {
-
-    }
-
-    @Override
-    public void onCompleted() {
-
-    }
 
     @Override
     public void hideRefresh() {
@@ -81,6 +69,11 @@ public abstract class BaseSwipeRefreshFragment<P extends BasePresenter> extends 
 
     @Override
     public void clear() {
+
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
 
     }
 }

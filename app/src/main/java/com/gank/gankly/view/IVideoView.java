@@ -11,4 +11,6 @@ public interface IVideoView<T extends ResultsBean> extends ISwipeRefreshView {
     void refillDate(List<T> list);
 
     void appendMoreDate(List<T> list);
+
+    void showRefreshError(String error);
 }

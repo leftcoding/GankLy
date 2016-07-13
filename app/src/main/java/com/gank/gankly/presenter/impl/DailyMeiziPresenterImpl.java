@@ -6,7 +6,7 @@ import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.model.DailyMeiziModel;
 import com.gank.gankly.model.impl.DailyMeiziModelImpl;
-import com.gank.gankly.presenter.BaseFetchDataPresenter;
+import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.presenter.DailyMeiziPresenter;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
@@ -22,13 +22,12 @@ import rx.functions.Action1;
 /**
  * Create by LingYan on 2016-07-05
  */
-public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziView<DailyMeiziBean>, DailyMeiziBean>
+public class DailyMeiziPresenterImpl extends BasePresenter<IDailyMeiziView<List<DailyMeiziBean>>>
         implements DailyMeiziPresenter {
     private DailyMeiziModel mModel;
     private List<GiftBean> mDailyMeiziBeanList = new ArrayList<>();
-    private int progress;
 
-    public DailyMeiziPresenterImpl(Activity mActivity, IDailyMeiziView<DailyMeiziBean> view) {
+    public DailyMeiziPresenterImpl(Activity mActivity, IDailyMeiziView<List<DailyMeiziBean>> view) {
         super(mActivity, view);
         mModel = new DailyMeiziModelImpl();
     }
@@ -40,6 +39,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
+                mIView.showContent();
             }
 
             @Override
@@ -65,7 +65,7 @@ public class DailyMeiziPresenterImpl extends BaseFetchDataPresenter<IDailyMeiziV
 
     @Override
     public void fetchImageUrls(String url) {
-        progress = 0;
+        int progress = 0;
         mIView.setMax(progress);
         mIView.setProgressValue(progress);
         mModel.setUnSubscribe(false);

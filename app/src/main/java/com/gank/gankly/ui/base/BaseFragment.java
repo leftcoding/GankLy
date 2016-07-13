@@ -8,17 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gank.gankly.presenter.BasePresenter;
-
 import butterknife.ButterKnife;
 
 
 /**
  * Create by LingYan on 2016-04-05
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment {
-    protected P mPresenter;
-
+public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

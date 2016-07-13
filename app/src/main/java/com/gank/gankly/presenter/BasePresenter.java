@@ -3,13 +3,12 @@ package com.gank.gankly.presenter;
 import android.app.Activity;
 import android.content.Context;
 
-import com.gank.gankly.view.IBaseView;
 import com.gank.gankly.utils.NetworkUtils;
 
 /**
  * Create by LingYan on 2016-05-12
  */
-public class BasePresenter<E extends IBaseView> {
+public abstract class BasePresenter<E> {
     protected E mIView;
     protected Context mActivity;
 

@@ -178,15 +178,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
-    public void onCompleted() {
-        super.onCompleted();
-        mCurPage = mCurPage + 1;
-        showContent();
-    }
-
-    @Override
     public void clear() {
-        super.clear();
         mAdapter.clear();
     }
 

@@ -6,6 +6,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.network.api.GankApi;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IVideoView;
 
 import rx.Observable;
@@ -57,13 +58,13 @@ public class VideoPresenter extends BasePresenter<IVideoView> {
                 if (mViewStatus != ViewStatus.SHOW) {
                     mIView.showContent();
                 }
-                mIView.onCompleted();
             }
 
             @Override
             public void onError(Throwable e) {
+                CrashUtils.crashReport(e);
                 mIView.hideRefresh();
-                mIView.onError(e, "");
+                mIView.showRefreshError("");
             }
 
             @Override

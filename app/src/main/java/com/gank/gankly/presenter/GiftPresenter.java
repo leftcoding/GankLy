@@ -36,7 +36,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
                 int _page = page + 1;
                 mIView.setNextPage(_page);
                 mIView.hideRefresh();
-                mIView.onCompleted();
+                mIView.showContent();
             }
 
             @Override

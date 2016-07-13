@@ -14,8 +14,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.presenter.IosPresenter;
-import com.gank.gankly.presenter.RefreshPresenter;
+import com.gank.gankly.presenter.IosGoodsPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
@@ -29,8 +28,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefreshLayout.OnRefreshListener,
-        RecyclerOnClick, IIosView<ResultsBean> {
+public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
+        RecyclerOnClick, IIosView<List<ResultsBean>> {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -40,9 +39,10 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     private MainActivity mActivity;
     private GankAdapter mRecyclerAdapter;
+    private IosGoodsPresenter mPresenter;
 
     private int mLastPosition;
-    private RefreshPresenter mPresenter;
+    private int mPage = 1;
 
     public IosFragment() {
 
@@ -76,7 +76,9 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
         mRecyclerAdapter = new GankAdapter(mActivity);
         mRecyclerAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
-        initRecycler();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 
     @Override
@@ -84,7 +86,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
             public void retry(View v) {
-                initFetch();
+                initFetchDate();
             }
         });
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -94,7 +96,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && mLastPosition + 1 == mRecyclerAdapter.getItemCount()
                         && !mSwipeRefreshLayout.isRefreshing()) {
-                    mPresenter.fetchMore();
+                    mPresenter.fetchMore(mPage);
                 }
             }
 
@@ -114,13 +116,12 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     protected void initDate() {
-        initFetch();
+        initFetchDate();
     }
 
-    private void initRecycler() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+    private void initFetchDate() {
+        mPage = 1;
+        mPresenter.fetchNew(mPage);
     }
 
     public static IosFragment newInstance() {
@@ -130,14 +131,10 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
         return fragment;
     }
 
-    private void initFetch() {
-        mPresenter.fetchNew();
-    }
-
     @Override
     public void onRefresh() {
         showRefresh();
-        mPresenter.fetchNew();
+        initFetchDate();
     }
 
     @Override
@@ -152,6 +149,7 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
 
     @Override
     public void refillDate(List<ResultsBean> list) {
+        mRecyclerAdapter.clear();
         mRecyclerAdapter.updateItems(list);
     }
 
@@ -161,28 +159,26 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     }
 
     @Override
-    public void hasNoMoreDate() {
-        super.hasNoMoreDate();
-        Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+    public void getNextPage(int page) {
+        mPage = page;
     }
 
     @Override
-    public void onCompleted() {
-        super.onCompleted();
-        mMultipleStatusView.showContent();
-    }
-
-    @Override
-    public void onError(Throwable e, String errorString) {
-        super.onError(e, errorString);
-        Snackbar.make(mSwipeRefreshLayout, errorString, Snackbar.LENGTH_LONG)
+    public void showRefreshError(String errorStr) {
+        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.fetchMore();
+                        mPresenter.fetchMore(mPage);
                     }
                 }).show();
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+        super.hasNoMoreDate();
+        Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -219,12 +215,6 @@ public class IosFragment extends LazyFragment<IosPresenter> implements SwipeRefr
     public void showRefresh() {
         super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void clear() {
-        super.clear();
-        mRecyclerAdapter.clear();
     }
 
     @Override

@@ -41,14 +41,14 @@ public class IosPresenter extends BasePresenter<IIosView> {
                     @Override
                     public void onCompleted() {
                         mIView.hideRefresh();
-                        mIView.onCompleted();
+                        mIView.showContent();
                         mIosCurPage = mIosCurPage + 1;
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         mIView.hideRefresh();
-                        mIView.onError(e, "");
+                        mIView.showRefreshError("");
                     }
 
                     @Override
@@ -87,7 +87,6 @@ public class IosPresenter extends BasePresenter<IIosView> {
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
-                mIView.onCompleted();
                 mGirlCurPage = mGirlCurPage + 1;
             }
 
@@ -114,7 +113,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
             if (isNetWork) {
                 resId = R.string.tip_server_error;
             }
-            mIView.onError(e, App.getAppString(resId));
+            mIView.showRefreshError(App.getAppString(resId));
         } else {
             if (isNetWork) {
                 mIView.showError();
