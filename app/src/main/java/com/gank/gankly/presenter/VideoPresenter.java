@@ -3,11 +3,14 @@ package com.gank.gankly.presenter;
 import android.app.Activity;
 
 import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IVideoView;
+
+import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -18,10 +21,10 @@ import rx.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-05-23
  */
-public class VideoPresenter extends BasePresenter<IVideoView> {
+public class VideoPresenter extends BasePresenter<IVideoView<List<ResultsBean>>> {
     private ViewStatus mViewStatus;
 
-    public VideoPresenter(Activity mActivity, IVideoView view) {
+    public VideoPresenter(Activity mActivity, IVideoView<List<ResultsBean>> view) {
         super(mActivity, view);
     }
 

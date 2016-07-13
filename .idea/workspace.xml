@@ -18,43 +18,9 @@
     <option name="LOGCAT_FORMAT_STRING" value="%1$s %3$s %4$c/%5$s: %6$s" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="1.Update Fragment&#10;2.Delete BaseFetchDatePresenter&#10;3.&#10;4.Add CrashUtils">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/BaseModel.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/MeiziModelImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/IBaseRefreshPresenter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/IosGoodsPresenter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/ViewShow.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/MeiziPresenterImpl.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IMeiziView.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/BaseFetchDataPresenter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/OnFetchListener.java" afterPath="" />
+    <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/IosModel.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/IosModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/IosModelImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/IosModelImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/BasePresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/BasePresenter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/CollectPresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/CollectPresenter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/GiftPresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/GiftPresenter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/IosPresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/IosPresenter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/DailyMeiziPresenterImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/DailyMeiziPresenterImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/IosGoodsPresenterImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/IosGoodsPresenterImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/LazyFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/LazyFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/DailyMeiziFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/DailyMeiziFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GiftFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GiftFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GirlsFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GirlsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/ICollectView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/ICollectView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IDailyMeiziView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IDailyMeiziView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IIosView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IIosView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/ISwipeRefreshView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/ISwipeRefreshView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java" />
     </list>
     <ignored path="GankLy.iws" />
@@ -168,9 +134,22 @@
       <file leaf-file-name="VideoPresenter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="2.32">
-              <caret line="76" column="21" selection-start-line="76" selection-start-column="21" selection-end-line="76" selection-end-column="21" />
+            <state vertical-scroll-proportion="-1.72">
+              <caret line="26" column="83" selection-start-line="26" selection-start-column="83" selection-end-line="26" selection-end-column="83" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GankResult.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/bean/GankResult.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="28" />
+              <folding>
+                <element signature="e#320#321#0" expanded="true" />
+                <element signature="e#350#351#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -210,6 +189,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="IVideoView.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="ViewShow.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/ViewShow.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -229,16 +218,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IBaseView.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IBaseView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -2333,8 +2312,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GiftFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/GiftPresenter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/IosPresenter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/MeiziModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/BaseModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/ErrorStringUtils.java" />
@@ -2367,6 +2344,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/MeiziPresenterImpl.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/StringUtils.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java" />
       </list>
     </option>
   </component>
@@ -3304,7 +3283,13 @@
       <option name="project" value="LOCAL" />
       <updated>1468293456351</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="1.Update Fragment&lt;T&gt;&#10;2.Delete BaseFetchDatePresenter&#10;3.Delete OnFetchListener&#10;4.Add IMeiziView&#10;5.Add ViewShow&#10;">
+      <created>1468398987544</created>
+      <option name="number" value="00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1468398987544</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3365,7 +3350,8 @@
     <MESSAGE value="1.Update DailyMeiziFragment" />
     <MESSAGE value="1.Add Bugly&#10;2.Update DailyMeiziFragment" />
     <MESSAGE value="1.Add Bugly&#10;2.Add CrashUtils" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Add Bugly&#10;2.Add CrashUtils" />
+    <MESSAGE value="1.Update Fragment&lt;T&gt;&#10;2.Delete BaseFetchDatePresenter&#10;3.Delete OnFetchListener&#10;4.Add IMeiziView&#10;5.Add ViewShow&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Update Fragment&lt;T&gt;&#10;2.Delete BaseFetchDatePresenter&#10;3.Delete OnFetchListener&#10;4.Add IMeiziView&#10;5.Add ViewShow&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -3427,14 +3413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="35" selection-start-line="9" selection-start-column="35" selection-end-line="9" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="59" selection-start-line="9" selection-start-column="59" selection-end-line="9" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -3695,17 +3673,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/bean/GankResult.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48">
-          <caret line="15" column="27" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="27" />
-          <folding>
-            <element signature="e#320#321#0" expanded="true" />
-            <element signature="e#350#351#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IDailyMeiziView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3762,14 +3729,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IMeiziView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
           <folding />
         </state>
       </provider>
@@ -3843,10 +3802,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IMeiziView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="47" selection-start-line="6" selection-start-column="47" selection-end-line="6" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/view/IVideoView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/bean/GankResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="11" selection-end-line="15" selection-end-column="28" />
+          <folding>
+            <element signature="e#320#321#0" expanded="true" />
+            <element signature="e#350#351#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/VideoPresenter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.32">
-          <caret line="76" column="21" selection-start-line="76" selection-start-column="21" selection-end-line="76" selection-end-column="21" />
+        <state vertical-scroll-proportion="-1.72">
+          <caret line="26" column="83" selection-start-line="26" selection-start-column="83" selection-end-line="26" selection-end-column="83" />
           <folding />
         </state>
       </provider>
