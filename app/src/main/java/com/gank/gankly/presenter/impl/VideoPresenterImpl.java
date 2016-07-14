@@ -35,12 +35,12 @@ public class VideoPresenterImpl extends BasePresenter<IMeiziView<List<ResultsBea
 
     @Override
     public void fetchNew(final int page) {
-        setPage(page);
         mIView.showRefresh();
         mModel.fetchDate(page, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 setFirst(false);
+                setPage(page);
                 mIView.hideRefresh();
                 mIView.showContent();
                 int mPage = page + 1;
