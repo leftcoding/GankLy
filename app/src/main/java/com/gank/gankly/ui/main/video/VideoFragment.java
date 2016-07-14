@@ -2,26 +2,25 @@ package com.gank.gankly.ui.main.video;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.ViewStatus;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.presenter.VideoPresenter;
+import com.gank.gankly.presenter.IBaseRefreshPresenter;
+import com.gank.gankly.presenter.impl.VideoPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
+import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
-import com.gank.gankly.view.IVideoView;
-import com.gank.gankly.widget.LoadingLayoutView;
+import com.gank.gankly.view.IMeiziView;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
@@ -31,32 +30,30 @@ import butterknife.Bind;
  * Create by LingYan on 2016-04-25
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, IVideoView<List<ResultsBean>> {
-    private int mLimit = 20;
-    private int mPage;
+        SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
+    private int mPage = 1;
     private static VideoFragment sVideoFragment;
 
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.recycler_view)
-    RecyclerView mRecyclerView;
+    @Bind(R.id.multiple_status_view)
+    MultipleStatusView mMultipleStatusView;
     @Bind(R.id.swipe_refresh)
-    SwipeRefreshLayout mSwipeRefresh;
-    @Bind(R.id.loading_layout)
-    LoadingLayoutView mLoadingLayoutView;
+    BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
-    private VideoPresenter mPresenter;
+    private IBaseRefreshPresenter mPresenter;
     private MainActivity mActivity;
     private VideoAdapter mVideoRecyclerAdapter;
-    private int mLastPosition;
-    private ViewStatus mCurStatus = ViewStatus.LOADING;
-
 
     public static VideoFragment getInstance() {
         if (sVideoFragment == null) {
-            sVideoFragment = new VideoFragment();
+            synchronized (VideoFragment.class) {
+                if (sVideoFragment == null) {
+                    sVideoFragment = new VideoFragment();
+                }
+            }
         }
         return sVideoFragment;
     }
@@ -69,17 +66,13 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     protected void initPresenter() {
-        mPresenter = new VideoPresenter(mActivity, this);
+        mPresenter = new VideoPresenterImpl(mActivity, this);
     }
 
     @Override
     protected void initValues() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onDownRefresh();
-            }
-        }, 100);
+        mMultipleStatusView.showLoading();
+        onDownRefresh();
     }
 
     @Override
@@ -91,31 +84,30 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
             barLayout.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             barLayout.setDisplayHomeAsUpEnabled(true);
         }
-
-        mVideoRecyclerAdapter = new VideoAdapter(mActivity);
-        mVideoRecyclerAdapter.setOnItemClickListener(this);
-        mRecyclerView.setAdapter(mVideoRecyclerAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        setMultipleStatusView(mMultipleStatusView);
+        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && (mLastPosition == mVideoRecyclerAdapter.getItemCount() - 1)
-                        && !mSwipeRefresh.isRefreshing()) {
-                    mSwipeRefresh.setRefreshing(true);
-                    mPresenter.setViewStatus(mCurStatus);
-                    mPresenter.fetchDate(mPage, mLimit);
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                mLastPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastCompletelyVisibleItemPosition();
+            public void retry(View v) {
+                mMultipleStatusView.showLoading();
+                onDownRefresh();
             }
         });
-        mSwipeRefresh.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
-        mSwipeRefresh.setOnRefreshListener(this);
+        mVideoRecyclerAdapter = new VideoAdapter(mActivity);
+        mVideoRecyclerAdapter.setOnItemClickListener(this);
+        mSwipeRefreshLayout.setAdapter(mVideoRecyclerAdapter);
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+            @Override
+            public void onRefresh() {
+                onDownRefresh();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPresenter.fetchMore(mPage);
+            }
+        });
+        mSwipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
     }
 
     @Override
@@ -130,8 +122,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     private void onDownRefresh() {
         mPage = 1;
-        mPresenter.setViewStatus(mCurStatus);
-        mPresenter.fetchDate(mPage, mLimit);
+        mPresenter.fetchNew(mPage);
     }
 
     @Override
@@ -170,7 +161,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     public void showRefreshError(String error) {
-        Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mCoordinatorLayout, error, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -181,19 +172,12 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     @Override
     public void hideRefresh() {
         super.hideRefresh();
-        mSwipeRefresh.setRefreshing(false);
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showRefresh() {
         super.showRefresh();
-        mSwipeRefresh.setRefreshing(true);
-    }
-
-    @Override
-    public void showContent() {
-        super.showContent();
-        mLoadingLayoutView.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 }

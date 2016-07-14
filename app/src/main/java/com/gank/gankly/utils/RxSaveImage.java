@@ -40,6 +40,7 @@ public class RxSaveImage {
                             .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .get();
                 } catch (InterruptedException | ExecutionException e) {
+                    KLog.e(e);
                     CrashUtils.crashReport(e);
                     subscriber.onError(e);
                 }
@@ -63,6 +64,7 @@ public class RxSaveImage {
                         fos.flush();
                         fos.close();
                     } catch (IOException e) {
+                        KLog.e(e);
                         CrashUtils.crashReport(e);
                     }
                 }

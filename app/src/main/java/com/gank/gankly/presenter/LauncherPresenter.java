@@ -13,6 +13,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.FileUtils;
 import com.gank.gankly.view.ILauncher;
+import com.socks.library.KLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +50,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hiddenDialog();
             }
@@ -72,6 +74,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
                 try {
                     FileUtils.writeFile(inputStream, mFile);
                 } catch (IOException e) {
+                    KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
             }
@@ -82,6 +85,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
             }
 

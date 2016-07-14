@@ -6,12 +6,14 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.gank.gankly.view.ISwipeRefreshView;
+import com.gank.gankly.widget.MultipleStatusView;
 
 
 /**
  * Create by LingYan on 2016-04-05
  */
 public abstract class BaseSwipeRefreshFragment extends BaseFragment implements ISwipeRefreshView {
+    private MultipleStatusView mMultipleStatusView;
 
     @Override
     public void onAttach(Context context) {
@@ -32,6 +34,10 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements I
 
     protected abstract void initPresenter();
 
+    public void setMultipleStatusView(MultipleStatusView multipleStatusView) {
+        this.mMultipleStatusView = multipleStatusView;
+    }
+
     @Override
     public void hideRefresh() {
 
@@ -44,22 +50,37 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements I
 
     @Override
     public void showEmpty() {
-
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showEmpty();
+        }
     }
 
     @Override
     public void showContent() {
-
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showDisNetWork() {
-
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showNoNetwork();
+        }
     }
 
     @Override
     public void showError() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showError();
+        }
+    }
 
+    @Override
+    public void showLoading() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showLoading();
+        }
     }
 
     @Override

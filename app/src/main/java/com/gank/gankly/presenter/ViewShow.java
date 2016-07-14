@@ -4,6 +4,7 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.view.IMeiziView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -42,23 +43,39 @@ public class ViewShow {
         callBackViewShow.hasMore(hasMore);
     }
 
-    public void callError(int page, boolean isNetWork, IMeiziView mIView) {
+    public void callError(int page, boolean isFirst, boolean isNetWork, IMeiziView mIView) {
+        KLog.d("isNetWork:" + isNetWork + ",isFirst:" + isFirst);
+        String errString = getError(isNetWork);
+        KLog.d("errString:" + errString);
         if (page > 1) {
-            int resId = R.string.loading_network_failure;
-            if (isNetWork) {
-                resId = R.string.tip_server_error;
-            }
-            mIView.showRefreshError(App.getAppString(resId));
+            mIView.showRefreshError(errString);
         } else {
-            if (isNetWork) {
-                mIView.showError();
+            if (isFirst) {
+                if (isNetWork) {
+                    mIView.showError();
+                } else {
+                    mIView.showDisNetWork();
+                }
             } else {
-                mIView.showDisNetWork();
+                KLog.d("------");
+                mIView.showRefreshError(errString);
             }
         }
     }
 
+    private String getError(boolean isNetWork) {
+        KLog.d("isNetWork:" + isNetWork);
+        int resId;
+        if (isNetWork) {
+            resId = R.string.tip_server_error;
+        } else {
+            resId = R.string.loading_network_failure;
+        }
+        KLog.d("App.getAppString(resId):" + App.getAppString(resId));
+        return App.getAppString(resId);
+    }
+
     public interface CallBackViewShow {
-        void hasMore(boolean hasMore);
+        void hasMore(boolean more);
     }
 }

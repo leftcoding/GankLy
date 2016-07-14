@@ -13,6 +13,7 @@ import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.presenter.IosGoodsPresenter;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IIosView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -46,6 +47,7 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
                 int size = MeiziArrayList.getInstance().size();

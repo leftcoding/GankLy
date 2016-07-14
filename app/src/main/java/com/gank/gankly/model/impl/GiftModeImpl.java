@@ -8,6 +8,7 @@ import com.gank.gankly.model.GiftModel;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StringUtils;
 import com.gank.gankly.view.IGiftView;
+import com.socks.library.KLog;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -54,6 +55,7 @@ public class GiftModeImpl implements GiftModel {
                     int mMaxPageNumber = getMaxPageNum(doc);
                     subscriber.onNext(new GiftResult(mMaxPageNumber, getPageLists(doc)));
                 } catch (IOException e) {
+                    KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
                 subscriber.onCompleted();
@@ -77,6 +79,7 @@ public class GiftModeImpl implements GiftModel {
                         try {
                             return Integer.parseInt(num);
                         } catch (IllegalFormatException e) {
+                            KLog.e(e);
                             CrashUtils.crashReport(e);
                         }
                     }
@@ -185,6 +188,7 @@ public class GiftModeImpl implements GiftModel {
                                 subscriber.onNext(getImageCountList(doc));
                             }
                         } catch (IOException e) {
+                            KLog.e(e);
                             CrashUtils.crashReport(e);
                         }
                         subscriber.onCompleted();

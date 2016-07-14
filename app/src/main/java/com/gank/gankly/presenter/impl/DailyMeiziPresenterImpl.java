@@ -11,6 +11,7 @@ import com.gank.gankly.presenter.DailyMeiziPresenter;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.view.IDailyMeiziView;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,7 @@ public class DailyMeiziPresenterImpl extends BasePresenter<IDailyMeiziView<List<
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
             }
 
@@ -76,6 +78,7 @@ public class DailyMeiziPresenterImpl extends BasePresenter<IDailyMeiziView<List<
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
             }
 
@@ -119,6 +122,7 @@ public class DailyMeiziPresenterImpl extends BasePresenter<IDailyMeiziView<List<
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
             }
 

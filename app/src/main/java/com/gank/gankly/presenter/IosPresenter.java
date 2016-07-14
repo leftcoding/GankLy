@@ -10,6 +10,7 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IIosView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
                     @Override
                     public void onError(Throwable e) {
+                        KLog.e(e);
                         mIView.hideRefresh();
                         mIView.showRefreshError("");
                     }
@@ -92,6 +94,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
                 boolean isNetWork = isNetworkAvailable();

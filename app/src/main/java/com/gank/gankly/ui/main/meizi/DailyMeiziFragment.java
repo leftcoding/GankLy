@@ -89,7 +89,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-        mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

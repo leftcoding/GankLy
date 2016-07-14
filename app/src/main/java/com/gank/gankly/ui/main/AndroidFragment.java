@@ -21,6 +21,7 @@ import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CrashUtils;
+import com.socks.library.KLog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -166,6 +167,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
                     @Override
                     public void onError(Throwable e) {
+                        KLog.e(e);
                         CrashUtils.crashReport(e);
                         mSwipeRefreshLayout.setRefreshing(false);
                         Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)

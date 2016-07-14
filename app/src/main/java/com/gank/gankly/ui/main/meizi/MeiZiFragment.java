@@ -89,7 +89,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
                 onDownRefresh();
             }
         });
-        mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 onDownRefresh();
@@ -104,7 +104,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected int getLayoutId() {
-        return R.layout.view_swiperefresh_recycler;
+        return R.layout.view_swiperefresh_multiple_status;
     }
 
     @Override

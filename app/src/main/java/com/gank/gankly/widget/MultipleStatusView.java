@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 
 import com.gank.gankly.R;
 import com.gank.gankly.utils.CrashUtils;
+import com.socks.library.KLog;
 
 /**
  * 包括Loading Empty Error DisNetWork界面
@@ -64,6 +65,7 @@ public class MultipleStatusView extends RelativeLayout {
             mNoNetworkViewId = array.getResourceId(R.styleable.MultipleStatusView_no_network_view, R.layout.view_no_network);
             mContentViewId = array.getResourceId(R.styleable.MultipleStatusView_content_view, -1);
         } catch (Exception e) {
+            KLog.e(e);
             CrashUtils.crashReport(e);
         }
         array.recycle();

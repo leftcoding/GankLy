@@ -32,6 +32,7 @@ import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.DepthPageTransformer;
+import com.socks.library.KLog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -114,6 +115,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
                 ToastUtils.showToast(R.string.tip_server_error);
             }
 
@@ -259,6 +262,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
                     @Override
                     public void onError(Throwable e) {
+                        KLog.e(e);
                         CrashUtils.crashReport(e);
                         ToastUtils.showToast(e.getMessage() + "\n再试试...");
                     }

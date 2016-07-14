@@ -54,13 +54,6 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         return sGiftFragment;
     }
 
-    public static GiftFragment newInstance() {
-        Bundle args = new Bundle();
-        GiftFragment fragment = new GiftFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -121,7 +114,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private void initRecycler() {
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        mSwipeRefreshLayout.setRefreshListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 onFetchNew();

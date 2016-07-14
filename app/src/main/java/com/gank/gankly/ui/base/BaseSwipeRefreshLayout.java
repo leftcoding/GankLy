@@ -63,16 +63,6 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
                         case S:
                             StaggeredGridLayoutManager staggeredGridLayoutManager =
                                     (StaggeredGridLayoutManager) layoutManager;
-//                            int[] first = new int[staggeredGridLayoutManager.getSpanCount()];
-//                            int[] last = new int[staggeredGridLayoutManager.getSpanCount()];
-//                            staggeredGridLayoutManager.findLastCompletelyVisibleItemPositions(last);
-//                            staggeredGridLayoutManager.findFirstCompletelyVisibleItemPositions(first);
-//                            for (int i : last) {
-//                                if (i == count) {
-//                                    loadMore();
-//                                    break;
-//                                }
-//                            }
                             int[] positions = new int[staggeredGridLayoutManager.getSpanCount()];
                             staggeredGridLayoutManager.findLastVisibleItemPositions(positions);
                             for (int position : positions) {
@@ -110,7 +100,7 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
-    public void setRefreshListener(OnSwipeRefRecyclerViewListener listener) {
+    public void setOnScrollListener(OnSwipeRefRecyclerViewListener listener) {
         this.mOnSwipeRefRecyclerViewListener = listener;
         super.setOnRefreshListener(listener);
     }

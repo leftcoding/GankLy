@@ -11,4 +11,6 @@ public interface IBaseView {
     void showContent();
 
     void showError();
+
+    void showLoading();
 }

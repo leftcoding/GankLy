@@ -4,13 +4,13 @@ import android.app.Activity;
 
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.model.BaseModel;
-import com.gank.gankly.model.impl.MeiziModelImpl;
+import com.gank.gankly.model.impl.VideoModelImpl;
 import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.ViewShow;
 import com.gank.gankly.utils.CrashUtils;
+import com.gank.gankly.utils.NetworkUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.socks.library.KLog;
 
@@ -19,34 +19,32 @@ import java.util.List;
 import rx.Subscriber;
 
 /**
- * Create by LingYan on 2016-07-13
+ * Create by LingYan on 2016-07-14
  * Email:137387869@qq.com
  */
-public class MeiziPresenterImpl extends BasePresenter<IMeiziView<List<ResultsBean>>>
-        implements IBaseRefreshPresenter {
-    private int mPage = 1;
-    private int limit = 20;
+public class VideoPresenterImpl extends BasePresenter<IMeiziView<List<ResultsBean>>> implements
+        IBaseRefreshPresenter {
     private BaseModel mModel;
-    private boolean hasMore = false;
-    private ViewShow viewShow = new ViewShow();
+    private ViewShow mViewShow;
 
-    public MeiziPresenterImpl(Activity mActivity, IMeiziView<List<ResultsBean>> view) {
+    public VideoPresenterImpl(Activity mActivity, IMeiziView<List<ResultsBean>> view) {
         super(mActivity, view);
-        mModel = new MeiziModelImpl();
+        mModel = new VideoModelImpl();
+        mViewShow = new ViewShow();
     }
 
-
     @Override
-    public void fetchNew(int page) {
-        mPage = page;
-        mModel.fetchDate(page, limit, new Subscriber<GankResult>() {
+    public void fetchNew(final int page) {
+        setPage(page);
+        mIView.showRefresh();
+        mModel.fetchDate(page, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
+                setFirst(false);
                 mIView.hideRefresh();
                 mIView.showContent();
-                mPage = mPage + 1;
+                int mPage = page + 1;
                 mIView.getNextPage(mPage);
-                setFirst(false);
             }
 
             @Override
@@ -54,26 +52,24 @@ public class MeiziPresenterImpl extends BasePresenter<IMeiziView<List<ResultsBea
                 KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
-                viewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
+                mViewShow.callError(page, isFirst(), NetworkUtils.isNetworkAvailable(mActivity), mIView);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
-                viewShow.callShow(mPage, limit, gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
+                mViewShow.callShow(page, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
                     @Override
                     public void hasMore(boolean more) {
-                        hasMore = more;
+                        setHasMore(more);
                     }
                 });
-                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
             }
         });
     }
 
     @Override
     public void fetchMore(int page) {
-        if (hasMore) {
-            mIView.showRefresh();
+        if (isHasMore()) {
             fetchNew(page);
         }
     }

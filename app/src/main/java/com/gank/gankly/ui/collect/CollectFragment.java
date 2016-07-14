@@ -27,6 +27,7 @@ import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
             @Override
             public void onError(Throwable e) {
-
+                KLog.e(e);
             }
 
             @Override
