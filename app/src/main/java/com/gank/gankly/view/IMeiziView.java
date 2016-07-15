@@ -12,5 +12,5 @@ public interface IMeiziView<T> extends ISwipeRefreshView {
 
     void showRefreshError(String error);
 
-    void getNextPage(int page);
+    void setNextPage(int page);
 }

@@ -11,10 +11,6 @@ import com.gank.gankly.utils.NetworkUtils;
 public abstract class BasePresenter<E> {
     protected E mIView;
     protected Context mActivity;
-    private int mPage;
-    private boolean hasMore;
-    private int mLimit = 20;
-    protected boolean isFirst = true;
 
     public BasePresenter(Activity mActivity, E view) {
         this.mIView = view;
@@ -25,39 +21,7 @@ public abstract class BasePresenter<E> {
         return mActivity;
     }
 
-    public boolean isNetworkAvailable() {
+    final public boolean isNetworkAvailable() {
         return NetworkUtils.isNetworkAvailable(mActivity);
-    }
-
-    public int getPage() {
-        return mPage;
-    }
-
-    public void setPage(int page) {
-        mPage = page;
-    }
-
-    public int getLimit() {
-        return mLimit;
-    }
-
-    public void setLimit(int limit) {
-        mLimit = limit;
-    }
-
-    public boolean isHasMore() {
-        return hasMore;
-    }
-
-    public void setHasMore(boolean hasMore) {
-        this.hasMore = hasMore;
-    }
-
-    public boolean isFirst() {
-        return isFirst;
-    }
-
-    public void setFirst(boolean first) {
-        isFirst = first;
     }
 }

@@ -155,7 +155,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     }
 
     @Override
-    public void getNextPage(int page) {
+    public void setNextPage(int page) {
         mPage = page;
     }
 

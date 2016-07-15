@@ -29,8 +29,8 @@ import butterknife.Bind;
 /**
  * Create by LingYan on 2016-5-12
  */
-public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
+public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener,
+        IMeiziView<List<ResultsBean>> {
     @Bind(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @Bind(R.id.swipe_refresh)
@@ -39,7 +39,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private MainActivity mActivity;
 
-    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private IBaseRefreshPresenter mPresenter;
     private int mPage = 1;
 
@@ -71,9 +70,8 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
     }
 
     private void initRecycler() {
-        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL);
-        mSwipeRefreshLayout.setLayoutManager(mStaggeredGridLayoutManager);
+        mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL));
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
@@ -86,13 +84,13 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
             @Override
             public void retry(View v) {
                 mMultipleStatusView.showLoading();
-                onDownRefresh();
+                mPresenter.fetchNew(mPage);
             }
         });
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
-                onDownRefresh();
+                mPresenter.fetchNew(mPage);
             }
 
             @Override
@@ -109,18 +107,17 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initDate() {
+        onLoadingRefresh();
+    }
+
+    private void onLoadingRefresh() {
         mMultipleStatusView.showLoading();
-        onDownRefresh();
+        mPresenter.fetchNew(mPage);
     }
 
     @Override
     protected void initPresenter() {
         mPresenter = new MeiziPresenterImpl(mActivity, this);
-    }
-
-    private void onDownRefresh() {
-        mPage = 1;
-        mPresenter.fetchNew(mPage);
     }
 
     private void onNextRefresh() {
@@ -137,7 +134,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        onDownRefresh();
+        mPresenter.fetchNew(mPage);
     }
 
     @Override
@@ -160,7 +157,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    public void getNextPage(int page) {
+    public void setNextPage(int page) {
         mPage = page;
     }
 
@@ -174,12 +171,12 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     public void showRefreshError(String errorStr) {
-        Snackbar.make(mSwipeRefreshLayout, R.string.tip_server_error, Snackbar.LENGTH_LONG)
+        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onDownRefresh();
+                        mPresenter.fetchNew(mPage);
                     }
                 }).show();
     }

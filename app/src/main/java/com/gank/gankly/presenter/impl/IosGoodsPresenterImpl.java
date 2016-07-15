@@ -22,8 +22,8 @@ import rx.Subscriber;
 /**
  * Create by LingYan on 2016-06-20
  */
-public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBean>>>
-        implements IosGoodsPresenter {
+public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBean>>> implements
+        IosGoodsPresenter {
     private int limit = 20;
     private int mIosCurPage;
     private boolean isIosLoadMore;

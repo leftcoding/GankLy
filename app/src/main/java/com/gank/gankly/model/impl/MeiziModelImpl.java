@@ -15,7 +15,7 @@ public class MeiziModelImpl implements BaseModel {
     }
 
     @Override
-    public void fetchDate(int page, int limit, Subscriber subscriber) {
+    public void fetchData(int page, int limit, Subscriber subscriber) {
         GankApi.getInstance().fetchWelfare(limit, page, subscriber);
     }
 }

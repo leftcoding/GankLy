@@ -7,6 +7,5 @@ import rx.Subscriber;
  * Email:137387869@qq.com
  */
 public interface BaseModel {
-
-    void fetchDate(int page, int limit, Subscriber subscriber);
+    void fetchData(int page, int limit, Subscriber subscriber);
 }

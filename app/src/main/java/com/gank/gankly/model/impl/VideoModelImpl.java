@@ -21,7 +21,7 @@ public class VideoModelImpl implements BaseModel {
     }
 
     @Override
-    public void fetchDate(final int mPage, int limit, Subscriber subscriber) {
+    public void fetchData(final int mPage, int limit, Subscriber subscriber) {
         Observable<GankResult> video = GankApi.getInstance()
                 .getGankService().fetchVideo(limit, mPage);
         Observable<GankResult> image = GankApi.getInstance()

@@ -46,7 +46,6 @@ public class ViewShow {
     public void callError(int page, boolean isFirst, boolean isNetWork, IMeiziView mIView) {
         KLog.d("isNetWork:" + isNetWork + ",isFirst:" + isFirst);
         String errString = getError(isNetWork);
-        KLog.d("errString:" + errString);
         if (page > 1) {
             mIView.showRefreshError(errString);
         } else {
@@ -57,7 +56,6 @@ public class ViewShow {
                     mIView.showDisNetWork();
                 }
             } else {
-                KLog.d("------");
                 mIView.showRefreshError(errString);
             }
         }
