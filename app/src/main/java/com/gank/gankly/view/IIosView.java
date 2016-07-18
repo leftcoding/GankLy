@@ -7,6 +7,4 @@ public interface IIosView<T> extends ISwipeRefreshView {
     void refillDate(T date);
 
     void appendMoreDate(T date);
-
-    void getNextPage(int page);
 }

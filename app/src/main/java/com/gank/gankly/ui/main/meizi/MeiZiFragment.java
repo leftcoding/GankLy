@@ -40,7 +40,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     private MainActivity mActivity;
 
     private IBaseRefreshPresenter mPresenter;
-    private int mPage = 1;
 
     public MeiZiFragment() {
     }
@@ -84,13 +83,13 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
             @Override
             public void retry(View v) {
                 mMultipleStatusView.showLoading();
-                mPresenter.fetchNew(mPage);
+                fetchNew();
             }
         });
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew(mPage);
+                fetchNew();
             }
 
             @Override
@@ -107,12 +106,8 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void initDate() {
-        onLoadingRefresh();
-    }
-
-    private void onLoadingRefresh() {
         mMultipleStatusView.showLoading();
-        mPresenter.fetchNew(mPage);
+        fetchNew();
     }
 
     @Override
@@ -121,7 +116,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     private void onNextRefresh() {
-        mPresenter.fetchMore(mPage);
+        fetchMore();
     }
 
     public static MeiZiFragment newInstance() {
@@ -134,7 +129,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.fetchNew(mPage);
+        fetchNew();
     }
 
     @Override
@@ -157,11 +152,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     @Override
-    public void setNextPage(int page) {
-        mPage = page;
-    }
-
-    @Override
     public void hasNoMoreDate() {
         super.hasNoMoreDate();
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
@@ -176,9 +166,17 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.fetchNew(mPage);
+                        fetchMore();
                     }
                 }).show();
+    }
+
+    private void fetchNew() {
+        mPresenter.fetchNew();
+    }
+
+    private void fetchMore() {
+        mPresenter.fetchMore();
     }
 
     @Override

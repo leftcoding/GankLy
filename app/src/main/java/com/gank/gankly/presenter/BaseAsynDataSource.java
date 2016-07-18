@@ -6,10 +6,24 @@ import android.app.Activity;
  * Create by LingYan on 2016-07-15
  * Email:137387869@qq.com
  */
-public abstract class BaseAsynDataSource<T> extends BasePresenter<T> implements IBaseRefreshPresenter {
+public abstract class BaseAsynDataSource<T> extends BasePresenter<T> implements
+        IBaseRefreshPresenter {
     private boolean hasMore;
     private int mLimit = 20;
     private boolean isFirst = true;
+    private int mPage = 1;
+
+    public int getPage() {
+        return mPage;
+    }
+
+    public void setPage(int page) {
+        mPage = page;
+    }
+
+    public void initFirstPage() {
+        mPage = 1;
+    }
 
     public BaseAsynDataSource(Activity mActivity, T view) {
         super(mActivity, view);
@@ -40,12 +54,15 @@ public abstract class BaseAsynDataSource<T> extends BasePresenter<T> implements 
     }
 
     @Override
-    public void fetchNew(final int page) {
-
+    public void fetchNew() {
     }
 
     @Override
-    public void fetchMore(final int page) {
+    public void fetchMore() {
+
+    }
+
+    public void fetchData() {
 
     }
 }

@@ -9,8 +9,8 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.model.IosModel;
 import com.gank.gankly.model.impl.IosModelImpl;
-import com.gank.gankly.presenter.BasePresenter;
-import com.gank.gankly.presenter.IosGoodsPresenter;
+import com.gank.gankly.presenter.BaseAsynDataSource;
+import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IIosView;
 import com.socks.library.KLog;
@@ -22,10 +22,8 @@ import rx.Subscriber;
 /**
  * Create by LingYan on 2016-06-20
  */
-public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBean>>> implements
-        IosGoodsPresenter {
-    private int limit = 20;
-    private int mIosCurPage;
+public class IosGoodsPresenterImpl extends BaseAsynDataSource<IIosView<List<ResultsBean>>> implements
+        IBaseRefreshPresenter {
     private boolean isIosLoadMore;
     private IosModel mIosModel;
 
@@ -34,15 +32,16 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
         mIosModel = new IosModelImpl();
     }
 
-    private void fetchIosData(int page) {
+    private void fetchIosData() {
         mIView.showRefresh();
-        mIosModel.fetchIos(page, limit, new Subscriber<GankResult>() {
+        final int mPage = getPage();
+        mIosModel.fetchIos(mPage, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
-                mIosCurPage = mIosCurPage + 1;
-                mIView.getNextPage(mIosCurPage);
+                setPage(mPage + 1);
+                setFirst(false);
             }
 
             @Override
@@ -52,7 +51,7 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
                 mIView.hideRefresh();
                 int size = MeiziArrayList.getInstance().size();
                 boolean isNetWork = isNetworkAvailable();
-                if (mIosCurPage > 1 || size > 0) {
+                if (mPage > 1 || size > 0) {
                     int resId = R.string.loading_network_failure;
                     if (isNetworkAvailable()) {
                         resId = R.string.tip_server_error;
@@ -61,7 +60,7 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
                 } else {
                     if (isNetWork) {
                         isIosLoadMore = false;
-                        if (mIosCurPage <= 1) {
+                        if (mPage <= 1) {
                             mIView.showEmpty();
                         } else {
                             mIView.hasNoMoreDate();
@@ -86,12 +85,12 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
                 if (isEmpty) {
                     mIView.showEmpty();
                 } else {
-                    if (mIosCurPage == 1) {
+                    if (getPage() == 1) {
                         mIView.refillDate(list);
                     } else {
                         mIView.appendMoreDate(list);
                     }
-                    if (list.size() < limit) {
+                    if (list.size() < getLimit()) {
                         isIosLoadMore = false;
                         mIView.hasNoMoreDate();
                     } else {
@@ -103,15 +102,15 @@ public class IosGoodsPresenterImpl extends BasePresenter<IIosView<List<ResultsBe
     }
 
     @Override
-    public void fetchNew(int page) {
-        mIosCurPage = page;
-        fetchIosData(page);
+    public void fetchNew() {
+        initFirstPage();
+        fetchIosData();
     }
 
     @Override
-    public void fetchMore(int page) {
+    public void fetchMore() {
         if (isIosLoadMore) {
-            fetchIosData(page);
+            fetchIosData();
         }
     }
 }

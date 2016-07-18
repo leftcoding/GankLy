@@ -11,6 +11,4 @@ public interface IMeiziView<T> extends ISwipeRefreshView {
     void appendMoreDate(T list);
 
     void showRefreshError(String error);
-
-    void setNextPage(int page);
 }

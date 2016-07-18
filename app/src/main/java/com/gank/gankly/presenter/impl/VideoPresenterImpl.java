@@ -31,17 +31,31 @@ public class VideoPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
     }
 
     @Override
-    public void fetchNew(final int page) {
-        super.fetchNew(page);
+    public void fetchNew() {
+        initFirstPage();
+        fetchData();
+    }
+
+    @Override
+    public void fetchMore() {
+        if (isHasMore()) {
+            fetchData();
+        }
+    }
+
+    @Override
+    public void fetchData() {
+        super.fetchData();
         mIView.showRefresh();
+        final int page = getPage();
         mModel.fetchData(page, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
-                setFirst(false);
                 mIView.hideRefresh();
                 mIView.showContent();
+                setFirst(false);
                 int mPage = page + 1;
-                mIView.setNextPage(mPage);
+                setPage(mPage);
             }
 
             @Override
@@ -62,12 +76,5 @@ public class VideoPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
                 });
             }
         });
-    }
-
-    @Override
-    public void fetchMore(int page) {
-        if (isHasMore()) {
-            fetchNew(page);
-        }
     }
 }

@@ -31,7 +31,6 @@ import butterknife.Bind;
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-    private int mPage = 1;
     private static VideoFragment sVideoFragment;
 
     @Bind(R.id.coordinator)
@@ -71,6 +70,10 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     protected void initValues() {
+        onLoading();
+    }
+
+    private void onLoading(){
         mMultipleStatusView.showLoading();
         onDownRefresh();
     }
@@ -88,8 +91,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
             public void retry(View v) {
-                mMultipleStatusView.showLoading();
-                onDownRefresh();
+                onLoading();
             }
         });
         mVideoRecyclerAdapter = new VideoAdapter(mActivity);
@@ -104,7 +106,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore(mPage);
+                mPresenter.fetchMore();
             }
         });
         mSwipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
@@ -121,8 +123,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     }
 
     private void onDownRefresh() {
-        mPage = 1;
-        mPresenter.fetchNew(mPage);
+        mPresenter.fetchNew();
     }
 
     @Override
@@ -152,11 +153,6 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     @Override
     public void appendMoreDate(List<ResultsBean> list) {
         mVideoRecyclerAdapter.addItems(list);
-    }
-
-    @Override
-    public void setNextPage(int page) {
-        mPage = page;
     }
 
     @Override

@@ -14,7 +14,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.presenter.IosGoodsPresenter;
+import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
@@ -39,10 +39,9 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     private MainActivity mActivity;
     private GankAdapter mRecyclerAdapter;
-    private IosGoodsPresenter mPresenter;
+    private IBaseRefreshPresenter mPresenter;
 
     private int mLastPosition;
-    private int mPage = 1;
 
     public IosFragment() {
 
@@ -96,7 +95,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && mLastPosition + 1 == mRecyclerAdapter.getItemCount()
                         && !mSwipeRefreshLayout.isRefreshing()) {
-                    mPresenter.fetchMore(mPage);
+                    mPresenter.fetchMore();
                 }
             }
 
@@ -120,8 +119,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     }
 
     private void initFetchDate() {
-        mPage = 1;
-        mPresenter.fetchNew(mPage);
+        mPresenter.fetchNew();
     }
 
     public static IosFragment newInstance() {
@@ -159,18 +157,13 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    public void getNextPage(int page) {
-        mPage = page;
-    }
-
-    @Override
     public void showRefreshError(String errorStr) {
         Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .setAction(R.string.retry, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mPresenter.fetchMore(mPage);
+                        mPresenter.fetchMore();
                     }
                 }).show();
     }

@@ -25,24 +25,41 @@ import rx.Subscriber;
 public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<ResultsBean>>>
         implements IBaseRefreshPresenter {
     private BaseModel mModel;
-    private ViewShow viewShow = new ViewShow();
+    private ViewShow viewShow;
 
     public MeiziPresenterImpl(Activity mActivity, IMeiziView<List<ResultsBean>> view) {
         super(mActivity, view);
         mModel = new MeiziModelImpl();
+        viewShow = new ViewShow();
     }
 
+    @Override
+    public void fetchNew() {
+        initFirstPage();
+        fetchData();
+    }
 
     @Override
-    public void fetchNew(final int mPage) {
-        mModel.fetchData(mPage, getLimit(), new Subscriber<GankResult>() {
+    public void fetchMore() {
+        if (isHasMore()) {
+            mIView.showRefresh();
+            fetchData();
+        }
+    }
+
+    @Override
+    public void fetchData() {
+        final int page = getPage();
+        KLog.d("page:" + page);
+        mModel.fetchData(page, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
-                setFirst(false);
                 mIView.hideRefresh();
                 mIView.showContent();
-                int page = mPage + 1;
-                mIView.setNextPage(page);
+                setFirst(false);
+                int nextPage = page + 1;
+                KLog.d("nextPage:" + nextPage);
+                setPage(nextPage);
             }
 
             @Override
@@ -50,27 +67,19 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
                 KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
-                viewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
+                viewShow.callError(page, isFirst(), isNetworkAvailable(), mIView);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
-                viewShow.callShow(mPage, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
+                viewShow.callShow(page, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
                     @Override
                     public void hasMore(boolean more) {
                         setHasMore(more);
                     }
                 });
-                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
+                MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), page);
             }
         });
-    }
-
-    @Override
-    public void fetchMore(int page) {
-        if (isHasMore()) {
-            mIView.showRefresh();
-            fetchNew(page);
-        }
     }
 }

@@ -14,7 +14,6 @@ public class IosModelImpl implements IosModel {
 
     @Override
     public void fetchIos(final int page, int limit, Subscriber _subscriber) {
-
         GankApi.getInstance().fetchIos(limit, page, _subscriber);
     }
 
