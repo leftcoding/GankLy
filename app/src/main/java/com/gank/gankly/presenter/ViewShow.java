@@ -62,14 +62,12 @@ public class ViewShow {
     }
 
     private String getError(boolean isNetWork) {
-        KLog.d("isNetWork:" + isNetWork);
         int resId;
         if (isNetWork) {
             resId = R.string.tip_server_error;
         } else {
             resId = R.string.loading_network_failure;
         }
-        KLog.d("App.getAppString(resId):" + App.getAppString(resId));
         return App.getAppString(resId);
     }
 

@@ -23,7 +23,7 @@ import rx.schedulers.Schedulers;
  */
 public class GankApi {
     private static final String BASE_URL = "http://gank.io/api/data/";
-    private static final int DEFAULT_OUT_TIME = 12;
+    private static final int DEFAULT_OUT_TIME = 30;
 
     public GankService gankApi;
 

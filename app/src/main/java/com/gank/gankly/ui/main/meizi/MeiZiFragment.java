@@ -65,10 +65,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     protected void initViews() {
         mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
         mRecyclerAdapter.setMeiZiOnClick(this);
-        initRecycler();
-    }
-
-    private void initRecycler() {
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);

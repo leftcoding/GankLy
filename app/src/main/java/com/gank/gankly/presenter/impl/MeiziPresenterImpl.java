@@ -50,7 +50,6 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
     @Override
     public void fetchData() {
         final int page = getPage();
-        KLog.d("page:" + page);
         mModel.fetchData(page, getLimit(), new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
@@ -58,7 +57,6 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
                 mIView.showContent();
                 setFirst(false);
                 int nextPage = page + 1;
-                KLog.d("nextPage:" + nextPage);
                 setPage(nextPage);
             }
 

@@ -18,17 +18,18 @@ import java.util.concurrent.ExecutionException;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-04-20
  */
 public class RxSaveImage {
-    public static Observable<Uri> saveImage(final Context context, final String url) {
-        return Observable.create(new Observable.OnSubscribe<Bitmap>() {
+    private static final String IMAGE_PATH = "Gankly/pic";
+
+    public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final String url) {
+        return Observable.create(new Observable.OnSubscribe<Uri>() {
             @Override
-            public void call(Subscriber<? super Bitmap> subscriber) {
+            public void call(Subscriber<? super Uri> subscriber) {
                 Bitmap bitmap = null;
                 try {
                     bitmap = Glide.with(context)
@@ -44,37 +45,36 @@ public class RxSaveImage {
                     CrashUtils.crashReport(e);
                     subscriber.onError(e);
                 }
-                subscriber.onNext(bitmap);
+                if (bitmap != null) {
+                    subscriber.onNext(saveImage(context, bitmap, String.valueOf(url.hashCode())));
+                } else {
+                    subscriber.onError(new Exception("bitmap can't be null"));
+                    CrashUtils.crashReport(new Exception("bitmap can't be null"));
+                }
                 subscriber.onCompleted();
             }
-        }).flatMap(new Func1<Bitmap, Observable<Uri>>() {
-            @Override
-            public Observable<Uri> call(Bitmap bitmap) {
-                File appDir = new File(Environment.getExternalStorageDirectory(), "Gankly/pic");
-                if (!appDir.exists()) {
-                    appDir.mkdir();
-                }
-                String fileName = url.hashCode() + ".jpg";
-                File file = new File(appDir, fileName);
-                if (!file.exists()) {
-                    try {
-                        FileOutputStream fos = new FileOutputStream(file);
-                        assert bitmap != null;
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                        fos.flush();
-                        fos.close();
-                    } catch (IOException e) {
-                        KLog.e(e);
-                        CrashUtils.crashReport(e);
-                    }
-                }
-
-                Uri uri = Uri.fromFile(file);
-                // 通知图库更新
-                Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
-                context.sendBroadcast(scannerIntent);
-                return Observable.just(uri);
-            }
         }).subscribeOn(Schedulers.io());
+    }
+
+    public static Uri saveImage(Context context, Bitmap bm, String name) {
+        File appDir = new File(Environment.getExternalStorageDirectory(), IMAGE_PATH);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        File file = new File(appDir, name + ".jpg");
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            KLog.e(e);
+            CrashUtils.crashReport(e);
+        }
+        Uri uri = Uri.fromFile(file);
+        // 通知图库更新
+        Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+        context.sendBroadcast(scannerIntent);
+        return uri;
     }
 }

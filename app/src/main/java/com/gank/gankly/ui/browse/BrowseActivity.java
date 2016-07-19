@@ -253,7 +253,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void saveImagePath(String imgUrl, final boolean isShare) {
-        RxSaveImage.saveImage(this, imgUrl)
+        RxSaveImage.saveImageAndGetPathObservable(this, imgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Uri>() {
                     @Override

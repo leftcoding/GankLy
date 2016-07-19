@@ -20,7 +20,6 @@ public class App extends Application {
     private static final int PREFERENCES_VERSION = 1;
     private static final String DB_NAME = "gank.db";
     public static boolean isNewVersion;
-    public static boolean isCheckedVersion;
 
     public static Context mContext;
     private static SQLiteDatabase db;
@@ -42,7 +41,6 @@ public class App extends Application {
         daoSession = daoMaster.newSession();
 
         //Bugly 测试：true
-
         CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
 
     }
