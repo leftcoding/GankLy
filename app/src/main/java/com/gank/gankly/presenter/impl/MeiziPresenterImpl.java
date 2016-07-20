@@ -8,7 +8,6 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.model.BaseModel;
 import com.gank.gankly.model.impl.MeiziModelImpl;
 import com.gank.gankly.presenter.BaseAsynDataSource;
-import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.ViewShow;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IMeiziView;
@@ -22,8 +21,7 @@ import rx.Subscriber;
  * Create by LingYan on 2016-07-13
  * Email:137387869@qq.com
  */
-public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<ResultsBean>>>
-        implements IBaseRefreshPresenter {
+public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<ResultsBean>>> {
     private BaseModel mModel;
     private ViewShow viewShow;
 

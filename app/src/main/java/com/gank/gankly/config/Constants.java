@@ -9,6 +9,7 @@ public interface Constants {
     String WELFRAE = "福利";
     String ALL = "all";
     String VIDEO = "video";
+    String JIANDAN = "煎蛋杂谈";
 
     String QINGCHUN = "清纯";
     String DAILY_GIRL = "每日更新";

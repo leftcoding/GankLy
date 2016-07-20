@@ -1,8 +1,8 @@
 package com.gank.gankly.network.api;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.network.service.GankService;
+import com.gank.gankly.bean.JiandanResult;
+import com.gank.gankly.network.service.JiandanService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,21 +18,21 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Retrofit请求封装
- * Create by LingYan on 2016-04-06
+ * Create by LingYan on 2016-07-20
+ * Email:137387869@qq.com
  */
-public class GankApi {
-    private static final String BASE_URL = "http://gank.io/api/data/";
+public class JiandanApi {
+    private static final String BASE_URL = "http://jandan.net/";
     private static final int DEFAULT_OUT_TIME = 30;
 
-    public GankService gankApi;
+    public JiandanService mService;
 
     final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
             .serializeNulls()
             .create();
 
-    private GankApi() {
+    private JiandanApi() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases
@@ -58,21 +58,17 @@ public class GankApi {
                 .baseUrl(BASE_URL)
                 .build();
 
-        gankApi = retrofit.create(GankService.class);
+        mService = retrofit.create(JiandanService.class);
     }
 
     //在访问HttpMethods时创建单例
     private static class SingletonHolder {
-        private static final GankApi INSTANCE = new GankApi();
+        private static final JiandanApi INSTANCE = new JiandanApi();
     }
 
     //获取单例
-    public static GankApi getInstance() {
+    public static JiandanApi getInstance() {
         return SingletonHolder.INSTANCE;
-    }
-
-    public GankService getGankService() {
-        return gankApi;
     }
 
     private <T> void toSubscribe(Observable<T> o, Subscriber<T> s) {
@@ -82,31 +78,8 @@ public class GankApi {
                 .subscribe(s);
     }
 
-    public void fetchAndroid(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = gankApi.fetchAndroidGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchIos(int limit, int page, Subscriber<GankResult> subscriber) {
-        if (subscriber == null) {
-            throw new RuntimeException("subscriber is null");
-        }
-        Observable<GankResult> observable = gankApi.fetchIosGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchAll(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = gankApi.fetchAllGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchWelfare(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = gankApi.fetchBenefitsGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchVideo(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = gankApi.fetchVideo(limit, page);
+    public void fetchJianDan(int page, Subscriber<JiandanResult> subscriber) {
+        Observable<JiandanResult> observable = mService.fetchData("get_recent_posts", "url,date,tags,author,title,comment_count,custom_fields", "thumb_c,views", "1", String.valueOf(page));
         toSubscribe(observable, subscriber);
     }
 }

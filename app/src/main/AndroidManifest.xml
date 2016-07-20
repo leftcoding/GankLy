@@ -53,5 +53,9 @@
             android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"/>
+        <activity
+            android:name=".ui.jiandan.JiandanActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
     </application>
 </manifest>

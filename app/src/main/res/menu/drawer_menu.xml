@@ -21,6 +21,11 @@
             android:title="@string/navigation_gift"/>
 
         <item
+            android:id="@+id/navigation_jiandan"
+            android:icon="@drawable/navigation_gift"
+            android:title="@string/navigation_jiandan"/>
+
+        <item
             android:id="@+id/navigation_collect"
             android:icon="@drawable/navigation_collect_nor"
             android:title="@string/navigation_collect"/>

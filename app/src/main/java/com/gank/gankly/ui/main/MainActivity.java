@@ -1,5 +1,6 @@
 package com.gank.gankly.ui.main;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
+import com.gank.gankly.ui.jiandan.JiandanActivity;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
@@ -66,10 +68,16 @@ public class MainActivity extends BaseActivity {
                     case R.id.navigation_settings:
                         fragmentTo = SettingFragment.getInstance();
                         break;
+                    case R.id.navigation_jiandan:
+                        Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
+                        startActivity(intent);
+                        break;
                     default:
                         break;
                 }
-                switchFragment(fragmentTo);
+                if (fragmentTo != null) {
+                    switchFragment(fragmentTo);
+                }
                 return true;
             }
         });
