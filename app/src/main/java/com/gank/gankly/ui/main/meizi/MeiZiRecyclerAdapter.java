@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -58,14 +59,20 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     public void onBindViewHolder(final GoodsViewHolder holder, final int position) {
         final ResultsBean bean = mResults.get(position);
         final String url = bean.getUrl();
-
-        Glide.with(mContext)
+        BitmapRequestBuilder requestBuilder = Glide.with(mContext)
                 .load(url)
                 .asBitmap()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .override(mScreenWidth, mScreenHeight)//设置宽高一致，后期改动不大
-                .into(new DriverViewTarget(holder.imgMeizi, url));
+                .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        if (heights.containsKey(url)) {
+            setCardViewLayoutParams(holder.imgMeizi, mScreenWidth, heights.get(url));
+            requestBuilder.into(holder.imgMeizi);
+        } else {
+            requestBuilder.override(mScreenWidth, mScreenHeight);//设置宽高一致，后期改动不大
+            requestBuilder.into(new DriverViewTarget(holder.imgMeizi, url));
+        }
     }
+
 
     private class DriverViewTarget extends BitmapImageViewTarget {
         private ImageView mImageView;
@@ -81,28 +88,20 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
             int viewWidth = mScreenWidth;
             int viewHeight;
-            if (heights.containsKey(url) && url != null) {
-                viewHeight = heights.get(url);
-            } else {
+            if (!heights.containsKey(url) && url != null) {
                 viewHeight = resource.getHeight() * viewWidth / resource.getWidth();
                 heights.put(url, viewHeight);
+                setCardViewLayoutParams(mImageView, viewWidth, viewHeight);
             }
-
-            setCardViewLayoutParams(viewWidth, viewHeight);
             super.onResourceReady(resource, glideAnimation);
-        }
-
-        private void setCardViewLayoutParams(int width, int height) {
-            ViewGroup.LayoutParams layoutParams = mImageView.getLayoutParams();
-            layoutParams.width = width;
-            layoutParams.height = height;
-            mImageView.setLayoutParams(layoutParams);
         }
     }
 
-    @Override
-    public long getItemId(int position) {
-        return 0;
+    private void setCardViewLayoutParams(ImageView mImageView, int width, int height) {
+        ViewGroup.LayoutParams layoutParams = mImageView.getLayoutParams();
+        layoutParams.width = width;
+        layoutParams.height = height;
+        mImageView.setLayoutParams(layoutParams);
     }
 
     @Override
@@ -122,6 +121,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         if (mResults != null) {
             mResults.clear();
         }
+        heights.clear();
     }
 
     public void addItems(List<ResultsBean> goods) {
@@ -147,5 +147,4 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
             }
         }
     }
-
 }

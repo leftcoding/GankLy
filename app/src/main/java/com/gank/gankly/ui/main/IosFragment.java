@@ -147,13 +147,12 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mRecyclerAdapter.clear();
         mRecyclerAdapter.updateItems(list);
     }
 
     @Override
     public void appendMoreDate(List<ResultsBean> list) {
-        mRecyclerAdapter.updateItems(list);
+        mRecyclerAdapter.appendMoreDate(list);
     }
 
     @Override

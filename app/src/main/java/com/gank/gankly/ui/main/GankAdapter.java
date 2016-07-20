@@ -69,11 +69,16 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     public void updateItems(List<ResultsBean> results) {
+        clear();
+        appendMoreDate(results);
+    }
+
+    public void appendMoreDate(List<ResultsBean> results) {
         mResults.addAll(results);
         notifyItemRangeInserted(mResults.size() - 1, results.size());
     }
 
-    public void clear() {
+    private void clear() {
         if (mResults != null) {
             mResults.clear();
         }
