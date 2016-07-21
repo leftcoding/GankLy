@@ -18,6 +18,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
@@ -64,13 +65,13 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         ActionBar barLayout = getSupportActionBar();
         if (barLayout != null) {
             barLayout.setDisplayHomeAsUpEnabled(true);
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
         }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -79,6 +80,7 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(this, R.drawable.shape_item_divider));
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override

@@ -6,6 +6,7 @@ import com.gank.gankly.bean.JiandanResult;
 import com.gank.gankly.model.JiandanModel;
 import com.gank.gankly.model.impl.JiandanModelImpl;
 import com.gank.gankly.presenter.BaseAsynDataSource;
+import com.gank.gankly.presenter.ViewShow;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.socks.library.KLog;
@@ -20,6 +21,7 @@ import rx.Subscriber;
  */
 public class JiandanPresenterImpl extends BaseAsynDataSource<IMeiziView<List<JiandanResult.PostsBean>>> {
     private JiandanModel mModel;
+    private ViewShow mViewShow = new ViewShow();
 
     public JiandanPresenterImpl(Activity mActivity, IMeiziView<List<JiandanResult.PostsBean>> view) {
         super(mActivity, view);
@@ -51,16 +53,17 @@ public class JiandanPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Jia
                 KLog.e(e);
                 mIView.hideRefresh();
                 CrashUtils.crashReport(e);
+                mViewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
             }
 
             @Override
             public void onNext(JiandanResult result) {
-                KLog.d("result.getPosts():" + result.getPosts().size());
-                if (mPage == 1) {
-                    mIView.refillDate(result.getPosts());
-                } else {
-                    mIView.appendMoreDate(result.getPosts());
-                }
+                mViewShow.callShow(mPage, getLimit(), result.getPosts(), mIView, new ViewShow.CallBackViewShow() {
+                    @Override
+                    public void hasMore(boolean more) {
+                        setHasMore(more);
+                    }
+                });
             }
         });
     }

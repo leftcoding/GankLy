@@ -30,6 +30,7 @@ import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -228,6 +229,7 @@ public class WebActivity extends BaseActivity {
     public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            KLog.d("url:" + url);
             if (!TextUtils.isEmpty(url)) {
                 mWebView.loadUrl(url);
             }
@@ -249,6 +251,8 @@ public class WebActivity extends BaseActivity {
                 injectCSS("weibo.css");
             } else if (url.contains("m.miaopai.com")) {
                 injectCSS("miaopai.css");
+            } else if (url.contains("jandan.net")) {
+                injectCSS("jiandan.css");
             }
         }
     }

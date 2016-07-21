@@ -69,9 +69,10 @@ public class MainActivity extends BaseActivity {
                         fragmentTo = SettingFragment.getInstance();
                         break;
                     case R.id.navigation_jiandan:
+                        menuItem.setChecked(false);
                         Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
                         startActivity(intent);
-                        break;
+                        return false; // no checked
                     default:
                         break;
                 }
@@ -84,9 +85,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void switchFragment(Fragment fragment) {
-        if (fragment == null) {
-            return;
-        }
         if (!fragment.getClass().getName().equals(mCurFragment.getClass().getName())) {
             addHideFragment(mCurFragment, fragment);
             mCurFragment = fragment;

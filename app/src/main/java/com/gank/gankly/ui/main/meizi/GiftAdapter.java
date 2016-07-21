@@ -39,8 +39,8 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final GankViewHolder holder, int position) {
-        final GiftBean bean = mResults.get(position);
+    public void onBindViewHolder(GankViewHolder holder, int position) {
+        final GiftBean bean = mResults.get(holder.getAdapterPosition());
         holder.mGiftBean = bean;
         holder.position = position;
         holder.txtDesc.setText(bean.getTitle());
@@ -58,12 +58,10 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
     }
 
     public void updateItems(List<GiftBean> getResults) {
+        mResults.addAll(getResults);
         int size = mResults.size();
-        for (int i = 0; i < getResults.size(); i++) {
-            size = size + i;
-            mResults.add(getResults.get(i));
-            notifyItemInserted(size);
-        }
+        int position = size == 0 ? 0 : size - 1;
+        notifyItemRangeChanged(position, getResults.size());
     }
 
     public void clear() {

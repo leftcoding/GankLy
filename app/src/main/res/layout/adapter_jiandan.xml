@@ -3,15 +3,65 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingBottom="10dp"
+    android:paddingEnd="12dp"
     android:paddingStart="12dp"
     android:paddingTop="10dp">
 
-    <TextView
-        android:id="@+id/jiandan_txt_title"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@color/text_default"
-        android:textSize="16sp"/>
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/jiandan_txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:text="詹姆斯最新生涯20球"
+            android:textColor="@color/text_default"
+            android:textSize="16sp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/jiandan_txt_title"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/jiandan_txt_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="腾讯体育"/>
+
+            <TextView
+                android:id="@+id/jiandan_txt_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/jiandan_txt_author"
+                android:text="123"/>
+
+            <TextView
+                android:id="@+id/jiandan_txt_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:paddingEnd="10dp"
+                android:paddingStart="0dp"
+                android:text="最新"
+                android:textColor="@color/Blue"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/jiandan_img"
+        android:layout_width="90dp"
+        android:layout_height="70dp"
+        android:layout_gravity="end"
+        android:scaleType="centerCrop"
+        android:src="@drawable/item_default_img"/>
+
 </LinearLayout>
