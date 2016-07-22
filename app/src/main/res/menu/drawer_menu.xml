@@ -22,7 +22,7 @@
 
         <item
             android:id="@+id/navigation_jiandan"
-            android:icon="@drawable/navigation_gift"
+            android:icon="@drawable/navigation_jiandan"
             android:title="@string/navigation_jiandan"/>
 
         <item

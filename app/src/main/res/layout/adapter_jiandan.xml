@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="10dp"
-            android:text="詹姆斯最新生涯20球"
+            android:paddingStart="0dp"
+            android:text=""
             android:textColor="@color/text_default"
             android:textSize="16sp"/>
 
@@ -34,7 +35,7 @@
                 android:id="@+id/jiandan_txt_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="腾讯体育"/>
+                android:text=""/>
 
             <TextView
                 android:id="@+id/jiandan_txt_comment_count"
@@ -42,7 +43,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_toEndOf="@id/jiandan_txt_author"
-                android:text="123"/>
+                android:drawableEnd="@drawable/jiandan_comment_count"
+                android:drawablePadding="3dp"
+                android:text=""/>
 
             <TextView
                 android:id="@+id/jiandan_txt_tags"
@@ -51,7 +54,7 @@
                 android:layout_alignParentEnd="true"
                 android:paddingEnd="10dp"
                 android:paddingStart="0dp"
-                android:text="最新"
+                android:text=""
                 android:textColor="@color/Blue"/>
         </RelativeLayout>
     </RelativeLayout>
@@ -62,6 +65,7 @@
         android:layout_height="70dp"
         android:layout_gravity="end"
         android:scaleType="centerCrop"
+        android:contentDescription="@null"
         android:src="@drawable/item_default_img"/>
 
 </LinearLayout>

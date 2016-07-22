@@ -79,6 +79,7 @@ public class WebActivity extends BaseActivity {
         WebSettings settings = mWebView.getSettings();
         mWebView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
         settings.setJavaScriptEnabled(true);  //支持js
+        settings.setDomStorageEnabled(true); //
         settings.setSupportZoom(true); //设置支持缩放
         settings.setBuiltInZoomControls(true); //
         settings.setDisplayZoomControls(false);//是否显示缩放控件
