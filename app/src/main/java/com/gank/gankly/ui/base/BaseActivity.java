@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.base;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
+import com.gank.gankly.ui.main.ThemeChangeUtil;
 
 import butterknife.ButterKnife;
 
@@ -25,6 +27,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        ThemeChangeUtil.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         initPresenter();
@@ -111,6 +114,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected void initPresenter() {
 
+    }
+
+    public void popBackStack() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void gotoActivity(Class<? extends Activity> cls, boolean isFinish) {

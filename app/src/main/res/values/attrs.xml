@@ -37,4 +37,7 @@
         <attr name="error_view" format="reference"/>
         <attr name="no_network_view" format="reference"/>
     </declare-styleable>
+
+    <!-- 自定义主题-->
+    <attr name="lyItemTextColor" format="reference|color"/>
 </resources>
