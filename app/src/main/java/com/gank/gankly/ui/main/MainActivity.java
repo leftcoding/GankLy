@@ -20,7 +20,6 @@ import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 
 import butterknife.Bind;
 
@@ -147,31 +146,26 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        KLog.d("onDestroy ==");
         super.onDestroy();
     }
 
     @Override
     protected void onStop() {
-        KLog.d("onStop ===");
         super.onStop();
     }
 
     @Override
     protected void onRestart() {
-        KLog.d("onRestart ===");
         super.onRestart();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        KLog.d("onCreate ===");
         super.onCreate(savedInstanceState, persistentState);
     }
 
     @Override
     protected void onResume() {
-        KLog.d("onResume ===");
         super.onResume();
     }
 }

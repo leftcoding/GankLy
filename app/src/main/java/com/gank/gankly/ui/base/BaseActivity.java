@@ -12,7 +12,6 @@ import android.text.TextUtils;
 
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
-import com.gank.gankly.ui.main.ThemeChangeUtil;
 
 import butterknife.ButterKnife;
 
@@ -27,7 +26,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        ThemeChangeUtil.changeTheme(this);
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         initPresenter();

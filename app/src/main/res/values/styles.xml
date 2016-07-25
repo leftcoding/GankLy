@@ -33,18 +33,4 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
-    <!-- 夜间主题 -->
-    <style name="ThemeNight" parent="AppTheme">
-        <item name="colorPrimary">@color/green</item>
-        <item name="colorPrimaryDark">@color/gray_light3</item>
-        <item name="colorAccent">@color/green</item>
-        <item name="lyItemTextColor">@color/item_txt_night</item>
-    </style>
-
-    <style name="ThemeLight" parent="AppTheme">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="lyItemTextColor">@color/book_item_title</item>
-    </style>
 </resources>
