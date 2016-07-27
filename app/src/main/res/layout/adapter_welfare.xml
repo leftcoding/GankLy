@@ -18,6 +18,7 @@
             android:id="@+id/ri_img"
             android:layout_width="0dp"
             android:layout_height="120dp"
+            android:src="@drawable/item_default_img"
             android:layout_weight="1"/>
 
         <LinearLayout

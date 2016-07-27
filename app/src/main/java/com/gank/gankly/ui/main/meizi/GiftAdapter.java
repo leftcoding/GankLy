@@ -59,9 +59,7 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
 
     public void updateItems(List<GiftBean> getResults) {
         mResults.addAll(getResults);
-        int size = mResults.size();
-        int position = size == 0 ? 0 : size - 1;
-        notifyItemRangeChanged(position, getResults.size());
+        notifyItemRangeInserted(mResults.size(), getResults.size());
     }
 
     public void clear() {

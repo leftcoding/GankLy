@@ -106,10 +106,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
 
     @Override
     public int getItemCount() {
-        if (mResults != null) {
-            return mResults.size();
-        }
-        return 0;
+        return mResults.size();
     }
 
     public void updateItems(List<ResultsBean> goods) {
@@ -118,16 +115,13 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     }
 
     public void clear() {
-        if (mResults != null) {
-            mResults.clear();
-        }
+        mResults.clear();
         heights.clear();
     }
 
     public void addItems(List<ResultsBean> goods) {
         mResults.addAll(goods);
-        int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
-        notifyItemRangeInserted(position, goods.size());
+        notifyItemRangeInserted(mResults.size(), goods.size());
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

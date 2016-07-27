@@ -63,8 +63,7 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
 
     public void appendItem(List<JiandanResult.PostsBean> list) {
         mList.addAll(list);
-        int position = mList.size() == 0 ? 0 : mList.size() - 1;
-        notifyItemRangeInserted(position, list.size());
+        notifyItemRangeInserted(mList.size(), list.size());
     }
 
     @Override
