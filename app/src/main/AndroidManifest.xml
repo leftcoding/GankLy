@@ -45,6 +45,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".ui.web.JiandanWebActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".ui.browse.BrowseActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,23 +27,38 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
-import java.io.InputStream;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-5-10
  */
-public class WebActivity extends BaseActivity {
+public class JiandanWebActivity extends BaseActivity {
     public static final int FROM_MAIN = 0;
     public static final int FROM_COLLECT = 1;
+    public static final int FROM_JIANDAN = 2;
+
+    private static final int timeout = 50 * 1000;
+    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36";
 
     @Bind(R.id.web_view)
     WebView mWebView;
@@ -96,7 +110,6 @@ public class WebActivity extends BaseActivity {
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
-        mWebView.loadUrl(mUrl);
     }
 
     @Override
@@ -122,7 +135,7 @@ public class WebActivity extends BaseActivity {
         if (bundle != null) {
             mUrl = bundle.getString("url");
             mTitle = bundle.getString("title");
-            mType = bundle.getString("type", Constants.ALL);
+            mType = bundle.getString("type", Constants.JIANDAN);
             mAuthor = bundle.getString("author");
             mFromType = bundle.getInt("from_type");
         }
@@ -133,10 +146,91 @@ public class WebActivity extends BaseActivity {
             isCollect = true;
             mUrlCollect = list.get(0);
         }
+
+        parseLoadUrlData(mUrl);
+    }
+
+    private void parseLoadUrlData(final String url) {
+        Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                try {
+                    Document doc = Jsoup.connect(url)
+                            .userAgent(USERAGENT)
+                            .timeout(timeout)
+                            .ignoreContentType(true)
+                            .ignoreHttpErrors(true)
+                            .get();
+                    String _url = null;
+                    if (doc != null) {
+                        doc = removeDivs(doc);
+                        _url = doc.html();
+                    }
+                    subscriber.onNext(_url);
+                    subscriber.onCompleted();
+                } catch (IOException e) {
+                    KLog.e(e);
+                    subscriber.onError(e);
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+                KLog.d("onCompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onNext(String s) {
+                mWebView.loadDataWithBaseURL("http://i.jandan.net", s, "text/html", "utf-8", null);
+            }
+        });
+    }
+
+    private Document removeDivs(Document doc) {
+        List<String> list = getRemoveDivs();
+        for (int i = 0; i < list.size(); i++) {
+            doc.select(list.get(i)).remove();
+        }
+
+        doc = removeScripts(doc);
+        return doc;
+    }
+
+    private List<String> getRemoveDivs() {
+        List<String> list = new ArrayList<>();
+        list.add("#headerwrapper");
+        list.add("#footer"); //id
+        list.add("#commentform");
+        list.add(".comment-hide");//class
+        list.add(".share-links");
+        list.add(".star-rating");
+        list.add(".s_related");
+        return list;
+    }
+
+    private Document removeScripts(Document doc) {
+        Elements sc = doc.select("script");
+        for (int i = 0; i < sc.size(); i++) {
+            String scText = sc.get(i).toString();
+            if (!TextUtils.isEmpty(scText) && scText.contains("decodeURIComponent") &&
+                    scText.contains("s_related")) {
+                sc.get(i).remove();
+            }
+        }
+        return doc;
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
-        Intent intent = new Intent(activity, WebActivity.class);
+        Intent intent = new Intent(activity, JiandanWebActivity.class);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
@@ -201,8 +295,8 @@ public class WebActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        if (intent.resolveActivity(WebActivity.this.getPackageManager()) != null) {
-            WebActivity.this.startActivity(intent);
+        if (intent.resolveActivity(JiandanWebActivity.this.getPackageManager()) != null) {
+            JiandanWebActivity.this.startActivity(intent);
         } else {
             ToastUtils.showToast(R.string.web_open_failed);
         }
@@ -231,6 +325,7 @@ public class WebActivity extends BaseActivity {
     public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            KLog.d("url:" + url);
             if (!TextUtils.isEmpty(url)) {
                 mWebView.loadUrl(url);
             }
@@ -239,10 +334,6 @@ public class WebActivity extends BaseActivity {
 
         @Override
         public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-//            String url = request.getUrl().toString();
-//            KLog.d("url:" + url);
-//            return new WebResourceResponse("application/x-javascript", "utf-8", null);
-//            return new WebResourceResponse("image/jpeg", "UTF-8", null);
             return super.shouldInterceptRequest(view, request);
         }
 
@@ -254,15 +345,6 @@ public class WebActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-
-//             这些视频需要hack CSS才能达到全屏播放的效果
-            if (url.contains("www.vmovier.com")) {
-                injectCSS("vmovier.css");
-            } else if (url.contains("video.weibo.com")) {
-                injectCSS("weibo.css");
-            } else if (url.contains("m.miaopai.com")) {
-                injectCSS("miaopai.css");
-            }
         }
     }
 
@@ -290,28 +372,6 @@ public class WebActivity extends BaseActivity {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
             return true;
-        }
-    }
-
-    // Inject CSS method: read style.css from assets folder
-    // Append stylesheet to document head
-    private void injectCSS(String filename) {
-        try {
-            InputStream inputStream = this.getAssets().open(filename);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            inputStream.close();
-            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
-            mWebView.loadUrl("javascript:(function() {" +
-                    "var parent = document.getElementsByTagName('head').item(0);" +
-                    "var style = document.createElement('style');" +
-                    "style.type = 'text/css';" +
-                    // Tell the browser to BASE64-decode the string into your script !!!
-                    "style.innerHTML = window.atob('" + encoded + "');" +
-                    "parent.appendChild(style)" +
-                    "})()");
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

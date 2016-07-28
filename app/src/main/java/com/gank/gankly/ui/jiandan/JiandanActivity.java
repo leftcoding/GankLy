@@ -15,7 +15,7 @@ import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.JiandanPresenterImpl;
 import com.gank.gankly.ui.base.BaseJiandanActivity;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
-import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
@@ -149,6 +149,7 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         bundle.putString("url", bean.getUrl());
         bundle.putString("type", Constants.JIANDAN);
         bundle.putString("author", bean.getAuthor().getNickname());
-        WebActivity.startWebActivity(this, bundle);
+//        WebActivity.startWebActivity(this, bundle);
+        JiandanWebActivity.startWebActivity(this, bundle);
     }
 }
