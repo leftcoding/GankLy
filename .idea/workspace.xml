@@ -39,12 +39,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java" />
     </list>
     <ignored path="GankLy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -130,126 +126,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="WebActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="7.4804754">
-              <caret line="255" column="33" selection-start-line="255" selection-start-column="33" selection-end-line="255" selection-end-column="33" />
-              <folding>
-                <element signature="e#5517#5541#0" expanded="true" />
-                <element signature="e#5763#5786#0" expanded="true" />
-                <element signature="e#6249#6274#0" expanded="true" />
-                <element signature="e#7249#7273#0" expanded="true" />
-                <element signature="e#7829#7830#0" expanded="true" />
-                <element signature="e#7892#7893#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JiandanAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="37" column="76" selection-start-line="37" selection-start-column="76" selection-end-line="37" selection-end-column="76" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JiandanActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="152" column="39" selection-start-line="152" selection-start-column="39" selection-end-line="152" selection-end-column="39" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="JiandanWebActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="JiandanWebActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.3327674">
+              <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5324#6207#0" expanded="true" />
-                <element signature="e#6206#6207#0" expanded="true" />
-                <element signature="e#6479#6480#0" expanded="true" />
-                <element signature="e#6532#6533#0" expanded="true" />
-                <element signature="e#6602#6603#0" expanded="true" />
-                <element signature="e#6659#6660#0" expanded="true" />
-                <element signature="e#8784#8808#0" expanded="true" />
-                <element signature="e#9030#9053#0" expanded="true" />
-                <element signature="e#9516#9541#0" expanded="true" />
-                <element signature="e#10530#10554#0" expanded="true" />
-                <element signature="e#11942#11943#0" expanded="true" />
-                <element signature="e#11997#11998#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.8">
-              <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
-              <folding>
-                <element signature="e#901#919#0" expanded="true" />
-                <element signature="e#1366#1384#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DailyMeiziModelImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/DailyMeiziModelImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="59" selection-start-line="58" selection-start-column="16" selection-end-line="59" selection-end-column="59" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/config/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WebView.java" pinned="false" current-in-tab="false">
-        <entry file="file://E:/android-sdk/sources/android-23/android/webkit/WebView.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="974" column="16" selection-start-line="974" selection-start-column="16" selection-end-line="974" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DailyMeiziFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/DailyMeiziFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaseMeziModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/BaseMeziModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="8" column="40" selection-start-line="8" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -2380,8 +2264,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java" />
       </list>
     </option>
   </component>
@@ -3303,7 +3187,13 @@
       <option name="project" value="LOCAL" />
       <updated>1469602675934</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="1.Add JiandanWebActivity &#10;2.Jiandan ads free">
+      <created>1469696792112</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1469696792112</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -3376,7 +3266,8 @@
     <MESSAGE value="1.Update JiandanPresenterImpl&#10;2.Update WebActivity&#10;" />
     <MESSAGE value="1.Reading Add NightTheme" />
     <MESSAGE value="1.Fix Adapter inserted" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Fix Adapter inserted" />
+    <MESSAGE value="1.Add JiandanWebActivity &#10;2.Jiandan ads free" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Add JiandanWebActivity &#10;2.Jiandan ads free" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3749,14 +3640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="76" selection-start-line="37" selection-start-column="76" selection-end-line="37" selection-end-column="76" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.8">
@@ -3786,38 +3669,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="0.7606112">
           <caret line="152" column="39" selection-start-line="152" selection-start-column="39" selection-end-line="152" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5324#6207#0" expanded="true" />
-            <element signature="e#6206#6207#0" expanded="true" />
-            <element signature="e#6479#6480#0" expanded="true" />
-            <element signature="e#6532#6533#0" expanded="true" />
-            <element signature="e#6602#6603#0" expanded="true" />
-            <element signature="e#6659#6660#0" expanded="true" />
-            <element signature="e#8784#8808#0" expanded="true" />
-            <element signature="e#9030#9053#0" expanded="true" />
-            <element signature="e#9516#9541#0" expanded="true" />
-            <element signature="e#10530#10554#0" expanded="true" />
-            <element signature="e#11942#11943#0" expanded="true" />
-            <element signature="e#11997#11998#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.3565365">
+          <caret line="37" column="76" selection-start-line="37" selection-start-column="76" selection-end-line="37" selection-end-column="76" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="7.4804754">
-          <caret line="255" column="33" selection-start-line="255" selection-start-column="33" selection-end-line="255" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.2852292">
+          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
           <folding>
             <element signature="e#5517#5541#0" expanded="true" />
             <element signature="e#5763#5786#0" expanded="true" />
@@ -3825,6 +3694,16 @@
             <element signature="e#7249#7273#0" expanded="true" />
             <element signature="e#7829#7830#0" expanded="true" />
             <element signature="e#7892#7893#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/JiandanWebActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3327674">
+          <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -53,7 +53,6 @@ import rx.schedulers.Schedulers;
  * Create by LingYan on 2016-5-10
  */
 public class JiandanWebActivity extends BaseActivity {
-    public static final int FROM_MAIN = 0;
     public static final int FROM_COLLECT = 1;
     public static final int FROM_JIANDAN = 2;
 
@@ -207,8 +206,8 @@ public class JiandanWebActivity extends BaseActivity {
 
     private List<String> getRemoveDivs() {
         List<String> list = new ArrayList<>();
-        list.add("#headerwrapper");
-        list.add("#footer"); //id
+        list.add("#headerwrapper"); //id
+        list.add("#footer");
         list.add("#commentform");
         list.add(".comment-hide");//class
         list.add(".share-links");
