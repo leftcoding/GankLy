@@ -19,6 +19,7 @@ import butterknife.OnClick;
 
 /**
  * Create by LingYan on 2016-05-10
+ * Email:137387869@qq.com
  */
 public class AboutFragment extends BaseFragment {
     @Bind(R.id.about_toolbar)
