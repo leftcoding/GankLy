@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import com.gank.gankly.presenter.impl.AndroidPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.utils.CircularAnimUtil;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -152,7 +154,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         bundle.putString("url", bean.getUrl());
         bundle.putString("type", Constants.ANDROID);
         bundle.putString("author", bean.getWho());
-        WebActivity.startWebActivity(mActivity, bundle);
+//        WebActivity.startWebActivity(mActivity, bundle);
+        Intent intent = new Intent(mActivity, WebActivity.class);
+        intent.putExtras(bundle);
+        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white_half);
     }
 
     @Override

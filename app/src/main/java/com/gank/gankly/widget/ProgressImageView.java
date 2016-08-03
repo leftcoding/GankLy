@@ -90,12 +90,12 @@ public class ProgressImageView extends RelativeLayout {
 
     public void load(String url, Fragment fragment) {
 //        if (url.endsWith("gif")) {
-        target.setModel(url); // update target's cache
+//        target.setModel(url); // update target's cache
 
         Glide.with(fragment).load(url)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .placeholder(R.drawable.placeholder_loading)
+                .placeholder(R.drawable.placeholder_load)
                 .error(R.drawable.placeholder_failed)
 //                .sizeMultiplier(0.6f)
                 .fitCenter() // needs explicit transformation, because we're using a custom target

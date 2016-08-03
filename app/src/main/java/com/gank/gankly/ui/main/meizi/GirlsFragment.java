@@ -20,6 +20,7 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * 美しい妹
  * Create by LingYan on 2016-07-01
  */
 public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
