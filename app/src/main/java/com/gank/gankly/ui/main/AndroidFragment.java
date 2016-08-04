@@ -157,7 +157,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 //        WebActivity.startWebActivity(mActivity, bundle);
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
-        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white_half);
+        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white);
     }
 
     @Override

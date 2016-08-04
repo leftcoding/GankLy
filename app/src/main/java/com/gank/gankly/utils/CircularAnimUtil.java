@@ -13,9 +13,11 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.socks.library.KLog;
+
 /**
  * 对 ViewAnimationUtils.createCircularReveal() 方法的封装.
- * <p/>
+ * <p>
  * Created on 16/7/20.
  * GitHub: https://github.com/XunMengWinter
  *
@@ -121,6 +123,8 @@ public class CircularAnimUtil {
         // 计算水波中心点至 @animView 边界的最大距离
         int maxW = Math.max(rippleCX, avW - rippleCX);
         int maxH = Math.max(rippleCY, avH - rippleCY);
+
+        // 勾股定理 & 进一法
         final int maxRadius = (int) Math.sqrt(maxW * maxW + maxH * maxH) + 1;
 
         float startRadius, endRadius;
@@ -133,7 +137,7 @@ public class CircularAnimUtil {
             startRadius = maxRadius;
             endRadius = miniRadius;
         }
-
+        //快速实现圆形缩放动画
         Animator anim = ViewAnimationUtils.createCircularReveal(
                 animView, rippleCX, rippleCY, startRadius, endRadius);
         animView.setVisibility(View.VISIBLE);
@@ -290,15 +294,26 @@ public class CircularAnimUtil {
         }
 
         int[] location = new int[2];
+        //获取视图在窗口的绝对位置，x y
         triggerView.getLocationInWindow(location);
+
+        int[] scron = new int[2];
+        triggerView.getLocationOnScreen(scron);
+        KLog.d("OnScreen[0]:" + scron[0] + ",OnScreen[1]:" + scron[1]);
+
         final int cx = location[0] + triggerView.getWidth() / 2;
         final int cy = location[1] + triggerView.getHeight() / 2;
+        KLog.d("location[0]:" + location[0] + ",location[1]:" + location[1] + ",triggerView.getWidth():"
+                + triggerView.getWidth() + ",triggerView.getHeight():" + triggerView.getHeight());
         final ImageView view = new ImageView(thisActivity);
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
         view.setImageResource(colorOrImageRes);
+        //获取到当前窗口最外层的视图
         final ViewGroup decorView = (ViewGroup) thisActivity.getWindow().getDecorView();
         int w = decorView.getWidth();
         int h = decorView.getHeight();
+        KLog.d("w:" + w + ",h:" + h);
+        //动态添加一张ImageView
         decorView.addView(view, w, h);
 
         // 计算中心点至view边界的最大距离
@@ -312,12 +327,14 @@ public class CircularAnimUtil {
         if (durationMills == PERFECT_MILLS) {
             // 算出实际边距与最大边距的比率
             double rate = 1d * finalRadius / maxRadius;
+            KLog.d("rate:" + rate);
             // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
             durationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
+            KLog.d("Math.sqrt(rate):" + Math.sqrt(rate) + ",durationMills:" + durationMills);
         }
         final long finalDuration = durationMills;
         // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。
-        anim.setDuration((long) (finalDuration * 0.9));
+        anim.setDuration((long) (finalDuration * 0.99));
         anim.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -335,25 +352,25 @@ public class CircularAnimUtil {
 
                 switch (finishType) {
                     case FINISH_NONE:
-                        // 默认显示返回至当前Activity的动画.
+//                        // 默认显示返回至当前Activity的动画.
                         triggerView.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Animator anim =
-                                        ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
-                                anim.setDuration(finalDuration);
-                                anim.addListener(new AnimatorListenerAdapter() {
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
-                                        super.onAnimationEnd(animation);
-                                        try {
-                                            decorView.removeView(view);
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                });
-                                anim.start();
+//                                Animator anim =
+//                                        ViewAnimationUtils.createCircularReveal(view, cx, cy, finalRadius, 0);
+//                                anim.setDuration(finalDuration);
+//                                anim.addListener(new AnimatorListenerAdapter() {
+//                                    @Override
+//                                    public void onAnimationEnd(Animator animation) {
+//                                        super.onAnimationEnd(animation);
+                                try {
+                                    decorView.removeView(view);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+//                                    }
+//                                });
+//                                anim.start();
                             }
                         }, 1000);
                         break;
