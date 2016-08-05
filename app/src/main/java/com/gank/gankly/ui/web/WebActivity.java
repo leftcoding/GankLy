@@ -111,7 +111,9 @@ public class WebActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+//                CircularAnimUtil.hide(WebActivity.this.getWindow().getCurrentFocus());
+                finish();
+//                onBackPressed();
             }
         });
     }

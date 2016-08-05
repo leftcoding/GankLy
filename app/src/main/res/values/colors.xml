@@ -32,11 +32,14 @@
 
     <color name="setting_line_bg">#80bebebe</color>
 
-    <!-- night theme start -->
-    <color name="view_bg_night">@color/book_item_title</color>
-    <color name="item_txt_night">@color/green</color>
-    <color name="item_bg_night">@color/green</color>
-    <!-- night theme end -->
+    <!-- Base refresh background-->
+    <color name="base_refresh_list_bg">#f0f0f0</color>
+
+    <!-- start deprecated -->
+    <color name="body_text_1">#de000000</color>
+    <color name="body_text_2">#8a000000</color>
+    <color name="body_text_3">#60000000</color>
+    <color name="body_text_disabled">#44000000</color>
 
     <!--  jianshu   -->
 

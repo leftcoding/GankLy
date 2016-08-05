@@ -101,6 +101,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void initRecycler() {
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setBackgroundResource(R.color.base_refresh_list_bg);
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
@@ -157,7 +158,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 //        WebActivity.startWebActivity(mActivity, bundle);
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
-        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white);
+        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white_half);
     }
 
     @Override
