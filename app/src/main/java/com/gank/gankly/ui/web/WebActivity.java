@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,7 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
+import com.gank.gankly.utils.CircularAnimUtil;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
@@ -76,6 +78,11 @@ public class WebActivity extends BaseActivity {
     }
 
     @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected void initViews() {
         WebSettings settings = mWebView.getSettings();
         mWebView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
@@ -111,11 +118,20 @@ public class WebActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                CircularAnimUtil.hide(WebActivity.this.getWindow().getCurrentFocus());
-                finish();
+//                KLog.d("view:"+ view);
+                CircularAnimUtil.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
+//                finish();
 //                onBackPressed();
             }
         });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            View view = WebActivity.this.getCurrentFocus().getRootView();
+        }
     }
 
     @Override

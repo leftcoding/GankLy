@@ -13,11 +13,12 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.gank.gankly.R;
 import com.socks.library.KLog;
 
 /**
  * 对 ViewAnimationUtils.createCircularReveal() 方法的封装.
- * <p>
+ * <p/>
  * Created on 16/7/20.
  * GitHub: https://github.com/XunMengWinter
  *
@@ -28,6 +29,50 @@ public class CircularAnimUtil {
     public static final long PERFECT_MILLS = 618;
     public static final int MINI_RADIUS = 0;
     private static final int FINISH_NONE = 0, FINISH_SINGLE = 1, FINISH_ALL = 3;
+
+    public static void actionVisible_(boolean isShow, final Activity thisActivity, final View myView, final View rootView, float miniRadius, long durationMills) {
+        int[] location = new int[2];
+        myView.getLocationInWindow(location);
+
+        final int cx = location[0] + myView.getWidth() / 2;
+        final int cy = location[1] + myView.getHeight() / 2;
+
+        final ViewGroup decorView = (ViewGroup) thisActivity.getWindow().getDecorView();
+        int w = decorView.getWidth();
+        int h = decorView.getHeight();
+        // 勾股定理 & 进一法
+        int maxRadius = (int) Math.sqrt(w * w + h * h) + 1;
+
+        float startRadius, endRadius;
+        if (isShow) {
+            // -< 从小到大
+            startRadius = miniRadius;
+            endRadius = maxRadius;
+        } else {
+            // >- 从大到校
+            startRadius = maxRadius;
+            endRadius = miniRadius;
+        }
+
+        Animator anim =
+                ViewAnimationUtils.createCircularReveal(rootView, cx, cy, startRadius, 0);
+//        rootView.setVisibility(View.VISIBLE);
+        anim.setDuration(500);
+
+        // 若收缩，则需要在动画结束时隐藏View
+        if (!isShow)
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    rootView.setVisibility(View.INVISIBLE);
+                    thisActivity.finish();
+                    // 默认渐隐过渡动画.
+                    thisActivity.overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+                }
+            });
+        anim.start();
+    }
 
     /**
      * 为 myView 自身添加显示隐藏的动画
