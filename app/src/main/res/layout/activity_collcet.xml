@@ -29,9 +29,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/main_appbar">
 
-        <!--<FrameLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
         <com.gank.gankly.widget.MultipleStatusView
             android:id="@+id/loading_view"
             android:layout_width="match_parent"
@@ -43,13 +40,7 @@
                 android:layout_height="match_parent"
                 android:visibility="visible"/>
 
-            <!--<com.gank.gankly.widget.LoadingLayoutView-->
-                <!--android:id="@+id/loading_view"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:visibility="visible"/>-->
         </com.gank.gankly.widget.MultipleStatusView>
-        <!--</FrameLayout>-->
     </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

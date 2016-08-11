@@ -6,14 +6,20 @@
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
     android:orientation="vertical"
-    android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/navigation_bg"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/app_txt_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:paddingLeft="16dp"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="24sp"/>
