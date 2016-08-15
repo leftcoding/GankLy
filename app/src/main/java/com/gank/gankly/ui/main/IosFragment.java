@@ -72,7 +72,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initViews() {
-        mRecyclerAdapter = new GankAdapter(mActivity);
+        mRecyclerAdapter = new GankAdapter(mActivity,GankAdapter.LAYOUT_IOS);
         mRecyclerAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));

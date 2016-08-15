@@ -93,7 +93,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
-        itemUpdate.setTextName(R.string.setting_auto_check);
+        itemUpdate.setTextName(R.string.setting_check_version);
         if (App.isNewVersion()) {
             itemUpdate.showVersion();
         }

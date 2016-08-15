@@ -30,16 +30,23 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     private List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
-
+    public static final int LAYOUT_Android = 1;
+    public static final int LAYOUT_IOS = 2;
+    public int mType;
 
     public GankAdapter(Context context) {
+        this(context, LAYOUT_Android);
+    }
+
+    public GankAdapter(Context context, int type) {
         mResults = new ArrayList<>();
         mContext = context;
+        mType = type;
     }
 
     @Override
     public GankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_welfare, parent, false);
+        View view = getLayoutView(parent);
         return new GankViewHolder(view);
     }
 
@@ -63,6 +70,20 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         }
     }
 
+    private View getLayoutView(ViewGroup parent) {
+        View view;
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        switch (mType) {
+            case LAYOUT_IOS:
+                view = layoutInflater.inflate(R.layout.adapter_ios, parent, false);
+                break;
+            default:
+                view = layoutInflater.inflate(R.layout.adapter_welfare, parent, false);
+                break;
+        }
+        return view;
+    }
+
     @Override
     public int getItemCount() {
         return mResults.size();
@@ -75,7 +96,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
     public void appendMoreDate(List<ResultsBean> results) {
         mResults.addAll(results);
-        notifyItemRangeInserted(mResults.size(), results.size());
+        notifyItemInserted(results.size());
     }
 
     private void clear() {

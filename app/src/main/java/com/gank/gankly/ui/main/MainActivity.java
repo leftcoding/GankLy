@@ -80,7 +80,9 @@ public class MainActivity extends BaseActivity {
                         menuItem.setChecked(false);
                         Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                         return false; // no checked
+//                        break;
                     default:
                         break;
                 }

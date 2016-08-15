@@ -40,7 +40,8 @@ public class IosGoodsPresenterImpl extends BaseAsynDataSource<IIosView<List<Resu
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
-                setPage(mPage + 1);
+                int nextPage = mPage + 1;
+                setPage(nextPage);
                 setFirst(false);
             }
 
