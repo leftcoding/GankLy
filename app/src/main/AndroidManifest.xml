@@ -44,7 +44,7 @@
             android:name=".ui.web.WebActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/WebActivityOutTheme"/>
+            android:theme="@style/MyAppTheme"/>
         <activity
             android:name=".ui.web.JiandanWebActivity"
             android:launchMode="singleTask"

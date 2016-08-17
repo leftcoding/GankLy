@@ -32,16 +32,15 @@
     <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
-
-    <!-- -->
-    <style name="ActivityInOutAnimation" parent="AppTheme">
-        <item name="android:activityCloseEnterAnimation">@anim/alpha_in</item>
-        <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
-    </style>
-
-    <style name="WebActivityOutTheme" parent="AppTheme">
-        <item name="android:windowAnimationStyle">@style/ActivityInOutAnimation</item>
-        <item name="android:windowEnableSplitTouch">false</item>
-        <item name="android:splitMotionEvents">false</item>
+    
+    <style name="MyAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

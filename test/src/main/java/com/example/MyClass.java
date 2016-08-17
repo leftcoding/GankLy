@@ -4,7 +4,8 @@ import java.util.List;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Func1;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 public class MyClass {
     private long mLastTime;
@@ -12,32 +13,33 @@ public class MyClass {
     public static void main(String[] args) throws InterruptedException {
         MyClass myClass = new MyClass();
         String[] names = {"A", "B", "C", "D"};
+        //  System.out.println
 
-        Observable.range(1, 10)
-//                .firstOrDefault(3)
-                .firstOrDefault(4, new Func1<Integer, Boolean>() {
-                    @Override
-                    public Boolean call(Integer integer) {
-                        return false;
-                    }
-                })
-                .subscribe(new Subscriber<Integer>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(Integer integer) {
-                        System.out.println("result: " + integer);
-                    }
-                });
+        Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                subscriber.onNext(1);
+                subscriber.onNext(2);
+                subscriber.onCompleted();
+            }
+        }).ignoreElements().subscribe(new Action1<Integer>() {
+            @Override
+            public void call(Integer integer) {
+                System.out.println(integer);
+            }
+        }, new Action1<Throwable>() {
+            @Override
+            public void call(Throwable throwable) {
+                System.out.println(throwable);
+            }
+        }, new Action0() {
+            @Override
+            public void call() {
+                System.out.println("onComplete");
+            }
+        });
     }
+
 
     public static String getSuffixImageName(String url) {
 //        if (!TextUtils.isEmpty(url)) {
