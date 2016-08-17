@@ -71,17 +71,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     private View getLayoutView(ViewGroup parent) {
-        View view;
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        int resLayout;
         switch (mType) {
             case LAYOUT_IOS:
-                view = layoutInflater.inflate(R.layout.adapter_ios, parent, false);
+                resLayout = R.layout.adapter_ios;
                 break;
             default:
-                view = layoutInflater.inflate(R.layout.adapter_welfare, parent, false);
+                resLayout = R.layout.adapter_welfare;
                 break;
         }
-        return view;
+        return layoutInflater.inflate(resLayout, parent, false);
     }
 
     @Override

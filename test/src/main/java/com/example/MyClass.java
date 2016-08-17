@@ -2,14 +2,41 @@ package com.example;
 
 import java.util.List;
 
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
+
 public class MyClass {
     private long mLastTime;
+
     public static void main(String[] args) throws InterruptedException {
         MyClass myClass = new MyClass();
-//        int s = 10 & 2;
-//        int ss = 5 << 2;
-//        System.out.print("s:" + s + ",0xFF:" + 0xFF + ",5>>2:" + ss);
-//        System.out.println("" + getSuffixImageName("http://ww4.sinaimg.cn/large/610dc034jw1f3litmfts1j20qo0hsac7.jpg"));
+        String[] names = {"A", "B", "C", "D"};
+
+        Observable.range(1, 10)
+//                .firstOrDefault(3)
+                .firstOrDefault(4, new Func1<Integer, Boolean>() {
+                    @Override
+                    public Boolean call(Integer integer) {
+                        return false;
+                    }
+                })
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        System.out.println("result: " + integer);
+                    }
+                });
     }
 
     public static String getSuffixImageName(String url) {

@@ -118,10 +118,7 @@ public class WebActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                KLog.d("view:"+ view);
                 CircularAnimUtil.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
-//                finish();
-//                onBackPressed();
             }
         });
     }
@@ -129,9 +126,6 @@ public class WebActivity extends BaseActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            View view = WebActivity.this.getCurrentFocus().getRootView();
-        }
     }
 
     @Override
