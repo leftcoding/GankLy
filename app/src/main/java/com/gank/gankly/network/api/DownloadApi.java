@@ -29,10 +29,6 @@ public class DownloadApi {
     private static final String BASE_URL = "http://gank.leftyan.com/";
     private DownloadService mDownloadService;
 
-    public DownloadApi() {
-        init(null);
-    }
-
     public DownloadApi(DownloadProgressListener listener) {
         DownloadProgressInterceptor interceptor = new DownloadProgressInterceptor(listener);
         init(interceptor);
