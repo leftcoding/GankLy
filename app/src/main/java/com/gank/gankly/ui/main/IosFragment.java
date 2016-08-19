@@ -77,6 +77,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
     }
 

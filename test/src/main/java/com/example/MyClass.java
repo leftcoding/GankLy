@@ -1,11 +1,11 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 public class MyClass {
     private long mLastTime;
@@ -14,32 +14,51 @@ public class MyClass {
         MyClass myClass = new MyClass();
         String[] names = {"A", "B", "C", "D"};
         //  System.out.println
+        ArrayList<Integer> arrays = new ArrayList<>();
+        arrays.add(0);
+        arrays.add(1);
+        arrays.add(2);
+        arrays.add(3);
+        arrays.add(4);
+        Observable.interval(1, TimeUnit.SECONDS)
+//                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Long>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("------ onNext onCompleted");
+                    }
 
-        Observable.create(new Observable.OnSubscribe<Integer>() {
-            @Override
-            public void call(Subscriber<? super Integer> subscriber) {
-                subscriber.onNext(1);
-                subscriber.onNext(2);
-                subscriber.onCompleted();
-            }
-        }).ignoreElements().subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                System.out.println(integer);
-            }
-        }, new Action1<Throwable>() {
-            @Override
-            public void call(Throwable throwable) {
-                System.out.println(throwable);
-            }
-        }, new Action0() {
-            @Override
-            public void call() {
-                System.out.println("onComplete");
-            }
-        });
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        System.out.println("------ onNext " + aLong);
+                    }
+                });
     }
 
+    private Observable<Integer> FromArray() {
+        ArrayList<Integer> arrays = new ArrayList<>();
+        arrays.add(0);
+        arrays.add(1);
+        arrays.add(2);
+        arrays.add(3);
+        arrays.add(4);
+        return Observable.from(arrays);
+    }
+
+    private Observable<Integer> FromIterable() {
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(0);
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        return Observable.from(list);
+    }
 
     public static String getSuffixImageName(String url) {
 //        if (!TextUtils.isEmpty(url)) {

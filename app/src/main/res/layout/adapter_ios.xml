@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
+    android:stateListAnimator="@drawable/ios_state_list"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="0dp"
     app:cardElevation="2dp">
@@ -31,17 +32,17 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:paddingBottom="16dp"
-            android:paddingTop="16dp"
-            android:paddingStart="16dp">
+            android:paddingStart="16dp"
+            android:paddingTop="16dp">
 
             <TextView
                 android:id="@+id/goods_txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_above="@+id/goods_rl_data"
                 android:ellipsize="end"
                 android:maxLines="3"
                 android:text=""
-                android:layout_above="@+id/goods_rl_data"
                 android:textColor="@color/body_text_1"
                 android:textSize="16sp"/>
 
@@ -50,8 +51,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:paddingTop="8dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="8dp">
 
                 <TextView
                     android:id="@+id/goods_txt_time"
@@ -62,9 +63,9 @@
                     android:drawableStart="@drawable/book_time"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:textColor="@color/body_text_2"
                     android:maxLines="1"
                     android:text=""
+                    android:textColor="@color/body_text_2"
                     android:textSize="14sp"/>
 
                 <TextView

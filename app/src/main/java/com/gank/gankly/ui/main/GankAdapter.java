@@ -1,5 +1,7 @@
 package com.gank.gankly.ui.main;
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,7 +34,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     private Context mContext;
     public static final int LAYOUT_Android = 1;
     public static final int LAYOUT_IOS = 2;
-    public int mType;
+    public int mLayout;
 
     public GankAdapter(Context context) {
         this(context, LAYOUT_Android);
@@ -41,7 +43,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     public GankAdapter(Context context, int type) {
         mResults = new ArrayList<>();
         mContext = context;
-        mType = type;
+        mLayout = type;
     }
 
     @Override
@@ -73,7 +75,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     private View getLayoutView(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         int resLayout;
-        switch (mType) {
+        switch (mLayout) {
             case LAYOUT_IOS:
                 resLayout = R.layout.adapter_ios;
                 break;
@@ -96,7 +98,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
     public void appendMoreDate(List<ResultsBean> results) {
         mResults.addAll(results);
-        notifyItemInserted(results.size());
+        int size = mResults.size();
+        int position = size - 1 < 0 ? 0 : size - 1;
+        notifyItemRangeInserted(position, results.size());
     }
 
     private void clear() {
@@ -124,6 +128,11 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
         public GankViewHolder(View itemView) {
             super(itemView);
+            if (mLayout == LAYOUT_IOS) {
+                StateListAnimator listAnimator = AnimatorInflater.loadStateListAnimator(mContext, R.drawable.ios_state_list);
+                itemView.setStateListAnimator(listAnimator);
+            }
+
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
             mSize = MeiziArrayList.getInstance().getImagesList().size();
