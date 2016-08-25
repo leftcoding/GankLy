@@ -18,7 +18,7 @@ import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
-import com.gank.gankly.view.IIosView;
+import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
@@ -26,10 +26,12 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
+ * ios
  * Create by LingYan on 2016-4-26
+ * Email:137387869@qq.com
  */
 public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
-        RecyclerOnClick, IIosView<List<ResultsBean>> {
+        RecyclerOnClick, IMeiziView<List<ResultsBean>> {
     @Bind(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @Bind(R.id.meizi_swipe_refresh)
@@ -44,7 +46,6 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     private int mLastPosition;
 
     public IosFragment() {
-
     }
 
     @Override
@@ -67,12 +68,11 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initValues() {
-
     }
 
     @Override
     protected void initViews() {
-        mRecyclerAdapter = new GankAdapter(mActivity,GankAdapter.LAYOUT_IOS);
+        mRecyclerAdapter = new GankAdapter(mActivity, GankAdapter.LAYOUT_IOS);
         mRecyclerAdapter.setOnItemClickListener(this);
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -139,10 +139,10 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onClick(View view, ResultsBean bean) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", bean.getDesc());
-        bundle.putString("url", bean.getUrl());
-        bundle.putString("type", Constants.IOS);
-        bundle.putString("author", bean.getWho());
+        bundle.putString(WebActivity.TITLE, bean.getDesc());
+        bundle.putString(WebActivity.URL, bean.getUrl());
+        bundle.putString(WebActivity.TYPE, Constants.IOS);
+        bundle.putString(WebActivity.AUTHOR, bean.getWho());
         WebActivity.startWebActivity(mActivity, bundle);
     }
 

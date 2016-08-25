@@ -29,6 +29,7 @@ import butterknife.Bind;
 
 /**
  * Create by LingYan on 2016-5-12
+ * Email:137387869@qq.com
  */
 public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener,
         IMeiziView<List<ResultsBean>> {
@@ -129,12 +130,10 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         fetchNew();
     }
 
-    private List<ResultsBean> mList;
-
     @Override
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
+        bundle.putInt(BrowseActivity.POSITION, position);
         Intent intent = new Intent(mActivity, BrowseActivity.class);
         intent.putExtras(bundle);
         CircularAnimUtil.startActivity(mActivity, intent, view, R.color.color_2f);
@@ -142,7 +141,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        this.mList = list;
         mRecyclerAdapter.updateItems(list);
     }
 

@@ -6,7 +6,7 @@ import com.gank.gankly.bean.JiandanResult;
 import com.gank.gankly.model.JiandanModel;
 import com.gank.gankly.model.impl.JiandanModelImpl;
 import com.gank.gankly.presenter.BaseAsynDataSource;
-import com.gank.gankly.presenter.ViewShow;
+import com.gank.gankly.presenter.ViewControl;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.socks.library.KLog;
@@ -21,7 +21,7 @@ import rx.Subscriber;
  */
 public class JiandanPresenterImpl extends BaseAsynDataSource<IMeiziView<List<JiandanResult.PostsBean>>> {
     private JiandanModel mModel;
-    private ViewShow mViewShow = new ViewShow();
+    private ViewControl mViewControl = new ViewControl();
 
     public JiandanPresenterImpl(Activity mActivity, IMeiziView<List<JiandanResult.PostsBean>> view) {
         super(mActivity, view);
@@ -38,14 +38,14 @@ public class JiandanPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Jia
     @Override
     public void fetchData() {
         super.fetchData();
-        final int mPage = getPage();
+        final int mPage = getNextPage();
         mModel.fetchData(mPage, new Subscriber<JiandanResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
                 setFirst(false);
-                setPage(mPage + 1);
+                setNextPage(mPage + 1);
             }
 
             @Override
@@ -53,12 +53,12 @@ public class JiandanPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Jia
                 KLog.e(e);
                 mIView.hideRefresh();
                 CrashUtils.crashReport(e);
-                mViewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
+                mViewControl.onError(mPage, isFirst(), isNetworkAvailable(), mIView);
             }
 
             @Override
             public void onNext(JiandanResult result) {
-                mViewShow.callShow(mPage, getLimit(), result.getPosts(), mIView, new ViewShow.CallBackViewShow() {
+                mViewControl.onNext(mPage, getLimit(), result.getPosts(), mIView, new ViewControl.CallBackViewShow() {
                     @Override
                     public void hasMore(boolean more) {
                         setHasMore(more);

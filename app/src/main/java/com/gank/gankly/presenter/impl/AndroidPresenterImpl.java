@@ -10,7 +10,7 @@ import com.gank.gankly.model.impl.AndroidModelImpl;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.presenter.BaseAsynDataSource;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
-import com.gank.gankly.presenter.ViewShow;
+import com.gank.gankly.presenter.ViewControl;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.socks.library.KLog;
@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<ResultsBean>>> implements
         IBaseRefreshPresenter {
     private BaseModel mModel;
-    private ViewShow mViewShow = new ViewShow();
+    private ViewControl mViewControl = new ViewControl();
 
     public AndroidPresenterImpl(Activity mActivity, IMeiziView<List<ResultsBean>> view) {
         super(mActivity, view);
@@ -40,7 +40,7 @@ public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Res
     @Override
     public void fetchMore() {
         super.fetchMore();
-        if (isHasMore()) {
+        if (isMore()) {
             mIView.showRefresh();
             fetchData();
         }
@@ -50,11 +50,12 @@ public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Res
     public void fetchNew() {
         super.fetchNew();
         initFirstPage();
-        final int mPage = getPage();
+        final int mPage = getNextPage();
+        final int limit = getLimit();
         final Observable<GankResult> androidGoods = GankApi.getInstance()
-                .getGankService().fetchAndroidGoods(getLimit(), mPage);
+                .getGankService().fetchAndroidGoods(limit, mPage);
         Observable<GankResult> images = GankApi.getInstance()
-                .getGankService().fetchBenefitsGoods(getLimit(), mPage);
+                .getGankService().fetchBenefitsGoods(limit, mPage);
 
         Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
             @Override
@@ -65,46 +66,28 @@ public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Res
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GankResult>() {
-                    @Override
-                    public void onCompleted() {
-                        mIView.hideRefresh();
-                        mIView.showContent();
-                        setFirst(false);
-                        setPage(mPage + 1);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        mIView.hideRefresh();
-                        KLog.e(e);
-                        CrashUtils.crashReport(e);
-                        mViewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        mViewShow.callShow(mPage, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
-                            @Override
-                            public void hasMore(boolean more) {
-                                setHasMore(more);
-                            }
-                        });
-                    }
-                });
+                .subscribe(getSubscriber());
     }
 
     @Override
     public void fetchData() {
         super.fetchData();
-        final int mPage = getPage();
-        mModel.fetchData(mPage, getLimit(), new Subscriber<GankResult>() {
+        final int mPage = getNextPage();
+        final int limit = getLimit();
+        mModel.fetchData(mPage, limit, getSubscriber());
+    }
+
+    private Subscriber<GankResult> getSubscriber() {
+        final int mPage = getNextPage();
+        final int limit = getLimit();
+        return new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
                 setFirst(false);
-                setPage(mPage + 1);
+                int nextPage = mPage + 1;
+                setNextPage(nextPage);
             }
 
             @Override
@@ -112,18 +95,18 @@ public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Res
                 KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
-                mViewShow.callError(mPage, isFirst(), isNetworkAvailable(), mIView);
+                mViewControl.onError(mPage, isFirst(), isNetworkAvailable(), mIView);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
-                mViewShow.callShow(mPage, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
+                mViewControl.onNext(mPage, limit, gankResult.getResults(), mIView, new ViewControl.CallBackViewShow() {
                     @Override
                     public void hasMore(boolean more) {
                         setHasMore(more);
                     }
                 });
             }
-        });
+        };
     }
 }

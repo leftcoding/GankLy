@@ -22,6 +22,7 @@ import butterknife.Bind;
 /**
  * 美しい妹
  * Create by LingYan on 2016-07-01
+ * Email:137387869@qq.com
  */
 public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     @Bind(R.id.girl_toolbar)

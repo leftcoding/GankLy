@@ -145,11 +145,10 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
     public void onClick(int position, Object object) {
         JiandanResult.PostsBean bean = (JiandanResult.PostsBean) object;
         Bundle bundle = new Bundle();
-        bundle.putString("title", bean.getTitle());
-        bundle.putString("url", bean.getUrl());
-        bundle.putString("type", Constants.JIANDAN);
-        bundle.putString("author", bean.getAuthor().getNickname());
-//        WebActivity.startWebActivity(this, bundle);
+        bundle.putString(JiandanWebActivity.TITLE, bean.getTitle());
+        bundle.putString(JiandanWebActivity.URL, bean.getUrl());
+        bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN);
+        bundle.putString(JiandanWebActivity.AUTHOR, bean.getAuthor().getNickname());
         JiandanWebActivity.startWebActivity(this, bundle);
     }
 }

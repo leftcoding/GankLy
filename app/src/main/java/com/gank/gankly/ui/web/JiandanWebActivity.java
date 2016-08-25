@@ -51,6 +51,7 @@ import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-5-10
+ * Email:137387869@qq.com
  */
 public class JiandanWebActivity extends BaseActivity {
     public static final int FROM_COLLECT = 1;
@@ -58,6 +59,12 @@ public class JiandanWebActivity extends BaseActivity {
 
     private static final int timeout = 50 * 1000;
     private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36";
+
+    public static final String TITLE = "title";
+    public static final String URL = "url";
+    public static final String TYPE = "type";
+    public static final String AUTHOR = "author";
+    public static final String FROM_WAY = "from_type";
 
     @Bind(R.id.web_view)
     WebView mWebView;
@@ -77,7 +84,7 @@ public class JiandanWebActivity extends BaseActivity {
     private boolean isInitCollect;
     private UrlCollect mUrlCollect;
     private CollectStates mStates = CollectStates.NORMAL;
-    private int mFromType;
+    private int mFromWay;
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -132,11 +139,11 @@ public class JiandanWebActivity extends BaseActivity {
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mUrl = bundle.getString("url");
-            mTitle = bundle.getString("title");
-            mType = bundle.getString("type", Constants.JIANDAN);
-            mAuthor = bundle.getString("author");
-            mFromType = bundle.getInt("from_type");
+            mUrl = bundle.getString(URL);
+            mTitle = bundle.getString(TITLE);
+            mType = bundle.getString(TYPE, Constants.JIANDAN);
+            mAuthor = bundle.getString(AUTHOR);
+            mFromWay = bundle.getInt(FROM_WAY);
         }
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
@@ -179,7 +186,6 @@ public class JiandanWebActivity extends BaseActivity {
         observable.subscribe(new Subscriber<String>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
             }
 
             @Override
@@ -294,6 +300,7 @@ public class JiandanWebActivity extends BaseActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        //查询是否有符合的Activity
         if (intent.resolveActivity(JiandanWebActivity.this.getPackageManager()) != null) {
             JiandanWebActivity.this.startActivity(intent);
         } else {
@@ -324,7 +331,6 @@ public class JiandanWebActivity extends BaseActivity {
     public class MyWebViewClient extends android.webkit.WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            KLog.d("url:" + url);
             if (!TextUtils.isEmpty(url)) {
                 mWebView.loadUrl(url);
             }
@@ -381,7 +387,7 @@ public class JiandanWebActivity extends BaseActivity {
             collectUrl();
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
-            if (mFromType == FROM_COLLECT) {
+            if (mFromWay == FROM_COLLECT) {
                 RxUtils.getInstance().OnUnCollect();
             }
         }

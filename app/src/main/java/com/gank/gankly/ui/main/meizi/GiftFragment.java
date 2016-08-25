@@ -28,6 +28,7 @@ import butterknife.Bind;
 
 /**
  * Create by LingYan on 2016-05-17
+ * Email:137387869@qq.com
  */
 public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;

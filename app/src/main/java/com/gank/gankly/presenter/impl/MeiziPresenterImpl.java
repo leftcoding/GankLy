@@ -8,7 +8,7 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.model.BaseModel;
 import com.gank.gankly.model.impl.MeiziModelImpl;
 import com.gank.gankly.presenter.BaseAsynDataSource;
-import com.gank.gankly.presenter.ViewShow;
+import com.gank.gankly.presenter.ViewControl;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.socks.library.KLog;
@@ -23,12 +23,12 @@ import rx.Subscriber;
  */
 public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<ResultsBean>>> {
     private BaseModel mModel;
-    private ViewShow viewShow;
+    private ViewControl mViewControl;
 
     public MeiziPresenterImpl(Activity mActivity, IMeiziView<List<ResultsBean>> view) {
         super(mActivity, view);
         mModel = new MeiziModelImpl();
-        viewShow = new ViewShow();
+        mViewControl = new ViewControl();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
 
     @Override
     public void fetchMore() {
-        if (isHasMore()) {
+        if (isMore()) {
             mIView.showRefresh();
             fetchData();
         }
@@ -47,15 +47,16 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
 
     @Override
     public void fetchData() {
-        final int page = getPage();
-        mModel.fetchData(page, getLimit(), new Subscriber<GankResult>() {
+        final int page = getNextPage();
+        final int limit = getLimit();
+        mModel.fetchData(page, limit, new Subscriber<GankResult>() {
             @Override
             public void onCompleted() {
                 mIView.hideRefresh();
                 mIView.showContent();
-                setFirst(false);
                 int nextPage = page + 1;
-                setPage(nextPage);
+                setNextPage(nextPage);
+                setFirst(false);
             }
 
             @Override
@@ -63,12 +64,12 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
                 KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hideRefresh();
-                viewShow.callError(page, isFirst(), isNetworkAvailable(), mIView);
+                mViewControl.onError(page, isFirst(), isNetworkAvailable(), mIView);
             }
 
             @Override
             public void onNext(GankResult gankResult) {
-                viewShow.callShow(page, getLimit(), gankResult.getResults(), mIView, new ViewShow.CallBackViewShow() {
+                mViewControl.onNext(page, limit, gankResult.getResults(), mIView, new ViewControl.CallBackViewShow() {
                     @Override
                     public void hasMore(boolean more) {
                         setHasMore(more);

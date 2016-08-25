@@ -58,6 +58,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     public static final String GIFT = "gift";
     public static final String DAILY = "daily";
 
+    public static final String POSITION = "position";
+
     @Bind(R.id.progress_txt_page)
     TextView txtLimit;
     @Bind(R.id.toolbar)
@@ -143,7 +145,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mPosition = bundle.getInt("position", 0);
+            mPosition = bundle.getInt(POSITION, 0);
             mViewsModel = bundle.getString(ViewsModel.Gift, GANK);
         }
 
