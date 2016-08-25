@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="butterknife-8.3.0">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jakewharton/butterknife/8.3.0/res" />
+      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.jakewharton/butterknife/8.3.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/8.3.0/29d580c1917112d3f406caaea38e02e670827c0c/butterknife-8.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

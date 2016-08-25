@@ -13,7 +13,7 @@ import com.gank.gankly.listener.ItemClick;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -58,7 +58,7 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
     }
 
     public class DailyMeiziHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.daily_meizi_title)
+        @BindView(R.id.daily_meizi_title)
         TextView txtTitle;
         DailyMeiziBean dailyMeiziBean;
 

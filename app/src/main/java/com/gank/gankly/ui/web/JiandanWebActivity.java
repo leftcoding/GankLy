@@ -43,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,13 +66,13 @@ public class JiandanWebActivity extends BaseActivity {
     public static final String AUTHOR = "author";
     public static final String FROM_WAY = "from_type";
 
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView mWebView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.web_progress_bar)
+    @BindView(R.id.web_progress_bar)
     ProgressBar mProgressBar;
-    @Bind(R.id.web_main)
+    @BindView(R.id.web_main)
     View mView;
 
     private String mUrl;

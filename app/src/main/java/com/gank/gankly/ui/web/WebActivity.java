@@ -39,7 +39,7 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-5-10
@@ -53,13 +53,13 @@ public class WebActivity extends BaseActivity {
     public static final String TYPE= "type";
     public static final String AUTHOR= "author";
 
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView mWebView;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.web_progress_bar)
+    @BindView(R.id.web_progress_bar)
     ProgressBar mProgressBar;
-    @Bind(R.id.web_main)
+    @BindView(R.id.web_main)
     View mView;
 
     private String mUrl;

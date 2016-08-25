@@ -16,7 +16,7 @@ import com.gank.gankly.listener.ItemClick;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -72,15 +72,15 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
     }
 
     public class JiandanHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.jiandan_txt_title)
+        @BindView(R.id.jiandan_txt_title)
         TextView txtTitle;
-        @Bind(R.id.jiandan_txt_author)
+        @BindView(R.id.jiandan_txt_author)
         TextView txtAuthor;
-        @Bind(R.id.jiandan_txt_tags)
+        @BindView(R.id.jiandan_txt_tags)
         TextView txtTags;
-        @Bind(R.id.jiandan_txt_comment_count)
+        @BindView(R.id.jiandan_txt_comment_count)
         TextView txtCount;
-        @Bind(R.id.jiandan_img)
+        @BindView(R.id.jiandan_img)
         ImageView img;
 
         private JiandanResult.PostsBean bean;

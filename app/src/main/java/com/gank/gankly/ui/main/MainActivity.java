@@ -21,15 +21,15 @@ import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-6-13
  */
 public class MainActivity extends BaseActivity {
-    @Bind(R.id.main_navigation)
+   @BindView(R.id.main_navigation)
     NavigationView mNavigationView;
-    @Bind(R.id.drawer_layout)
+   @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     private long mKeyTime;

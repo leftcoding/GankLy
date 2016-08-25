@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -19,13 +19,13 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-06-06
  */
 public class ItemTextView extends RelativeLayout {
-    @Bind(R.id.item_view_txt_name)
+    @BindView(R.id.item_view_txt_name)
     TextView txtTitle;
-    @Bind(R.id.item_view_txt_summary)
+    @BindView(R.id.item_view_txt_summary)
     TextView txtSummary;
-    @Bind(R.id.item_rl_update_version)
+    @BindView(R.id.item_rl_update_version)
     View mView;
-    @Bind(R.id.item_view_txt_new_version)
+    @BindView(R.id.item_view_txt_new_version)
     TextView txtVersion;
 
     private String mSummary;

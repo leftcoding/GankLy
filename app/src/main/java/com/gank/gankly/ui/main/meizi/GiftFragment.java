@@ -24,7 +24,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-05-17
@@ -32,9 +32,9 @@ import butterknife.Bind;
  */
 public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;
-    @Bind(R.id.meizi_swipe_refresh)
+    @BindView(R.id.meizi_swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
 
     private GiftAdapter mAdapter;

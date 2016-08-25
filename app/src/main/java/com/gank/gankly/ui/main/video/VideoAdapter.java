@@ -17,7 +17,7 @@ import com.gank.gankly.listener.MeiziOnClick;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -90,11 +90,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.goods_txt_title)
+        @BindView(R.id.goods_txt_title)
         TextView txtDesc;
-        @Bind(R.id.goods_img_bg)
+        @BindView(R.id.goods_img_bg)
         ImageView mImageView;
-        @Bind(R.id.video_txt_author)
+        @BindView(R.id.video_txt_author)
         TextView txtAuthor;
         int position;
 

@@ -23,7 +23,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * ios
@@ -32,11 +32,11 @@ import butterknife.Bind;
  */
 public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
         RecyclerOnClick, IMeiziView<List<ResultsBean>> {
-    @Bind(R.id.meizi_recycler_view)
+    @BindView(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.meizi_swipe_refresh)
+    @BindView(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.meizi_multiple_status_view)
+    @BindView(R.id.meizi_multiple_status_view)
     MultipleStatusView mMultipleStatusView;
 
     private MainActivity mActivity;

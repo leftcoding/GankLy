@@ -38,7 +38,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -60,11 +60,11 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     public static final String POSITION = "position";
 
-    @Bind(R.id.progress_txt_page)
+    @BindView(R.id.progress_txt_page)
     TextView txtLimit;
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.pager)
+    @BindView(R.id.pager)
     ViewPager mViewPager;
 
     private PagerAdapter mPagerAdapter;

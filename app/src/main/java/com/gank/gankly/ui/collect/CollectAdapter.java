@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -95,15 +95,15 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
 
 
     class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-        @Bind(R.id.collect_txt_title)
+        @BindView(R.id.collect_txt_title)
         TextView title;
-        @Bind(R.id.collect_txt_time)
+        @BindView(R.id.collect_txt_time)
         TextView time;
-        @Bind(R.id.collect_txt_type)
+        @BindView(R.id.collect_txt_type)
         TextView type;
-        @Bind(R.id.collect_user_img)
+        @BindView(R.id.collect_user_img)
         ImageView userPicture;
-        @Bind(R.id.collect_txt_author)
+        @BindView(R.id.collect_txt_author)
         TextView author;
 
         UrlCollect mUrlCollect;

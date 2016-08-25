@@ -22,7 +22,7 @@ import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 煎蛋杂谈
@@ -31,11 +31,11 @@ import butterknife.Bind;
  */
 public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<List<JiandanResult.PostsBean>>,
         ItemClick {
-    @Bind(R.id.main_toolbar)
+    @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.multiple_status_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private IBaseRefreshPresenter mPresenter;

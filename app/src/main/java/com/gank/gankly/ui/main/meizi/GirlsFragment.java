@@ -17,7 +17,7 @@ import com.gank.gankly.ui.main.MainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * 美しい妹
@@ -25,11 +25,11 @@ import butterknife.Bind;
  * Email:137387869@qq.com
  */
 public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
-    @Bind(R.id.girl_toolbar)
+    @BindView(R.id.girl_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.girl_tabLayout)
+    @BindView(R.id.girl_tabLayout)
     TabLayout mTabLayout;
-    @Bind(R.id.girl_view_pager)
+    @BindView(R.id.girl_view_pager)
     ViewPager mViewPager;
 
     private GirlsAdapter mPagerAdapter;

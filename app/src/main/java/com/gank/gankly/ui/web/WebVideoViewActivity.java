@@ -10,13 +10,13 @@ import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.LoveVideoView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-26
  */
 public class WebVideoViewActivity extends BaseActivity {
-    @Bind(R.id.video_view)
+    @BindView(R.id.video_view)
     LoveVideoView mLoveVideoView;
     private String mUrl;
 

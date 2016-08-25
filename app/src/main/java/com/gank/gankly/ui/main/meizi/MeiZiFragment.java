@@ -25,7 +25,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-5-12
@@ -33,9 +33,9 @@ import butterknife.Bind;
  */
 public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener,
         IMeiziView<List<ResultsBean>> {
-    @Bind(R.id.multiple_status_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;

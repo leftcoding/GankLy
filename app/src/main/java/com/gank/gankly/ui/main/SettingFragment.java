@@ -20,18 +20,18 @@ import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
  * Create by LingYan on 2016-05-10
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
-    @Bind(R.id.setting_toolbar)
+    @BindView(R.id.setting_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.setting_switch_check)
+    @BindView(R.id.setting_switch_check)
     ItemSwitchView mSwitchView;
-    @Bind(R.id.setting_item_text_update)
+    @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
 
     public static SettingFragment sAboutFragment;

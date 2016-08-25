@@ -13,8 +13,8 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
 
-import butterknife.Bind;
 import butterknife.BindString;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -22,9 +22,9 @@ import butterknife.OnClick;
  * Email:137387869@qq.com
  */
 public class AboutFragment extends BaseFragment {
-    @Bind(R.id.about_toolbar)
+    @BindView(R.id.about_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.about_collapsing)
+    @BindView(R.id.about_collapsing)
     CollapsingToolbarLayout mCollapsingToolbarLayout;
     @BindString(R.string.about_gank_url)
     String mGankUrl;

@@ -13,18 +13,18 @@ import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.network.DownloadProgressListener;
+import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.meizi.MeiZiFragment;
-import com.gank.gankly.presenter.LauncherPresenter;
-import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.utils.GanklyPreferences;
+import com.gank.gankly.view.ILauncher;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-22
@@ -33,11 +33,11 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
         ViewPager.OnPageChangeListener, DownloadProgressListener, ILauncher {
     private static final String TAG = "MainFragment";
 
-    @Bind(R.id.main_toolbar)
+    @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.main_tabLayout)
+    @BindView(R.id.main_tabLayout)
     TabLayout mTabLayout;
-    @Bind(R.id.main_view_pager)
+    @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
 
     private GankPagerAdapter mPagerAdapter;

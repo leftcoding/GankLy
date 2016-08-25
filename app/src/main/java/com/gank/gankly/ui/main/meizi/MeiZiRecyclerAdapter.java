@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -125,7 +125,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.meizi_img_picture)
+        @BindView(R.id.meizi_img_picture)
         ImageView imgMeizi;
 
         public GoodsViewHolder(View itemView) {

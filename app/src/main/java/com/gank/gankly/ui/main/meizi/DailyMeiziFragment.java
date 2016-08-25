@@ -28,7 +28,7 @@ import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-07-01
@@ -38,9 +38,9 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     private DailyMeiziPresenter mPresenter;
     private MainActivity mActivity;
 
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
-    @Bind(R.id.meizi_swipe_refresh)
+    @BindView(R.id.meizi_swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
     DailyMeiziAdapter mDailyMeiziAdapter;
 

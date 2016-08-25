@@ -31,7 +31,7 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import rx.Subscriber;
 
@@ -43,13 +43,13 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 public class CollectFragment extends BaseSwipeRefreshFragment implements
         DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, ICollectView<List<UrlCollect>> {
 
-    @Bind(R.id.main_toolbar)
+    @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.meizi_recycler_view)
+    @BindView(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
-    @Bind(R.id.meizi_swipe_refresh)
+    @BindView(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @Bind(R.id.loading_view)
+    @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
     private MainActivity mActivity;
     private CollectAdapter mCollectAdapter;

@@ -25,7 +25,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
@@ -34,9 +34,9 @@ import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
  */
 public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
         RecyclerOnClick, IMeiziView<List<ResultsBean>> {
-    @Bind(R.id.multiple_status_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @Bind(R.id.swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private MainActivity mActivity;

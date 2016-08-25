@@ -14,6 +14,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -23,13 +24,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private long mLastTime;
     private Fragment mContent = null;
     protected P mPresenter;
+    protected Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         initPresenter();
-        ButterKnife.bind(this);
+        mUnbinder = ButterKnife.bind(this);
         initValues();
         initViews();
         bindListener();
@@ -142,6 +144,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
+            mUnbinder = null;
+        }
     }
 }

@@ -15,7 +15,7 @@ import com.gank.gankly.ui.base.BaseActivity;
 
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -24,7 +24,7 @@ import rx.functions.Action1;
  * Create by LingYan on 2016-06-01
  */
 public class SplashActivity extends BaseActivity {
-    @Bind(R.id.splash_main)
+    @BindView(R.id.splash_main)
     View mView;
 
     @Override

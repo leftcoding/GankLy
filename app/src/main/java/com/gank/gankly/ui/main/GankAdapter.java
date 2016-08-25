@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -114,13 +114,13 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.goods_txt_title)
+        @BindView(R.id.goods_txt_title)
         TextView txtDesc;
-        @Bind(R.id.goods_txt_author_name)
+        @BindView(R.id.goods_txt_author_name)
         TextView txtName;
-        @Bind(R.id.goods_txt_time)
+        @BindView(R.id.goods_txt_time)
         TextView txtTime;
-        @Bind(R.id.ri_img)
+        @BindView(R.id.ri_img)
         RatioImageView img;
         ResultsBean mBean;
         int mSize;
