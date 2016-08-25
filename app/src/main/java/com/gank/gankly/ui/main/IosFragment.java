@@ -116,6 +116,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initDate() {
+        showLoading();
         initFetchDate();
     }
 
@@ -172,6 +173,12 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     public void hasNoMoreDate() {
         super.hasNoMoreDate();
         Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showLoading() {
+        super.showLoading();
+        mMultipleStatusView.showLoading();
     }
 
     @Override
