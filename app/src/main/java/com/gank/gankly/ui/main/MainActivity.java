@@ -27,9 +27,9 @@ import butterknife.BindView;
  * Create by LingYan on 2016-6-13
  */
 public class MainActivity extends BaseActivity {
-   @BindView(R.id.main_navigation)
+    @BindView(R.id.main_navigation)
     NavigationView mNavigationView;
-   @BindView(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
     private long mKeyTime;
