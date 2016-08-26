@@ -27,11 +27,13 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 清纯妹子
  * Create by LingYan on 2016-05-17
  * Email:137387869@qq.com
  */
 public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;
+
     @BindView(R.id.meizi_swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.loading_view)
