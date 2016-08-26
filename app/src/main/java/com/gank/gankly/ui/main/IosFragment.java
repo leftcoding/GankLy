@@ -115,7 +115,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    protected void initDate() {
+    protected void initData() {
         showLoading();
         initFetchDate();
     }

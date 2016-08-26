@@ -44,13 +44,13 @@ public abstract class LazyFragment extends BaseSwipeRefreshFragment {
         super.setUserVisibleHint(isVisibleToUser);
     }
 
-    protected abstract void initDate();
+    protected abstract void initData();
 
     private void lazyLoadData() {
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }
-        initDate();
+        initData();
         isFirstLoad = false;
     }
 }

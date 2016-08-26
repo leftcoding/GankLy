@@ -88,7 +88,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
-    protected void initDate() {
+    protected void initData() {
         initRefresh();
     }
 

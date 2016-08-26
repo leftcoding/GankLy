@@ -112,7 +112,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     }
 
     @Override
-    protected void initDate() {
+    protected void initData() {
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
     }

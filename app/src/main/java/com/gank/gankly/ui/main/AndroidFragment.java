@@ -95,7 +95,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    protected void initDate() {
+    protected void initData() {
         onDownRefresh();
     }
 

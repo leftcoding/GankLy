@@ -103,7 +103,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     @Override
-    protected void initDate() {
+    protected void initData() {
         mMultipleStatusView.showLoading();
         fetchNew();
     }

@@ -2,7 +2,6 @@ package com.gank.gankly.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -159,11 +158,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
     }
 
     @Override
