@@ -28,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 休息视频
  * Create by LingYan on 2016-04-25
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
