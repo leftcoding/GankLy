@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     @Override
@@ -98,6 +99,11 @@ public class MainActivity extends BaseActivity {
             addHideFragment(mCurFragment, fragment);
             mCurFragment = fragment;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
