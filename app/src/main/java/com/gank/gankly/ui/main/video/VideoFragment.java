@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
@@ -31,7 +32,7 @@ import butterknife.BindView;
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-    private static VideoFragment sVideoFragment;
+    private volatile static VideoFragment sVideoFragment;
 
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
@@ -109,7 +110,8 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
                 mPresenter.fetchMore();
             }
         });
-        mSwipeRefreshLayout.setColorSchemeColors(R.color.colorPrimary, R.color.colorPrimaryDark);
+        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary),
+                App.getAppColor(R.color.colorPrimaryDark));
     }
 
     @Override

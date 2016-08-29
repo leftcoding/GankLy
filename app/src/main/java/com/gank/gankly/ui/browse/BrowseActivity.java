@@ -54,11 +54,11 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-    public static final String GANK = "gank";
-    public static final String GIFT = "gift";
-    public static final String DAILY = "daily";
-
-    public static final String POSITION = "position";
+    public static final String EXTRA_GANK = "gank";
+    public static final String EXTRA_GIFT = "gift";
+    public static final String EXTRA_DAILY = "daily";
+    public static final String EXTRA_MODEL = "model";
+    public static final String EXTRA_POSITION = "position";
 
     @BindView(R.id.progress_txt_page)
     TextView txtLimit;
@@ -72,13 +72,13 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private int mPage;
 
     private boolean isLoadMore = true;
-    private String mViewsModel = GANK;
+    private String mViewsModel = EXTRA_GANK;
     private List<GiftBean> mGiftList;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         int size;
-        if (GANK.equals(mViewsModel)) {
+        if (EXTRA_GANK.equals(mViewsModel)) {
             size = MeiziArrayList.getInstance().size();
         } else {
             size = mGiftList.size();
@@ -89,7 +89,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     @Override
     public void onPageSelected(int position) {
-        if (GANK.equals(mViewsModel)) {
+        if (EXTRA_GANK.equals(mViewsModel)) {
             int p = mGiftList.size() - 5;
             if (position == p) {
                 if (isLoadMore) {
@@ -145,8 +145,8 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mPosition = bundle.getInt(POSITION, 0);
-            mViewsModel = bundle.getString(ViewsModel.Gift, GANK);
+            mPosition = bundle.getInt(EXTRA_POSITION, 0);
+            mViewsModel = bundle.getString(EXTRA_GIFT, EXTRA_GANK);
         }
 
         getImageList(mViewsModel);
@@ -182,11 +182,11 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void getImageList(String model) {
-        if (GIFT.equals(model)) {
+        if (EXTRA_GIFT.equals(model)) {
             mGiftList = GiftFragment.getInstance().getList();
-        } else if (DAILY.equals(model)) {
+        } else if (EXTRA_DAILY.equals(model)) {
             mGiftList = DailyMeiziFragment.getInstance().getList();
-        } else if (GANK.equals(model)) {
+        } else if (EXTRA_GANK.equals(model)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
             List<GiftBean> g = new ArrayList<>();
             if (!ListUtils.isListEmpty(giftBeen)) {
@@ -206,7 +206,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
         @Override
         public int getCount() {
-            if (GANK.equals(mViewsModel)) {
+            if (EXTRA_GANK.equals(mViewsModel)) {
                 return MeiziArrayList.getInstance().size();
             }
             return mGiftList.size();
@@ -214,7 +214,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
         @Override
         public Fragment getItem(int position) {
-            if (GANK.equals(mViewsModel)) {
+            if (EXTRA_GANK.equals(mViewsModel)) {
                 ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
                 return BrowseFragment.newInstance(bean.getUrl());
             }

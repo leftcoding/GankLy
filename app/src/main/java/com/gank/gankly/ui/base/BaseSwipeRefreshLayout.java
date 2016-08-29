@@ -50,7 +50,7 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
                     switch (mCurManager) {
                         case L:
                             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
-                            if (linearLayoutManager.findLastCompletelyVisibleItemPosition() == count) {
+                            if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == count) {
                                 loadMore();
                             }
                             break;

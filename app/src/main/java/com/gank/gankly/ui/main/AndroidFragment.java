@@ -27,7 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Create by LingYan on 2016-4-26
@@ -115,7 +115,8 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             }
         });
 
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new ScaleInAnimator());
+//        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new ScaleInAnimator());
+        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
         alphaAdapter.setFirstOnly(true);
         alphaAdapter.setDuration(500);
