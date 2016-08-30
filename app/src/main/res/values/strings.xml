@@ -53,6 +53,7 @@
     <string name="setting_auto_check">自动检查更新</string>
     <string name="setting_check_version">检查更新</string>
     <string name="setting_current_version">当前版本 %1$s</string>
+    <string name="setting_theme_night">夜间模式</string>
 
     <string name="preference_category_base_settings">基本设置</string>
     <string name="preference_category_help">帮助</string>

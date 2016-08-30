@@ -31,6 +31,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Create by LingYan on 2016-4-26
+ * Email:137387869@qq.com
  */
 public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
         RecyclerOnClick, IMeiziView<List<ResultsBean>> {

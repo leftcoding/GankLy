@@ -1,7 +1,9 @@
 package com.gank.gankly.ui.jiandan;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -9,13 +11,11 @@ import android.view.View;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.JiandanResult;
-import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.JiandanPresenterImpl;
 import com.gank.gankly.ui.base.BaseJiandanActivity;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
-import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
@@ -41,6 +41,12 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
     private IBaseRefreshPresenter mPresenter;
     private static JiandanActivity sJiandanActivity;
     private JiandanAdapter mAdapter;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//        getDelegate().setLocalNightMode(App.mDayNightMode);
+        super.onCreate(savedInstanceState);
+    }
 
     public static JiandanActivity getInstance() {
         if (sJiandanActivity == null) {
@@ -143,12 +149,14 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
 
     @Override
     public void onClick(int position, Object object) {
-        JiandanResult.PostsBean bean = (JiandanResult.PostsBean) object;
-        Bundle bundle = new Bundle();
-        bundle.putString(JiandanWebActivity.TITLE, bean.getTitle());
-        bundle.putString(JiandanWebActivity.URL, bean.getUrl());
-        bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN);
-        bundle.putString(JiandanWebActivity.AUTHOR, bean.getAuthor().getNickname());
-        JiandanWebActivity.startWebActivity(this, bundle);
+//        JiandanResult.PostsBean bean = (JiandanResult.PostsBean) object;
+//        Bundle bundle = new Bundle();
+//        bundle.putString(JiandanWebActivity.TITLE, bean.getTitle());
+//        bundle.putString(JiandanWebActivity.URL, bean.getUrl());
+//        bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN);
+//        bundle.putString(JiandanWebActivity.AUTHOR, bean.getAuthor().getNickname());
+//        JiandanWebActivity.startWebActivity(this, bundle);
+        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        recreate();
     }
 }

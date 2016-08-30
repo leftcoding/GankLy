@@ -14,6 +14,8 @@
     <color name="text_555555">#ff555555</color>
     <color name="text_666666">#666666</color>
 
+    <color name="dark_color">#ff00A0DC</color>
+
     <color name="color_2f">#ff2f2f2f</color>
     <color name="Blue">#55a5e3</color>
     <color name="book_item_divider">#dddddd</color>

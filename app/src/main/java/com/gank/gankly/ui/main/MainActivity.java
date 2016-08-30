@@ -5,12 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatDelegate;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
@@ -24,8 +27,11 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-6-13
+ * Email:137387869@qq.com
  */
 public class MainActivity extends BaseActivity {
+    public static final String TAG = "MainActivity";
+
     @BindView(R.id.main_navigation)
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
@@ -36,8 +42,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (App.isDayNight()) {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
         super.onCreate(savedInstanceState);
-//        getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     @Override
@@ -108,8 +118,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
-        mCurFragment = MainFragment.getInstance();
-        add(mCurFragment);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(TAG);
+        if(fragment == null){
+            mCurFragment = MainFragment.getInstance();
+            add(mCurFragment);
+        }
     }
 
     @Override

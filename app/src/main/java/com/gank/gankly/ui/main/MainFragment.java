@@ -28,6 +28,7 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-22
+ * Email:137387869@qq.com
  */
 public class MainFragment extends BaseSwipeRefreshFragment implements
         ViewPager.OnPageChangeListener, DownloadProgressListener, ILauncher {

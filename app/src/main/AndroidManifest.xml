@@ -39,7 +39,8 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.DayNight.NoActionBar"/>
         <activity
             android:name=".ui.web.WebActivity"
             android:launchMode="singleTask"
@@ -61,6 +62,7 @@
         <activity
             android:name=".ui.jiandan.JiandanActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.DayNight.NoActionBar"/>
     </application>
 </manifest>

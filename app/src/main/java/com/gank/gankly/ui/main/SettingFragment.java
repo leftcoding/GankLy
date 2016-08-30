@@ -25,6 +25,7 @@ import butterknife.OnClick;
 
 /**
  * Create by LingYan on 2016-05-10
+ * Email:137387869@qq.com
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
     @BindView(R.id.setting_toolbar)
@@ -33,6 +34,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     ItemSwitchView mSwitchView;
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
+    @BindView(R.id.setting_switch_theme)
+    ItemSwitchView mTheme;
 
     public static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
@@ -83,12 +86,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private void initPreferences() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, false);
         mSwitchView.setViewSwitch(isAutoCheck);
-        mSwitchView.setOnSwitch(new ItemSwitchView.OnSwitch() {
-            @Override
-            public void onSwitch(boolean isCheck) {
-                savePreferences(isCheck);
-            }
-        });
+
+        mTheme.setTextName(App.getAppString(R.string.setting_theme_night));
 
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
@@ -106,6 +105,25 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void bindLister() {
+        mSwitchView.setOnSwitch(new ItemSwitchView.OnSwitch() {
+            @Override
+            public void onSwitch(boolean isCheck) {
+                savePreferences(isCheck);
+            }
+        });
+
+        mTheme.setOnSwitch(new ItemSwitchView.OnSwitch() {
+            @Override
+            public void onSwitch(boolean isCheck) {
+                if (isCheck) {
+                    App.setIsDayNight(false);
+                    mActivity.recreate();
+                } else {
+                    App.setIsDayNight(true);
+                    mActivity.recreate();
+                }
+            }
+        });
     }
 
     @Override

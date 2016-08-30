@@ -32,7 +32,8 @@ import rx.schedulers.Schedulers;
 public class GiftModeImpl implements GiftModel {
     private static final int timeout = 50 * 1000;
     private static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
-    private String url = "http://www.mzitu.com/mm/page/";
+    private String url = "http://www.mzitu.com/mm";
+    private String nextUrl = url + "/page/";
 
     private Subscription mSubscription;
     private boolean isUnSubscribe;
@@ -47,7 +48,7 @@ public class GiftModeImpl implements GiftModel {
             @Override
             public void call(Subscriber<? super GiftResult> subscriber) {
                 try {
-                    String _url = url + page;
+                    String _url = getUrl(page);
                     Document doc = Jsoup.connect(_url)
                             .userAgent(DESKTOP_USERAGENT)
                             .timeout(timeout)
@@ -65,6 +66,16 @@ public class GiftModeImpl implements GiftModel {
                 .observeOn(AndroidSchedulers.mainThread());
 
         observable.subscribe(subscriber);
+    }
+
+    private String getUrl(int page) {
+        String _url;
+        if (page == 1) {
+            _url = url;
+        } else {
+            _url = nextUrl + page;
+        }
+        return _url;
     }
 
     private int getMaxPageNum(Document doc) {

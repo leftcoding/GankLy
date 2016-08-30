@@ -24,6 +24,8 @@ public class App extends Application {
     public static Context mContext;
     private static SQLiteDatabase db;
 
+    private static boolean isDayNight;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -86,5 +88,13 @@ public class App extends Application {
 
     public static void setNewVersion(boolean newVersion) {
         isNewVersion = newVersion;
+    }
+
+    public static boolean isDayNight() {
+        return isDayNight;
+    }
+
+    public static void setIsDayNight(boolean isDayNight) {
+        App.isDayNight = isDayNight;
     }
 }
