@@ -15,14 +15,16 @@
             android:id="@+id/setting_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
             app:layout_collapseMode="pin"/>
     </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/setting_rl_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/setting_appbar"
-        android:background="@color/white">
+        android:background="?attr/themeSettingBackground">
 
         <com.gank.gankly.widget.ItemSwitchView
             android:id="@+id/setting_switch_check"

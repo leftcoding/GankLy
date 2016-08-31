@@ -43,6 +43,9 @@
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
 
+    <!-- dark theme color-->
+    <color name="dark_colorPrimary">#3f3f3f</color>
+    <color name="dark_colorPrimaryDark">#3a3a3a</color>
     <!--  jianshu   -->
 
     <color name="Blue_translucent">#5555a5e3</color>

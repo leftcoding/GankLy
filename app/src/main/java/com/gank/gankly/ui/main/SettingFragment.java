@@ -3,9 +3,13 @@ package com.gank.gankly.ui.main;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.Resources;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.Switch;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -28,6 +32,8 @@ import butterknife.OnClick;
  * Email:137387869@qq.com
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
+    @BindView(R.id.setting_rl_body)
+    View mView;
     @BindView(R.id.setting_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.setting_switch_check)
@@ -36,11 +42,15 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     ItemTextView itemUpdate;
     @BindView(R.id.setting_switch_theme)
     ItemSwitchView mTheme;
+    @BindView(R.id.item_switch_auto_check)
+    Switch mSwitch;
 
     public static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
     public MainActivity mActivity;
     private ProgressDialog mDialog;
+    private Resources.Theme theme;
+    private TypedValue typedValue;
 
     @Override
     public void onAttach(Context context) {
@@ -62,6 +72,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void initValues() {
+        theme = mActivity.getTheme();
     }
 
     @Override
@@ -98,6 +109,12 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeTheme();
+    }
+
     @OnClick(R.id.setting_item_text_update)
     void clikUpdate() {
         mPresenter.checkVersion();
@@ -112,16 +129,23 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             }
         });
 
+        if (App.isNight()) {
+            mTheme.setViewSwitch(true);
+        } else {
+            mTheme.setViewSwitch(false);
+        }
+
         mTheme.setOnSwitch(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {
+                App.setIsNight(isCheck);
                 if (isCheck) {
-                    App.setIsDayNight(false);
-                    mActivity.recreate();
+                    getActivity().setTheme(R.style.AppTheme_Night);
                 } else {
-                    App.setIsDayNight(true);
-                    mActivity.recreate();
+                    getActivity().setTheme(R.style.AppTheme_Day);
                 }
+                refreshStatusBar();
+                changeTheme();
             }
         });
     }
@@ -157,6 +181,26 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
+    }
+
+    /**
+     * 刷新 StatusBar
+     */
+    private void refreshStatusBar() {
+        if (Build.VERSION.SDK_INT >= 21) {
+            typedValue = new TypedValue();
+            theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+            mActivity.getWindow().setStatusBarColor(getResources().getColor(typedValue.resourceId));
+        }
+    }
+
+
+    private void changeTheme() {
+        TypedValue background = new TypedValue();
+        theme.resolveAttribute(R.attr.themeSettingBackground, background, true);
+        mView.setBackgroundResource(background.resourceId);
+        theme.resolveAttribute(R.attr.colorPrimary, background, true);
+        mToolbar.setBackgroundResource(background.resourceId);
     }
 
     @Override

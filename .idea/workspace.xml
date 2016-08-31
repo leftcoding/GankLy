@@ -45,6 +45,11 @@
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml">
+        <config>
+          <theme>@style/AppTheme</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/drawer_menu.xml">
         <config>
           <theme>@android:style/Theme.Material.Light</theme>
@@ -63,25 +68,19 @@
     <option name="LOGCAT_FORMAT_STRING" value="%1$s %3$s %4$c/%5$s: %6$s" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="1.Update Butterknife">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/BuglyUploadLog.txt" />
+    <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/GiftModeImpl.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/GiftModeImpl.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AboutFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AboutFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SplashActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SplashActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/adapter_jiandan.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_jiandan.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/include_app_head.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/include_app_head.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
     </list>
     <ignored path="GankLy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -167,78 +166,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="JiandanActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="158" column="71" selection-start-line="158" selection-start-column="71" selection-end-line="158" selection-end-column="71" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2144#2171#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.6">
-              <caret line="55" column="37" selection-start-line="55" selection-start-column="18" selection-end-line="55" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="themes.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/themes.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.5">
-              <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SettingFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
-              <folding>
-                <element signature="e#1945#1973#0" expanded="true" />
-                <element signature="e#2706#2734#0" expanded="true" />
-                <element signature="e#2764#2881#0" expanded="true" />
-                <element signature="e#2958#2988#0" expanded="true" />
-                <element signature="e#3270#3441#0" expanded="true" />
-                <element signature="e#3440#3441#0" expanded="true" />
-                <element signature="e#3472#3850#0" expanded="true" />
-                <element signature="e#3849#3850#0" expanded="true" />
-                <element signature="e#4312#4339#0" expanded="true" />
-                <element signature="e#4521#4545#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6836158">
-              <caret line="185" column="5" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
-              <folding>
-                <element signature="e#5753#5754#0" expanded="true" />
-                <element signature="e#5785#5786#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.033334">
-              <caret line="42" column="64" selection-start-line="42" selection-start-column="64" selection-end-line="42" selection-end-column="64" />
+            <state vertical-scroll-proportion="-4.2">
+              <caret line="12" column="41" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -248,14 +180,39 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
+              <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="attrs.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-15.633333">
+              <caret line="42" column="37" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SettingFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7372449">
+              <caret line="50" column="35" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
               <folding>
-                <element signature="e#2131#2132#0" expanded="true" />
-                <element signature="e#2186#2187#0" expanded="true" />
-                <element signature="e#2564#2565#0" expanded="true" />
-                <element signature="e#2597#2598#0" expanded="true" />
-                <element signature="e#2657#2658#0" expanded="true" />
-                <element signature="e#2700#2701#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2173#2174#0" expanded="true" />
+                <element signature="e#2217#2218#0" expanded="true" />
+                <element signature="e#2293#2321#0" expanded="true" />
+                <element signature="e#3054#3082#0" expanded="true" />
+                <element signature="e#3112#3229#0" expanded="true" />
+                <element signature="e#3306#3336#0" expanded="true" />
+                <element signature="e#4057#4502#0" expanded="true" />
+                <element signature="e#4501#4502#0" expanded="true" />
+                <element signature="e#4964#4991#0" expanded="true" />
+                <element signature="e#5173#5197#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -263,16 +220,14 @@
       </file>
       <file leaf-file-name="fragment_setting.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.451613">
-              <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
-              <folding>
-                <element signature="e#2007#2028#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
           <provider editor-type-id="android-designer">
             <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.7903225">
+              <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -280,7 +235,7 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="78" selection-start-line="46" selection-start-column="78" selection-end-line="46" selection-end-column="78" />
+              <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -288,14 +243,34 @@
       </file>
       <file leaf-file-name="view_item_switch.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.33870968">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="-4.677419">
+              <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
               <folding />
             </state>
           </provider>
-          <provider editor-type-id="android-designer">
-            <state />
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-28.9">
+              <caret line="63" column="48" selection-start-line="63" selection-start-column="48" selection-end-line="63" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="140" column="29" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="29" />
+              <folding />
+            </state>
           </provider>
         </entry>
       </file>
@@ -2451,11 +2426,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/DailyMeiziFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemTextView.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/browse/BrowseFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" />
@@ -2465,7 +2435,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GirlsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GiftAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiRecyclerAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/ImageView.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/LazyFragment.java" />
@@ -2479,11 +2448,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshLayout.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AboutFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SplashActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/bean/CarNewsBean.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/api/GankApi.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/service/GankService.java" />
@@ -2491,17 +2458,25 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/presenter/impl/AndroidPresenterImpl.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-night/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/adapter_jiandan.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/model/impl/GiftModeImpl.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/themes.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
+        <option value="$PROJECT_DIR$/app/build/intermediates/bundles/debug/instant-run/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/include_app_head.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/themes.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -2564,19 +2539,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2584,6 +2546,10 @@
               <option name="myItemId" value="GankLy" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="External Libraries" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2606,28 +2572,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2650,14 +2594,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values-night" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2853,194 +2789,25 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="meizi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jiandan" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="network" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="impl" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="bean" />
+              <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3051,7 +2818,7 @@
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="SearchEverywhereHistoryKey" value="final&#9;FILE&#9;jar://C:/Program Files/Java/jdk1.8.0_91/jre/lib/rt.jar!/com/sun/istack/internal/FinalArrayList.class&#10;static final&#9;null&#9;null&#10;pro&#9;FILE&#9;file://E:/GankLy/app/src/main/java/com/gank/gankly/widget/ProgressImageView.java&#10;rxi&#9;PSI&#9;JAVA://com.gank.gankly.utils.RxSaveImage" />
-    <property name="last_opened_file_path" value="E:/Gankly_img/gankly.jks" />
+    <property name="last_opened_file_path" value="C:/" />
     <property name="ExportApk.ApkPath" value="E:\GankLy\app" />
     <property name="ExportApk.Flavors" value="" />
     <property name="ExportApk.BuildType" value="release" />
@@ -3386,12 +3153,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00012" summary="1.Add StickyListHeadersListView">
-      <created>1467623569496</created>
-      <option name="number" value="00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1467623569496</updated>
-    </task>
     <task id="LOCAL-00013" summary="1.Add StickyListHeadersListView&#10;2.Add DailyMeiziFragment">
       <created>1467710468977</created>
       <option name="number" value="00013" />
@@ -3680,7 +3441,13 @@
       <option name="project" value="LOCAL" />
       <updated>1472462973514</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="1.Add DayNightTheme">
+      <created>1472549625714</created>
+      <option name="number" value="00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1472549625725</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3694,7 +3461,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2262181" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946634" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3702,7 +3469,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29814386" sideWeight="0.502451" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34802786" sideWeight="0.49754903" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.50928074" sideWeight="0.49754903" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26960784" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23433875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -3738,7 +3505,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.Update VideoPresenter&#10;" />
     <MESSAGE value="1.Update VideoPresenter&#10;2.Delete IVideoView&#10;3.Renamed view_swiperefresh_multiple_status&#10;4.Update BasePresenter&#10;" />
     <MESSAGE value="1.Fix VideoPresenterImpl&#10;" />
     <MESSAGE value="1.Add BaseAsynDataSource&#10;2.Update BasePresenter&#10;" />
@@ -3763,7 +3529,8 @@
     <MESSAGE value="1.Add DisplayUtils" />
     <MESSAGE value="1.Update presenter" />
     <MESSAGE value="1.Update Butterknife" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Update Butterknife" />
+    <MESSAGE value="1.Add DayNightTheme" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Add DayNightTheme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3775,317 +3542,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/DepthPageTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/DisplayUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="62" selection-start-line="52" selection-start-column="62" selection-end-line="52" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/jp.wasabeef/recyclerview-animators/2.2.3/d95d1043795fd4e24243b7dd2f8539adb1e8af7d/recyclerview-animators-2.2.3-sources.jar!/jp/wasabeef/recyclerview/animators/ScaleInAnimator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7430168">
-          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="61" selection-start-line="14" selection-start-column="61" selection-end-line="14" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-fragment/24.2.0/b71b851c2724662f772b1055ad2ad9f0af6dd6f3/support-fragment-24.2.0-sources.jar!/android/support/v4/app/Fragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="13" selection-start-line="177" selection-start-column="13" selection-end-line="177" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#92404#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#4537#4538#0" expanded="false" />
-            <element signature="e#4561#4562#0" expanded="false" />
-            <element signature="e#5274#5275#0" expanded="false" />
-            <element signature="e#5326#5327#0" expanded="false" />
-            <element signature="e#5397#5398#0" expanded="false" />
-            <element signature="e#5451#5452#0" expanded="false" />
-            <element signature="e#11934#11935#0" expanded="false" />
-            <element signature="e#11972#11973#0" expanded="false" />
-            <element signature="e#12245#12246#0" expanded="false" />
-            <element signature="e#12277#12278#0" expanded="false" />
-            <element signature="e#12356#12357#0" expanded="false" />
-            <element signature="e#12404#12405#0" expanded="false" />
-            <element signature="e#12611#12612#0" expanded="false" />
-            <element signature="e#12674#12675#0" expanded="false" />
-            <element signature="e#12750#12751#0" expanded="false" />
-            <element signature="e#12809#12810#0" expanded="false" />
-            <element signature="e#13104#13105#0" expanded="false" />
-            <element signature="e#13145#13146#0" expanded="false" />
-            <element signature="e#18290#18291#0" expanded="false" />
-            <element signature="e#18334#18335#0" expanded="false" />
-            <element signature="e#18450#18451#0" expanded="false" />
-            <element signature="e#18488#18489#0" expanded="false" />
-            <element signature="e#18596#18597#0" expanded="false" />
-            <element signature="e#18635#18636#0" expanded="false" />
-            <element signature="e#19409#19410#0" expanded="false" />
-            <element signature="e#19443#19444#0" expanded="false" />
-            <element signature="e#19554#19555#0" expanded="false" />
-            <element signature="e#19581#19582#0" expanded="false" />
-            <element signature="e#20259#20260#0" expanded="false" />
-            <element signature="e#20292#20293#0" expanded="false" />
-            <element signature="e#21764#21765#0" expanded="false" />
-            <element signature="e#21794#21795#0" expanded="false" />
-            <element signature="e#21930#21931#0" expanded="false" />
-            <element signature="e#21971#21972#0" expanded="false" />
-            <element signature="e#22100#22101#0" expanded="false" />
-            <element signature="e#22164#22165#0" expanded="false" />
-            <element signature="e#22680#22681#0" expanded="false" />
-            <element signature="e#22743#22744#0" expanded="false" />
-            <element signature="e#23580#23581#0" expanded="false" />
-            <element signature="e#23634#23635#0" expanded="false" />
-            <element signature="e#24745#24746#0" expanded="false" />
-            <element signature="e#24784#24785#0" expanded="false" />
-            <element signature="e#25741#25742#0" expanded="false" />
-            <element signature="e#25779#25780#0" expanded="false" />
-            <element signature="e#25904#25905#0" expanded="false" />
-            <element signature="e#25950#25951#0" expanded="false" />
-            <element signature="e#26210#26211#0" expanded="false" />
-            <element signature="e#26242#26243#0" expanded="false" />
-            <element signature="e#26529#26530#0" expanded="false" />
-            <element signature="e#26561#26562#0" expanded="false" />
-            <element signature="e#26993#26994#0" expanded="false" />
-            <element signature="e#27025#27026#0" expanded="false" />
-            <element signature="e#27234#27235#0" expanded="false" />
-            <element signature="e#27274#27275#0" expanded="false" />
-            <element signature="e#28067#28068#0" expanded="false" />
-            <element signature="e#28097#28098#0" expanded="false" />
-            <element signature="e#28159#28160#0" expanded="false" />
-            <element signature="e#28190#28191#0" expanded="false" />
-            <element signature="e#28251#28252#0" expanded="false" />
-            <element signature="e#28286#28287#0" expanded="false" />
-            <element signature="e#29429#29430#0" expanded="false" />
-            <element signature="e#29469#29470#0" expanded="false" />
-            <element signature="e#29521#29522#0" expanded="false" />
-            <element signature="e#29559#29560#0" expanded="false" />
-            <element signature="e#32247#32248#0" expanded="false" />
-            <element signature="e#32286#32287#0" expanded="false" />
-            <element signature="e#32959#32960#0" expanded="false" />
-            <element signature="e#33002#33003#0" expanded="false" />
-            <element signature="e#46605#46606#0" expanded="false" />
-            <element signature="e#46635#46636#0" expanded="false" />
-            <element signature="e#46785#46786#0" expanded="false" />
-            <element signature="e#46812#46813#0" expanded="false" />
-            <element signature="e#51323#51324#0" expanded="false" />
-            <element signature="e#51351#51352#0" expanded="false" />
-            <element signature="e#52162#52163#0" expanded="false" />
-            <element signature="e#52192#52193#0" expanded="false" />
-            <element signature="e#52818#52819#0" expanded="false" />
-            <element signature="e#52848#52849#0" expanded="false" />
-            <element signature="e#53762#53763#0" expanded="false" />
-            <element signature="e#53792#53793#0" expanded="false" />
-            <element signature="e#55830#55831#0" expanded="false" />
-            <element signature="e#55860#55861#0" expanded="false" />
-            <element signature="e#56099#56100#0" expanded="false" />
-            <element signature="e#56129#56130#0" expanded="false" />
-            <element signature="e#56369#56370#0" expanded="false" />
-            <element signature="e#56399#56400#0" expanded="false" />
-            <element signature="e#56461#56462#0" expanded="false" />
-            <element signature="e#56491#56492#0" expanded="false" />
-            <element signature="e#57068#57069#0" expanded="false" />
-            <element signature="e#57098#57099#0" expanded="false" />
-            <element signature="e#58812#58813#0" expanded="false" />
-            <element signature="e#58842#58843#0" expanded="false" />
-            <element signature="e#61359#61360#0" expanded="false" />
-            <element signature="e#61387#61388#0" expanded="false" />
-            <element signature="e#63285#63286#0" expanded="false" />
-            <element signature="e#63342#63343#0" expanded="false" />
-            <element signature="e#63683#63684#0" expanded="false" />
-            <element signature="e#63740#63741#0" expanded="false" />
-            <element signature="e#64649#64650#0" expanded="false" />
-            <element signature="e#64677#64678#0" expanded="false" />
-            <element signature="e#66307#66308#0" expanded="false" />
-            <element signature="e#66352#66353#0" expanded="false" />
-            <element signature="e#66905#66906#0" expanded="false" />
-            <element signature="e#66944#66945#0" expanded="false" />
-            <element signature="e#67967#67968#0" expanded="false" />
-            <element signature="e#68013#68014#0" expanded="false" />
-            <element signature="e#69820#69821#0" expanded="false" />
-            <element signature="e#69864#69865#0" expanded="false" />
-            <element signature="e#70638#70639#0" expanded="false" />
-            <element signature="e#70676#70677#0" expanded="false" />
-            <element signature="e#71623#71624#0" expanded="false" />
-            <element signature="e#71670#71671#0" expanded="false" />
-            <element signature="e#73787#73788#0" expanded="false" />
-            <element signature="e#73839#73840#0" expanded="false" />
-            <element signature="e#82968#82969#0" expanded="false" />
-            <element signature="e#83022#83023#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#3066#3067#0" expanded="false" />
-            <element signature="e#3109#3110#0" expanded="false" />
-            <element signature="e#4074#4075#0" expanded="false" />
-            <element signature="e#4128#4129#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AboutFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SplashActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/GankPagerAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="32" column="13" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18077475">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/res/merged/debug/values/values.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.4333334">
-          <caret line="1082" column="0" selection-start-line="1082" selection-start-column="0" selection-end-line="1082" selection-end-column="0" />
-          <folding>
-            <marker date="1472548851118" expanded="true" signature="99:190363" placeholder="..." />
-            <marker date="1472548851118" expanded="true" signature="39804:39866" placeholder="..." />
-            <marker date="1472548851118" expanded="true" signature="89771:90017" placeholder="..." />
-            <marker date="1472548851118" expanded="true" signature="156317:156786" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="android-dummy://E:/GankLy//Theme Editor">
-      <provider selected="true" editor-type-id="themeEditor">
-        <state theme-name="AppTheme" module-name="app" proportion="0.67" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_swiperefresh_multiple_status.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.048387">
-          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_jiandan.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseJiandanActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="73" selection-start-line="37" selection-start-column="73" selection-end-line="37" selection-end-column="73" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8333335">
-          <caret line="44" column="12" selection-start-line="44" selection-start-column="12" selection-end-line="44" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4101,9 +3561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7518464">
           <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4164,7 +3621,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4173,136 +3629,136 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="24" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="24" />
           <folding>
-            <element signature="e#1658#1659#0" expanded="true" />
-            <element signature="e#1695#1696#0" expanded="true" />
-            <element signature="e#2971#2972#0" expanded="true" />
-            <element signature="e#3008#3009#0" expanded="true" />
-            <element signature="e#3056#3057#0" expanded="true" />
-            <element signature="e#3100#3101#0" expanded="true" />
-            <element signature="e#3139#3140#0" expanded="true" />
-            <element signature="e#3178#3179#0" expanded="true" />
-            <element signature="e#3231#3232#0" expanded="true" />
-            <element signature="e#3279#3280#0" expanded="true" />
-            <element signature="e#3314#3315#0" expanded="true" />
-            <element signature="e#3352#3353#0" expanded="true" />
-            <element signature="e#3399#3400#0" expanded="true" />
-            <element signature="e#3445#3446#0" expanded="true" />
-            <element signature="e#3483#3484#0" expanded="true" />
-            <element signature="e#3524#3525#0" expanded="true" />
-            <element signature="e#3577#3578#0" expanded="true" />
-            <element signature="e#3629#3630#0" expanded="true" />
-            <element signature="e#3666#3667#0" expanded="true" />
-            <element signature="e#3703#3704#0" expanded="true" />
-            <element signature="e#3751#3752#0" expanded="true" />
-            <element signature="e#3795#3796#0" expanded="true" />
-            <element signature="e#3829#3830#0" expanded="true" />
-            <element signature="e#3866#3867#0" expanded="true" />
-            <element signature="e#3911#3912#0" expanded="true" />
-            <element signature="e#3955#3956#0" expanded="true" />
-            <element signature="e#3992#3993#0" expanded="true" />
-            <element signature="e#4029#4030#0" expanded="true" />
-            <element signature="e#4077#4078#0" expanded="true" />
-            <element signature="e#4121#4122#0" expanded="true" />
-            <element signature="e#4159#4160#0" expanded="true" />
-            <element signature="e#4197#4198#0" expanded="true" />
-            <element signature="e#4248#4249#0" expanded="true" />
-            <element signature="e#4294#4295#0" expanded="true" />
-            <element signature="e#4330#4331#0" expanded="true" />
-            <element signature="e#4366#4367#0" expanded="true" />
-            <element signature="e#4412#4413#0" expanded="true" />
-            <element signature="e#4454#4455#0" expanded="true" />
-            <element signature="e#4490#4491#0" expanded="true" />
-            <element signature="e#4526#4527#0" expanded="true" />
-            <element signature="e#4572#4573#0" expanded="true" />
-            <element signature="e#4614#4615#0" expanded="true" />
-            <element signature="e#4647#4648#0" expanded="true" />
-            <element signature="e#4683#4684#0" expanded="true" />
-            <element signature="e#4726#4727#0" expanded="true" />
-            <element signature="e#4768#4769#0" expanded="true" />
-            <element signature="e#4804#4805#0" expanded="true" />
-            <element signature="e#4843#4844#0" expanded="true" />
-            <element signature="e#4892#4893#0" expanded="true" />
-            <element signature="e#4940#4941#0" expanded="true" />
-            <element signature="e#4978#4979#0" expanded="true" />
-            <element signature="e#5016#5017#0" expanded="true" />
-            <element signature="e#5066#5067#0" expanded="true" />
-            <element signature="e#5112#5113#0" expanded="true" />
-            <element signature="e#5150#5151#0" expanded="true" />
-            <element signature="e#5188#5189#0" expanded="true" />
-            <element signature="e#5238#5239#0" expanded="true" />
-            <element signature="e#5284#5285#0" expanded="true" />
-            <element signature="e#5321#5322#0" expanded="true" />
-            <element signature="e#5358#5359#0" expanded="true" />
-            <element signature="e#5406#5407#0" expanded="true" />
-            <element signature="e#5450#5451#0" expanded="true" />
-            <element signature="e#5489#5490#0" expanded="true" />
-            <element signature="e#5528#5529#0" expanded="true" />
-            <element signature="e#5580#5581#0" expanded="true" />
-            <element signature="e#5628#5629#0" expanded="true" />
-            <element signature="e#5665#5666#0" expanded="true" />
-            <element signature="e#5705#5706#0" expanded="true" />
-            <element signature="e#5756#5757#0" expanded="true" />
-            <element signature="e#5806#5807#0" expanded="true" />
-            <element signature="e#5842#5843#0" expanded="true" />
-            <element signature="e#5878#5879#0" expanded="true" />
-            <element signature="e#5924#5925#0" expanded="true" />
-            <element signature="e#5966#5967#0" expanded="true" />
-            <element signature="e#6000#6001#0" expanded="true" />
-            <element signature="e#6034#6035#0" expanded="true" />
-            <element signature="e#6076#6077#0" expanded="true" />
-            <element signature="e#6114#6115#0" expanded="true" />
-            <element signature="e#6148#6149#0" expanded="true" />
-            <element signature="e#6182#6183#0" expanded="true" />
-            <element signature="e#6224#6225#0" expanded="true" />
-            <element signature="e#6262#6263#0" expanded="true" />
-            <element signature="e#6295#6296#0" expanded="true" />
-            <element signature="e#6331#6332#0" expanded="true" />
-            <element signature="e#6374#6375#0" expanded="true" />
-            <element signature="e#6416#6417#0" expanded="true" />
-            <element signature="e#6453#6454#0" expanded="true" />
-            <element signature="e#6490#6491#0" expanded="true" />
-            <element signature="e#6538#6539#0" expanded="true" />
-            <element signature="e#6582#6583#0" expanded="true" />
-            <element signature="e#6618#6619#0" expanded="true" />
-            <element signature="e#6654#6655#0" expanded="true" />
-            <element signature="e#6700#6701#0" expanded="true" />
-            <element signature="e#6742#6743#0" expanded="true" />
-            <element signature="e#6781#6782#0" expanded="true" />
-            <element signature="e#6820#6821#0" expanded="true" />
-            <element signature="e#6872#6873#0" expanded="true" />
-            <element signature="e#6920#6921#0" expanded="true" />
-            <element signature="e#6957#6958#0" expanded="true" />
-            <element signature="e#6994#6995#0" expanded="true" />
-            <element signature="e#7042#7043#0" expanded="true" />
-            <element signature="e#7086#7087#0" expanded="true" />
-            <element signature="e#7122#7123#0" expanded="true" />
-            <element signature="e#7158#7159#0" expanded="true" />
-            <element signature="e#7204#7205#0" expanded="true" />
-            <element signature="e#7246#7247#0" expanded="true" />
-            <element signature="e#7282#7283#0" expanded="true" />
-            <element signature="e#7318#7319#0" expanded="true" />
-            <element signature="e#7364#7365#0" expanded="true" />
-            <element signature="e#7406#7407#0" expanded="true" />
-            <element signature="e#7456#7457#0" expanded="true" />
-            <element signature="e#7495#7496#0" expanded="true" />
-            <element signature="e#7558#7559#0" expanded="true" />
-            <element signature="e#7606#7607#0" expanded="true" />
-            <element signature="e#7827#7828#0" expanded="true" />
-            <element signature="e#7871#7872#0" expanded="true" />
-            <element signature="e#7921#7922#0" expanded="true" />
-            <element signature="e#7971#7972#0" expanded="true" />
-            <element signature="e#8012#8013#0" expanded="true" />
-            <element signature="e#8057#8058#0" expanded="true" />
-            <element signature="e#8109#8110#0" expanded="true" />
-            <element signature="e#8161#8162#0" expanded="true" />
-            <element signature="e#8204#8205#0" expanded="true" />
-            <element signature="e#8251#8252#0" expanded="true" />
-            <element signature="e#8307#8308#0" expanded="true" />
-            <element signature="e#8363#8364#0" expanded="true" />
-            <element signature="e#8401#8402#0" expanded="true" />
-            <element signature="e#8443#8444#0" expanded="true" />
-            <element signature="e#8489#8490#0" expanded="true" />
-            <element signature="e#8535#8536#0" expanded="true" />
+            <element signature="e#1658#1659#0" expanded="false" />
+            <element signature="e#1695#1696#0" expanded="false" />
+            <element signature="e#2971#2972#0" expanded="false" />
+            <element signature="e#3008#3009#0" expanded="false" />
+            <element signature="e#3056#3057#0" expanded="false" />
+            <element signature="e#3100#3101#0" expanded="false" />
+            <element signature="e#3139#3140#0" expanded="false" />
+            <element signature="e#3178#3179#0" expanded="false" />
+            <element signature="e#3231#3232#0" expanded="false" />
+            <element signature="e#3279#3280#0" expanded="false" />
+            <element signature="e#3314#3315#0" expanded="false" />
+            <element signature="e#3352#3353#0" expanded="false" />
+            <element signature="e#3399#3400#0" expanded="false" />
+            <element signature="e#3445#3446#0" expanded="false" />
+            <element signature="e#3483#3484#0" expanded="false" />
+            <element signature="e#3524#3525#0" expanded="false" />
+            <element signature="e#3577#3578#0" expanded="false" />
+            <element signature="e#3629#3630#0" expanded="false" />
+            <element signature="e#3666#3667#0" expanded="false" />
+            <element signature="e#3703#3704#0" expanded="false" />
+            <element signature="e#3751#3752#0" expanded="false" />
+            <element signature="e#3795#3796#0" expanded="false" />
+            <element signature="e#3829#3830#0" expanded="false" />
+            <element signature="e#3866#3867#0" expanded="false" />
+            <element signature="e#3911#3912#0" expanded="false" />
+            <element signature="e#3955#3956#0" expanded="false" />
+            <element signature="e#3992#3993#0" expanded="false" />
+            <element signature="e#4029#4030#0" expanded="false" />
+            <element signature="e#4077#4078#0" expanded="false" />
+            <element signature="e#4121#4122#0" expanded="false" />
+            <element signature="e#4159#4160#0" expanded="false" />
+            <element signature="e#4197#4198#0" expanded="false" />
+            <element signature="e#4248#4249#0" expanded="false" />
+            <element signature="e#4294#4295#0" expanded="false" />
+            <element signature="e#4330#4331#0" expanded="false" />
+            <element signature="e#4366#4367#0" expanded="false" />
+            <element signature="e#4412#4413#0" expanded="false" />
+            <element signature="e#4454#4455#0" expanded="false" />
+            <element signature="e#4490#4491#0" expanded="false" />
+            <element signature="e#4526#4527#0" expanded="false" />
+            <element signature="e#4572#4573#0" expanded="false" />
+            <element signature="e#4614#4615#0" expanded="false" />
+            <element signature="e#4647#4648#0" expanded="false" />
+            <element signature="e#4683#4684#0" expanded="false" />
+            <element signature="e#4726#4727#0" expanded="false" />
+            <element signature="e#4768#4769#0" expanded="false" />
+            <element signature="e#4804#4805#0" expanded="false" />
+            <element signature="e#4843#4844#0" expanded="false" />
+            <element signature="e#4892#4893#0" expanded="false" />
+            <element signature="e#4940#4941#0" expanded="false" />
+            <element signature="e#4978#4979#0" expanded="false" />
+            <element signature="e#5016#5017#0" expanded="false" />
+            <element signature="e#5066#5067#0" expanded="false" />
+            <element signature="e#5112#5113#0" expanded="false" />
+            <element signature="e#5150#5151#0" expanded="false" />
+            <element signature="e#5188#5189#0" expanded="false" />
+            <element signature="e#5238#5239#0" expanded="false" />
+            <element signature="e#5284#5285#0" expanded="false" />
+            <element signature="e#5321#5322#0" expanded="false" />
+            <element signature="e#5358#5359#0" expanded="false" />
+            <element signature="e#5406#5407#0" expanded="false" />
+            <element signature="e#5450#5451#0" expanded="false" />
+            <element signature="e#5489#5490#0" expanded="false" />
+            <element signature="e#5528#5529#0" expanded="false" />
+            <element signature="e#5580#5581#0" expanded="false" />
+            <element signature="e#5628#5629#0" expanded="false" />
+            <element signature="e#5665#5666#0" expanded="false" />
+            <element signature="e#5705#5706#0" expanded="false" />
+            <element signature="e#5756#5757#0" expanded="false" />
+            <element signature="e#5806#5807#0" expanded="false" />
+            <element signature="e#5842#5843#0" expanded="false" />
+            <element signature="e#5878#5879#0" expanded="false" />
+            <element signature="e#5924#5925#0" expanded="false" />
+            <element signature="e#5966#5967#0" expanded="false" />
+            <element signature="e#6000#6001#0" expanded="false" />
+            <element signature="e#6034#6035#0" expanded="false" />
+            <element signature="e#6076#6077#0" expanded="false" />
+            <element signature="e#6114#6115#0" expanded="false" />
+            <element signature="e#6148#6149#0" expanded="false" />
+            <element signature="e#6182#6183#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6262#6263#0" expanded="false" />
+            <element signature="e#6295#6296#0" expanded="false" />
+            <element signature="e#6331#6332#0" expanded="false" />
+            <element signature="e#6374#6375#0" expanded="false" />
+            <element signature="e#6416#6417#0" expanded="false" />
+            <element signature="e#6453#6454#0" expanded="false" />
+            <element signature="e#6490#6491#0" expanded="false" />
+            <element signature="e#6538#6539#0" expanded="false" />
+            <element signature="e#6582#6583#0" expanded="false" />
+            <element signature="e#6618#6619#0" expanded="false" />
+            <element signature="e#6654#6655#0" expanded="false" />
+            <element signature="e#6700#6701#0" expanded="false" />
+            <element signature="e#6742#6743#0" expanded="false" />
+            <element signature="e#6781#6782#0" expanded="false" />
+            <element signature="e#6820#6821#0" expanded="false" />
+            <element signature="e#6872#6873#0" expanded="false" />
+            <element signature="e#6920#6921#0" expanded="false" />
+            <element signature="e#6957#6958#0" expanded="false" />
+            <element signature="e#6994#6995#0" expanded="false" />
+            <element signature="e#7042#7043#0" expanded="false" />
+            <element signature="e#7086#7087#0" expanded="false" />
+            <element signature="e#7122#7123#0" expanded="false" />
+            <element signature="e#7158#7159#0" expanded="false" />
+            <element signature="e#7204#7205#0" expanded="false" />
+            <element signature="e#7246#7247#0" expanded="false" />
+            <element signature="e#7282#7283#0" expanded="false" />
+            <element signature="e#7318#7319#0" expanded="false" />
+            <element signature="e#7364#7365#0" expanded="false" />
+            <element signature="e#7406#7407#0" expanded="false" />
+            <element signature="e#7456#7457#0" expanded="false" />
+            <element signature="e#7495#7496#0" expanded="false" />
+            <element signature="e#7558#7559#0" expanded="false" />
+            <element signature="e#7606#7607#0" expanded="false" />
+            <element signature="e#7827#7828#0" expanded="false" />
+            <element signature="e#7871#7872#0" expanded="false" />
+            <element signature="e#7921#7922#0" expanded="false" />
+            <element signature="e#7971#7972#0" expanded="false" />
+            <element signature="e#8012#8013#0" expanded="false" />
+            <element signature="e#8057#8058#0" expanded="false" />
+            <element signature="e#8109#8110#0" expanded="false" />
+            <element signature="e#8161#8162#0" expanded="false" />
+            <element signature="e#8204#8205#0" expanded="false" />
+            <element signature="e#8251#8252#0" expanded="false" />
+            <element signature="e#8307#8308#0" expanded="false" />
+            <element signature="e#8363#8364#0" expanded="false" />
+            <element signature="e#8401#8402#0" expanded="false" />
+            <element signature="e#8443#8444#0" expanded="false" />
+            <element signature="e#8489#8490#0" expanded="false" />
+            <element signature="e#8535#8536#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4318,19 +3774,10 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.833333">
-          <caret line="28" column="54" selection-start-line="28" selection-start-column="54" selection-end-line="28" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/GiftFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="113" column="25" selection-start-line="113" selection-start-column="25" selection-end-line="113" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4358,38 +3805,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values-night/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4">
-          <caret line="2" column="44" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/themes.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5">
-          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://E:/android-sdk/extras/android/m2repository/com/android/support/appcompat-v7/24.2.0/appcompat-v7-24.2.0-sources.jar!/android/support/v7/app/AppCompatDelegate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3326923">
           <caret line="103" column="28" selection-start-line="103" selection-start-column="28" selection-end-line="103" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="158" column="71" selection-start-line="158" selection-start-column="71" selection-end-line="158" selection-end-column="71" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2144#2171#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4401,10 +3820,227 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53503186">
+          <caret line="37" column="73" selection-start-line="37" selection-start-column="73" selection-end-line="37" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="47" column="43" selection-start-line="47" selection-start-column="43" selection-end-line="47" selection-end-column="43" />
+          <folding>
+            <element signature="e#2000#2001#0" expanded="false" />
+            <element signature="e#2048#2049#0" expanded="false" />
+            <element signature="e#2481#2482#0" expanded="false" />
+            <element signature="e#2521#2522#0" expanded="false" />
+            <element signature="e#3198#3199#0" expanded="false" />
+            <element signature="e#3251#3252#0" expanded="false" />
+            <element signature="e#3313#3314#0" expanded="false" />
+            <element signature="e#3367#3368#0" expanded="false" />
+            <element signature="e#3792#3793#0" expanded="false" />
+            <element signature="e#3833#3834#0" expanded="false" />
+            <element signature="e#3917#3918#0" expanded="false" />
+            <element signature="e#3958#3959#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="49" column="27" selection-start-line="49" selection-start-column="27" selection-end-line="49" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.zhaokaiqiang.klog/library/1.3.0/46ebbbf7dca0d5cfc2ba6a2ff2bdc62526abd7e3/library-1.3.0-sources.jar!/com/socks/library/KLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5572626">
+          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/MultipleStatusView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.79469275">
+          <caret line="67" column="15" selection-start-line="67" selection-start-column="15" selection-end-line="67" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemTextView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2444134">
+          <caret line="49" column="71" selection-start-line="49" selection-start-column="71" selection-end-line="49" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_item_text.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0472973">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/public.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.357143">
+          <caret line="68" column="6" selection-start-line="68" selection-start-column="6" selection-end-line="68" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.support/support-core-ui/24.2.0/f4c2254669b02bb9d9df18fcf9c4cfadaa62ae32/support-core-ui-24.2.0-sources.jar!/android/support/v4/widget/DrawerLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1639" column="16" selection-start-line="1639" selection-start-column="16" selection-end-line="1639" selection-end-column="16" />
+          <folding>
+            <element signature="e#64469#64470#0" expanded="false" />
+            <element signature="e#64510#64511#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/content/res/Resources.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8">
+          <caret line="265" column="23" selection-start-line="265" selection-start-column="23" selection-end-line="265" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9505929">
+          <caret line="12" column="39" selection-start-line="12" selection-start-column="39" selection-end-line="12" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6704036">
+          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/view/ContextThemeWrapper.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.0833335">
+          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+          <folding>
+            <element signature="e#1368#1369#0" expanded="true" />
+            <element signature="e#1419#1420#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/java/lang/RuntimeException.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.45">
+          <caret line="12" column="11" selection-start-line="12" selection-start-column="11" selection-end-line="12" selection-end-column="11" />
+          <folding>
+            <element signature="e#304#305#0" expanded="true" />
+            <element signature="e#355#356#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/view/KeyEvent.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.3833334">
+          <caret line="633" column="21" selection-start-line="633" selection-start-column="21" selection-end-line="633" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/view/View.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.2833333">
+          <caret line="2040" column="28" selection-start-line="2040" selection-start-column="28" selection-end-line="2040" selection-end-column="28" />
+          <folding>
+            <element signature="e#58746#58747#0" expanded="true" />
+            <element signature="e#58797#58798#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/include_app_head.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.8387096">
+          <caret line="18" column="50" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/8.3.0/29d580c1917112d3f406caaea38e02e670827c0c/butterknife-8.3.0-sources.jar!/butterknife/ButterKnife.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="316" column="41" selection-start-line="316" selection-start-column="41" selection-end-line="316" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/24.2.0/res/values/values.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.1777778">
+          <caret line="110" column="3508" selection-start-line="110" selection-start-column="3508" selection-end-line="110" selection-end-column="3508" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/util/TypedValue.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2">
+          <caret line="54" column="15" selection-start-line="54" selection-start-column="15" selection-end-line="54" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8">
+          <caret line="4" column="37" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+          <folding>
+            <element signature="e#4249#4250#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.033334">
-          <caret line="42" column="64" selection-start-line="42" selection-start-column="64" selection-end-line="42" selection-end-column="64" />
+        <state vertical-scroll-proportion="-28.9">
+          <caret line="63" column="48" selection-start-line="63" selection-start-column="48" selection-end-line="63" selection-end-column="48" />
           <folding />
         </state>
       </provider>
@@ -4412,43 +4048,66 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/App.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="25" selection-start-line="72" selection-start-column="25" selection-end-line="72" selection-end-column="25" />
-          <folding>
-            <element signature="e#2131#2132#0" expanded="true" />
-            <element signature="e#2186#2187#0" expanded="true" />
-            <element signature="e#2564#2565#0" expanded="true" />
-            <element signature="e#2597#2598#0" expanded="true" />
-            <element signature="e#2657#2658#0" expanded="true" />
-            <element signature="e#2700#2701#0" expanded="true" />
-          </folding>
+          <caret line="40" column="42" selection-start-line="40" selection-start-column="42" selection-end-line="40" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/themes.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2">
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/attrs.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.633333">
+          <caret line="42" column="37" selection-start-line="42" selection-start-column="16" selection-end-line="42" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://E:/android-sdk/platforms/android-24/android.jar!/android/widget/Switch.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7883959">
+          <caret line="91" column="25" selection-start-line="91" selection-start-column="11" selection-end-line="91" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="140" column="29" selection-start-line="140" selection-start-column="19" selection-end-line="140" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.451613">
-          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
-          <folding>
-            <element signature="e#2007#2028#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-2.7903225">
+          <caret line="39" column="38" selection-start-line="39" selection-start-column="38" selection-end-line="39" selection-end-column="38" />
+          <folding />
         </state>
       </provider>
       <provider editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/ItemSwitchView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="78" selection-start-line="46" selection-start-column="78" selection-end-line="46" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/view_item_switch.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.33870968">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state vertical-scroll-proportion="-4.677419">
+          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="46" />
           <folding />
         </state>
       </provider>
@@ -4458,30 +4117,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="19" selection-start-line="41" selection-start-column="19" selection-end-line="41" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.7372449">
+          <caret line="50" column="35" selection-start-line="50" selection-start-column="35" selection-end-line="50" selection-end-column="35" />
           <folding>
-            <element signature="e#1945#1973#0" expanded="true" />
-            <element signature="e#2706#2734#0" expanded="true" />
-            <element signature="e#2764#2881#0" expanded="true" />
-            <element signature="e#2958#2988#0" expanded="true" />
-            <element signature="e#3270#3441#0" expanded="true" />
-            <element signature="e#3440#3441#0" expanded="true" />
-            <element signature="e#3472#3850#0" expanded="true" />
-            <element signature="e#3849#3850#0" expanded="true" />
-            <element signature="e#4312#4339#0" expanded="true" />
-            <element signature="e#4521#4545#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6836158">
-          <caret line="185" column="5" selection-start-line="185" selection-start-column="5" selection-end-line="185" selection-end-column="5" />
-          <folding>
-            <element signature="e#5753#5754#0" expanded="true" />
-            <element signature="e#5785#5786#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2173#2174#0" expanded="true" />
+            <element signature="e#2217#2218#0" expanded="true" />
+            <element signature="e#2293#2321#0" expanded="true" />
+            <element signature="e#3054#3082#0" expanded="true" />
+            <element signature="e#3112#3229#0" expanded="true" />
+            <element signature="e#3306#3336#0" expanded="true" />
+            <element signature="e#4057#4502#0" expanded="true" />
+            <element signature="e#4501#4502#0" expanded="true" />
+            <element signature="e#4964#4991#0" expanded="true" />
+            <element signature="e#5173#5197#0" expanded="true" />
           </folding>
         </state>
       </provider>

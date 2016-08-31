@@ -1,10 +1,12 @@
 package com.gank.gankly.ui.main;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.gank.gankly.App;
@@ -61,6 +63,16 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
     }
 
     @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        KLog.d("hidden:" + hidden);
+        if (!hidden) {
+            KLog.d("App.isNight:" + App.isNight());
+            changeThemeBackground();
+        }
+    }
+
+    @Override
     protected void initPresenter() {
         mPresenter = new LauncherPresenter(mActivity, this, this);
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
@@ -89,13 +101,13 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
                 mActivity.openDrawer();
             }
         });
+        changeThemeBackground();
     }
 
     @Override
     protected int getLayoutId() {
         return R.layout.include_app_head;
     }
-
 
     @Override
     protected void initValues() {
@@ -125,9 +137,17 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
 
     }
 
+    private void changeThemeBackground() {
+        TypedValue background = new TypedValue();//背景色
+        Resources.Theme theme = mActivity.getTheme();
+        theme.resolveAttribute(R.attr.themeTabLayoutBackground, background, true);
+        mTabLayout.setBackgroundResource(background.resourceId);
+        theme.resolveAttribute(R.attr.colorPrimary, background, true);
+        mToolbar.setBackgroundResource(background.resourceId);
+    }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
@@ -137,7 +157,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
 
     private void downloadApk() {
@@ -160,11 +179,9 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     public void showDialog() {
-
     }
 
     @Override
     public void hiddenDialog() {
-
     }
 }

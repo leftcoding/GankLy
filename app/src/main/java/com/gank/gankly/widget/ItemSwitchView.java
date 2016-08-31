@@ -69,6 +69,10 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         }
     }
 
+    public Switch getSwitch() {
+        return mSwitch;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {

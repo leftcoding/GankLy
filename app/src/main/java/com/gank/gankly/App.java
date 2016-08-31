@@ -24,7 +24,7 @@ public class App extends Application {
     public static Context mContext;
     private static SQLiteDatabase db;
 
-    private static boolean isDayNight;
+    private static boolean isNight = false;
 
     @Override
     public void onCreate() {
@@ -90,11 +90,11 @@ public class App extends Application {
         isNewVersion = newVersion;
     }
 
-    public static boolean isDayNight() {
-        return isDayNight;
+    public static boolean isNight() {
+        return isNight;
     }
 
-    public static void setIsDayNight(boolean isDayNight) {
-        App.isDayNight = isDayNight;
+    public static void setIsNight(boolean isNight) {
+        App.isNight = isNight;
     }
 }

@@ -33,4 +33,12 @@
 
     <!-- 自定义主题-->
     <attr name="lyItemTextColor" format="reference|color"/>
+
+    <!-- Night Day 主题颜色-->
+    <attr name="themeBackground" format="reference|color"/>
+    <attr name="themeTextBackground" format="reference|color"/>
+    <attr name="themeTabLayoutBackground" format="color"/>
+
+    <attr name="themeSettingBackground" format="reference|color"/>
+    <attr name="themeSwitchBackground" format="reference|color"/>
 </resources>
