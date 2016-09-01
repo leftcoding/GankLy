@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="@color/text_default"
+        android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"/>
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_txt_name"
         android:text=""
-        android:textColor="@color/text_999999"
+        android:textColor="?attr/textSecondaryColor"
         android:layout_marginTop="5dp"
         android:textSize="14sp"/>
 
@@ -38,7 +38,7 @@
         android:paddingEnd="3dp"
         android:paddingStart="3dp"
         android:text="@string/app_new_version"
-        android:textColor="@color/white"
+        android:textColor="?attr/textPrimaryColor"
         android:textSize="12sp"
         android:visibility="gone"/>
 

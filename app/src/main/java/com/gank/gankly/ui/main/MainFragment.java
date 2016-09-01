@@ -48,6 +48,8 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
     private static MainFragment sMainFragment;
+    private List<LazyFragment> mList;
+    private LazyFragment mCurFragment;
 
     public static MainFragment getInstance() {
         if (sMainFragment == null) {
@@ -67,8 +69,11 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
         super.onHiddenChanged(hidden);
         KLog.d("hidden:" + hidden);
         if (!hidden) {
-            KLog.d("App.isNight:" + App.isNight());
             changeThemeBackground();
+            mCurFragment = mList.get(mViewPager.getCurrentItem());
+            if (mCurFragment != null) {
+                mCurFragment.onResume();
+            }
         }
     }
 
@@ -111,10 +116,10 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     protected void initValues() {
-        List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new AndroidFragment());
-        mList.add(new IosFragment());
-        mList.add(new MeiZiFragment());
+        mList = new ArrayList<>();
+        mList.add(AndroidFragment.newInstance());
+        mList.add(IosFragment.newInstance());
+        mList.add(MeiZiFragment.newInstance());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.ANDROID);

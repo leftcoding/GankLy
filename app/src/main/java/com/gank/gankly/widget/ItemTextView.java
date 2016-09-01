@@ -87,6 +87,10 @@ public class ItemTextView extends RelativeLayout {
         txtVersion.setVisibility(View.VISIBLE);
     }
 
+    public TextView getTextView(){
+        return txtTitle;
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();

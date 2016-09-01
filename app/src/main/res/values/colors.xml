@@ -44,8 +44,17 @@
     <color name="body_text_disabled">#44000000</color>
 
     <!-- dark theme color-->
-    <color name="dark_colorPrimary">#3f3f3f</color>
-    <color name="dark_colorPrimaryDark">#3a3a3a</color>
+    <color name="dark_colorPrimary">#263238</color>
+    <color name="dark_colorPrimaryDark">#1e282d</color>
+    <color name="dark_colorAccent">#253137</color>  <!--FF4081  55a5e3-->
+    <color name="switch_thumb_disabled_dark">#31c4f9</color>
+    <color name="switch_Track_disabled_dark">#346e83</color>
+    <color name="dark_background">#212b30</color>
+    <color name="material_blue_grey_900">#ff263238</color>
+    <color name="text_primary_dark">#b3ffffff</color> <!-- deffffff -->
+    <color name="text_secondary_dark">#8affffff</color>
+    <color name="base_adapter_item_background">#37474f</color>
+
     <!--  jianshu   -->
 
     <color name="Blue_translucent">#5555a5e3</color>
@@ -225,7 +234,6 @@
     <color name="magenta">#ff00ff</color>
     <color name="maroon">#800000</color>
     <color name="material_blue_grey_800">#ff37474f</color>
-    <color name="material_blue_grey_900">#ff263238</color>
     <color name="material_blue_grey_950">#ff21272b</color>
     <color name="material_deep_teal_200">#ff80cbc4</color>
     <color name="material_deep_teal_500">#ff009688</color>
@@ -303,10 +311,6 @@
     <color name="snow">#fffafa</color>
     <color name="springgreen">#00ff7f</color>
     <color name="steelblue">#4682b4</color>
-    <color name="switch_thumb_disabled_material_dark">#ff616161</color>
-    <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
-    <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
-    <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
     <color name="tan">#d2b48c</color>
     <color name="tb_munion_item_force">#e3e3e3</color>
     <color name="teal">#008080</color>

@@ -5,11 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Switch;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -24,7 +24,11 @@ import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
 
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,15 +46,17 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     ItemTextView itemUpdate;
     @BindView(R.id.setting_switch_theme)
     ItemSwitchView mTheme;
-    @BindView(R.id.item_switch_auto_check)
-    Switch mSwitch;
+    @BindViews({R.id.setting_switch_check, R.id.setting_switch_theme})
+    List<ItemSwitchView> switchTextViews;
+    @BindViews({R.id.setting_item_text_update})
+    List<ItemTextView> textViews;
 
     public static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
     public MainActivity mActivity;
     private ProgressDialog mDialog;
     private Resources.Theme theme;
-    private TypedValue typedValue;
+    private TypedValue textColor;
 
     @Override
     public void onAttach(Context context) {
@@ -188,12 +194,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
      */
     private void refreshStatusBar() {
         if (Build.VERSION.SDK_INT >= 21) {
-            typedValue = new TypedValue();
+            TypedValue typedValue = new TypedValue();
             theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
             mActivity.getWindow().setStatusBarColor(getResources().getColor(typedValue.resourceId));
         }
     }
-
 
     private void changeTheme() {
         TypedValue background = new TypedValue();
@@ -201,6 +206,24 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         mView.setBackgroundResource(background.resourceId);
         theme.resolveAttribute(R.attr.colorPrimary, background, true);
         mToolbar.setBackgroundResource(background.resourceId);
+        textColor = new TypedValue();
+        theme.resolveAttribute(R.attr.textPrimaryColor, textColor, true);
+
+        ButterKnife.apply(switchTextViews, new ButterKnife.Action<ItemSwitchView>() {
+            @Override
+            public void apply(@NonNull ItemSwitchView view, int index) {
+                view.getTextView().setTextColor(App.getAppColor(textColor.resourceId));
+                view.getSwitch().changeTheme();
+            }
+        });
+
+        ButterKnife.apply(textViews, new ButterKnife.Action<ItemTextView>() {
+            @Override
+            public void apply(@NonNull ItemTextView view, int index) {
+                view.getTextView().setTextColor(App.getAppColor(textColor.resourceId));
+            }
+        });
+
     }
 
     @Override

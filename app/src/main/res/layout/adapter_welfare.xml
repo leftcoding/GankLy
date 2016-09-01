@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="?attr/baseAdapterItemBackground"
     app:cardCornerRadius="0dp"
     app:cardElevation="2dp">
 
@@ -41,7 +41,7 @@
                 android:maxLines="3"
                 android:text=""
                 android:layout_above="@+id/goods_rl_data"
-                android:textColor="@color/body_text_1"
+                android:textColor="?attr/baseAdapterItemTextColor"
                 android:textSize="16sp"/>
 
             <RelativeLayout

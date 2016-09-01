@@ -36,9 +36,10 @@
 
     <!-- Night Day 主题颜色-->
     <attr name="themeBackground" format="reference|color"/>
-    <attr name="themeTextBackground" format="reference|color"/>
+    <attr name="textPrimaryColor" format="reference|color"/>
+    <attr name="textSecondaryColor" format="reference|color"/>
     <attr name="themeTabLayoutBackground" format="color"/>
-
     <attr name="themeSettingBackground" format="reference|color"/>
-    <attr name="themeSwitchBackground" format="reference|color"/>
+    <attr name="baseAdapterItemBackground" format="reference|color"/>
+    <attr name="baseAdapterItemTextColor" format="reference|color"/>
 </resources>

@@ -16,10 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:text="@string/setting_auto_check"
-        android:textColor="@color/text_default"
+        android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"/>
 
-    <Switch
+    <com.gank.gankly.widget.LSwitch
         android:id="@+id/item_switch_auto_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

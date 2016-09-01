@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
@@ -19,7 +18,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     private Context mContext;
     private TextView txtName;
     private View viItem;
-    private Switch mSwitch;
+    private LSwitch mSwitch;
     private boolean isCheck;
     private OnSwitch mOnSwitch;
 
@@ -46,7 +45,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.view_item_switch, this, true);
         txtName = (TextView) view.findViewById(R.id.item_switch_txt_name);
-        mSwitch = (Switch) view.findViewById(R.id.item_switch_auto_check);
+        mSwitch = (LSwitch) view.findViewById(R.id.item_switch_auto_check);
         viItem = view.findViewById(R.id.setting_rl_auto_check);
     }
 
@@ -69,8 +68,12 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         }
     }
 
-    public Switch getSwitch() {
+    public LSwitch getSwitch() {
         return mSwitch;
+    }
+
+    public TextView getTextView() {
+        return txtName;
     }
 
     @Override
