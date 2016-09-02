@@ -1,16 +1,22 @@
 package com.gank.gankly.ui.main;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
@@ -21,9 +27,13 @@ import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 /**
  * ios
@@ -68,6 +78,14 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initValues() {
+        setRecyclerViewBackground();
+
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                refreshUi();
+            }
+        });
     }
 
     @Override
@@ -122,6 +140,57 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     private void initFetchDate() {
         mPresenter.fetchNew();
+    }
+
+    private void setRecyclerViewBackground() {
+        if (App.isNight()) {
+            mRecyclerView.setBackgroundResource(R.color.dark_background);
+        } else {
+            mRecyclerView.setBackgroundResource(R.color.base_refresh_list_bg);
+        }
+    }
+
+    public void refreshUi() {
+        setRecyclerViewBackground();
+
+        Resources.Theme theme = mActivity.getTheme();
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        int background = typedValue.data;
+        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+        int textColor = typedValue.data;
+
+        int childCount = mRecyclerView.getChildCount();
+        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
+            childView.setBackgroundColor(background);
+            TextView nickName = (TextView) childView.findViewById(R.id.goods_txt_title);
+            nickName.setTextColor(textColor);
+        }
+
+        //让 RecyclerView 缓存在 Pool 中的 Item 失效
+        //那么，如果是ListView，要怎么做呢？这里的思路是通过反射拿到 AbsListView 类中的 RecycleBin 对象，然后同样再用反射去调用 clear 方法
+        Class<RecyclerView> recyclerViewClass = RecyclerView.class;
+        try {
+            Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
+            declaredField.setAccessible(true);
+            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
+            declaredMethod.setAccessible(true);
+            declaredMethod.invoke(declaredField.get(mRecyclerView), new Object[0]);
+            RecyclerView.RecycledViewPool recycledViewPool = mRecyclerView.getRecycledViewPool();
+            recycledViewPool.clear();
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     public static IosFragment newInstance() {

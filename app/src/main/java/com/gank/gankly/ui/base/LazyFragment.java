@@ -46,6 +46,11 @@ public abstract class LazyFragment extends BaseSwipeRefreshFragment {
 
     protected abstract void initData();
 
+
+    public void refreshUi() {
+
+    }
+
     private void lazyLoadData() {
         if (!isVisible || !isFirstLoad || !isView) {
             return;

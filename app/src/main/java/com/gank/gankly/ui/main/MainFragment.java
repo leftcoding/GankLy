@@ -70,10 +70,10 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
         KLog.d("hidden:" + hidden);
         if (!hidden) {
             changeThemeBackground();
-            mCurFragment = mList.get(mViewPager.getCurrentItem());
-            if (mCurFragment != null) {
-                mCurFragment.onResume();
-            }
+//            mCurFragment = mList.get(mViewPager.getCurrentItem());
+//            if (mCurFragment != null) {
+//                mCurFragment.refreshUi();
+//            }
         }
     }
 

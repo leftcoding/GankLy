@@ -47,10 +47,12 @@ public class DailyMeiziPresenterImpl extends BasePresenter<IDailyMeiziView<List<
             public void onError(Throwable e) {
                 KLog.e(e);
                 CrashUtils.crashReport(e);
+                mIView.showError();
             }
 
             @Override
             public void onNext(List<DailyMeiziBean> giftResult) {
+                KLog.d("giftResult:" + giftResult.size());
                 if (ListUtils.getListSize(giftResult) > 0) {
                     mIView.refillDate(giftResult);
                 } else {

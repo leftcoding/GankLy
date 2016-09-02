@@ -77,7 +77,6 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
         return R.layout.fragment_girls;
     }
 
-
     @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();

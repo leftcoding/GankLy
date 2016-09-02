@@ -1,5 +1,6 @@
 package com.gank.gankly.utils;
 
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.RxCollect;
 
 import rx.Observable;

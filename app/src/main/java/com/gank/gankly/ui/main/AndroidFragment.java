@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
@@ -29,7 +30,6 @@ import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtil;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -39,6 +39,7 @@ import java.util.List;
 import butterknife.BindView;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-4-26
@@ -71,7 +72,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        KLog.d("onCreate");
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         setHasOptionsMenu(true);
@@ -110,9 +110,17 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     protected void initData() {
         onDownRefresh();
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                refreshUi();
+            }
+        });
     }
 
     private void initRecycler() {
+        setRecyclerViewBackground();
+
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
 
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
@@ -199,41 +207,33 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        KLog.d("onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshUi();
-    }
-
-    public void refreshUi() {
+    private void setRecyclerViewBackground() {
         if (App.isNight()) {
             mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.dark_background);
         } else {
             mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.base_refresh_list_bg);
         }
+    }
 
-        TypedValue background = new TypedValue();
-        TypedValue textColor = new TypedValue();
+    public void refreshUi() {
+        setRecyclerViewBackground();
+
         Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, background, true);
-        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textColor, true);
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        int background = typedValue.data;
+        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+        int textColor = typedValue.data;
 
         int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            CardView childView = (CardView) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
-            childView.setCardBackgroundColor(App.getAppColor(background.resourceId));
-//            View infoLayout = childView.findViewById(R.id.info_layout);
-//            infoLayout.setBackgroundResource(background.resourceId);
+            ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
+            childView.setBackgroundColor(background);
             TextView nickName = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            nickName.setBackgroundResource(background.resourceId);
-            nickName.setTextColor(App.getAppColor(textColor.resourceId));
-//            TextView motto = (TextView) childView.findViewById(R.id.tv_motto);
-//            motto.setBackgroundResource(background.resourceId);
-//            motto.setTextColor(resources.getColor(textColor.resourceId));
+            nickName.setTextColor(textColor);
         }
 
         //让 RecyclerView 缓存在 Pool 中的 Item 失效

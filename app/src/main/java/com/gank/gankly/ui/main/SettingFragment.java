@@ -13,6 +13,8 @@ import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.presenter.LauncherPresenter;
@@ -146,9 +148,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             public void onSwitch(boolean isCheck) {
                 App.setIsNight(isCheck);
                 if (isCheck) {
-                    getActivity().setTheme(R.style.AppTheme_Night);
+                    mActivity.setTheme(R.style.AppTheme_Night);
+                    RxBus.getInstance().post(new ThemeEvent(true));
                 } else {
-                    getActivity().setTheme(R.style.AppTheme_Day);
+                    mActivity.setTheme(R.style.AppTheme_Day);
+                    RxBus.getInstance().post(new ThemeEvent(false));
                 }
                 refreshStatusBar();
                 changeTheme();
@@ -223,7 +227,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
                 view.getTextView().setTextColor(App.getAppColor(textColor.resourceId));
             }
         });
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.gank.gankly.utils;
+package com.gank.gankly.RxBus;
 
 
 import rx.Observer;
@@ -10,7 +10,7 @@ import rx.subjects.SerializedSubject;
 
 public class RxBus {
 
-    private static volatile RxBus instance;
+    private static volatile RxBus sRxBus;
     private final SerializedSubject<Object, Object> subject;
 
     private RxBus() {
@@ -18,21 +18,24 @@ public class RxBus {
     }
 
     public static RxBus getInstance() {
-        if (instance == null) {
+        RxBus bus = sRxBus;
+        if (bus == null) {
             synchronized (RxBus.class) {
-                if (instance == null) {
-                    instance = new RxBus();
+                bus = sRxBus;
+                if (sRxBus == null) {
+                    bus = new RxBus();
+                    sRxBus = bus;
                 }
             }
         }
-        return instance;
+        return bus;
     }
 
     public void post(Object object) {
         subject.onNext(object);
     }
 
-    private  <T> Observable<T> toObservable(final Class<T> type) {
+    private <T> Observable<T> toObservable(final Class<T> type) {
         return subject.ofType(type);
     }
 
