@@ -53,12 +53,12 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         txtName.setText(name);
     }
 
-    public void setViewSwitch(boolean isCheck) {
+    public void setSwitchChecked(boolean isCheck) {
         this.isCheck = isCheck;
         mSwitch.setChecked(isCheck);
     }
 
-    public void setOnSwitch(OnSwitch onSwitch) {
+    public void setSwitchListener(OnSwitch onSwitch) {
         this.mOnSwitch = onSwitch;
     }
 

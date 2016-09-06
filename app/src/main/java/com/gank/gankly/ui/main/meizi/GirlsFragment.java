@@ -130,6 +130,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
         int background = typedValue.data;
         mTabLayout.setBackgroundColor(background);
         mToolbar.setBackgroundColor(background);
+
     }
 
     @Override

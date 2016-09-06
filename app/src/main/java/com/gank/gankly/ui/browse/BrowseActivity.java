@@ -76,6 +76,12 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private List<GiftBean> mGiftList;
 
     @Override
+    protected void initTheme() {
+        super.initTheme();
+        setTheme(R.style.BrowseThemeBase);
+    }
+
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
         int size;
         if (EXTRA_GANK.equals(mViewsModel)) {

@@ -5,7 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="?attr/aboutBackground"
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
@@ -48,53 +48,64 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/about_txt_app"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:lineSpacingExtra="5dp"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:text="@string/about_app_str"
-                android:textColor="@color/text_default"/>
+                android:textColor="?attr/TextTitleColor"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="16dp"
                 android:lineSpacingExtra="5dp"
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:text="@string/about_thanks_str"
-                android:textColor="@color/text_default"/>
+                android:textColor="?attr/TextTitleColor"/>
 
-            <com.gank.gankly.widget.ItemTextView
-                android:id="@+id/about_item_text_gank"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:TextSummary="@string/about_gank_url"
-                app:TextTitle="@string/about_gank"/>
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_card_about"
+                android:orientation="vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="8dp">
 
-            <com.gank.gankly.widget.ItemTextView
-                android:id="@+id/about_item_text_mzitu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:TextSummary="@string/about_mzitu_url"
-                app:TextTitle="@string/about_mzitu"/>
+                <com.gank.gankly.widget.ItemTextView
+                    android:id="@+id/about_item_text_gank"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:TextSummary="@string/about_gank_url"
+                    app:TextTitle="@string/about_gank"/>
 
-            <com.gank.gankly.widget.ItemTextView
-                android:id="@+id/about_item_text_github"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:TextSummary="@string/about_my_github_url"
-                app:TextTitle="@string/about_my_github"/>
+                <com.gank.gankly.widget.ItemTextView
+                    android:id="@+id/about_item_text_mzitu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:TextSummary="@string/about_mzitu_url"
+                    app:TextTitle="@string/about_mzitu"/>
 
-            <com.gank.gankly.widget.ItemTextView
-                android:id="@+id/about_item_text_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:TextSummary="@string/about_contact_email"
-                app:TextTitle="@string/about_contact"/>
+                <com.gank.gankly.widget.ItemTextView
+                    android:id="@+id/about_item_text_github"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:TextSummary="@string/about_my_github_url"
+                    app:TextTitle="@string/about_my_github"/>
+
+                <com.gank.gankly.widget.ItemTextView
+                    android:id="@+id/about_item_text_contact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:TextSummary="@string/about_contact_email"
+                    app:TextTitle="@string/about_contact"/>
+            </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

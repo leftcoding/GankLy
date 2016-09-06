@@ -52,7 +52,6 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void initValues() {
-
     }
 
     @Override

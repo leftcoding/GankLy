@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -49,27 +48,13 @@ public class MainActivity extends BaseActivity {
     private Fragment mCurFragment;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        initTheme();
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected int getContentId() {
         return R.layout.activity_main;
     }
 
     @Override
     protected void initViews() {
-
-    }
-
-    private void initTheme() {
-        if (App.isNight()) {
-            setTheme(R.style.AppTheme_Night);
-        } else {
-            setTheme(R.style.AppTheme_Day);
-        }
+        changeNavigationView();
     }
 
     @Override
@@ -203,12 +188,16 @@ public class MainActivity extends BaseActivity {
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
             @Override
             public void call(ThemeEvent event) {
-                int textColorJava = getThemeAttrColor(MainActivity.this, R.attr.navigationBackground);
-                mNavigationView.setBackgroundColor(textColorJava);
-                mNavigationView.setItemTextColor(createColorStateList(MainActivity.this));
-                mNavigationView.setItemIconTintList(getSwitchThumbColorStateList());
+                changeNavigationView();
             }
         });
+    }
+
+    private void changeNavigationView() {
+        int textColorJava = getThemeAttrColor(MainActivity.this, R.attr.navigationBackground);
+        mNavigationView.setBackgroundColor(textColorJava);
+        mNavigationView.setItemTextColor(createColorStateList(MainActivity.this));
+        mNavigationView.setItemIconTintList(getSwitchThumbColorStateList());
     }
 
     @ColorInt

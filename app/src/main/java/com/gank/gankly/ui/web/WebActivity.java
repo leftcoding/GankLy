@@ -43,6 +43,7 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-5-10
+ * Email:137387869@qq.com
  */
 public class WebActivity extends BaseActivity {
     public static final int FROM_MAIN = 0;
@@ -84,7 +85,18 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        initTheme();
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void initTheme() {
+        super.initTheme();
+        if (App.isNight()) {
+            setTheme(R.style.AppTheme_Night_NoActionBar);
+        } else {
+            setTheme(R.style.AppTheme_Day_NoActionBar);
+        }
     }
 
     @Override

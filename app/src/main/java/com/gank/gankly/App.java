@@ -9,6 +9,7 @@ import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
+import com.gank.gankly.ui.main.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.socks.library.KLog;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -24,7 +25,7 @@ public class App extends Application {
     public static Context mContext;
     private static SQLiteDatabase db;
 
-    private static boolean isNight = false;
+    private static boolean isNight = true;
 
     @Override
     public void onCreate() {
@@ -45,6 +46,7 @@ public class App extends Application {
         //Bugly 测试：true
         CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
 
+        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_SELECT_SWITCH, false);
     }
 
     private static DaoSession daoSession;

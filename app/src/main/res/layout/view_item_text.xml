@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textColor="?attr/textPrimaryColor"
+        android:textColor="?attr/TextTitleColor"
         android:textSize="16sp"/>
 
     <TextView
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/item_view_txt_name"
+        android:layout_marginTop="5dp"
         android:text=""
         android:textColor="?attr/textSecondaryColor"
-        android:layout_marginTop="5dp"
         android:textSize="14sp"/>
 
     <TextView

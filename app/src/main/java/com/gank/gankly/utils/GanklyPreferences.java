@@ -9,17 +9,33 @@ import javax.annotation.Nullable;
 
 
 /**
+ * 偏好设置
  * Create by LingYan on 2016-06-01
+ * Email:137387869@qq.com
  */
 public class GanklyPreferences {
     private static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
+    private static final int VERSION = 1;
+    private static SharedPreferences mSharedPreferences;
+    private static SharedPreferences.Editor sEditor;
 
     public static SharedPreferences getDefaultPreference() {
         return initPreference(PREFERENCES_NAME_DEFAULT);
     }
 
     public static SharedPreferences.Editor getDefaultEditor() {
-        return initPreference(PREFERENCES_NAME_DEFAULT).edit();
+        if (mSharedPreferences == null) {
+            initPreference(PREFERENCES_NAME_DEFAULT);
+        }
+
+        if (sEditor == null) {
+            synchronized (GanklyPreferences.class) {
+                if (sEditor == null) {
+                    sEditor = mSharedPreferences.edit();
+                }
+            }
+        }
+        return sEditor;
     }
 
     public static SharedPreferences getPreference(String name) {
@@ -27,7 +43,14 @@ public class GanklyPreferences {
     }
 
     public static SharedPreferences initPreference(String name) {
-        return App.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+        if (mSharedPreferences == null) {
+            synchronized (GanklyPreferences.class) {
+                if (mSharedPreferences == null) {
+                    mSharedPreferences = App.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+                }
+            }
+        }
+        return mSharedPreferences;
     }
 
     public static void clear() {
@@ -66,6 +89,4 @@ public class GanklyPreferences {
     public static void putString(String key, @Nullable String value) {
         getDefaultEditor().putString(key, value).apply();
     }
-
-
 }

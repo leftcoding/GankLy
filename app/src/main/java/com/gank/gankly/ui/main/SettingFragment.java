@@ -38,6 +38,8 @@ import butterknife.OnClick;
  * Email:137387869@qq.com
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
+    public static final String IS_SELECT_SWITCH = "isSelect";
+
     @BindView(R.id.setting_rl_body)
     View mView;
     @BindView(R.id.setting_toolbar)
@@ -47,7 +49,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
     @BindView(R.id.setting_switch_theme)
-    ItemSwitchView mTheme;
+    ItemSwitchView mThemeSwitch;
     @BindViews({R.id.setting_switch_check, R.id.setting_switch_theme})
     List<ItemSwitchView> switchTextViews;
     @BindViews({R.id.setting_item_text_update})
@@ -59,12 +61,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private ProgressDialog mDialog;
     private Resources.Theme theme;
     private TypedValue textColor;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
-    }
 
     @Override
     protected void initPresenter() {
@@ -104,9 +100,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     private void initPreferences() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, false);
-        mSwitchView.setViewSwitch(isAutoCheck);
+        mSwitchView.setSwitchChecked(isAutoCheck);
 
-        mTheme.setTextName(App.getAppString(R.string.setting_theme_night));
+        mThemeSwitch.setTextName(App.getAppString(R.string.setting_theme_night));
 
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
@@ -115,12 +111,17 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         if (App.isNewVersion()) {
             itemUpdate.showVersion();
         }
+
+        selectSwitch();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        changeTheme();
+    private void selectSwitch() {
+        boolean isSelect = GanklyPreferences.getBoolean(IS_SELECT_SWITCH, false);
+        if (isSelect) {
+            mSwitchView.setSwitchChecked(true);
+        } else {
+            mSwitchView.setSwitchChecked(false);
+        }
     }
 
     @OnClick(R.id.setting_item_text_update)
@@ -130,7 +131,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void bindLister() {
-        mSwitchView.setOnSwitch(new ItemSwitchView.OnSwitch() {
+        mSwitchView.setSwitchListener(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {
                 savePreferences(isCheck);
@@ -138,15 +139,17 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         });
 
         if (App.isNight()) {
-            mTheme.setViewSwitch(true);
+            mThemeSwitch.setSwitchChecked(true);
         } else {
-            mTheme.setViewSwitch(false);
+            mThemeSwitch.setSwitchChecked(false);
         }
 
-        mTheme.setOnSwitch(new ItemSwitchView.OnSwitch() {
+        mThemeSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {
                 App.setIsNight(isCheck);
+                GanklyPreferences.putBoolean(IS_SELECT_SWITCH, isCheck);
+
                 if (isCheck) {
                     mActivity.setTheme(R.style.AppTheme_Night);
                     RxBus.getInstance().post(new ThemeEvent(true));
@@ -154,6 +157,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
                     mActivity.setTheme(R.style.AppTheme_Day);
                     RxBus.getInstance().post(new ThemeEvent(false));
                 }
+
                 refreshStatusBar();
                 changeTheme();
             }
@@ -237,5 +241,17 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void hiddenDialog() {
         disDialog();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MainActivity) context;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        changeTheme();
     }
 }

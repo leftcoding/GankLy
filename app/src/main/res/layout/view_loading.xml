@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:background="?attr/baseAdapterItemBackground"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:textSize="16sp"
-            android:textColor="@color/text_default"
+            android:textColor="?attr/TextTitleColor"
             android:text="@string/loading"/>
     </LinearLayout>
 </RelativeLayout>

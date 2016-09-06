@@ -12,16 +12,23 @@
         <item name="baseAdapterItemTextColor">@color/body_text_1</item>
         <item name="navigationBackground">@color/white</item>
         <item name="themeBackground">@color/white</item>
+        <item name="TextTitleColor">@color/text_default</item>
+        <item name="aboutTextViewBackground">@color/white</item>
+        <item name="aboutBackground">@color/light_aboutBackground</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--Setting-->
-        <item name="themeSettingBackground">@color/white</item>
+        <item name="themeSettingBackground">@color/white</item> <!--Setting-->
     </style>
 
     <style name="AppTheme.Day.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <!--夜晚-->
@@ -37,17 +44,23 @@
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
         <item name="baseAdapterItemTextColor">#fff5f5f5</item>
         <item name="navigationBackground">@color/dark_colorAccent</item>
-        <item name="themeBackground">@color/dark_colorPrimary</item>
+        <item name="themeBackground">@color/dark_background</item><!-- 应用背景色 -->
+        <item name="TextTitleColor">@color/material_grey_50</item>
+        <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
+        <item name="aboutBackground">@color/dark_background</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <!--Setting-->
-        <item name="themeSettingBackground">@color/dark_background</item>
-
+        <item name="themeSettingBackground">@color/dark_background</item> <!--Setting-->
     </style>
 
     <style name="AppTheme.Night.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 </resources>

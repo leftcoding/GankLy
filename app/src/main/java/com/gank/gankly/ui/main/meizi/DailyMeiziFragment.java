@@ -4,14 +4,21 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.ViewsModel;
@@ -26,9 +33,13 @@ import com.gank.gankly.view.IDailyMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 /**
  * 妹子每日更新
@@ -83,6 +94,12 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
 
     @Override
     protected void initValues() {
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                changeTheme();
+            }
+        });
     }
 
     @Override
@@ -90,7 +107,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         mDailyMeiziAdapter = new DailyMeiziAdapter();
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -117,6 +134,49 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     protected void initData() {
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
+    }
+
+    private void changeTheme() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = mActivity.getTheme();
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        int background = typedValue.data;
+
+        TypedValue textValue = new TypedValue();
+        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
+        int textColor = textValue.data;
+
+        int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
+        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+            ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
+            childView.setBackgroundColor(background);
+            TextView title = (TextView) childView.findViewById(R.id.daily_meizi_title);
+            title.setTextColor(textColor);
+        }
+
+        //让 RecyclerView 缓存在 Pool 中的 Item 失效
+        //那么，如果是ListView，要怎么做呢？这里的思路是通过反射拿到 AbsListView 类中的 RecycleBin 对象，然后同样再用反射去调用 clear 方法
+        Class<RecyclerView> recyclerViewClass = RecyclerView.class;
+        try {
+            Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
+            declaredField.setAccessible(true);
+            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
+            declaredMethod.setAccessible(true);
+            declaredMethod.invoke(declaredField.get(mSwipeRefreshLayout.getRecyclerView()), new Object[0]);
+            RecyclerView.RecycledViewPool recycledViewPool = mSwipeRefreshLayout.getRecyclerView().getRecycledViewPool();
+            recycledViewPool.clear();
+
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     private void createDialog() {

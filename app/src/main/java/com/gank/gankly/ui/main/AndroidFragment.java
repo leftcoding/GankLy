@@ -9,7 +9,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
@@ -203,12 +202,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
     private void setRecyclerViewBackground() {
         if (App.isNight()) {
             mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.dark_background);
@@ -270,7 +263,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void onHiddenChanged(boolean hidden) {
-
         super.onHiddenChanged(hidden);
     }
 }

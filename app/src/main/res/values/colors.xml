@@ -43,7 +43,7 @@
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
 
-    <!-- dark theme color-->
+    <!-- dark theme color -->
     <color name="dark_colorPrimary">#263238</color>
     <color name="dark_colorPrimaryDark">#1e282d</color>
     <color name="dark_colorAccent">#253137</color>  <!--FF4081  55a5e3-->
@@ -57,6 +57,9 @@
     <color name="navigation_item_icon">#A2BFDE</color>
     <color name="baseSwipeRefreshLayoutProgressSchemeColor">#455A64</color>
     <color name="baseSwipeRefreshLayoutSchemeColors">#2184b2</color>
+
+    <!-- light theme color -->
+    <color name="light_aboutBackground">#EEEEEE</color>
 
     <!--  jianshu   -->
 

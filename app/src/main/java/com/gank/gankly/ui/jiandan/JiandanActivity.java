@@ -49,7 +49,8 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         super.onCreate(savedInstanceState);
     }
 
-    private void initTheme() {
+    @Override
+    protected void initTheme() {
         if (App.isNight()) {
             setTheme(R.style.AppTheme_Night);
         } else {

@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
 
@@ -28,6 +29,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        initTheme();
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         initPresenter();
@@ -113,7 +115,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected abstract void initValues();
 
     protected void initPresenter() {
+    }
 
+    protected void initTheme() {
+        if (App.isNight()) {
+            setTheme(R.style.AppTheme_Night);
+        } else {
+            setTheme(R.style.AppTheme_Day);
+        }
     }
 
     public void popBackStack() {

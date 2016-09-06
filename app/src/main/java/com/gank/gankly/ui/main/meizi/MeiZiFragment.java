@@ -2,15 +2,19 @@ package com.gank.gankly.ui.main.meizi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.TypedValue;
 import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
@@ -26,6 +30,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 import java.util.List;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-5-12
@@ -61,6 +66,12 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void initValues() {
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                changTheme();
+            }
+        });
     }
 
     @Override
@@ -122,6 +133,14 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    private void changTheme() {
+        TypedValue value = new TypedValue();
+        Resources.Theme theme = mActivity.getTheme();
+        theme.resolveAttribute(R.attr.themeBackground, value, true);
+        int background = value.data;
+        mSwipeRefreshLayout.setBackgroundColor(background);
     }
 
     @Override
