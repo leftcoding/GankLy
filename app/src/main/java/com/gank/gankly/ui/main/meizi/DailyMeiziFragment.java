@@ -31,7 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 妹子每日更新
  * Create by LingYan on 2016-07-01
+ * Email:137387869@qq.com
  */
 public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<List<DailyMeiziBean>>,
         ItemClick {

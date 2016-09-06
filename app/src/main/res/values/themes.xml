@@ -7,9 +7,11 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="themeTabLayoutBackground">@color/colorPrimary</item>
         <item name="textPrimaryColor">@color/text_default</item>
-        <item name="textSecondaryColor">@color/text_666666</item>
+        <item name="textSecondaryColor">@color/body_text_2</item>
         <item name="baseAdapterItemBackground">@color/white</item>
         <item name="baseAdapterItemTextColor">@color/body_text_1</item>
+        <item name="navigationBackground">@color/white</item>
+        <item name="themeBackground">@color/white</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -34,6 +36,8 @@
         <item name="textSecondaryColor">@color/text_secondary_dark</item>
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
         <item name="baseAdapterItemTextColor">#fff5f5f5</item>
+        <item name="navigationBackground">@color/dark_colorAccent</item>
+        <item name="themeBackground">@color/dark_colorPrimary</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

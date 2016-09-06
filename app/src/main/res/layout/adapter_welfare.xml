@@ -61,7 +61,7 @@
                     android:drawableStart="@drawable/book_time"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:textColor="@color/body_text_2"
+                    android:textColor="?attr/textSecondaryColor"
                     android:maxLines="1"
                     android:text=""
                     android:textSize="14sp"/>

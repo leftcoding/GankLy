@@ -42,4 +42,5 @@
     <attr name="themeSettingBackground" format="reference|color"/>
     <attr name="baseAdapterItemBackground" format="reference|color"/>
     <attr name="baseAdapterItemTextColor" format="reference|color"/>
+    <attr name="navigationBackground" format="reference|color"/>
 </resources>

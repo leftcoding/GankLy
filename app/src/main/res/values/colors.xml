@@ -54,6 +54,9 @@
     <color name="text_primary_dark">#b3ffffff</color> <!-- deffffff -->
     <color name="text_secondary_dark">#8affffff</color>
     <color name="base_adapter_item_background">#37474f</color>
+    <color name="navigation_item_icon">#A2BFDE</color>
+    <color name="baseSwipeRefreshLayoutProgressSchemeColor">#455A64</color>
+    <color name="baseSwipeRefreshLayoutSchemeColors">#2184b2</color>
 
     <!--  jianshu   -->
 

@@ -1,18 +1,27 @@
 package com.gank.gankly.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.AttrRes;
+import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.StateSet;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.jiandan.JiandanActivity;
@@ -22,6 +31,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-6-13
@@ -189,5 +199,69 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                int textColorJava = getThemeAttrColor(MainActivity.this, R.attr.navigationBackground);
+                mNavigationView.setBackgroundColor(textColorJava);
+                mNavigationView.setItemTextColor(createColorStateList(MainActivity.this));
+                mNavigationView.setItemIconTintList(getSwitchThumbColorStateList());
+            }
+        });
+    }
+
+    @ColorInt
+    private static int getThemeAttrColor(Context context, @AttrRes int colorAttr) {
+        TypedArray array = context.obtainStyledAttributes(null, new int[]{colorAttr});
+        try {
+            return array.getColor(0, 0);
+        } finally {
+            array.recycle();
+        }
+    }
+
+    private ColorStateList getSwitchThumbColorStateList() {
+        int mSelectColor;
+        int unSelectColor;
+
+        if (App.isNight()) {
+            mSelectColor = R.color.switch_thumb_disabled_dark;
+            unSelectColor = R.color.navigation_item_icon;
+        } else {
+            mSelectColor = R.color.colorAccent;
+            unSelectColor = R.color.gray;
+        }
+
+        final int[][] states = new int[3][];
+        final int[] colors = new int[3];
+
+        // Disabled state
+        states[0] = new int[]{-android.R.attr.state_enabled};
+        colors[0] = (Color.DKGRAY);
+
+        // Checked state
+        states[1] = new int[]{android.R.attr.state_checked};
+
+        colors[1] = App.getAppColor(mSelectColor);
+
+        // Unchecked enabled state state
+        states[2] = new int[0];
+
+        colors[2] = App.getAppColor(unSelectColor);
+
+        return new ColorStateList(states, colors);
+    }
+
+    private static ColorStateList createColorStateList(Context context) {
+        return new ColorStateList(
+                new int[][]{
+                        new int[]{-android.R.attr.state_enabled}, // Disabled state.
+                        StateSet.WILD_CARD,                       // Enabled state.
+                },
+                new int[]{
+                        getThemeAttrColor(context, R.attr.textPrimaryColor),  // Disabled state.
+                        getThemeAttrColor(context, R.attr.textPrimaryColor), // Enabled state.
+                });
     }
 }

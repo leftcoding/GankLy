@@ -27,7 +27,7 @@
 
         <item
             android:id="@+id/navigation_collect"
-            android:icon="@drawable/navigation_collect_nor"
+            android:icon="@drawable/navigation_collect_prs"
             android:title="@string/navigation_collect"/>
     </group>
 

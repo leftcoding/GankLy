@@ -29,13 +29,12 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 首页
  * Create by LingYan on 2016-04-22
  * Email:137387869@qq.com
  */
-public class MainFragment extends BaseSwipeRefreshFragment implements
-        ViewPager.OnPageChangeListener, DownloadProgressListener, ILauncher {
-    private static final String TAG = "MainFragment";
-
+public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener,
+        DownloadProgressListener, ILauncher {
     @BindView(R.id.main_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.main_tabLayout)
@@ -43,13 +42,11 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    private GankPagerAdapter mPagerAdapter;
     private MainActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
     private static MainFragment sMainFragment;
     private List<LazyFragment> mList;
-    private LazyFragment mCurFragment;
 
     public static MainFragment getInstance() {
         if (sMainFragment == null) {
@@ -67,13 +64,8 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        KLog.d("hidden:" + hidden);
         if (!hidden) {
             changeThemeBackground();
-//            mCurFragment = mList.get(mViewPager.getCurrentItem());
-//            if (mCurFragment != null) {
-//                mCurFragment.refreshUi();
-//            }
         }
     }
 
@@ -90,12 +82,12 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
     protected void initViews() {
         mToolbar.setTitle(R.string.app_name);
         mActivity.setSupportActionBar(mToolbar);
+
         ActionBar ab = mActivity.getSupportActionBar();
         if (ab != null) {
             ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             ab.setDisplayHomeAsUpEnabled(true);
         }
-        mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
     }
 
     @Override
@@ -106,6 +98,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
                 mActivity.openDrawer();
             }
         });
+
         changeThemeBackground();
     }
 
@@ -125,10 +118,13 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
         mTitles.add(Constants.ANDROID);
         mTitles.add(Constants.IOS);
         mTitles.add(Constants.WELFRAE);
-        mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(), mList, mTitles);
+
+        GankPagerAdapter mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(),
+                mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
+
         initTabLayout();
     }
 
@@ -136,12 +132,16 @@ public class MainFragment extends BaseSwipeRefreshFragment implements
         for (int i = 0; i < mTitles.size(); i++) {
             mTabLayout.addTab(mTabLayout.newTab().setText(mTitles.get(i)));
         }
+
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setBackgroundColor(App.getAppColor(R.color.colorPrimary));
-
+//        mTabLayout.setBackgroundColor(App.getAppColor(R.color.colorPrimary));
+        mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
     }
 
+    /**
+     * 改变主题颜色
+     */
     private void changeThemeBackground() {
         TypedValue background = new TypedValue();//背景色
         Resources.Theme theme = mActivity.getTheme();

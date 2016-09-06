@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
 import com.gank.gankly.ui.base.LazyFragment;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -23,7 +22,6 @@ public class GankPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        KLog.d("getItem");
 //        switch (position) {
 //            case 1:
 //                return IosFragment.newInstance();

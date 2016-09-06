@@ -26,15 +26,17 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
+ * 妹子每日更新 实现类
  * Create by LingYan on 2016-07-05
  */
 public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziModel {
+    public static final String MEZI_DAILY_URL = "http://m.mzitu.com/all";
+
     private Subscription mSubscription;
     private boolean isUnSubscribe;
     private int progress;
 
     public DailyMeiziModelImpl() {
-
     }
 
     @Override
@@ -43,10 +45,9 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
             @Override
             public void call(Subscriber<? super List<DailyMeiziBean>> subscriber) {
                 try {
-                    String u = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
-                    String _url = "http://www.mzitu.com/all";
-                    Document doc = Jsoup.connect(_url)
-                            .userAgent(u)
+                    Document doc = Jsoup.connect(MEZI_DAILY_URL)
+                            .ignoreContentType(true)
+                            .userAgent(MEIZI_USERAGENT)
                             .timeout(timeout)
                             .get();
                     subscriber.onNext(getMonthList(doc));
@@ -69,8 +70,7 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
             @Override
             public void call(Subscriber<? super List<GiftBean>> subscriber) {
                 try {
-                    String _url = url;
-                    Document doc = Jsoup.connect(_url)
+                    Document doc = Jsoup.connect(url)
                             .userAgent(USERAGENT)
                             .timeout(timeout)
                             .get();
@@ -186,15 +186,11 @@ public class DailyMeiziModelImpl extends BaseMeziModel implements DailyMeiziMode
         List<DailyMeiziBean> list = new ArrayList<>();
         if (doc != null) {
             Elements times = doc.select(".post-content .archive-brick");
-            KLog.d("times:" + times.size());
             Elements ahref = doc.select(".post-content .archive-brick a");
             for (int i = 0; i < ahref.size(); i++) {
                 list.add(new DailyMeiziBean(ahref.get(i).attr("href"), times.get(i).text()));
             }
         }
-        KLog.d("list:" + list.size());
         return list;
     }
-
-
 }

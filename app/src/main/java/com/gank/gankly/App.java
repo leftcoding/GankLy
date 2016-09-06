@@ -24,7 +24,7 @@ public class App extends Application {
     public static Context mContext;
     private static SQLiteDatabase db;
 
-    private static boolean isNight = true;
+    private static boolean isNight = false;
 
     @Override
     public void onCreate() {
