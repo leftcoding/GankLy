@@ -1,13 +1,11 @@
 package com.gank.gankly.ui.jiandan;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.JiandanResult;
 import com.gank.gankly.config.Constants;
@@ -19,7 +17,6 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.List;
 
@@ -42,21 +39,6 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
     private IBaseRefreshPresenter mPresenter;
     private static JiandanActivity sJiandanActivity;
     private JiandanAdapter mAdapter;
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        initTheme();
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void initTheme() {
-        if (App.isNight()) {
-            setTheme(R.style.AppTheme_Night);
-        } else {
-            setTheme(R.style.AppTheme_Day);
-        }
-    }
 
     public static JiandanActivity getInstance() {
         if (sJiandanActivity == null) {
@@ -95,9 +77,11 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         mAdapter = new JiandanAdapter();
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
+        mSwipeRefreshLayout.setAdapter(mAdapter);
+
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
-        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(this, R.drawable.shape_item_divider));
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(this, R.drawable.jiandan_divider_light));
+//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -109,7 +93,6 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
                 mPresenter.fetchMore();
             }
         });
-        mSwipeRefreshLayout.setAdapter(mAdapter);
     }
 
     @Override

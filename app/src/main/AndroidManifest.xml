@@ -61,6 +61,7 @@
         <activity
             android:name=".ui.jiandan.JiandanActivity"
             android:launchMode="singleTask"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
             android:screenOrientation="portrait"/>
     </application>
 </manifest>

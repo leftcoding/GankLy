@@ -48,6 +48,7 @@
         <item name="TextTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
         <item name="aboutBackground">@color/dark_background</item>
+        <item name="android:colorControlHighlight">#42ffffff</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -136,9 +137,11 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
-            childView.setBackgroundColor(background);
+//            childView.setBackgroundColor(background);
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             title.setTextColor(textColor);
+            View rlView = childView.findViewById(R.id.goods_rl_title);
+            rlView.setBackgroundColor(background);
         }
 
         //让 RecyclerView 缓存在 Pool 中的 Item 失效
