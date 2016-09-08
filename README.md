@@ -21,6 +21,7 @@
 * 关于
 
 ##应用截图
+![image](https://github.com/leftcoding/GankLy/raw/master/art/img_0.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_1.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_2.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_3.png)
