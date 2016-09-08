@@ -80,7 +80,6 @@
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="GankLy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -3455,12 +3454,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00023" summary="1.Update VideoPresenter&#10;">
-      <created>1468401050000</created>
-      <option name="number" value="00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1468401050000</updated>
-    </task>
     <task id="LOCAL-00024" summary="1.Update VideoPresenter&#10;2.Delete IVideoView&#10;3.Renamed view_swiperefresh_multiple_status&#10;4.Update BasePresenter&#10;">
       <created>1468487499617</created>
       <option name="number" value="00024" />
@@ -3749,7 +3742,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473301192750</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="1.Update README.md">
+      <created>1473301246180</created>
+      <option name="number" value="00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1473301246180</updated>
+    </task>
+    <option name="localTasksCounter" value="73" />
     <servers />
   </component>
   <component name="TodoView">
