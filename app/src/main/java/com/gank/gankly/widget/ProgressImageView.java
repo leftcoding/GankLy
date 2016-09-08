@@ -90,7 +90,7 @@ public class ProgressImageView extends RelativeLayout {
 
     public void load(String url, Fragment fragment) {
 //        if (url.endsWith("gif")) {
-//        target.setModel(url); // update target's cache
+        target.setModel(url); // update target's cache
 
         Glide.with(fragment).load(url)
                 .asBitmap()

@@ -159,13 +159,17 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         int background = typedValue.data;
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
         int textColor = typedValue.data;
+        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
+        int textSecondaryColor = typedValue.data;
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             childView.setBackgroundColor(background);
-            TextView nickName = (TextView) childView.findViewById(R.id.goods_txt_title);
-            nickName.setTextColor(textColor);
+            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+            title.setTextColor(textColor);
+            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
+            time.setTextColor(textSecondaryColor);
         }
 
         //让 RecyclerView 缓存在 Pool 中的 Item 失效

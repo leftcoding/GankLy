@@ -22,5 +22,5 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/view_swiperefresh_multiple_status"/>
+    <include layout="@layout/layout_swiperefresh_multiple_status"/>
 </LinearLayout>

@@ -49,10 +49,10 @@ public class WebActivity extends BaseActivity {
     public static final int FROM_MAIN = 0;
     public static final int FROM_COLLECT = 1;
 
-    public static final String TITLE= "title";
-    public static final String URL= "url";
-    public static final String TYPE= "type";
-    public static final String AUTHOR= "author";
+    public static final String TITLE = "title";
+    public static final String URL = "url";
+    public static final String TYPE = "type";
+    public static final String AUTHOR = "author";
 
     @BindView(R.id.web_view)
     WebView mWebView;
@@ -141,11 +141,6 @@ public class WebActivity extends BaseActivity {
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-    }
-
-    @Override
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -174,7 +169,7 @@ public class WebActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.welfare_menu, menu);
+        getMenuInflater().inflate(R.menu.web_menu, menu);
         switchCollectIcon(menu.findItem(R.id.welfare_collect));
         return true;
     }

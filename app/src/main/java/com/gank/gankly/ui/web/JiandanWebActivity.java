@@ -244,7 +244,7 @@ public class JiandanWebActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.welfare_menu, menu);
+        getMenuInflater().inflate(R.menu.web_menu, menu);
         switchCollectIcon(menu.findItem(R.id.welfare_collect));
         return true;
     }

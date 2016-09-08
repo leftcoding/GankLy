@@ -10,14 +10,12 @@ import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.widget.ProgressImageView;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 public class BrowseFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
     @BindView(R.id.progress_img)
     ProgressImageView mProgressImageView;
     private BrowseActivity mActivity;
     private String mUrl;
-    private Unbinder mUnbinder;
 
     public BrowseFragment() {
     }

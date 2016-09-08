@@ -21,7 +21,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <include
-        layout="@layout/view_swiperefresh_multiple_status"
+        layout="@layout/layout_swiperefresh_multiple_status"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appbar"

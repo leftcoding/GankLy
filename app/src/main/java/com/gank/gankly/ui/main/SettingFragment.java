@@ -101,13 +101,13 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private void initPreferences() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, false);
         mSwitchView.setSwitchChecked(isAutoCheck);
-
         mThemeSwitch.setTextName(App.getAppString(R.string.setting_theme_night));
 
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
         itemUpdate.setTextName(R.string.setting_check_version);
+
         if (App.isNewVersion()) {
             itemUpdate.showVersion();
         }
@@ -152,12 +152,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
                 if (isCheck) {
                     mActivity.setTheme(R.style.AppTheme_Night);
-                    RxBus.getInstance().post(new ThemeEvent(true));
                 } else {
                     mActivity.setTheme(R.style.AppTheme_Day);
-                    RxBus.getInstance().post(new ThemeEvent(false));
                 }
 
+                RxBus.getInstance().post(new ThemeEvent(isCheck));
                 refreshStatusBar();
                 changeTheme();
             }
@@ -175,7 +174,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     public void callUpdate(CheckVersion checkVersion) {
-        ToastUtils.showToast("V " + checkVersion.getVersion());
+        ToastUtils.showToast(checkVersion.getChangelog());
     }
 
     @Override

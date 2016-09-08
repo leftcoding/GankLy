@@ -43,7 +43,7 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
 
     private void initView(Context context) {
         mContext = context;
-        View view = LayoutInflater.from(context).inflate(R.layout.view_item_switch, this, true);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this, true);
         txtName = (TextView) view.findViewById(R.id.item_switch_txt_name);
         mSwitch = (LSwitch) view.findViewById(R.id.item_switch_auto_check);
         viItem = view.findViewById(R.id.setting_rl_auto_check);

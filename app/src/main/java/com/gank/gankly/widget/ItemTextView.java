@@ -47,7 +47,7 @@ public class ItemTextView extends RelativeLayout {
 
     public ItemTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        View view = LayoutInflater.from(context).inflate(R.layout.view_item_text, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view, this);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemTextView);
         try {
             mTitle = array.getString(R.styleable.ItemTextView_TextTitle);

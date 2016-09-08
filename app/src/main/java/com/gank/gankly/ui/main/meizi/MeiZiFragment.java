@@ -110,7 +110,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.view_swiperefresh_multiple_status;
+        return R.layout.layout_swiperefresh_multiple_status;
     }
 
     @Override
