@@ -79,7 +79,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/video/VideoAdapter.java" />
@@ -215,8 +214,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.037102472">
-              <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.33200794">
+              <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -3457,12 +3456,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00019" summary="1.Add Bugly&#10;2.Update DailyMeiziFragment">
-      <created>1468221812070</created>
-      <option name="number" value="00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1468221812070</updated>
-    </task>
     <task id="LOCAL-00020" summary="1.Add Bugly&#10;2.Add CrashUtils">
       <created>1468293456351</created>
       <option name="number" value="00020" />
@@ -3751,7 +3744,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473240839542</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="1.Update README.md">
+      <created>1473300884588</created>
+      <option name="number" value="00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1473300884589</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3809,7 +3808,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.Update VideoPresenter&#10;2.Delete IVideoView&#10;3.Renamed view_swiperefresh_multiple_status&#10;4.Update BasePresenter&#10;" />
     <MESSAGE value="1.Fix VideoPresenterImpl&#10;" />
     <MESSAGE value="1.Add BaseAsynDataSource&#10;2.Update BasePresenter&#10;" />
     <MESSAGE value="1.Update BaseAsynDataSource&#10;2.Update PresenterImpl&#10;3.Delete IosGoodsPresenter&#10;" />
@@ -3834,7 +3832,8 @@
     <MESSAGE value="1.Update presenter" />
     <MESSAGE value="1.Update Butterknife" />
     <MESSAGE value="1.Add DayNightTheme" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Add DayNightTheme" />
+    <MESSAGE value="1.Update README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Update README.md" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -4298,8 +4297,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.037102472">
-          <caret line="1" column="25" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.33200794">
+          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
           <folding />
         </state>
       </provider>
