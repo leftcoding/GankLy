@@ -44,9 +44,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     @Override
     public void onBindViewHolder(GankViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
-        holder.position = position;
         holder.txtDesc.setText(bean.getDesc());
         holder.txtAuthor.setText(bean.getWho());
+
         int size = MeiziArrayList.getInstance().getArrayList().size();
         if (position > size && size > 0) {
             position = position % size;
@@ -72,8 +72,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
 
     public void addItems(List<ResultsBean> getResults) {
         mResults.addAll(getResults);
-        int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
-        notifyItemRangeInserted(position, getResults.size());
+//        int position = mResults.size() == 0 ? 0 : mResults.size() - 1;
+        notifyItemRangeInserted(mResults.size() , getResults.size());
     }
 
     public void clear() {
@@ -97,7 +97,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         ImageView mImageView;
         @BindView(R.id.video_txt_author)
         TextView txtAuthor;
-        int position;
 
         public GankViewHolder(View itemView) {
             super(itemView);
@@ -108,7 +107,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         @Override
         public void onClick(View v) {
             if (mMeiZiOnClick != null) {
-                mMeiZiOnClick.onClick(v, position);
+                mMeiZiOnClick.onClick(v, getAdapterPosition());
             }
         }
     }

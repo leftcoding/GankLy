@@ -214,8 +214,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33200794">
-              <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.37375745">
+              <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -3456,12 +3456,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00020" summary="1.Add Bugly&#10;2.Add CrashUtils">
-      <created>1468293456351</created>
-      <option name="number" value="00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1468293456351</updated>
-    </task>
     <task id="LOCAL-00021" summary="1.Update Fragment&lt;T&gt;&#10;2.Delete BaseFetchDatePresenter&#10;3.Delete OnFetchListener&#10;4.Add IMeiziView&#10;5.Add ViewShow&#10;">
       <created>1468398987544</created>
       <option name="number" value="00021" />
@@ -3750,7 +3744,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473300884589</updated>
     </task>
-    <option name="localTasksCounter" value="69" />
+    <task id="LOCAL-00069" summary="1.Update README.md">
+      <created>1473301078118</created>
+      <option name="number" value="00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1473301078118</updated>
+    </task>
+    <option name="localTasksCounter" value="70" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4297,8 +4297,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33200794">
-          <caret line="21" column="10" selection-start-line="21" selection-start-column="10" selection-end-line="21" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.37375745">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="10" selection-end-line="13" selection-end-column="10" />
           <folding />
         </state>
       </provider>
