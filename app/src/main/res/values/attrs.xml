@@ -45,4 +45,7 @@
     <attr name="navigationBackground" format="reference|color"/>
     <attr name="aboutTextViewBackground" format="reference|color"/>
     <attr name="aboutBackground" format="reference|color"/>
+    <attr name="updateVersionButtonTextColor" format="reference|color"/>
+    <attr name="updateVersionBackgroundColor" format="reference|color"/>
+    <attr name="updateVersionTextColor" format="reference|color"/>
 </resources>

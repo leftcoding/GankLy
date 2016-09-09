@@ -15,7 +15,6 @@ import com.gank.gankly.R;
  * Create by LingYan on 2016-06-06
  */
 public class ItemSwitchView extends RelativeLayout implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    private Context mContext;
     private TextView txtName;
     private View viItem;
     private LSwitch mSwitch;
@@ -42,7 +41,6 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
     }
 
     private void initView(Context context) {
-        mContext = context;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this, true);
         txtName = (TextView) view.findViewById(R.id.item_switch_txt_name);
         mSwitch = (LSwitch) view.findViewById(R.id.item_switch_auto_check);

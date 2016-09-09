@@ -25,7 +25,10 @@
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
+    <string name="dialog_update">更新</string>
     <string name="dialog_checking">检查更新&#8230;</string>
+
+    <string name="update_downing">开始下载Apk&#8230;</string>
 
     <string name="collect_success">收藏成功</string>
     <string name="collect_cancel">取消收藏</string>

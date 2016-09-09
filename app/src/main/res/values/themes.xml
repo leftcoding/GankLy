@@ -15,6 +15,9 @@
         <item name="TextTitleColor">@color/text_default</item>
         <item name="aboutTextViewBackground">@color/white</item>
         <item name="aboutBackground">@color/light_aboutBackground</item>
+        <item name="updateVersionTextColor">@color/body_text_1</item>
+        <item name="updateVersionBackgroundColor">@color/white</item>
+        <item name="updateVersionButtonTextColor">@color/body_text_2</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -39,8 +42,8 @@
         <item name="themeTabLayoutBackground">@color/dark_colorPrimary</item>
         <item name="colorControlActivated">@color/material_blue_grey_900</item>
         <item name="colorControlNormal">@color/material_blue_grey_900</item>
-        <item name="textPrimaryColor">@color/text_primary_dark</item>
-        <item name="textSecondaryColor">@color/text_secondary_dark</item>
+        <item name="textPrimaryColor">@color/dark_text_primary</item>
+        <item name="textSecondaryColor">@color/dark_text_secondary</item>
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
         <item name="baseAdapterItemTextColor">#fff5f5f5</item>
         <item name="navigationBackground">@color/dark_colorAccent</item>
@@ -48,7 +51,11 @@
         <item name="TextTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
         <item name="aboutBackground">@color/dark_background</item>
-        <item name="android:colorControlHighlight">#42ffffff</item>
+        <item name="android:colorControlHighlight">@color/dark_colorControlHighlight</item>
+        <item name="updateVersionTextColor">@color/material_grey_50</item>
+        <item name="updateVersionBackgroundColor">@color/base_adapter_item_background</item>
+        <item name="updateVersionButtonTextColor">@color/blue_pressed</item>
+
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -56,9 +63,6 @@
     </style>
 
     <style name="AppTheme.Night.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>

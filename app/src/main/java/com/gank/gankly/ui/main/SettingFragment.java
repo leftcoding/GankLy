@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
+import com.gank.gankly.listener.DialogOnClick;
 import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.utils.AppUtils;
@@ -25,6 +27,7 @@ import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
+import com.gank.gankly.widget.UpdateVersionDialog;
 
 import java.util.List;
 
@@ -38,14 +41,15 @@ import butterknife.OnClick;
  * Email:137387869@qq.com
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
-    public static final String IS_SELECT_SWITCH = "isSelect";
+    public static final String IS_NIGHT = "isNight";
+    private static final String DIALOG_TAG = "versionDialog";
 
     @BindView(R.id.setting_rl_body)
     View mView;
     @BindView(R.id.setting_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.setting_switch_check)
-    ItemSwitchView mSwitchView;
+    ItemSwitchView mAutoCheckSwitch;
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
     @BindView(R.id.setting_switch_theme)
@@ -58,13 +62,14 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     public static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
     public MainActivity mActivity;
-    private ProgressDialog mDialog;
+    private ProgressDialog mProgressDialog;
     private Resources.Theme theme;
     private TypedValue textColor;
+    private UpdateVersionDialog mVersionDialog;
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new LauncherPresenter(mActivity, this);
+    protected int getLayoutId() {
+        return R.layout.fragment_setting;
     }
 
     public static SettingFragment getInstance() {
@@ -72,6 +77,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             sAboutFragment = new SettingFragment();
         }
         return sAboutFragment;
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new LauncherPresenter(mActivity, this);
     }
 
     @Override
@@ -99,8 +109,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     private void initPreferences() {
-        boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, false);
-        mSwitchView.setSwitchChecked(isAutoCheck);
         mThemeSwitch.setTextName(App.getAppString(R.string.setting_theme_night));
 
         String summary = App.getAppResources().getString(R.string.setting_current_version,
@@ -112,16 +120,14 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             itemUpdate.showVersion();
         }
 
-        selectSwitch();
+        selectItemSwitch();
     }
 
-    private void selectSwitch() {
-        boolean isSelect = GanklyPreferences.getBoolean(IS_SELECT_SWITCH, false);
-        if (isSelect) {
-            mSwitchView.setSwitchChecked(true);
-        } else {
-            mSwitchView.setSwitchChecked(false);
-        }
+    private void selectItemSwitch() {
+        boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
+        mAutoCheckSwitch.setSwitchChecked(isAutoCheck);
+        boolean isNight = App.isNight();
+        mThemeSwitch.setSwitchChecked(isNight);
     }
 
     @OnClick(R.id.setting_item_text_update)
@@ -131,24 +137,18 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void bindLister() {
-        mSwitchView.setSwitchListener(new ItemSwitchView.OnSwitch() {
+        mAutoCheckSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {
                 savePreferences(isCheck);
             }
         });
 
-        if (App.isNight()) {
-            mThemeSwitch.setSwitchChecked(true);
-        } else {
-            mThemeSwitch.setSwitchChecked(false);
-        }
-
         mThemeSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {
                 App.setIsNight(isCheck);
-                GanklyPreferences.putBoolean(IS_SELECT_SWITCH, isCheck);
+                GanklyPreferences.putBoolean(IS_NIGHT, isCheck);
 
                 if (isCheck) {
                     mActivity.setTheme(R.style.AppTheme_Night);
@@ -163,18 +163,13 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         });
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_setting;
-    }
-
     private void savePreferences(boolean isCheck) {
         GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck);
     }
 
     @Override
     public void callUpdate(CheckVersion checkVersion) {
-        ToastUtils.showToast(checkVersion.getChangelog());
+        showVersionDialog(checkVersion.getChangelog());
     }
 
     @Override
@@ -182,17 +177,41 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         ToastUtils.showToast(R.string.tip_no_new_version);
     }
 
-    private void createDialog() {
-        if (mDialog == null) {
-            mDialog = new ProgressDialog(mActivity);
+    private void showVersionDialog(String content) {
+        Bundle bundle = new Bundle();
+        bundle.putString(UpdateVersionDialog.UPDATE_CONTENT, content);
+
+        if (mVersionDialog == null) {
+            mVersionDialog = new UpdateVersionDialog();
         }
-        mDialog.setMessage(App.getAppString(R.string.dialog_checking));
-        mDialog.show();
+        mVersionDialog.setDialogOnClick(new DialogOnClick() {
+            @Override
+            public void cancel() {
+                mVersionDialog.dismiss();
+            }
+
+            @Override
+            public void submit() {
+                mVersionDialog.dismiss();
+                ToastUtils.showToast("update_downing");
+                mPresenter.downloadApk();
+            }
+        });
+        mVersionDialog.setArguments(bundle);
+        mVersionDialog.show(mActivity.getSupportFragmentManager(), DIALOG_TAG);
+    }
+
+    private void createDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(mActivity);
+        }
+        mProgressDialog.setMessage(App.getAppString(R.string.dialog_checking));
+        mProgressDialog.show();
     }
 
     private void disDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
         }
     }
 
@@ -251,6 +270,5 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void onResume() {
         super.onResume();
-        changeTheme();
     }
 }

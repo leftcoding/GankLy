@@ -46,7 +46,7 @@ public class App extends Application {
         //Bugly 测试：true
         CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
 
-        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_SELECT_SWITCH, false);
+        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
     }
 
     private static DaoSession daoSession;

@@ -55,6 +55,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initViews() {
         changeNavigationView();
+
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent event) {
+                changeNavigationView();
+            }
+        });
     }
 
     @Override
@@ -184,13 +191,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-            @Override
-            public void call(ThemeEvent event) {
-                changeNavigationView();
-            }
-        });
     }
 
     private void changeNavigationView() {
@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity {
         int unSelectColor;
 
         if (App.isNight()) {
-            mSelectColor = R.color.switch_thumb_disabled_dark;
+            mSelectColor = R.color.dark_switch_thumb_disabled;
             unSelectColor = R.color.navigation_item_icon;
         } else {
             mSelectColor = R.color.colorAccent;
