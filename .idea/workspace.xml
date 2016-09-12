@@ -79,29 +79,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/StyleUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_empty_data.png" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_empty_data.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/jiand_divider_light.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/collect/CollectFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/jiandan/JiandanActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/AndroidFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/IosFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/SettingFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/meizi/MeiZiFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/LSwitch.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/widget/LSwitch.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_collcet.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_collcet.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/adapter_jiandan.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_jiandan.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_setting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/layout_multiple_empty.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/layout_multiple_empty.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/attrs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/themes.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/CircularAnimUtil.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/utils/CircularAnimUtils.java" />
     </list>
     <ignored path="GankLy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -203,8 +182,8 @@
       <file leaf-file-name="WebActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6551724">
-              <caret line="195" column="17" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="176" column="13" selection-start-line="176" selection-start-column="13" selection-end-line="176" selection-end-column="13" />
               <folding>
                 <element signature="e#6351#6375#0" expanded="true" />
                 <element signature="e#6623#6646#0" expanded="true" />
@@ -3503,12 +3482,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00028" summary="1.Fix 福利 can't show in virtual&#10;">
-      <created>1468911411560</created>
-      <option name="number" value="00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1468911411560</updated>
-    </task>
     <task id="LOCAL-00029" summary="1.Fixed FuLi StaggeredGridLayout&#10;2.Add AndroidModelImpl&#10;3.Update AndroidFragment &#10;3.Add AndroidPresenter&#10;">
       <created>1468985282721</created>
       <option name="number" value="00029" />
@@ -3797,7 +3770,13 @@
       <option name="project" value="LOCAL" />
       <updated>1473413687377</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="1.Update Night Theme">
+      <created>1473671850531</created>
+      <option name="number" value="00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1473671850533</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3855,7 +3834,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.Update BaseAsynDataSource&#10;2.Update PresenterImpl&#10;3.Delete IosGoodsPresenter&#10;" />
     <MESSAGE value="1.Fix 福利 can't show in virtual&#10;" />
     <MESSAGE value="1.Fixed FuLi StaggeredGridLayout&#10;2.Add AndroidModelImpl&#10;3.Update AndroidFragment &#10;3.Add AndroidPresenter&#10;" />
     <MESSAGE value="1.Add JiandanModelImpl&#10;2.Add JiandanApi&#10;3.Add JiandanService&#10;" />
@@ -3880,7 +3858,8 @@
     <MESSAGE value="1.Update README.md" />
     <MESSAGE value="1.Update Layout Name" />
     <MESSAGE value="1.Add night" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Add night" />
+    <MESSAGE value="1.Update Night Theme" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Update Night Theme" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3925,6 +3904,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="54" column="44" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1491#1719#0" expanded="false" />
+            <element signature="e#1718#1719#0" expanded="false" />
+            <element signature="e#1791#2019#0" expanded="false" />
+            <element signature="e#2018#2019#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4124,6 +4110,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="238" column="0" selection-start-line="238" selection-start-column="0" selection-end-line="238" selection-end-column="0" />
+          <folding>
+            <element signature="e#2987#3015#0" expanded="false" />
+            <element signature="e#3606#3634#0" expanded="false" />
+            <element signature="e#3664#3781#0" expanded="false" />
+            <element signature="e#3858#3888#0" expanded="false" />
+            <element signature="e#5531#5558#0" expanded="false" />
+            <element signature="e#6562#6586#0" expanded="false" />
+            <element signature="e#7826#8123#0" expanded="false" />
+            <element signature="e#8122#8123#0" expanded="false" />
+            <element signature="e#8164#8409#0" expanded="false" />
+            <element signature="e#8408#8409#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4402,8 +4400,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/web/WebActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6551724">
-          <caret line="195" column="17" selection-start-line="195" selection-start-column="17" selection-end-line="195" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="176" column="13" selection-start-line="176" selection-start-column="13" selection-end-line="176" selection-end-column="13" />
           <folding>
             <element signature="e#6351#6375#0" expanded="true" />
             <element signature="e#6623#6646#0" expanded="true" />
