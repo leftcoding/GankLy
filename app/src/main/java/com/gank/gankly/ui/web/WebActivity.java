@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -29,7 +28,7 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
-import com.gank.gankly.utils.CircularAnimUtil;
+import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
@@ -53,6 +52,7 @@ public class WebActivity extends BaseActivity {
     public static final String URL = "url";
     public static final String TYPE = "type";
     public static final String AUTHOR = "author";
+    public static final String FROM_TYPE = "from_type";
 
     @BindView(R.id.web_view)
     WebView mWebView;
@@ -135,7 +135,7 @@ public class WebActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CircularAnimUtil.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
+                CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
             }
         });
     }
@@ -144,11 +144,11 @@ public class WebActivity extends BaseActivity {
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mUrl = bundle.getString("url");
-            mTitle = bundle.getString("title");
-            mType = bundle.getString("type", Constants.ALL);
-            mAuthor = bundle.getString("author");
-            mFromType = bundle.getInt("from_type");
+            mUrl = bundle.getString(URL);
+            mTitle = bundle.getString(TITLE);
+            mType = bundle.getString(TYPE, Constants.ALL);
+            mAuthor = bundle.getString(AUTHOR);
+            mFromType = bundle.getInt(FROM_TYPE);
         }
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
@@ -179,19 +179,24 @@ public class WebActivity extends BaseActivity {
         switch (item.getItemId()) {
             case R.id.welfare_collect:
                 mStates = CollectStates.NORMAL;
+                int resColor;
+                int resText;
                 if (!isCollect) {
                     if (!isInitCollect) {
                         mStates = CollectStates.COLLECT;
                     }
-                    Snackbar.make(mView, R.string.collect_success, Snackbar.LENGTH_SHORT).show();
+                    resText = R.string.collect_success;
+                    resColor = R.color.collect_snackbar_text_color;
                 } else {
                     if (isInitCollect) {
                         mStates = CollectStates.UN_COLLECT;
                     }
-                    Snackbar.make(mView, R.string.collect_cancel, Snackbar.LENGTH_SHORT).show();
+                    resText = R.string.collect_cancel;
+                    resColor = R.color.white;
                 }
 
                 isCollect = !isCollect;
+                showSnackbar(mView, resText, App.getAppColor(resColor));
                 switchCollectIcon(item);
                 return true;
             case R.id.welfare_share:

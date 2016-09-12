@@ -26,7 +26,7 @@ import com.gank.gankly.presenter.impl.AndroidPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
-import com.gank.gankly.utils.CircularAnimUtil;
+import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -140,7 +140,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
         alphaAdapter.setFirstOnly(true);
         alphaAdapter.setDuration(500);
-        alphaAdapter.setInterpolator(new OvershootInterpolator(.5f));
+        alphaAdapter.setInterpolator(new OvershootInterpolator(0.5f));
         mSwipeRefreshLayout.setAdapter(alphaAdapter);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -177,7 +177,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         bundle.putString("author", bean.getWho());
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
-        CircularAnimUtil.startActivity(mActivity, intent, view, R.color.white_half);
+        CircularAnimUtils.startActivity(mActivity, intent, view, R.color.white_half);
     }
 
     @Override
@@ -204,7 +204,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private void setRecyclerViewBackground() {
         if (App.isNight()) {
-            mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.dark_background);
+            mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.background_dark);
             mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(App.getAppColor(R.color.baseSwipeRefreshLayoutProgressSchemeColor));
             mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.baseSwipeRefreshLayoutSchemeColors));
         } else {

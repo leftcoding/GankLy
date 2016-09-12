@@ -43,21 +43,25 @@
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
 
+    <color name="collect_background_light">#F1F3F6</color>
+    <color name="collect_snackbar_text_color">#31c4f9</color>
+
     <!-- dark theme color -->
-    <color name="dark_colorPrimary">#263238</color>
-    <color name="dark_colorPrimaryDark">#1e282d</color>
-    <color name="dark_colorAccent">#253137</color>  <!--FF4081  55a5e3-->
-    <color name="dark_switch_thumb_disabled">#31c4f9</color>
-    <color name="dark_switch_Track_disabled">#346e83</color>
-    <color name="dark_background">#212b30</color>
+    <color name="colorPrimary_dark">#263238</color>
+    <color name="colorPrimaryDark_dark">#1e282d</color>
+    <color name="colorAccent_dark">#253137</color>  <!--FF4081  55a5e3-->
+    <color name="switch_thumb_disabled_dark">#31c4f9</color>
+    <color name="switch_Track_disabled_dark">#346e83</color>
+    <color name="background_dark">#212b30</color>
     <color name="material_blue_grey_900">#ff263238</color>
-    <color name="dark_text_primary">#b3ffffff</color> <!-- deffffff -->
-    <color name="dark_text_secondary">#8affffff</color>
+    <color name="text_primary_dark">#b3ffffff</color>
+    <color name="text_secondary_dark">#8affffff</color>
     <color name="base_adapter_item_background">#37474f</color>
     <color name="navigation_item_icon">#A2BFDE</color>
     <color name="baseSwipeRefreshLayoutProgressSchemeColor">#455A64</color>
     <color name="baseSwipeRefreshLayoutSchemeColors">#2184b2</color>
     <color name="dark_colorControlHighlight">#42ffffff</color>
+    <color name="collect_background_dark">@color/colorPrimaryDark_dark</color>
 
     <!-- light theme color -->
     <color name="light_aboutBackground">#EEEEEE</color>

@@ -52,7 +52,7 @@ public class LSwitch extends SwitchCompat {
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
         if (App.isNight()) {
-            mColor = R.color.dark_switch_thumb_disabled;
+            mColor = R.color.switch_thumb_disabled_dark;
         } else {
             mColor = R.color.colorAccent;
         }

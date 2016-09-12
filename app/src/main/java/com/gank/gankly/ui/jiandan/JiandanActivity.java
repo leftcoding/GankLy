@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.JiandanResult;
 import com.gank.gankly.config.Constants;
@@ -17,6 +18,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.MyDecoration;
 
 import java.util.List;
 
@@ -79,8 +81,9 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(this));
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
+        changeRecyclerViewBackground();
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
-//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(this, R.drawable.jiandan_divider_light));
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL));
 //        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
@@ -105,6 +108,14 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
     protected void initPresenter() {
         super.initPresenter();
         mPresenter = new JiandanPresenterImpl(this, this);
+    }
+
+    private void changeRecyclerViewBackground() {
+        int color = R.color.gray_holo_dark;
+        if (App.isNight()) {
+            color = R.color.gray_holo_light;
+        }
+        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(App.getAppColor(color));
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -37,6 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 设置
  * Create by LingYan on 2016-05-10
  * Email:137387869@qq.com
  */
@@ -58,6 +60,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     List<ItemSwitchView> switchTextViews;
     @BindViews({R.id.setting_item_text_update})
     List<ItemTextView> textViews;
+    @BindView(R.id.setting_text_copyright)
+    TextView txtCopyRight;
 
     public static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
@@ -128,11 +132,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         mAutoCheckSwitch.setSwitchChecked(isAutoCheck);
         boolean isNight = App.isNight();
         mThemeSwitch.setSwitchChecked(isNight);
-    }
-
-    @OnClick(R.id.setting_item_text_update)
-    void clikUpdate() {
-        mPresenter.checkVersion();
     }
 
     @Override
@@ -233,6 +232,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         theme.resolveAttribute(R.attr.colorPrimary, background, true);
         mToolbar.setBackgroundResource(background.resourceId);
         textColor = new TypedValue();
+        theme.resolveAttribute(R.attr.TextTitleColor, textColor, true);
+        int copyRight = textColor.data;
+        txtCopyRight.setTextColor(copyRight);
         theme.resolveAttribute(R.attr.textPrimaryColor, textColor, true);
 
         ButterKnife.apply(switchTextViews, new ButterKnife.Action<ItemSwitchView>() {
@@ -259,6 +261,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void hiddenDialog() {
         disDialog();
+    }
+
+    @OnClick(R.id.setting_item_text_update)
+    void clikUpdate() {
+        mPresenter.checkVersion();
     }
 
     @Override

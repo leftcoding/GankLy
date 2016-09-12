@@ -1,5 +1,15 @@
 #Gank
-应用所有接口数据来自 http://Gank.io
+本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教!
+
+##应用用到的技术和第三方库
+* MVP + retrofit + rxJava
+* GreenDao
+* butterKnife
+* glide
+* jsoup
+* bugly(腾讯异常收集工具)
+* klog(Log日志调试)
+* recyclerview-animators
 
 ##联系方式
 137387869@qq.com

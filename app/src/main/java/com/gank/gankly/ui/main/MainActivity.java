@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity {
         int unSelectColor;
 
         if (App.isNight()) {
-            mSelectColor = R.color.dark_switch_thumb_disabled;
+            mSelectColor = R.color.switch_thumb_disabled_dark;
             unSelectColor = R.color.navigation_item_icon;
         } else {
             mSelectColor = R.color.colorAccent;

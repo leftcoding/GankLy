@@ -44,11 +44,13 @@
             android:layout_below="@id/setting_item_text_update"/>
 
         <TextView
+            android:id="@+id/setting_text_copyright"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
+            android:textColor="?attr/TextTitleColor"
             android:text="@string/app_website"/>
     </RelativeLayout>
 </RelativeLayout>

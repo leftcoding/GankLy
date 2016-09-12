@@ -32,7 +32,8 @@
         <com.gank.gankly.widget.MultipleStatusView
             android:id="@+id/loading_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?attr/collectBackground">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/meizi_recycler_view"

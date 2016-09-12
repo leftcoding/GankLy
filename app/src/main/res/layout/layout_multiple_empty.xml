@@ -8,10 +8,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:drawablePadding="10dp"
         android:drawableTop="@drawable/ic_empty_data"
         android:gravity="center"
         android:text="@string/loading_empty"
-        android:drawablePadding="10dp"
-        android:textColor="@color/text_default"
+        android:textColor="?attr/textPrimaryColor"
         android:textSize="16sp"/>
 </RelativeLayout>

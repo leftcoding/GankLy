@@ -144,7 +144,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     private void setRecyclerViewBackground() {
         if (App.isNight()) {
-            mRecyclerView.setBackgroundResource(R.color.dark_background);
+            mRecyclerView.setBackgroundResource(R.color.background_dark);
         } else {
             mRecyclerView.setBackgroundResource(R.color.base_refresh_list_bg);
         }

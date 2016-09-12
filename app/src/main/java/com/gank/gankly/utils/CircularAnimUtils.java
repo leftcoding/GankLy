@@ -24,7 +24,7 @@ import com.socks.library.KLog;
  *
  * @author ice
  */
-public class CircularAnimUtil {
+public class CircularAnimUtils {
 
     public static final long PERFECT_MILLS = 618;
     public static final int MINI_RADIUS = 0;

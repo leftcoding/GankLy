@@ -48,4 +48,5 @@
     <attr name="updateVersionButtonTextColor" format="reference|color"/>
     <attr name="updateVersionBackgroundColor" format="reference|color"/>
     <attr name="updateVersionTextColor" format="reference|color"/>
+    <attr name="collectBackground" format="reference|color"/>
 </resources>

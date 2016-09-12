@@ -23,6 +23,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
+import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -38,7 +39,9 @@ import rx.Subscriber;
 import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 
 /**
+ * 收藏
  * Create by LingYan on 2016-4-25
+ * Email:137387869@qq.com
  */
 public class CollectFragment extends BaseSwipeRefreshFragment implements
         DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, ICollectView<List<UrlCollect>> {
@@ -61,6 +64,11 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
     private int mClickPosition = -1;
     private boolean hasMore = true;
     private long mDeleteId;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_collcet;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -101,13 +109,6 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
         mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
     }
 
-    public static CollectFragment newInstance() {
-        Bundle args = new Bundle();
-        CollectFragment fragment = new CollectFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     protected void initValues() {
         mActivity.setTitle(R.string.navigation_collect);
@@ -133,16 +134,17 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mRecyclerView.setAdapter(mCollectAdapter);
-        mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
+//        mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
         mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
         mRecyclerView.getItemAnimator().setAddDuration(500);
         mRecyclerView.getItemAnimator().setRemoveDuration(500);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-
         mMultipleStatusView.showLoading();
         onRefresh();
+
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
@@ -166,11 +168,6 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
                 mLostPosition = manager.findLastVisibleItemPosition();
             }
         });
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_collcet;
     }
 
     @Override

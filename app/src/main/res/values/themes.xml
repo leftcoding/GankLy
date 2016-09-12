@@ -18,6 +18,7 @@
         <item name="updateVersionTextColor">@color/body_text_1</item>
         <item name="updateVersionBackgroundColor">@color/white</item>
         <item name="updateVersionButtonTextColor">@color/body_text_2</item>
+        <item name="collectBackground">@color/collect_background_light</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -36,30 +37,30 @@
 
     <!--夜晚-->
     <style name="AppTheme.Night" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/dark_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/dark_colorPrimaryDark</item>
-        <item name="colorAccent">@color/dark_colorAccent</item>
-        <item name="themeTabLayoutBackground">@color/dark_colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary_dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
+        <item name="colorAccent">@color/colorAccent_dark</item>
+        <item name="themeTabLayoutBackground">@color/colorPrimary_dark</item>
         <item name="colorControlActivated">@color/material_blue_grey_900</item>
         <item name="colorControlNormal">@color/material_blue_grey_900</item>
-        <item name="textPrimaryColor">@color/dark_text_primary</item>
-        <item name="textSecondaryColor">@color/dark_text_secondary</item>
+        <item name="textPrimaryColor">@color/text_primary_dark</item>
+        <item name="textSecondaryColor">@color/text_secondary_dark</item>
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
         <item name="baseAdapterItemTextColor">#fff5f5f5</item>
-        <item name="navigationBackground">@color/dark_colorAccent</item>
-        <item name="themeBackground">@color/dark_background</item><!-- 应用背景色 -->
+        <item name="navigationBackground">@color/colorAccent_dark</item>
+        <item name="themeBackground">@color/background_dark</item><!-- 应用背景色 -->
         <item name="TextTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
-        <item name="aboutBackground">@color/dark_background</item>
+        <item name="aboutBackground">@color/background_dark</item>
         <item name="android:colorControlHighlight">@color/dark_colorControlHighlight</item>
         <item name="updateVersionTextColor">@color/material_grey_50</item>
         <item name="updateVersionBackgroundColor">@color/base_adapter_item_background</item>
         <item name="updateVersionButtonTextColor">@color/blue_pressed</item>
-
+        <item name="collectBackground">@color/collect_background_dark</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="themeSettingBackground">@color/dark_background</item> <!--Setting-->
+        <item name="themeSettingBackground">@color/background_dark</item> <!--Setting-->
     </style>
 
     <style name="AppTheme.Night.NoActionBar">
