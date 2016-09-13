@@ -76,15 +76,12 @@ public class MainActivity extends BaseActivity {
                         fragmentTo = MainFragment.getInstance();
                         break;
                     case R.id.navigation_collect:
-//                        fragmentTo = CollectFragment.newInstance();
                         fragmentTo = new CollectFragment();
                         break;
                     case R.id.navigation_video:
-//                        fragmentTo = VideoFragment.getInstance();
                         fragmentTo = new VideoFragment();
                         break;
                     case R.id.navigation_about:
-//                        fragmentTo = AboutFragment.getInstance();
                         fragmentTo = new AboutFragment();
                         break;
                     case R.id.navigation_gift:

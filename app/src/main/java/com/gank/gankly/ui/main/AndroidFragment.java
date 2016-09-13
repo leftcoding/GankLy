@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
@@ -27,12 +26,10 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
+import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +38,7 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 import rx.functions.Action1;
 
 /**
+ * Android
  * Create by LingYan on 2016-4-26
  * Email:137387869@qq.com
  */
@@ -51,17 +49,24 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @BindView(R.id.swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
+    private RecyclerView mRecyclerView;
     private MainActivity mActivity;
     private GankAdapter mGankAdapter;
     private IBaseRefreshPresenter mPresenter;
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.layout_swiperefresh_multiple_status;
+    }
+
     public AndroidFragment() {
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+    public static AndroidFragment newInstance() {
+        AndroidFragment fragment = new AndroidFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -70,45 +75,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
     protected void initValues() {
-        mMultipleStatusView.showLoading();
-    }
-
-    @Override
-    protected void initViews() {
-        mMultipleStatusView.setBackgroundColor(App.getAppColor(R.color.book_recycler_item_bg));
-        mGankAdapter = new GankAdapter(mActivity);
-        mGankAdapter.setOnItemClickListener(this);
-        initRecycler();
-    }
-
-    @Override
-    protected void bindLister() {
         setMultipleStatusView(mMultipleStatusView);
-        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
-            @Override
-            public void retry(View v) {
-                mMultipleStatusView.showLoading();
-                mPresenter.fetchNew();
-            }
-        });
-    }
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.layout_swiperefresh_multiple_status;
-    }
-
-    @Override
-    protected void initData() {
-        onDownRefresh();
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
             @Override
             public void call(ThemeEvent event) {
@@ -117,11 +87,34 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         });
     }
 
+    @Override
+    protected void initViews() {
+        mGankAdapter = new GankAdapter(mActivity);
+        mGankAdapter.setOnItemClickListener(this);
+        initRecycler();
+    }
+
+    @Override
+    protected void bindLister() {
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
+            @Override
+            public void retry(View v) {
+                showLoading();
+                mPresenter.fetchNew();
+            }
+        });
+    }
+
+    @Override
+    protected void initData() {
+        showLoading();
+        onDownRefresh();
+    }
+
     private void initRecycler() {
-        setRecyclerViewBackground();
-
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
@@ -135,17 +128,13 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             }
         });
 
-//        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new ScaleInAnimator());
         mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
         alphaAdapter.setFirstOnly(true);
         alphaAdapter.setDuration(500);
         alphaAdapter.setInterpolator(new OvershootInterpolator(0.5f));
         mSwipeRefreshLayout.setAdapter(alphaAdapter);
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
-
 
     private void onDownRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
@@ -156,13 +145,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mPresenter.fetchNew();
     }
 
-    public static AndroidFragment newInstance() {
-        AndroidFragment fragment = new AndroidFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onRefresh() {
         onDownRefresh();
@@ -171,10 +153,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onClick(View view, ResultsBean bean) {
         Bundle bundle = new Bundle();
-        bundle.putString("title", bean.getDesc());
-        bundle.putString("url", bean.getUrl());
-        bundle.putString("type", Constants.ANDROID);
-        bundle.putString("author", bean.getWho());
+        bundle.putString(WebActivity.TITLE, bean.getDesc());
+        bundle.putString(WebActivity.URL, bean.getUrl());
+        bundle.putString(WebActivity.TYPE, Constants.ANDROID);
+        bundle.putString(WebActivity.AUTHOR, bean.getWho());
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
         CircularAnimUtils.startActivity(mActivity, intent, view, R.color.white_half);
@@ -202,21 +184,8 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
-    private void setRecyclerViewBackground() {
-        if (App.isNight()) {
-            mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.background_dark);
-            mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(App.getAppColor(R.color.baseSwipeRefreshLayoutProgressSchemeColor));
-            mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.baseSwipeRefreshLayoutSchemeColors));
-        } else {
-            mSwipeRefreshLayout.getRecyclerView().setBackgroundResource(R.color.base_refresh_list_bg);
-            mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(App.getAppColor(R.color.white));
-            mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-        }
-    }
-
+    @Override
     public void refreshUi() {
-        setRecyclerViewBackground();
-
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
@@ -225,10 +194,13 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         int textColor = typedValue.data;
         theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
         int textSecondaryColor = typedValue.data;
+        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
+        int mainColor = typedValue.data;
+        mRecyclerView.setBackgroundColor(mainColor);
 
-        int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
+        int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
+            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             childView.setBackgroundColor(background);
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             title.setTextColor(textColor);
@@ -236,33 +208,26 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             time.setTextColor(textSecondaryColor);
         }
 
-        //让 RecyclerView 缓存在 Pool 中的 Item 失效
-        //那么，如果是ListView，要怎么做呢？这里的思路是通过反射拿到 AbsListView 类中的 RecycleBin 对象，然后同样再用反射去调用 clear 方法
-        Class<RecyclerView> recyclerViewClass = RecyclerView.class;
-        try {
-            Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
-            declaredField.setAccessible(true);
-            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
-            declaredMethod.setAccessible(true);
-            declaredMethod.invoke(declaredField.get(mSwipeRefreshLayout.getRecyclerView()), new Object[0]);
-            RecyclerView.RecycledViewPool recycledViewPool = mSwipeRefreshLayout.getRecyclerView().getRecycledViewPool();
-            recycledViewPool.clear();
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (MainActivity) context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setMultipleStatusView(mMultipleStatusView);
     }
 }

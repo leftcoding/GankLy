@@ -157,7 +157,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
                 RxBus.getInstance().post(new ThemeEvent(isCheck));
                 refreshStatusBar();
-                changeTheme();
+                changeUi();
             }
         });
     }
@@ -192,7 +192,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             @Override
             public void submit() {
                 mVersionDialog.dismiss();
-                ToastUtils.showToast("update_downing");
+                ToastUtils.showToast(R.string.update_downing);
                 mPresenter.downloadApk();
             }
         });
@@ -225,9 +225,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         }
     }
 
-    private void changeTheme() {
+    private void changeUi() {
         TypedValue background = new TypedValue();
-        theme.resolveAttribute(R.attr.themeSettingBackground, background, true);
+        theme.resolveAttribute(R.attr.settingBackground, background, true);
         mView.setBackgroundResource(background.resourceId);
         theme.resolveAttribute(R.attr.colorPrimary, background, true);
         mToolbar.setBackgroundResource(background.resourceId);

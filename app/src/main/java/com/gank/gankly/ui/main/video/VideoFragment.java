@@ -90,7 +90,10 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
             barLayout.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             barLayout.setDisplayHomeAsUpEnabled(true);
         }
+
         setMultipleStatusView(mMultipleStatusView);
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
+
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
             public void retry(View v) {

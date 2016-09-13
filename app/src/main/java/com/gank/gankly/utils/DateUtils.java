@@ -31,7 +31,6 @@ public class DateUtils {
         try {
             sdf = new SimpleDateFormat(type, Locale.getDefault());
         } catch (Exception e) {
-//            throw new RuntimeException(e);
             sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         }
         return sdf.format(date);

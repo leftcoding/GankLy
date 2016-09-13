@@ -14,9 +14,10 @@ import butterknife.Unbinder;
 
 /**
  * Create by LingYan on 2016-04-05
+ * Email:137387869@qq.com
  */
 public abstract class BaseFragment extends Fragment {
-    protected Unbinder mUnbinder;
+    protected Unbinder unBinder;
 
     @Override
     public void onAttach(Context context) {
@@ -32,7 +33,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUnbinder = ButterKnife.bind(this, view);
+        unBinder = ButterKnife.bind(this, view);
         initValues();
         initViews();
         bindLister();
@@ -41,6 +42,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        changeThemes();
     }
 
     protected abstract void initValues();
@@ -51,12 +53,16 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
+    public void changeThemes() {
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-            mUnbinder = null;
+        if (unBinder != null) {
+            unBinder.unbind();
+            unBinder = null;
         }
     }
 

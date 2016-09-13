@@ -128,6 +128,8 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     protected void initViews() {
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
+
         mCollectAdapter = new CollectAdapter(mActivity);
         mCollectAdapter.setItemLongClick(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));

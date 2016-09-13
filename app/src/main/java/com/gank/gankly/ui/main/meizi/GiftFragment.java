@@ -26,12 +26,10 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +49,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
 
+    private RecyclerView mRecyclerView;
     private GiftAdapter mAdapter;
     private MainActivity mActivity;
 
@@ -58,6 +57,11 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private List<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
     private GiftPresenter mPresenter;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_gift;
+    }
 
     public GiftFragment() {
     }
@@ -70,21 +74,8 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (MainActivity) context;
-    }
-
-    @Override
     protected void initPresenter() {
         mPresenter = new GiftPresenter(mActivity, this);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -94,7 +85,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
             @Override
             public void call(ThemeEvent event) {
-                changeTheme();
+                changeUi();
             }
         });
     }
@@ -102,10 +93,12 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @Override
     protected void initViews() {
         initRecycler();
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
     protected void bindLister() {
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
     }
 
     @Override
@@ -113,17 +106,12 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         initRefresh();
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_gift;
-    }
-
     private void initRefresh() {
         mMultipleStatusView.showLoading();
         onFetchNew();
     }
 
-    private void changeTheme() {
+    private void changeUi() {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = mActivity.getTheme();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
@@ -134,39 +122,17 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
         int textColor = textValue.data;
 
-        int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
+        int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
-//            childView.setBackgroundColor(background);
+            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             title.setTextColor(textColor);
             View rlView = childView.findViewById(R.id.goods_rl_title);
             rlView.setBackgroundColor(background);
         }
 
-        //让 RecyclerView 缓存在 Pool 中的 Item 失效
-        //那么，如果是ListView，要怎么做呢？这里的思路是通过反射拿到 AbsListView 类中的 RecycleBin 对象，然后同样再用反射去调用 clear 方法
-        Class<RecyclerView> recyclerViewClass = RecyclerView.class;
-        try {
-            Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
-            declaredField.setAccessible(true);
-            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
-            declaredMethod.setAccessible(true);
-            declaredMethod.invoke(declaredField.get(mSwipeRefreshLayout.getRecyclerView()), new Object[0]);
-            RecyclerView.RecycledViewPool recycledViewPool = mSwipeRefreshLayout.getRecyclerView().getRecycledViewPool();
-            recycledViewPool.clear();
-
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     private void onFetchNew() {
@@ -205,6 +171,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         if (mDialog == null) {
             mDialog = new ProgressDialog(mActivity);
         }
+
         mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(false);
@@ -216,6 +183,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
                 mPresenter.unSubscribe();
             }
         });
+
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
@@ -274,7 +242,6 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         this.mCurPage = page;
     }
 
-
     @Override
     public void refillImagesCount(List<GiftBean> giftResult) {
         mImageCountList.addAll(giftResult);
@@ -299,5 +266,18 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
     public List<GiftBean> getList() {
         return mImageCountList;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (MainActivity) context;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        setHasOptionsMenu(true);
     }
 }

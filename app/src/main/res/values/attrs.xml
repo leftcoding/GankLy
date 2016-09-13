@@ -22,7 +22,7 @@
         <attr name="TextSummaryColor" format="color"/>
     </declare-styleable>
 
-    <!-- loading emtpy error 多页面选择-->
+    <!-- Loading Empty Error -->
     <declare-styleable name="MultipleStatusView">
         <attr name="content_view" format="reference"/>
         <attr name="loading_view" format="reference"/>
@@ -34,12 +34,12 @@
     <!-- 自定义主题-->
     <attr name="lyItemTextColor" format="reference|color"/>
 
-    <!-- Night Day 主题颜色-->
+    <!-- Night Day Custom Colors -->
     <attr name="themeBackground" format="reference|color"/>
     <attr name="textPrimaryColor" format="reference|color"/>
     <attr name="textSecondaryColor" format="reference|color"/>
     <attr name="themeTabLayoutBackground" format="color"/>
-    <attr name="themeSettingBackground" format="reference|color"/>
+    <attr name="settingBackground" format="reference|color"/>
     <attr name="baseAdapterItemBackground" format="reference|color"/>
     <attr name="baseAdapterItemTextColor" format="reference|color"/>
     <attr name="navigationBackground" format="reference|color"/>

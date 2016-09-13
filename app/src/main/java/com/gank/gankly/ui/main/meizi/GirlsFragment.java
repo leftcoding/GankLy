@@ -41,17 +41,16 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     private List<String> mTitles;
     private static GirlsFragment sMainFragment;
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_girls;
+    }
+
     public static GirlsFragment getInstance() {
         if (sMainFragment == null) {
             sMainFragment = new GirlsFragment();
         }
         return sMainFragment;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 
     @Override
@@ -68,17 +67,20 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     protected void bindLister() {
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+                    @Override
+                    public void call(ThemeEvent event) {
+                        refreshUi();
+                    }
+                }
+        );
+
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.openDrawer();
             }
         });
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_girls;
     }
 
     @Override
@@ -107,8 +109,16 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-//        mTabLayout.setBackgroundColor(App.getAppColor(R.color.colorPrimary));
         mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
+    }
+
+    private void refreshUi() {
+        TypedValue typedValue = new TypedValue();
+        Resources.Theme theme = mActivity.getTheme();
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        int background = typedValue.data;
+        mTabLayout.setBackgroundColor(background);
+        mToolbar.setBackgroundColor(background);
     }
 
     @Override
@@ -123,26 +133,14 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     public void onPageScrollStateChanged(int state) {
     }
 
-    private void changeTheme() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        int background = typedValue.data;
-        mTabLayout.setBackgroundColor(background);
-        mToolbar.setBackgroundColor(background);
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (MainActivity) context;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-                    @Override
-                    public void call(ThemeEvent event) {
-                        changeTheme();
-                    }
-                }
-        );
     }
 }

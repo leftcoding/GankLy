@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--白天-->
+    <!-- light theme -->
     <style name="AppTheme.Day" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,10 +11,10 @@
         <item name="baseAdapterItemBackground">@color/white</item>
         <item name="baseAdapterItemTextColor">@color/body_text_1</item>
         <item name="navigationBackground">@color/white</item>
-        <item name="themeBackground">@color/white</item>
+        <item name="themeBackground">@color/refresh_background_light</item>
         <item name="TextTitleColor">@color/text_default</item>
         <item name="aboutTextViewBackground">@color/white</item>
-        <item name="aboutBackground">@color/light_aboutBackground</item>
+        <item name="aboutBackground">@color/aboutBackground_light</item>
         <item name="updateVersionTextColor">@color/body_text_1</item>
         <item name="updateVersionBackgroundColor">@color/white</item>
         <item name="updateVersionButtonTextColor">@color/body_text_2</item>
@@ -22,7 +22,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="themeSettingBackground">@color/white</item> <!--Setting-->
+        <item name="settingBackground">@color/white</item> <!--Setting-->
     </style>
 
     <style name="AppTheme.Day.NoActionBar">
@@ -35,7 +35,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <!--夜晚-->
+    <!-- night theme -->
     <style name="AppTheme.Night" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary_dark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
@@ -52,7 +52,7 @@
         <item name="TextTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
         <item name="aboutBackground">@color/background_dark</item>
-        <item name="android:colorControlHighlight">@color/dark_colorControlHighlight</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight_dark</item>
         <item name="updateVersionTextColor">@color/material_grey_50</item>
         <item name="updateVersionBackgroundColor">@color/base_adapter_item_background</item>
         <item name="updateVersionButtonTextColor">@color/blue_pressed</item>
@@ -60,7 +60,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="themeSettingBackground">@color/background_dark</item> <!--Setting-->
+        <item name="settingBackground">@color/background_dark</item>
     </style>
 
     <style name="AppTheme.Night.NoActionBar">

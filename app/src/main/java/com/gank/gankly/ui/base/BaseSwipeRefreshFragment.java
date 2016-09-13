@@ -1,100 +1,79 @@
 package com.gank.gankly.ui.base;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.View;
-
-import com.gank.gankly.view.ISwipeRefreshView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 
 /**
  * Create by LingYan on 2016-04-05
+ * Email:137387869@qq.com
  */
-public abstract class BaseSwipeRefreshFragment extends BaseFragment implements ISwipeRefreshView {
+public abstract class BaseSwipeRefreshFragment extends BaseThemeFragment{
+    private static final int LOADING = 1;
+    private static final int EMPTY = 2;
+    private static final int CONTENT = 3;
+    private static final int ERROR = 4;
+    private static final int DIS_NETWORK = 5;
+
     private MultipleStatusView mMultipleStatusView;
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initPresenter();
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
-
-    protected abstract void initPresenter();
-
     public void setMultipleStatusView(MultipleStatusView multipleStatusView) {
-        this.mMultipleStatusView = multipleStatusView;
+        mMultipleStatusView = multipleStatusView;
+        checkMultiple();
     }
 
-    @Override
-    public void hideRefresh() {
-
-    }
-
-    @Override
-    public void showRefresh() {
-
+    private void checkMultiple() {
+        if (mMultipleStatusView == null) {
+            throw new NullPointerException("MultipleStatusView can't be null");
+        }
     }
 
     @Override
     public void showEmpty() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showEmpty();
-        }
+        showMultipleStatusView(EMPTY);
     }
 
     @Override
     public void showContent() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showContent();
-        }
+        showMultipleStatusView(CONTENT);
     }
 
     @Override
     public void showDisNetWork() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showNoNetwork();
-        }
+        showMultipleStatusView(DIS_NETWORK);
     }
 
     @Override
     public void showError() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showError();
-        }
+        showMultipleStatusView(ERROR);
     }
 
     @Override
     public void showLoading() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showLoading();
+        showMultipleStatusView(LOADING);
+    }
+
+    private void showMultipleStatusView(int status) {
+        if (mMultipleStatusView == null) {
+            return;
         }
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
+        switch (status) {
+            case 1:
+                mMultipleStatusView.showLoading();
+                break;
+            case 2:
+                mMultipleStatusView.showEmpty();
+                break;
+            case 3:
+                mMultipleStatusView.showContent();
+                break;
+            case 4:
+                mMultipleStatusView.showError();
+                break;
+            case 5:
+                mMultipleStatusView.showNoNetwork();
+                break;
+            default:
+                break;
+        }
     }
 }

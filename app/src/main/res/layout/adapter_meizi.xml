@@ -8,8 +8,8 @@
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
     android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:layout_marginBottom="5dp">
 
     <ImageView
         android:id="@+id/meizi_img_picture"

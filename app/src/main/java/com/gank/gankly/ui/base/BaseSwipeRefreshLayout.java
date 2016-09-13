@@ -25,7 +25,6 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
     private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
     private Context mContext;
     private int mCurManager = 1;
-    private boolean isLoading = false;
 
     public BaseSwipeRefreshLayout(Context context) {
         this(context, null);
@@ -84,7 +83,6 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
     }
 
     public void loadMore() {
-        isLoading = true;
         mOnSwipeRefRecyclerViewListener.onLoadMore();
     }
 
