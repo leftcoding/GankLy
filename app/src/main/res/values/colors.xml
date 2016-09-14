@@ -31,7 +31,6 @@
     <color name="setting_line_bg">#80bebebe</color>
 
 
-
     <!-- start deprecated -->
     <color name="body_text_1">#de000000</color>
     <color name="body_text_2">#8a000000</color>
@@ -46,7 +45,8 @@
     <color name="colorAccent">#5C6BC0</color>
     <color name="aboutBackground_light">#EEEEEE</color>
     <color name="collect_background_light">#F1F3F6</color>
-    <color name="refresh_background_light">#f2f4f7</color>
+    <color name="refresh_background_light">#efefef</color><!--#f2f4f7-->
+    <color name="meizi_item_background_light">#fefefe</color>
     <!-- light theme color end -->
 
     <!-- dark  theme color start -->
@@ -65,6 +65,7 @@
     <color name="baseSwipeRefreshLayoutSchemeColors">#2184b2</color>
     <color name="colorControlHighlight_dark">#42ffffff</color>
     <color name="collect_background_dark">@color/colorPrimaryDark_dark</color>
+    <color name="meizi_item_background_dark">#37474f</color>
     <!-- dark  theme color end -->
 
 

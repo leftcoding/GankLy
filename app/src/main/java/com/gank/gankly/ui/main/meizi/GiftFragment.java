@@ -116,7 +116,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         Resources.Theme theme = mActivity.getTheme();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
         int background = typedValue.data;
-        mSwipeRefreshLayout.setBackgroundColor(background);
+        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(background);
 
         TypedValue textValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);

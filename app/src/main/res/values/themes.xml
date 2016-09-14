@@ -19,10 +19,10 @@
         <item name="updateVersionBackgroundColor">@color/white</item>
         <item name="updateVersionButtonTextColor">@color/body_text_2</item>
         <item name="collectBackground">@color/collect_background_light</item>
-
+        <item name="meiziDailyItemBackground">@color/meizi_item_background_light</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="settingBackground">@color/white</item> <!--Setting-->
+        <item name="settingBackground">@color/white</item>
     </style>
 
     <style name="AppTheme.Day.NoActionBar">
@@ -57,7 +57,7 @@
         <item name="updateVersionBackgroundColor">@color/base_adapter_item_background</item>
         <item name="updateVersionButtonTextColor">@color/blue_pressed</item>
         <item name="collectBackground">@color/collect_background_dark</item>
-
+        <item name="meiziDailyItemBackground">@color/base_adapter_item_background</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>

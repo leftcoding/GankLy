@@ -12,12 +12,11 @@ import com.gank.gankly.view.ISwipeRefreshView;
  * Create by LingYan on 2016-09-13
  * Email:137387869@qq.com
  */
-public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRefreshView, ISwipeRefresh {
+public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRefreshView {
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        initPresenter();
         super.onViewCreated(view, savedInstanceState);
     }
 
@@ -29,14 +28,36 @@ public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRe
         }
     }
 
-    protected abstract void initPresenter();
-
-    @Override
     public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
         if (swipeRefreshLayout == null) {
             throw new NullPointerException("SwipeRefreshLayout can't be null");
         }
         this.mSwipeRefreshLayout = swipeRefreshLayout;
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
     }
 
     @Override

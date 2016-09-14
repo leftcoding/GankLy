@@ -49,4 +49,5 @@
     <attr name="updateVersionBackgroundColor" format="reference|color"/>
     <attr name="updateVersionTextColor" format="reference|color"/>
     <attr name="collectBackground" format="reference|color"/>
+    <attr name="meiziDailyItemBackground" format="reference|color"/>
 </resources>

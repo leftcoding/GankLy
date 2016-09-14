@@ -26,6 +26,7 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
         this.mActivity = (BrowseActivity) context;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -63,17 +63,16 @@ public class AboutFragment extends BaseFragment {
             bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             bar.setDisplayHomeAsUpEnabled(true);
         }
+    }
+
+    @Override
+    protected void bindLister() {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mActivity.openDrawer();
             }
         });
-    }
-
-    @Override
-    protected void bindLister() {
-
     }
 
     @Override

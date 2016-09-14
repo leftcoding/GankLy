@@ -53,6 +53,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract int getLayoutId();
 
+
     public void changeThemes() {
 
     }

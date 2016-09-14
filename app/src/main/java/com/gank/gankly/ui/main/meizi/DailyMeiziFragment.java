@@ -57,6 +57,11 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     private static DailyMeiziFragment sDailyMeiziFragment;
     private ProgressDialog mDialog;
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_gift;
+    }
+
     public DailyMeiziFragment() {
     }
 
@@ -126,12 +131,14 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     private void changeUi() {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        theme.resolveAttribute(R.attr.meiziDailyItemBackground, typedValue, true);
         int background = typedValue.data;
-
         TypedValue textValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
         int textColor = textValue.data;
+        theme.resolveAttribute(R.attr.themeBackground, textValue, true);
+        int recyclerColor = textValue.data;
+        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(recyclerColor);
 
         int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -184,11 +191,6 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         if (mDialog != null) {
             mDialog.setMax(value);
         }
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_gift;
     }
 
     @Override

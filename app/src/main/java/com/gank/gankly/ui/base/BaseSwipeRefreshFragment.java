@@ -1,5 +1,9 @@
 package com.gank.gankly.ui.base;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.View;
+
 import com.gank.gankly.widget.MultipleStatusView;
 
 
@@ -7,12 +11,20 @@ import com.gank.gankly.widget.MultipleStatusView;
  * Create by LingYan on 2016-04-05
  * Email:137387869@qq.com
  */
-public abstract class BaseSwipeRefreshFragment extends BaseThemeFragment{
+public abstract class BaseSwipeRefreshFragment extends BaseThemeFragment {
     private static final int LOADING = 1;
     private static final int EMPTY = 2;
     private static final int CONTENT = 3;
     private static final int ERROR = 4;
     private static final int DIS_NETWORK = 5;
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        initPresenter();
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    protected abstract void initPresenter();
 
     private MultipleStatusView mMultipleStatusView;
 
