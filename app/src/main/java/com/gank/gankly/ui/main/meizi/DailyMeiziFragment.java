@@ -95,11 +95,17 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     @Override
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
-
         mDailyMeiziAdapter = new DailyMeiziAdapter();
-        mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+        mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity,
+                R.drawable.shape_item_divider));
+    }
+
+    @Override
+    protected void bindLister() {
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -111,15 +117,8 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
 
             }
         });
-        mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
+
         mDailyMeiziAdapter.setOnItemClickListener(this);
-    }
-
-    @Override
-    protected void bindLister() {
-
     }
 
     @Override

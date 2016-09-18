@@ -38,7 +38,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected int getContentId() {
-        return R.layout.activity_start;
+        return R.layout.activity_splash;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
-        Observable.timer(500, TimeUnit.MILLISECONDS)
+        Observable.timer(300, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
                     @Override

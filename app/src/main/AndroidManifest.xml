@@ -30,7 +30,7 @@
             android:name=".ui.main.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -61,7 +61,9 @@
         <activity
             android:name=".ui.jiandan.JiandanActivity"
             android:launchMode="singleTask"
-            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"/>
+
+        <service android:name=".ui.base.InitializeService"/>
     </application>
 </manifest>

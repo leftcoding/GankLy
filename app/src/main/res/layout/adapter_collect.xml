@@ -5,15 +5,17 @@
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="5dp">
+    android:paddingBottom="8dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="4dp">
 
     <RelativeLayout
         android:id="@+id/collect_rl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -22,8 +24,7 @@
             android:layout_height="32dp"
             android:layout_centerVertical="true"
             android:contentDescription="@null"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_user_defaults"/>
+            android:scaleType="fitCenter"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -50,6 +51,7 @@
                 android:layout_toEndOf="@id/collect_txt_author"
                 android:ellipsize="end"
                 android:maxLines="3"
+                android:textColor="?attr/textSecondaryColor"
                 android:text=""
                 android:textSize="12sp"/>
 
@@ -75,10 +77,8 @@
         android:ellipsize="end"
         android:maxLines="3"
         android:paddingBottom="5dp"
-        android:paddingEnd="0dp"
-        android:paddingStart="10dp"
         android:text=""
-        android:textColor="@color/collect_item_title"
+        android:textColor="?attr/baseAdapterItemTextColor"
         android:textSize="18sp"/>
 
 </RelativeLayout>

@@ -30,10 +30,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     private List<UrlCollect> mList;
     private Context mContext;
     private ItemLongClick mItemLongClick;
-    private Integer[] imgs = {R.drawable.ic_collect_default_1, R.drawable.ic_collect_default_2,
-            R.drawable.ic_collect_default_3, R.drawable.ic_collect_default_4,
-            R.drawable.ic_collect_default_5, R.drawable.ic_collect_default_6,
-            R.drawable.ic_collect_default_7};
+    private Integer[] mImages = {R.drawable.ic_collect_default_7};
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
@@ -57,15 +54,13 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         holder.type.setText(urlCollect.getG_type());
         holder.author.setText(urlCollect.getG_author());
 
-        int index = position % imgs.length;
         Glide.with(mContext)
-                .load(imgs[index])
+                .load(mImages[0])
                 .transform(new GlideRoundTransform(mContext, 10))
                 .into(holder.userPicture);
     }
 
     public void clear() {
-        notifyItemMoved(0, mList.size());
         mList.clear();
     }
 
@@ -76,7 +71,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
 
     public void addItems(List<UrlCollect> list) {
         mList.addAll(list);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(mList.size(), list.size());
     }
 
     public void deleteItem(int item) {
@@ -92,7 +87,6 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     public int getItemCount() {
         return mList.size();
     }
-
 
     class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         @BindView(R.id.collect_txt_title)

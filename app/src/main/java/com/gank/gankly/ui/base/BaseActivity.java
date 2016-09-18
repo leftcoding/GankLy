@@ -41,6 +41,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initValues();
         initViews();
         bindListener();
+        changeThemes();
+    }
+
+    public void changeThemes() {
+        
     }
 
     public void add(Fragment fragment) {

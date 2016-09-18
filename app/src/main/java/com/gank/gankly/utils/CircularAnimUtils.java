@@ -344,12 +344,9 @@ public class CircularAnimUtils {
 
         int[] scron = new int[2];
         triggerView.getLocationOnScreen(scron);
-        KLog.d("OnScreen[0]:" + scron[0] + ",OnScreen[1]:" + scron[1]);
 
         final int cx = location[0] + triggerView.getWidth() / 2;
         final int cy = location[1] + triggerView.getHeight() / 2;
-        KLog.d("location[0]:" + location[0] + ",location[1]:" + location[1] + ",triggerView.getWidth():"
-                + triggerView.getWidth() + ",triggerView.getHeight():" + triggerView.getHeight());
         final ImageView view = new ImageView(thisActivity);
         view.setScaleType(ImageView.ScaleType.CENTER_CROP);
         view.setImageResource(colorOrImageRes);
@@ -357,7 +354,7 @@ public class CircularAnimUtils {
         final ViewGroup decorView = (ViewGroup) thisActivity.getWindow().getDecorView();
         int w = decorView.getWidth();
         int h = decorView.getHeight();
-        KLog.d("w:" + w + ",h:" + h);
+
         //动态添加一张ImageView
         decorView.addView(view, w, h);
 
@@ -372,10 +369,8 @@ public class CircularAnimUtils {
         if (durationMills == PERFECT_MILLS) {
             // 算出实际边距与最大边距的比率
             double rate = 1d * finalRadius / maxRadius;
-            KLog.d("rate:" + rate);
             // 为了让用户便于感触到水波，速度应随最大边距的变小而越慢，扩散时间应随最大边距的变小而变小，因此比率应在 @rate 与 1 之间。
             durationMills = (long) (PERFECT_MILLS * Math.sqrt(rate));
-            KLog.d("Math.sqrt(rate):" + Math.sqrt(rate) + ",durationMills:" + durationMills);
         }
         final long finalDuration = durationMills;
         // 由于thisActivity.startActivity()会有所停顿，所以进入的水波动画应比退出的水波动画时间短才能保持视觉上的一致。

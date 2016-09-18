@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:paddingRight="16dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingRight="16dp">
 
         <com.gank.gankly.widget.RatioImageView
             android:id="@+id/ri_img"
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/book_time"
+                    android:drawableStart="?attr/androidItemTimeIcon"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="1"

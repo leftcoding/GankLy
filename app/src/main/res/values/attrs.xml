@@ -50,4 +50,5 @@
     <attr name="updateVersionTextColor" format="reference|color"/>
     <attr name="collectBackground" format="reference|color"/>
     <attr name="meiziDailyItemBackground" format="reference|color"/>
+    <attr name="androidItemTimeIcon" format="reference"/>
 </resources>

@@ -16,6 +16,7 @@ import com.gank.gankly.presenter.impl.JiandanPresenterImpl;
 import com.gank.gankly.ui.base.BaseJiandanActivity;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.web.JiandanWebActivity;
+import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.MyDecoration;
@@ -110,10 +111,18 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         mPresenter = new JiandanPresenterImpl(this, this);
     }
 
+    @Override
+    public void changeThemes() {
+        super.changeThemes();
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
+    }
+
     private void changeRecyclerViewBackground() {
-        int color = R.color.gray_holo_dark;
+        int color;
         if (App.isNight()) {
             color = R.color.gray_holo_light;
+        } else {
+            color = R.color.gray_holo_dark;
         }
         mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(App.getAppColor(color));
     }

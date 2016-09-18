@@ -8,21 +8,21 @@ package com.gank.gankly.utils;
 
 import android.content.Context;
 
+import com.gank.gankly.App;
+
 public class DisplayUtils {
 
-    public static float px2dp(final Context context, final float px) {
-        return px / context.getResources().getDisplayMetrics().density;
+
+    public static float px2dp(final float px) {
+        return px / App.getAppResources().getDisplayMetrics().density;
     }
 
-    public static float dp2px(final Context context, final float dp) {
-        return dp * context.getResources().getDisplayMetrics().density;
+    public static float dp2px(final float dp) {
+        return dp * App.getAppResources().getDisplayMetrics().density;
     }
 
     /**
      * 将px值转换为sp值，保证文字大小不变
-     *
-     * @param pxValue
-     * @return
      */
     public static int px2sp(Context context, float pxValue) {
         final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;

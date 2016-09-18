@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-04-25
+ * Email:137387869@qq.com
  */
 public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder> {
     private List<GiftBean> mResults;
@@ -34,7 +35,7 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
 
     @Override
     public GankViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_video, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_gift, parent, false);
         return new GankViewHolder(view);
     }
 

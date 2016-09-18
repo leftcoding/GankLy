@@ -58,7 +58,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:drawablePadding="5dp"
-                    android:drawableStart="@drawable/book_time"
+                    android:drawableStart="?attr/androidItemTimeIcon"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:textColor="?attr/textSecondaryColor"

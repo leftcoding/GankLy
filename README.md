@@ -1,9 +1,9 @@
 #Gank
 本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教!
 
-##应用用到的技术和第三方库
-* MVP + retrofit + rxJava
-* GreenDao
+##技术、第三方库
+* mvp + retrofit + rxJava
+* greenDao
 * butterKnife
 * glide
 * jsoup
@@ -40,5 +40,6 @@
 
 ##感谢
 * @代码家 提供接口
-* 瓶子的友情帮助
+* 瓶子同学的友情帮助
+* 远耕同学的友情帮助
 * Google

@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 
+import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
@@ -197,6 +199,8 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
+        theme.resolveAttribute(R.attr.androidItemTimeIcon, typedValue, true);
+        int left = typedValue.resourceId;
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -206,6 +210,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             title.setTextColor(textColor);
             TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
             time.setTextColor(textSecondaryColor);
+
+            Drawable drawable = App.getAppResources().getDrawable(left);
+            if (drawable != null) {
+                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                time.setCompoundDrawables(drawable, null, null, null);
+            }
         }
 
         StyleUtils.clearRecyclerViewItem(mRecyclerView);

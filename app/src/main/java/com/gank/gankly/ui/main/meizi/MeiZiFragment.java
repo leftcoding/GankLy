@@ -88,7 +88,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
                 StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
     }
 

@@ -78,8 +78,9 @@
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
 
-#################### Bean ####################
+#################### Bean Class ####################
 -keep class com.gank.gankly.bean.** { *; }
+-keep class com.gank.gankly.RxBus.ChangeThemeEvent.**{*;}
 
 #################### Widget ####################
 -keep class com.gank.gankly.widget.** { *; }

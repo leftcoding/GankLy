@@ -5,59 +5,70 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.facebook.stetho.Stetho;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
+import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.main.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
-import com.socks.library.KLog;
-import com.tencent.bugly.crashreport.CrashReport;
+
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-04-01
+ * Email:137387869@qq.com
  */
 public class App extends Application {
     private static final int PREFERENCES_VERSION = 1;
-    private static final String DB_NAME = "gank.db";
+
     public static boolean isNewVersion;
-
     public static Context mContext;
-    private static SQLiteDatabase db;
+    private static DaoSession daoSession;
 
-    private static boolean isNight = true;
+    private static boolean isNight;
 
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = this;
 
+        InitializeService.start(this);
+
         initPreferences();
 
-        //数据库Chrome上调试
-        Stetho.initializeWithDefaults(this);
+//        //数据库Chrome上调试
+//        Stetho.initializeWithDefaults(this);
+//
+//        //GreenDao
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
+//        db = helper.getWritableDatabase();
+//        DaoMaster daoMaster = new DaoMaster(db);
+//        daoSession = daoMaster.newSession();
+//
+//        //Bugly 测试：true
+//        CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
 
-        //GreenDao
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
-        db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-
-        //Bugly 测试：true
-        CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
-
-        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
+        RxBus.getInstance().toSubscription(SQLiteDatabase.class, new Action1<SQLiteDatabase>() {
+            @Override
+            public void call(SQLiteDatabase sqLiteDatabase) {
+                if (sqLiteDatabase != null) {
+                    DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
+                    daoSession = daoMaster.newSession();
+                }
+            }
+        });
     }
-
-    private static DaoSession daoSession;
 
     private void initPreferences() {
         int version = GanklyPreferences.getInt(Preferences.APP_VERSION, 1);
-        KLog.d("version:" + version);
+
         if (version < PREFERENCES_VERSION) {
             GanklyPreferences.clear();
             GanklyPreferences.putInt(Preferences.APP_VERSION, PREFERENCES_VERSION);
         }
+
+        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
     }
 
     @Override
@@ -81,9 +92,9 @@ public class App extends Application {
         return getAppResources().getString(res);
     }
 
-    public static SQLiteDatabase getDatabase() {
-        return db;
-    }
+//    public static SQLiteDatabase getDatabase() {
+//        return db;
+//    }
 
     public static DaoSession getDaoSession() {
         return daoSession;

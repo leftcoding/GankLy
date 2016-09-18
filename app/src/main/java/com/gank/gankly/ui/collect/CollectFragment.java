@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.config.RefreshStatus;
@@ -23,7 +22,6 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
-import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -142,11 +140,11 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
         mRecyclerView.getItemAnimator().setRemoveDuration(500);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
+//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mMultipleStatusView.showLoading();
         onRefresh();
 
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
+//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override

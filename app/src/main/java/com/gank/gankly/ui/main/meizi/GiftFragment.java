@@ -26,6 +26,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -98,7 +99,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
     @Override
     protected void bindLister() {
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
+        mAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -116,11 +117,12 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         Resources.Theme theme = mActivity.getTheme();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
         int background = typedValue.data;
-        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(background);
-
         TypedValue textValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
         int textColor = textValue.data;
+        theme.resolveAttribute(R.attr.themeBackground, textValue, true);
+        int recyclerColor = textValue.data;
+        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(recyclerColor);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -146,9 +148,14 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     private void initRecycler() {
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
+
+        float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager
+        mSwipeRefreshLayout.getRecyclerView().setPadding((int) leftPadding, 0, 0, 0);
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+
             @Override
             public void onRefresh() {
                 onFetchNew();
@@ -160,9 +167,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
             }
         });
 
-        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mAdapter = new GiftAdapter(mActivity);
-        mAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setAdapter(mAdapter);
     }
 

@@ -7,15 +7,16 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/icon_splash_bg"/>
+        android:id="@+id/splash_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_splash_bg"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/splash_img"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -24,14 +25,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="40sp"/>
+            android:textColor="@color/text_default"
+            android:textSize="32sp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="程序猿与妹子"
-            android:textColor="@color/white"/>
+            android:textColor="@color/text_default"/>
     </LinearLayout>
 </RelativeLayout>

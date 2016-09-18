@@ -23,6 +23,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/white</item>
+        <item name="androidItemTimeIcon">@drawable/item_book_time_light</item>
     </style>
 
     <style name="AppTheme.Day.NoActionBar">
@@ -41,8 +42,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
         <item name="colorAccent">@color/colorAccent_dark</item>
         <item name="themeTabLayoutBackground">@color/colorPrimary_dark</item>
-        <item name="colorControlActivated">@color/material_blue_grey_900</item>
-        <item name="colorControlNormal">@color/material_blue_grey_900</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark_dark</item>
+        <item name="colorControlNormal">@color/colorPrimaryDark_dark</item>
         <item name="textPrimaryColor">@color/text_primary_dark</item>
         <item name="textSecondaryColor">@color/text_secondary_dark</item>
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
@@ -61,6 +62,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>
+        <item name="androidItemTimeIcon">@drawable/item_book_time_dark</item>
     </style>
 
     <style name="AppTheme.Night.NoActionBar">
