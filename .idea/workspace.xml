@@ -172,8 +172,8 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63653845">
-              <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+            <state vertical-scroll-proportion="0.6557692">
+              <caret line="45" column="36" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -3105,12 +3105,6 @@
       <option name="number" value="Default" />
       <updated>1466665007628</updated>
     </task>
-    <task id="LOCAL-00036" summary="1.Add JiandanWebActivity &#10;2.Jiandan ads free">
-      <created>1469696792112</created>
-      <option name="number" value="00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1469696792112</updated>
-    </task>
     <task id="LOCAL-00037" summary="1.Add JiandanWebActivity &#10;2.Jiandan ads free">
       <created>1469775779075</created>
       <option name="number" value="00037" />
@@ -3399,7 +3393,13 @@
       <option name="project" value="LOCAL" />
       <updated>1474277335181</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="1.Update Night Theme&#10;2.Optimize Android Layout xml">
+      <created>1474277574116</created>
+      <option name="number" value="00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1474277574116</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3413,7 +3413,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2262181" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35614848" sideWeight="0.5067402" order="7" side_tool="false" content_ui="tabs" />
@@ -3422,7 +3422,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35614848" sideWeight="0.49325982" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28886312" sideWeight="0.49754903" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23590687" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23590687" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23433875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -3457,7 +3457,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="1.Add JiandanModelImpl&#10;2.Add JiandanApi&#10;3.Add JiandanService&#10;" />
     <MESSAGE value="1.Update JiandanPresenterImpl&#10;2.Update WebActivity&#10;" />
     <MESSAGE value="1.Reading Add NightTheme" />
     <MESSAGE value="1.Fix Adapter inserted" />
@@ -3482,7 +3481,8 @@
     <MESSAGE value="1.Update Night Theme" />
     <MESSAGE value="1.Update Night Theme&#10;2.Update Layout &#10;3.Add Init Service" />
     <MESSAGE value="1.Update Night Theme&#10;2.Update Layout" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.Update Night Theme&#10;2.Update Layout" />
+    <MESSAGE value="1.Update Night Theme&#10;2.Optimize Android Layout xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.Update Night Theme&#10;2.Optimize Android Layout xml" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -3952,8 +3952,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63653845">
-          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.6557692">
+          <caret line="45" column="36" selection-start-line="45" selection-start-column="36" selection-end-line="45" selection-end-column="36" />
           <folding />
         </state>
       </provider>

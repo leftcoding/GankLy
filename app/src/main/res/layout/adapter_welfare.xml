@@ -43,7 +43,6 @@
                 android:ellipsize="end"
                 android:gravity="end"
                 android:maxLines="1"
-                android:text="sssss"
                 android:textColor="@color/book_item_name"
                 android:textSize="14sp"/>
 
@@ -59,8 +58,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:textColor="?attr/textSecondaryColor"
-                android:textSize="14sp"
-                tools:text="就这样啊"/>
+                android:textSize="14sp"/>
         </RelativeLayout>
 
         <TextView
@@ -73,8 +71,7 @@
             android:ellipsize="end"
             android:maxLines="3"
             android:textColor="?attr/baseAdapterItemTextColor"
-            android:textSize="16sp"
-            tools:text="1111"/>
+            android:textSize="16sp"/>
 
 
     </RelativeLayout>
