@@ -26,10 +26,12 @@ import butterknife.Unbinder;
  * Email:137387869@qq.com
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
+    private static final int RES_ID = R.id.main_frame_layout;
+
     private long mLastTime;
     private Fragment mContent = null;
     protected P mPresenter;
-    protected Unbinder mUnbinder;
+    protected Unbinder mUnBinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         initPresenter();
-        mUnbinder = ButterKnife.bind(this);
+        mUnBinder = ButterKnife.bind(this);
         initValues();
         initViews();
         bindListener();
@@ -45,25 +47,25 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void changeThemes() {
-        
+
     }
 
-    public void add(Fragment fragment) {
-        addFragment(fragment, null, "", R.id.main_frame_layout, false);
+    public void addMainFragment(Fragment fragment) {
+        addFragment(fragment, null, RES_ID);
     }
 
     public void replace(Fragment fragment) {
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        mFragmentTransaction.replace(R.id.main_frame_layout, fragment).commit();
+        mFragmentTransaction.replace(RES_ID, fragment).commit();
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, R.id.main_frame_layout, null, "", false);
+        addHideFragment(from, to, RES_ID, null, "");
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
-                                Bundle bundle, String tag, boolean isAnimation) {
+                                Bundle bundle, String tag) {
         if (isOpenMore()) {
             return;
         }
@@ -71,10 +73,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 .beginTransaction();
         if (mContent != to) {
             mContent = to;
-//            if (isAnimation) {
-//                mFragmentTransaction.setCustomAnimations(R.anim.anim_enter,
-//                        R.anim.anim_exit, R.anim.back_enter, R.anim.back_exit);
-//            }
             if (bundle != null) {
                 to.setArguments(bundle);
             }
@@ -92,25 +90,23 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
     }
 
-    private void addFragment(Fragment fragment, Bundle bundle, String tag,
-                             int contentId, boolean isAnimation) {
-        if (isOpenMore() || fragment == null) {
+    private void addFragment(Fragment fragment, Bundle bundle, int contentId) {
+        if (fragment == null) {
+            throw new RuntimeException(new NullPointerException("fragment can't be null"));
+        }
+
+        if (isOpenMore()) {
             return;
         }
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-//        if (isAnimation) {
-//            mFragmentTransaction.setCustomAnimations(R.anim.in_from_right,
-//                    R.anim.out_to_left, R.anim.in_from_left,
-//                    R.anim.out_to_right);
-//        }
+
         if (bundle != null) {
             fragment.setArguments(bundle);
         }
-        mFragmentTransaction.add(contentId, fragment);
 
-        if (!TextUtils.isEmpty(tag)) {
-            mFragmentTransaction.addToBackStack(tag);
+        if (!fragment.isAdded()) {
+            mFragmentTransaction.add(contentId, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();
     }
@@ -173,9 +169,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mUnbinder != null) {
-            mUnbinder.unbind();
-            mUnbinder = null;
+        if (mUnBinder != null) {
+            mUnBinder.unbind();
+            mUnBinder = null;
         }
     }
+
+
 }

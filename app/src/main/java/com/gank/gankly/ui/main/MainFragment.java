@@ -2,9 +2,10 @@ package com.gank.gankly.ui.main;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
@@ -136,7 +137,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-//        mTabLayout.setBackgroundColor(App.getAppColor(R.color.colorPrimary));
         mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
     }
 
@@ -189,5 +189,10 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     public void hiddenDialog() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 }

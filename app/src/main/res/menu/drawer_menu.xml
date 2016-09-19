@@ -6,7 +6,6 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_home"
-            android:checked="true"
             android:icon="@drawable/navigation_home"
             android:title="@string/navigation_home"/>
 

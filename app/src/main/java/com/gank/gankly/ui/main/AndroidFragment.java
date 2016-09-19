@@ -200,7 +200,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
         theme.resolveAttribute(R.attr.androidItemTimeIcon, typedValue, true);
-        int left = typedValue.resourceId;
+        int leftResource = typedValue.resourceId;
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -211,7 +211,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
             time.setTextColor(textSecondaryColor);
 
-            Drawable drawable = App.getAppResources().getDrawable(left);
+            Drawable drawable = App.getAppResources().getDrawable(leftResource);
             if (drawable != null) {
                 drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
                 time.setCompoundDrawables(drawable, null, null, null);

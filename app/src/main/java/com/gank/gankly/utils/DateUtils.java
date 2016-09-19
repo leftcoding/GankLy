@@ -14,6 +14,7 @@ import java.util.Locale;
 public class DateUtils {
     public static final String TYPE_ONE = "yyyy/MM/dd";
     public static final String TYPE_TWO = "yyyy-MM-dd";
+    public static final String TYPE_DD = "MM-dd";
 
 
     public static String getFormatDateStr(final Date date) {

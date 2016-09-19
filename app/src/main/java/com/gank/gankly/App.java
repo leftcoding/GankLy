@@ -12,6 +12,7 @@ import com.gank.gankly.data.DaoSession;
 import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.main.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
+import com.socks.library.KLog;
 
 import rx.functions.Action1;
 
@@ -30,6 +31,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
+        long start = System.currentTimeMillis();
         super.onCreate();
         mContext = this;
 
@@ -58,6 +60,8 @@ public class App extends Application {
                 }
             }
         });
+        long e = System.currentTimeMillis() - start;
+        KLog.d("s-e:" + e);
     }
 
     private void initPreferences() {

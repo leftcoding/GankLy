@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.AttrRes;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -36,9 +37,7 @@ import rx.functions.Action1;
  * Create by LingYan on 2016-6-13
  * Email:137387869@qq.com
  */
-public class MainActivity extends BaseActivity {
-    public static final String TAG = "MainActivity";
-
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
     @BindView(R.id.main_navigation)
     NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
@@ -66,53 +65,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void bindListener() {
-        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                mDrawerLayout.closeDrawers();
-                Fragment fragmentTo = null;
-                switch (menuItem.getItemId()) {
-                    case R.id.navigation_home:
-                        fragmentTo = MainFragment.getInstance();
-                        break;
-                    case R.id.navigation_collect:
-                        fragmentTo = new CollectFragment();
-                        break;
-                    case R.id.navigation_video:
-                        fragmentTo = new VideoFragment();
-                        break;
-                    case R.id.navigation_about:
-                        fragmentTo = new AboutFragment();
-                        break;
-                    case R.id.navigation_gift:
-                        fragmentTo = GirlsFragment.getInstance();
-                        break;
-                    case R.id.navigation_settings:
-                        fragmentTo = SettingFragment.getInstance();
-                        break;
-                    case R.id.navigation_jiandan:
-                        menuItem.setChecked(false);
-                        Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
-                        return false; // no checked
-//                        break;
-                    default:
-                        break;
-                }
-                if (fragmentTo != null) {
-                    switchFragment(fragmentTo);
-                }
-                return true;
-            }
-        });
-    }
-
-    private void switchFragment(Fragment fragment) {
-        if (!fragment.getClass().getName().equals(mCurFragment.getClass().getName())) {
-            addHideFragment(mCurFragment, fragment);
-            mCurFragment = fragment;
-        }
+        mNavigationView.getMenu().getItem(0).setChecked(true);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -123,7 +77,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initValues() {
         mCurFragment = MainFragment.getInstance();
-        add(mCurFragment);
+        addMainFragment(mCurFragment);
     }
 
     @Override
@@ -249,5 +203,51 @@ public class MainActivity extends BaseActivity {
                         getThemeAttrColor(context, R.attr.textPrimaryColor),  // Disabled state.
                         getThemeAttrColor(context, R.attr.textPrimaryColor), // Enabled state.
                 });
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        mDrawerLayout.closeDrawers();
+        Fragment fragmentTo = null;
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_home:
+                fragmentTo = MainFragment.getInstance();
+                break;
+            case R.id.navigation_collect:
+                fragmentTo = new CollectFragment();
+                break;
+            case R.id.navigation_video:
+                fragmentTo = new VideoFragment();
+                break;
+            case R.id.navigation_about:
+                fragmentTo = new AboutFragment();
+                break;
+            case R.id.navigation_gift:
+                fragmentTo = GirlsFragment.getInstance();
+                break;
+            case R.id.navigation_settings:
+                fragmentTo = SettingFragment.getInstance();
+                break;
+            case R.id.navigation_jiandan:
+                menuItem.setChecked(false);
+                Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return false; // no checked
+//                        break;
+            default:
+                break;
+        }
+        if (fragmentTo != null) {
+            switchFragment(fragmentTo);
+        }
+        return true;
+    }
+
+    private void switchFragment(Fragment fragment) {
+        if (!fragment.getClass().getName().equals(mCurFragment.getClass().getName())) {
+            addHideFragment(mCurFragment, fragment);
+            mCurFragment = fragment;
+        }
     }
 }

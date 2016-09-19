@@ -30,11 +30,12 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder> {
+    public static final int LAYOUT_Android = 1;
+    public static final int LAYOUT_IOS = 2;
+
     private List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
-    public static final int LAYOUT_Android = 1;
-    public static final int LAYOUT_IOS = 2;
     public int mLayout;
 
     public GankAdapter(Context context) {
@@ -60,8 +61,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         holder.txtDesc.setText(bean.getDesc());
 
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
+        holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_DD));
         holder.txtName.setText(bean.getWho());
-        holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_ONE));
         if (position > holder.mSize && holder.mSize != 0) {
             position = position % holder.mSize;
         }
