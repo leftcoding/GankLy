@@ -1,30 +1,38 @@
 package com.gank.gankly.ui.main.video;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.VideoPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
+import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
 import butterknife.BindView;
+import rx.functions.Action1;
 
 /**
  * 休息视频
@@ -33,7 +41,7 @@ import butterknife.BindView;
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-    private volatile static VideoFragment sVideoFragment;
+    private static VideoFragment sVideoFragment;
 
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
@@ -43,9 +51,10 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView mRecyclerView;
 
     private IBaseRefreshPresenter mPresenter;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private VideoAdapter mVideoRecyclerAdapter;
 
     public static VideoFragment getInstance() {
@@ -60,9 +69,14 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     }
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_video;
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     @Override
@@ -75,7 +89,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
         onLoading();
     }
 
-    private void onLoading(){
+    private void onLoading() {
         mMultipleStatusView.showLoading();
         onDownRefresh();
     }
@@ -83,12 +97,6 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     @Override
     protected void initViews() {
         mToolbar.setTitle(R.string.navigation_video);
-        mActivity.setSupportActionBar(mToolbar);
-        ActionBar barLayout = mActivity.getSupportActionBar();
-        if (barLayout != null) {
-            barLayout.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            barLayout.setDisplayHomeAsUpEnabled(true);
-        }
 
         setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
@@ -99,9 +107,12 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
                 onLoading();
             }
         });
+
         mVideoRecyclerAdapter = new VideoAdapter(mActivity);
         mVideoRecyclerAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setAdapter(mVideoRecyclerAdapter);
+
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
@@ -114,27 +125,44 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
                 mPresenter.fetchMore();
             }
         });
-//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary),
-//                App.getAppColor(R.color.colorPrimaryDark));
     }
 
     @Override
     protected void bindLister() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
             @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
+            public void call(ThemeEvent themeEvent) {
+                onRefreshUi();
             }
         });
     }
 
-    private void onDownRefresh() {
-        mPresenter.fetchNew();
+    private void onRefreshUi() {
+        Resources.Theme theme = mActivity.getTheme();
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        int background = typedValue.data;
+        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+        int textColor = typedValue.data;
+        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
+        int mainColor = typedValue.data;
+        mRecyclerView.setBackgroundColor(mainColor);
+
+        int childCount = mRecyclerView.getChildCount();
+        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
+            View view = childView.findViewById(R.id.goods_rl_title);
+            view.setBackgroundColor(background);
+            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+            title.setTextColor(textColor);
+        }
+
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_video;
+    private void onDownRefresh() {
+        mPresenter.fetchNew();
     }
 
     @Override

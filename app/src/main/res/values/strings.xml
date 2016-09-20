@@ -6,10 +6,11 @@
     <string name="app_website">© GankLy</string>
 
     <string name="navigation_collect">收藏</string>
+    <string name="navigation_mine">我的</string>
     <string name="navigation_settings">设置</string>
     <string name="navigation_share">分享</string>
     <string name="navigation_other">其他</string>
-    <string name="navigation_video">休息视频</string>
+    <string name="navigation_video">视频</string>
     <string name="navigation_gift">美しい妹</string>
     <string name="navigation_home">首页</string>
     <string name="navigation_about">关于</string>

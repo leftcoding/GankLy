@@ -25,7 +25,7 @@ import com.gank.gankly.presenter.GiftPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IGiftView;
@@ -52,7 +52,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
     private RecyclerView mRecyclerView;
     private GiftAdapter mAdapter;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
 
     private int mCurPage = 1;
     private List<GiftBean> mImageCountList = new ArrayList<>();
@@ -276,7 +276,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+        this.mActivity = (HomeActivity) context;
     }
 
     @Override

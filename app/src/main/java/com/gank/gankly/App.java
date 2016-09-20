@@ -23,8 +23,8 @@ import rx.functions.Action1;
 public class App extends Application {
     private static final int PREFERENCES_VERSION = 1;
 
-    public static boolean isNewVersion;
-    public static Context mContext;
+    private static boolean isNewVersion;
+    private static Context mContext;
     private static DaoSession daoSession;
 
     private static boolean isNight;

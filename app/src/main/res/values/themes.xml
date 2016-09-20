@@ -26,15 +26,6 @@
         <item name="androidItemTimeIcon">@drawable/item_book_time_light</item>
     </style>
 
-    <style name="AppTheme.Day.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
-        <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-    </style>
 
     <!-- night theme -->
     <style name="AppTheme.Night" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -63,6 +54,14 @@
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>
         <item name="androidItemTimeIcon">@drawable/item_book_time_dark</item>
+    </style>
+
+
+    <style name="AppTheme.Day.NoActionBar">
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="AppTheme.Night.NoActionBar">

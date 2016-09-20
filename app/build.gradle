@@ -94,5 +94,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.9.1'
     //Bugly
     compile 'com.tencent.bugly:crashreport:2.1.9'
-
+    //
+    compile 'com.roughike:bottom-bar:2.0.2'
 }

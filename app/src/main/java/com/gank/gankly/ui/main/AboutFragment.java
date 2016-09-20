@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -35,12 +34,12 @@ public class AboutFragment extends BaseFragment {
     String mGithubUrl;
 
     public static AboutFragment sAboutFragment;
-    public MainActivity mActivity;
+    public HomeActivity mActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     public static AboutFragment getInstance() {
@@ -67,12 +66,6 @@ public class AboutFragment extends BaseFragment {
 
     @Override
     protected void bindLister() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
     }
 
     @Override

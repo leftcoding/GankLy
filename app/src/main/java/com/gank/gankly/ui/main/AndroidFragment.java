@@ -52,7 +52,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView mRecyclerView;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private GankAdapter mGankAdapter;
     private IBaseRefreshPresenter mPresenter;
 
@@ -225,7 +225,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+        this.mActivity = (HomeActivity) context;
     }
 
     @Override

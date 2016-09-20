@@ -23,7 +23,7 @@ import com.gank.gankly.presenter.impl.MeiziPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
@@ -47,7 +47,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private RecyclerView mRecyclerView;
 
     private IBaseRefreshPresenter mPresenter;
@@ -88,7 +88,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
                 StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
     }
 
@@ -241,7 +240,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+        this.mActivity = (HomeActivity) context;
     }
 
     @Override
@@ -254,6 +253,5 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        changeSwipeRefreshLayout();
     }
 }

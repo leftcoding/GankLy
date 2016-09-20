@@ -7,9 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -37,18 +35,23 @@ import butterknife.BindView;
  */
 public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener,
         DownloadProgressListener, ILauncher {
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.main_toolbar)
+//    Toolbar mToolbar;
     @BindView(R.id.main_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
     private static MainFragment sMainFragment;
     private List<LazyFragment> mList;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.include_app_head;
+    }
 
     public static MainFragment getInstance() {
         if (sMainFragment == null) {
@@ -60,7 +63,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     @Override
@@ -82,8 +85,8 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.app_name);
-        mActivity.setSupportActionBar(mToolbar);
+//        mToolbar.setTitle(R.string.app_name);
+//        mActivity.setSupportActionBar(mToolbar);
 
         ActionBar ab = mActivity.getSupportActionBar();
         if (ab != null) {
@@ -94,19 +97,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     protected void bindLister() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
-
         changeThemeBackground();
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.include_app_head;
     }
 
     @Override
@@ -149,7 +140,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
         theme.resolveAttribute(R.attr.themeTabLayoutBackground, background, true);
         mTabLayout.setBackgroundResource(background.resourceId);
         theme.resolveAttribute(R.attr.colorPrimary, background, true);
-        mToolbar.setBackgroundResource(background.resourceId);
+//        mToolbar.setBackgroundResource(background.resourceId);
     }
 
     @Override

@@ -38,8 +38,8 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-    @BindView(R.id.main_navigation)
-    NavigationView mNavigationView;
+//    @BindView(R.id.main_navigation)
+//    NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
@@ -65,8 +65,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void bindListener() {
-        mNavigationView.getMenu().getItem(0).setChecked(true);
-        mNavigationView.setNavigationItemSelectedListener(this);
+//        mNavigationView.getMenu().getItem(0).setChecked(true);
+//        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -146,9 +146,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void changeNavigationView() {
         int textColorJava = getThemeAttrColor(MainActivity.this, R.attr.navigationBackground);
-        mNavigationView.setBackgroundColor(textColorJava);
-        mNavigationView.setItemTextColor(createColorStateList(MainActivity.this));
-        mNavigationView.setItemIconTintList(getSwitchThumbColorStateList());
+//        mNavigationView.setBackgroundColor(textColorJava);
+//        mNavigationView.setItemTextColor(createColorStateList(MainActivity.this));
+//        mNavigationView.setItemIconTintList(getSwitchThumbColorStateList());
     }
 
     @ColorInt

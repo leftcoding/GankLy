@@ -37,8 +37,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.HomeActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Day"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.web.WebActivity"

@@ -27,7 +27,7 @@ import com.gank.gankly.presenter.impl.DailyMeiziPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IDailyMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -46,7 +46,7 @@ import rx.functions.Action1;
 public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<List<DailyMeiziBean>>,
         ItemClick {
     private DailyMeiziPresenter mPresenter;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
 
     @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
@@ -235,7 +235,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     @Override

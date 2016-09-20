@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
@@ -63,9 +62,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindView(R.id.setting_text_copyright)
     TextView txtCopyRight;
 
-    public static SettingFragment sAboutFragment;
+    private static SettingFragment sAboutFragment;
     private LauncherPresenter mPresenter;
-    public MainActivity mActivity;
+    public HomeActivity mActivity;
     private ProgressDialog mProgressDialog;
     private Resources.Theme theme;
     private TypedValue textColor;
@@ -74,6 +73,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_setting;
+    }
+
+    public SettingFragment() {
     }
 
     public static SettingFragment getInstance() {
@@ -97,18 +99,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     protected void initViews() {
         mToolbar.setTitle(R.string.navigation_settings);
         mActivity.setSupportActionBar(mToolbar);
-        ActionBar bar = mActivity.getSupportActionBar();
-        if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
-
         initPreferences();
     }
 
@@ -271,7 +261,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     @Override

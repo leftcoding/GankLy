@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_bottom_bar_home"
+        id="@+id/tab_home"
+        title="干货"/>
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_bottom_bar_video"
+        id="@+id/tab_video"
+        title="@string/navigation_video"/>
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_bottom_bar_image"
+        id="@+id/tab_image"
+        title="@string/navigation_gift"/>
+
+    <tab
+        barColorWhenSelected="@color/colorPrimary"
+        icon="@drawable/ic_bottom_bar_more"
+        id="@+id/tab_more"
+        title="@string/navigation_mine"/>
+</tabs>

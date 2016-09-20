@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -16,7 +13,7 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.main.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +27,12 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
-    @BindView(R.id.girl_toolbar)
-    Toolbar mToolbar;
     @BindView(R.id.girl_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.girl_view_pager)
     ViewPager mViewPager;
 
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private List<String> mTitles;
     private static GirlsFragment sMainFragment;
 
@@ -55,14 +50,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.navigation_gift);
-        mActivity.setSupportActionBar(mToolbar);
 
-        ActionBar ab = mActivity.getSupportActionBar();
-        if (ab != null) {
-            ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
@@ -74,13 +62,6 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
                     }
                 }
         );
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
     }
 
     @Override
@@ -118,7 +99,6 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
         theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
         int background = typedValue.data;
         mTabLayout.setBackgroundColor(background);
-        mToolbar.setBackgroundColor(background);
     }
 
     @Override
@@ -136,7 +116,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (HomeActivity) context;
     }
 
     @Override

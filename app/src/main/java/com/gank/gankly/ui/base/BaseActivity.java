@@ -61,11 +61,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, RES_ID, null, "");
+        addHideFragment(from, to, RES_ID, null, "", false);
+    }
+
+    public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
+        addHideFragment(from, to, RES_ID, null, "", isAnim);
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
-                                Bundle bundle, String tag) {
+                                Bundle bundle, String tag, boolean isAnim) {
         if (isOpenMore()) {
             return;
         }
@@ -80,6 +84,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             if (!TextUtils.isEmpty(tag)) {
                 mFragmentTransaction.addToBackStack(tag);
             }
+            if (isAnim) {
+                mFragmentTransaction.setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out);
+            }
+
             if (!to.isAdded()) {
                 mFragmentTransaction.hide(from).add(contentAreaId, to)
                         .commitAllowingStateLoss();

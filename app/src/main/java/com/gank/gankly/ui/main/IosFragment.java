@@ -47,7 +47,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     BaseSwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView mRecyclerView;
-    private MainActivity mActivity;
+    private HomeActivity mActivity;
     private GankAdapter mRecyclerAdapter;
     private IBaseRefreshPresenter mPresenter;
 
@@ -240,16 +240,10 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         WebActivity.startWebActivity(mActivity, bundle);
     }
 
-//    @Override
-//    public void changeThemes() {
-//        super.changeThemes();
-//        changeSwipeRefreshLayout();
-//    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+        this.mActivity = (HomeActivity) context;
     }
 
     @Override
