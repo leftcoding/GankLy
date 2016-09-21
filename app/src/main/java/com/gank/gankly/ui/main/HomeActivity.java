@@ -63,31 +63,28 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 Fragment fragmentTo = null;
-                String tag = "";
                 switch (tabId) {
                     case R.id.tab_home:
                         fragmentTo = MainFragment.getInstance();
-                        tag = "tab_home";
                         break;
                     case R.id.tab_video:
                         fragmentTo = VideoFragment.getInstance();
-                        tag = "tab_video";
                         break;
                     case R.id.tab_image:
                         fragmentTo = GirlsFragment.getInstance();
-                        tag = "tab_image";
                         break;
                     case R.id.tab_more:
                         fragmentTo = MineFragment.getInstance();
-                        tag = "tab_more";
                         break;
                 }
 
                 if (mCurFragment == null) {
                     addMainFragment(fragmentTo);
                 } else {
-                    if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
-                        addAnimFragment(mCurFragment, fragmentTo, tag, true);
+                    if (fragmentTo != null) {
+                        if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
+                            addAnimFragment(mCurFragment, fragmentTo, true);
+                        }
                     }
                 }
                 mCurFragment = fragmentTo;

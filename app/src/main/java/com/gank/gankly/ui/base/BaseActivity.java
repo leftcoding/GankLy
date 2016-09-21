@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
-import com.socks.library.KLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -89,16 +88,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 mFragmentTransaction.setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out);
             }
 
-            Fragment fragment = null;
             if (!TextUtils.isEmpty(tag)) {
-                fragment = getSupportFragmentManager().findFragmentByTag(tag);
                 mFragmentTransaction.addToBackStack(tag);
-            }
-
-            if (fragment == null) {
-                KLog.d("fragment = null");
-            } else {
-                KLog.d("fragment != null");
             }
 
             if (!to.isAdded()) {
