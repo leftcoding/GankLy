@@ -147,6 +147,8 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
         theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+        mToolbar.setBackgroundResource(typedValue.resourceId);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {

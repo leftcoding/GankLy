@@ -42,6 +42,8 @@ import butterknife.OnClick;
  * Email:137387869@qq.com
  */
 public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
+    public static final String TAG = "SettingFragment";
+
     public static final String IS_NIGHT = "isNight";
     private static final String DIALOG_TAG = "versionDialog";
 
@@ -62,7 +64,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindView(R.id.setting_text_copyright)
     TextView txtCopyRight;
 
-    private static SettingFragment sAboutFragment;
+    private static SettingFragment sSettingFragment;
     private LauncherPresenter mPresenter;
     public HomeActivity mActivity;
     private ProgressDialog mProgressDialog;
@@ -79,10 +81,10 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     public static SettingFragment getInstance() {
-        if (sAboutFragment == null) {
-            sAboutFragment = new SettingFragment();
+        if (sSettingFragment == null) {
+            sSettingFragment = new SettingFragment();
         }
-        return sAboutFragment;
+        return sSettingFragment;
     }
 
     @Override

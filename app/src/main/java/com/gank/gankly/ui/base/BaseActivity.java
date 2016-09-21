@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.base;
 
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
+import com.socks.library.KLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,7 +26,7 @@ import butterknife.Unbinder;
  * Email:137387869@qq.com
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
-    private static final int RES_ID = R.id.main_frame_layout;
+    private static final int CONTENT_ID = R.id.main_frame_layout;
 
     private long mLastTime;
     private Fragment mContent = null;
@@ -51,21 +51,25 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void addMainFragment(Fragment fragment) {
-        addFragment(fragment, null, RES_ID);
+        addFragment(fragment, null, "", CONTENT_ID);
     }
 
     public void replace(Fragment fragment) {
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        mFragmentTransaction.replace(RES_ID, fragment).commit();
+        mFragmentTransaction.replace(CONTENT_ID, fragment).commit();
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, RES_ID, null, "", false);
+        addHideFragment(from, to, CONTENT_ID, null, "", false);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
-        addHideFragment(from, to, RES_ID, null, "", isAnim);
+        addHideFragment(from, to, CONTENT_ID, null, "", isAnim);
+    }
+
+    public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {
+        addHideFragment(from, to, CONTENT_ID, null, tag, isAnim);
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -81,24 +85,46 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                 to.setArguments(bundle);
             }
 
-            if (!TextUtils.isEmpty(tag)) {
-                mFragmentTransaction.addToBackStack(tag);
-            }
             if (isAnim) {
                 mFragmentTransaction.setCustomAnimations(R.anim.alpha_in, R.anim.alpha_out);
             }
 
+            Fragment fragment = null;
+            if (!TextUtils.isEmpty(tag)) {
+                fragment = getSupportFragmentManager().findFragmentByTag(tag);
+                mFragmentTransaction.addToBackStack(tag);
+            }
+
+            if (fragment == null) {
+                KLog.d("fragment = null");
+            } else {
+                KLog.d("fragment != null");
+            }
+
             if (!to.isAdded()) {
-                mFragmentTransaction.hide(from).add(contentAreaId, to)
+                mFragmentTransaction
+                        .hide(from)
+                        .add(contentAreaId, to, tag)
                         .commitAllowingStateLoss();
             } else {
-                mFragmentTransaction.hide(from).show(to)
+                mFragmentTransaction
+                        .hide(from)
+                        .show(to)
                         .commitAllowingStateLoss();
             }
         }
     }
 
-    private void addFragment(Fragment fragment, Bundle bundle, int contentId) {
+    public void addToBackFragment(Fragment fragment, @Nullable String tag) {
+        addFragment(fragment, null, tag, CONTENT_ID);
+    }
+
+    private void addToBackFragment(Fragment fragment, Bundle bundle, @Nullable String tag) {
+        addFragment(fragment, bundle, tag, CONTENT_ID);
+    }
+
+
+    private void addFragment(Fragment fragment, Bundle bundle, String tag, @Nullable int contentId) {
         if (fragment == null) {
             throw new RuntimeException(new NullPointerException("fragment can't be null"));
         }
@@ -111,6 +137,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
         if (bundle != null) {
             fragment.setArguments(bundle);
+        }
+
+        if (!TextUtils.isEmpty(tag)) {
+            mFragmentTransaction.addToBackStack(tag);
         }
 
         if (!fragment.isAdded()) {
@@ -135,15 +165,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             setTheme(R.style.AppTheme_Night);
         } else {
             setTheme(R.style.AppTheme_Day);
-        }
-    }
-
-    public void popBackStack() {
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            fm.popBackStack();
-        } else {
-            super.onBackPressed();
         }
     }
 

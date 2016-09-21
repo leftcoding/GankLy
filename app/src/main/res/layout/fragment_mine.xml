@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/themeBackground"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v7.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="90dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/item_default_img"/>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/baseAdapterItemBackground"
+                android:orientation="vertical"
+                app:divider="@drawable/shape_item_divider"
+                app:showDividers="middle">
+
+                <RelativeLayout
+                    android:id="@+id/mine_rl_browse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_browse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_browse"
+                        android:gravity="center_vertical"
+                        android:text="最近浏览"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/mine_rl_collect"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_collect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_collect"
+                        android:gravity="center_vertical"
+                        android:text="我的收藏"/>
+                </RelativeLayout>
+            </android.support.v7.widget.LinearLayoutCompat>
+
+            <android.support.v7.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/baseAdapterItemBackground"
+                android:orientation="vertical"
+                app:divider="@drawable/shape_item_divider"
+                app:showDividers="middle">
+
+                <RelativeLayout
+                    android:id="@+id/mine_rl_night"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <com.gank.gankly.widget.LSwitch
+                        android:layout_width="44dp"
+                        android:layout_height="26dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="16dp"/>
+
+                    <TextView
+                        android:id="@+id/mine_txt_night"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_night"
+                        android:gravity="center_vertical"
+                        android:text="夜间模式"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/mine_rl_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:paddingBottom="16dp"
+                    android:paddingEnd="0dp"
+                    android:paddingStart="16dp"
+                    android:paddingTop="16dp">
+
+                    <TextView
+                        android:id="@+id/mine_txt_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/mine_setting"
+                        android:gravity="center_vertical"
+                        android:text="设置"/>
+                </RelativeLayout>
+            </android.support.v7.widget.LinearLayoutCompat>
+        </android.support.v7.widget.LinearLayoutCompat>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

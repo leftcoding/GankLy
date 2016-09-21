@@ -15,6 +15,7 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
+import com.gank.gankly.ui.main.mine.MineFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -62,18 +63,23 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onTabSelected(@IdRes int tabId) {
                 Fragment fragmentTo = null;
+                String tag = "";
                 switch (tabId) {
                     case R.id.tab_home:
                         fragmentTo = MainFragment.getInstance();
+                        tag = "tab_home";
                         break;
                     case R.id.tab_video:
                         fragmentTo = VideoFragment.getInstance();
+                        tag = "tab_video";
                         break;
                     case R.id.tab_image:
                         fragmentTo = GirlsFragment.getInstance();
+                        tag = "tab_image";
                         break;
                     case R.id.tab_more:
-                        fragmentTo = SettingFragment.getInstance();
+                        fragmentTo = MineFragment.getInstance();
+                        tag = "tab_more";
                         break;
                 }
 
@@ -81,7 +87,7 @@ public class HomeActivity extends BaseActivity {
                     addMainFragment(fragmentTo);
                 } else {
                     if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
-                        addAnimFragment(mCurFragment, fragmentTo, true);
+                        addAnimFragment(mCurFragment, fragmentTo, tag, true);
                     }
                 }
                 mCurFragment = fragmentTo;
