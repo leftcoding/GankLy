@@ -33,8 +33,11 @@ import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.Subscriber;
 import rx.functions.Action1;
 
 /**
@@ -152,7 +155,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
 
-        float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager
+        float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager left margin
         mSwipeRefreshLayout.getRecyclerView().setPadding((int) leftPadding, 0, 0, 0);
         mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
 
@@ -265,8 +268,23 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     public void onClick(int position, Object object) {
         showDialog();
         mImageCountList.clear();
-        GiftBean giftBean = (GiftBean) object;
-        mPresenter.fetchImagePageList(giftBean.getUrl());
+        final GiftBean giftBean = (GiftBean) object;
+        Observable.create(new Observable.OnSubscribe<GiftBean>() {
+
+            @Override
+            public void call(Subscriber<? super GiftBean> subscriber) {
+                subscriber.onNext(giftBean);
+                subscriber.onCompleted();
+            }
+        })
+                .throttleFirst(100, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<GiftBean>() {
+                    @Override
+                    public void call(GiftBean giftBean) {
+                        mPresenter.fetchImagePageList(giftBean.getUrl());
+                    }
+                });
+
     }
 
     public List<GiftBean> getList() {

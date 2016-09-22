@@ -142,11 +142,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract int getContentId();
 
+    protected abstract void initValues();
+
     protected abstract void initViews();
 
     protected abstract void bindListener();
-
-    protected abstract void initValues();
 
     protected void initPresenter() {
     }

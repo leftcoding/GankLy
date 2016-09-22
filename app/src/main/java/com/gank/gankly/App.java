@@ -10,7 +10,7 @@ import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
 import com.gank.gankly.ui.base.InitializeService;
-import com.gank.gankly.ui.main.SettingFragment;
+import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.socks.library.KLog;
 

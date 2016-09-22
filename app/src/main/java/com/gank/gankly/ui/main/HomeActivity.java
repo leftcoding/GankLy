@@ -15,12 +15,15 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
-import com.gank.gankly.ui.main.mine.MineFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
+import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import rx.Observable;
@@ -38,7 +41,8 @@ public class HomeActivity extends BaseActivity {
     private long mKeyDownTime;
     private Fragment mCurFragment;
 
-    Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_video};
+    private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_video};
+    private List<Fragment> mFragmentList;
 
     @Override
     protected int getContentId() {
@@ -47,6 +51,8 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        mFragmentList = getFragmentList();
+
         changeBottomBar();
 
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
@@ -62,29 +68,29 @@ public class HomeActivity extends BaseActivity {
         mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
-                Fragment fragmentTo = null;
+                int index = 0;
                 switch (tabId) {
                     case R.id.tab_home:
-                        fragmentTo = MainFragment.getInstance();
+                        index = 0;
                         break;
                     case R.id.tab_video:
-                        fragmentTo = VideoFragment.getInstance();
+                        index = 1;
                         break;
                     case R.id.tab_image:
-                        fragmentTo = GirlsFragment.getInstance();
+                        index = 2;
                         break;
                     case R.id.tab_more:
-                        fragmentTo = MineFragment.getInstance();
+                        index = 3;
                         break;
                 }
+
+                Fragment fragmentTo = mFragmentList.get(index);
 
                 if (mCurFragment == null) {
                     addMainFragment(fragmentTo);
                 } else {
-                    if (fragmentTo != null) {
-                        if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
-                            addAnimFragment(mCurFragment, fragmentTo, true);
-                        }
+                    if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
+                        addAnimFragment(mCurFragment, fragmentTo, true);
                     }
                 }
                 mCurFragment = fragmentTo;
@@ -106,6 +112,16 @@ public class HomeActivity extends BaseActivity {
         super.initPresenter();
 
     }
+
+    private List<Fragment> getFragmentList() {
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new MainFragment());
+        fragments.add(new VideoFragment());
+        fragments.add(new GirlsFragment());
+        fragments.add(new MineFragment());
+        return fragments;
+    }
+
 
     public void changeBottomBar() {
         TypedValue typedValue = new TypedValue();

@@ -4,12 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
@@ -19,7 +16,7 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.presenter.CollectPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.more.SettingActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.view.ICollectView;
@@ -44,15 +41,16 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 public class CollectFragment extends BaseSwipeRefreshFragment implements
         DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, ICollectView<List<UrlCollect>> {
 
-    @BindView(R.id.main_toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.main_toolbar)
+//    Toolbar mToolbar;
     @BindView(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.meizi_swipe_refresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
-    private MainActivity mActivity;
+
+    private SettingActivity mActivity;
     private CollectAdapter mCollectAdapter;
     private CollectPresenter mPresenter;
 
@@ -68,10 +66,13 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
         return R.layout.activity_collcet;
     }
 
+    public CollectFragment() {
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (MainActivity) context;
+        mActivity = (SettingActivity) context;
     }
 
     @Override
@@ -109,19 +110,19 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     protected void initValues() {
-        mActivity.setTitle(R.string.navigation_collect);
-        mActivity.setSupportActionBar(mToolbar);
-        ActionBar bar = mActivity.getSupportActionBar();
-        if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.openDrawer();
-            }
-        });
+//        mActivity.setTitle(R.string.navigation_collect);
+//        mActivity.setSupportActionBar(mToolbar);
+//        ActionBar bar = mActivity.getSupportActionBar();
+//        if (bar != null) {
+//            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
+//            bar.setDisplayHomeAsUpEnabled(true);
+//        }
+//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mActivity.finish();
+//            }
+//        });
     }
 
     @Override

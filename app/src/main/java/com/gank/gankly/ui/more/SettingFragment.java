@@ -1,21 +1,13 @@
-package com.gank.gankly.ui.main;
-
+package com.gank.gankly.ui.more;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
-import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.listener.DialogOnClick;
@@ -33,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.BindViews;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -48,28 +39,22 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private static final String DIALOG_TAG = "versionDialog";
 
     @BindView(R.id.setting_rl_body)
-    View mView;
-    @BindView(R.id.setting_toolbar)
-    Toolbar mToolbar;
+    RelativeLayout mView;
     @BindView(R.id.setting_switch_check)
     ItemSwitchView mAutoCheckSwitch;
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
-    @BindView(R.id.setting_switch_theme)
-    ItemSwitchView mThemeSwitch;
-    @BindViews({R.id.setting_switch_check, R.id.setting_switch_theme})
+    @BindView(R.id.setting_text_copyright)
+    TextView txtCopyRight;
+    @BindViews({R.id.setting_switch_check})
     List<ItemSwitchView> switchTextViews;
     @BindViews({R.id.setting_item_text_update})
     List<ItemTextView> textViews;
-    @BindView(R.id.setting_text_copyright)
-    TextView txtCopyRight;
 
     private static SettingFragment sSettingFragment;
     private LauncherPresenter mPresenter;
-    public HomeActivity mActivity;
+    public SettingActivity mActivity;
     private ProgressDialog mProgressDialog;
-    private Resources.Theme theme;
-    private TypedValue textColor;
     private UpdateVersionDialog mVersionDialog;
 
     @Override
@@ -94,19 +79,14 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void initValues() {
-        theme = mActivity.getTheme();
     }
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.navigation_settings);
-        mActivity.setSupportActionBar(mToolbar);
         initPreferences();
     }
 
     private void initPreferences() {
-        mThemeSwitch.setTextName(App.getAppString(R.string.setting_theme_night));
-
         String summary = App.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
@@ -122,8 +102,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private void selectItemSwitch() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
         mAutoCheckSwitch.setSwitchChecked(isAutoCheck);
-        boolean isNight = App.isNight();
-        mThemeSwitch.setSwitchChecked(isNight);
     }
 
     @Override
@@ -135,23 +113,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             }
         });
 
-        mThemeSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
-            @Override
-            public void onSwitch(boolean isCheck) {
-                App.setIsNight(isCheck);
-                GanklyPreferences.putBoolean(IS_NIGHT, isCheck);
-
-                if (isCheck) {
-                    mActivity.setTheme(R.style.AppTheme_Night);
-                } else {
-                    mActivity.setTheme(R.style.AppTheme_Day);
-                }
-
-                RxBus.getInstance().post(new ThemeEvent(isCheck));
-                refreshStatusBar();
-                changeUi();
-            }
-        });
     }
 
     private void savePreferences(boolean isCheck) {
@@ -206,44 +167,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         }
     }
 
-    /**
-     * 刷新 StatusBar
-     */
-    private void refreshStatusBar() {
-        if (Build.VERSION.SDK_INT >= 21) {
-            TypedValue typedValue = new TypedValue();
-            theme.resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-            mActivity.getWindow().setStatusBarColor(getResources().getColor(typedValue.resourceId));
-        }
-    }
-
-    private void changeUi() {
-        TypedValue background = new TypedValue();
-        theme.resolveAttribute(R.attr.settingBackground, background, true);
-        mView.setBackgroundResource(background.resourceId);
-        theme.resolveAttribute(R.attr.colorPrimary, background, true);
-        mToolbar.setBackgroundResource(background.resourceId);
-        textColor = new TypedValue();
-        theme.resolveAttribute(R.attr.TextTitleColor, textColor, true);
-        int copyRight = textColor.data;
-        txtCopyRight.setTextColor(copyRight);
-        theme.resolveAttribute(R.attr.textPrimaryColor, textColor, true);
-
-        ButterKnife.apply(switchTextViews, new ButterKnife.Action<ItemSwitchView>() {
-            @Override
-            public void apply(@NonNull ItemSwitchView view, int index) {
-                view.getTextView().setTextColor(App.getAppColor(textColor.resourceId));
-                view.getSwitch().changeTheme();
-            }
-        });
-
-        ButterKnife.apply(textViews, new ButterKnife.Action<ItemTextView>() {
-            @Override
-            public void apply(@NonNull ItemTextView view, int index) {
-                view.getTextView().setTextColor(App.getAppColor(textColor.resourceId));
-            }
-        });
-    }
 
     @Override
     public void showDialog() {
@@ -256,14 +179,14 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     @OnClick(R.id.setting_item_text_update)
-    void clikUpdate() {
+    void clickUpdate() {
         mPresenter.checkVersion();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (SettingActivity) context;
     }
 
     @Override

@@ -15,6 +15,7 @@
         <item name="TextTitleColor">@color/text_default</item>
         <item name="aboutTextViewBackground">@color/white</item>
         <item name="aboutBackground">@color/aboutBackground_light</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight_light</item>
         <item name="updateVersionTextColor">@color/body_text_1</item>
         <item name="updateVersionBackgroundColor">@color/white</item>
         <item name="updateVersionButtonTextColor">@color/body_text_2</item>
@@ -26,15 +27,12 @@
         <item name="androidItemTimeIcon">@drawable/item_book_time_light</item>
     </style>
 
-
     <!-- night theme -->
     <style name="AppTheme.Night" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary_dark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_dark</item>
         <item name="colorAccent">@color/colorAccent_dark</item>
         <item name="themeTabLayoutBackground">@color/colorPrimary_dark</item>
-        <item name="colorControlActivated">@color/colorPrimaryDark_dark</item>
-        <item name="colorControlNormal">@color/colorPrimaryDark_dark</item>
         <item name="textPrimaryColor">@color/text_primary_dark</item>
         <item name="textSecondaryColor">@color/text_secondary_dark</item>
         <item name="baseAdapterItemBackground">@color/base_adapter_item_background</item>
@@ -44,7 +42,7 @@
         <item name="TextTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
         <item name="aboutBackground">@color/background_dark</item>
-        <item name="android:colorControlHighlight">@color/colorControlHighlight_dark</item>
+        <item name="colorControlHighlight">@color/colorControlHighlight_dark</item>
         <item name="updateVersionTextColor">@color/material_grey_50</item>
         <item name="updateVersionBackgroundColor">@color/base_adapter_item_background</item>
         <item name="updateVersionButtonTextColor">@color/blue_pressed</item>

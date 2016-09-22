@@ -39,7 +39,6 @@
         <activity
             android:name=".ui.main.HomeActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Day"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.web.WebActivity"
@@ -64,6 +63,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"/>
+        <activity
+            android:name=".ui.more.SettingActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".ui.base.InitializeService"/>
     </application>
