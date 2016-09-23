@@ -51,4 +51,5 @@
     <attr name="collectBackground" format="reference|color"/>
     <attr name="meiziDailyItemBackground" format="reference|color"/>
     <attr name="androidItemTimeIcon" format="reference"/>
+    <attr name="recyclerViewItemBg" format="reference|color"/>
 </resources>

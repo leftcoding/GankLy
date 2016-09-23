@@ -2,8 +2,9 @@ package com.gank.gankly.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
-import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +15,6 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gank.gankly.App;
@@ -30,15 +30,11 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
-import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
+import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import butterknife.BindView;
@@ -197,8 +193,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     public void refreshUi() {
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-        int background = typedValue.data;
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
         int textColor = typedValue.data;
         theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
@@ -209,17 +203,11 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         theme.resolveAttribute(R.attr.androidItemTimeIcon, typedValue, true);
         int leftResource = typedValue.resourceId;
 
-        int[] attrs = new int[]{R.attr.selectableItemBackground};
-        TypedArray typedArray = mActivity.obtainStyledAttributes(attrs);
-        int backgroundResource = typedArray.getResourceId(0, 0);
-
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-            childView.setBackgroundColor(background);
-
-            RelativeLayout relativeLayout = (RelativeLayout) childView.findViewById(R.id.welfare_rl);
-            relativeLayout.setBackgroundResource(backgroundResource);
+            LYRelativeLayoutRipple rl = (LYRelativeLayoutRipple) childView.findViewById(R.id.welfare_rl);
+            rl.setBackgroundRes(R.attr.recyclerViewItemBg);
 
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             title.setTextColor(textColor);
@@ -233,22 +221,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             }
         }
 
-        Class<RecyclerView> recyclerViewClass = RecyclerView.class;
-        try {
-            Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
-            declaredField.setAccessible(true);
-            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
-            declaredMethod.setAccessible(true);
-            declaredMethod.invoke(declaredField.get(mRecyclerView), new Object[0]);
-//            declaredMethod.invoke(declaredField.get(mRecyclerView));
-            RecyclerView.RecycledViewPool recycledViewPool = mRecyclerView.getRecycledViewPool();
-            recycledViewPool.clear();
-        } catch (NoSuchFieldException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
-            KLog.e(e);
-            CrashUtils.crashReport(e);
-        }
-
-//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
@@ -269,5 +242,37 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setMultipleStatusView(mMultipleStatusView);
+    }
+
+    private ColorStateList getSwitchThumbColorStateList() {
+        int mSelectColor;
+        int unSelectColor;
+
+        if (App.isNight()) {
+            mSelectColor = R.color.switch_thumb_disabled_dark;
+            unSelectColor = R.color.navigation_item_icon;
+        } else {
+            mSelectColor = R.color.colorAccent;
+            unSelectColor = R.color.gray;
+        }
+
+        final int[][] states = new int[3][];
+        final int[] colors = new int[3];
+
+        // Disabled state
+        states[0] = new int[]{-android.R.attr.state_enabled};
+        colors[0] = (Color.DKGRAY);
+
+        // Checked state
+        states[1] = new int[]{android.R.attr.state_checked};
+
+        colors[1] = App.getAppColor(mSelectColor);
+
+        // Unchecked enabled state state
+        states[2] = new int[0];
+
+        colors[2] = App.getAppColor(unSelectColor);
+
+        return new ColorStateList(states, colors);
     }
 }

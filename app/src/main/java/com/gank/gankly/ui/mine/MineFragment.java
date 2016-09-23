@@ -10,6 +10,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -51,6 +52,8 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     List<LSwitch> mSwitchList;
     @BindViews({R.id.mine_ll_notes, R.id.mine_ll_setting})
     List<LinearLayoutCompat> mLinearLayoutCompatList;
+    @BindViews({R.id.mine_rl_collect, R.id.mine_rl_night, R.id.mine_rl_setting, R.id.mine_rl_browse})
+    List<View> mViewList;
 
     private static MineFragment mMineFragment;
     private HomeActivity mActivity;
@@ -76,6 +79,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @Override
     protected void initValues() {
         selectItemSwitch();
+
         mNestedScrollView.setNestedScrollingEnabled(false);
     }
 
@@ -125,6 +129,8 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         final int itemTextColor = typeValue.resourceId;
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typeValue, true);
         final int itemBackground = typeValue.resourceId;
+
+        setItemSelectBackground(mViewList);
 
         ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
             @Override

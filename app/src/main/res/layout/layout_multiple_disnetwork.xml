@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/baseAdapterItemBackground"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -15,7 +16,7 @@
         android:drawablePadding="15dp"
         android:drawableTop="@drawable/ic_network_failure"
         android:text="@string/loading_network_failure"
-        android:textColor="@color/text_default"
+        android:textColor="?attr/baseAdapterItemTextColor"
         android:textSize="16sp"/>
 
     <TextView
@@ -23,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/tip_connected_again"
-        android:textColor="@color/text_999999"
+        android:textColor="?attr/baseAdapterItemTextColor"
         android:textSize="12sp"/>
 </LinearLayout>

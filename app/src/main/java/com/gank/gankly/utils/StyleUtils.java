@@ -41,10 +41,9 @@ public class StyleUtils {
         try {
             Field declaredField = recyclerViewClass.getDeclaredField("mRecycler");
             declaredField.setAccessible(true);
-            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear", (Class<?>[]) new Class[0]);
+            Method declaredMethod = Class.forName(RecyclerView.Recycler.class.getName()).getDeclaredMethod("clear");
             declaredMethod.setAccessible(true);
-            declaredMethod.invoke(declaredField.get(mRecyclerView), new Object[0]);
-//            declaredMethod.invoke(declaredField.get(mRecyclerView));
+            declaredMethod.invoke(declaredField.get(mRecyclerView));
             RecyclerView.RecycledViewPool recycledViewPool = mRecyclerView.getRecycledViewPool();
             recycledViewPool.clear();
         } catch (NoSuchFieldException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException | IllegalAccessException e) {
