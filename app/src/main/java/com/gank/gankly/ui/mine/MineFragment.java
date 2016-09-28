@@ -55,16 +55,8 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @BindViews({R.id.mine_rl_collect, R.id.mine_rl_night, R.id.mine_rl_setting, R.id.mine_rl_browse})
     List<View> mViewList;
 
-    private static MineFragment mMineFragment;
     private HomeActivity mActivity;
     private boolean isNight;
-
-    public static MineFragment getInstance() {
-        if (mMineFragment == null) {
-            mMineFragment = new MineFragment();
-        }
-        return mMineFragment;
-    }
 
     @Override
     protected int getLayoutId() {
