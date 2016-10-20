@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import com.socks.library.KLog;
 
 /**
+ * RelativeLayout 水波纹点击背景
  * Create by LingYan on 2016-09-23
  * Email:137387869@qq.com
  */
