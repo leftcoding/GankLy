@@ -35,7 +35,7 @@ public class LYRelativeLayoutRipple extends RelativeLayout {
 
     }
 
-    public void setBackgroundRes(int attr) {
+    public void setCustomBackgroundResource(int attr) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = mContext.getTheme();
         try {

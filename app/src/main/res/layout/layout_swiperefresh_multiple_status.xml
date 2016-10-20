@@ -3,14 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/multiple_status_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_below="@id/main_appbar">
+    android:layout_height="match_parent">
 
     <com.gank.gankly.ui.base.BaseSwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/themeBackground"
-        android:layout_below="@id/main_appbar"/>
+        android:layout_below="@id/main_appbar"
+        android:background="?attr/themeBackground"/>
 
 </com.gank.gankly.widget.MultipleStatusView>

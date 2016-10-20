@@ -11,6 +11,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.ISwipeRefreshView;
+import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
 
@@ -53,6 +54,18 @@ public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRe
                 @Override
                 public void apply(@NonNull View view, int index) {
                     view.setBackgroundResource(backgroundResource);
+                }
+            });
+        }
+    }
+
+    public void setItemBackground(@NonNull List<LYRelativeLayoutRipple> list) {
+        if (!ListUtils.isListEmpty(list)) {
+            final int backgroundResource = R.attr.lyItemSelectBackground;
+            ButterKnife.apply(list, new ButterKnife.Action<LYRelativeLayoutRipple>() {
+                @Override
+                public void apply(@NonNull LYRelativeLayoutRipple view, int index) {
+                    view.setCustomBackgroundResource(backgroundResource);
                 }
             });
         }

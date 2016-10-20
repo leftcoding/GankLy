@@ -10,7 +10,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
@@ -23,6 +22,7 @@ import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.more.SettingActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
+import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @BindViews({R.id.mine_ll_notes, R.id.mine_ll_setting})
     List<LinearLayoutCompat> mLinearLayoutCompatList;
     @BindViews({R.id.mine_rl_collect, R.id.mine_rl_night, R.id.mine_rl_setting, R.id.mine_rl_browse})
-    List<View> mViewList;
+    List<LYRelativeLayoutRipple> mViewList;
 
     private HomeActivity mActivity;
     private boolean isNight;
@@ -99,7 +99,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         } else {
             mActivity.setTheme(R.style.AppTheme_Day);
         }
-
+        themeSwitch.setChecked(isChecked);
         RxBus.getInstance().post(new ThemeEvent(isChecked));
         refreshStatusBar();
         onRefreshUi();
@@ -122,7 +122,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typeValue, true);
         final int itemBackground = typeValue.resourceId;
 
-        setItemSelectBackground(mViewList);
+        setItemBackground(mViewList);
 
         ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
             @Override

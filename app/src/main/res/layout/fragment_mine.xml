@@ -34,19 +34,6 @@
             android:orientation="vertical">
 
             <android.support.v7.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:contentDescription="@null"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/item_default_img"/>
-            </android.support.v7.widget.LinearLayoutCompat>
-
-            <android.support.v7.widget.LinearLayoutCompat
                 android:id="@+id/mine_ll_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -54,9 +41,10 @@
                 android:background="?attr/baseAdapterItemBackground"
                 android:orientation="vertical"
                 app:divider="@drawable/shape_item_divider"
+                android:elevation="1dp"
                 app:showDividers="middle">
 
-                <RelativeLayout
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_browse"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,9 +64,9 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_browse"
                         android:textColor="?attr/textPrimaryColor"/>
-                </RelativeLayout>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
 
-                <RelativeLayout
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_collect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,7 +86,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_my_collect"
                         android:textColor="?attr/textPrimaryColor"/>
-                </RelativeLayout>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
             </android.support.v7.widget.LinearLayoutCompat>
 
             <android.support.v7.widget.LinearLayoutCompat
@@ -108,10 +96,11 @@
                 android:layout_marginTop="8dp"
                 android:background="?attr/baseAdapterItemBackground"
                 android:orientation="vertical"
+                android:elevation="1dp"
                 app:divider="@drawable/shape_item_divider"
                 app:showDividers="middle">
 
-                <RelativeLayout
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_night"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -140,9 +129,9 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_night"
                         android:textColor="?attr/textPrimaryColor"/>
-                </RelativeLayout>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
 
-                <RelativeLayout
+                <com.gank.gankly.widget.LYRelativeLayoutRipple
                     android:id="@+id/mine_rl_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,7 +151,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/mine_setting"
                         android:textColor="?attr/textPrimaryColor"/>
-                </RelativeLayout>
+                </com.gank.gankly.widget.LYRelativeLayoutRipple>
             </android.support.v7.widget.LinearLayoutCompat>
         </android.support.v7.widget.LinearLayoutCompat>
     </android.support.v4.widget.NestedScrollView>

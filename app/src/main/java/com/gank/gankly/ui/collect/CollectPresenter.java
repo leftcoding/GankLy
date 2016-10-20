@@ -1,11 +1,13 @@
-package com.gank.gankly.presenter;
+package com.gank.gankly.ui.collect;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 
 import com.gank.gankly.App;
 import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
+import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.view.ICollectView;
 
@@ -16,13 +18,14 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter extends BasePresenter<ICollectView> {
+public class CollectPresenter implements CollectContract.Presenter {
     private UrlCollectDao mUrlCollectDao;
+    private CollectContract.View mView;
     private static final int LIMIT = 10;
     private int mPage = 0;
 
-    public CollectPresenter(Activity mActivity, ICollectView view) {
-        super(mActivity, view);
+    public CollectPresenter(@NonNull CollectContract.View view) {
+        this.mView = view;
     }
 
 
@@ -35,17 +38,16 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
     }
 
     public void fetchCollect(int page, int refresh) {
-        mIView.showRefresh();
         mPage = page;
         int offset = 0;
         if (refresh == RefreshStatus.UP) {
             offset = page * LIMIT;
         }
-        fetchDate(offset);
+//        fetchDate(offset);
     }
 
     private void callView(List<UrlCollect> list) {
-        mIView.hideRefresh();
+        mView.hideRefresh();
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {
@@ -73,5 +75,15 @@ public class CollectPresenter extends BasePresenter<ICollectView> {
         if (size == 0) {
             mIView.showEmpty();
         }
+    }
+
+    @Override
+    public void fetchNew() {
+
+    }
+
+    @Override
+    public void fetchMore() {
+
     }
 }

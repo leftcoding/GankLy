@@ -25,7 +25,7 @@
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/white</item>
         <item name="androidItemTimeIcon">@drawable/item_book_time_light</item>
-        <item name="recyclerViewItemBg">@drawable/ripple_bg_light</item>
+        <item name="lyItemSelectBackground">@drawable/ripple_bg_light</item>
     </style>
 
     <!-- night theme -->
@@ -53,7 +53,7 @@
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>
         <item name="androidItemTimeIcon">@drawable/item_book_time_dark</item>
-        <item name="recyclerViewItemBg">@drawable/ripple_bg_dark</item>
+        <item name="lyItemSelectBackground">@drawable/ripple_bg_dark</item>
     </style>
 
 

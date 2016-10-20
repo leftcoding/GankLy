@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
     android:stateListAnimator="@drawable/ios_state_list"
     app:cardBackgroundColor="?attr/baseAdapterItemBackground"
     app:cardCornerRadius="0dp"
@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
-        android:orientation="horizontal"
-        android:paddingRight="16dp">
+        android:orientation="horizontal">
 
         <com.gank.gankly.widget.RatioImageView
             android:id="@+id/ri_img"
@@ -32,6 +31,7 @@
             android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:paddingBottom="16dp"
+            android:paddingEnd="16dp"
             android:paddingStart="16dp"
             android:paddingTop="16dp">
 
@@ -46,7 +46,7 @@
                 android:textColor="?attr/baseAdapterItemTextColor"
                 android:textSize="16sp"/>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/goods_rl_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -56,9 +56,9 @@
 
                 <TextView
                     android:id="@+id/goods_txt_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
                     android:drawablePadding="5dp"
                     android:drawableStart="?attr/androidItemTimeIcon"
                     android:ellipsize="end"
@@ -72,13 +72,12 @@
                     android:id="@+id/goods_txt_author_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/book_item_name"
                     android:textSize="14sp"/>
-            </RelativeLayout>
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

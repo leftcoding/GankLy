@@ -11,15 +11,12 @@ import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
-import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
-import com.gank.gankly.presenter.CollectPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.more.SettingActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
-import com.gank.gankly.view.ICollectView;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
@@ -39,10 +36,8 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
  * Email:137387869@qq.com
  */
 public class CollectFragment extends BaseSwipeRefreshFragment implements
-        DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, ICollectView<List<UrlCollect>> {
+        DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, CollectContract.View {
 
-//    @BindView(R.id.main_toolbar)
-//    Toolbar mToolbar;
     @BindView(R.id.meizi_recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.meizi_swipe_refresh)
@@ -51,8 +46,8 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
     MultipleStatusView mMultipleStatusView;
 
     private SettingActivity mActivity;
-    private CollectAdapter mCollectAdapter;
     private CollectPresenter mPresenter;
+    private CollectAdapter mCollectAdapter;
 
     private int mLostPosition;
     private int mPage = 0;
@@ -105,24 +100,12 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     private void onDelete(int item) {
         mCollectAdapter.deleteItem(item);
-        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
+//        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
     }
 
     @Override
     protected void initValues() {
-//        mActivity.setTitle(R.string.navigation_collect);
-//        mActivity.setSupportActionBar(mToolbar);
-//        ActionBar bar = mActivity.getSupportActionBar();
-//        if (bar != null) {
-//            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-//            bar.setDisplayHomeAsUpEnabled(true);
-//        }
-//        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mActivity.finish();
-//            }
-//        });
+
     }
 
     @Override
@@ -173,17 +156,15 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     protected void initPresenter() {
-        mPresenter = new CollectPresenter(mActivity, this);
     }
 
     @Override
     public void onRefresh() {
-        mPage = 0;
-        mPresenter.fetchCollect(mPage, RefreshStatus.DOWN);
+        mPresenter.fetchNew();
     }
 
     private void onDownRefresh() {
-        mPresenter.fetchCollect(mPage, RefreshStatus.UP);
+//        mPresenter.fetchCollect(mPage, RefreshStatus.UP);
     }
 
     @Override
@@ -213,12 +194,12 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
 
     @Override
-    public void refillDate(List<UrlCollect> list) {
+    public void setAdapterList(List<UrlCollect> list) {
         mCollectAdapter.updateItems(list);
     }
 
     @Override
-    public void appendMoreDate(List<UrlCollect> list) {
+    public void appendAdapter(List<UrlCollect> list) {
         mCollectAdapter.addItems(list);
     }
 
@@ -235,13 +216,13 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
     }
 
     @Override
-    public void showContent() {
-        mMultipleStatusView.showContent();
+    public void showDisNetwork() {
+
     }
 
     @Override
-    public void fetchFinish() {
-        mPage = mPage + 1;
+    public void showContent() {
+        mMultipleStatusView.showContent();
     }
 
     @Override
@@ -254,5 +235,10 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
     public void hideRefresh() {
         super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void setPresenter(CollectContract.Presenter presenter) {
+
     }
 }

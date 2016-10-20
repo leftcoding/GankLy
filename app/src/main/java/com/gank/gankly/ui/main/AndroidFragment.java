@@ -207,7 +207,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             LYRelativeLayoutRipple rl = (LYRelativeLayoutRipple) childView.findViewById(R.id.welfare_rl);
-            rl.setBackgroundRes(R.attr.recyclerViewItemBg);
+            rl.setCustomBackgroundResource(R.attr.lyItemSelectBackground);
 
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             title.setTextColor(textColor);
