@@ -3,17 +3,20 @@ package com.gank.gankly.ui.collect;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
+import com.gank.gankly.mvp.base.FetchFragment;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.more.SettingActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.RxUtils;
@@ -35,22 +38,20 @@ import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
  * Create by LingYan on 2016-4-25
  * Email:137387869@qq.com
  */
-public class CollectFragment extends BaseSwipeRefreshFragment implements
+public class CollectFragment extends FetchFragment implements
         DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, CollectContract.View {
-
-    @BindView(R.id.meizi_recycler_view)
-    RecyclerView mRecyclerView;
-    @BindView(R.id.meizi_swipe_refresh)
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.loading_view)
+    @BindView(R.id.swipe_multiple_view)
     MultipleStatusView mMultipleStatusView;
+    @BindView(R.id.swipe_refresh)
+    LySwipeRefreshLayout mSwipeRefreshLayout;
+    RecyclerView mRecyclerView;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private SettingActivity mActivity;
-    private CollectPresenter mPresenter;
+    private CollectContract.Presenter mPresenter;
     private CollectAdapter mCollectAdapter;
 
-    private int mLostPosition;
-    private int mPage = 0;
     private int mLongClick;
     private int mClickPosition = -1;
     private boolean hasMore = true;
@@ -94,77 +95,62 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
     }
 
     @Override
-    public void onNavigationClick() {
-        onDelete(mLongClick);
-    }
-
-    private void onDelete(int item) {
-        mCollectAdapter.deleteItem(item);
-//        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
+    protected void initPresenter() {
+        mPresenter = new CollectPresenter();
+        mPresenter.setModel(new CollectModel(), this);
     }
 
     @Override
     protected void initValues() {
+        mToolbar.setTitle(R.string.mine_my_collect);
+        mActivity.setSupportActionBar(mToolbar);
+        ActionBar bar = mActivity.getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
 
-    }
-
-    @Override
-    protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
-
-        mCollectAdapter = new CollectAdapter(mActivity);
-        mCollectAdapter.setItemLongClick(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setAdapter(mCollectAdapter);
-//        mRecyclerView.setBackgroundColor(App.getAppColor(R.color.white));
-        mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
-        mRecyclerView.getItemAnimator().setAddDuration(500);
-        mRecyclerView.getItemAnimator().setRemoveDuration(500);
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-//        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-        mMultipleStatusView.showLoading();
-        onRefresh();
-
-//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
-
-    @Override
-    protected void bindLister() {
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mLostPosition + 1 == mCollectAdapter.getItemCount()
-                        && !mSwipeRefreshLayout.isRefreshing()) {
-                    if (hasMore) {
-                        onDownRefresh();
-                    }
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                mLostPosition = manager.findLastVisibleItemPosition();
+            public void onClick(View v) {
+                mActivity.finish();
             }
         });
     }
 
     @Override
-    protected void initPresenter() {
+    protected void initViews() {
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
+        initAdapter();
+        setRecyclerView();
+        onRefresh();
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setAdapter(mCollectAdapter);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
+        mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
+        mRecyclerView.getItemAnimator().setAddDuration(500);
+        mRecyclerView.getItemAnimator().setRemoveDuration(500);
+    }
+
+    private void initAdapter() {
+        mCollectAdapter = new CollectAdapter(mActivity);
+        mCollectAdapter.setItemLongClick(this);
     }
 
     @Override
-    public void onRefresh() {
-        mPresenter.fetchNew();
+    protected void bindLister() {
+        mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void onDownRefresh() {
-//        mPresenter.fetchCollect(mPage, RefreshStatus.UP);
+
+    @Override
+    public void onRefresh() {
+        mMultipleStatusView.showLoading();
+        mPresenter.fetchNew();
     }
 
     @Override
@@ -211,12 +197,21 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     public void showEmpty() {
-        super.showEmpty();
         mMultipleStatusView.showEmpty();
     }
 
     @Override
     public void showDisNetwork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
 
     }
 
@@ -227,18 +222,21 @@ public class CollectFragment extends BaseSwipeRefreshFragment implements
 
     @Override
     public void showRefresh() {
-        super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void setPresenter(CollectContract.Presenter presenter) {
+    public void onNavigationClick() {
+        onDelete(mLongClick);
+    }
 
+    private void onDelete(int item) {
+        mCollectAdapter.deleteItem(item);
+//        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
     }
 }

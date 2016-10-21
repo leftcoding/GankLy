@@ -1,15 +1,9 @@
 package com.gank.gankly.ui.collect;
 
-import android.app.Activity;
-import android.support.annotation.NonNull;
-
 import com.gank.gankly.App;
-import com.gank.gankly.config.RefreshStatus;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.presenter.BasePresenter;
 import com.gank.gankly.utils.ListUtils;
-import com.gank.gankly.view.ICollectView;
 
 import java.util.List;
 
@@ -18,54 +12,42 @@ import de.greenrobot.dao.query.QueryBuilder;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter implements CollectContract.Presenter {
-    private UrlCollectDao mUrlCollectDao;
-    private CollectContract.View mView;
+public class CollectPresenter extends CollectContract.Presenter {
     private static final int LIMIT = 10;
+
+    private UrlCollectDao mUrlCollectDao;
     private int mPage = 0;
 
-    public CollectPresenter(@NonNull CollectContract.View view) {
-        this.mView = view;
+    public CollectPresenter() {
     }
 
-
-    public void fetchDate(int offset) {
+    private void fetchDate(int offset) {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
         queryBuilder.orderDesc(UrlCollectDao.Properties.Date);
         queryBuilder.offset(offset).limit(LIMIT);
-        callView(queryBuilder.list());
+        parseData(queryBuilder.list());
     }
 
-    public void fetchCollect(int page, int refresh) {
-        mPage = page;
-        int offset = 0;
-        if (refresh == RefreshStatus.UP) {
-            offset = page * LIMIT;
-        }
-//        fetchDate(offset);
-    }
-
-    private void callView(List<UrlCollect> list) {
-        mView.hideRefresh();
+    private void parseData(List<UrlCollect> list) {
+        mModelView.hideRefresh();
         int size = ListUtils.getListSize(list);
         if (size > 0) {
             if (mPage == 0) {
-                mIView.refillDate(list);
+                mModelView.setAdapterList(list);
             } else {
-                mIView.appendMoreDate(list);
+                mModelView.appendAdapter(list);
             }
-            mIView.showContent();
+            mModelView.showContent();
 
             if (size < LIMIT) {
-                mIView.hasNoMoreDate();
+                mModelView.hasNoMoreDate();
             }
-            mIView.fetchFinish();
         } else {
             if (mPage > 0) {
-                mIView.hasNoMoreDate();
+                mModelView.hasNoMoreDate();
             } else {
-                mIView.showEmpty();
+                mModelView.showEmpty();
             }
         }
     }
@@ -73,17 +55,19 @@ public class CollectPresenter implements CollectContract.Presenter {
     public void deleteByKey(long id, int size) {
         mUrlCollectDao.deleteByKey(id);
         if (size == 0) {
-            mIView.showEmpty();
+            mModelView.showEmpty();
         }
     }
 
     @Override
     public void fetchNew() {
-
+        int offset = 0;
+        fetchDate(offset);
     }
 
     @Override
     public void fetchMore() {
-
+        int offset = mPage * LIMIT;
+        fetchDate(offset);
     }
 }

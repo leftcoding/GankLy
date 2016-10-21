@@ -26,7 +26,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.AndroidPresenterImpl;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
@@ -52,7 +52,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
@@ -121,7 +121,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

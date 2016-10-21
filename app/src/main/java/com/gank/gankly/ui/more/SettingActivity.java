@@ -2,15 +2,10 @@ package com.gank.gankly.ui.more;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
-
-import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-09-21
@@ -25,10 +20,6 @@ public class SettingActivity extends BaseActivity {
     public static final int TYPE_SETTING = 1;
     public static final int TYPE_COLLECT = 2;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-
-    private String mTitle;
     private int mType;
 
     @Override
@@ -45,19 +36,7 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(mTitle);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
@@ -68,7 +47,6 @@ public class SettingActivity extends BaseActivity {
     private void parseIntent() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mTitle = bundle.getString(TITLE);
             mType = bundle.getInt(TYPE);
         }
     }

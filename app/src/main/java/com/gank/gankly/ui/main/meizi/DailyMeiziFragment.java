@@ -24,7 +24,7 @@ import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.DailyMeiziPresenter;
 import com.gank.gankly.presenter.impl.DailyMeiziPresenterImpl;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.HomeActivity;
@@ -51,7 +51,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.meizi_swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
     DailyMeiziAdapter mDailyMeiziAdapter;
 
     private static DailyMeiziFragment sDailyMeiziFragment;
@@ -106,7 +106,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
 
     @Override
     protected void bindLister() {
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

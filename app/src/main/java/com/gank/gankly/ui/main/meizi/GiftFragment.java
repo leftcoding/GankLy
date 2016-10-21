@@ -22,7 +22,7 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.GiftPresenter;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.HomeActivity;
@@ -49,7 +49,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private static GiftFragment sGiftFragment;
 
     @BindView(R.id.meizi_swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.loading_view)
     MultipleStatusView mMultipleStatusView;
 
@@ -157,7 +157,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
         float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager left margin
         mSwipeRefreshLayout.getRecyclerView().setPadding((int) leftPadding, 0, 0, 0);
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
 
             @Override
             public void onRefresh() {

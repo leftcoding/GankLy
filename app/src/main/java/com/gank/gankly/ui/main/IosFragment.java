@@ -22,7 +22,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.StyleUtils;
@@ -44,7 +44,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
@@ -103,7 +103,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
                 initFetchDate();
             }
         });
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

@@ -14,7 +14,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.JiandanPresenterImpl;
 import com.gank.gankly.ui.base.BaseJiandanActivity;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
@@ -37,7 +37,7 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private IBaseRefreshPresenter mPresenter;
     private static JiandanActivity sJiandanActivity;
@@ -86,7 +86,7 @@ public class JiandanActivity extends BaseJiandanActivity implements IMeiziView<L
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
         mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(this, LinearLayoutManager.HORIZONTAL));
 //        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

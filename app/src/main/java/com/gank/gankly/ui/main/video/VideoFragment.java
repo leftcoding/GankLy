@@ -22,7 +22,7 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.VideoPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
@@ -50,7 +50,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
     private IBaseRefreshPresenter mPresenter;
@@ -114,7 +114,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 onDownRefresh();

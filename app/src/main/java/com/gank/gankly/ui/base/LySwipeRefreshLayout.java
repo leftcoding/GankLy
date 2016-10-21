@@ -15,7 +15,7 @@ import com.gank.gankly.R;
 /**
  * Create by LingYan on 2016-06-23
  */
-public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
+public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     private static final int L = 1;
     private static final int S = 2;
     private static final int G = 3;
@@ -26,11 +26,11 @@ public class BaseSwipeRefreshLayout extends SwipeRefreshLayout {
     private Context mContext;
     private int mCurManager = 1;
 
-    public BaseSwipeRefreshLayout(Context context) {
+    public LySwipeRefreshLayout(Context context) {
         this(context, null);
     }
 
-    public BaseSwipeRefreshLayout(Context context, AttributeSet attrs) {
+    public LySwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
         init();

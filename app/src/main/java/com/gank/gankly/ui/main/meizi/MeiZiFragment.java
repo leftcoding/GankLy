@@ -20,7 +20,7 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.MeiziPresenterImpl;
-import com.gank.gankly.ui.base.BaseSwipeRefreshLayout;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.HomeActivity;
@@ -44,7 +44,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
-    BaseSwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private MeiZiRecyclerAdapter mRecyclerAdapter;
     private HomeActivity mActivity;
@@ -101,7 +101,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
             }
         });
 
-        mSwipeRefreshLayout.setOnScrollListener(new BaseSwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
                 fetchNew();
