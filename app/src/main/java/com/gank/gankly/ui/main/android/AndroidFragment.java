@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.main.android;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,14 +25,14 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.presenter.IBaseRefreshPresenter;
-import com.gank.gankly.presenter.impl.AndroidPresenterImpl;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.mvp.source.remote.RemoteDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.ui.main.GankAdapter;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -48,7 +49,7 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
-        RecyclerOnClick, IMeiziView<List<ResultsBean>> {
+        RecyclerOnClick, AndroidContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -57,7 +58,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
     private GankAdapter mGankAdapter;
-    private IBaseRefreshPresenter mPresenter;
+    private AndroidContract.Presenter mPresenter;
 
     @Override
     protected int getLayoutId() {
@@ -76,7 +77,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initPresenter() {
-        mPresenter = new AndroidPresenterImpl(mActivity, this);
+        mPresenter = new AndroidPresenter(RemoteDataSource.getInstance(), this);
     }
 
     @Override
@@ -124,11 +125,13 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
+                showRefresh();
                 mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
+                showRefresh();
                 mPresenter.fetchMore();
             }
         });
@@ -173,19 +176,27 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void appendMoreDate(List<ResultsBean> list) {
+    public void appendData(List<ResultsBean> list) {
         mGankAdapter.appendMoreDate(list);
     }
 
     @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
+    public void hasNoMoreDate() {
+        Snackbar.make(mSwipeRefreshLayout, R.string.loading_no_more, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
+        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showRefresh() {
-        super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
     }
 

@@ -5,5 +5,5 @@ package com.gank.gankly.mvp;
  * Email:137387869@qq.com
  */
 
-public interface BaseView {
+public interface IBaseView {
 }

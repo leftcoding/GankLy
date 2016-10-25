@@ -160,7 +160,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void hasNoMoreDate() {
-        super.hasNoMoreDate();
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
                 .show();
@@ -188,13 +187,11 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showRefresh() {
-        super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
@@ -224,7 +221,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void clear() {
-        super.clear();
         mRecyclerAdapter.clear();
     }
 

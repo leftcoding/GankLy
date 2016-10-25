@@ -10,7 +10,6 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.view.ISwipeRefreshView;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
@@ -21,7 +20,8 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-09-13
  * Email:137387869@qq.com
  */
-public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRefreshView {
+public abstract class BaseThemeFragment extends BaseFragment {
+    @NonNull
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
@@ -37,7 +37,7 @@ public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRe
         }
     }
 
-    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
+    public void setSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
         if (swipeRefreshLayout == null) {
             throw new NullPointerException("SwipeRefreshLayout can't be null");
         }
@@ -69,55 +69,5 @@ public abstract class BaseThemeFragment extends BaseFragment implements ISwipeRe
                 }
             });
         }
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void hideRefresh() {
-
-    }
-
-    @Override
-    public void showRefresh() {
-
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
     }
 }

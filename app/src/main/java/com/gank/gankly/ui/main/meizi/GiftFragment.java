@@ -204,19 +204,27 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
     @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showRefresh() {
-        super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+
     }
 
     @Override
     public void clear() {
         mAdapter.clear();
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
+
     }
 
     @Override

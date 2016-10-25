@@ -19,21 +19,6 @@ public abstract class LazyFragment extends BaseSwipeRefreshFragment {
     }
 
     @Override
-    protected void initValues() {
-
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindLister() {
-
-    }
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         if (isVisibleToUser) {
             isVisible = true;

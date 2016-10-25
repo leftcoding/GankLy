@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Create by LingYan on 2016-04-06
  */
-public class GankResult extends BaseResult implements Serializable{
+public class GankResult extends BaseResult implements Serializable {
 
     private List<ResultsBean> results;
 
@@ -21,11 +21,11 @@ public class GankResult extends BaseResult implements Serializable{
         this.results = results;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return ListUtils.isListEmpty(results);
     }
 
-    public int getSize(){
+    public int getSize() {
         return ListUtils.getListSize(results);
     }
 }

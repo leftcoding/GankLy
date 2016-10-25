@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <include layout="@layout/layout_bar"/>
 
     <RelativeLayout
         android:id="@+id/setting_rl_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/settingBackground"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:background="?attr/settingBackground"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.gank.gankly.widget.ItemSwitchView
             android:id="@+id/setting_switch_check"
@@ -30,7 +35,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
-            android:textColor="?attr/TextTitleColor"
-            android:text="@string/app_website"/>
+            android:text="@string/app_website"
+            android:textColor="?attr/TextTitleColor"/>
     </RelativeLayout>
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

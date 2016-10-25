@@ -3,6 +3,9 @@ package com.gank.gankly.ui.more;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,6 +41,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     public static final String IS_NIGHT = "isNight";
     private static final String DIALOG_TAG = "versionDialog";
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.setting_rl_body)
     RelativeLayout mView;
     @BindView(R.id.setting_switch_check)
@@ -84,6 +89,19 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     protected void initViews() {
         initPreferences();
+
+        mToolbar.setTitle(R.string.navigation_settings);
+        mActivity.setSupportActionBar(mToolbar);
+        ActionBar bar = mActivity.getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.onBackPressed();
+            }
+        });
     }
 
     private void initPreferences() {

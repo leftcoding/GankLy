@@ -7,17 +7,6 @@ import com.gank.gankly.mvp.rx.RxManager;
  * Email:137387869@qq.com
  */
 
-public abstract class BasePresenter<M extends BaseModel, V extends BaseView> {
-    protected M mModel;
-    protected V mModelView;
+public abstract class BasePresenter {
     protected RxManager mRxManager = new RxManager();
-
-    public void setModel(M m, V v) {
-        this.mModel = m;
-        this.mModelView = v;
-    }
-
-    public void onDestroy() {
-        mRxManager.clear();
-    }
 }

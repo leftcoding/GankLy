@@ -202,14 +202,17 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     }
 
     @Override
+    public void clear() {
+
+    }
+
+    @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showRefresh() {
-        super.showRefresh();
         mSwipeRefreshLayout.setRefreshing(true);
     }
 }

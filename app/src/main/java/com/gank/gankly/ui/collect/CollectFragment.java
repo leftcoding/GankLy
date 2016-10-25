@@ -16,6 +16,7 @@ import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.mvp.base.FetchFragment;
+import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.more.SettingActivity;
 import com.gank.gankly.ui.web.WebActivity;
@@ -31,15 +32,13 @@ import butterknife.BindView;
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
 import rx.Subscriber;
 
-import static android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
-
 /**
  * 收藏
  * Create by LingYan on 2016-4-25
  * Email:137387869@qq.com
  */
 public class CollectFragment extends FetchFragment implements
-        DeleteDialog.DialogListener, OnRefreshListener, ItemLongClick, CollectContract.View {
+        DeleteDialog.DialogListener, ItemLongClick, CollectContract.View {
     @BindView(R.id.swipe_multiple_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -51,11 +50,6 @@ public class CollectFragment extends FetchFragment implements
     private SettingActivity mActivity;
     private CollectContract.Presenter mPresenter;
     private CollectAdapter mCollectAdapter;
-
-    private int mLongClick;
-    private int mClickPosition = -1;
-    private boolean hasMore = true;
-    private long mDeleteId;
 
     @Override
     protected int getLayoutId() {
@@ -88,7 +82,7 @@ public class CollectFragment extends FetchFragment implements
             @Override
             public void onNext(RxCollect rxCollect) {
                 if (rxCollect.isCollect()) {
-                    onDelete(mClickPosition);
+                    onDelete();
                 }
             }
         });
@@ -96,8 +90,7 @@ public class CollectFragment extends FetchFragment implements
 
     @Override
     protected void initPresenter() {
-        mPresenter = new CollectPresenter();
-        mPresenter.setModel(new CollectModel(), this);
+        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
     }
 
     @Override
@@ -122,13 +115,13 @@ public class CollectFragment extends FetchFragment implements
         setSwipeRefreshLayout(mSwipeRefreshLayout);
         initAdapter();
         setRecyclerView();
-        onRefresh();
+        initRefresh();
     }
 
     private void setRecyclerView() {
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setAdapter(mCollectAdapter);
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
         mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
@@ -143,38 +136,44 @@ public class CollectFragment extends FetchFragment implements
 
     @Override
     protected void bindLister() {
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+            @Override
+            public void onRefresh() {
+                showRefresh();
+                mPresenter.fetchNew();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPresenter.fetchMore();
+            }
+        });
     }
 
-
-    @Override
-    public void onRefresh() {
+    private void initRefresh() {
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
     }
 
     @Override
     public void onLongClick(int position, Object object) {
-        mLongClick = position;
         UrlCollect mUrlCollect = (UrlCollect) object;
-        mDeleteId = mUrlCollect.getId();
         Bundle bundle = new Bundle();
-        bundle.putString("content", mUrlCollect.getComment());
+        bundle.putString(DeleteDialog.CONTENT, mUrlCollect.getComment());
+        bundle.putInt(DeleteDialog.ITEM, position);
         DeleteDialog deleteDialog = new DeleteDialog();
         deleteDialog.setListener(this);
         deleteDialog.setArguments(bundle);
-        deleteDialog.show(mActivity.getSupportFragmentManager(), "delete");
+        deleteDialog.show(mActivity.getSupportFragmentManager(), DeleteDialog.TAG);
     }
 
     @Override
     public void onClick(int position, Object object) {
-        mClickPosition = position;
         UrlCollect urlCollect = (UrlCollect) object;
-        mDeleteId = urlCollect.getId();
         Bundle bundle = new Bundle();
-        bundle.putString("title", urlCollect.getComment());
-        bundle.putString("url", urlCollect.getUrl());
-        bundle.putInt("from_type", WebActivity.FROM_COLLECT);
+        bundle.putString(WebActivity.TITLE, urlCollect.getComment());
+        bundle.putString(WebActivity.URL, urlCollect.getUrl());
+        bundle.putInt(WebActivity.FROM_TYPE, WebActivity.FROM_COLLECT);
         WebActivity.startWebActivity(mActivity, bundle);
     }
 
@@ -190,8 +189,17 @@ public class CollectFragment extends FetchFragment implements
     }
 
     @Override
+    public void onDelete() {
+        mCollectAdapter.deleteItem(mCollectAdapter.getClickItem());
+    }
+
+    @Override
+    public int getItemsCount() {
+        return mCollectAdapter.getItemCount();
+    }
+
+    @Override
     public void hasNoMoreDate() {
-        hasMore = false;
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -201,17 +209,22 @@ public class CollectFragment extends FetchFragment implements
     }
 
     @Override
-    public void showDisNetwork() {
-
+    public void showDisNetWork() {
+        mMultipleStatusView.showNoNetwork();
     }
 
     @Override
     public void showError() {
-
+        mMultipleStatusView.showError();
     }
 
     @Override
     public void showLoading() {
+        mMultipleStatusView.showLoading();
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
 
     }
 
@@ -232,11 +245,6 @@ public class CollectFragment extends FetchFragment implements
 
     @Override
     public void onNavigationClick() {
-        onDelete(mLongClick);
-    }
-
-    private void onDelete(int item) {
-        mCollectAdapter.deleteItem(item);
-//        mPresenter.deleteByKey(mDeleteId, mCollectAdapter.getItemCount());
+        mPresenter.delete(mCollectAdapter.getDeleteKey());
     }
 }

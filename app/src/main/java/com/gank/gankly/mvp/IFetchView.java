@@ -5,7 +5,7 @@ package com.gank.gankly.mvp;
  * Email:137387869@qq.com
  */
 
-public interface FetchView extends BaseView{
+public interface IFetchView<T extends Object> extends IBaseView {
     void showRefresh();
 
     void hideRefresh();
@@ -16,9 +16,11 @@ public interface FetchView extends BaseView{
 
     void showEmpty();
 
-    void showDisNetwork();
+    void showDisNetWork();
 
     void showError();
 
     void showLoading();
+
+    void showRefreshError(String errorStr);
 }

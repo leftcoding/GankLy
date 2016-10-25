@@ -16,6 +16,10 @@ import com.gank.gankly.R;
  * Create by LingYan on 2016-04-13
  */
 public class DeleteDialog extends DialogFragment {
+    public static final String TAG = "DeleteDialog";
+    public static final String CONTENT = "content";
+    public static final String ITEM = "item";
+
     private Context mContext;
     private DialogListener mListener;
     private DialogFragment mDialogFragment;
@@ -50,7 +54,7 @@ public class DeleteDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mContent = bundle.getString("content");
+            mContent = bundle.getString(CONTENT);
         }
 
         mBuilder = new AlertDialog.Builder(mContext);

@@ -28,6 +28,7 @@
     <string name="loading_empty">暂无数据</string>
     <string name="loading_meizi_images">正在解析图片地址</string>
     <string name="loading_network_failure">Wi-Fi和移动数据已断开</string>
+    <string name="loading_no_more">全部加载完毕</string>
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
@@ -57,7 +58,7 @@
     <string name="tip_no_new_version">已经最新版本</string>
     <string name="tip_connected_again">请连接网络后，点击空白刷新</string>
 
-    <string name="share_to">"分享到.."</string>
+    <string name="share_to">"分享到…"</string>
 
     <string name="setting_auto_check">自动检查更新</string>
     <string name="setting_check_version">检查更新</string>

@@ -31,6 +31,8 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     private Context mContext;
     private ItemLongClick mItemLongClick;
     private Integer[] mImages = {R.drawable.ic_collect_default_7};
+    private long mDeleteKey;
+    private int mClickItem;
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
@@ -112,16 +114,27 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         @Override
         public void onClick(View v) {
             if (mItemLongClick != null) {
-                mItemLongClick.onClick(getAdapterPosition(), mUrlCollect);
+                mClickItem = getAdapterPosition();
+                mItemLongClick.onClick(mClickItem, mUrlCollect);
             }
         }
 
         @Override
         public boolean onLongClick(View v) {
             if (mItemLongClick != null) {
-                mItemLongClick.onLongClick(getAdapterPosition(), mUrlCollect);
+                mClickItem = getAdapterPosition();
+                mDeleteKey = mUrlCollect.getId();
+                mItemLongClick.onLongClick(mClickItem, mUrlCollect);
             }
             return true;
         }
+    }
+
+    public int getClickItem() {
+        return mClickItem;
+    }
+
+    public long getDeleteKey() {
+        return mDeleteKey;
     }
 }

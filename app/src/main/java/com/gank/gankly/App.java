@@ -12,6 +12,7 @@ import com.gank.gankly.data.DaoSession;
 import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
+import com.gank.gankly.utils.NetworkUtils;
 import com.socks.library.KLog;
 
 import rx.functions.Action1;
@@ -118,5 +119,9 @@ public class App extends Application {
 
     public static void setIsNight(boolean isNight) {
         App.isNight = isNight;
+    }
+
+    public static boolean isNetConnect() {
+        return NetworkUtils.isNetworkAvailable(getContext());
     }
 }

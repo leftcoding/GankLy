@@ -208,8 +208,27 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
 
     @Override
     public void hideRefresh() {
-        super.hideRefresh();
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showRefresh() {
+
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void clear() {
+
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
+
     }
 
     @Override
