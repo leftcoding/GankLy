@@ -56,6 +56,7 @@ public abstract class BaseThemeFragment extends BaseFragment {
                     view.setBackgroundResource(backgroundResource);
                 }
             });
+            typedArray.recycle();
         }
     }
 

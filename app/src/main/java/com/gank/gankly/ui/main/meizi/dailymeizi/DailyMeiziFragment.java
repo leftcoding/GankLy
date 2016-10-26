@@ -1,9 +1,8 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.meizi.dailymeizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,19 +18,15 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.presenter.DailyMeiziPresenter;
-import com.gank.gankly.presenter.impl.DailyMeiziPresenterImpl;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.browse.BrowseActivity;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.view.IDailyMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -43,8 +38,8 @@ import rx.functions.Action1;
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */
-public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<List<DailyMeiziBean>>,
-        ItemClick {
+public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContract.View
+        , ItemClick {
     private DailyMeiziPresenter mPresenter;
     private HomeActivity mActivity;
 
@@ -54,7 +49,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     LySwipeRefreshLayout mSwipeRefreshLayout;
     DailyMeiziAdapter mDailyMeiziAdapter;
 
-    private static DailyMeiziFragment sDailyMeiziFragment;
+    //    private static DailyMeiziFragment sDailyMeiziFragment;
     private ProgressDialog mDialog;
 
     @Override
@@ -65,21 +60,21 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     public DailyMeiziFragment() {
     }
 
-    public static DailyMeiziFragment getInstance() {
-        if (sDailyMeiziFragment == null) {
-            synchronized (DailyMeiziFragment.class) {
-                if (sDailyMeiziFragment == null) {
-                    sDailyMeiziFragment = new DailyMeiziFragment();
-                }
-            }
-        }
-        return sDailyMeiziFragment;
-    }
+//    public static DailyMeiziFragment getInstance() {
+//        if (sDailyMeiziFragment == null) {
+//            synchronized (DailyMeiziFragment.class) {
+//                if (sDailyMeiziFragment == null) {
+//                    sDailyMeiziFragment = new DailyMeiziFragment();
+//                }
+//            }
+//        }
+//        return sDailyMeiziFragment;
+//    }
 
 
     @Override
     protected void initPresenter() {
-        mPresenter = new DailyMeiziPresenterImpl(mActivity, this);
+        mPresenter = new DailyMeiziPresenter(MeiziDataSource.getInstance(), this);
     }
 
     @Override
@@ -160,21 +155,16 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         mDialog.setIndeterminate(false);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setProgress(0);
+        mDialog.setMax(0);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                KLog.d("onCancel");
                 mPresenter.unSubscribe();
             }
         });
         if (!mDialog.isShowing()) {
             mDialog.show();
-        }
-    }
-
-    @Override
-    public void disDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
         }
     }
 
@@ -185,35 +175,18 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         }
     }
 
-    @Override
-    public void setMax(int value) {
-        if (mDialog != null) {
-            mDialog.setMax(value);
-        }
-    }
-
-    @Override
-    public void refillDate(List<DailyMeiziBean> list) {
-        mDailyMeiziAdapter.updateItem(list);
-    }
-
-    @Override
-    public void gotoBrowseActivity() {
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(mActivity, BrowseActivity.class);
-        bundle.putString(ViewsModel.Gift, ViewsModel.Daily);
-        intent.putExtras(bundle);
-        mActivity.startActivity(intent);
-    }
+//    @Override
+//    public void gotoBrowseActivity() {
+//        Bundle bundle = new Bundle();
+//        Intent intent = new Intent(mActivity, BrowseActivity.class);
+//        bundle.putString(BrowseActivity.EXTRA_MODEL, ViewsModel.Daily);
+//        intent.putExtra(BrowseActivity.TAG, bundle);
+//        mActivity.startActivity(intent);
+//    }
 
     @Override
     public void hideRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showRefresh() {
-
     }
 
     @Override
@@ -222,7 +195,7 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
     }
 
     @Override
-    public void clear() {
+    public void showRefresh() {
 
     }
 
@@ -237,17 +210,13 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         mMultipleStatusView.showContent();
     }
 
-    public List<GiftBean> getList() {
-        return mPresenter.getList();
-    }
-
     @Override
     public void onClick(int position, Object object) {
         DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
         String url = dailyMeiziBean.getUrl();
         if (!TextUtils.isEmpty(url)) {
             createDialog();
-            mPresenter.fetchImageUrls(url);
+            mPresenter.girlsImages(url);
         }
     }
 
@@ -262,5 +231,24 @@ public class DailyMeiziFragment extends LazyFragment implements IDailyMeiziView<
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void refillData(List<DailyMeiziBean> list) {
+        mDailyMeiziAdapter.updateItem(list);
+    }
+
+    @Override
+    public void setMaxProgress(int value) {
+        if (mDialog != null) {
+            mDialog.setMax(value);
+        }
+    }
+
+    @Override
+    public void disProgressDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

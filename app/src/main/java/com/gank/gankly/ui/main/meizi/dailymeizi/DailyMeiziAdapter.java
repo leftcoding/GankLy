@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.meizi.dailymeizi;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,9 +52,9 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         return mDailyMeiziBeanList.size();
     }
 
-    public void updateItem(List<DailyMeiziBean> mDailyMeiziBeanList) {
-        this.mDailyMeiziBeanList.clear();
-        this.mDailyMeiziBeanList = mDailyMeiziBeanList;
+    public void updateItem(List<DailyMeiziBean> dailyMeiziBeanList) {
+        mDailyMeiziBeanList.clear();
+        mDailyMeiziBeanList.addAll(dailyMeiziBeanList);
         notifyDataSetChanged();
     }
 

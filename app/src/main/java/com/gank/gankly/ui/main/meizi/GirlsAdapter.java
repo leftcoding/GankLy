@@ -25,14 +25,7 @@ public class GirlsAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
-                return GiftFragment.getInstance();
-            case 1:
-                return DailyMeiziFragment.getInstance();
-            default:
-                return null;
-        }
+        return mFragments.get(position);
     }
 
     @Override

@@ -24,7 +24,6 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.ui.main.meizi.DailyMeiziFragment;
 import com.gank.gankly.ui.main.meizi.GiftFragment;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
@@ -54,11 +53,12 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-    public static final String EXTRA_GANK = "gank";
-    public static final String EXTRA_GIFT = "gift";
-    public static final String EXTRA_DAILY = "daily";
-    public static final String EXTRA_MODEL = "model";
-    public static final String EXTRA_POSITION = "position";
+    public static final String TAG = "BrowseActivity";
+    public static final String EXTRA_GANK = "Gank";
+    public static final String EXTRA_GIFT = "Gift";
+    public static final String EXTRA_DAILY = "Daily";
+    public static final String EXTRA_MODEL = "Model";
+    public static final String EXTRA_POSITION = "Position";
 
     @BindView(R.id.progress_txt_page)
     TextView txtLimit;
@@ -149,10 +149,10 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     @Override
     protected void initValues() {
-        Bundle bundle = getIntent().getExtras();
+        Bundle bundle = getIntent().getBundleExtra(TAG);
         if (bundle != null) {
             mPosition = bundle.getInt(EXTRA_POSITION, 0);
-            mViewsModel = bundle.getString(EXTRA_GIFT, EXTRA_GANK);
+            mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
         }
 
         getImageList(mViewsModel);
@@ -191,7 +191,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         if (EXTRA_GIFT.equals(model)) {
             mGiftList = GiftFragment.getInstance().getList();
         } else if (EXTRA_DAILY.equals(model)) {
-            mGiftList = DailyMeiziFragment.getInstance().getList();
+//            mGiftList = DailyMeiziFragment.getInstance().getList();
         } else if (EXTRA_GANK.equals(model)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
             List<GiftBean> g = new ArrayList<>();

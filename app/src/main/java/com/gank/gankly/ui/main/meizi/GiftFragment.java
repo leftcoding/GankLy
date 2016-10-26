@@ -267,8 +267,8 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     public void gotoBrowseActivity() {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(mActivity, BrowseActivity.class);
-        bundle.putString(ViewsModel.Gift, ViewsModel.Gift);
-        intent.putExtras(bundle);
+        bundle.putString(BrowseActivity.EXTRA_MODEL, ViewsModel.Gift);
+        intent.putExtra(BrowseActivity.TAG, bundle);
         mActivity.startActivity(intent);
     }
 

@@ -4,6 +4,7 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.utils.ListUtils;
 
 import java.util.List;
 
@@ -52,10 +53,38 @@ public abstract class FetchPresenter extends BasePresenter {
             if (size > 0) {
                 if (size >= fetchLimit) {
                     view.showContent();
-                    return gankResult.getResults();
                 } else {
                     view.hasNoMoreDate();
                 }
+                return gankResult.getResults();
+            } else {
+                if (fetchPage == 1) {
+                    view.showEmpty();
+                } else {
+                    view.hasNoMoreDate();
+                }
+            }
+        } else {
+            if (fetchPage > 1) {
+                view.showRefreshError(App.getAppString(R.string.loading_error));
+            } else {
+                view.showError();
+            }
+        }
+        return null;
+    }
+
+    public <T> List<T> filterData(List<T> t, IFetchView view) {
+        view.hideRefresh();
+        if (t != null) {
+            int size = ListUtils.getListSize(t);
+            if (size > 0) {
+                if (size >= fetchLimit) {
+                    view.showContent();
+                } else {
+                    view.hasNoMoreDate();
+                }
+                return t;
             } else {
                 if (fetchPage == 1) {
                     view.showEmpty();

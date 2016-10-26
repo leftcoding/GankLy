@@ -41,8 +41,6 @@ import rx.functions.Action1;
  */
 public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-    private static VideoFragment sVideoFragment;
-
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.toolbar)
@@ -56,17 +54,6 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     private IBaseRefreshPresenter mPresenter;
     private HomeActivity mActivity;
     private VideoAdapter mVideoRecyclerAdapter;
-
-    public static VideoFragment getInstance() {
-        if (sVideoFragment == null) {
-            synchronized (VideoFragment.class) {
-                if (sVideoFragment == null) {
-                    sVideoFragment = new VideoFragment();
-                }
-            }
-        }
-        return sVideoFragment;
-    }
 
     @Override
     protected int getLayoutId() {

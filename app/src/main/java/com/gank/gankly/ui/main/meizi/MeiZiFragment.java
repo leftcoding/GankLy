@@ -229,7 +229,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         Bundle bundle = new Bundle();
         bundle.putInt(BrowseActivity.EXTRA_POSITION, position);
         Intent intent = new Intent(mActivity, BrowseActivity.class);
-        intent.putExtras(bundle);
+        intent.putExtra(BrowseActivity.TAG, bundle);
         CircularAnimUtils.startActivity(mActivity, intent, view, R.color.color_2f);
     }
 
