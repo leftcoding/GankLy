@@ -19,7 +19,7 @@ import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.more.SettingActivity;
-import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.MultipleStatusView;

@@ -1,9 +1,13 @@
 package com.gank.gankly.bean;
 
+import android.os.Parcel;
+
+import java.io.Serializable;
+
 /**
  * Create by LingYan on 2016-05-18
  */
-public class GiftBean {
+public class GiftBean implements Serializable {
     private String imgUrl;
     private String url;
     private String time;
@@ -20,6 +24,14 @@ public class GiftBean {
         this.time = time;
         this.views = views;
         this.title = title;
+    }
+
+    protected GiftBean(Parcel in) {
+        imgUrl = in.readString();
+        url = in.readString();
+        time = in.readString();
+        views = in.readString();
+        title = in.readString();
     }
 
     public String getTime() {

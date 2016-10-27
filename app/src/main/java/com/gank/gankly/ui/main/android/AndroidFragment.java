@@ -30,7 +30,7 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.main.GankAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.web.WebActivity;
+import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;

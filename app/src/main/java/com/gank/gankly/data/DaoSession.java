@@ -6,6 +6,8 @@ import com.gank.gankly.data.entity.Customer;
 import com.gank.gankly.data.entity.CustomerDao;
 import com.gank.gankly.data.entity.Order;
 import com.gank.gankly.data.entity.OrderDao;
+import com.gank.gankly.data.entity.ReadHistory;
+import com.gank.gankly.data.entity.ReadHistoryDao;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 
@@ -20,7 +22,7 @@ import de.greenrobot.dao.internal.DaoConfig;
 
 /**
  * {@inheritDoc}
- * 
+ *
  * @see de.greenrobot.dao.AbstractDaoSession
  */
 public class DaoSession extends AbstractDaoSession {
@@ -28,14 +30,19 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig urlCollectDaoConfig;
     private final DaoConfig customerDaoConfig;
     private final DaoConfig orderDaoConfig;
+    private final DaoConfig readHistoryDaoConfig;
 
     private final UrlCollectDao urlCollectDao;
     private final CustomerDao customerDao;
     private final OrderDao orderDao;
+    private final ReadHistoryDao readHistoryDao;
 
     public DaoSession(SQLiteDatabase db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        readHistoryDaoConfig = daoConfigMap.get(ReadHistoryDao.class).clone();
+        readHistoryDaoConfig.initIdentityScope(type);
 
         urlCollectDaoConfig = daoConfigMap.get(UrlCollectDao.class).clone();
         urlCollectDaoConfig.initIdentityScope(type);
@@ -49,16 +56,23 @@ public class DaoSession extends AbstractDaoSession {
         urlCollectDao = new UrlCollectDao(urlCollectDaoConfig, this);
         customerDao = new CustomerDao(customerDaoConfig, this);
         orderDao = new OrderDao(orderDaoConfig, this);
+        readHistoryDao = new ReadHistoryDao(readHistoryDaoConfig, this);
 
         registerDao(UrlCollect.class, urlCollectDao);
         registerDao(Customer.class, customerDao);
         registerDao(Order.class, orderDao);
+        registerDao(ReadHistory.class, readHistoryDao);
     }
-    
+
     public void clear() {
         urlCollectDaoConfig.getIdentityScope().clear();
         customerDaoConfig.getIdentityScope().clear();
         orderDaoConfig.getIdentityScope().clear();
+        readHistoryDaoConfig.getIdentityScope().clear();
+    }
+
+    public ReadHistoryDao getReadHistoryDao() {
+        return readHistoryDao;
     }
 
     public UrlCollectDao getUrlCollectDao() {

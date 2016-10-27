@@ -1,9 +1,11 @@
 package com.gank.gankly.ui.main.meizi.dailymeizi;
 
 import com.gank.gankly.bean.DailyMeiziBean;
+import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.IFetchPresenter;
 import com.gank.gankly.mvp.IFetchView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,6 +22,8 @@ public interface DailyMeiziContract {
         void disProgressDialog();
 
         void setProgressValue(int value);
+
+        void openBrowseActivity(ArrayList<GiftBean> list);
     }
 
     interface Presenter extends IFetchPresenter {

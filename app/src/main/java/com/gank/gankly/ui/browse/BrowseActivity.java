@@ -59,6 +59,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     public static final String EXTRA_DAILY = "Daily";
     public static final String EXTRA_MODEL = "Model";
     public static final String EXTRA_POSITION = "Position";
+    public static final String EXTRA_LIST = "Extra_List";
 
     @BindView(R.id.progress_txt_page)
     TextView txtLimit;
@@ -73,7 +74,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
 
     private boolean isLoadMore = true;
     private String mViewsModel = EXTRA_GANK;
-    private List<GiftBean> mGiftList;
+    private List<GiftBean> mGiftList = new ArrayList<>();
 
     @Override
     protected void initTheme() {
@@ -155,6 +156,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
             mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
         }
 
+        mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
         getImageList(mViewsModel);
     }
 
@@ -190,8 +192,6 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private void getImageList(String model) {
         if (EXTRA_GIFT.equals(model)) {
             mGiftList = GiftFragment.getInstance().getList();
-        } else if (EXTRA_DAILY.equals(model)) {
-//            mGiftList = DailyMeiziFragment.getInstance().getList();
         } else if (EXTRA_GANK.equals(model)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
             List<GiftBean> g = new ArrayList<>();

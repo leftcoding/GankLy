@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.gank.gankly.App;
+import com.gank.gankly.data.entity.ReadHistory;
+import com.gank.gankly.data.entity.ReadHistoryDao;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.mvp.BaseModel;
@@ -12,6 +14,7 @@ import java.util.List;
 
 import de.greenrobot.dao.query.QueryBuilder;
 import rx.Observable;
+import rx.Observable.OnSubscribe;
 import rx.Subscriber;
 
 /**
@@ -26,6 +29,9 @@ public class LocalDataSource extends BaseModel {
     @NonNull
     private UrlCollectDao mUrlCollectDao;
 
+    @NonNull
+    private ReadHistoryDao mReadHistoryDao;
+
     public static LocalDataSource getInstance() {
         if (INSTANCE == null) {
             synchronized (LocalDataSource.class) {
@@ -39,10 +45,11 @@ public class LocalDataSource extends BaseModel {
 
     private LocalDataSource() {
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
+        mReadHistoryDao = App.getDaoSession().getReadHistoryDao();
     }
 
     public Observable<List<UrlCollect>> getCollect(final int offset, final int limit) {
-        return Observable.create(new Observable.OnSubscribe<List<UrlCollect>>() {
+        return Observable.create(new OnSubscribe<List<UrlCollect>>() {
             @Override
             public void call(Subscriber<? super List<UrlCollect>> subscriber) {
                 QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
@@ -55,13 +62,62 @@ public class LocalDataSource extends BaseModel {
     }
 
     public Observable<String> toDelete(final long id) {
-        return Observable.create(new Observable.OnSubscribe<String>() {
+        return toObservable(Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 mUrlCollectDao.deleteByKey(id);
                 subscriber.onNext("");
                 subscriber.onCompleted();
             }
-        });
+        }));
+    }
+
+    public Observable<List<ReadHistory>> selectReadHistory(final int offset, final int limit) {
+        return toObservable(Observable.create(new OnSubscribe<List<ReadHistory>>() {
+            @Override
+            public void call(Subscriber<? super List<ReadHistory>> subscriber) {
+                QueryBuilder<ReadHistory> queryBuilder = mReadHistoryDao.queryBuilder();
+                queryBuilder.orderDesc(ReadHistoryDao.Properties.Date);
+                queryBuilder.offset(offset).limit(limit);
+                subscriber.onNext(queryBuilder.list());
+                subscriber.onCompleted();
+            }
+        }));
+    }
+
+    public Observable<Long> insertReadHistory(final ReadHistory history) {
+        return toObservable(Observable.create(new OnSubscribe<Long>() {
+
+            @Override
+            public void call(Subscriber<? super Long> subscriber) {
+                long rasId = mReadHistoryDao.insert(history);
+                subscriber.onNext(rasId);
+                subscriber.onCompleted();
+            }
+        }));
+    }
+
+    public Observable<List<UrlCollect>> findUrlCollect(final String url) {
+        return toObservable(Observable.create(new OnSubscribe<List<UrlCollect>>() {
+            @Override
+            public void call(Subscriber<? super List<UrlCollect>> subscriber) {
+                QueryBuilder<UrlCollect> query = mUrlCollectDao.queryBuilder();
+                List<UrlCollect> list = query.where(UrlCollectDao.Properties.Url.eq(url)).list();
+                subscriber.onNext(list);
+                subscriber.onCompleted();
+            }
+        }));
+    }
+
+    public Observable<List<ReadHistory>> findReadHistory(final String url) {
+        return toObservable(Observable.create(new OnSubscribe<List<ReadHistory>>() {
+            @Override
+            public void call(Subscriber<? super List<ReadHistory>> subscriber) {
+                QueryBuilder<ReadHistory> query = mReadHistoryDao.queryBuilder();
+                List<ReadHistory> list = query.where(ReadHistoryDao.Properties.Url.eq(url)).list();
+                subscriber.onNext(list);
+                subscriber.onCompleted();
+            }
+        }));
     }
 }

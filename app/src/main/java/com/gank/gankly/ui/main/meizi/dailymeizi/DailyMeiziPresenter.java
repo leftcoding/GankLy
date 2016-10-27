@@ -27,7 +27,8 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
     private MeiziDataSource mTask;
     private DailyMeiziContract.View mModelView;
     private int progress;
-    private List<GiftBean> imagesList;
+    private ArrayList<GiftBean> imagesList;
+
     public DailyMeiziPresenter(MeiziDataSource task, DailyMeiziContract.View view) {
         mTask = task;
         mModelView = view;
@@ -98,7 +99,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
                     @Override
                     public void onNext(List<GiftBean> list) {
-                        if (list != null) {
+                        if (!ListUtils.isListEmpty(list)) {
                             mModelView.setMaxProgress(list.size());
                             getImages(list);
                         }
@@ -111,16 +112,17 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
         progress = 0;
 
         mRxManager.add(mTask.getImageList(list)
-                .map(new Func1<Document, List<GiftBean>>() {
+                .map(new Func1<Document, ArrayList<GiftBean>>() {
                     @Override
-                    public List<GiftBean> call(Document document) {
+                    public ArrayList<GiftBean> call(Document document) {
                         return getImageCountList(document);
                     }
                 })
-                .subscribe(new Subscriber<List<GiftBean>>() {
+                .subscribe(new Subscriber<ArrayList<GiftBean>>() {
                     @Override
                     public void onCompleted() {
                         mModelView.disProgressDialog();
+                        mModelView.openBrowseActivity(imagesList);
                     }
 
                     @Override
@@ -130,9 +132,11 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
-                    public void onNext(List<GiftBean> list) {
-                        mModelView.setProgressValue(progress++);
-                        imagesList.addAll(list);
+                    public void onNext(ArrayList<GiftBean> list) {
+                        if (ListUtils.getListSize(list) > 0) {
+                            mModelView.setProgressValue(progress++);
+                            imagesList.addAll(list);
+                        }
                     }
                 }));
     }
@@ -148,8 +152,6 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     /**
      * 筛选过滤得到月份集合
-     *
-     * @param doc 转化后的文本
      */
     private List<DailyMeiziBean> getDays(Document doc) {
         List<DailyMeiziBean> list = new ArrayList<>();
@@ -198,8 +200,8 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
         return list;
     }
 
-    private List<GiftBean> getImageCountList(Document doc) {
-        List<GiftBean> list = new ArrayList<>();
+    private ArrayList<GiftBean> getImageCountList(Document doc) {
+        ArrayList<GiftBean> list = new ArrayList<>();
         if (doc != null) {
             Elements page = doc.select("#content a img");
             for (int i = 0; i < page.size(); i++) {

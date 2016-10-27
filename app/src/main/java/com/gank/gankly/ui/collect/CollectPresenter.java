@@ -104,8 +104,6 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     @Override
     public void delete(long position) {
         mModel.toDelete(position)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {

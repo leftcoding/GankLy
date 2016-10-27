@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.gank.gankly.data.entity.CustomerDao;
 import com.gank.gankly.data.entity.OrderDao;
+import com.gank.gankly.data.entity.ReadHistoryDao;
 import com.gank.gankly.data.entity.UrlCollectDao;
 
 import de.greenrobot.dao.AbstractDaoMaster;
@@ -28,6 +29,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UrlCollectDao.createTable(db, ifNotExists);
         CustomerDao.createTable(db, ifNotExists);
         OrderDao.createTable(db, ifNotExists);
+        ReadHistoryDao.createTable(db, ifNotExists);
     }
 
     /**
@@ -37,6 +39,7 @@ public class DaoMaster extends AbstractDaoMaster {
         UrlCollectDao.dropTable(db, ifExists);
         CustomerDao.dropTable(db, ifExists);
         OrderDao.dropTable(db, ifExists);
+        ReadHistoryDao.dropTable(db, ifExists);
     }
 
     public static abstract class OpenHelper extends SQLiteOpenHelper {
@@ -81,6 +84,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(UrlCollectDao.class);
         registerDaoClass(CustomerDao.class);
         registerDaoClass(OrderDao.class);
+        registerDaoClass(ReadHistoryDao.class);
     }
 
     public DaoSession newSession() {

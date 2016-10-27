@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.web;
+package com.gank.gankly.ui.web.normal;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -26,13 +26,15 @@ import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.mvp.base.BaseActivity;
+import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -44,7 +46,7 @@ import butterknife.BindView;
  * Create by LingYan on 2016-5-10
  * Email:137387869@qq.com
  */
-public class WebActivity extends BaseActivity {
+public class WebActivity extends BaseActivity implements WebContract.View {
     public static final int FROM_MAIN = 0;
     public static final int FROM_COLLECT = 1;
 
@@ -73,6 +75,7 @@ public class WebActivity extends BaseActivity {
     private UrlCollect mUrlCollect;
     private CollectStates mStates = CollectStates.NORMAL;
     private int mFromType;
+    private WebContract.Presenter mPresenter;
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -87,6 +90,13 @@ public class WebActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         initTheme();
         super.onCreate(savedInstanceState);
+
+        parseBundle();
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new WebPresenter(LocalDataSource.getInstance(), this);
     }
 
     @Override
@@ -142,20 +152,18 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
+//        mPresenter.findCollectUrl(mUrl);
+    }
+
+    private void parseBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mUrl = bundle.getString(URL);
+            KLog.d("mUrl:" + mUrl);
             mTitle = bundle.getString(TITLE);
             mType = bundle.getString(TYPE, Constants.ALL);
             mAuthor = bundle.getString(AUTHOR);
             mFromType = bundle.getInt(FROM_TYPE);
-        }
-        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
-        List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
-        if (!ListUtils.isListEmpty(list)) {
-            isInitCollect = true;
-            isCollect = true;
-            mUrlCollect = list.get(0);
         }
     }
 
@@ -364,5 +372,19 @@ public class WebActivity extends BaseActivity {
             mWebView.destroy();
             mWebView = null;
         }
+    }
+
+    @Override
+    public void findCollectSuccess(List<UrlCollect> list) {
+        if (!ListUtils.isListEmpty(list)) {
+            isInitCollect = true;
+            isCollect = true;
+            mUrlCollect = list.get(0);
+        }
+    }
+
+    @Override
+    public void findHistoryUrlSuccess() {
+
     }
 }

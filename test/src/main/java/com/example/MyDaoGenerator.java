@@ -13,10 +13,20 @@ public class MyDaoGenerator {
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(1, "com.gank.gankly");
 
-        addNote(schema);
+//        addNote(schema);
+        addReadHistory(schema);
 //        addCustomerOrder(schema);
 
         new DaoGenerator().generateAll(schema, "E:/GankLy/app/src/main/java");
+    }
+
+    private static void addReadHistory(Schema schema) {
+        Entity note = schema.addEntity("ReadHistory");//类名
+        note.addIdProperty();
+        note.addStringProperty("url").notNull();
+        note.addStringProperty("comment");
+        note.addDateProperty("date");
+        note.addStringProperty("g_type");
     }
 
     private static void addNote(Schema schema) {
@@ -27,6 +37,7 @@ public class MyDaoGenerator {
         note.addDateProperty("date");
         note.addStringProperty("g_type");
         note.addStringProperty("g_author");
+        note.addBooleanProperty("isRead");
     }
 
     private static void addCustomerOrder(Schema schema) {

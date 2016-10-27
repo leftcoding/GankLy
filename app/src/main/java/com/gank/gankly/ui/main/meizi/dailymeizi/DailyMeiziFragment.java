@@ -3,8 +3,10 @@ package com.gank.gankly.ui.main.meizi.dailymeizi;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,16 +20,18 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.DailyMeiziBean;
+import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.RecycleViewDivider;
-import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,8 +42,7 @@ import rx.functions.Action1;
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */
-public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContract.View
-        , ItemClick {
+public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContract.View, ItemClick {
     private DailyMeiziPresenter mPresenter;
     private HomeActivity mActivity;
 
@@ -49,7 +52,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     LySwipeRefreshLayout mSwipeRefreshLayout;
     DailyMeiziAdapter mDailyMeiziAdapter;
 
-    //    private static DailyMeiziFragment sDailyMeiziFragment;
     private ProgressDialog mDialog;
 
     @Override
@@ -59,18 +61,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     public DailyMeiziFragment() {
     }
-
-//    public static DailyMeiziFragment getInstance() {
-//        if (sDailyMeiziFragment == null) {
-//            synchronized (DailyMeiziFragment.class) {
-//                if (sDailyMeiziFragment == null) {
-//                    sDailyMeiziFragment = new DailyMeiziFragment();
-//                }
-//            }
-//        }
-//        return sDailyMeiziFragment;
-//    }
-
 
     @Override
     protected void initPresenter() {
@@ -159,7 +149,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                KLog.d("onCancel");
                 mPresenter.unSubscribe();
             }
         });
@@ -175,14 +164,15 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         }
     }
 
-//    @Override
-//    public void gotoBrowseActivity() {
-//        Bundle bundle = new Bundle();
-//        Intent intent = new Intent(mActivity, BrowseActivity.class);
-//        bundle.putString(BrowseActivity.EXTRA_MODEL, ViewsModel.Daily);
-//        intent.putExtra(BrowseActivity.TAG, bundle);
-//        mActivity.startActivity(intent);
-//    }
+    @Override
+    public void openBrowseActivity(@NonNull ArrayList<GiftBean> list) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(mActivity, BrowseActivity.class);
+        bundle.putString(BrowseActivity.EXTRA_MODEL, BrowseActivity.EXTRA_DAILY);
+        intent.putExtra(BrowseActivity.EXTRA_LIST, list);
+        intent.putExtra(BrowseActivity.TAG, bundle);
+        mActivity.startActivity(intent);
+    }
 
     @Override
     public void hideRefresh() {
