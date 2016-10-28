@@ -2,6 +2,7 @@ package com.gank.gankly.view;
 
 import com.gank.gankly.bean.GiftBean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public interface IGiftView extends ISwipeRefreshView {
 
     void refillImagesCount(List<GiftBean> giftResult);
 
-    void gotoBrowseActivity();
+    void gotoBrowseActivity(ArrayList<GiftBean> list);
 
     void setMax(int max);
 

@@ -25,12 +25,10 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.mvp.base.BaseActivity;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
-import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -38,7 +36,6 @@ import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -67,7 +64,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     private String mUrl;
     private String mTitle;
-    private UrlCollectDao mUrlCollectDao;
     private String mType;
     private String mAuthor;
     private boolean isCollect;
@@ -76,6 +72,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     private CollectStates mStates = CollectStates.NORMAL;
     private int mFromType;
     private WebContract.Presenter mPresenter;
+    private MenuItem mMenuItem;
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -88,10 +85,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        parseBundle();
         initTheme();
         super.onCreate(savedInstanceState);
-
-        parseBundle();
     }
 
     @Override
@@ -152,14 +148,15 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void initValues() {
-//        mPresenter.findCollectUrl(mUrl);
+        isInitCollect = true;
+        isCollect = false;
+        mPresenter.findCollectUrl(mUrl);
     }
 
     private void parseBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mUrl = bundle.getString(URL);
-            KLog.d("mUrl:" + mUrl);
             mTitle = bundle.getString(TITLE);
             mType = bundle.getString(TYPE, Constants.ALL);
             mAuthor = bundle.getString(AUTHOR);
@@ -178,7 +175,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.web_menu, menu);
-        switchCollectIcon(menu.findItem(R.id.welfare_collect));
+        mMenuItem = menu.findItem(R.id.welfare_collect);
         return true;
     }
 
@@ -205,7 +202,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
                 isCollect = !isCollect;
                 showSnackbar(mView, resText, App.getAppColor(resColor));
-                switchCollectIcon(item);
+                switchCollectIcon(isCollect);
+
+                mPresenter.collectAction(isCollect);
                 return true;
             case R.id.welfare_share:
                 ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
@@ -226,11 +225,12 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         return super.onOptionsItemSelected(item);
     }
 
-    private void switchCollectIcon(MenuItem item) {
+    private void switchCollectIcon(boolean isCollect) {
+        KLog.d("mMenuItem:" + mMenuItem);
         if (isCollect) {
-            item.setIcon(R.drawable.navigation_collect_prs);
+            mMenuItem.setIcon(R.drawable.navigation_collect_prs);
         } else {
-            item.setIcon(R.drawable.navigation_collect_nor);
+            mMenuItem.setIcon(R.drawable.navigation_collect_nor);
         }
     }
 
@@ -254,15 +254,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             }
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    private void collectUrl() {
-        UrlCollect urlCollect = new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
-        mUrlCollectDao.insert(urlCollect);
-    }
-
-    private void cancelCollect() {
-        mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
     public class MyWebViewClient extends android.webkit.WebViewClient {
@@ -356,9 +347,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     protected void onStop() {
         super.onStop();
         if (mStates == CollectStates.COLLECT) {
-            collectUrl();
+//            collectUrl();
         } else if (mStates == CollectStates.UN_COLLECT) {
-            cancelCollect();
+//            cancelCollect();
             if (mFromType == FROM_COLLECT) {
                 RxUtils.getInstance().OnUnCollect();
             }
@@ -375,16 +366,23 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     }
 
     @Override
-    public void findCollectSuccess(List<UrlCollect> list) {
-        if (!ListUtils.isListEmpty(list)) {
-            isInitCollect = true;
-            isCollect = true;
-            mUrlCollect = list.get(0);
-        }
+    public void onCollect() {
+        KLog.d("onCollect");
+        switchCollectIcon(true);
+    }
+
+    @Override
+    public void onCancelCollect() {
+        switchCollectIcon(false);
     }
 
     @Override
     public void findHistoryUrlSuccess() {
 
+    }
+
+    @Override
+    public UrlCollect getCollect() {
+        return new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
     }
 }

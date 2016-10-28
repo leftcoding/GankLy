@@ -18,7 +18,7 @@ import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
-import com.gank.gankly.ui.more.SettingActivity;
+import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.DeleteDialog;
@@ -47,7 +47,7 @@ public class CollectFragment extends FetchFragment implements
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
-    private SettingActivity mActivity;
+    private MoreActivity mActivity;
     private CollectContract.Presenter mPresenter;
     private CollectAdapter mCollectAdapter;
 
@@ -62,7 +62,7 @@ public class CollectFragment extends FetchFragment implements
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (SettingActivity) context;
+        mActivity = (MoreActivity) context;
     }
 
     @Override
@@ -245,6 +245,6 @@ public class CollectFragment extends FetchFragment implements
 
     @Override
     public void onNavigationClick() {
-        mPresenter.delete(mCollectAdapter.getDeleteKey());
+        mPresenter.cancelCollect(mCollectAdapter.getDeleteKey());
     }
 }

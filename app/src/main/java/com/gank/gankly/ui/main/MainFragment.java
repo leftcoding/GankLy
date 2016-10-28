@@ -46,7 +46,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     private HomeActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
-    private static MainFragment sMainFragment;
     private List<LazyFragment> mList;
 
     @Override
@@ -55,10 +54,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     }
 
     public static MainFragment getInstance() {
-        if (sMainFragment == null) {
-            sMainFragment = new MainFragment();
-        }
-        return sMainFragment;
+        return new MainFragment();
     }
 
     public static MainFragment getInstance1() {

@@ -56,9 +56,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindViews({R.id.setting_item_text_update})
     List<ItemTextView> textViews;
 
-    private static SettingFragment sSettingFragment;
     private LauncherPresenter mPresenter;
-    public SettingActivity mActivity;
+    public MoreActivity mActivity;
     private ProgressDialog mProgressDialog;
     private UpdateVersionDialog mVersionDialog;
 
@@ -71,10 +70,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     public static SettingFragment getInstance() {
-        if (sSettingFragment == null) {
-            sSettingFragment = new SettingFragment();
-        }
-        return sSettingFragment;
+        return new SettingFragment();
     }
 
     @Override
@@ -204,7 +200,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (SettingActivity) context;
+        mActivity = (MoreActivity) context;
     }
 
     @Override

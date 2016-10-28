@@ -19,11 +19,10 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.GiftPresenter;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.browse.BrowseActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.DisplayUtils;
@@ -58,7 +57,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     private HomeActivity mActivity;
 
     private int mCurPage = 1;
-    private List<GiftBean> mImageCountList = new ArrayList<>();
+    private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
     private GiftPresenter mPresenter;
 
@@ -264,11 +263,12 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
-    public void gotoBrowseActivity() {
+    public void gotoBrowseActivity(ArrayList<GiftBean> list) {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(mActivity, BrowseActivity.class);
-        bundle.putString(BrowseActivity.EXTRA_MODEL, ViewsModel.Gift);
+        bundle.putString(BrowseActivity.EXTRA_MODEL, BrowseActivity.EXTRA_GIFT);
         intent.putExtra(BrowseActivity.TAG, bundle);
+        intent.putExtra(BrowseActivity.EXTRA_LIST, list);
         mActivity.startActivity(intent);
     }
 

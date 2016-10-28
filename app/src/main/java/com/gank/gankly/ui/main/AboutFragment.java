@@ -33,20 +33,12 @@ public class AboutFragment extends BaseFragment {
     @BindString(R.string.about_my_github_url)
     String mGithubUrl;
 
-    public static AboutFragment sAboutFragment;
     public HomeActivity mActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (HomeActivity) context;
-    }
-
-    public static AboutFragment getInstance() {
-        if (sAboutFragment == null) {
-            sAboutFragment = new AboutFragment();
-        }
-        return sAboutFragment;
     }
 
     @Override

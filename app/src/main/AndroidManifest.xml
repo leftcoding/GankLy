@@ -64,7 +64,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark"/>
         <activity
-            android:name=".ui.more.SettingActivity"
+            android:name=".ui.more.MoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 

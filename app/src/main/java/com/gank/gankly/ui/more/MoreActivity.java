@@ -12,7 +12,7 @@ import com.gank.gankly.ui.collect.CollectFragment;
  * Email:137387869@qq.com
  */
 
-public class SettingActivity extends BaseActivity {
+public class MoreActivity extends BaseActivity {
     private static final int CONTENT_ID = R.id.setting_frame_layout;
     public static final String TITLE = "title";
     public static final String TYPE = "from_type";

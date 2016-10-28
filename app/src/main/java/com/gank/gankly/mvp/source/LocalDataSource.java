@@ -61,12 +61,12 @@ public class LocalDataSource extends BaseModel {
         });
     }
 
-    public Observable<String> toDelete(final long id) {
+    public Observable<String> cancelCollect(final long id) {
         return toObservable(Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 mUrlCollectDao.deleteByKey(id);
-                subscriber.onNext("");
+                subscriber.onNext("取消成功");
                 subscriber.onCompleted();
             }
         }));
@@ -80,6 +80,18 @@ public class LocalDataSource extends BaseModel {
                 queryBuilder.orderDesc(ReadHistoryDao.Properties.Date);
                 queryBuilder.offset(offset).limit(limit);
                 subscriber.onNext(queryBuilder.list());
+                subscriber.onCompleted();
+            }
+        }));
+    }
+
+    public Observable<Long> insertCollect(final UrlCollect collect) {
+        return toObservable(Observable.create(new OnSubscribe<Long>() {
+
+            @Override
+            public void call(Subscriber<? super Long> subscriber) {
+                long rasId = mUrlCollectDao.insert(collect);
+                subscriber.onNext(rasId);
                 subscriber.onCompleted();
             }
         }));

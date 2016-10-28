@@ -102,8 +102,8 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     }
 
     @Override
-    public void delete(long position) {
-        mModel.toDelete(position)
+    public void cancelCollect(long position) {
+        mModel.cancelCollect(position)
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {

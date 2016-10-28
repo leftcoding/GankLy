@@ -74,6 +74,11 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         }
     }
 
+    @Override
+    public void onViewRecycled(GoodsViewHolder holder) {
+        super.onViewRecycled(holder);
+        Glide.clear(holder.imgMeizi);//view recycled,clear image request
+    }
 
     private class DriverViewTarget extends BitmapImageViewTarget {
         private ImageView mImageView;

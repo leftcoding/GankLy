@@ -21,10 +21,8 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.config.ViewsModel;
 import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.ui.main.meizi.GiftFragment;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxSaveImage;
@@ -40,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+
 
 /**
  * Create by LingYan on 2016-4-25
@@ -190,9 +189,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     }
 
     private void getImageList(String model) {
-        if (EXTRA_GIFT.equals(model)) {
-            mGiftList = GiftFragment.getInstance().getList();
-        } else if (EXTRA_GANK.equals(model)) {
+        if (EXTRA_GANK.equals(model)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
             List<GiftBean> g = new ArrayList<>();
             if (!ListUtils.isListEmpty(giftBeen)) {
@@ -252,7 +249,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
     private String getImageUrl() {
         int position = mViewPager.getCurrentItem();
         String mUrl;
-        if (ViewsModel.GANK.equals(mViewsModel)) {
+        if (EXTRA_GANK.equals(mViewsModel)) {
             mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
         } else {
             mUrl = mGiftList.get(position).getImgUrl();

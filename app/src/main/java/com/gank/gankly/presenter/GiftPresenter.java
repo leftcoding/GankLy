@@ -23,7 +23,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     private int progress;
     private boolean isUnSubscribe;
     private GiftModel mGiftModel;
-    private List<GiftBean> girls = new ArrayList<>();
+    private ArrayList<GiftBean> girls = new ArrayList<>();
 
     public GiftPresenter(Activity mActivity, IGiftView view) {
         super(mActivity, view);
@@ -110,7 +110,7 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
                 mIView.disDialog();
                 mIView.refillImagesCount(girls);
                 if (!isUnSubscribe) {
-                    mIView.gotoBrowseActivity();
+                    mIView.gotoBrowseActivity(girls);
                 } else {
                     isUnSubscribe = false;
                 }

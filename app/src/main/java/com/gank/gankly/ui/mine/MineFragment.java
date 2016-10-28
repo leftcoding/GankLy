@@ -19,7 +19,7 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.more.SettingActivity;
+import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
@@ -35,6 +35,7 @@ import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
 
 
 /**
+ * 我的
  * Create by LingYan on 2016-09-21
  * Email:137387869@qq.com
  */
@@ -160,10 +161,10 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @OnClick(R.id.mine_rl_setting)
     void onSetting() {
         Intent intent = new Intent();
-        intent.setClass(mActivity, SettingActivity.class);
+        intent.setClass(mActivity, MoreActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(SettingActivity.TITLE, App.getAppString(R.string.navigation_settings));
-        bundle.putInt(SettingActivity.TYPE, SettingActivity.TYPE_SETTING);
+        bundle.putString(MoreActivity.TITLE, App.getAppString(R.string.navigation_settings));
+        bundle.putInt(MoreActivity.TYPE, MoreActivity.TYPE_SETTING);
         intent.putExtras(bundle);
         goActivity(intent);
     }
@@ -177,10 +178,10 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @OnClick(R.id.mine_rl_collect)
     void onCollect() {
         Intent intent = new Intent();
-        intent.setClass(mActivity, SettingActivity.class);
+        intent.setClass(mActivity, MoreActivity.class);
         Bundle bundle = new Bundle();
-        bundle.putString(SettingActivity.TITLE, App.getAppString(R.string.mine_my_collect));
-        bundle.putInt(SettingActivity.TYPE, SettingActivity.TYPE_COLLECT);
+        bundle.putString(MoreActivity.TITLE, App.getAppString(R.string.mine_my_collect));
+        bundle.putInt(MoreActivity.TYPE, MoreActivity.TYPE_COLLECT);
         intent.putExtras(bundle);
         goActivity(intent);
     }

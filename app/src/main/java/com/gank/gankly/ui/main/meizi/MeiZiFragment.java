@@ -243,7 +243,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     @Override
