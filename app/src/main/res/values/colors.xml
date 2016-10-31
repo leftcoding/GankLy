@@ -37,7 +37,7 @@
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
 
-    <color name="collect_snackbar_text_color">#31c4f9</color>
+    <color name="collect_snackbar_text_color">#4093c6</color>
 
     <!-- light theme color start -->
     <color name="colorPrimary">#3F51B5</color>

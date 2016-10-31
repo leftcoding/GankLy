@@ -25,7 +25,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
-import com.gank.gankly.ui.browse.BrowseActivity;
+import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -167,10 +167,10 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     public void openBrowseActivity(@NonNull ArrayList<GiftBean> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(mActivity, BrowseActivity.class);
-        bundle.putString(BrowseActivity.EXTRA_MODEL, BrowseActivity.EXTRA_DAILY);
-        intent.putExtra(BrowseActivity.EXTRA_LIST, list);
-        intent.putExtra(BrowseActivity.TAG, bundle);
+        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
+        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+        intent.putExtra(GalleryActivity.TAG, bundle);
         mActivity.startActivity(intent);
     }
 

@@ -37,8 +37,8 @@ import rx.Subscriber;
  * Create by LingYan on 2016-4-25
  * Email:137387869@qq.com
  */
-public class CollectFragment extends FetchFragment implements
-        DeleteDialog.DialogListener, ItemLongClick, CollectContract.View {
+public class CollectFragment extends FetchFragment implements DeleteDialog.DialogListener,
+        ItemLongClick, CollectContract.View {
     @BindView(R.id.swipe_multiple_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -191,6 +191,9 @@ public class CollectFragment extends FetchFragment implements
     @Override
     public void onDelete() {
         mCollectAdapter.deleteItem(mCollectAdapter.getClickItem());
+        if (mCollectAdapter.getItemCount() == 0) {
+            showEmpty();
+        }
     }
 
     @Override

@@ -20,9 +20,9 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.MeiziPresenterImpl;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.browse.BrowseActivity;
+import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
@@ -227,9 +227,9 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        bundle.putInt(BrowseActivity.EXTRA_POSITION, position);
-        Intent intent = new Intent(mActivity, BrowseActivity.class);
-        intent.putExtra(BrowseActivity.TAG, bundle);
+        bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
+        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        intent.putExtra(GalleryActivity.TAG, bundle);
         CircularAnimUtils.startActivity(mActivity, intent, view, R.color.color_2f);
     }
 

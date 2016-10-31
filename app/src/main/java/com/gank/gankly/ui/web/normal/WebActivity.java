@@ -85,6 +85,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        KLog.d("onCreate");
         parseBundle();
         initTheme();
         super.onCreate(savedInstanceState);
@@ -149,8 +150,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void initValues() {
         isInitCollect = true;
-        isCollect = false;
         mPresenter.findCollectUrl(mUrl);
+        mPresenter.findHistoryUrl(mUrl);
     }
 
     private void parseBundle() {
@@ -173,9 +174,21 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.web_menu, menu);
+    public void invalidateOptionsMenu() {
+        super.invalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
         mMenuItem = menu.findItem(R.id.welfare_collect);
+        switchCollectIcon(isCollect);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.web_menu, menu);
         return true;
     }
 
@@ -201,10 +214,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 }
 
                 isCollect = !isCollect;
+                mPresenter.collectAction(isCollect);
                 showSnackbar(mView, resText, App.getAppColor(resColor));
                 switchCollectIcon(isCollect);
-
-                mPresenter.collectAction(isCollect);
                 return true;
             case R.id.welfare_share:
                 ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
@@ -223,6 +235,11 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void switchCollectIcon(boolean isCollect) {
@@ -367,7 +384,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     public void onCollect() {
-        KLog.d("onCollect");
         switchCollectIcon(true);
     }
 
@@ -384,5 +400,11 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     public UrlCollect getCollect() {
         return new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
+    }
+
+    @Override
+    public void setCollectIcon(boolean isCollect) {
+        invalidateOptionsMenu();//更新Menu
+        this.isCollect = isCollect;
     }
 }

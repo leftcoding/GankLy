@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.browse;
+package com.gank.gankly.ui.gallery;//package com.gank.gankly.ui.browse;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,7 +43,7 @@ import rx.android.schedulers.AndroidSchedulers;
 /**
  * Create by LingYan on 2016-4-25
  */
-public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     private static final int SYSTEM_UI_BASE_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
@@ -219,9 +219,9 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
         public Fragment getItem(int position) {
             if (EXTRA_GANK.equals(mViewsModel)) {
                 ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
-                return BrowseFragment.newInstance(bean.getUrl());
+                return GalleryFragment.newInstance(bean.getUrl());
             }
-            return BrowseFragment.newInstance(mGiftList.get(position).getImgUrl());
+            return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
         }
     }
 
@@ -280,7 +280,7 @@ public class BrowseActivity extends BaseActivity implements ViewPager.OnPageChan
                             return;
                         }
                         if (isShare) {
-                            ShareUtils.shareSingleImage(BrowseActivity.this, uri);
+                            ShareUtils.shareSingleImage(GalleryActivity.this, uri);
                         } else {
                             String msg = String.format(getString(R.string.meizi_picture_save_path), imgPath);
                             ToastUtils.showToast(msg);

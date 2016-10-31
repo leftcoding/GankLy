@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.browse;
+package com.gank.gankly.ui.gallery;//package com.gank.gankly.ui.browse;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,19 +11,19 @@ import com.gank.gankly.widget.ProgressImageView;
 
 import butterknife.BindView;
 
-public class BrowseFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
+public class GalleryFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
     @BindView(R.id.progress_img)
     ProgressImageView mProgressImageView;
-    private BrowseActivity mActivity;
+    private GalleryActivity mActivity;
     private String mUrl;
 
-    public BrowseFragment() {
+    public GalleryFragment() {
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (BrowseActivity) context;
+        this.mActivity = (GalleryActivity) context;
     }
 
 
@@ -46,7 +46,7 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
 
     @Override
     protected void initValues() {
-        mProgressImageView.load(mUrl, BrowseFragment.this);
+        mProgressImageView.load(mUrl, GalleryFragment.this);
     }
 
     @Override
@@ -80,8 +80,8 @@ public class BrowseFragment extends BaseFragment implements ProgressImageView.Im
         super.onDestroy();
     }
 
-    public static BrowseFragment newInstance(String url) {
-        BrowseFragment fragment = new BrowseFragment();
+    public static GalleryFragment newInstance(String url) {
+        GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
         args.putString("url", url);
         fragment.setArguments(args);

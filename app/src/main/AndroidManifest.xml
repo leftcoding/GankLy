@@ -50,7 +50,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.browse.BrowseActivity"
+            android:name=".ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/BrowseThemeBase"/>

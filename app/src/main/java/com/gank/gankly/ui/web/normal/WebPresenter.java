@@ -10,11 +10,13 @@ import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,6 +30,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     private WebContract.View mView;
     private long endTime;
     private List<UrlCollect> mCollects;
+    private Subscription subscription;
 
     public WebPresenter(LocalDataSource task, WebContract.View view) {
         mTask = task;
@@ -51,16 +54,14 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
             @Override
             public void onNext(List<UrlCollect> urlCollects) {
                 mCollects = urlCollects;
-                KLog.d("mCollects:" + mCollects.size());
-                if (ListUtils.getListSize(urlCollects) > 0) {
-                    mView.onCollect();
-                }
+                boolean isCollect = ListUtils.getListSize(urlCollects) > 0;
+                mView.setCollectIcon(isCollect);
             }
         });
     }
 
     @Override
-    public void findHistoryUrl(@NonNull String url) {
+    public void findHistoryUrl(@NonNull final String url) {
         mTask.findReadHistory(url).subscribe(new Subscriber<List<ReadHistory>>() {
             @Override
             public void onCompleted() {
@@ -74,13 +75,26 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
             @Override
             public void onNext(List<ReadHistory> readHistories) {
-
+                if (ListUtils.getListSize(readHistories) <= 0) {
+                    UrlCollect urlCollect = mView.getCollect();
+                    if (urlCollect != null) {
+                        ReadHistory readHistory = new ReadHistory();
+                        readHistory.setDate(new Date());
+                        readHistory.setComment(urlCollect.getComment());
+                        readHistory.setUrl(url);
+                        readHistory.setG_type(urlCollect.getG_type());
+                        mTask.insertReadHistory(readHistory);
+                    }
+                }
             }
         });
     }
 
     @Override
     public void cancelCollect() {
+        if (ListUtils.getListSize(mCollects) <= 0) {
+            return;
+        }
         long deleteByKey = mCollects.get(0).getId();
         mTask.cancelCollect(deleteByKey).subscribe(new Subscriber<String>() {
             @Override
@@ -90,7 +104,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
             @Override
             public void onError(Throwable e) {
-
+                KLog.e(e);
             }
 
             @Override
@@ -124,20 +138,22 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     @Override
     public void collectAction(final boolean isCollect) {
         long curTime = System.currentTimeMillis();
-        if (curTime - endTime < 1000) {
-            mRxManager.clear();
-        } else {
-            endTime = curTime;
+        long subTime = curTime - endTime;
+        KLog.d("subTime:" + subTime);
+        if (curTime - endTime < 2000) {
+            subscription.unsubscribe();
         }
-        mRxManager.add(Observable.create(new Observable.OnSubscribe<Boolean>() {
+        endTime = curTime;
+
+        subscription = Observable.create(new Observable.OnSubscribe<Boolean>() {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
                 subscriber.onNext(isCollect);
                 subscriber.onCompleted();
             }
-        }).subscribeOn(Schedulers.newThread())
+        }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .delay(1000, TimeUnit.MILLISECONDS)
+                .delay(1, TimeUnit.SECONDS)
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
@@ -151,14 +167,16 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
                     @Override
                     public void onNext(Boolean aBoolean) {
-                        KLog.d("aBoolean:" + aBoolean);
+                        KLog.d("collectAction，aBoolean:" + aBoolean);
                         if (aBoolean) {
                             collect();
                         } else {
                             cancelCollect();
                         }
                     }
-                }));
+                });
+
+        mRxManager.add(subscription);
     }
 
 

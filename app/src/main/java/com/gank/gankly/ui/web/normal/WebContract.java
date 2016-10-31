@@ -20,6 +20,8 @@ public interface WebContract {
         void findHistoryUrlSuccess();
 
         UrlCollect getCollect();
+
+        void setCollectIcon(boolean isCollect);
     }
 
     interface Presenter extends IBasePresenter {
