@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
+import com.gank.gankly.ui.history.BrowseHistoryFragment;
 
 /**
  * Create by LingYan on 2016-09-21
@@ -19,6 +20,7 @@ public class MoreActivity extends BaseActivity {
 
     public static final int TYPE_SETTING = 1;
     public static final int TYPE_COLLECT = 2;
+    public static final int TYPE_BROWSE = 3;
 
     private int mType;
 
@@ -60,6 +62,8 @@ public class MoreActivity extends BaseActivity {
             case TYPE_COLLECT:
                 fragment = new CollectFragment();
                 break;
+            case TYPE_BROWSE:
+                fragment = new BrowseHistoryFragment();
         }
         if (fragment != null) {
             getSupportFragmentManager().beginTransaction()

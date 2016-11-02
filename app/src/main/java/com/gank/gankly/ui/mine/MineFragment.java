@@ -160,13 +160,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
 
     @OnClick(R.id.mine_rl_setting)
     void onSetting() {
-        Intent intent = new Intent();
-        intent.setClass(mActivity, MoreActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(MoreActivity.TITLE, App.getAppString(R.string.navigation_settings));
-        bundle.putInt(MoreActivity.TYPE, MoreActivity.TYPE_SETTING);
-        intent.putExtras(bundle);
-        goActivity(intent);
+        openActivity(MoreActivity.TYPE_SETTING);
     }
 
     @OnClick(R.id.mine_rl_night)
@@ -177,23 +171,21 @@ public class MineFragment extends BaseSwipeRefreshFragment {
 
     @OnClick(R.id.mine_rl_collect)
     void onCollect() {
-        Intent intent = new Intent();
-        intent.setClass(mActivity, MoreActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(MoreActivity.TITLE, App.getAppString(R.string.mine_my_collect));
-        bundle.putInt(MoreActivity.TYPE, MoreActivity.TYPE_COLLECT);
-        intent.putExtras(bundle);
-        goActivity(intent);
+        openActivity(MoreActivity.TYPE_COLLECT);
     }
 
     @OnClick(R.id.mine_rl_browse)
     void onBrowse() {
+        openActivity(MoreActivity.TYPE_BROWSE);
     }
 
-    private void goActivity(Intent intent) {
-        if (intent != null) {
-            mActivity.startActivity(intent);
-        }
+    private void openActivity(int type) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity, MoreActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putInt(MoreActivity.TYPE, type);
+        intent.putExtras(bundle);
+        mActivity.startActivity(intent);
     }
 
     @Override

@@ -28,6 +28,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/setting_switch_check"/>
 
+        <com.gank.gankly.widget.LYRelativeLayoutRipple
+            android:id="@+id/mine_rl_night"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/setting_item_text_update"
+            android:elevation="1dp"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:text="@string/navigation_about"/>
+        </com.gank.gankly.widget.LYRelativeLayoutRipple>
+
         <TextView
             android:id="@+id/setting_text_copyright"
             android:layout_width="wrap_content"

@@ -75,15 +75,36 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
             @Override
             public void onNext(List<ReadHistory> readHistories) {
+                KLog.d("readHistories:" + readHistories.size());
                 if (ListUtils.getListSize(readHistories) <= 0) {
                     UrlCollect urlCollect = mView.getCollect();
+                    KLog.d("urlCollect:" + urlCollect);
                     if (urlCollect != null) {
-                        ReadHistory readHistory = new ReadHistory();
-                        readHistory.setDate(new Date());
-                        readHistory.setComment(urlCollect.getComment());
-                        readHistory.setUrl(url);
-                        readHistory.setG_type(urlCollect.getG_type());
-                        mTask.insertReadHistory(readHistory);
+//                        ReadHistory readHistory = new ReadHistory();
+//                        readHistory.setId(null);
+//                        readHistory.setDate(new Date());
+//                        readHistory.setComment(urlCollect.getComment());
+//                        readHistory.setUrl(url);
+//                        readHistory.setG_type(urlCollect.getG_type());
+                        KLog.d("urlCollect.getComment():" + urlCollect.getComment()
+                                + ",url:" + url + ",urlCollect.getG_type():" + urlCollect.getG_type() + "," + new Date());
+                        mTask.insertReadHistory(new ReadHistory(null, url, urlCollect.getComment(),
+                                new Date(), urlCollect.getG_type())).subscribe(new Subscriber<Long>() {
+                            @Override
+                            public void onCompleted() {
+                                KLog.d("onCompleted");
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                KLog.e(e);
+                            }
+
+                            @Override
+                            public void onNext(Long aLong) {
+                                KLog.d("aLong:" + aLong);
+                            }
+                        });
                     }
                 }
             }

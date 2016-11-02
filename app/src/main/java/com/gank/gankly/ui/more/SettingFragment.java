@@ -66,9 +66,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         return R.layout.fragment_setting;
     }
 
-    public SettingFragment() {
-    }
-
     public static SettingFragment getInstance() {
         return new SettingFragment();
     }

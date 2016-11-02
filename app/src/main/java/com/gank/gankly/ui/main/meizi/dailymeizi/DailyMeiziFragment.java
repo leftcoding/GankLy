@@ -29,7 +29,6 @@ import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.gank.gankly.widget.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,8 +84,8 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity,
-                R.drawable.shape_item_divider));
+//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity,
+//                R.drawable.shape_item_divider));
     }
 
     @Override

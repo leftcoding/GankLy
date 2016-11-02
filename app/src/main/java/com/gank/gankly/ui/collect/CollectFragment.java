@@ -56,9 +56,6 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
         return R.layout.activity_collcet;
     }
 
-    public CollectFragment() {
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

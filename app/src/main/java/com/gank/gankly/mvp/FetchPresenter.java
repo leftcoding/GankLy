@@ -17,6 +17,19 @@ public abstract class FetchPresenter extends BasePresenter {
     private int fetchLimit = 20;
     private int fetchPage = 1;
     private boolean hasMore = true;
+    private int offSet = 0;
+
+    public int initOffSet() {
+        return offSet = 0;
+    }
+
+    public int getOffSet() {
+        return offSet * fetchLimit;
+    }
+
+    public void setOffSet(int offSet) {
+        this.offSet = offSet;
+    }
 
     public int getInitPage() {
         return fetchPage = 1;

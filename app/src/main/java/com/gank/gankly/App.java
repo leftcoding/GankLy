@@ -40,18 +40,6 @@ public class App extends Application {
 
         initPreferences();
 
-//        //数据库Chrome上调试
-//        Stetho.initializeWithDefaults(this);
-//
-//        //GreenDao
-//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
-//        db = helper.getWritableDatabase();
-//        DaoMaster daoMaster = new DaoMaster(db);
-//        daoSession = daoMaster.newSession();
-//
-//        //Bugly 测试：true
-//        CrashReport.initCrashReport(getApplicationContext(), "900039150", true);
-
         RxBus.getInstance().toSubscription(SQLiteDatabase.class, new Action1<SQLiteDatabase>() {
             @Override
             public void call(SQLiteDatabase sqLiteDatabase) {
@@ -97,9 +85,6 @@ public class App extends Application {
         return getAppResources().getString(res);
     }
 
-//    public static SQLiteDatabase getDatabase() {
-//        return db;
-//    }
 
     public static DaoSession getDaoSession() {
         return daoSession;
