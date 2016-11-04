@@ -75,4 +75,9 @@ public class AppUtils {
         DisplayMetrics dm = App.getContext().getResources().getDisplayMetrics();
         return dm.widthPixels;
     }
+
+    public static int getDisplayHeight() {
+        DisplayMetrics dm = App.getContext().getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
 }

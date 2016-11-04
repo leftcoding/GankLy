@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
+import com.socks.library.KLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -25,8 +26,7 @@ import butterknife.Unbinder;
  * Email:137387869@qq.com
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
-    private static final int CONTENT_ID = R.id.main_frame_layout;
-
+    private static final int contentAreaId = R.id.main_frame_layout;
     private long mLastTime;
     private Fragment mContent = null;
     protected P mPresenter;
@@ -50,25 +50,23 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void addMainFragment(Fragment fragment) {
-        addFragment(fragment, null, "", CONTENT_ID);
-    }
-
-    public void replace(Fragment fragment) {
-        FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
-        mFragmentTransaction.replace(CONTENT_ID, fragment).commit();
+        addFragment(fragment, null, "");
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, CONTENT_ID, null, "", false);
+        addHideFragment(from, to, contentAreaId, null, "", false);
+    }
+
+    public void addHideFragment(Fragment from, Fragment to, String Tag, int contentAreaId) {
+        addHideFragment(from, to, contentAreaId, null, Tag, true);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
-        addHideFragment(from, to, CONTENT_ID, null, "", isAnim);
+        addHideFragment(from, to, contentAreaId, null, "", isAnim);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {
-        addHideFragment(from, to, CONTENT_ID, null, tag, isAnim);
+        addHideFragment(from, to, contentAreaId, null, tag, isAnim);
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -107,15 +105,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     public void addToBackFragment(Fragment fragment, @Nullable String tag) {
-        addFragment(fragment, null, tag, CONTENT_ID);
+        addFragment(fragment, null, tag);
     }
 
     private void addToBackFragment(Fragment fragment, Bundle bundle, @Nullable String tag) {
-        addFragment(fragment, bundle, tag, CONTENT_ID);
+        addFragment(fragment, bundle, tag);
     }
 
 
-    private void addFragment(Fragment fragment, Bundle bundle, String tag, @Nullable int contentId) {
+    private void addFragment(Fragment fragment, Bundle bundle, String tag) {
         if (fragment == null) {
             throw new RuntimeException(new NullPointerException("fragment can't be null"));
         }
@@ -135,7 +133,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
 
         if (!fragment.isAdded()) {
-            mFragmentTransaction.add(contentId, fragment);
+            mFragmentTransaction.add(contentAreaId, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();
     }
@@ -198,10 +196,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
+        KLog.d("count:" + count);
         if (count == 0) {
             super.onBackPressed();
         } else {
-            getFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
         }
     }
 }

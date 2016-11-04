@@ -17,18 +17,18 @@ public abstract class FetchPresenter extends BasePresenter {
     private int fetchLimit = 20;
     private int fetchPage = 1;
     private boolean hasMore = true;
-    private int offSet = 0;
-
-    public int initOffSet() {
-        return offSet = 0;
-    }
+    private int offSetPage = 0;
 
     public int getOffSet() {
-        return offSet * fetchLimit;
+        return offSetPage * fetchLimit;
     }
 
-    public void setOffSet(int offSet) {
-        this.offSet = offSet;
+    public void setOffSetPage(int page) {
+        this.offSetPage = page;
+    }
+
+    public int getOffSetPage() {
+        return offSetPage;
     }
 
     public int getInitPage() {
@@ -95,6 +95,7 @@ public abstract class FetchPresenter extends BasePresenter {
                 if (size >= fetchLimit) {
                     view.showContent();
                 } else {
+                    hasMore = false;
                     view.hasNoMoreDate();
                 }
                 return t;
@@ -102,6 +103,7 @@ public abstract class FetchPresenter extends BasePresenter {
                 if (fetchPage == 1) {
                     view.showEmpty();
                 } else {
+                    hasMore = false;
                     view.hasNoMoreDate();
                 }
             }
@@ -114,6 +116,36 @@ public abstract class FetchPresenter extends BasePresenter {
         }
         return null;
     }
+
+    public <T> List<T> filterDataBase(List<T> t, IFetchView view) {
+        if (t != null) {
+            int size = ListUtils.getListSize(t);
+            if (size > 0) {
+                if (size >= fetchLimit) {
+                    view.showContent();
+                } else {
+                    hasMore = false;
+                    view.hasNoMoreDate();
+                }
+                return t;
+            } else {
+                if (offSetPage == 0) {
+                    view.showEmpty();
+                } else {
+                    hasMore = false;
+                    view.hasNoMoreDate();
+                }
+            }
+        } else {
+            if (offSetPage > 0) {
+                view.showRefreshError(App.getAppString(R.string.loading_error));
+            } else {
+                view.showError();
+            }
+        }
+        return null;
+    }
+
 
     public void parseError(IFetchView view) {
         view.hideRefresh();

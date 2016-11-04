@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gank.gankly.App;
@@ -16,6 +15,7 @@ import com.gank.gankly.config.Preferences;
 import com.gank.gankly.listener.DialogOnClick;
 import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
+import com.gank.gankly.ui.main.AboutFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.ToastUtils;
@@ -44,7 +44,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.setting_rl_body)
-    RelativeLayout mView;
+    View mView;
     @BindView(R.id.setting_switch_check)
     ItemSwitchView mAutoCheckSwitch;
     @BindView(R.id.setting_item_text_update)
@@ -192,6 +192,11 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @OnClick(R.id.setting_item_text_update)
     void clickUpdate() {
         mPresenter.checkVersion();
+    }
+
+    @OnClick(R.id.setting_rl_about)
+    void onClickAbout() {
+        mActivity.addHideFragment(this, new AboutFragment(), TAG, R.id.setting_frame_layout);
     }
 
     @Override

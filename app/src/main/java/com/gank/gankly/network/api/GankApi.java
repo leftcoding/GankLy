@@ -40,9 +40,9 @@ public class GankApi {
 //        builder.addInterceptor(new Interceptor() {
 //            @Override
 //            public Response intercept(Interceptor.Chain chain) throws IOException {
-//                Request original = chain.request();
+//                okhttp3.Request original = chain.request();
 //
-//                Request request = original.newBuilder()
+//                okhttp3.Request request = original.newBuilder()
 //                        .header("Content-Type", "application/json")
 //                        .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
 //                        .build();

@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
+import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.base.BaseActivity;
 import com.gank.gankly.mvp.source.LocalDataSource;
@@ -64,7 +65,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     private String mUrl;
     private String mTitle;
-    private String mType;
+    private String mCollectType;
     private String mAuthor;
     private boolean isCollect;
     private boolean isInitCollect;
@@ -85,7 +86,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        KLog.d("onCreate");
         parseBundle();
         initTheme();
         super.onCreate(savedInstanceState);
@@ -151,7 +151,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     protected void initValues() {
         isInitCollect = true;
         mPresenter.findCollectUrl(mUrl);
-        mPresenter.findHistoryUrl(mUrl);
+        mPresenter.insetHistoryUrl(new ReadHistory(null, mUrl, mTitle, new Date(), mCollectType));
     }
 
     private void parseBundle() {
@@ -159,7 +159,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         if (bundle != null) {
             mUrl = bundle.getString(URL);
             mTitle = bundle.getString(TITLE);
-            mType = bundle.getString(TYPE, Constants.ALL);
+            mCollectType = bundle.getString(TYPE, Constants.ALL);
             mAuthor = bundle.getString(AUTHOR);
             mFromType = bundle.getInt(FROM_TYPE);
         }
@@ -393,13 +393,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     }
 
     @Override
-    public void findHistoryUrlSuccess() {
-
-    }
-
-    @Override
     public UrlCollect getCollect() {
-        return new UrlCollect(null, mUrl, mTitle, new Date(), mType, mAuthor);
+        return new UrlCollect(null, mUrl, mTitle, new Date(), mCollectType, mAuthor);
     }
 
     @Override

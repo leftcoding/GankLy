@@ -7,10 +7,12 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.more.MoreActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -33,12 +35,12 @@ public class AboutFragment extends BaseFragment {
     @BindString(R.string.about_my_github_url)
     String mGithubUrl;
 
-    public HomeActivity mActivity;
+    private MoreActivity mActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MoreActivity) context;
     }
 
     @Override
@@ -51,9 +53,14 @@ public class AboutFragment extends BaseFragment {
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
             bar.setDisplayHomeAsUpEnabled(true);
         }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.onBackPressed();
+            }
+        });
     }
 
     @Override

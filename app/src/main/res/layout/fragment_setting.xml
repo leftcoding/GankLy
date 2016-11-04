@@ -3,45 +3,57 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="match_parent">
 
     <include layout="@layout/layout_bar"/>
 
     <RelativeLayout
-        android:id="@+id/setting_rl_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:background="?attr/settingBackground"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.gank.gankly.widget.ItemSwitchView
-            android:id="@+id/setting_switch_check"
+        <android.support.v7.widget.LinearLayoutCompat
+            android:id="@+id/setting_rl_body"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="?attr/baseAdapterItemBackground"
+            android:orientation="vertical"
+            app:divider="@drawable/shape_item_divider"
+            app:showDividers="middle|end">
 
-        <com.gank.gankly.widget.ItemTextView
-            android:id="@+id/setting_item_text_update"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/setting_switch_check"/>
-
-        <com.gank.gankly.widget.LYRelativeLayoutRipple
-            android:id="@+id/mine_rl_night"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/setting_item_text_update"
-            android:elevation="1dp"
-            android:background="?attr/selectableItemBackground">
-
-            <TextView
+            <com.gank.gankly.widget.ItemSwitchView
+                android:id="@+id/setting_switch_check"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="start"
-                android:text="@string/navigation_about"/>
-        </com.gank.gankly.widget.LYRelativeLayoutRipple>
+                android:layout_height="wrap_content"/>
+
+            <com.gank.gankly.widget.ItemTextView
+                android:id="@+id/setting_item_text_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_switch_check"/>
+
+            <com.gank.gankly.widget.LYRelativeLayoutRipple
+                android:id="@+id/setting_rl_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_item_text_update"
+                android:background="?attr/lyItemSelectBackground"
+                android:clickable="true"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/navigation_about"
+                    android:textColor="?attr/TextTitleColor"/>
+            </com.gank.gankly.widget.LYRelativeLayoutRipple>
+        </android.support.v7.widget.LinearLayoutCompat>
 
         <TextView
             android:id="@+id/setting_text_copyright"
@@ -49,7 +61,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="15dp"
+            android:gravity="bottom"
             android:text="@string/app_website"
             android:textColor="?attr/TextTitleColor"/>
     </RelativeLayout>

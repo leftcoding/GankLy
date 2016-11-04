@@ -14,6 +14,8 @@ import java.util.List;
 public interface BrowseHistoryContract {
     interface View extends IFetchView {
         void refillData(List<ReadHistory> history);
+
+        void appendData(List<ReadHistory> history);
     }
 
     interface Presenter extends IFetchPresenter {

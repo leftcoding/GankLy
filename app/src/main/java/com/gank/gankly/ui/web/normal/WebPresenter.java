@@ -10,7 +10,6 @@ import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -61,66 +60,10 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     }
 
     @Override
-    public void findHistoryUrl(@NonNull final String url) {
-        mTask.findReadHistory(url).subscribe(new Subscriber<List<ReadHistory>>() {
+    public void insetHistoryUrl(final ReadHistory readHistory) {
+        mTask.insertOrReplaceHistory(readHistory).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(List<ReadHistory> readHistories) {
-                KLog.d("readHistories:" + readHistories.size());
-                if (ListUtils.getListSize(readHistories) <= 0) {
-                    UrlCollect urlCollect = mView.getCollect();
-                    KLog.d("urlCollect:" + urlCollect);
-                    if (urlCollect != null) {
-//                        ReadHistory readHistory = new ReadHistory();
-//                        readHistory.setId(null);
-//                        readHistory.setDate(new Date());
-//                        readHistory.setComment(urlCollect.getComment());
-//                        readHistory.setUrl(url);
-//                        readHistory.setG_type(urlCollect.getG_type());
-                        KLog.d("urlCollect.getComment():" + urlCollect.getComment()
-                                + ",url:" + url + ",urlCollect.getG_type():" + urlCollect.getG_type() + "," + new Date());
-                        mTask.insertReadHistory(new ReadHistory(null, url, urlCollect.getComment(),
-                                new Date(), urlCollect.getG_type())).subscribe(new Subscriber<Long>() {
-                            @Override
-                            public void onCompleted() {
-                                KLog.d("onCompleted");
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                KLog.e(e);
-                            }
-
-                            @Override
-                            public void onNext(Long aLong) {
-                                KLog.d("aLong:" + aLong);
-                            }
-                        });
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void cancelCollect() {
-        if (ListUtils.getListSize(mCollects) <= 0) {
-            return;
-        }
-        long deleteByKey = mCollects.get(0).getId();
-        mTask.cancelCollect(deleteByKey).subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
             }
 
             @Override
@@ -129,10 +72,34 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
             }
 
             @Override
-            public void onNext(String string) {
-                KLog.d("cancelCollect:" + string);
+            public void onNext(Long aLong) {
+                KLog.d("aLong:" + aLong);
             }
         });
+
+    }
+
+    @Override
+    public void cancelCollect() {
+        if (ListUtils.getListSize(mCollects) > 0) {
+            long deleteByKey = mCollects.get(0).getId();
+            mTask.cancelCollect(deleteByKey).subscribe(new Subscriber<String>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    KLog.e(e);
+                }
+
+                @Override
+                public void onNext(String string) {
+                    KLog.d("cancelCollect:" + string);
+                }
+            });
+        }
     }
 
     @Override

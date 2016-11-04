@@ -41,11 +41,4 @@
         android:textColor="?attr/textPrimaryColor"
         android:textSize="12sp"
         android:visibility="gone"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@id/item_view_txt_summary"
-        android:layout_marginTop="15dp"
-        android:background="@color/setting_line_bg"/>
 </RelativeLayout>

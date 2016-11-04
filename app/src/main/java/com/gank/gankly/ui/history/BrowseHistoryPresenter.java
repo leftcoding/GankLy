@@ -26,20 +26,28 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
 
     @Override
     public void fetchNew() {
-        fetch(initOffSet());
+        setOffSetPage(0);
+        setHasMore(true);
+        fetch();
     }
 
     @Override
     public void fetchMore() {
-        fetch(getOffSet());
+        if (isHasMore()) {
+            mModelView.showRefresh();
+            fetch();
+        }
     }
 
-    private void fetch(int offset) {
+    private void fetch() {
+        int offset = getOffSet();
         mTask.selectReadHistory(offset, getFetchLimit())
                 .subscribe(new Subscriber<List<ReadHistory>>() {
                     @Override
                     public void onCompleted() {
                         mModelView.hideRefresh();
+                        int nextOffsetPage = getOffSetPage() + 1;
+                        setOffSetPage(nextOffsetPage);
                     }
 
                     @Override
@@ -49,12 +57,14 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
 
                     @Override
                     public void onNext(List<ReadHistory> readHistories) {
-                        int size = ListUtils.getListSize(readHistories);
-                        KLog.d("size:" + size);
+                        List<ReadHistory> list = filterDataBase(readHistories, mModelView);
+                        int size = ListUtils.getListSize(list);
                         if (size > 0) {
-                            mModelView.refillData(readHistories);
-                        } else {
-                            mModelView.showEmpty();
+                            if (getOffSetPage() == 0) {
+                                mModelView.refillData(list);
+                            } else {
+                                mModelView.appendData(list);
+                            }
                         }
                     }
                 });

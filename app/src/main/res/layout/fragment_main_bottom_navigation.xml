@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
@@ -8,33 +8,34 @@
     android:fitsSystemWindows="true">
 
     <android.support.design.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<android.support.v4.widget.NestedScrollView-->
+    <!--android:id="@+id/myScrollingContent"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/main_frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    </FrameLayout>
+    <!--</android.support.v4.widget.NestedScrollView>-->
 
-        <!--<android.support.v4.widget.NestedScrollView-->
-        <!--android:id="@+id/myScrollingContent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
-        <FrameLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/main_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </FrameLayout>
-        <!--</android.support.v4.widget.NestedScrollView>-->
-
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/bottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_gravity="bottom"
-            app:bb_activeTabAlpha="1"
-            app:bb_activeTabColor="@color/white"
-            app:bb_behavior="shy"
-            app:bb_inActiveTabAlpha="0.5"
-            app:bb_inActiveTabColor="@color/white"
-            app:bb_tabXmlResource="@xml/bottombar_tabs_color_changing"/>
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        app:bb_activeTabAlpha="1"
+        app:bb_activeTabColor="@color/white"
+        app:bb_inActiveTabAlpha="0.5"
+        app:bb_inActiveTabColor="@color/white"
+        app:bb_behavior="shy"
+        app:bb_tabXmlResource="@xml/bottombar_tabs_color_changing"/>
 
     </android.support.design.widget.CoordinatorLayout>
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>

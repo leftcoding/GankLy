@@ -71,6 +71,4 @@ public class MoreActivity extends BaseActivity {
                     .commitAllowingStateLoss();
         }
     }
-
-
 }

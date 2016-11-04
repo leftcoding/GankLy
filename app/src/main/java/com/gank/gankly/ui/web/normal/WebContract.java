@@ -2,6 +2,7 @@ package com.gank.gankly.ui.web.normal;
 
 import android.support.annotation.NonNull;
 
+import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.IBasePresenter;
 import com.gank.gankly.mvp.IBaseView;
@@ -17,8 +18,6 @@ public interface WebContract {
 
         void onCancelCollect();
 
-        void findHistoryUrlSuccess();
-
         UrlCollect getCollect();
 
         void setCollectIcon(boolean isCollect);
@@ -27,7 +26,7 @@ public interface WebContract {
     interface Presenter extends IBasePresenter {
         void findCollectUrl(@NonNull String url);
 
-        void findHistoryUrl(@NonNull String url);
+        void insetHistoryUrl(@NonNull ReadHistory readHistory);
 
         void cancelCollect();
 
