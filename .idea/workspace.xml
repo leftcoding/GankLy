@@ -90,6 +90,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GankLy.iws" />
@@ -194,7 +195,7 @@
       <file leaf-file-name="SettingFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/more/SettingFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
+            <state relative-caret-position="189">
               <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -206,7 +207,7 @@
       <file leaf-file-name="BaseSwipeRefreshFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
+            <state relative-caret-position="189">
               <caret line="14" column="58" selection-start-line="14" selection-start-column="58" selection-end-line="14" selection-end-column="58" />
               <folding />
             </state>
@@ -216,7 +217,7 @@
       <file leaf-file-name="BaseThemeFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseThemeFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
+            <state relative-caret-position="168">
               <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
               <folding />
             </state>
@@ -269,7 +270,7 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
+            <state relative-caret-position="1512">
               <caret line="72" column="56" selection-start-line="72" selection-start-column="56" selection-end-line="72" selection-end-column="56" />
               <folding />
             </state>
@@ -2626,45 +2627,7 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GankLy" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="gankly" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2803,7 +2766,45 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gankly" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3293,13 +3294,6 @@
       <option name="presentableId" value="Default" />
       <updated>1478058173242</updated>
     </task>
-    <task id="LOCAL-00059" summary="1.Update Butterknife">
-      <created>1472455808610</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1472455808610</updated>
-    </task>
     <task id="LOCAL-00060" summary="1.Update Butterknife">
       <created>1472462973514</created>
       <option name="number" value="00060" />
@@ -3636,7 +3630,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478248890556</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="1.Update MVP&#10;2.Add History">
+      <created>1478249571482</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1478249571482</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3659,8 +3660,8 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24709977" sideWeight="0.502451" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3085847" sideWeight="0.49754903" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3085847" sideWeight="0.50735295" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3085847" sideWeight="0.49264705" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946634" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23433875" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3781,7 +3782,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="755" column="13" selection-start-line="755" selection-start-column="13" selection-end-line="755" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3813,7 +3813,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="537">
           <caret line="73" column="22" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3858,7 +3857,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="126">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4003,9 +4001,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4020,7 +4015,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="483">
           <caret line="41" column="87" selection-start-line="41" selection-start-column="87" selection-end-line="41" selection-end-column="87" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4028,7 +4022,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1470">
           <caret line="95" column="5" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4082,7 +4075,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
+        <state relative-caret-position="1512">
           <caret line="72" column="56" selection-start-line="72" selection-start-column="56" selection-end-line="72" selection-end-column="56" />
           <folding />
         </state>
@@ -4090,7 +4083,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/more/SettingFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
+        <state relative-caret-position="189">
           <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -4100,7 +4093,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseSwipeRefreshFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
+        <state relative-caret-position="189">
           <caret line="14" column="58" selection-start-line="14" selection-start-column="58" selection-end-line="14" selection-end-column="58" />
           <folding />
         </state>
@@ -4108,7 +4101,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/base/BaseThemeFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
+        <state relative-caret-position="168">
           <caret line="22" column="54" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
           <folding />
         </state>
