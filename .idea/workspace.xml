@@ -3293,13 +3293,6 @@
       <option name="presentableId" value="Default" />
       <updated>1478058173242</updated>
     </task>
-    <task id="LOCAL-00061" summary="1.Add DayNightTheme">
-      <created>1472549625714</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1472549625725</updated>
-    </task>
     <task id="LOCAL-00062" summary="1.Add DayNightTheme">
       <created>1472635850294</created>
       <option name="number" value="00062" />
@@ -3636,7 +3629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478250373828</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="1.Update MVP&#10;2.Add History">
+      <created>1478251210853</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1478251210861</updated>
+    </task>
+    <option name="localTasksCounter" value="112" />
     <servers />
   </component>
   <component name="TodoView">
