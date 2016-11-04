@@ -3809,7 +3809,7 @@
   <component name="PropertiesComponent">
     <property name="device.picker.selection" value="29c243df" />
     <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="http.proxy" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -4293,13 +4293,6 @@
       <option name="presentableId" value="Default" />
       <updated>1478058173242</updated>
     </task>
-    <task id="LOCAL-00056" summary="1.Update Butterknife">
-      <created>1472177261450</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1472177261450</updated>
-    </task>
     <task id="LOCAL-00057" summary="1.Update Butterknife">
       <created>1472204075181</created>
       <option name="number" value="00057" />
@@ -4636,7 +4629,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478246858752</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="1.Update MVP&#10;2.Add History">
+      <created>1478248274303</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1478248274303</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TodoView">
