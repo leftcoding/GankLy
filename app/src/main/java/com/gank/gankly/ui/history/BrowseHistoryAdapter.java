@@ -40,8 +40,8 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
 
     public void updateList(List<ReadHistory> readHistories) {
         int size = mReadHistories.size();
-        notifyItemRangeRemoved(0, size);// because LinearLayoutManager use notifyItemRangeInserted,Adapter inside keep the same,must remove first
         mReadHistories.clear();
+        notifyItemRangeRemoved(0, size);// because LinearLayoutManager use notifyItemRangeInserted,Adapter inside keep the same,must remove first
         appendList(readHistories);
     }
 
