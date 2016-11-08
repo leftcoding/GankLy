@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.gank.gankly.R;
+import com.gank.gankly.widget.LyRecyclerView;
 
 /**
  * Create by LingYan on 2016-06-23
@@ -21,7 +22,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     private static final int G = 3;
 
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView mRecyclerView;
+    private LyRecyclerView mRecyclerView;
     private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
     private Context mContext;
     private int mCurManager = 1;
@@ -38,7 +39,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
 
     private void init() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.view_swiperefresh, this, true);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
+        mRecyclerView = (LyRecyclerView) view.findViewById(R.id.my_recyclerView);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -107,8 +108,12 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         mRecyclerView.setAdapter(adapter);
     }
 
-    public RecyclerView getRecyclerView() {
+    public LyRecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+    public void setILyRecycler(LyRecyclerView.ILyRecycler lyRecycler) {
+        mRecyclerView.setILyRecycler(lyRecycler);
     }
 
     /**

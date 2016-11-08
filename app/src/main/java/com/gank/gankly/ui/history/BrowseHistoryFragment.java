@@ -7,9 +7,9 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.ReadHistory;
@@ -19,13 +19,13 @@ import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
+import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
+import com.gank.gankly.widget.NoAlphaItemAnimator;
 
 import java.util.List;
 
 import butterknife.BindView;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Create by LingYan on 2016-10-31
@@ -88,7 +88,23 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
         mSwipeRefreshLayout.setAdapter(mAdapter);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
+        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new NoAlphaItemAnimator());
+        ((SimpleItemAnimator)mSwipeRefreshLayout.getRecyclerView().getItemAnimator()).setSupportsChangeAnimations(false);
+        mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
+            @Override
+            public void removeRecycle(int pos) {
+                mAdapter.removeRecycle(pos);
+                if (mAdapter.getItemCount() == 0) {
+                    showEmpty();
+                }
+            }
+
+            @Override
+            public void onClick(int pos) {
+                ReadHistory readHistory = mAdapter.getReadHistory(pos);
+                openWebActivity(readHistory);
+            }
+        });
     }
 
     @Override
@@ -144,17 +160,17 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
     @Override
     public void showDisNetWork() {
-
+        mMultipleStatusView.showNoNetwork();
     }
 
     @Override
     public void showError() {
-
+        mMultipleStatusView.showError();
     }
 
     @Override
     public void showLoading() {
-
+        mMultipleStatusView.showLoading();
     }
 
     @Override
@@ -164,8 +180,10 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
     @Override
     public void onClick(int position, Object object) {
-        KLog.d("onClick");
-        ReadHistory readHistory = (ReadHistory) object;
+        openWebActivity((ReadHistory) object);
+    }
+
+    private void openWebActivity(ReadHistory readHistory) {
         Bundle bundle = new Bundle();
         bundle.putString(WebActivity.TITLE, readHistory.getComment());
         bundle.putString(WebActivity.URL, readHistory.getUrl());

@@ -25,6 +25,8 @@ import butterknife.ButterKnife;
 public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdapter.BrowseHolder> {
     private List<ReadHistory> mReadHistories;
     private ItemClick itemClick;
+    @NonNull
+    private BrowseHolder mBrowseHolder;
 
     public BrowseHistoryAdapter() {
         mReadHistories = new ArrayList<>();
@@ -33,7 +35,7 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
     @Override
     public BrowseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_dailymeizi, parent, false);
-        return new BrowseHolder(view);
+        return mBrowseHolder = new BrowseHolder(view);
     }
 
     public void updateList(List<ReadHistory> readHistories) {
@@ -45,8 +47,14 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
 
     public void appendList(List<ReadHistory> readHistories) {
         mReadHistories.addAll(readHistories);
-        int size = mReadHistories.size();
+        int size = mReadHistories.size() - 1 > 0 ? mReadHistories.size() - 1 : 0;
         notifyItemRangeInserted(size, readHistories.size());
+    }
+
+    public void removeRecycle(int position) {
+        mReadHistories.remove(position);
+//        notifyItemRemoved(position);
+        notifyItemRangeRemoved(position, 1);
     }
 
     @Override
@@ -65,15 +73,28 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
         return mReadHistories.size();
     }
 
+    public BrowseHolder getBrowseHolder() {
+        return mBrowseHolder;
+    }
+
+    public ReadHistory getReadHistory(int position) {
+        return mReadHistories.get(position);
+    }
+
     public class BrowseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public boolean isShowing;
+
         @BindView(R.id.daily_meizi_title)
         TextView mTitle;
         ReadHistory mReadHistory;
+        @BindView(R.id.daily_meizi_ll_body)
+        public View mLinearLayout;
 
         public BrowseHolder(View itemView) {
             super(itemView);
+//            mLinearLayout = itemView;
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
+//            mLinearLayout.setOnClickListener(this);
         }
 
         @Override

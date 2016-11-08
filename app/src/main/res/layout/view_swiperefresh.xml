@@ -7,9 +7,13 @@
     android:minWidth="300dip"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/my_recyclerView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"/>-->
+
+    <com.gank.gankly.widget.LyRecyclerView
         android:id="@+id/my_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-
 </LinearLayout>
