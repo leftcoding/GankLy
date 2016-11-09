@@ -91,7 +91,6 @@
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/history/BrowseHistoryAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/history/BrowseHistoryAdapter.java" />
     </list>
     <ignored path="GankLy.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -223,8 +222,8 @@
       <file leaf-file-name="BrowseHistoryAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/history/BrowseHistoryAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+            <state relative-caret-position="434">
+              <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2487#2488#0" expanded="true" />
@@ -3588,13 +3587,6 @@
       <option name="presentableId" value="Default" />
       <updated>1478058173242</updated>
     </task>
-    <task id="LOCAL-00064" summary="1.Add DayNightTheme">
-      <created>1472808909245</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1472808909262</updated>
-    </task>
     <task id="LOCAL-00065" summary="1.Add DayNightTheme">
       <created>1473126729941</created>
       <option name="number" value="00065" />
@@ -3931,7 +3923,14 @@
       <option name="project" value="LOCAL" />
       <updated>1478597706597</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="1.Fix History">
+      <created>1478597865644</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1478597865644</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4508,8 +4507,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/history/BrowseHistoryAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="54" column="40" selection-start-line="54" selection-start-column="40" selection-end-line="54" selection-end-column="40" />
+        <state relative-caret-position="434">
+          <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2487#2488#0" expanded="true" />
