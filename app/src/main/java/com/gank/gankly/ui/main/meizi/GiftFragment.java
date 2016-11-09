@@ -22,13 +22,13 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.GiftPresenter;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +45,9 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
-    private static GiftFragment sGiftFragment;
-
     @BindView(R.id.meizi_swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.loading_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
 
     private RecyclerView mRecyclerView;
@@ -66,14 +64,8 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         return R.layout.fragment_gift;
     }
 
-    public GiftFragment() {
-    }
-
     public static GiftFragment getInstance() {
-        if (sGiftFragment == null) {
-            sGiftFragment = new GiftFragment();
-        }
-        return sGiftFragment;
+        return new GiftFragment();
     }
 
     @Override
@@ -124,7 +116,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         int textColor = textValue.data;
         theme.resolveAttribute(R.attr.themeBackground, textValue, true);
         int recyclerColor = textValue.data;
-        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(recyclerColor);
+        mRecyclerView.setBackgroundColor(recyclerColor);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -155,7 +147,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
                 StaggeredGridLayoutManager.VERTICAL));
 
         float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager left margin
-        mSwipeRefreshLayout.getRecyclerView().setPadding((int) leftPadding, 0, 0, 0);
+        mRecyclerView.setPadding((int) leftPadding, 0, 0, 0);
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
 
             @Override

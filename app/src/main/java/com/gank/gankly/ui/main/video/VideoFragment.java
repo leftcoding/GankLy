@@ -22,7 +22,7 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.VideoPresenterImpl;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;

@@ -23,11 +23,11 @@ import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.List;
 
@@ -138,7 +138,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         int textSecondaryColor = typedValue.data;
         theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
         int mainColor = typedValue.data;
-        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(mainColor);
+        mRecyclerView.setBackgroundColor(mainColor);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {

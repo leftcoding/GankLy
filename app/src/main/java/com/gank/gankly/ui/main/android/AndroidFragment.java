@@ -27,7 +27,6 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.RemoteDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.main.GankAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
@@ -35,6 +34,7 @@ import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.List;
 
@@ -65,9 +65,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         return R.layout.layout_swiperefresh_multiple_status;
     }
 
-    public AndroidFragment() {
-    }
-
     public static AndroidFragment newInstance() {
         AndroidFragment fragment = new AndroidFragment();
         Bundle args = new Bundle();
@@ -95,13 +92,13 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initViews() {
-        mGankAdapter = new GankAdapter(mActivity);
-        mGankAdapter.setOnItemClickListener(this);
+        initAdapter();
         initRecycler();
     }
 
     @Override
     protected void bindLister() {
+        mGankAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
@@ -122,6 +119,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
+        mRecyclerView.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -135,8 +133,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
                 mPresenter.fetchMore();
             }
         });
+    }
 
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
+    private void initAdapter() {
+        mGankAdapter = new GankAdapter(mActivity);
         AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
         alphaAdapter.setFirstOnly(true);
         alphaAdapter.setDuration(500);

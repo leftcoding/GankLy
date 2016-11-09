@@ -46,16 +46,14 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
     }
 
     public void appendList(List<ReadHistory> readHistories) {
-        mReadHistories.addAll(readHistories);
         int size = mReadHistories.size();
-//        int size = mReadHistories.size() - 1 > 0 ? mReadHistories.size() - 1 : 0;
+        mReadHistories.addAll(readHistories);
         notifyItemRangeInserted(size, readHistories.size());
     }
 
     public void removeRecycle(int position) {
         mReadHistories.remove(position);
-//        notifyItemRemoved(position);
-        notifyItemRangeRemoved(position, 1);
+        notifyItemRemoved(position);
     }
 
     @Override

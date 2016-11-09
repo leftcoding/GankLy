@@ -21,13 +21,13 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.MeiziPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.List;
 

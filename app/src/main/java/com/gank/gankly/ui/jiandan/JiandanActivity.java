@@ -14,7 +14,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.JiandanPresenterImpl;
 import com.gank.gankly.ui.base.BaseJiandanActivity;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;

@@ -61,12 +61,6 @@ public class LyRecyclerView extends RecyclerView {
         int x = (int) event.getX();
         int y = (int) event.getY();
         int scrollX;
-//        int scrollX = getScrollX();
-//        if (scrollX == 0) {
-//            isSlide = false;
-//        } else {
-//            isSlide = true;
-//        }
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.gank.gankly.widget.MultipleStatusView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/swipe_multiple_view"
+    xmlns:ly="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/multiple_status_view"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    android:layout_height="match_parent">
 
     <com.gank.gankly.widget.LySwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_appbar"
-        android:background="?attr/themeBackground"/>
-
+        android:background="?attr/themeBackground"
+        ly:refreshState="2"/>
 </com.gank.gankly.widget.MultipleStatusView>

@@ -52,4 +52,8 @@
     <attr name="meiziDailyItemBackground" format="reference|color"/>
     <attr name="androidItemTimeIcon" format="reference"/>
     <attr name="lyItemSelectBackground" format="reference|color"/>
+
+    <declare-styleable name="LySwipeRefreshLayout">
+        <attr name="refreshState" format="integer"/>
+    </declare-styleable>
 </resources>

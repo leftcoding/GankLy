@@ -7,7 +7,6 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -16,12 +15,12 @@ import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.NoAlphaItemAnimator;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.List;
 
@@ -38,9 +37,9 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
     @BindView(R.id.browse_coordinator)
     CoordinatorLayout mCoordinatorLayout;
-    @BindView(R.id.loading_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @BindView(R.id.meizi_swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -67,6 +66,7 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
     protected void initValues() {
         mPresenter.fetchNew();
         mAdapter = new BrowseHistoryAdapter();
+        mSwipeRefreshLayout.setAdapter(mAdapter);
     }
 
     @Override
@@ -85,11 +85,8 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
         });
 
         setSwipeRefreshLayout(mSwipeRefreshLayout);
-
-        mSwipeRefreshLayout.setAdapter(mAdapter);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new NoAlphaItemAnimator());
-        ((SimpleItemAnimator)mSwipeRefreshLayout.getRecyclerView().getItemAnimator()).setSupportsChangeAnimations(false);
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
             public void removeRecycle(int pos) {

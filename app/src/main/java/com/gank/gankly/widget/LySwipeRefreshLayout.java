@@ -1,6 +1,7 @@
-package com.gank.gankly.ui.base;
+package com.gank.gankly.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,21 +12,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.widget.LyRecyclerView;
+import com.socks.library.KLog;
 
 /**
+ * 组合 SwipeRefresh RecyclerView LyRecyclerView(侧滑)
  * Create by LingYan on 2016-06-23
  */
 public class LySwipeRefreshLayout extends SwipeRefreshLayout {
+    private static final int DEFAULT_REFRESH = 1;
+    private static final int GESTURE_REFRESH = 2;
+
     private static final int L = 1;
     private static final int S = 2;
     private static final int G = 3;
 
     private RecyclerView.LayoutManager layoutManager;
-    private LyRecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView;
     private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
     private Context mContext;
     private int mCurManager = 1;
+    private int mState = DEFAULT_REFRESH;
 
     public LySwipeRefreshLayout(Context context) {
         this(context, null);
@@ -34,12 +40,27 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     public LySwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         mContext = context;
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.LySwipeRefreshLayout);
+        try {
+            mState = array.getInt(R.styleable.LySwipeRefreshLayout_refreshState, 1);
+        } catch (Exception e) {
+            KLog.e(e);
+        } finally {
+            array.recycle();
+        }
+
         init();
     }
 
     private void init() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.view_swiperefresh, this, true);
-        mRecyclerView = (LyRecyclerView) view.findViewById(R.id.my_recyclerView);
+        LayoutInflater mLayout = LayoutInflater.from(mContext);
+        View view;
+        if (mState == GESTURE_REFRESH) {
+            view = mLayout.inflate(R.layout.view_swiperefresh, this, true);
+        } else {
+            view = mLayout.inflate(R.layout.layout_default_refresh, this, true);
+        }
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -108,12 +129,14 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         mRecyclerView.setAdapter(adapter);
     }
 
-    public LyRecyclerView getRecyclerView() {
+    public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
 
     public void setILyRecycler(LyRecyclerView.ILyRecycler lyRecycler) {
-        mRecyclerView.setILyRecycler(lyRecycler);
+        if (mRecyclerView instanceof LyRecyclerView) {
+            ((LyRecyclerView) mRecyclerView).setILyRecycler(lyRecycler);
+        }
     }
 
     /**

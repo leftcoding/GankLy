@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.gank.gankly.ui.base.LySwipeRefreshLayout
+    <com.gank.gankly.widget.LySwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/main_appbar"
         android:background="?attr/themeBackground"/>
-
 </com.gank.gankly.widget.MultipleStatusView>

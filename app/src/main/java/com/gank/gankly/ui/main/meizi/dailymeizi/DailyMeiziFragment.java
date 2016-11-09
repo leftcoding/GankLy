@@ -24,7 +24,7 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.LySwipeRefreshLayout;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
@@ -45,7 +45,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     private DailyMeiziPresenter mPresenter;
     private HomeActivity mActivity;
 
-    @BindView(R.id.loading_view)
+    @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.meizi_swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
