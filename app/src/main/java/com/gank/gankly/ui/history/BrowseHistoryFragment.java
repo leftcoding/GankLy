@@ -18,9 +18,9 @@ import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.NoAlphaItemAnimator;
-import com.gank.gankly.widget.LySwipeRefreshLayout;
 
 import java.util.List;
 
@@ -90,6 +90,8 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
             public void removeRecycle(int pos) {
+                long id = mAdapter.getReadHistory(pos).getId();
+                mPresenter.deleteHistory(id);
                 mAdapter.removeRecycle(pos);
                 if (mAdapter.getItemCount() == 0) {
                     showEmpty();

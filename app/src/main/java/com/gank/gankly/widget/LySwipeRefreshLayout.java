@@ -27,7 +27,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     private static final int G = 3;
 
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView mRecyclerView;
+    private LyRecyclerView mRecyclerView;
     private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
     private Context mContext;
     private int mCurManager = 1;
@@ -55,12 +55,13 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     private void init() {
         LayoutInflater mLayout = LayoutInflater.from(mContext);
         View view;
-        if (mState == GESTURE_REFRESH) {
-            view = mLayout.inflate(R.layout.view_swiperefresh, this, true);
-        } else {
-            view = mLayout.inflate(R.layout.layout_default_refresh, this, true);
-        }
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
+//        if (mState == GESTURE_REFRESH) {
+        view = mLayout.inflate(R.layout.view_swiperefresh, this, true);
+//        } else {
+//            view = mLayout.inflate(R.layout.layout_default_refresh, this, true);
+//        }
+        mRecyclerView = (LyRecyclerView) view.findViewById(R.id.my_recyclerView);
+        mRecyclerView.setRefreshState(mState);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

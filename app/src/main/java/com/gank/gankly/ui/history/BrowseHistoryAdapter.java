@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.listener.ItemClick;
+import com.gank.gankly.ui.base.BaseHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,8 +26,6 @@ import butterknife.ButterKnife;
 public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdapter.BrowseHolder> {
     private List<ReadHistory> mReadHistories;
     private ItemClick itemClick;
-    @NonNull
-    private BrowseHolder mBrowseHolder;
 
     public BrowseHistoryAdapter() {
         mReadHistories = new ArrayList<>();
@@ -35,7 +34,7 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
     @Override
     public BrowseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_dailymeizi, parent, false);
-        return mBrowseHolder = new BrowseHolder(view);
+        return new BrowseHolder(view);
     }
 
     public void updateList(List<ReadHistory> readHistories) {
@@ -72,17 +71,11 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
         return mReadHistories.size();
     }
 
-    public BrowseHolder getBrowseHolder() {
-        return mBrowseHolder;
-    }
-
     public ReadHistory getReadHistory(int position) {
         return mReadHistories.get(position);
     }
 
-    public class BrowseHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public boolean isShowing;
-
+    public class BrowseHolder extends BaseHolder implements View.OnClickListener {
         @BindView(R.id.daily_meizi_title)
         TextView mTitle;
         ReadHistory mReadHistory;
@@ -91,9 +84,12 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
 
         public BrowseHolder(View itemView) {
             super(itemView);
-//            mLinearLayout = itemView;
             ButterKnife.bind(this, itemView);
-//            mLinearLayout.setOnClickListener(this);
+        }
+
+        @Override
+        public View getView() {
+            return mLinearLayout;
         }
 
         @Override

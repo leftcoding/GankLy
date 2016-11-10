@@ -19,6 +19,6 @@ public interface BrowseHistoryContract {
     }
 
     interface Presenter extends IFetchPresenter {
-
+        void deleteHistory(long id);
     }
 }

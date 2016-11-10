@@ -75,6 +75,17 @@ public class LocalDataSource extends BaseModel {
         }));
     }
 
+    public Observable<String> deleteHistory(final long id) {
+        return toObservable(Observable.create(new Observable.OnSubscribe<String>() {
+            @Override
+            public void call(Subscriber<? super String> subscriber) {
+                mReadHistoryDao.deleteByKey(id);
+                subscriber.onNext("取消成功");
+                subscriber.onCompleted();
+            }
+        }));
+    }
+
     public Observable<List<ReadHistory>> selectReadHistory(final int offset, final int limit) {
         return toObservable(Observable.create(new OnSubscribe<List<ReadHistory>>() {
             @Override

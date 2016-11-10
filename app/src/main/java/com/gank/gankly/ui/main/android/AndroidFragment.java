@@ -62,7 +62,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_swiperefresh_multiple_status;
+        return R.layout.layout_swipe_normal;
     }
 
     public static AndroidFragment newInstance() {

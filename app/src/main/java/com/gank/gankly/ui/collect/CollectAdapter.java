@@ -14,6 +14,7 @@ import com.gank.gankly.config.glide.GlideRoundTransform;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.listener.ItemLongClick;
+import com.gank.gankly.ui.base.BaseHolder;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -31,8 +32,6 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     private Context mContext;
     private ItemLongClick mItemLongClick;
     private Integer[] mImages = {R.drawable.ic_collect_default_7};
-    private long mDeleteKey;
-    private int mClickItem;
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
@@ -85,12 +84,16 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         mItemLongClick = (ItemLongClick) itemLongClick;
     }
 
+    public UrlCollect getUrlCollect(int position) {
+        return mList.get(position);
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();
     }
 
-    class CollectHolderView extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+    class CollectHolderView extends BaseHolder {
         @BindView(R.id.collect_txt_title)
         TextView title;
         @BindView(R.id.collect_txt_time)
@@ -101,40 +104,45 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         ImageView userPicture;
         @BindView(R.id.collect_txt_author)
         TextView author;
+        @BindView(R.id.collect_rl_body)
+        View mView;
 
         UrlCollect mUrlCollect;
 
         public CollectHolderView(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
             ButterKnife.bind(this, itemView);
         }
 
         @Override
-        public void onClick(View v) {
-            if (mItemLongClick != null) {
-                mClickItem = getAdapterPosition();
-                mItemLongClick.onClick(mClickItem, mUrlCollect);
-            }
+        public View getView() {
+            return mView;
         }
 
-        @Override
-        public boolean onLongClick(View v) {
-            if (mItemLongClick != null) {
-                mClickItem = getAdapterPosition();
-                mDeleteKey = mUrlCollect.getId();
-                mItemLongClick.onLongClick(mClickItem, mUrlCollect);
-            }
-            return true;
-        }
+//        @Override
+//        public void onClick(View v) {
+//            if (mItemLongClick != null) {
+//                mClickItem = getAdapterPosition();
+//                mItemLongClick.onClick(mClickItem, mUrlCollect);
+//            }
+//        }
+//
+//        @Override
+//        public boolean onLongClick(View v) {
+//            if (mItemLongClick != null) {
+//                mClickItem = getAdapterPosition();
+//                mDeleteKey = mUrlCollect.getId();
+//                mItemLongClick.onLongClick(mClickItem, mUrlCollect);
+//            }
+//            return true;
+//        }
     }
 
-    public int getClickItem() {
-        return mClickItem;
-    }
-
-    public long getDeleteKey() {
-        return mDeleteKey;
-    }
+//    public int getClickItem() {
+//        return mClickItem;
+//    }
+//
+//    public long getDeleteKey() {
+//        return mDeleteKey;
+//    }
 }

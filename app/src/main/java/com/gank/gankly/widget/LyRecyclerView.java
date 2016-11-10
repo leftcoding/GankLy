@@ -12,7 +12,7 @@ import android.view.ViewConfiguration;
 import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
-import com.gank.gankly.ui.history.BrowseHistoryAdapter;
+import com.gank.gankly.ui.base.BaseHolder;
 import com.socks.library.KLog;
 
 /**
@@ -28,7 +28,7 @@ public class LyRecyclerView extends RecyclerView {
     private Rect mTouchFrame;
     private int xDown, xMove, yDown, yMove, mTouchSlop, xUp, yUp;
     private Scroller mScroller;
-    private BrowseHistoryAdapter.BrowseHolder currentViewHolder;
+    private BaseHolder currentViewHolder;
     //需要滑动的item是不是当前的item
     private boolean isCurrentItem = true;
     private View otherItemView;
@@ -38,6 +38,7 @@ public class LyRecyclerView extends RecyclerView {
     private static final long CLICK_MAX_TIME = 200;
     private boolean isSlide;
     private long startTime = 0;
+    private boolean isGesture;
 
     public LyRecyclerView(Context context) {
         this(context, null);
@@ -78,18 +79,20 @@ public class LyRecyclerView extends RecyclerView {
                 }
                 int mFirstPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
                 int count = getChildCount();
-                BrowseHistoryAdapter.BrowseHolder viewHolder;
+//                BrowseHistoryAdapter.BrowseHolder viewHolder;
                 int _scrollX;
                 for (int i = 0; i < count; i++) {
                     final View child = getChildAt(i);
-                    viewHolder = (BrowseHistoryAdapter.BrowseHolder) getChildViewHolder(child);
+                    ViewHolder viewHolder = getChildViewHolder(child);
                     _scrollX = viewHolder.itemView.getScrollX();
                     if (child.getVisibility() == View.VISIBLE) {
                         child.getHitRect(frame);
                         if (frame.contains(x, y)) {
-                            currentViewHolder = viewHolder;
-                            itemLayout = viewHolder.itemView;
-                            maxLength = viewHolder.mLinearLayout.getMeasuredWidth();
+                            if (viewHolder instanceof BaseHolder) {
+                                currentViewHolder = (BaseHolder) viewHolder;
+                                itemLayout = viewHolder.itemView;
+                                maxLength = ((BaseHolder) viewHolder).getView().getMeasuredWidth();
+                            }
                             position = mFirstPosition + i;
                         } else {
                             if (_scrollX != 0) {
@@ -104,23 +107,25 @@ public class LyRecyclerView extends RecyclerView {
 
             case MotionEvent.ACTION_MOVE:
                 KLog.d("MotionEvent.ACTION_MOVE");
-                isSlide = true;
-                xMove = x;
-                yMove = y;
-                int dx = xMove - xDown;
-                int dy = yMove - yDown;
-                scrollX = itemLayout.getScrollX();
-                KLog.d("scrollX:" + scrollX);
-                if (Math.abs(dy) < mTouchSlop * 2 && Math.abs(dx) > mTouchSlop) {
-                    intrList = true;
-                    int newScrollX = mStartX - x;
-                    if (newScrollX < 0 && scrollX <= 0) {
-                        newScrollX = 0;
-                    } else if (newScrollX > 0 && scrollX >= maxLength) {
-                        newScrollX = 0;
-                    }
+                if (isGesture) {
+                    isSlide = true;
+                    xMove = x;
+                    yMove = y;
+                    int dx = xMove - xDown;
+                    int dy = yMove - yDown;
+                    scrollX = itemLayout.getScrollX();
+                    KLog.d("scrollX:" + scrollX);
+                    if (Math.abs(dy) < mTouchSlop * 2 && Math.abs(dx) > mTouchSlop) {
+                        intrList = true;
+                        int newScrollX = mStartX - x;
+                        if (newScrollX < 0 && scrollX <= 0) {
+                            newScrollX = 0;
+                        } else if (newScrollX > 0 && scrollX >= maxLength) {
+                            newScrollX = 0;
+                        }
 
-                    itemLayout.scrollBy(newScrollX, 0);
+                        itemLayout.scrollBy(newScrollX, 0);
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -131,7 +136,9 @@ public class LyRecyclerView extends RecyclerView {
                 int _dy = yUp - yDown;
                 KLog.d("_dy：" + _dy + ",_dx:" + _dx);
                 if (Math.abs(_dy) < mTouchSlop && Math.abs(_dx) < mTouchSlop) {
-                    mILyRecycler.onClick(position);
+                    if (mILyRecycler != null) {
+                        mILyRecycler.onClick(position);
+                    }
                 } else if (currentViewHolder != null) {
                     if (currentViewHolder.isShowing) {
                         hideMenu();
@@ -150,6 +157,7 @@ public class LyRecyclerView extends RecyclerView {
                     invalidate();
                 }
                 break;
+            //git config --global http.proxy "socks5://127.0.0.1:1080"
             default:
                 break;
         }
@@ -178,11 +186,13 @@ public class LyRecyclerView extends RecyclerView {
         hideMenu(currentViewHolder);
     }
 
-    public void hideMenu(BrowseHistoryAdapter.BrowseHolder viewHolder) {
+    public void hideMenu(ViewHolder viewHolder) {
         if (viewHolder == null) {
             return;
         }
-        viewHolder.isShowing = false;
+        if (viewHolder instanceof BaseHolder) {
+            ((BaseHolder) viewHolder).isShowing = false;
+        }
         isCurrentItem = false;
         int scrollX = viewHolder.itemView.getScrollX();
         mScroller.startScroll(scrollX, 0, -scrollX, 0);
@@ -214,5 +224,13 @@ public class LyRecyclerView extends RecyclerView {
 
     public void setILyRecycler(ILyRecycler lyRecycler) {
         mILyRecycler = lyRecycler;
+    }
+
+    public void setRefreshState(int state) {
+        if (state == 1) {
+            isGesture = false;
+        } else {
+            isGesture = true;
+        }
     }
 }

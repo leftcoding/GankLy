@@ -53,7 +53,11 @@
     <attr name="androidItemTimeIcon" format="reference"/>
     <attr name="lyItemSelectBackground" format="reference|color"/>
 
+    <!--recyclerview 是否带有侧滑-->
     <declare-styleable name="LySwipeRefreshLayout">
-        <attr name="refreshState" format="integer"/>
+        <attr name="refreshState" format="enum">
+            <enum name="normal" value="1"/>
+            <enum name="gesture" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>

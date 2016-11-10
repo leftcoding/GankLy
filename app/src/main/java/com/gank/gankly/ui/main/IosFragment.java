@@ -53,7 +53,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_swiperefresh_multiple_status;
+        return R.layout.layout_swipe_normal;
     }
 
     public IosFragment() {

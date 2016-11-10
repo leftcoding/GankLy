@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/collect_rl_body"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/selectableItemBackground"
@@ -51,8 +52,8 @@
                 android:layout_toEndOf="@id/collect_txt_author"
                 android:ellipsize="end"
                 android:maxLines="3"
-                android:textColor="?attr/textSecondaryColor"
                 android:text=""
+                android:textColor="?attr/textSecondaryColor"
                 android:textSize="12sp"/>
 
             <TextView
