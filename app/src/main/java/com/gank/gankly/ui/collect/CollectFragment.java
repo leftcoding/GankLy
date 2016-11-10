@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.view.animation.OvershootInterpolator;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.more.MoreActivity;
@@ -24,16 +22,13 @@ import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.gank.gankly.widget.RecycleViewDivider;
 import com.socks.library.KLog;
 
 import java.util.List;
 
 import butterknife.BindView;
-import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import rx.Subscriber;
-
-import static android.R.attr.id;
 
 /**
  * 收藏
@@ -41,7 +36,7 @@ import static android.R.attr.id;
  * Email:137387869@qq.com
  */
 public class CollectFragment extends FetchFragment implements DeleteDialog.DialogListener,
-        ItemLongClick, CollectContract.View {
+        CollectContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -124,12 +119,10 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
             public void removeRecycle(int pos) {
+                KLog.d("removeRecycle");
                 long id = mCollectAdapter.getUrlCollect(pos).getId();
-                mPresenter.cancelCollect(id);
                 mCollectAdapter.deleteItem(pos);
-                if (mCollectAdapter.getItemCount() == 0) {
-                    showEmpty();
-                }
+                mPresenter.cancelCollect(id);
             }
 
             @Override
@@ -137,17 +130,16 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
                 openWebActivity(position);
             }
         });
+
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setItemAnimator(new FadeInLeftAnimator(new OvershootInterpolator(1f)));
-        mRecyclerView.getItemAnimator().setAddDuration(500);
-        mRecyclerView.getItemAnimator().setRemoveDuration(500);
+//        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
+        mRecyclerView.setItemAnimator(new FadeInUpAnimator(new OvershootInterpolator(1f)));
+        mRecyclerView.getItemAnimator().setAddDuration(150);
+        mRecyclerView.getItemAnimator().setRemoveDuration(150);
     }
 
     private void initAdapter() {
         mCollectAdapter = new CollectAdapter(mActivity);
-        mCollectAdapter.setItemLongClick(this);
     }
 
     @Override
@@ -171,22 +163,17 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
         mPresenter.fetchNew();
     }
 
-    @Override
-    public void onLongClick(int position, Object object) {
-        UrlCollect mUrlCollect = (UrlCollect) object;
-        Bundle bundle = new Bundle();
-        bundle.putString(DeleteDialog.CONTENT, mUrlCollect.getComment());
-        bundle.putInt(DeleteDialog.ITEM, position);
-        DeleteDialog deleteDialog = new DeleteDialog();
-        deleteDialog.setListener(this);
-        deleteDialog.setArguments(bundle);
-        deleteDialog.show(mActivity.getSupportFragmentManager(), DeleteDialog.TAG);
-    }
-
-    @Override
-    public void onClick(int position, Object object) {
-
-    }
+//    @Override
+//    public void onLongClick(int position, Object object) {
+//        UrlCollect mUrlCollect = (UrlCollect) object;
+//        Bundle bundle = new Bundle();
+//        bundle.putString(DeleteDialog.CONTENT, mUrlCollect.getComment());
+//        bundle.putInt(DeleteDialog.ITEM, position);
+//        DeleteDialog deleteDialog = new DeleteDialog();
+//        deleteDialog.setListener(this);
+//        deleteDialog.setArguments(bundle);
+//        deleteDialog.show(mActivity.getSupportFragmentManager(), DeleteDialog.TAG);
+//    }
 
     private void openWebActivity(int position) {
         UrlCollect urlCollect = mCollectAdapter.getUrlCollect(position);
@@ -210,7 +197,7 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
 
     @Override
     public void onDelete() {
-//        mCollectAdapter.deleteItem(mCollectAdapter.getClickItem());
+        mCollectAdapter.deleteItem(mSwipeRefreshLayout.getPosition());
         if (mCollectAdapter.getItemCount() == 0) {
             showEmpty();
         }
@@ -269,8 +256,8 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
     @Override
     public void onNavigationClick() {
 //        int id = mSwipeRefreshLayout.getCurPosition();
-        if (id != -1) {
-            mPresenter.cancelCollect(id);
-        }
+//        if (id != -1) {
+//            mPresenter.cancelCollect(id);
+//        }
     }
 }

@@ -33,8 +33,8 @@ import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
-import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 

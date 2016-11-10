@@ -375,11 +375,11 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mWebView != null) {
             mWebView.destroy();
             mWebView = null;
         }
+        super.onDestroy(); // All you have to do is destroy() the WebView before Activity finishes
     }
 
     @Override

@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.GlideRoundTransform;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.listener.ItemLongClick;
 import com.gank.gankly.ui.base.BaseHolder;
 import com.gank.gankly.utils.DateUtils;
 
@@ -30,12 +28,12 @@ import butterknife.ButterKnife;
 public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectHolderView> {
     private List<UrlCollect> mList;
     private Context mContext;
-    private ItemLongClick mItemLongClick;
     private Integer[] mImages = {R.drawable.ic_collect_default_7};
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
         mContext = context;
+        setHasStableIds(true);//除去动画闪屏效果
     }
 
     @Override
@@ -61,27 +59,22 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
                 .into(holder.userPicture);
     }
 
-    public void clear() {
-        mList.clear();
-    }
-
     public void updateItems(List<UrlCollect> list) {
-        clear();
+        int size = mList.size();
+        mList.clear();
+        notifyItemRangeRemoved(0, size);
         addItems(list);
     }
 
     public void addItems(List<UrlCollect> list) {
+        int size = mList.size();
         mList.addAll(list);
-        notifyItemRangeInserted(mList.size(), list.size());
+        notifyItemRangeInserted(size, list.size());
     }
 
     public void deleteItem(int item) {
         mList.remove(item);
-        notifyItemRemoved(item);
-    }
-
-    public void setItemLongClick(ItemClick itemLongClick) {
-        mItemLongClick = (ItemLongClick) itemLongClick;
+        notifyItemRangeRemoved(item, 1);
     }
 
     public UrlCollect getUrlCollect(int position) {
@@ -118,31 +111,5 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         public View getView() {
             return mView;
         }
-
-//        @Override
-//        public void onClick(View v) {
-//            if (mItemLongClick != null) {
-//                mClickItem = getAdapterPosition();
-//                mItemLongClick.onClick(mClickItem, mUrlCollect);
-//            }
-//        }
-//
-//        @Override
-//        public boolean onLongClick(View v) {
-//            if (mItemLongClick != null) {
-//                mClickItem = getAdapterPosition();
-//                mDeleteKey = mUrlCollect.getId();
-//                mItemLongClick.onLongClick(mClickItem, mUrlCollect);
-//            }
-//            return true;
-//        }
     }
-
-//    public int getClickItem() {
-//        return mClickItem;
-//    }
-//
-//    public long getDeleteKey() {
-//        return mDeleteKey;
-//    }
 }

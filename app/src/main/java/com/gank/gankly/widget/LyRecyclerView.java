@@ -61,7 +61,7 @@ public class LyRecyclerView extends RecyclerView {
     public boolean onTouchEvent(MotionEvent event) {
         int x = (int) event.getX();
         int y = (int) event.getY();
-        int scrollX;
+        int scrollX = 0;
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -79,20 +79,18 @@ public class LyRecyclerView extends RecyclerView {
                 }
                 int mFirstPosition = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();
                 int count = getChildCount();
-//                BrowseHistoryAdapter.BrowseHolder viewHolder;
+                BaseHolder viewHolder;
                 int _scrollX;
                 for (int i = 0; i < count; i++) {
                     final View child = getChildAt(i);
-                    ViewHolder viewHolder = getChildViewHolder(child);
+                    viewHolder = (BaseHolder) getChildViewHolder(child);
                     _scrollX = viewHolder.itemView.getScrollX();
                     if (child.getVisibility() == View.VISIBLE) {
                         child.getHitRect(frame);
                         if (frame.contains(x, y)) {
-                            if (viewHolder instanceof BaseHolder) {
-                                currentViewHolder = (BaseHolder) viewHolder;
-                                itemLayout = viewHolder.itemView;
-                                maxLength = ((BaseHolder) viewHolder).getView().getMeasuredWidth();
-                            }
+                            currentViewHolder = viewHolder;
+                            itemLayout = viewHolder.itemView;
+                            maxLength = viewHolder.getView().getMeasuredWidth();
                             position = mFirstPosition + i;
                         } else {
                             if (_scrollX != 0) {
@@ -107,25 +105,24 @@ public class LyRecyclerView extends RecyclerView {
 
             case MotionEvent.ACTION_MOVE:
                 KLog.d("MotionEvent.ACTION_MOVE");
-                if (isGesture) {
-                    isSlide = true;
-                    xMove = x;
-                    yMove = y;
-                    int dx = xMove - xDown;
-                    int dy = yMove - yDown;
+                isSlide = true;
+                xMove = x;
+                yMove = y;
+                int dx = xMove - xDown;
+                int dy = yMove - yDown;
+                if (itemLayout != null) {
                     scrollX = itemLayout.getScrollX();
-                    KLog.d("scrollX:" + scrollX);
-                    if (Math.abs(dy) < mTouchSlop * 2 && Math.abs(dx) > mTouchSlop) {
-                        intrList = true;
-                        int newScrollX = mStartX - x;
-                        if (newScrollX < 0 && scrollX <= 0) {
-                            newScrollX = 0;
-                        } else if (newScrollX > 0 && scrollX >= maxLength) {
-                            newScrollX = 0;
-                        }
-
-                        itemLayout.scrollBy(newScrollX, 0);
+                }
+                if (Math.abs(dy) < mTouchSlop * 2 && Math.abs(dx) > mTouchSlop) {
+                    intrList = true;
+                    int newScrollX = mStartX - x;
+                    if (newScrollX < 0 && scrollX <= 0) {
+                        newScrollX = 0;
+                    } else if (newScrollX > 0 && scrollX >= maxLength) {
+                        newScrollX = 0;
                     }
+
+                    itemLayout.scrollBy(newScrollX, 0);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -157,7 +154,6 @@ public class LyRecyclerView extends RecyclerView {
                     invalidate();
                 }
                 break;
-            //git config --global http.proxy "socks5://127.0.0.1:1080"
             default:
                 break;
         }
@@ -186,13 +182,11 @@ public class LyRecyclerView extends RecyclerView {
         hideMenu(currentViewHolder);
     }
 
-    public void hideMenu(ViewHolder viewHolder) {
+    public void hideMenu(BaseHolder viewHolder) {
         if (viewHolder == null) {
             return;
         }
-        if (viewHolder instanceof BaseHolder) {
-            ((BaseHolder) viewHolder).isShowing = false;
-        }
+        viewHolder.isShowing = false;
         isCurrentItem = false;
         int scrollX = viewHolder.itemView.getScrollX();
         mScroller.startScroll(scrollX, 0, -scrollX, 0);
@@ -226,11 +220,7 @@ public class LyRecyclerView extends RecyclerView {
         mILyRecycler = lyRecycler;
     }
 
-    public void setRefreshState(int state) {
-        if (state == 1) {
-            isGesture = false;
-        } else {
-            isGesture = true;
-        }
+    public int getPosition() {
+        return position;
     }
 }

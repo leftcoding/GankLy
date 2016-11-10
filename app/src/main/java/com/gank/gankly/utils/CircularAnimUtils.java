@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.gank.gankly.R;
-import com.socks.library.KLog;
 
 /**
  * 对 ViewAnimationUtils.createCircularReveal() 方法的封装.
@@ -26,7 +25,7 @@ import com.socks.library.KLog;
  */
 public class CircularAnimUtils {
 
-    public static final long PERFECT_MILLS = 618;
+    public static final long PERFECT_MILLS = 300;
     public static final int MINI_RADIUS = 0;
     private static final int FINISH_NONE = 0, FINISH_SINGLE = 1, FINISH_ALL = 3;
 

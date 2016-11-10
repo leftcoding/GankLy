@@ -119,7 +119,6 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
                     @Override
                     public void onNext(String o) {
-                        mModelView.onDelete();
                     }
                 });
     }
