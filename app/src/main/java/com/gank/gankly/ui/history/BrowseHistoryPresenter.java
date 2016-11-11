@@ -85,7 +85,6 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
         mTask.deleteHistory(id).subscribe(new Subscriber<String>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
             }
 
             @Override
@@ -95,7 +94,6 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
 
             @Override
             public void onNext(String s) {
-                KLog.d(s);
             }
         });
     }

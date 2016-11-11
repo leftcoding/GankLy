@@ -9,8 +9,10 @@ import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -18,19 +20,19 @@ import rx.schedulers.Schedulers;
  * Create by LingYan on 2016-05-12
  */
 public class CollectPresenter extends BasePresenter implements CollectContract.Presenter {
-
     private static final int LIMIT = 10;
 
     @NonNull
-    private LocalDataSource mModel;
+    private LocalDataSource mTask;
     @NonNull
     private CollectContract.View mModelView;
+    private Subscription mSubscription;
 
     private int mPage = 0;
     private boolean isNoMore;
 
-    public CollectPresenter(@NonNull LocalDataSource model, @NonNull CollectContract.View modelView) {
-        this.mModel = model;
+    public CollectPresenter(@NonNull LocalDataSource task, @NonNull CollectContract.View modelView) {
+        this.mTask = task;
         this.mModelView = modelView;
     }
 
@@ -79,7 +81,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     }
 
     private void collect(int offset) {
-        mModel.getCollect(offset, LIMIT)
+        mTask.getCollect(offset, LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<List<UrlCollect>>() {
@@ -102,8 +104,9 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     }
 
     @Override
-    public void cancelCollect(long position) {
-        mModel.cancelCollect(position)
+    public void cancelCollect(final long position) {
+        mSubscription = mTask.cancelCollect(position)
+                .delaySubscription(4, TimeUnit.SECONDS)
                 .subscribe(new Subscriber<String>() {
                     @Override
                     public void onCompleted() {
@@ -121,6 +124,11 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
                     public void onNext(String o) {
                     }
                 });
+    }
+
+    @Override
+    public void backCollect() {
+        mSubscription.unsubscribe();
     }
 
     @Override

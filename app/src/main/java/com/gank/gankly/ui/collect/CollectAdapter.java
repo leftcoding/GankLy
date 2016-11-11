@@ -29,11 +29,13 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     private List<UrlCollect> mList;
     private Context mContext;
     private Integer[] mImages = {R.drawable.ic_collect_default_7};
+    private UrlCollect mCurrentDelete;
+    private int mDeleteCurPosition;
 
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
         mContext = context;
-        setHasStableIds(true);//除去动画闪屏效果
+//        setHasStableIds(true);//除去动画闪屏效果
     }
 
     @Override
@@ -72,9 +74,16 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         notifyItemRangeInserted(size, list.size());
     }
 
-    public void deleteItem(int item) {
-        mList.remove(item);
-        notifyItemRangeRemoved(item, 1);
+    public void deleteItem(int position) {
+        mDeleteCurPosition = position;
+        mCurrentDelete = getUrlCollect(position);
+        mList.remove(position);
+        notifyItemRangeRemoved(position, 1);
+    }
+
+    public void backAdapter() {
+        mList.add(mDeleteCurPosition, mCurrentDelete);
+        notifyItemRangeInserted(mDeleteCurPosition, 1);
     }
 
     public UrlCollect getUrlCollect(int position) {

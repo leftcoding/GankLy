@@ -2,6 +2,7 @@ package com.gank.gankly.ui.collect;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +19,6 @@ import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.RxUtils;
-import com.gank.gankly.widget.DeleteDialog;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -35,8 +35,9 @@ import rx.Subscriber;
  * Create by LingYan on 2016-4-25
  * Email:137387869@qq.com
  */
-public class CollectFragment extends FetchFragment implements DeleteDialog.DialogListener,
-        CollectContract.View {
+public class CollectFragment extends FetchFragment implements CollectContract.View {
+    @BindView(R.id.coordinator)
+    CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -118,11 +119,26 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
         mSwipeRefreshLayout.setAdapter(mCollectAdapter);
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
-            public void removeRecycle(int pos) {
-                KLog.d("removeRecycle");
-                long id = mCollectAdapter.getUrlCollect(pos).getId();
-                mCollectAdapter.deleteItem(pos);
+            public void removeRecycle(final int position) {
+                final UrlCollect urlCollect = mCollectAdapter.getUrlCollect(position);
+                long id = urlCollect.getId();
                 mPresenter.cancelCollect(id);
+                mCollectAdapter.deleteItem(position);
+                Snackbar.make(mCoordinatorLayout, R.string.collect_revoke, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.revoke, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mCollectAdapter.backAdapter();
+                                mPresenter.backCollect();
+                                if (mCollectAdapter.getItemCount() > 0) {
+                                    showContent();
+                                }
+                            }
+                        })
+                        .show();
+                if (mCollectAdapter.getItemCount() == 0) {
+                    showEmpty();
+                }
             }
 
             @Override
@@ -162,18 +178,6 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
     }
-
-//    @Override
-//    public void onLongClick(int position, Object object) {
-//        UrlCollect mUrlCollect = (UrlCollect) object;
-//        Bundle bundle = new Bundle();
-//        bundle.putString(DeleteDialog.CONTENT, mUrlCollect.getComment());
-//        bundle.putInt(DeleteDialog.ITEM, position);
-//        DeleteDialog deleteDialog = new DeleteDialog();
-//        deleteDialog.setListener(this);
-//        deleteDialog.setArguments(bundle);
-//        deleteDialog.show(mActivity.getSupportFragmentManager(), DeleteDialog.TAG);
-//    }
 
     private void openWebActivity(int position) {
         UrlCollect urlCollect = mCollectAdapter.getUrlCollect(position);
@@ -235,7 +239,6 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
 
     @Override
     public void showRefreshError(String errorStr) {
-
     }
 
     @Override
@@ -251,13 +254,5 @@ public class CollectFragment extends FetchFragment implements DeleteDialog.Dialo
     @Override
     public void hideRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void onNavigationClick() {
-//        int id = mSwipeRefreshLayout.getCurPosition();
-//        if (id != -1) {
-//            mPresenter.cancelCollect(id);
-//        }
     }
 }

@@ -25,5 +25,7 @@ public interface CollectContract {
 
     interface Presenter extends IFetchPresenter {
         void cancelCollect(long position);
+
+        void backCollect();
     }
 }

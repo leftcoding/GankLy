@@ -10,6 +10,7 @@ import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
 import com.gank.gankly.mvp.BaseModel;
 import com.gank.gankly.utils.ListUtils;
+import com.socks.library.KLog;
 
 import java.util.Date;
 import java.util.List;
@@ -52,7 +53,7 @@ public class LocalDataSource extends BaseModel {
     }
 
     public Observable<List<UrlCollect>> getCollect(final int offset, final int limit) {
-        return Observable.create(new OnSubscribe<List<UrlCollect>>() {
+        return toObservable(Observable.create(new OnSubscribe<List<UrlCollect>>() {
             @Override
             public void call(Subscriber<? super List<UrlCollect>> subscriber) {
                 QueryBuilder<UrlCollect> queryBuilder = mUrlCollectDao.queryBuilder();
@@ -61,7 +62,7 @@ public class LocalDataSource extends BaseModel {
                 subscriber.onNext(queryBuilder.list());
                 subscriber.onCompleted();
             }
-        });
+        }));
     }
 
     public Observable<String> cancelCollect(final long id) {
@@ -69,7 +70,7 @@ public class LocalDataSource extends BaseModel {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 mUrlCollectDao.deleteByKey(id);
-                subscriber.onNext("取消成功");
+                subscriber.onNext("");
                 subscriber.onCompleted();
             }
         }));
@@ -80,7 +81,7 @@ public class LocalDataSource extends BaseModel {
             @Override
             public void call(Subscriber<? super String> subscriber) {
                 mReadHistoryDao.deleteByKey(id);
-                subscriber.onNext("取消成功");
+                subscriber.onNext("");
                 subscriber.onCompleted();
             }
         }));

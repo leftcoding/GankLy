@@ -73,7 +73,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
             @Override
             public void onNext(Long aLong) {
-                KLog.d("aLong:" + aLong);
             }
         });
 
@@ -96,7 +95,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
                 @Override
                 public void onNext(String string) {
-                    KLog.d("cancelCollect:" + string);
                 }
             });
         }
@@ -108,7 +106,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
         mTask.insertCollect(urlCollect).subscribe(new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-                KLog.d("onCompleted");
             }
 
             @Override
@@ -118,7 +115,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
             @Override
             public void onNext(Long aLong) {
-                KLog.d("收藏成功，aLong:" + aLong);
             }
         });
     }
@@ -127,7 +123,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     public void collectAction(final boolean isCollect) {
         long curTime = System.currentTimeMillis();
         long subTime = curTime - endTime;
-        KLog.d("subTime:" + subTime);
         if (curTime - endTime < 2000) {
             subscription.unsubscribe();
         }
@@ -145,7 +140,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
                 .subscribe(new Subscriber<Boolean>() {
                     @Override
                     public void onCompleted() {
-                        KLog.d("onCompleted");
                     }
 
                     @Override
@@ -155,7 +149,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
                     @Override
                     public void onNext(Boolean aBoolean) {
-                        KLog.d("collectAction，aBoolean:" + aBoolean);
                         if (aBoolean) {
                             collect();
                         } else {

@@ -3,8 +3,6 @@ package com.gank.gankly.RxBus;
 
 import android.support.annotation.NonNull;
 
-import com.socks.library.KLog;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -79,7 +77,6 @@ public class RxBus {
         }
         Subject<T, T> subject;
         subjectList.add(subject = PublishSubject.create());
-        KLog.d("register", tag + "  size:" + subjectList.size());
         return subject;
     }
 
@@ -100,7 +97,6 @@ public class RxBus {
             subjects.remove((Subject<?, ?>) observable);
             if (isEmpty(subjects)) {
                 subjectMapper.remove(tag);
-                KLog.d("unregister", tag + "  size:" + subjects.size());
             }
         }
         return getInstance();

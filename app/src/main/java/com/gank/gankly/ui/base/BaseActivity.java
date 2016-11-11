@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
-import com.socks.library.KLog;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -196,7 +195,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
-        KLog.d("count:" + count);
         if (count == 0) {
             super.onBackPressed();
         } else {

@@ -33,7 +33,6 @@ import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -243,7 +242,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     }
 
     private void switchCollectIcon(boolean isCollect) {
-        KLog.d("mMenuItem:" + mMenuItem);
         if (isCollect) {
             mMenuItem.setIcon(R.drawable.navigation_collect_prs);
         } else {

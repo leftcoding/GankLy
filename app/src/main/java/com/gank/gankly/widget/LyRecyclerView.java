@@ -13,7 +13,6 @@ import android.view.animation.LinearInterpolator;
 import android.widget.Scroller;
 
 import com.gank.gankly.ui.base.BaseHolder;
-import com.socks.library.KLog;
 
 /**
  * reference https://github.com/moodstrikerdd/Test_Android/blob/53ecf70a131e553a68daad2b57bfe3f09722ddc2/sidesliplist/src/main/java/com/example/sidesliplist/MyRecyclerView.java
@@ -53,7 +52,6 @@ public class LyRecyclerView extends RecyclerView {
 
         //滑动到最小距离
         mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        KLog.d("mTouchSlop:" + mTouchSlop);
         //初始化Scroller
         mScroller = new Scroller(context, new LinearInterpolator(context, null), true);
     }
@@ -66,7 +64,6 @@ public class LyRecyclerView extends RecyclerView {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 isSlide = false;
-                KLog.d("MotionEvent.ACTION_DOWN");
                 startTime = System.currentTimeMillis();
                 //所有菜单不显示
                 xDown = x;
@@ -104,15 +101,15 @@ public class LyRecyclerView extends RecyclerView {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                KLog.d("MotionEvent.ACTION_MOVE");
+                if (itemLayout == null) {
+                    break;
+                }
                 isSlide = true;
                 xMove = x;
                 yMove = y;
                 int dx = xMove - xDown;
                 int dy = yMove - yDown;
-                if (itemLayout != null) {
-                    scrollX = itemLayout.getScrollX();
-                }
+                scrollX = itemLayout.getScrollX();
                 if (Math.abs(dy) < mTouchSlop * 2 && Math.abs(dx) > mTouchSlop) {
                     intrList = true;
                     int newScrollX = mStartX - x;
@@ -121,17 +118,14 @@ public class LyRecyclerView extends RecyclerView {
                     } else if (newScrollX > 0 && scrollX >= maxLength) {
                         newScrollX = 0;
                     }
-
                     itemLayout.scrollBy(newScrollX, 0);
                 }
                 break;
             case MotionEvent.ACTION_UP:
-                KLog.d("MotionEvent.ACTION_UP");
                 xUp = x;
                 yUp = y;
                 int _dx = xUp - xDown;
                 int _dy = yUp - yDown;
-                KLog.d("_dy：" + _dy + ",_dx:" + _dx);
                 if (Math.abs(_dy) < mTouchSlop && Math.abs(_dx) < mTouchSlop) {
                     if (mILyRecycler != null) {
                         mILyRecycler.onClick(position);
