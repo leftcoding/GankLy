@@ -15,7 +15,6 @@ import com.gank.gankly.config.Preferences;
 import com.gank.gankly.listener.DialogOnClick;
 import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.main.AboutFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.ToastUtils;

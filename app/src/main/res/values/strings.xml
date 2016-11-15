@@ -43,6 +43,11 @@
     <string name="collect_revoke">撤销收藏</string>
 
     <string name="meizi_save">保存</string>
+    <string name="meizi_wallpaper">设置壁纸</string>
+    <string name="meizi_wallpaper_success">设置壁纸成功</string>
+    <string name="meizi_revoke_success">撤销成功</string>
+    <string name="meizi_is_wallpaper">是否将该图片设置手机壁纸</string>
+    <string name="meizi_wallpaper_failure">设置壁纸失败，请重试</string>
     <string name="meizi_picture_save_path">图片已保存,保存图片路径:%s</string>
     <string name="meizi_limit_page">%1$d / %2$d</string>
 

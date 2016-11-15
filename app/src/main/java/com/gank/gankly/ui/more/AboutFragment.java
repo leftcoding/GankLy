@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.more;
 
 
 import android.content.Context;
@@ -12,7 +12,6 @@ import android.view.View;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseFragment;
-import com.gank.gankly.ui.more.MoreActivity;
 
 import butterknife.BindString;
 import butterknife.BindView;

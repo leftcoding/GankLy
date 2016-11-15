@@ -1,12 +1,20 @@
 package com.gank.gankly.ui.gallery;//package com.gank.gankly.ui.browse;
 
+import android.app.WallpaperManager;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -15,6 +23,9 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
@@ -32,12 +43,19 @@ import com.gank.gankly.widget.DepthPageTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import rx.Observable;
+import rx.Observer;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -52,6 +70,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
+    private static final String FILE_PATH = "GankLy_pic";
     public static final String TAG = "BrowseActivity";
     public static final String EXTRA_GANK = "Gank";
     public static final String EXTRA_GIFT = "Gift";
@@ -67,6 +86,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @BindView(R.id.pager)
     ViewPager mViewPager;
 
+
     private PagerAdapter mPagerAdapter;
     private int mPosition;
     private int mPage;
@@ -74,6 +94,11 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private boolean isLoadMore = true;
     private String mViewsModel = EXTRA_GANK;
     private List<GiftBean> mGiftList = new ArrayList<>();
+    private Bitmap mBitmap;
+    private WallpaperManager myWallpaperManager;
+    private Subscription subscription;
+    private int count;
+    private boolean isHide;
 
     @Override
     protected void initTheme() {
@@ -107,8 +132,10 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageScrollStateChanged(int state) {
+        KLog.d("state:" + state);
         if (state == ViewPager.SCROLL_STATE_DRAGGING) {
             hideSystemUi();
+            unSubscribeTime();
         }
     }
 
@@ -170,6 +197,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         mPagerAdapter = new PagerAdapter();
         mViewPager.setAdapter(mPagerAdapter);
+
 //        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
         mViewPager.setOffscreenPageLimit(1);
@@ -180,6 +208,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     protected void bindListener() {
+        timerBrowse();
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,10 +269,141 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             case R.id.meizi_share:
                 saveImagePath(getImageUrl(), true);
                 break;
+            case R.id.meizi_wallpaper:
+                makeWallpaperDialog();
+                break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void timerBrowse() {
+        if (subscription == null || subscription.isUnsubscribed()) {
+            subscription = Observable.interval(2000, 2000, TimeUnit.MILLISECONDS)
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<Long>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            KLog.e(e);
+                        }
+
+                        @Override
+                        public void onNext(Long aLong) {
+                            KLog.d("along:" + aLong + ",mPosition:" + mPosition + ",count:" + count);
+                            count = mPagerAdapter.getCount();
+                            if (mPosition == count) {
+                                unSubscribeTime();
+                            } else {
+                                mViewPager.postInvalidateDelayed(800);
+                                mPosition = mPosition + 1;
+                                mViewPager.setCurrentItem(mPosition);
+                            }
+                        }
+                    });
+        }
+    }
+
+    private void unSubscribeTime() {
+        if (!subscription.isUnsubscribed()) {
+            subscription.unsubscribe();
+        }
+    }
+
+    private void makeWallpaperDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.meizi_is_wallpaper);
+        builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                setWallPaper(getImageUrl(), GalleryActivity.this);
+            }
+        });
+        builder.create().show();
+    }
+
+    private void setWallPaper(final String url, final FragmentActivity activity) {
+        Observable.create(new Observable.OnSubscribe<Bitmap>() {
+            @Override
+            public void call(Subscriber<? super Bitmap> subscriber) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = Glide.with(activity)
+                            .load(url)
+                            .asBitmap()
+                            .atMost()
+                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                            .skipMemoryCache(true)
+                            .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .get();
+                } catch (InterruptedException | ExecutionException e) {
+                    KLog.e(e);
+                    CrashUtils.crashReport(e);
+                }
+                subscriber.onNext(bitmap);
+                subscriber.onCompleted();
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Bitmap>() {
+                    @Override
+                    public void onCompleted() {
+                        revokeWallpaper();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.showToast(R.string.meizi_wallpaper_failure);
+                        KLog.e(e);
+                        CrashUtils.crashReport(e);
+                    }
+
+                    @Override
+                    public void onNext(Bitmap bitmap) {
+                        myWallpaperManager = WallpaperManager
+                                .getInstance(getApplicationContext());
+                        try {
+                            Drawable wallpaperDrawable = myWallpaperManager.getDrawable();
+                            mBitmap = ((BitmapDrawable) wallpaperDrawable).getBitmap();
+                            myWallpaperManager.setBitmap(bitmap);
+                        } catch (IOException e) {
+                            KLog.e(e);
+                            CrashUtils.crashReport(e);
+                        }
+                    }
+                });
+    }
+
+    private void revokeWallpaper() {
+        Snackbar.make(mViewPager, R.string.meizi_wallpaper_success, Snackbar.LENGTH_LONG)
+                .setAction(R.string.revoke, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            if (mBitmap != null) {
+                                myWallpaperManager.setBitmap(mBitmap);
+                            }
+                        } catch (IOException e) {
+                            KLog.e(e);
+                        } finally {
+                            mBitmap = null;
+                        }
+                        ToastUtils.showToast(R.string.meizi_revoke_success);
+                    }
+                })
+                .show();
     }
 
     private String getImageUrl() {
@@ -290,7 +450,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private String getImagePath() {
-        File appDir = new File(Environment.getExternalStorageDirectory(), "GankLy_pic");
+        File appDir = new File(Environment.getExternalStorageDirectory(), FILE_PATH);
         return appDir.getAbsolutePath();
     }
 
@@ -304,6 +464,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void showSystemUi() {
+        unSubscribeTime();
         mViewPager.setSystemUiVisibility(SYSTEM_UI_BASE_VISIBILITY);
         mToolbar.animate()
                 .translationY(0)
@@ -314,6 +475,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     public void switchToolbar() {
         if (mToolbar.getTranslationY() == 0) {
+            timerBrowse();
             hideSystemUi();
         } else {
             showSystemUi();
@@ -324,5 +486,17 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     protected void onResume() {
         super.onResume();
         overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+    }
+
+    @Override
+    protected void onDestroy() {
+        unSubscribeTime();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        hideSystemUi();
     }
 }

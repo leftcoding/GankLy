@@ -74,6 +74,12 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         }
     }
 
+    @Override
+    public void onViewRecycled(GankViewHolder holder) {
+        super.onViewRecycled(holder);
+        Glide.clear(holder.img);
+    }
+
     private View getLayoutView(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         int resLayout;

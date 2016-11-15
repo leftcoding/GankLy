@@ -29,7 +29,6 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
 
     public BrowseHistoryAdapter() {
         mReadHistories = new ArrayList<>();
-        setHasStableIds(true);//除去动画闪屏效果
     }
 
     @Override

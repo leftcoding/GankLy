@@ -35,7 +35,6 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
     public CollectAdapter(Context context) {
         mList = new ArrayList<>();
         mContext = context;
-//        setHasStableIds(true);//除去动画闪屏效果
     }
 
     @Override

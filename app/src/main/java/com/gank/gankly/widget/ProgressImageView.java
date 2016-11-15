@@ -1,5 +1,6 @@
 package com.gank.gankly.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -89,6 +90,22 @@ public class ProgressImageView extends RelativeLayout {
     }
 
     public void load(String url, Fragment fragment) {
+//        if (url.endsWith("gif")) {
+        target.setModel(url); // update target's cache
+
+        Glide.with(fragment).load(url)
+                .asBitmap()
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .placeholder(R.drawable.image_loading)
+                .error(R.drawable.image_failure)
+//                .sizeMultiplier(0.6f)
+                .fitCenter() // needs explicit transformation, because we're using a custom target
+//                .crossFade()
+                .into(target);
+//        }
+    }
+
+    public void load(String url, Activity fragment) {
 //        if (url.endsWith("gif")) {
         target.setModel(url); // update target's cache
 

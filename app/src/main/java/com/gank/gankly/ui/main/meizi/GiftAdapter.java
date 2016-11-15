@@ -58,6 +58,12 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
         return mResults.size();
     }
 
+    @Override
+    public void onViewRecycled(GankViewHolder holder) {
+        super.onViewRecycled(holder);
+        Glide.clear(holder.mImageView);
+    }
+
     public void updateItems(List<GiftBean> getResults) {
         mResults.addAll(getResults);
         notifyItemRangeInserted(mResults.size(), getResults.size());

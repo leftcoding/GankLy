@@ -43,7 +43,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#5C6BC0</color>
-    <color name="aboutBackground_light">#EEEEEE</color>
+    <color name="aboutBackground_light">#EFEEF4</color>
     <color name="collect_background_light">#F1F3F6</color>
     <color name="refresh_background_light">#f3f6f9</color><!--#f2f4f7-->
     <color name="meizi_item_background_light">#fefefe</color>

@@ -27,6 +27,7 @@ import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.jiandan.JiandanActivity;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
+import com.gank.gankly.ui.more.AboutFragment;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;

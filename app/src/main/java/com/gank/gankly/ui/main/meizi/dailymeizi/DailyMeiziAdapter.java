@@ -58,6 +58,11 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         notifyDataSetChanged();
     }
 
+    @Override
+    public void onViewRecycled(DailyMeiziHolder holder) {
+        super.onViewRecycled(holder);
+    }
+
     public class DailyMeiziHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.daily_meizi_title)
         TextView txtTitle;

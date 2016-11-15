@@ -53,7 +53,7 @@ public class ItemTextView extends RelativeLayout {
             mTitle = array.getString(R.styleable.ItemTextView_TextTitle);
             mSummary = array.getString(R.styleable.ItemTextView_TextSummary);
             mTitleSize = array.getInteger(R.styleable.ItemTextView_TextTitleSize, 16);
-            mSummarySize = array.getInteger(R.styleable.ItemTextView_TextSummarySize, 14);
+            mSummarySize = array.getInteger(R.styleable.ItemTextView_TextSummarySize, 12);
             mTitleColor = array.getColor(R.styleable.ItemTextView_TextTitleColor, App.getAppColor(R.color.text_default));
             mSummaryColor = array.getColor(R.styleable.ItemTextView_TextSummaryColor, App.getAppColor(R.color.text_999999));
         } catch (Exception e) {

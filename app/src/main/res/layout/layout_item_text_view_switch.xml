@@ -4,21 +4,9 @@
     android:id="@+id/setting_rl_auto_check"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="16dp"
     android:background="?attr/selectableItemBackground"
-    android:clickable="true"
-    android:paddingBottom="15dp"
-    android:paddingEnd="15dp"
-    android:paddingStart="15dp"
-    android:paddingTop="15dp">
-
-    <TextView
-        android:id="@+id/item_switch_txt_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:text="@string/setting_auto_check"
-        android:textColor="?attr/textPrimaryColor"
-        android:textSize="16sp"/>
+    android:clickable="true">
 
     <com.gank.gankly.widget.LSwitch
         android:id="@+id/item_switch_auto_check"
@@ -26,5 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"/>
+
+    <TextView
+        android:id="@+id/item_switch_txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_auto_check"
+        android:textColor="?attr/textPrimaryColor"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
 
 </RelativeLayout>
