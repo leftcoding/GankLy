@@ -32,23 +32,30 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         super.onCreate();
         mContext = this;
 
-        InitializeService.start(this);
 
-        initPreferences();
-
-        RxBus.getInstance().toSubscription(SQLiteDatabase.class, new Action1<SQLiteDatabase>() {
+        new Thread(new Runnable() {
             @Override
-            public void call(SQLiteDatabase sqLiteDatabase) {
-                if (sqLiteDatabase != null) {
-                    DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-                    daoSession = daoMaster.newSession();
-                }
+            public void run() {
+                InitializeService.start(mContext);
+                initPreferences();
+
+                RxBus.getInstance().toSubscription(SQLiteDatabase.class, new Action1<SQLiteDatabase>() {
+                    @Override
+                    public void call(SQLiteDatabase sqLiteDatabase) {
+                        if (sqLiteDatabase != null) {
+                            DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
+                            daoSession = daoMaster.newSession();
+                        }
+                    }
+                });
             }
-        });
+        }).start();
+
+
         long e = System.currentTimeMillis() - start;
         KLog.d("s-e:" + e);
     }

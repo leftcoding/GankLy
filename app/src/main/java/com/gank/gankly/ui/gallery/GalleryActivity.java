@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +51,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
@@ -85,6 +87,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     Toolbar mToolbar;
     @BindView(R.id.pager)
     ViewPager mViewPager;
+    @BindView(R.id.brose_img_auto)
+    ImageView mImageView;
 
 
     private PagerAdapter mPagerAdapter;
@@ -97,8 +101,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private Bitmap mBitmap;
     private WallpaperManager myWallpaperManager;
     private Subscription subscription;
-    private int count;
-    private boolean isHide;
+    private boolean isScroll = true;
+    private boolean isPlay;
 
     @Override
     protected void initTheme() {
@@ -108,18 +112,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-        int size;
-        if (EXTRA_GANK.equals(mViewsModel)) {
-            size = MeiziArrayList.getInstance().size();
-        } else {
-            size = mGiftList.size();
-        }
-        txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
-                position + 1, size));
+//        KLog.d("position:" + position + ",positionOffset:" + positionOffset);
     }
 
     @Override
     public void onPageSelected(int position) {
+        KLog.d("onPageSelected#position:" + position + ",isScroll:" + isScroll);
         if (EXTRA_GANK.equals(mViewsModel)) {
             int p = mGiftList.size() - 5;
             if (position == p) {
@@ -128,12 +126,18 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 }
             }
         }
+
+        if (isScroll) {
+            mPosition = position;
+        }
+        setNumberText(position);
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
         KLog.d("state:" + state);
         if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+            isScroll = true;
             hideSystemUi();
             unSubscribeTime();
         }
@@ -159,6 +163,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             public void onNext(GankResult gankResult) {
                 if (!gankResult.isEmpty()) {
                     MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
+                    mGiftList.addAll(changeImageList(gankResult.getResults()));
                 }
                 if (gankResult.getSize() < limit) {
                     isLoadMore = false;
@@ -167,6 +172,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 mPagerAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void setNumberText(int position) {
+        int size = mPagerAdapter.getCount();
+        txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
+                position + 1, size));
     }
 
     @Override
@@ -182,12 +193,19 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
         }
 
-        mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
-        getImageList(mViewsModel);
+        if (EXTRA_GANK.equals(mViewsModel)) {
+            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
+            mGiftList = changeImageList(giftBeen);
+        } else {
+            mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
+        }
     }
 
     @Override
     protected void initViews() {
+        mPagerAdapter = new PagerAdapter();
+        mViewPager.setAdapter(mPagerAdapter);
+
         mToolbar.setTitle(R.string.app_name);
         setSupportActionBar(mToolbar);
         ActionBar bar = getSupportActionBar();
@@ -195,8 +213,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
         }
 
-        mPagerAdapter = new PagerAdapter();
-        mViewPager.setAdapter(mPagerAdapter);
+        mImageView.setBackgroundResource(R.drawable.ic_gallery_play);
+
+        setNumberText(mPosition);
 
 //        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mViewPager.setPageTransformer(true, new DepthPageTransformer());
@@ -208,7 +227,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     protected void bindListener() {
-        timerBrowse();
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,17 +235,14 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         });
     }
 
-    private void getImageList(String model) {
-        if (EXTRA_GANK.equals(model)) {
-            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
-            List<GiftBean> g = new ArrayList<>();
-            if (!ListUtils.isListEmpty(giftBeen)) {
-                for (ResultsBean gift : giftBeen) {
-                    g.add(new GiftBean(gift.getUrl()));
-                }
+    private List<GiftBean> changeImageList(List<ResultsBean> giftBeen) {
+        List<GiftBean> list = new ArrayList<>();
+        if (!ListUtils.isListEmpty(giftBeen)) {
+            for (ResultsBean gift : giftBeen) {
+                list.add(new GiftBean(gift.getUrl()));
             }
-            mGiftList = g;
         }
+        return list;
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
@@ -238,18 +253,15 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         @Override
         public int getCount() {
-            if (EXTRA_GANK.equals(mViewsModel)) {
-                return MeiziArrayList.getInstance().size();
-            }
             return mGiftList.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-            if (EXTRA_GANK.equals(mViewsModel)) {
-                ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
-                return GalleryFragment.newInstance(bean.getUrl());
-            }
+//            if (EXTRA_GANK.equals(mViewsModel)) {
+//                ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
+//                return GalleryFragment.newInstance(bean.getUrl());
+//            }
             return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
         }
     }
@@ -280,7 +292,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private void timerBrowse() {
         if (subscription == null || subscription.isUnsubscribed()) {
-            subscription = Observable.interval(2000, 2000, TimeUnit.MILLISECONDS)
+            mImageView.setBackgroundResource(R.drawable.ic_gallery_stop);
+            isScroll = false;
+            subscription = Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<Long>() {
                         @Override
@@ -295,9 +309,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
                         @Override
                         public void onNext(Long aLong) {
+                            int count = mPagerAdapter.getCount();
                             KLog.d("along:" + aLong + ",mPosition:" + mPosition + ",count:" + count);
-                            count = mPagerAdapter.getCount();
-                            if (mPosition == count) {
+                            if (aLong >= count) {
                                 unSubscribeTime();
                             } else {
                                 mViewPager.postInvalidateDelayed(800);
@@ -310,7 +324,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void unSubscribeTime() {
-        if (!subscription.isUnsubscribed()) {
+        mImageView.setBackgroundResource(R.drawable.ic_gallery_play);
+        if (subscription != null && !subscription.isUnsubscribed()) {
             subscription.unsubscribe();
         }
     }
@@ -449,6 +464,17 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 });
     }
 
+    @OnClick(R.id.brose_img_auto)
+    void onBrowseAuto() {
+        if (isPlay) {
+            isPlay = false;
+            unSubscribeTime();
+        } else {
+            isPlay = true;
+            timerBrowse();
+        }
+    }
+
     private String getImagePath() {
         File appDir = new File(Environment.getExternalStorageDirectory(), FILE_PATH);
         return appDir.getAbsolutePath();
@@ -475,7 +501,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     public void switchToolbar() {
         if (mToolbar.getTranslationY() == 0) {
-            timerBrowse();
             hideSystemUi();
         } else {
             showSystemUi();

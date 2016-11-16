@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
  * Email:137387869@qq.com
  */
 public class GanklyPreferences {
-    private static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
+    public static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
     private static final int VERSION = 1;
     private static SharedPreferences mSharedPreferences;
     private static SharedPreferences.Editor sEditor;
