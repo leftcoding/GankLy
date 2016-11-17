@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -25,9 +26,9 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import rx.Observable;
 
 import butterknife.BindView;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -36,8 +37,12 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class HomeActivity extends BaseActivity {
-    @BindView(R.id.bottomBar)
-    BottomBar mBottomBar;
+        @BindView(R.id.bottomBar)
+        BottomBar mBottomBar;
+    @BindView(R.id.home_coordinator)
+    CoordinatorLayout mCoordinatorLayout;
+//    @BindView(R.id.bottom_navigation_view)
+//    BottomNavigationView mBottomNavigationView;
 
     private long mKeyDownTime;
     private Fragment mCurFragment;
@@ -60,6 +65,8 @@ public class HomeActivity extends BaseActivity {
     protected void initViews() {
         mFragmentList = getFragmentList();
 
+//        mBottomNavigationView.getMenu().getItem(0).setChecked(true);
+
         changeBottomBar();
 
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
@@ -68,6 +75,7 @@ public class HomeActivity extends BaseActivity {
                 changeBottomBar();
             }
         });
+
     }
 
     @Override
@@ -103,6 +111,39 @@ public class HomeActivity extends BaseActivity {
                 mCurFragment = fragmentTo;
             }
         });
+
+//        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                int index = 0;
+//                switch (item.getItemId()) {
+//                    case R.id.tab_home:
+//                        index = 0;
+//                        break;
+//                    case R.id.tab_video:
+//                        index = 1;
+//                        break;
+//                    case R.id.tab_image:
+//                        index = 2;
+//                        break;
+//                    case R.id.tab_more:
+//                        index = 3;
+//                        break;
+//                }
+//
+//                Fragment fragmentTo = mFragmentList.get(index);
+//
+//                if (mCurFragment == null) {
+//                    addMainFragment(fragmentTo);
+//                } else {
+//                    if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
+//                        addAnimFragment(mCurFragment, fragmentTo, true);
+//                    }
+//                }
+//                mCurFragment = fragmentTo;
+//                return true;
+//            }
+//        });
     }
 
     @Override
@@ -117,7 +158,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initPresenter() {
         super.initPresenter();
-
     }
 
     private List<Fragment> getFragmentList() {

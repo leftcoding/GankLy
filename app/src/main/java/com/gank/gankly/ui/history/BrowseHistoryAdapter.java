@@ -33,7 +33,7 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
 
     @Override
     public BrowseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_dailymeizi, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_browse_history, parent, false);
         return new BrowseHolder(view);
     }
 

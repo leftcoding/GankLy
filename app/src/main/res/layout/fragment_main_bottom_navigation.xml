@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/drawer_layout"
+    android:id="@+id/home_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <android.support.design.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <!--<android.support.v4.widget.NestedScrollView-->
-    <!--android:id="@+id/myScrollingContent"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent">-->
 
     <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
-    <!--</android.support.v4.widget.NestedScrollView>-->
 
     <com.roughike.bottombar.BottomBar
         android:id="@+id/bottomBar"
@@ -29,12 +19,24 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom|end"
+
         app:bb_activeTabAlpha="1"
         app:bb_activeTabColor="@color/white"
+        app:bb_behavior="shy"
         app:bb_inActiveTabAlpha="0.5"
         app:bb_inActiveTabColor="@color/white"
-        app:bb_behavior="shy"
         app:bb_tabXmlResource="@xml/bottombar_tabs_color_changing"/>
 
-    </android.support.design.widget.CoordinatorLayout>
-</RelativeLayout>
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:menu="@menu/home"/>
+</android.support.design.widget.CoordinatorLayout>
