@@ -44,15 +44,13 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         changeThemes();
     }
+    protected abstract int getLayoutId();
 
     protected abstract void initValues();
 
     protected abstract void initViews();
 
     protected abstract void bindLister();
-
-    protected abstract int getLayoutId();
-
 
     public void changeThemes() {
 

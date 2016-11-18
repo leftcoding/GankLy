@@ -11,13 +11,14 @@ import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.main.meizi.DiscoveredFragment;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
-import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -26,9 +27,9 @@ import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import rx.Observable;
 
 import butterknife.BindView;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -37,12 +38,10 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class HomeActivity extends BaseActivity {
-        @BindView(R.id.bottomBar)
-        BottomBar mBottomBar;
+    @BindView(R.id.bottomBar)
+    BottomBar mBottomBar;
     @BindView(R.id.home_coordinator)
     CoordinatorLayout mCoordinatorLayout;
-//    @BindView(R.id.bottom_navigation_view)
-//    BottomNavigationView mBottomNavigationView;
 
     private long mKeyDownTime;
     private Fragment mCurFragment;
@@ -64,8 +63,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initViews() {
         mFragmentList = getFragmentList();
-
-//        mBottomNavigationView.getMenu().getItem(0).setChecked(true);
 
         changeBottomBar();
 
@@ -111,39 +108,6 @@ public class HomeActivity extends BaseActivity {
                 mCurFragment = fragmentTo;
             }
         });
-
-//        mBottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                int index = 0;
-//                switch (item.getItemId()) {
-//                    case R.id.tab_home:
-//                        index = 0;
-//                        break;
-//                    case R.id.tab_video:
-//                        index = 1;
-//                        break;
-//                    case R.id.tab_image:
-//                        index = 2;
-//                        break;
-//                    case R.id.tab_more:
-//                        index = 3;
-//                        break;
-//                }
-//
-//                Fragment fragmentTo = mFragmentList.get(index);
-//
-//                if (mCurFragment == null) {
-//                    addMainFragment(fragmentTo);
-//                } else {
-//                    if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
-//                        addAnimFragment(mCurFragment, fragmentTo, true);
-//                    }
-//                }
-//                mCurFragment = fragmentTo;
-//                return true;
-//            }
-//        });
     }
 
     @Override
@@ -163,7 +127,8 @@ public class HomeActivity extends BaseActivity {
     private List<Fragment> getFragmentList() {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new MainFragment());
-        fragments.add(new VideoFragment());
+//        fragments.add(new VideoFragment());
+        fragments.add(new DiscoveredFragment());
         fragments.add(new GirlsFragment());
         fragments.add(new MineFragment());
         return fragments;
@@ -227,6 +192,13 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    @Override
+    protected void onStart() {
+        getWindow().
+                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        super.onStart();
     }
 
     @Override

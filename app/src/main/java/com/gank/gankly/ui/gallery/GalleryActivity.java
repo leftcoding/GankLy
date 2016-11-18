@@ -17,11 +17,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -72,6 +74,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
+
     private static final String FILE_PATH = "GankLy_pic";
     public static final String TAG = "BrowseActivity";
     public static final String EXTRA_GANK = "Gank";
@@ -89,6 +92,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     ViewPager mViewPager;
     @BindView(R.id.brose_img_auto)
     ImageView mImageView;
+    @BindView(R.id.browse_rl)
+    RelativeLayout mRelativeLayout;
 
 
     private PagerAdapter mPagerAdapter;
@@ -103,6 +108,11 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private Subscription subscription;
     private boolean isScroll = true;
     private boolean isPlay;
+
+    @Override
+    protected int getContentId() {
+        return R.layout.activity_browse_picture;
+    }
 
     @Override
     protected void initTheme() {
@@ -135,7 +145,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        KLog.d("state:" + state);
         if (state == ViewPager.SCROLL_STATE_DRAGGING) {
             isScroll = true;
             hideSystemUi();
@@ -178,11 +187,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         int size = mPagerAdapter.getCount();
         txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
                 position + 1, size));
-    }
-
-    @Override
-    protected int getContentId() {
-        return R.layout.activity_browse_picture;
     }
 
     @Override
@@ -258,10 +262,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         @Override
         public Fragment getItem(int position) {
-//            if (EXTRA_GANK.equals(mViewsModel)) {
-//                ResultsBean bean = MeiziArrayList.getInstance().getResultBean(position);
-//                return GalleryFragment.newInstance(bean.getUrl());
-//            }
             return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
         }
     }
@@ -314,7 +314,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                             if (aLong >= count) {
                                 unSubscribeTime();
                             } else {
-                                mViewPager.postInvalidateDelayed(800);
+//                                mViewPager.postInvalidateDelayed(800);
                                 mPosition = mPosition + 1;
                                 mViewPager.setCurrentItem(mPosition);
                             }
@@ -481,7 +481,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void hideSystemUi() {
-        mViewPager.setSystemUiVisibility(SYSTEM_UI_BASE_VISIBILITY | SYSTEM_UI_IMMERSIVE);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         mToolbar.animate()
                 .translationY(-mToolbar.getHeight())
                 .setDuration(400)
@@ -490,13 +490,13 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void showSystemUi() {
-        unSubscribeTime();
-        mViewPager.setSystemUiVisibility(SYSTEM_UI_BASE_VISIBILITY);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         mToolbar.animate()
                 .translationY(0)
                 .setDuration(400)
                 .setInterpolator(new DecelerateInterpolator(2))
                 .start();
+        unSubscribeTime();
     }
 
     public void switchToolbar() {
@@ -522,6 +522,15 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        hideSystemUi();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            finish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

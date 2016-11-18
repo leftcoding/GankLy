@@ -54,8 +54,7 @@
         <activity
             android:name=".ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/BrowseThemeBase"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"

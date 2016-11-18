@@ -57,10 +57,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
         return new MainFragment();
     }
 
-    public static MainFragment getInstance1() {
-        return new MainFragment();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

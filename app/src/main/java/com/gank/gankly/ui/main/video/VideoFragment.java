@@ -3,12 +3,10 @@ package com.gank.gankly.ui.main.video;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +19,14 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.VideoPresenterImpl;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -39,12 +38,12 @@ import rx.functions.Action1;
  * Create by LingYan on 2016-04-25
  * Email:137387869@qq.com
  */
-public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnClick,
+public class VideoFragment extends LazyFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-    @BindView(R.id.coordinator)
-    CoordinatorLayout mCoordinatorLayout;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+//    @BindView(R.id.coordinator)
+//    CoordinatorLayout mCoordinatorLayout;
+    //    @BindView(R.id.toolbar)
+//    Toolbar mToolbar;
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -57,7 +56,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_video;
+        return R.layout.layout_swipe_normal;
     }
 
     @Override
@@ -73,17 +72,17 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     protected void initValues() {
-        onLoading();
+//        onLoading();
     }
 
     private void onLoading() {
-        mMultipleStatusView.showLoading();
+//        mMultipleStatusView.showLoading();
         onDownRefresh();
     }
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle(R.string.navigation_video);
+//        mToolbar.setTitle(R.string.navigation_video);
 
         setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
@@ -135,7 +134,7 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
         theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        mToolbar.setBackgroundResource(typedValue.resourceId);
+//        mToolbar.setBackgroundResource(typedValue.resourceId);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -170,6 +169,8 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     public void refillDate(List<ResultsBean> list) {
+        KLog.d("list:" + list.size());
+        mMultipleStatusView.showContent();
         mVideoRecyclerAdapter.updateItems(list);
     }
 
@@ -180,12 +181,12 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
 
     @Override
     public void showRefreshError(String error) {
-        Snackbar.make(mCoordinatorLayout, error, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mRecyclerView, error, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
     public void hasNoMoreDate() {
-        Snackbar.make(mCoordinatorLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -201,5 +202,11 @@ public class VideoFragment extends BaseSwipeRefreshFragment implements MeiziOnCl
     @Override
     public void showRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    protected void initData() {
+//        onLoading();
+        mPresenter.fetchNew();
     }
 }

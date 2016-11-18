@@ -5,6 +5,7 @@
     <string name="app_new_version">NEW</string>
     <string name="app_website">© GankLy</string>
     <string name="revoke">撤销</string>
+    <string name="bye_burger_bottom_behavior">com.gank.gankly.widget.ByeBurgerBottomBehavior</string>
 
     <string name="navigation_collect">收藏</string>
     <string name="navigation_mine">我的</string>
@@ -12,7 +13,7 @@
     <string name="navigation_share">分享</string>
     <string name="navigation_other">其他</string>
     <string name="navigation_video">视频</string>
-    <string name="navigation_gift">美しい妹</string>
+    <string name="navigation_gift">妹子</string>
     <string name="navigation_home">首页</string>
     <string name="navigation_about">关于</string>
     <string name="navigation_jiandan">煎蛋杂集</string>
