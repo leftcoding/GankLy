@@ -36,7 +36,7 @@ public abstract class BaseFragment extends Fragment {
         unBinder = ButterKnife.bind(this, view);
         initValues();
         initViews();
-        bindLister();
+        bindListener();
     }
 
     @Override
@@ -50,7 +50,7 @@ public abstract class BaseFragment extends Fragment {
 
     protected abstract void initViews();
 
-    protected abstract void bindLister();
+    protected abstract void bindListener();
 
     public void changeThemes() {
 

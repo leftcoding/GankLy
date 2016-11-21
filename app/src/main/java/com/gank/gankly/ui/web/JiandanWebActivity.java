@@ -58,7 +58,8 @@ public class JiandanWebActivity extends BaseActivity {
     public static final int FROM_JIANDAN = 2;
 
     private static final int timeout = 50 * 1000;
-    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36";
+    //    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36";
+    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
 
     public static final String TITLE = "title";
     public static final String URL = "url";
@@ -153,10 +154,20 @@ public class JiandanWebActivity extends BaseActivity {
             mUrlCollect = list.get(0);
         }
 
-        parseLoadUrlData(mUrl);
+        parseLoadUrlData(filterUrl(mUrl));
+    }
+
+    private String filterUrl(String url) {
+        if (!TextUtils.isEmpty(url)) {
+            if (url.contains("/") && url.startsWith("http://jandan.net")) {
+                url = url.replace("jandan.net", "i.jandan.net");
+            }
+        }
+        return url;
     }
 
     private void parseLoadUrlData(final String url) {
+        KLog.d("url:" + url);
         Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {

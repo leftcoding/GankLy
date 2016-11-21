@@ -56,15 +56,30 @@ public class JiandanResult {
 
     public static class PostsBean {
         private int id;
+        private String type;
+        private String slug;
         private String url;
+        private String status;
         private String title;
+        private String title_plain;
+        private String content;
+        private String excerpt;
         private String date;
+        private String modified;
+        private String img;
 
         private AuthorBean author;
         private int comment_count;
-        private CustomFieldsBean custom_fields;
 
         private List<TagsBean> tags;
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
+        }
 
         public int getId() {
             return id;
@@ -114,12 +129,60 @@ public class JiandanResult {
             this.comment_count = comment_count;
         }
 
-        public CustomFieldsBean getCustom_fields() {
-            return custom_fields;
+        public String getType() {
+            return type;
         }
 
-        public void setCustom_fields(CustomFieldsBean custom_fields) {
-            this.custom_fields = custom_fields;
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getSlug() {
+            return slug;
+        }
+
+        public void setSlug(String slug) {
+            this.slug = slug;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public String getTitle_plain() {
+            return title_plain;
+        }
+
+        public void setTitle_plain(String title_plain) {
+            this.title_plain = title_plain;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
+        public String getExcerpt() {
+            return excerpt;
+        }
+
+        public void setExcerpt(String excerpt) {
+            this.excerpt = excerpt;
+        }
+
+        public String getModified() {
+            return modified;
+        }
+
+        public void setModified(String modified) {
+            this.modified = modified;
         }
 
         public List<TagsBean> getTags() {
@@ -205,17 +268,6 @@ public class JiandanResult {
             }
         }
 
-        public static class CustomFieldsBean {
-            private List<String> thumb_c;
-
-            public List<String> getThumb_c() {
-                return thumb_c;
-            }
-
-            public void setThumb_c(List<String> thumb_c) {
-                this.thumb_c = thumb_c;
-            }
-        }
 
         public static class TagsBean {
             private int id;

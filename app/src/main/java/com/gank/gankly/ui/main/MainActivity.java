@@ -24,7 +24,6 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
-import com.gank.gankly.ui.jiandan.JiandanActivity;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.main.video.VideoFragment;
 import com.gank.gankly.ui.more.AboutFragment;
@@ -231,11 +230,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 fragmentTo = SettingFragment.getInstance();
                 break;
             case R.id.navigation_jiandan:
-                menuItem.setChecked(false);
-                Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-                return false; // no checked
+//                menuItem.setChecked(false);
+//                Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
+//                startActivity(intent);
+//                overridePendingTransition(0, 0);
+//                return false; // no checked
 //                        break;
             default:
                 break;

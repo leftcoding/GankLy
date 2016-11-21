@@ -63,7 +63,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
     }
 
     @Override

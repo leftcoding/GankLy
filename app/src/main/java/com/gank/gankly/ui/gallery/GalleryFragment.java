@@ -55,7 +55,7 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mProgressImageView.setImageViewOnClick(this);
     }
 

@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.discovered;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -10,12 +10,11 @@ import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
-import com.gank.gankly.config.Constants;
-import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.jiandan.JiandanFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.main.meizi.dailymeizi.DailyMeiziFragment;
+import com.gank.gankly.ui.main.video.VideoFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +28,12 @@ import rx.functions.Action1;
  * Email:137387869@qq.com
  */
 public class DiscoveredFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener {
-    @BindView(R.id.girl_tabLayout)
+    private static final String TYPE_VIDEO = "视频";
+    private static final String TYPE_JIANDAN = "新鲜事";
+
+    @BindView(R.id.discovered_tabLayout)
     TabLayout mTabLayout;
-    @BindView(R.id.girl_view_pager)
+    @BindView(R.id.discovered_view_pager)
     ViewPager mViewPager;
 
     private HomeActivity mActivity;
@@ -39,11 +41,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_girls;
-    }
-
-    public static GirlsFragment getInstance() {
-        return new GirlsFragment();
+        return R.layout.fragment_discovered;
     }
 
     @Override
@@ -52,7 +50,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
                     @Override
                     public void call(ThemeEvent event) {
@@ -65,14 +63,14 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new GiftFragment());
-        mList.add(new DailyMeiziFragment());
+        mList.add(new VideoFragment());
+        mList.add(new JiandanFragment());
 
         mTitles = new ArrayList<>();
-        mTitles.add(Constants.QINGCHUN);
-        mTitles.add(Constants.DAILY_GIRL);
+        mTitles.add(TYPE_VIDEO);
+        mTitles.add(TYPE_JIANDAN);
 
-        GirlsAdapter mPagerAdapter = new GirlsAdapter(mActivity.getSupportFragmentManager(), mList,
+        DiscoveredAdapter mPagerAdapter = new DiscoveredAdapter(mActivity.getSupportFragmentManager(), mList,
                 mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);

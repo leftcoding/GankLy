@@ -93,7 +93,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         changeThemeBackground();
     }
 

@@ -92,7 +92,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
             public void retry(View v) {

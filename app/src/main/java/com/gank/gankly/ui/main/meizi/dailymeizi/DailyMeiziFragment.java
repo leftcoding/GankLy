@@ -58,9 +58,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         return R.layout.fragment_gift;
     }
 
-    public DailyMeiziFragment() {
-    }
-
     @Override
     protected void initPresenter() {
         mPresenter = new DailyMeiziPresenter(MeiziDataSource.getInstance(), this);
@@ -89,7 +86,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {

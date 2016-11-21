@@ -24,7 +24,6 @@ import rx.functions.Func1;
 
 public class MeiziDataSource extends GirlsDataSource {
     private static final String MEIZI_DAILY_URL = "http://m.mzitu.com/all";
-    private int progress = 0;
 
     @Nullable
     private static MeiziDataSource INSTANCE = null;

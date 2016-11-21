@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.JiandanResult;
+import com.gank.gankly.bean.JiandanBean;
 import com.gank.gankly.listener.ItemClick;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanHolder> {
-    private List<JiandanResult.PostsBean> mList;
+    private List<JiandanBean> mList;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 
@@ -41,14 +41,15 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
 
     @Override
     public void onBindViewHolder(JiandanHolder holder, int position) {
-        JiandanResult.PostsBean bean = mList.get(position);
+        JiandanBean bean = mList.get(position);
         holder.bean = bean;
         holder.txtTitle.setText(bean.getTitle());
-        holder.txtAuthor.setText(bean.getAuthor().getNickname());
-        holder.txtCount.setText(String.valueOf(bean.getComment_count()));
-        holder.txtTags.setText(bean.getTags().get(0).getTitle());
+        holder.txtAuthor.setText(bean.getType());
+        holder.txtCount.setText("");
+        holder.txtTags.setText("");
+
         Glide.with(mContext)
-                .load(bean.getCustom_fields().getThumb_c().get(0))
+                .load(bean.getImgUrl())
                 .into(holder.img);
     }
 
@@ -56,12 +57,12 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
         this.mMeiZiOnClick = mMeiZiOnClick;
     }
 
-    public void updateItem(List<JiandanResult.PostsBean> list) {
+    public void updateItem(List<JiandanBean> list) {
         mList.clear();
         appendItem(list);
     }
 
-    public void appendItem(List<JiandanResult.PostsBean> list) {
+    public void appendItem(List<JiandanBean> list) {
         mList.addAll(list);
         notifyItemRangeInserted(mList.size(), list.size());
     }
@@ -83,7 +84,7 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
         @BindView(R.id.jiandan_img)
         ImageView img;
 
-        private JiandanResult.PostsBean bean;
+        private JiandanBean bean;
 
         public JiandanHolder(View itemView) {
             super(itemView);

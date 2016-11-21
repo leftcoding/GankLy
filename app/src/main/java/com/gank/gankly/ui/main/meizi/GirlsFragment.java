@@ -55,7 +55,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
                     @Override
                     public void call(ThemeEvent event) {

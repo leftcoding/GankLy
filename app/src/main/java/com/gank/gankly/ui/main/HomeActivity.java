@@ -17,7 +17,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.ui.main.meizi.DiscoveredFragment;
+import com.gank.gankly.ui.main.discovered.DiscoveredFragment;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
@@ -100,12 +100,13 @@ public class HomeActivity extends BaseActivity {
 
                 if (mCurFragment == null) {
                     addMainFragment(fragmentTo);
+                    mCurFragment = fragmentTo;
                 } else {
                     if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
                         addAnimFragment(mCurFragment, fragmentTo, true);
+                        mCurFragment = fragmentTo;
                     }
                 }
-                mCurFragment = fragmentTo;
             }
         });
     }

@@ -82,7 +82,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

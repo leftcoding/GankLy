@@ -97,7 +97,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mGankAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {

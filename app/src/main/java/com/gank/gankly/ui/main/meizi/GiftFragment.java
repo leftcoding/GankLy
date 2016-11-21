@@ -92,7 +92,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mAdapter.setOnItemClickListener(this);
     }
 

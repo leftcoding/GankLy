@@ -115,7 +115,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mAutoCheckSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
             @Override
             public void onSwitch(boolean isCheck) {

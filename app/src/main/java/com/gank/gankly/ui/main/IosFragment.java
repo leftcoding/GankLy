@@ -96,7 +96,7 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
             public void retry(View v) {
