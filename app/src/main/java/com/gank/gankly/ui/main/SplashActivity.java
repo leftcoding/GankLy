@@ -57,7 +57,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
-        Observable.timer(300, TimeUnit.MILLISECONDS)
+        Observable.timer(50, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Long>() {
                     @Override
@@ -71,7 +71,7 @@ public class SplashActivity extends BaseActivity {
         ObjectAnimator objectAnimatorX = ObjectAnimator.ofFloat(mView, "scaleX", 1f, 1.5f);
         ObjectAnimator objectAnimatorY = ObjectAnimator.ofFloat(mView, "scaleY", 1f, 1.5f);
         AnimatorSet set = new AnimatorSet();
-        set.setDuration(300).playTogether(objectAnimatorX, objectAnimatorY);
+        set.setDuration(200).playTogether(objectAnimatorX, objectAnimatorY);
         set.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

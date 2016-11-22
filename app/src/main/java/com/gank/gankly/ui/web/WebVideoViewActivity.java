@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
@@ -27,7 +28,7 @@ public class WebVideoViewActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
-
+        mLoveVideoView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
     @Override

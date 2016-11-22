@@ -16,6 +16,7 @@
             android:id="@+id/main_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
             android:background="?attr/themeTabLayoutBackground"/>
     </android.support.design.widget.AppBarLayout>
 

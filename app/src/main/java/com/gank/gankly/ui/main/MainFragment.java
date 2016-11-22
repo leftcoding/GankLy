@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.util.TypedValue;
 
 import com.gank.gankly.App;
@@ -85,11 +84,11 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 //        mToolbar.setTitle(R.string.app_name);
 //        mActivity.setSupportActionBar(mToolbar);
 
-        ActionBar ab = mActivity.getSupportActionBar();
-        if (ab != null) {
-            ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
+//        ActionBar ab = mActivity.getSupportActionBar();
+//        if (ab != null) {
+//            ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
+//            ab.setDisplayHomeAsUpEnabled(true);
+//        }
     }
 
     @Override

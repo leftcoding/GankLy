@@ -7,9 +7,9 @@
         title="干货"/>
     <tab
         barColorWhenSelected="@color/colorPrimary"
-        icon="@drawable/ic_bottom_bar_video"
-        id="@+id/tab_video"
-        title="@string/navigation_video"/>
+        icon="@drawable/ic_bottom_bar_news"
+        id="@+id/tab_news"
+        title="@string/navigation_news"/>
     <tab
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_bottom_bar_image"

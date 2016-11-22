@@ -40,10 +40,6 @@ import rx.functions.Action1;
  */
 public class VideoFragment extends LazyFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
-//    @BindView(R.id.coordinator)
-//    CoordinatorLayout mCoordinatorLayout;
-    //    @BindView(R.id.toolbar)
-//    Toolbar mToolbar;
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -72,18 +68,14 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initValues() {
-//        onLoading();
     }
 
     private void onLoading() {
-//        mMultipleStatusView.showLoading();
         onDownRefresh();
     }
 
     @Override
     protected void initViews() {
-//        mToolbar.setTitle(R.string.navigation_video);
-
         setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
@@ -159,6 +151,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         List<ResultsBean> list = mVideoRecyclerAdapter.getResults();
         bundle.putString("title", list.get(position).getDesc());
         bundle.putString("url", list.get(position).getUrl());
+        KLog.d("list.get(position).getUrl():" + list.get(position).getUrl());
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
     }
 
@@ -169,7 +162,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        KLog.d("list:" + list.size());
         mMultipleStatusView.showContent();
         mVideoRecyclerAdapter.updateItems(list);
     }

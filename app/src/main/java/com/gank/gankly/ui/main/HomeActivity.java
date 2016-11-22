@@ -46,7 +46,7 @@ public class HomeActivity extends BaseActivity {
     private long mKeyDownTime;
     private Fragment mCurFragment;
 
-    private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_video};
+    private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_news};
     private List<Fragment> mFragmentList;
 
     @Override
@@ -85,7 +85,7 @@ public class HomeActivity extends BaseActivity {
                     case R.id.tab_home:
                         index = 0;
                         break;
-                    case R.id.tab_video:
+                    case R.id.tab_news:
                         index = 1;
                         break;
                     case R.id.tab_image:

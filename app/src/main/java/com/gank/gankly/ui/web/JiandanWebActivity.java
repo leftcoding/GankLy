@@ -58,7 +58,6 @@ public class JiandanWebActivity extends BaseActivity {
     public static final int FROM_JIANDAN = 2;
 
     private static final int timeout = 50 * 1000;
-    //    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 7 Build/JSS15Q) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2307.2 Safari/537.36";
     private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
 
     public static final String TITLE = "title";
@@ -217,7 +216,16 @@ public class JiandanWebActivity extends BaseActivity {
             doc.select(list.get(i)).remove();
         }
 
+        doc = removePrevDiv(doc);
         doc = removeScripts(doc);
+        return doc;
+    }
+
+    private Document removePrevDiv(Document doc) {
+        Elements elements = doc.select(".entry");
+        if (elements != null && elements.size() > 1) {
+            elements.get(1).remove();
+        }
         return doc;
     }
 
@@ -230,6 +238,7 @@ public class JiandanWebActivity extends BaseActivity {
         list.add(".share-links");
         list.add(".star-rating");
         list.add(".s_related");
+        list.add(".jandan-zan");
         return list;
     }
 
@@ -251,6 +260,7 @@ public class JiandanWebActivity extends BaseActivity {
             intent.putExtras(bundle);
         }
         activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
     }
 
     @Override
@@ -281,17 +291,17 @@ public class JiandanWebActivity extends BaseActivity {
                 switchCollectIcon(item);
                 return true;
             case R.id.welfare_share:
-                ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mWebView.getUrl());
+                ShareUtils.getInstance().shareText(this, mWebView.getTitle(), mUrl);
                 return true;
             case R.id.welfare_copy_url:
-                AppUtils.copyText(this, mWebView.getUrl());
+                AppUtils.copyText(this, mUrl);
                 ToastUtils.showToast(R.string.tip_copy_success);
                 return true;
             case R.id.welfare_refresh:
                 mWebView.reload();
                 return true;
             case R.id.welfare_browser:
-                openBrowser(mWebView.getUrl());
+                openBrowser(mUrl);
                 return true;
             default:
                 break;

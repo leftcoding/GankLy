@@ -24,6 +24,7 @@ import rx.schedulers.Schedulers;
 
 public class JiandanPresenter extends FetchPresenter implements JiandanContract.Presenter {
     private static final String BASE_URL = "http://i.jandan.net/page/";
+    private static final int LIMIT = 24;
 
     private JiandanDataSource mJiandanDataSource;
     private JiandanContract.View mView;
@@ -31,6 +32,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
     public JiandanPresenter(JiandanDataSource jiandanDataSource, JiandanContract.View view) {
         mJiandanDataSource = jiandanDataSource;
         mView = view;
+        setFetchLimit(LIMIT);
     }
 
     @Override
@@ -89,8 +91,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
             Elements imgs = doc.select(".thumb_s a img");
             Elements types = doc.select(".indexs");
             Elements titles = doc.select(".thetitle");
-            KLog.d("herfs:" + herfs.size() + ",imgs:" + imgs.size() + ",types:"
-                    + types.size() + ",titles:" + titles.size());
+
             String url;
             String title;
             String type;
@@ -104,7 +105,6 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                     imgUrl = imgUrl.substring(2, imgUrl.length());
                     imgUrl = "http://" + imgUrl;
                 }
-                KLog.d("url:" + url + ",title:" + title + ",type:" + type + ",imgUrl:" + imgUrl);
                 list.add(new JiandanBean(url, title, type, imgUrl));
             }
         }

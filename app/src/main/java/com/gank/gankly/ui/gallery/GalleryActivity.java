@@ -122,12 +122,10 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//        KLog.d("position:" + position + ",positionOffset:" + positionOffset);
     }
 
     @Override
     public void onPageSelected(int position) {
-        KLog.d("onPageSelected#position:" + position + ",isScroll:" + isScroll);
         if (EXTRA_GANK.equals(mViewsModel)) {
             int p = mGiftList.size() - 5;
             if (position == p) {
@@ -310,11 +308,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                         @Override
                         public void onNext(Long aLong) {
                             int count = mPagerAdapter.getCount();
-                            KLog.d("along:" + aLong + ",mPosition:" + mPosition + ",count:" + count);
                             if (aLong >= count) {
                                 unSubscribeTime();
                             } else {
-//                                mViewPager.postInvalidateDelayed(800);
                                 mPosition = mPosition + 1;
                                 mViewPager.setCurrentItem(mPosition);
                             }
@@ -467,12 +463,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @OnClick(R.id.brose_img_auto)
     void onBrowseAuto() {
         if (isPlay) {
-            isPlay = false;
             unSubscribeTime();
         } else {
-            isPlay = true;
+            hideSystemUi();
             timerBrowse();
         }
+        isPlay = !isPlay;
     }
 
     private String getImagePath() {
