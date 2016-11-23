@@ -11,6 +11,7 @@ public interface Constants {
     String ALL = "all";
     String VIDEO = "video";
     String JIANDAN = "新鲜事";
+    String TECHNOLOGY = "科技资讯";
 
     String QINGCHUN = "清纯";
     String DAILY_GIRL = "每日更新";

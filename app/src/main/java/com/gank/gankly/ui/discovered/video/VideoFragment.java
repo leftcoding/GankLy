@@ -160,7 +160,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mMultipleStatusView.showContent();
         mVideoRecyclerAdapter.updateItems(list);
     }
 
@@ -185,18 +184,29 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
+    public void showContent() {
+        super.showContent();
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showContent();
+        }
+    }
+
+    @Override
     public void hideRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void showRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override
     protected void initData() {
-//        onLoading();
         mPresenter.fetchNew();
     }
 }

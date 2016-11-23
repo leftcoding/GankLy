@@ -47,7 +47,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
 
     public void fetchData(int page) {
         String url = BASE_URL + page;
-        mJiandanDataSource.fetchData(url)
+        mJiandanDataSource.jsoupUrlData(url)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

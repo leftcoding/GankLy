@@ -13,8 +13,9 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.discovered.technology.TechnologyFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
+import com.gank.gankly.ui.main.HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +24,13 @@ import butterknife.BindView;
 import rx.functions.Action1;
 
 /**
- * 美しい妹
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */
 public class DiscoveredFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener {
     private static final String TYPE_VIDEO = "视频";
     private static final String TYPE_JIANDAN = "新鲜事";
+    private static final String TYPE_THCHNOLOGY = "科技资讯";
 
     @BindView(R.id.discovered_tabLayout)
     TabLayout mTabLayout;
@@ -65,15 +66,17 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new VideoFragment());
         mList.add(new JiandanFragment());
+        mList.add(new TechnologyFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(TYPE_VIDEO);
         mTitles.add(TYPE_JIANDAN);
+        mTitles.add(TYPE_THCHNOLOGY);
 
-        DiscoveredAdapter mPagerAdapter = new DiscoveredAdapter(mActivity.getSupportFragmentManager(), mList,
+        DiscoveredAdapter mPagerAdapter = new DiscoveredAdapter(getChildFragmentManager(), mList,
                 mTitles);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.addOnPageChangeListener(this);
 
         initTabLayout();

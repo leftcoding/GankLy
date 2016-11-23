@@ -20,8 +20,6 @@ import rx.Subscriber;
  */
 
 public class JiandanDataSource extends BaseDataSourceModel {
-    protected static final int TIME_OUT = 50 * 1000;
-    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
 
     @Nullable
     private static JiandanDataSource INSTANCE = null;
@@ -43,7 +41,7 @@ public class JiandanDataSource extends BaseDataSourceModel {
      * @param url 请求地址
      * @return
      */
-    public Observable<Document> fetchData(final String url) {
+    public Observable<Document> jsoupUrlData(final String url) {
         return Observable.create(new Observable.OnSubscribe<Document>() {
             @Override
             public void call(Subscriber<? super Document> subscriber) {
