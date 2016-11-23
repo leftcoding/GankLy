@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.video;
+package com.gank.gankly.ui.discovered.video;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -26,7 +26,6 @@ import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -151,7 +150,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         List<ResultsBean> list = mVideoRecyclerAdapter.getResults();
         bundle.putString("title", list.get(position).getDesc());
         bundle.putString("url", list.get(position).getUrl());
-        KLog.d("list.get(position).getUrl():" + list.get(position).getUrl());
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
     }
 

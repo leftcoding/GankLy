@@ -35,8 +35,6 @@ import butterknife.BindView;
  */
 public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener,
         DownloadProgressListener, ILauncher {
-//    @BindView(R.id.main_toolbar)
-//    Toolbar mToolbar;
     @BindView(R.id.main_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.main_view_pager)
@@ -81,14 +79,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     protected void initViews() {
-//        mToolbar.setTitle(R.string.app_name);
-//        mActivity.setSupportActionBar(mToolbar);
-
-//        ActionBar ab = mActivity.getSupportActionBar();
-//        if (ab != null) {
-//            ab.setHomeAsUpIndicator(R.drawable.ic_home_navigation);
-//            ab.setDisplayHomeAsUpEnabled(true);
-//        }
     }
 
     @Override

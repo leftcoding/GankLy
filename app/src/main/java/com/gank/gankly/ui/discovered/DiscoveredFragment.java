@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.discovered;
+package com.gank.gankly.ui.discovered;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -12,9 +12,9 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.jiandan.JiandanFragment;
+import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.main.video.VideoFragment;
+import com.gank.gankly.ui.discovered.video.VideoFragment;
 
 import java.util.ArrayList;
 import java.util.List;

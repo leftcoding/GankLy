@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.jiandan;
+package com.gank.gankly.ui.discovered.jiandan;
 
 import com.gank.gankly.bean.JiandanBean;
 import com.gank.gankly.mvp.FetchPresenter;

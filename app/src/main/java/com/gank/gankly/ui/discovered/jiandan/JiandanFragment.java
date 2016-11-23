@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.jiandan;
+package com.gank.gankly.ui.discovered.jiandan;
 
 import android.content.Context;
 import android.os.Bundle;

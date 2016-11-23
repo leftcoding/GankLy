@@ -25,7 +25,7 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
-import com.gank.gankly.ui.main.video.VideoFragment;
+import com.gank.gankly.ui.discovered.video.VideoFragment;
 import com.gank.gankly.ui.more.AboutFragment;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.AppUtils;

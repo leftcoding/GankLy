@@ -27,19 +27,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.gank.gankly.utils.CrashUtils;
-import com.socks.library.KLog;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.io.InputStream;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * pick from drakeet  https://github.com/drakeet
@@ -94,12 +82,6 @@ public class LoveVideoView extends WebView {
 
         @Override
         public void onPageFinished(WebView view, String url) {
-            if (!isLoaded && url.contains("https://m.v.qq.com")) {
-                mUrl = url;
-                isLoaded = true;
-                parseLoadUrlData(url);
-            }
-            KLog.d("url:" + url);
             super.onPageFinished(view, url);
             // 这些视频需要hack CSS才能达到全屏播放的效果
             if (url.contains("www.vmovier.com")) {
@@ -115,57 +97,6 @@ public class LoveVideoView extends WebView {
         public void onLoadResource(WebView view, String url) {
             super.onLoadResource(view, url);
         }
-    }
-
-    private void parseLoadUrlData(final String url) {
-        KLog.d("url:" + url);
-        Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
-            @Override
-            public void call(Subscriber<? super String> subscriber) {
-                try {
-                    Document doc = Jsoup.connect(url)
-                            .userAgent(USERAGENT)
-                            .timeout(timeout)
-                            .ignoreContentType(true)
-                            .ignoreHttpErrors(true)
-                            .get();
-                    String _url = null;
-                    if (doc != null) {
-                        doc = removeDivs(doc);
-                        _url = doc.html();
-                    }
-                    subscriber.onNext(_url);
-                    subscriber.onCompleted();
-                } catch (IOException e) {
-                    KLog.e(e);
-                    subscriber.onError(e);
-                }
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                CrashUtils.crashReport(e);
-            }
-
-            @Override
-            public void onNext(String s) {
-                loadDataWithBaseURL("https://m.v.qq.com", s, "text/html", "utf-8", null);
-            }
-        });
-    }
-
-
-    private Document removeDivs(Document doc) {
-//        doc.select("#header").remove();
-        return doc;
     }
 
     private class Chrome extends WebChromeClient
