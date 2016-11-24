@@ -13,6 +13,7 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
+import com.gank.gankly.ui.discovered.teamBlog.TeamBlogFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
 import com.gank.gankly.ui.main.HomeActivity;
@@ -31,6 +32,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     private static final String TYPE_VIDEO = "视频";
     private static final String TYPE_JIANDAN = "新鲜事";
     private static final String TYPE_THCHNOLOGY = "科技资讯";
+    private static final String TYPE_TEAM_BLOG = "团队博客";
 
     @BindView(R.id.discovered_tabLayout)
     TabLayout mTabLayout;
@@ -67,16 +69,18 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
         mList.add(new VideoFragment());
         mList.add(new JiandanFragment());
         mList.add(new TechnologyFragment());
+        mList.add(new TeamBlogFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(TYPE_VIDEO);
         mTitles.add(TYPE_JIANDAN);
         mTitles.add(TYPE_THCHNOLOGY);
+        mTitles.add(TYPE_TEAM_BLOG);
 
         DiscoveredAdapter mPagerAdapter = new DiscoveredAdapter(getChildFragmentManager(), mList,
                 mTitles);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setOffscreenPageLimit(2);
+        mViewPager.setOffscreenPageLimit(mPagerAdapter.getCount());
         mViewPager.addOnPageChangeListener(this);
 
         initTabLayout();

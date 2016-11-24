@@ -205,19 +205,45 @@ public class JiandanWebActivity extends BaseActivity {
 
             @Override
             public void onNext(String s) {
-                mWebView.loadDataWithBaseURL("http://i.jandan.net", s, "text/html", "utf-8", null);
+                if (TextUtils.isEmpty(s)) {
+                    mWebView.loadUrl(mUrl);
+                } else {
+                    mWebView.loadDataWithBaseURL(getLoadDataBaseUrl(), s, "text/html", "utf-8", null);
+                }
             }
         });
     }
 
+    private String getLoadDataBaseUrl() {
+        if (!TextUtils.isEmpty(mUrl)) {
+            if (isJianDanUrl()) {
+                return "i.jandan.net";
+            } else if (isPmUrl()) {
+                return "woshipm.com";
+            }
+        }
+        return mUrl;
+    }
+
     private Document removeDivs(Document doc) {
-        List<String> list = getRemoveDivs();
-        for (int i = 0; i < list.size(); i++) {
-            doc.select(list.get(i)).remove();
+        List<String> list = new ArrayList<>();
+        KLog.d("isJianDanUrl:" + isJianDanUrl() + ",isPmUrl:" + isPmUrl());
+        if (isJianDanUrl()) {
+            list = getJianDanRemoveDivs();
+        } else if (isPmUrl()) {
+            list = getPmRemoveDivs();
         }
 
-        doc = removePrevDiv(doc);
-        doc = removeScripts(doc);
+        if (list.size() != 0) {
+            for (int i = 0; i < list.size(); i++) {
+                doc.select(list.get(i)).remove();
+            }
+        }
+
+        if (isJianDanUrl()) {
+            doc = removePrevDiv(doc);
+            doc = removeScripts(doc);
+        }
         return doc;
     }
 
@@ -229,7 +255,13 @@ public class JiandanWebActivity extends BaseActivity {
         return doc;
     }
 
-    private List<String> getRemoveDivs() {
+    private List<String> getPmRemoveDivs() {
+        List<String> list = new ArrayList<>();
+        list.add(".downapp"); //id
+        return list;
+    }
+
+    private List<String> getJianDanRemoveDivs() {
         List<String> list = new ArrayList<>();
         list.add("#headerwrapper"); //id
         list.add("#footer");
@@ -252,6 +284,14 @@ public class JiandanWebActivity extends BaseActivity {
             }
         }
         return doc;
+    }
+
+    private boolean isJianDanUrl() {
+        return mUrl.contains("jandan.net") || mUrl.contains("i.jandan.net");
+    }
+
+    private boolean isPmUrl() {
+        return mUrl.contains("woshipm.com");
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
