@@ -85,6 +85,8 @@ public class JiandanWebActivity extends BaseActivity {
     private UrlCollect mUrlCollect;
     private CollectStates mStates = CollectStates.NORMAL;
     private int mFromWay;
+    private String mHistory;
+    private List<String> mStrings = new ArrayList<>();
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -190,6 +192,12 @@ public class JiandanWebActivity extends BaseActivity {
                 }
             }
         })
+//                .map(new Func1<String, String>() {
+//                    @Override
+//                    public String call(String s) {
+//                        return s.replace("#", "%23").replace("%", "%25").replace("\\", "%27").replace("\'\'", "%3f");
+//                    }
+//                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -200,6 +208,7 @@ public class JiandanWebActivity extends BaseActivity {
 
             @Override
             public void onError(Throwable e) {
+                KLog.e(e);
                 CrashUtils.crashReport(e);
             }
 
@@ -208,18 +217,19 @@ public class JiandanWebActivity extends BaseActivity {
                 if (TextUtils.isEmpty(s)) {
                     mWebView.loadUrl(mUrl);
                 } else {
-                    mWebView.loadDataWithBaseURL(getLoadDataBaseUrl(), s, "text/html", "utf-8", null);
+                    mWebView.loadDataWithBaseURL(getLoadDataBaseUrl(), s, "text/html", "utf-8", mUrl);
                 }
             }
         });
     }
 
     private String getLoadDataBaseUrl() {
+        KLog.d("isJianDanUrl:" + isJianDanUrl() + ",isPmUrl:" + isPmUrl());
         if (!TextUtils.isEmpty(mUrl)) {
             if (isJianDanUrl()) {
-                return "i.jandan.net";
+                return "http://i.jandan.net";
             } else if (isPmUrl()) {
-                return "woshipm.com";
+                return "http://woshipm.com";
             }
         }
         return mUrl;
@@ -257,7 +267,9 @@ public class JiandanWebActivity extends BaseActivity {
 
     private List<String> getPmRemoveDivs() {
         List<String> list = new ArrayList<>();
-        list.add(".downapp"); //id
+        list.add(".downapp");
+        list.add(".footer");
+        list.add(".metabar");
         return list;
     }
 
@@ -374,7 +386,21 @@ public class JiandanWebActivity extends BaseActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (mWebView != null && mWebView.canGoBack()) {
                 mWebView.goBack();
+//                int size = mStrings.size();
+//                KLog.d("size:" + size + ",mHistory:" + mHistory);
+//                if (size > 1) {
+//                    mStrings.remove(size - 1);
+//                    KLog.d("size:" + mStrings.size());
+//                    size = mStrings.size();
+//                    String url;
+//                    if (size == 1) {
+//                        url = mUrl;
+//                    } else {
+//                        url = mStrings.get(size - 1);
+//                    }
+//                    mWebView.loadUrl(url);
                 return true;
+//                }
             }
         }
         return super.onKeyDown(keyCode, event);
@@ -411,6 +437,10 @@ public class JiandanWebActivity extends BaseActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            mHistory = url;
+            if (!mStrings.contains(url)) {
+                mStrings.add(url);
+            }
         }
     }
 
@@ -433,6 +463,7 @@ public class JiandanWebActivity extends BaseActivity {
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
+
         }
 
         @Override
@@ -456,10 +487,10 @@ public class JiandanWebActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (mWebView != null) {
             mWebView.destroy();
             mWebView = null;
         }
+        super.onDestroy();
     }
 }

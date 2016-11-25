@@ -303,4 +303,9 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         setRetainInstance(true);
         setHasOptionsMenu(true);
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

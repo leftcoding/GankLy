@@ -264,4 +264,9 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

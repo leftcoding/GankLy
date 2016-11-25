@@ -131,4 +131,9 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     protected void initPresenter() {
 
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

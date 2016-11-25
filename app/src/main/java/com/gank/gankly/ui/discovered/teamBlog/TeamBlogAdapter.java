@@ -55,7 +55,9 @@ public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.Jianda
     }
 
     public void updateItem(List<JiandanBean> list) {
+        int size = mList.size();
         mList.clear();
+        notifyItemRangeRemoved(0, size);
         appendItem(list);
     }
 

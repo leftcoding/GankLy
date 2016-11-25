@@ -45,8 +45,6 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
         holder.bean = bean;
         holder.txtTitle.setText(bean.getTitle());
         holder.txtAuthor.setText(bean.getType());
-        holder.txtCount.setText("");
-        holder.txtTags.setText("");
 
         Glide.with(mContext)
                 .load(bean.getImgUrl())
@@ -83,10 +81,6 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
         TextView txtTitle;
         @BindView(R.id.jiandan_txt_author)
         TextView txtAuthor;
-        @BindView(R.id.jiandan_txt_tags)
-        TextView txtTags;
-        @BindView(R.id.jiandan_txt_comment_count)
-        TextView txtCount;
         @BindView(R.id.jiandan_img)
         ImageView img;
 

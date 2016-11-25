@@ -1,10 +1,15 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.JiandanBean;
 import com.gank.gankly.config.Constants;
@@ -32,11 +37,12 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView mRecyclerView;
 
-    //    private IBaseRefreshPresenter mPresenter;
     private HomeActivity mActivity;
     private JiandanAdapter mAdapter;
     private JiandanContract.Presenter mPresenter;
+
 
     @Override
     public void onAttach(Context context) {
@@ -66,7 +72,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setAdapter(mAdapter);
-
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
         mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(mActivity, LinearLayoutManager.HORIZONTAL));
 //        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
@@ -85,7 +91,8 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
 
     @Override
     protected void initValues() {
-
+        setMultipleStatusView(mMultipleStatusView);
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
@@ -94,21 +101,34 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void changeThemes() {
-        super.changeThemes();
+    protected void callBackRefreshUi() {
+        Resources.Theme theme = mActivity.getTheme();
+        TypedValue typedValue = new TypedValue();
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+        int background = typedValue.data;
+        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+        int textColor = typedValue.data;
+        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
+        int authorColor = typedValue.data;
+        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
+        int mainColor = typedValue.data;
+        mRecyclerView.setBackgroundColor(mainColor);
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
+
+        int childCount = mRecyclerView.getChildCount();
+        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
+            View view = childView.findViewById(R.id.jiandan_ll);
+            view.setBackgroundColor(background);
+            TextView title = (TextView) childView.findViewById(R.id.jiandan_txt_title);
+            TextView author = (TextView) childView.findViewById(R.id.jiandan_txt_author);
+            title.setTextColor(textColor);
+            author.setTextColor(authorColor);
+        }
+
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
-
-    private void changeRecyclerViewBackground() {
-        int color;
-        if (App.isNight()) {
-            color = R.color.gray_holo_light;
-        } else {
-            color = R.color.gray_holo_dark;
-        }
-        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(App.getAppColor(color));
-    }
-
 
     @Override
     public void refillData(List<JiandanBean> list) {

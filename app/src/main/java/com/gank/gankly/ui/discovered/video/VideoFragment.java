@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
@@ -23,6 +21,7 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
+import com.gank.gankly.utils.theme.ThemeUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -30,7 +29,6 @@ import com.gank.gankly.widget.MultipleStatusView;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
 
 /**
  * 休息视频
@@ -106,36 +104,40 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void bindListener() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-            @Override
-            public void call(ThemeEvent themeEvent) {
-                onRefreshUi();
-            }
-        });
+//        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+//            @Override
+//            public void call(ThemeEvent themeEvent) {
+//                callBackRefreshUi();
+//            }
+//        });
     }
 
-    private void onRefreshUi() {
+    @Override
+    protected void callBackRefreshUi() {
+        ThemeUtils themeUtils = new ThemeUtils(this);
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-        int background = typedValue.data;
+        int background = typedValue.resourceId;
         theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
         int textColor = typedValue.data;
         theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-//        mToolbar.setBackgroundResource(typedValue.resourceId);
+//        mRecyclerView.setBackgroundResource(typedValue.resourceId);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             View view = childView.findViewById(R.id.goods_rl_title);
-            view.setBackgroundColor(background);
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+            view.setBackgroundResource(background);
             title.setTextColor(textColor);
+//            themeUtils.backgroundColor(R.attr.baseAdapterItemBackground, view);
+//            themeUtils.textViewColor(R.attr.baseAdapterItemTextColor, title);
         }
-
+//        themeUtils.backgroundColor(R.attr.themeBackground, mRecyclerView);
+//        themeUtils.start();
         StyleUtils.clearRecyclerViewItem(mRecyclerView);
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }

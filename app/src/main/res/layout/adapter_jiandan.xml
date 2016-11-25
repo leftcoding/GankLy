@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/jiandan_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/meiziDailyItemBackground"
@@ -44,27 +45,6 @@
                     android:text=""
                     android:textColor="?attr/textSecondaryColor"/>
 
-                <TextView
-                    android:id="@+id/jiandan_txt_comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_toEndOf="@id/jiandan_txt_author"
-                    android:drawablePadding="3dp"
-                    android:drawableStart="@drawable/jiandan_comment_count"
-                    android:gravity="center"
-                    android:text=""
-                    android:textColor="?attr/textSecondaryColor"/>
-
-                <TextView
-                    android:id="@+id/jiandan_txt_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="0dp"
-                    android:text=""
-                    android:textColor="@color/Blue"/>
             </RelativeLayout>
         </RelativeLayout>
 

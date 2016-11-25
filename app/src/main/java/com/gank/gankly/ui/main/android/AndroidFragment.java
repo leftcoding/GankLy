@@ -286,4 +286,9 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
         return new ColorStateList(states, colors);
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

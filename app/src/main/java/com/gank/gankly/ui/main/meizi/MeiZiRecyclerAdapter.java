@@ -64,7 +64,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
                 .load(url)
                 .asBitmap()
                 .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                .diskCacheStrategy(DiskCacheStrategy.ALL);
         if (heights.containsKey(url)) {
             setCardViewLayoutParams(holder.imgMeizi, mScreenWidth, heights.get(url));
             requestBuilder.into(holder.imgMeizi);
@@ -78,6 +78,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     public void onViewRecycled(GoodsViewHolder holder) {
         super.onViewRecycled(holder);
         Glide.clear(holder.imgMeizi);//view recycled,clear image request
+        holder.imgMeizi.setImageBitmap(null);
     }
 
     private class DriverViewTarget extends BitmapImageViewTarget {

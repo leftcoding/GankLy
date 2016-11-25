@@ -64,6 +64,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
         Glide.clear(holder.mImageView);
+        holder.mImageView.setImageBitmap(null);
     }
 
     @Override
@@ -72,19 +73,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     public void updateItems(List<ResultsBean> getResults) {
-        clear();
+        int size = mResults.size();
+        mResults.clear();
+        notifyItemRangeRemoved(0, size);
         addItems(getResults);
     }
 
     public void addItems(List<ResultsBean> getResults) {
         mResults.addAll(getResults);
         notifyItemRangeInserted(mResults.size(), getResults.size());
-    }
-
-    public void clear() {
-        if (mResults != null) {
-            mResults.clear();
-        }
     }
 
     public List<ResultsBean> getResults() {

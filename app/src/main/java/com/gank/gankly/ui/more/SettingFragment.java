@@ -208,4 +208,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     public void onResume() {
         super.onResume();
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

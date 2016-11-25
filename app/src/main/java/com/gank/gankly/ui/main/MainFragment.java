@@ -172,4 +172,9 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

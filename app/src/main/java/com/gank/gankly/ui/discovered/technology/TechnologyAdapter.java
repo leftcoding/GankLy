@@ -55,7 +55,9 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.Ji
     }
 
     public void updateItem(List<JiandanBean> list) {
+        int size = mList.size();
         mList.clear();
+        notifyItemRangeRemoved(0, size);
         appendItem(list);
     }
 

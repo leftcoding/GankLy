@@ -61,14 +61,15 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
 
     @Override
     protected void initValues() {
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
         setMultipleStatusView(mMultipleStatusView);
+
         mAdapter = new TechnologyAdapter();
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(mActivity, LinearLayoutManager.HORIZONTAL));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -134,5 +135,10 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         intent.putExtras(bundle);
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(0, 0);
+    }
+
+    @Override
+    protected void callBackRefreshUi() {
+
     }
 }

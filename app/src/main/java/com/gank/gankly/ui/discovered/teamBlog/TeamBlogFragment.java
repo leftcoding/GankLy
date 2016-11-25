@@ -14,6 +14,7 @@ import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
 import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -62,14 +63,15 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
 
     @Override
     protected void initValues() {
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
         setMultipleStatusView(mMultipleStatusView);
+
         mAdapter = new TeamBlogAdapter();
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(mActivity, LinearLayoutManager.HORIZONTAL));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -133,7 +135,12 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         bundle.putString(WebActivity.AUTHOR, "");
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
-//        JiandanWebActivity.startWebActivity(mActivity, bundle);
-        mActivity.startActivity(intent);
+        JiandanWebActivity.startWebActivity(mActivity, bundle);
+//        mActivity.startActivity(intent);
+    }
+
+    @Override
+    protected void callBackRefreshUi() {
+
     }
 }

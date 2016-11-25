@@ -237,4 +237,9 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
             mDialog.dismiss();
         }
     }
+
+    @Override
+    protected void callBackRefreshUi() {
+
+    }
 }

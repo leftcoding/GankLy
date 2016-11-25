@@ -26,8 +26,8 @@ import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IMeiziView;
-import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
-    private MeiZiRecyclerAdapter mRecyclerAdapter;
+    private MeiZiRecyclerAdapter mMeiZiRecyclerAdapter;
     private HomeActivity mActivity;
     private RecyclerView mRecyclerView;
 
@@ -81,14 +81,14 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        mRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
-        mRecyclerAdapter.setMeiZiOnClick(this);
+        mMeiZiRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
+        mMeiZiRecyclerAdapter.setMeiZiOnClick(this);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
+        mSwipeRefreshLayout.setAdapter(mMeiZiRecyclerAdapter);
     }
 
     @Override
@@ -150,12 +150,12 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mRecyclerAdapter.updateItems(list);
+        mMeiZiRecyclerAdapter.updateItems(list);
     }
 
     @Override
     public void appendMoreDate(List<ResultsBean> list) {
-        mRecyclerAdapter.addItems(list);
+        mMeiZiRecyclerAdapter.addItems(list);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void clear() {
-        mRecyclerAdapter.clear();
+        mMeiZiRecyclerAdapter.clear();
     }
 
     @Override
@@ -248,5 +248,10 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    protected void callBackRefreshUi() {
+
     }
 }

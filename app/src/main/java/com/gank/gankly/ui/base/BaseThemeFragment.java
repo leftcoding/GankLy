@@ -8,6 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
@@ -15,6 +17,7 @@ import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 /**
  * Create by LingYan on 2016-09-13
@@ -27,7 +30,15 @@ public abstract class BaseThemeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+            @Override
+            public void call(ThemeEvent themeEvent) {
+                callBackRefreshUi();
+            }
+        });
     }
+
+    protected abstract void callBackRefreshUi();
 
     @Override
     public void changeThemes() {
@@ -38,9 +49,6 @@ public abstract class BaseThemeFragment extends BaseFragment {
     }
 
     public void setSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
-        if (swipeRefreshLayout == null) {
-            throw new NullPointerException("SwipeRefreshLayout can't be null");
-        }
         this.mSwipeRefreshLayout = swipeRefreshLayout;
     }
 
