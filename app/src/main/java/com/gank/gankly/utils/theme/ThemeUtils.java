@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +24,9 @@ public final class ThemeUtils {
     private Activity mActivity;
     private List<TextViewColor> mTextViewColor = new ArrayList<>();
     private List<BackgroundColor> mBackGroundColor = new ArrayList<>();
+    private List<BackgroundColor> mBackGroundDrawable = new ArrayList<>();
+    private RecyclerViewColor mRecyclerViewColor;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     public ThemeUtils(@NonNull Fragment fragment) {
         mActivity = fragment.getActivity();
@@ -33,20 +36,23 @@ public final class ThemeUtils {
         mActivity = activity;
     }
 
+    public void setTheme(int resId) {
+        mActivity.setTheme(resId);
+    }
+
     public ThemeUtils textViewColor(int resId, @NonNull TextView... args) {
         if (args.length != 0) {
-            int color = getColor(resId);
+            int color = getResourceData(resId);
             for (TextView textView : args) {
-                KLog.d("textView:" + textView);
                 mTextViewColor.add(new TextViewColor(color, textView));
             }
         }
         return this;
     }
 
-    public ThemeUtils backgroundColor(int arrId, @NonNull View... args) {
+    public ThemeUtils backgroundResource(int arrId, @NonNull View... args) {
         if (args.length != 0) {
-            int resource = getResourceColor(arrId);
+            int resource = getResourceId(arrId);
             for (View view : args) {
                 mBackGroundColor.add(new BackgroundColor(resource, view));
             }
@@ -54,52 +60,80 @@ public final class ThemeUtils {
         return this;
     }
 
-    public void backgroundDrawable(int resid, @NonNull View... args) {
+    public void backgroundDrawable(int resId, @NonNull View... args) {
         if (args.length != 0) {
             for (int i = 0; i < args.length; i++) {
-                KLog.d("args:" + args[i]);
+                //empty
             }
         }
     }
 
-    public void start() {
-        for (int i = 0; i < mTextViewColor.size(); i++) {
-            TextViewColor textViewColor = mTextViewColor.get(i);
-            textViewColor.getTextView().setTextColor(textViewColor.getResId());
-        }
+    public ThemeUtils swipeRefresh(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
+        mSwipeRefreshLayout = swipeRefreshLayout;
+        return this;
+    }
 
-        for (int i = 0; i < mBackGroundColor.size(); i++) {
-            BackgroundColor back = mBackGroundColor.get(i);
-            back.getBackGroundView().setBackgroundResource(back.getResId());
+    public ThemeUtils recyclerViewColor(@NonNull RecyclerViewColor recyclerViewColor) {
+        mRecyclerViewColor = new RecyclerViewColor(recyclerViewColor, getTheme());
+        return this;
+    }
+
+    public int getResourceId(int arrId) {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(arrId, typedValue, true);
+        return typedValue.resourceId;
+    }
+
+    public int getResourceData(int arrId) {
+        TypedValue typedValue = new TypedValue();
+        getTheme().resolveAttribute(arrId, typedValue, true);
+        return typedValue.data;
+    }
+
+    public void start() {
+        changeTextColor();
+        changeBackGround();
+        changeSwipeRefreshLayout(mSwipeRefreshLayout);
+//        clearRecyclerViewItem(mRecyclerView);
+        mRecyclerViewColor.start();
+        clean();
+    }
+
+    private void changeTextColor() {
+        TextViewColor textViewColor;
+        TextView textView;
+        for (int i = 0; i < mTextViewColor.size(); i++) {
+            textViewColor = mTextViewColor.get(i);
+            textView = textViewColor.getTextView();
+            textView.setTextColor(textViewColor.getResId());
         }
     }
 
-    private void setTextView() {
-        Resources.Theme theme = mActivity.getTheme();
-        TypedValue typedValue = new TypedValue();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-        int background = typedValue.data;
-        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
-        int textColor = typedValue.data;
-        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
-        int authorColor = typedValue.data;
-        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
-        int mainColor = typedValue.data;
+    private void changeBackGround() {
+        BackgroundColor back;
+        View view;
+        for (int i = 0; i < mBackGroundColor.size(); i++) {
+            back = mBackGroundColor.get(i);
+            view = back.getBackGroundView();
+            view.setBackgroundResource(back.getResId());
+        }
+    }
+
+    private void clean() {
+        mTextViewColor.clear();
+        mBackGroundDrawable.clear();
+        mSwipeRefreshLayout = null;
+//        mRecyclerView = null;
+    }
+
+    public void changeSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
+        int progressColor = getResourceData(R.attr.swipeRefreshLayoutProgressSchemeColor);
+        int schemeColor = getResourceData(R.attr.swipeRefreshLayoutSchemeColors);
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(progressColor);
+        swipeRefreshLayout.setColorSchemeColors(schemeColor);
     }
 
     private Resources.Theme getTheme() {
         return mActivity.getTheme();
-    }
-
-    private int getColor(int resId) {
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(resId, typedValue, true);
-        return typedValue.data;
-    }
-
-    private int getResourceColor(int resId) {
-        TypedValue typedValue = new TypedValue();
-        getTheme().resolveAttribute(resId, typedValue, true);
-        return typedValue.resourceId;
     }
 }

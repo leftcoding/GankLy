@@ -2,20 +2,16 @@ package com.gank.gankly.ui.main.meizi;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
@@ -25,6 +21,7 @@ import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
+import com.gank.gankly.utils.theme.ThemeUtils;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -32,7 +29,6 @@ import com.gank.gankly.widget.MultipleStatusView;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
 
 /**
  * 福利妹子
@@ -69,12 +65,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void initValues() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-            @Override
-            public void call(ThemeEvent event) {
-                refreshUi();
-            }
-        });
     }
 
     @Override
@@ -86,7 +76,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        mRecyclerView.setHasFixedSize(true);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setAdapter(mMeiZiRecyclerAdapter);
     }
@@ -127,19 +116,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     private void onNextRefresh() {
         fetchMore();
-    }
-
-    @Override
-    public void refreshUi() {
-        super.refreshUi();
-        TypedValue value = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.themeBackground, value, true);
-        int background = value.data;
-        mSwipeRefreshLayout.setBackgroundColor(background);
-
-        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
@@ -242,7 +218,6 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override
@@ -252,6 +227,11 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void callBackRefreshUi() {
+        ThemeUtils themeUtils = new ThemeUtils(this);
+        int resource = themeUtils.getResourceId(R.attr.themeBackground);
+        mRecyclerView.setBackgroundResource(resource);
 
+        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 }

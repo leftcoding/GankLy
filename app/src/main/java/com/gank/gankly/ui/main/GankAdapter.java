@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
@@ -69,6 +70,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         if (position < holder.mSize) {
             Glide.with(mContext)
                     .load(holder.list.get(position).getUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .centerCrop()
                     .into(holder.img);
         }
@@ -143,8 +145,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
-            mSize = MeiziArrayList.getInstance().getImagesList().size();
             list = MeiziArrayList.getInstance().getImagesList();
+            mSize = list.size();
             Collections.shuffle(list);
         }
 

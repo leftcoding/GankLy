@@ -52,8 +52,10 @@
     <attr name="meiziDailyItemBackground" format="reference|color"/>
     <attr name="androidItemTimeIcon" format="reference"/>
     <attr name="lyItemSelectBackground" format="reference|color"/>
+    <attr name="swipeRefreshLayoutProgressSchemeColor" format="reference|color"/>
+    <attr name="swipeRefreshLayoutSchemeColors" format="reference|color"/>
 
-    <!--recyclerview 是否带有侧滑-->
+    <!--recyclerView 是否带有侧滑-->
     <declare-styleable name="LySwipeRefreshLayout">
         <attr name="refreshState" format="enum">
             <enum name="normal" value="1"/>
