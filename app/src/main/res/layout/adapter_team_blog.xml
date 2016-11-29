@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/team_ll_body"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:background="?attr/baseAdapterItemBackground"
+    android:background="?attr/lyItemSelectBackground"
     android:elevation="1dp"
     android:orientation="horizontal">
 
@@ -25,7 +26,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/technology_txt_title"
+                android:id="@+id/team_blog_txt_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingEnd="10dp"

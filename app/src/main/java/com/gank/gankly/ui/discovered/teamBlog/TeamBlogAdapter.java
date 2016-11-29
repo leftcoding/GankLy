@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.listener.ItemClick;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.JiandanHolder> {
-    private List<JiandanBean> mList;
+    private List<JianDanBean> mList;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 
@@ -41,7 +41,7 @@ public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.Jianda
 
     @Override
     public void onBindViewHolder(JiandanHolder holder, int position) {
-        JiandanBean bean = mList.get(position);
+        JianDanBean bean = mList.get(position);
         holder.bean = bean;
         holder.txtTitle.setText(bean.getTitle());
 
@@ -54,14 +54,14 @@ public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.Jianda
         this.mMeiZiOnClick = mMeiZiOnClick;
     }
 
-    public void updateItem(List<JiandanBean> list) {
+    public void updateItem(List<JianDanBean> list) {
         int size = mList.size();
         mList.clear();
         notifyItemRangeRemoved(0, size);
         appendItem(list);
     }
 
-    public void appendItem(List<JiandanBean> list) {
+    public void appendItem(List<JianDanBean> list) {
         mList.addAll(list);
         notifyItemRangeInserted(mList.size(), list.size());
     }
@@ -78,12 +78,12 @@ public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.Jianda
     }
 
     public class JiandanHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.technology_txt_title)
+        @BindView(R.id.team_blog_txt_title)
         TextView txtTitle;
         @BindView(R.id.technology_img)
         ImageView img;
 
-        private JiandanBean bean;
+        private JianDanBean bean;
 
         public JiandanHolder(View itemView) {
             super(itemView);

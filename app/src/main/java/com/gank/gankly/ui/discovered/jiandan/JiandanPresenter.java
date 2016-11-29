@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.JiandanDataSource;
 import com.gank.gankly.utils.ListUtils;
@@ -51,13 +51,13 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Document, List<JiandanBean>>() {
+                .map(new Func1<Document, List<JianDanBean>>() {
                     @Override
-                    public List<JiandanBean> call(Document document) {
+                    public List<JianDanBean> call(Document document) {
                         return mapResult(document);
                     }
                 })
-                .subscribe(new Subscriber<List<JiandanBean>>() {
+                .subscribe(new Subscriber<List<JianDanBean>>() {
                     @Override
                     public void onCompleted() {
                         mView.showContent();
@@ -71,7 +71,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                     }
 
                     @Override
-                    public void onNext(List<JiandanBean> list) {
+                    public void onNext(List<JianDanBean> list) {
                         list = filterData(list, mView);
                         if (ListUtils.getListSize(list) > 0) {
                             if (getFetchPage() > 1) {
@@ -84,8 +84,8 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                 });
     }
 
-    private List<JiandanBean> mapResult(Document doc) {
-        List<JiandanBean> list = new ArrayList<>();
+    private List<JianDanBean> mapResult(Document doc) {
+        List<JianDanBean> list = new ArrayList<>();
         if (doc != null) {
             Elements herfs = doc.select(".thumb_s a");
             Elements imgs = doc.select(".thumb_s a img");
@@ -105,7 +105,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                     imgUrl = imgUrl.substring(2, imgUrl.length());
                     imgUrl = "http://" + imgUrl;
                 }
-                list.add(new JiandanBean(url, title, type, imgUrl));
+                list.add(new JianDanBean(url, title, type, imgUrl));
             }
         }
         return list;

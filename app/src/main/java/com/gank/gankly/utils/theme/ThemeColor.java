@@ -19,20 +19,20 @@ import java.util.List;
  * Email:137387869@qq.com
  */
 
-public final class ThemeUtils {
+public final class ThemeColor {
     @NonNull
     private Activity mActivity;
-    private List<TextViewColor> mTextViewColor = new ArrayList<>();
-    private List<BackgroundColor> mBackGroundColor = new ArrayList<>();
-    private List<BackgroundColor> mBackGroundDrawable = new ArrayList<>();
+    private List<ViewTextView> mViewTextView = new ArrayList<>();
+    private List<ViewBackground> mBackGroundView = new ArrayList<>();
+    private List<ViewBackground> mBackGroundDrawable = new ArrayList<>();
     private RecyclerViewColor mRecyclerViewColor;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    public ThemeUtils(@NonNull Fragment fragment) {
+    public ThemeColor(@NonNull Fragment fragment) {
         mActivity = fragment.getActivity();
     }
 
-    public ThemeUtils(@NonNull Activity activity) {
+    public ThemeColor(@NonNull Activity activity) {
         mActivity = activity;
     }
 
@@ -40,21 +40,21 @@ public final class ThemeUtils {
         mActivity.setTheme(resId);
     }
 
-    public ThemeUtils textViewColor(int resId, @NonNull TextView... args) {
+    public ThemeColor textViewColor(int resId, @NonNull TextView... args) {
         if (args.length != 0) {
             int color = getResourceData(resId);
             for (TextView textView : args) {
-                mTextViewColor.add(new TextViewColor(color, textView));
+                mViewTextView.add(new ViewTextView(color, textView));
             }
         }
         return this;
     }
 
-    public ThemeUtils backgroundResource(int arrId, @NonNull View... args) {
+    public ThemeColor backgroundResource(int arrId, @NonNull View... args) {
         if (args.length != 0) {
             int resource = getResourceId(arrId);
             for (View view : args) {
-                mBackGroundColor.add(new BackgroundColor(resource, view));
+                mBackGroundView.add(new ViewBackground(resource, view));
             }
         }
         return this;
@@ -68,12 +68,12 @@ public final class ThemeUtils {
         }
     }
 
-    public ThemeUtils swipeRefresh(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
+    public ThemeColor swipeRefresh(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
         mSwipeRefreshLayout = swipeRefreshLayout;
         return this;
     }
 
-    public ThemeUtils recyclerViewColor(@NonNull RecyclerViewColor recyclerViewColor) {
+    public ThemeColor recyclerViewColor(@NonNull RecyclerViewColor recyclerViewColor) {
         mRecyclerViewColor = new RecyclerViewColor(recyclerViewColor, getTheme());
         return this;
     }
@@ -100,33 +100,33 @@ public final class ThemeUtils {
     }
 
     private void changeTextColor() {
-        TextViewColor textViewColor;
+        ViewTextView viewTextView;
         TextView textView;
-        for (int i = 0; i < mTextViewColor.size(); i++) {
-            textViewColor = mTextViewColor.get(i);
-            textView = textViewColor.getTextView();
-            textView.setTextColor(textViewColor.getResId());
+        for (int i = 0; i < mViewTextView.size(); i++) {
+            viewTextView = mViewTextView.get(i);
+            textView = viewTextView.getTextView();
+            textView.setTextColor(viewTextView.getResId());
         }
     }
 
     private void changeBackGround() {
-        BackgroundColor back;
+        ViewBackground back;
         View view;
-        for (int i = 0; i < mBackGroundColor.size(); i++) {
-            back = mBackGroundColor.get(i);
+        for (int i = 0; i < mBackGroundView.size(); i++) {
+            back = mBackGroundView.get(i);
             view = back.getBackGroundView();
             view.setBackgroundResource(back.getResId());
         }
     }
 
     private void clean() {
-        mTextViewColor.clear();
+        mViewTextView.clear();
         mBackGroundDrawable.clear();
         mSwipeRefreshLayout = null;
 //        mRecyclerView = null;
     }
 
-    public void changeSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
+    private void changeSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
         int progressColor = getResourceData(R.attr.swipeRefreshLayoutProgressSchemeColor);
         int schemeColor = getResourceData(R.attr.swipeRefreshLayoutSchemeColors);
         swipeRefreshLayout.setProgressBackgroundColorSchemeColor(progressColor);

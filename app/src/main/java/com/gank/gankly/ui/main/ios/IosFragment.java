@@ -1,38 +1,33 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.main.ios;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.presenter.IBaseRefreshPresenter;
 import com.gank.gankly.presenter.impl.IosGoodsPresenterImpl;
 import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.main.GankAdapter;
+import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
-import com.gank.gankly.utils.StyleUtils;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.view.IMeiziView;
-import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
 
 /**
  * ios
@@ -56,9 +51,6 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         return R.layout.layout_swipe_normal;
     }
 
-    public IosFragment() {
-    }
-
     public static IosFragment newInstance() {
         IosFragment fragment = new IosFragment();
         Bundle args = new Bundle();
@@ -73,12 +65,12 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void initValues() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-            @Override
-            public void call(ThemeEvent event) {
-                refreshUi();
-            }
-        });
+//        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+//            @Override
+//            public void call(ThemeEvent event) {
+//                refreshUi();
+//            }
+//        });
     }
 
     @Override
@@ -126,33 +118,33 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
         mPresenter.fetchNew();
     }
 
-    @Override
-    public void refreshUi() {
-        Resources.Theme theme = mActivity.getTheme();
-        TypedValue typedValue = new TypedValue();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-        int background = typedValue.data;
-        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
-        int textColor = typedValue.data;
-        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
-        int textSecondaryColor = typedValue.data;
-        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
-        int mainColor = typedValue.data;
-        mRecyclerView.setBackgroundColor(mainColor);
-
-        int childCount = mRecyclerView.getChildCount();
-        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-            childView.setBackgroundColor(background);
-            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
-            title.setTextColor(textColor);
-            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
-            time.setTextColor(textSecondaryColor);
-        }
-
-        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
+//    @Override
+//    public void refreshUi() {
+//        Resources.Theme theme = mActivity.getTheme();
+//        TypedValue typedValue = new TypedValue();
+//        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+//        int background = typedValue.data;
+//        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+//        int textColor = typedValue.data;
+//        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
+//        int textSecondaryColor = typedValue.data;
+//        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
+//        int mainColor = typedValue.data;
+//        mRecyclerView.setBackgroundColor(mainColor);
+//
+//        int childCount = mRecyclerView.getChildCount();
+//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
+//            childView.setBackgroundColor(background);
+//            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+//            title.setTextColor(textColor);
+//            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
+//            time.setTextColor(textSecondaryColor);
+//        }
+//
+//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
+//    }
 
     @Override
     public void onRefresh() {
@@ -267,6 +259,31 @@ public class IosFragment extends LazyFragment implements SwipeRefreshLayout.OnRe
 
     @Override
     protected void callBackRefreshUi() {
+//        Resources.Theme theme = mActivity.getTheme();
+//        TypedValue typedValue = new TypedValue();
+//        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
+//        int background = typedValue.data;
+//        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
+//        int textColor = typedValue.data;
+//        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
+//        int textSecondaryColor = typedValue.data;
+//        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
+//        int mainColor = typedValue.data;
+//        mRecyclerView.setBackgroundColor(mainColor);
+//
+//        int childCount = mRecyclerView.getChildCount();
+//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
+//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
+//            childView.setBackgroundColor(background);
+//            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+//            title.setTextColor(textColor);
+//            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
+//            time.setTextColor(textSecondaryColor);
+//        }
+//
+//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
+//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
 
+        ThemeColor theme = new ThemeColor(this);
     }
 }

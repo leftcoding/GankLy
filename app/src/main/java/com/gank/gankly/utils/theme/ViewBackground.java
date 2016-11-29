@@ -7,11 +7,11 @@ import android.view.View;
  * Email:137387869@qq.com
  */
 
-public class BackgroundColor {
+public class ViewBackground {
     private View mView;
     private int mResId;
 
-    public BackgroundColor(int resId, View view) {
+    public ViewBackground(int resId, View view) {
         mView = view;
         mResId = resId;
     }

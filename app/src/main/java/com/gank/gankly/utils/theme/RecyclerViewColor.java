@@ -53,12 +53,24 @@ public class RecyclerViewColor {
         mTheme = theme;
     }
 
+    /**
+     * Modified TextView Color
+     *
+     * @param id    TextView id
+     * @param resId TextView attr id
+     */
     public void textViewColor(int id, int resId) {
         if (!mTextViewList.contains(id)) {
             mTextViewList.add(new TextViewId(id, resId));
         }
     }
 
+    /**
+     * Modified Views background
+     *
+     * @param id    Views id
+     * @param resId Views attr id
+     */
     public void backGroundColor(int id, int resId) {
         if (!mViews.contains(id)) {
             mViews.add(new TextViewId(id, resId));
@@ -111,15 +123,20 @@ public class RecyclerViewColor {
         int childCount = mRecyclerView.getChildCount();
         ViewGroup childView;
 
+        TextView textView;
+        TextViewId textViewId;
+        View view;
+        TextViewId viewId;
+
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
 
             if (size > 0) {
                 try {
-                    TextView textView;
                     for (int i = 0; i < size; i++) {
-                        textView = (TextView) childView.findViewById(mTextViewList.get(i).getId());
-                        textView.setTextColor(getResourceData(mTextViewList.get(i).getResId()));
+                        textViewId = mTextViewList.get(i);
+                        textView = (TextView) childView.findViewById(textViewId.getId());
+                        textView.setTextColor(getResourceData(textViewId.getResId()));
                     }
                 } catch (Exception e) {
                     KLog.e(e);
@@ -128,9 +145,11 @@ public class RecyclerViewColor {
 
             if (views > 0) {
                 try {
+
                     for (int x = 0; x < views; x++) {
-                        View v = childView.findViewById(mViews.get(x).getId());
-                        v.setBackgroundResource(getResourceId(mViews.get(x).getResId()));
+                        viewId = mViews.get(x);
+                        view = childView.findViewById(viewId.getId());
+                        view.setBackgroundResource(getResourceId(viewId.getResId()));
                     }
                 } catch (Exception e) {
                     KLog.e(e);

@@ -56,13 +56,13 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initViews() {
         mFragmentList = getFragmentList();
+        mBottomBar.setDefaultTabPosition(0);
 
         changeBottomBar();
 
@@ -128,7 +128,6 @@ public class HomeActivity extends BaseActivity {
     private List<Fragment> getFragmentList() {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new MainFragment());
-//        fragments.add(new VideoFragment());
         fragments.add(new DiscoveredFragment());
         fragments.add(new GirlsFragment());
         fragments.add(new MineFragment());

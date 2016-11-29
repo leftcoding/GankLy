@@ -1,7 +1,5 @@
 package com.gank.gankly.ui.main;
 
-import android.animation.AnimatorInflater;
-import android.animation.StateListAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -102,7 +100,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     }
 
     public void updateItems(List<ResultsBean> results) {
-        clear();
+        int size = mResults.size();
+        mResults.clear();
+        notifyItemRangeRemoved(0, size);
         appendMoreDate(results);
     }
 
@@ -111,12 +111,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         int size = mResults.size();
         int position = size - 1 < 0 ? 0 : size - 1;
         notifyItemRangeInserted(position, results.size());
-    }
-
-    private void clear() {
-        if (mResults != null) {
-            mResults.clear();
-        }
     }
 
     public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
@@ -138,11 +132,6 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
         public GankViewHolder(View itemView) {
             super(itemView);
-            if (mLayout == LAYOUT_IOS) {
-                StateListAnimator listAnimator = AnimatorInflater.loadStateListAnimator(mContext, R.drawable.ios_state_list);
-                itemView.setStateListAnimator(listAnimator);
-            }
-
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
             list = MeiziArrayList.getInstance().getImagesList();

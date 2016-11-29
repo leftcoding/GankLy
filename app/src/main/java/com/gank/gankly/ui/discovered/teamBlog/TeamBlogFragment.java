@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
@@ -16,6 +16,8 @@ import com.gank.gankly.ui.discovered.technology.TechnologyContract;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
+import com.gank.gankly.utils.theme.RecyclerViewColor;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -116,18 +118,18 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     }
 
     @Override
-    public void refillData(List<JiandanBean> list) {
+    public void refillData(List<JianDanBean> list) {
         mAdapter.updateItem(list);
     }
 
     @Override
-    public void appendData(List<JiandanBean> list) {
+    public void appendData(List<JianDanBean> list) {
         mAdapter.appendItem(list);
     }
 
     @Override
     public void onClick(int position, Object object) {
-        JiandanBean bean = (JiandanBean) object;
+        JianDanBean bean = (JianDanBean) object;
         Bundle bundle = new Bundle();
         bundle.putString(WebActivity.TITLE, bean.getTitle());
         bundle.putString(WebActivity.URL, bean.getUrl());
@@ -136,11 +138,18 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         Intent intent = new Intent(mActivity, WebActivity.class);
         intent.putExtras(bundle);
         JiandanWebActivity.startWebActivity(mActivity, bundle);
-//        mActivity.startActivity(intent);
     }
 
     @Override
     protected void callBackRefreshUi() {
+        RecyclerViewColor recyclerViewColor = new RecyclerViewColor(mRecyclerView);
+        recyclerViewColor.backGroundColor(R.id.team_ll_body, R.attr.lyItemSelectBackground);
+        recyclerViewColor.textViewColor(R.id.team_blog_txt_title, R.attr.baseAdapterItemTextColor);
 
+        ThemeColor themeColor = new ThemeColor(this);
+        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.swipeRefresh(mSwipeRefreshLayout);
+        themeColor.recyclerViewColor(recyclerViewColor);
+        themeColor.start();
     }
 }

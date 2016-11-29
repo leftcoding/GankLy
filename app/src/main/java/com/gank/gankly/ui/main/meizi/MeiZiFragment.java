@@ -21,7 +21,7 @@ import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.utils.theme.ThemeUtils;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -227,8 +227,8 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     protected void callBackRefreshUi() {
-        ThemeUtils themeUtils = new ThemeUtils(this);
-        int resource = themeUtils.getResourceId(R.attr.themeBackground);
+        ThemeColor themeColor = new ThemeColor(this);
+        int resource = themeColor.getResourceId(R.attr.themeBackground);
         mRecyclerView.setBackgroundResource(resource);
 
         StyleUtils.clearRecyclerViewItem(mRecyclerView);

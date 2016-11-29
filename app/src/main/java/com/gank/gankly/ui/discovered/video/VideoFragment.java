@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
@@ -22,7 +21,7 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.utils.theme.ThemeUtils;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -115,7 +114,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void callBackRefreshUi() {
-        ThemeUtils themeUtils = new ThemeUtils(this);
+        ThemeColor themeColor = new ThemeColor(this);
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);

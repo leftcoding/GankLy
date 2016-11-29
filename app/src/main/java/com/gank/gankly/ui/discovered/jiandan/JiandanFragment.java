@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.JiandanDataSource;
@@ -131,12 +131,12 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void refillData(List<JiandanBean> list) {
+    public void refillData(List<JianDanBean> list) {
         mAdapter.updateItem(list);
     }
 
     @Override
-    public void appendMoreDate(List<JiandanBean> list) {
+    public void appendMoreDate(List<JianDanBean> list) {
         mAdapter.appendItem(list);
     }
 
@@ -168,7 +168,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
 
     @Override
     public void onClick(int position, Object object) {
-        JiandanBean bean = (JiandanBean) object;
+        JianDanBean bean = (JianDanBean) object;
         Bundle bundle = new Bundle();
         bundle.putString(JiandanWebActivity.TITLE, bean.getTitle());
         bundle.putString(JiandanWebActivity.URL, bean.getUrl());

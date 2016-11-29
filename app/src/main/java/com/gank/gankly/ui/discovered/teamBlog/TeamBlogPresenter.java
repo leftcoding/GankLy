@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.discovered.teamBlog;
 
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
@@ -51,7 +51,7 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
 
             @Override
             public void onNext(Document document) {
-                List<JiandanBean> list = parseDocument(document);
+                List<JianDanBean> list = parseDocument(document);
                 if (list.size() > 0) {
                     if (getFetchPage() > 1) {
                         mView.appendData(list);
@@ -63,8 +63,8 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
         });
     }
 
-    private List<JiandanBean> parseDocument(Document document) {
-        List<JiandanBean> jiandanBeen = new ArrayList<>();
+    private List<JianDanBean> parseDocument(Document document) {
+        List<JianDanBean> jiandanBeen = new ArrayList<>();
         if (document != null) {
             Elements hrefs = document.select(".xiandu_left a");
             Elements imgs = document.select(".xiandu_right img");
@@ -78,7 +78,7 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
                     href = hrefs.get(i).attr("href");
                     img = imgs.get(i).attr("src");
                     title = titles.get(i).text();
-                    jiandanBeen.add(new JiandanBean(href, title, type, img));
+                    jiandanBeen.add(new JianDanBean(href, title, type, img));
                 }
             }
         }

@@ -1,6 +1,6 @@
 #Gank
-本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教! 
-提示:应用最低版本 5.0 Android系统，如果想安装4.4 请修改源码 minSdkVersion 19。
+本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教! </br>
+_提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，有问题请联系我。_
 
 ##技术、第三方库
 * mvp + retrofit + rxJava
@@ -44,3 +44,17 @@
 * 瓶子同学的友情帮助
 * 远耕同学的友情帮助
 * Google
+##
+Copyright 2016 LeftCoding
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

@@ -24,7 +24,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/white</item>
-        <item name="androidItemTimeIcon">@drawable/item_book_time_light</item>
         <item name="lyItemSelectBackground">@drawable/ripple_bg_light</item>
         <item name="swipeRefreshLayoutProgressSchemeColor">@color/white</item>
         <item name="swipeRefreshLayoutSchemeColors">@color/colorAccent</item>
@@ -54,7 +53,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>
-        <item name="androidItemTimeIcon">@drawable/item_book_time_dark</item>
         <item name="lyItemSelectBackground">@drawable/ripple_bg_dark</item>
         <item name="swipeRefreshLayoutProgressSchemeColor">@color/baseSwipeRefreshLayoutProgressSchemeColor</item>
         <item name="swipeRefreshLayoutSchemeColors">@color/baseSwipeRefreshLayoutSchemeColors</item>

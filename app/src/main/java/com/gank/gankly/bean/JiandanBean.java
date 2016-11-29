@@ -5,13 +5,13 @@ package com.gank.gankly.bean;
  * Email:137387869@qq.com
  */
 
-public class JiandanBean {
+public class JianDanBean {
     private String url;
     private String title;
     private String type;
     private String imgUrl;
 
-    public JiandanBean(String url, String title, String type, String imgUrl) {
+    public JianDanBean(String url, String title, String type, String imgUrl) {
         this.url = url;
         this.title = title;
         this.type = type;

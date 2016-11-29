@@ -50,7 +50,6 @@
     <attr name="updateVersionTextColor" format="reference|color"/>
     <attr name="collectBackground" format="reference|color"/>
     <attr name="meiziDailyItemBackground" format="reference|color"/>
-    <attr name="androidItemTimeIcon" format="reference"/>
     <attr name="lyItemSelectBackground" format="reference|color"/>
     <attr name="swipeRefreshLayoutProgressSchemeColor" format="reference|color"/>
     <attr name="swipeRefreshLayoutSchemeColors" format="reference|color"/>

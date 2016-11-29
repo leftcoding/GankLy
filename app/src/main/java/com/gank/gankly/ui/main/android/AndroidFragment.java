@@ -25,7 +25,7 @@ import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.theme.RecyclerViewColor;
-import com.gank.gankly.utils.theme.ThemeUtils;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -281,41 +281,15 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void callBackRefreshUi() {
-        ThemeUtils themeUtils = new ThemeUtils(this);
+        ThemeColor themeColor = new ThemeColor(this);
         RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
         mRecycler.textViewColor(R.id.goods_txt_title, R.attr.baseAdapterItemTextColor);
         mRecycler.textViewColor(R.id.goods_txt_time, R.attr.textSecondaryColor);
         mRecycler.backGroundColor(R.id.welfare_rl, R.attr.lyItemSelectBackground);
 
-        themeUtils.backgroundResource(R.attr.themeBackground, mRecyclerView);
-        themeUtils.swipeRefresh(mSwipeRefreshLayout);
-        themeUtils.recyclerViewColor(mRecycler);
-
-
-//        int leftResource = themeUtils.getResourceId(R.attr.androidItemTimeIcon);
-//        Drawable drawable = App.getAppResources().getDrawable(leftResource);
-//        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//        int textColor = themeUtils.getResourceData(R.attr.baseAdapterItemTextColor);
-//        int textSecondaryColor = themeUtils.getResourceData(R.attr.textSecondaryColor);
-//
-//        TextView title;
-//        TextView time;
-//        ViewGroup childView;
-//        LYRelativeLayoutRipple rl;
-//
-//        int childCount = mRecyclerView.getChildCount();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-//            rl = (LYRelativeLayoutRipple) childView.findViewById(R.id.welfare_rl);
-//            title = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            time = (TextView) childView.findViewById(R.id.goods_txt_time);
-//
-//            rl.setCustomBackgroundResource(R.attr.lyItemSelectBackground);
-//            title.setTextColor(textColor);
-//            time.setTextColor(textSecondaryColor);
-//            time.setCompoundDrawables(drawable, null, null, null);
-//        }
-
-        themeUtils.start();
+        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.swipeRefresh(mSwipeRefreshLayout);
+        themeColor.recyclerViewColor(mRecycler);
+        themeColor.start();
     }
 }

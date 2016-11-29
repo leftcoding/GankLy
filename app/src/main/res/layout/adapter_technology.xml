@@ -12,9 +12,10 @@
     app:cardCornerRadius="2dp">
 
     <RelativeLayout
+        android:id="@+id/technology_rl_body"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/meiziDailyItemBackground">
+        android:background="?attr/lyItemSelectBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_weight="1">
 
                 <TextView
-                    android:id="@+id/technology_txt_title"
+                    android:id="@+id/team_blog_txt_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingEnd="10dp"

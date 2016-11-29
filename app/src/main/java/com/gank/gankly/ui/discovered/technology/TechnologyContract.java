@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.discovered.technology;
 
-import com.gank.gankly.bean.JiandanBean;
+import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.mvp.IFetchPresenter;
 import com.gank.gankly.mvp.IFetchView;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 public interface TechnologyContract {
     interface View extends IFetchView {
-        void refillData(List<JiandanBean> list);
+        void refillData(List<JianDanBean> list);
 
-        void appendData(List<JiandanBean> list);
+        void appendData(List<JianDanBean> list);
     }
 
     interface Presenter extends IFetchPresenter {
