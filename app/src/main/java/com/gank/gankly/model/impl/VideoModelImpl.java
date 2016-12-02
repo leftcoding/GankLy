@@ -23,9 +23,9 @@ public class VideoModelImpl implements BaseModel {
     @Override
     public void fetchData(final int mPage, int limit, Subscriber subscriber) {
         Observable<GankResult> video = GankApi.getInstance()
-                .getGankService().fetchVideo(limit, mPage);
+                .getService().fetchVideo(limit, mPage);
         Observable<GankResult> image = GankApi.getInstance()
-                .getGankService().fetchBenefitsGoods(limit, mPage);
+                .getService().fetchBenefitsGoods(limit, mPage);
         Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
             @Override
             public GankResult call(GankResult gankResult, GankResult gankResult2) {

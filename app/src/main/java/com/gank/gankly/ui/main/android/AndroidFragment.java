@@ -73,13 +73,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     protected void initValues() {
         setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
-
-//        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-//            @Override
-//            public void call(ThemeEvent event) {
-//                refreshUi();
-//            }
-//        });
     }
 
     @Override

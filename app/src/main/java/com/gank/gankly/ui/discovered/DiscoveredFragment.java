@@ -33,6 +33,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     private static final String TYPE_JIANDAN = "新鲜事";
     private static final String TYPE_THCHNOLOGY = "科技资讯";
     private static final String TYPE_TEAM_BLOG = "团队博客";
+    private static final String TYPE_MORE = "更多";
 
     @BindView(R.id.discovered_tabLayout)
     TabLayout mTabLayout;
@@ -70,12 +71,14 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
         mList.add(new JiandanFragment());
         mList.add(new TechnologyFragment());
         mList.add(new TeamBlogFragment());
+        mList.add(new DiscoveredMoreFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(TYPE_VIDEO);
         mTitles.add(TYPE_JIANDAN);
         mTitles.add(TYPE_THCHNOLOGY);
         mTitles.add(TYPE_TEAM_BLOG);
+        mTitles.add(TYPE_MORE);
 
         DiscoveredAdapter mPagerAdapter = new DiscoveredAdapter(getChildFragmentManager(), mList,
                 mTitles);

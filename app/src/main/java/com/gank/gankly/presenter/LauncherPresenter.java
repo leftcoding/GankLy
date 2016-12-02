@@ -58,6 +58,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
             @Override
             public void onNext(CheckVersion checkVersion) {
                 int curVersion = AppUtils.getVersionCode(mActivity);
+                KLog.d(curVersion + "c" + checkVersion.getCode() + "n" + checkVersion.getChangelog());
                 if (checkVersion.getCode() > curVersion) {
                     mIView.callUpdate(checkVersion);
                 } else {

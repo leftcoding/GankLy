@@ -18,7 +18,7 @@ public class RxUtils {
 
     public static RxUtils getInstance() {
         if (instance == null) {
-            synchronized (RxBus.class) {
+            synchronized (RxUtils.class) {
                 if (instance == null) {
                     instance = new RxUtils();
                 }

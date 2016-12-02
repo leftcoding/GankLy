@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GankLy.iml" filepath="$PROJECT_DIR$/GankLy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" filepath="$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" filepath="$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>
   </component>

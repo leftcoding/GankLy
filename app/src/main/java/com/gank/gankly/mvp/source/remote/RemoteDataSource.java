@@ -40,9 +40,9 @@ public class RemoteDataSource extends BaseDataSourceModel {
      */
     public Observable<GankResult> fetchAndroid(final int page, final int limit) {
         final Observable<GankResult> androidGoods = GankApi.getInstance()
-                .getGankService().fetchAndroidGoods(limit, page);
+                .getService().fetchAndroidGoods(limit, page);
         Observable<GankResult> images = GankApi.getInstance()
-                .getGankService().fetchBenefitsGoods(limit, page);
+                .getService().fetchBenefitsGoods(limit, page);
 
         return toObservable(Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
             @Override

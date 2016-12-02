@@ -63,6 +63,10 @@
             android:name=".ui.more.MoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.main.baisi.PlayerActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".ui.base.InitializeService"/>
     </application>

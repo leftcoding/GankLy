@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/discovered_rl_budejie"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:background="@drawable/ic_discovered_budejie">
+
+        <TextView
+            android:id="@+id/discovered_txt_budejie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:background="#90000000"
+            android:padding="4dp"
+            android:text="搞笑视屏集合"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+</LinearLayout>

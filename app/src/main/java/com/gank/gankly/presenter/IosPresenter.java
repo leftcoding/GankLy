@@ -35,7 +35,7 @@ public class IosPresenter extends BasePresenter<IIosView> {
     public void fetchDate() {
         mIView.showRefresh();
         GankApi.getInstance()
-                .getGankService().fetchIosGoods(limit, mIosCurPage)
+                .getService().fetchIosGoods(limit, mIosCurPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GankResult>() {

@@ -53,9 +53,9 @@ public class AndroidPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Res
         final int mPage = getNextPage();
         final int limit = getLimit();
         final Observable<GankResult> androidGoods = GankApi.getInstance()
-                .getGankService().fetchAndroidGoods(limit, mPage);
+                .getService().fetchAndroidGoods(limit, mPage);
         Observable<GankResult> images = GankApi.getInstance()
-                .getGankService().fetchBenefitsGoods(limit, mPage);
+                .getService().fetchBenefitsGoods(limit, mPage);
 
         Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
             @Override
