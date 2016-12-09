@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,15 +30,15 @@ import butterknife.BindView;
  * Email:137387869@qq.com
  */
 
-public class BaiSiFragment extends LazyFragment implements BaiSiContract.View {
-    private BaiSiContract.Presenter mPresenter;
+public class BaiSiVideoFragment extends LazyFragment implements BaiSiContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private BaiSiAdapter mBaiSiAdapter;
-    private PlayerActivity mActivity;
+    private BaiSiContract.Presenter mPresenter;
+    private BaiSiActivity mActivity;
 
     private int postion = -1;
     private int lastPostion = -1;
@@ -48,7 +48,7 @@ public class BaiSiFragment extends LazyFragment implements BaiSiContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (PlayerActivity) context;
+        mActivity = (BaiSiActivity) context;
     }
 
     @Override

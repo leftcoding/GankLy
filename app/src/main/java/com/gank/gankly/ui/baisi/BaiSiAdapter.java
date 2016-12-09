@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -65,7 +65,6 @@ public class BaiSiAdapter extends RecyclerView.Adapter<BaiSiAdapter.BaiSiHolderV
     public class BaiSiHolderView extends RecyclerView.ViewHolder {
         @BindView(R.id.adapter_player_control)
         RelativeLayout rlayPlayerControl;
-//        private RelativeLayout rlayPlayer;
         @BindView(R.id.baisi_txt_name)
         TextView name;
         @BindView(R.id.baisi_video_title)

@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.mvp.IFetchPresenter;

@@ -140,6 +140,12 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         return mRecyclerView;
     }
 
+
+    /**
+     * 设置滑动收拾 回调监听
+     *
+     * @param lyRecycler
+     */
     public void setILyRecycler(LyRecyclerView.ILyRecycler lyRecycler) {
         if (isGesture) {
             ((LyRecyclerView) mRecyclerView).setILyRecycler(lyRecycler);

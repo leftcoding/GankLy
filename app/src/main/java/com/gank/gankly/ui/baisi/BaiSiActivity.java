@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
@@ -8,7 +8,7 @@ import com.gank.gankly.ui.base.BaseActivity;
  * Email:137387869@qq.com
  */
 
-public class PlayerActivity extends BaseActivity {
+public class BaiSiActivity extends BaseActivity {
     @Override
     protected int getContentId() {
         return R.layout.activity_setting;

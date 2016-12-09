@@ -64,7 +64,7 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.main.baisi.PlayerActivity"
+            android:name=".ui.baisi.BaiSiActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
 

@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
@@ -29,6 +30,7 @@ import butterknife.BindView;
  */
 public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener {
     private static final String TYPE_VIDEO = "视频";
+    private static final String TYPE_IMAGE = "图片";
 
     @BindView(R.id.baisi_toolbar)
     Toolbar mToolbar;
@@ -37,7 +39,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    private PlayerActivity mActivity;
+    private BaiSiActivity mActivity;
     private List<String> mTitles;
     private List<LazyFragment> mList;
 
@@ -53,7 +55,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (PlayerActivity) context;
+        mActivity = (BaiSiActivity) context;
     }
 
     @Override
@@ -84,10 +86,12 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
     @Override
     protected void initValues() {
         mList = new ArrayList<>();
-        mList.add(new BaiSiFragment());
+        mList.add(new BaiSiVideoFragment());
+        mList.add(new BaiSiImageFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(TYPE_VIDEO);
+        mTitles.add(TYPE_IMAGE);
 
         GankPagerAdapter mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(),
                 mList, mTitles);

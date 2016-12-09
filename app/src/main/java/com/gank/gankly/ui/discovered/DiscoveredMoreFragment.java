@@ -6,7 +6,7 @@ import android.content.Intent;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.main.baisi.PlayerActivity;
+import com.gank.gankly.ui.baisi.BaiSiActivity;
 
 import butterknife.OnClick;
 
@@ -61,7 +61,7 @@ public class DiscoveredMoreFragment extends LazyFragment {
 
     @OnClick(R.id.discovered_rl_budejie)
     void onClickBuDeJie() {
-        mActivity.startActivity(new Intent(mActivity, PlayerActivity.class));
+        mActivity.startActivity(new Intent(mActivity, BaiSiActivity.class));
         mActivity.overridePendingTransition(0, 0);
     }
 }

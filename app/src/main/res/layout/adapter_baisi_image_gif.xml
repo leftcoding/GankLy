@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:background="?attr/baseAdapterItemBackground"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/baisi_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:id="@+id/baisi_ll_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/baisi_img_portrait"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@null"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/baisi_txt_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="123"
+                android:textColor="@color/holo_blue_dark"/>
+
+            <TextView
+                android:id="@+id/baisi_txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="123"
+                android:textColor="@color/color_99"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/baisi_video_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/baisi_ll_head"
+            android:maxLines="2"
+            android:text="我只是个标题而已"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/adapter_player_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/baisi_rl_top">
+
+        <ImageView
+            android:id="@+id/baisi_gallery_img_gif"
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:contentDescription="@null"
+            android:scaleType="centerCrop"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

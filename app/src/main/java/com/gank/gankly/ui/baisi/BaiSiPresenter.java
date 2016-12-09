@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.baisi;
+package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.mvp.FetchPresenter;
@@ -16,6 +16,7 @@ import rx.Subscriber;
  */
 
 public class BaiSiPresenter extends FetchPresenter implements BaiSiContract.Presenter {
+    private static final String TYPE_VIDEO = "41";
     private BaiSiDataSource mTask;
     private BaiSiContract.View mView;
 
@@ -26,16 +27,16 @@ public class BaiSiPresenter extends FetchPresenter implements BaiSiContract.Pres
 
     @Override
     public void fetchNew() {
-        fetchData(1);
+//        fetchData(1);
     }
 
     @Override
     public void fetchMore() {
-        fetchData(getFetchPage());
+//        fetchData(getFetchPage());
     }
 
     private void fetchData(int page) {
-        mTask.fetchVideo(page).subscribe(new Subscriber<BaiSiBean>() {
+        mTask.fetchData(page, TYPE_VIDEO).subscribe(new Subscriber<BaiSiBean>() {
             @Override
             public void onCompleted() {
                 mView.hideRefresh();
