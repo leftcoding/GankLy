@@ -53,6 +53,7 @@
     <attr name="lyItemSelectBackground" format="reference|color"/>
     <attr name="swipeRefreshLayoutProgressSchemeColor" format="reference|color"/>
     <attr name="swipeRefreshLayoutSchemeColors" format="reference|color"/>
+    <attr name="budejieAdapterTitleColor" format="reference|color"/>
 
     <!--recyclerView 是否带有侧滑-->
     <declare-styleable name="LySwipeRefreshLayout">

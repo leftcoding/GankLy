@@ -2,6 +2,7 @@ package com.gank.gankly.network.service;
 
 import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.bean.BuDeJieBean;
+import com.gank.gankly.bean.BuDeJieVideo;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -46,5 +47,10 @@ public interface BaiSiService {
             @Query("screenwidth") String screenwidth,
             @Query("screenheight") String screenheight,
             @Query("country") String country
+    );
+
+    @GET("/topic/list/zuixin/41/budejie-android-6.6.1/{limit}-20.json")
+    Observable<BuDeJieVideo> fetchVideo(
+            @Path("limit") int nextPage
     );
 }

@@ -38,7 +38,7 @@ _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，�
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_3.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_4.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/img_5.png)
-
+![image](https://github.com/leftcoding/GankLy/raw/master/art/img_6.png)
 ##感谢
 * @代码家 提供接口
 * 瓶子同学的友情帮助

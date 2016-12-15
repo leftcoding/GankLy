@@ -27,6 +27,7 @@
         <item name="lyItemSelectBackground">@drawable/ripple_bg_light</item>
         <item name="swipeRefreshLayoutProgressSchemeColor">@color/white</item>
         <item name="swipeRefreshLayoutSchemeColors">@color/colorAccent</item>
+        <item name="budejieAdapterTitleColor">@color/text_default</item>
     </style>
 
     <!-- night theme -->
@@ -56,6 +57,7 @@
         <item name="lyItemSelectBackground">@drawable/ripple_bg_dark</item>
         <item name="swipeRefreshLayoutProgressSchemeColor">@color/baseSwipeRefreshLayoutProgressSchemeColor</item>
         <item name="swipeRefreshLayoutSchemeColors">@color/baseSwipeRefreshLayoutSchemeColors</item>
+        <item name="budejieAdapterTitleColor">@color/book_recycler_item_bg</item>
     </style>
 
 

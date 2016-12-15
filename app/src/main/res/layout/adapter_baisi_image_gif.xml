@@ -5,8 +5,13 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:background="?attr/baseAdapterItemBackground"
-    android:orientation="vertical">
+    android:background="?attr/lyItemSelectBackground"
+    android:elevation="1dp"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="8dp">
 
     <RelativeLayout
         android:id="@+id/baisi_rl_top"
@@ -26,24 +31,34 @@
                 android:id="@+id/baisi_img_portrait"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:contentDescription="@null"
                 android:src="@mipmap/ic_launcher"/>
 
-            <TextView
-                android:id="@+id/baisi_txt_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="123"
-                android:textColor="@color/holo_blue_dark"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/baisi_txt_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="123"
-                android:textColor="@color/color_99"/>
+                <TextView
+                    android:id="@+id/baisi_txt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text=""
+                    android:textColor="@color/holo_blue_dark"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/baisi_txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:text=""
+                    android:textColor="@color/color_99"
+                    android:textSize="12sp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -51,25 +66,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/baisi_ll_head"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:text="我只是个标题而已"
-            android:textColor="@android:color/black"
+            android:text=""
+            android:textColor="@color/black"
             android:textSize="16sp"/>
     </RelativeLayout>
 
 
     <RelativeLayout
-        android:id="@+id/adapter_player_control"
+        android:id="@+id/baisi_player_control"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="210dp"
         android:layout_below="@id/baisi_rl_top">
 
         <ImageView
             android:id="@+id/baisi_gallery_img_gif"
             android:layout_width="match_parent"
-            android:layout_height="210dp"
+            android:layout_height="match_parent"
             android:contentDescription="@null"
-            android:scaleType="centerCrop"/>
+            android:scaleType="fitXY"/>
 
     </RelativeLayout>
 

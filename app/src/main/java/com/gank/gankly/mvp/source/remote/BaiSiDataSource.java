@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.bean.BuDeJieBean;
+import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.network.api.BaiSiApi;
 import com.gank.gankly.network.service.BaiSiService;
@@ -50,5 +51,9 @@ public class BaiSiDataSource extends BaseDataSourceModel {
 
     public Observable<BuDeJieBean> fetchImage(int np) {
         return toObservable(mGankService.fetchImage(np, "xiaomi", "6.6.1", "", "6.0.1", "baisibudejie", "android", "866333021430895", "02:00:00:00:00:00", "MI 4LTE", "移动", "1080", "1920", "CN"));
+    }
+
+    public Observable<BuDeJieVideo> fetchVideo(int np) {
+        return toObservable(mGankService.fetchVideo(np));
     }
 }

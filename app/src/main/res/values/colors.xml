@@ -48,6 +48,7 @@
     <color name="refresh_background_light">#f3f6f9</color><!--#f2f4f7-->
     <color name="meizi_item_background_light">#fefefe</color>
     <color name="colorControlHighlight_light">#33000000</color>
+    <color name="text_blue">#4093c6</color>
     <!-- light theme color end -->
 
     <!-- dark  theme color start -->
@@ -330,7 +331,7 @@
     <color name="teal">#008080</color>
     <color name="text_black">#373737</color>
     <color name="text_black_light">#555555</color>
-    <color name="text_blue">#4093c6</color>
+
     <color name="text_bright">#919191</color>
     <color name="text_bright_light">#666666</color>
     <color name="text_color_b1">#b1b1b1</color>

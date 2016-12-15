@@ -17,6 +17,7 @@ import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     @Override
     protected void initViews() {
+        KLog.d("initViews");
         mToolbar.setTitle("休闲");
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();

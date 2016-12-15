@@ -10,10 +10,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.socks.library.KLog;
@@ -32,12 +30,11 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private static final String IMAGE_JPG = ".jpg";
     private static final String IMAGE_PNG = ".png";
     private static final String IMAGE_GIF = ".gif";
-    private Map<String, Integer> maps = new ArrayMap<>();
-
-    //    private List<BaiSiBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> mList;
+    private Map<String, Integer> mGifHeight = new ArrayMap<>();
+    private Map<String, Integer> mImageHeight = new ArrayMap<>();
     private List<BuDeJieBean.ListBean> mList;
     private final Activity mContext;
-    private onPlayClick playclick;
+    private onClickImage mOnClickImage;
 
     public BaiSiImageAdapter(Activity context) {
         this.mContext = context;
@@ -49,100 +46,103 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         View view;
         if (viewType == 1) {
             view = View.inflate(mContext, R.layout.adapter_baisi_image_gif, null);
-            return new BaiSiImageView(view);
+            return new BaiSiGifHolder(view);
         } else {
             view = View.inflate(mContext, R.layout.adapter_baisi_image, null);
-            return new BaiSiSecondImageView(view);
+            return new BaiSiNormalImageHolder(view);
         }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        BuDeJieBean.ListBean bean = mList.get(position);
         String imgUrl;
+        int height;
+        int mPreHeight;
+        int mPreWidth;
+
+        BuDeJieBean.ListBean bean = mList.get(position);
+        String passtime = bean.getPasstime();
+        String u_name = bean.getU().getName();
+        String text = bean.getText();
+
+        if (!passtime.startsWith("2")) {
+            int index = passtime.indexOf("2");
+            if (index > 0) {
+                passtime = passtime.substring(index, passtime.length());
+            }
+        }
         if (bean.getGif() != null) {
-            imgUrl = bean.getGif().getImages().get(0);
+            BuDeJieBean.ListBean.GifBean gif = bean.getGif();
+            imgUrl = gif.getImages().get(0);
+            mPreHeight = gif.getHeight();
+            mPreWidth = gif.getWidth();
+
+            if (!mGifHeight.containsKey(imgUrl)) {
+                KLog.d(mPreHeight + ":" + mPreWidth + ",imgUrl:" + imgUrl);
+                height = mPreHeight * 1080 / mPreWidth;
+                mGifHeight.put(imgUrl, height);
+            } else {
+                height = mGifHeight.get(imgUrl);
+            }
         } else {
-            imgUrl = bean.getImage().getBig().get(0);
+            BuDeJieBean.ListBean.ImageBean imageBean = bean.getImage();
+            imgUrl = imageBean.getDownload_url().get(3);
+            mPreHeight = imageBean.getHeight();
+            mPreWidth = imageBean.getWidth();
+
+            if (!mImageHeight.containsKey(imgUrl)) {
+                KLog.d(mPreHeight + ":" + mPreWidth + ",imgUrl:" + imgUrl);
+                height = mPreHeight * 1080 / mPreWidth;
+                height = height > 630 ? 630 : height;
+                mImageHeight.put(imgUrl, height);
+            } else {
+                height = mImageHeight.get(imgUrl);
+            }
         }
 
-        if (holder instanceof BaiSiImageView) {
-            BaiSiImageView baiSiHolderView = (BaiSiImageView) holder;
-            baiSiHolderView.update(position, imgUrl);
-            baiSiHolderView.name.setText(bean.getU().getName());
-            baiSiHolderView.title.setText(bean.getText());
-            String passtime = bean.getPasstime();
-            if (!passtime.startsWith("2")) {
-                int index = passtime.indexOf("2");
-                if (index > 0) {
-                    passtime = passtime.substring(0, index + 1);
-                }
-            }
+        if (holder instanceof BaiSiGifHolder) {
+            BaiSiGifHolder gifHolder = (BaiSiGifHolder) holder;
+            gifHolder.update(position, imgUrl);
 
-            baiSiHolderView.mTime.setText(passtime);
-            Glide.with(mContext).load(bean.getU().getHeader().get(0)).into(baiSiHolderView.imgPortarit);
+            gifHolder.mName.setText(u_name);
+            gifHolder.mTitle.setText(text);
+
+            gifHolder.height = mPreHeight;
+            gifHolder.width = mPreWidth;
+            gifHolder.mTime.setText(passtime);
+            Glide.with(mContext).load(bean.getU().getHeader().get(0)).into(gifHolder.imgPortarit);
 
             Glide.with(mContext)
                     .load(imgUrl)
-//                    .centerCrop()
-                    .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL) // gif must be add this
-//                    .dontAnimate()
-//                    .skipMemoryCache(true)
-                    .into(baiSiHolderView.mGif);
+                    .priority(Priority.IMMEDIATE)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(gifHolder.mGif);
 
-//            int height;
-//            if (!maps.containsKey(imgUrl)) {
-//                KLog.d(bean.getGif().getHeight() + ":" + bean.getGif().getWidth() + ",imgUrl:" + imgUrl);
-//                height = bean.getGif().getHeight() * 1080 / bean.getGif().getWidth();
-//                KLog.d("height:" + height);
-//                maps.put(imgUrl, height);
-//            } else {
-//                height = maps.get(imgUrl);
-//            }
-//            ViewGroup.LayoutParams layoutParams = baiSiHolderView.mGif.getLayoutParams();
-//            layoutParams.width = 1080;
-//            layoutParams.height = height;
-//            baiSiHolderView.mGif.setLayoutParams(layoutParams);
+            ViewGroup.LayoutParams layoutParams = gifHolder.rlayPlayerControl.getLayoutParams();
+            layoutParams.width = 1080;
+            layoutParams.height = height;
+            gifHolder.rlayPlayerControl.setLayoutParams(layoutParams);
 
-        } else if (holder instanceof BaiSiSecondImageView) {
-            BaiSiSecondImageView baiSiSecondImageView = (BaiSiSecondImageView) holder;
-            baiSiSecondImageView.update(position, imgUrl);
-            baiSiSecondImageView.name.setText(bean.getU().getName());
-            baiSiSecondImageView.title.setText(bean.getText());
-            String passtime = bean.getPasstime();
-            if (!passtime.startsWith("2")) {
-                int index = passtime.indexOf("2");
-                if (index > 0) {
-                    passtime = passtime.substring(0, index + 1);
-                }
-            }
+        } else if (holder instanceof BaiSiNormalImageHolder) {
+            BaiSiNormalImageHolder imageHolder = (BaiSiNormalImageHolder) holder;
+            imageHolder.update(position, imgUrl);
+            imageHolder.mName.setText(u_name);
+            imageHolder.mTitle.setText(text);
 
-            baiSiSecondImageView.mTime.setText(passtime);
-            Glide.with(mContext).load(bean.getU().getHeader().get(0)).into(baiSiSecondImageView.imgPortarit);
+            imageHolder.height = mPreHeight;
+            imageHolder.width = mPreWidth;
+            imageHolder.mTime.setText(passtime);
+            Glide.with(mContext).load(bean.getU().getHeader().get(0)).into(imageHolder.imgPortarit);
+            Glide.with(mContext)
+                    .load(imgUrl)
+                    .centerCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imageHolder.mPicture);
 
-            if (!imgUrl.endsWith(IMAGE_GIF)) {
-                final String imgUrL = bean.getImage().getThumbnail_small().get(0);
-                Glide.with(mContext)
-                        .load(imgUrL)
-                        .centerCrop()
-                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                        .crossFade()
-                        .listener(new RequestListener<String, GlideDrawable>() {
-                            @Override
-                            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                KLog.d("model:" + model);
-                                return false;
-                            }
-                        })
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(baiSiSecondImageView.mPicture);
-            }
+            ViewGroup.LayoutParams layoutParams = imageHolder.rlayPlayerControl.getLayoutParams();
+            layoutParams.width = 1080;
+            layoutParams.height = height;
+            imageHolder.rlayPlayerControl.setLayoutParams(layoutParams);
         }
     }
 
@@ -156,55 +156,57 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         return mList == null ? 0 : mList.size();
     }
 
-    public class BaiSiImageView extends RecyclerView.ViewHolder {
-        @BindView(R.id.adapter_player_control)
+    public class BaiSiGifHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.baisi_player_control)
         RelativeLayout rlayPlayerControl;
         @BindView(R.id.baisi_txt_name)
-        TextView name;
+        TextView mName;
         @BindView(R.id.baisi_video_title)
-        TextView title;
+        TextView mTitle;
         @BindView(R.id.baisi_img_portrait)
         ImageView imgPortarit;
         @BindView(R.id.baisi_txt_time)
         TextView mTime;
         @BindView(R.id.baisi_gallery_img_gif)
         ImageView mGif;
+        int width;
+        int height;
 
-        public BaiSiImageView(View itemView) {
+        public BaiSiGifHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         public void update(final int position, final String url) {
-            //点击回调 播放视频
             rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (playclick != null) {
+                    if (mOnClickImage != null) {
                         KLog.d("url:" + url);
-                        playclick.onPlayclick(position, rlayPlayerControl, url);
+                        mOnClickImage.onClickImage(new GallerySize(height, width, url, position));
                     }
                 }
             });
         }
     }
 
-
-    public class BaiSiSecondImageView extends RecyclerView.ViewHolder {
-        @BindView(R.id.adapter_player_control)
+    public class BaiSiNormalImageHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.baisi_player_control)
         RelativeLayout rlayPlayerControl;
         @BindView(R.id.baisi_txt_name)
-        TextView name;
+        TextView mName;
         @BindView(R.id.baisi_video_title)
-        TextView title;
+        TextView mTitle;
         @BindView(R.id.baisi_img_portrait)
         ImageView imgPortarit;
         @BindView(R.id.baisi_txt_time)
         TextView mTime;
         @BindView(R.id.baisi_img_pic)
         ImageView mPicture;
+        int height;
+        int width;
 
-        public BaiSiSecondImageView(View itemView) {
+        public BaiSiNormalImageHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -214,9 +216,8 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (playclick != null) {
-                        KLog.d("url:" + url);
-                        playclick.onPlayclick(position, rlayPlayerControl, url);
+                    if (mOnClickImage != null) {
+                        mOnClickImage.onClickImage(new GallerySize(height, width, url, position));
                     }
                 }
             });
@@ -225,9 +226,9 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
-        if (holder instanceof BaiSiImageView) {
-            BaiSiImageView baiSiImageView = (BaiSiImageView) holder;
-            Glide.clear(baiSiImageView.mGif);
+        if (holder instanceof BaiSiGifHolder) {
+            BaiSiGifHolder baiSiGifHolder = (BaiSiGifHolder) holder;
+            Glide.clear(baiSiGifHolder.mGif);
         }
         super.onViewRecycled(holder);
     }
@@ -245,11 +246,11 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         notifyItemRangeInserted(size, list.size());
     }
 
-    public void setPlayClick(onPlayClick playclick) {
-        this.playclick = playclick;
+    public void setPlayClick(onClickImage playclick) {
+        this.mOnClickImage = playclick;
     }
 
-    public interface onPlayClick {
-        void onPlayclick(int position, View image, String url);
+    public interface onClickImage {
+        void onClickImage(GallerySize gallerySize);
     }
 }

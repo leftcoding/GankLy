@@ -45,13 +45,13 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
 
             @Override
             public void onError(Throwable e) {
+                mView.hideRefresh();
                 KLog.e(e);
             }
 
             @Override
             public void onNext(BuDeJieBean buDeJieBean) {
                 if (buDeJieBean != null) {
-                    KLog.d("buDeJieBean.getList():" + buDeJieBean.getList().size());
                     np = buDeJieBean.getInfo().getNp();
                     if (np == 0) {
                         mView.refillData(buDeJieBean.getList());

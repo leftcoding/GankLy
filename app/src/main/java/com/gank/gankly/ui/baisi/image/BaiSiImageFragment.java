@@ -2,16 +2,15 @@ package com.gank.gankly.ui.baisi.image;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.mvp.source.remote.BaiSiDataSource;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.utils.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -40,6 +39,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     protected void initData() {
+        mSwipeRefreshLayout.setRefreshing(true);
         mPresenter.fetchNew();
     }
 
@@ -61,13 +61,13 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     @Override
     protected void initValues() {
         mAdapter = new BaiSiImageAdapter(mActivity);
-        mAdapter.setPlayClick(new BaiSiImageAdapter.onPlayClick() {
+        mAdapter.setPlayClick(new BaiSiImageAdapter.onClickImage() {
+
             @Override
-            public void onPlayclick(int position, View image, String url) {
-                KLog.d("url:" + url);
+            public void onClickImage(GallerySize gallerySize) {
                 mActivity.getSupportFragmentManager().beginTransaction()
                         .addToBackStack("BaiSiGalleryFragment")
-                        .add(R.id.setting_frame_layout, BaiSiGalleryFragment.newInstance(url))
+                        .add(R.id.setting_frame_layout, BaiSiGalleryFragment.newInstance(gallerySize))
                         .commitAllowingStateLoss();
             }
         });
@@ -88,7 +88,11 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     protected void initViews() {
+        setMultipleStatusView(mMultipleStatusView);
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
 
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
     }
 
     @Override

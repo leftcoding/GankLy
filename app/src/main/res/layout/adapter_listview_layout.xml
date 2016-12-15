@@ -3,10 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginTop="4dp"
-    android:background="?attr/baseAdapterItemBackground"
-    android:orientation="vertical">
+    android:background="?attr/lyItemSelectBackground"
+    android:elevation="1dp"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
     <RelativeLayout
         android:id="@+id/baisi_rl_top"
@@ -26,24 +27,33 @@
                 android:id="@+id/baisi_img_portrait"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_gravity="center"
                 android:contentDescription="@null"
                 android:src="@mipmap/ic_launcher"/>
 
-            <TextView
-                android:id="@+id/baisi_txt_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="123"
-                android:textColor="@color/holo_blue_dark"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/baisi_txt_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="123"
-                android:textColor="@color/color_99"/>
+                <TextView
+                    android:id="@+id/baisi_txt_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text=""
+                    android:textColor="@color/holo_blue_dark"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:id="@+id/baisi_txt_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text=""
+                    android:textColor="?attr/budejieAdapterTitleColor"
+                    android:textSize="12sp"/>
+            </LinearLayout>
         </LinearLayout>
 
         <TextView
@@ -52,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/baisi_ll_head"
             android:maxLines="2"
-            android:text="我只是个标题而已"
-            android:textColor="@android:color/black"
+            android:text=""
+            android:textColor="?attr/budejieAdapterTitleColor"
             android:textSize="16sp"/>
     </RelativeLayout>
 
@@ -61,51 +71,34 @@
         android:id="@+id/adapter_super_video_layout"
         android:layout_width="match_parent"
         android:layout_height="210dp"
-        android:layout_below="@+id/baisi_rl_top">
+        android:layout_below="@+id/baisi_rl_top"
+        android:background="#30000000">
 
-        <FrameLayout
-            android:id="@+id/adapter_super_video"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </FrameLayout>
-
-        <RelativeLayout
-            android:id="@+id/adapter_player_control"
+        <ImageView
+            android:id="@+id/baisi_adapter_img_thumb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible">
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:src="#c2000000"/>
 
-            <ImageView
-                android:id="@+id/adapter_super_video_iv_cover"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#30000000"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_video_bg"/>
-
-            <!--<FrameLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:background="#50000000"/>-->
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_play_normal"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_play_normal"/>
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:padding="8dp"
-                android:text="04:33"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"/>
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/baisi_adapter_txt_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
     </RelativeLayout>
 </RelativeLayout>
