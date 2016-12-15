@@ -32,13 +32,14 @@ _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，�
 * 关于
 
 ##应用截图
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_0.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_1.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_2.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_3.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_4.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_5.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/img_6.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_0.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_1.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_2.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_3.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_4.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_5.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_6.png)
+
 ##感谢
 * @代码家 提供接口
 * 瓶子同学的友情帮助
