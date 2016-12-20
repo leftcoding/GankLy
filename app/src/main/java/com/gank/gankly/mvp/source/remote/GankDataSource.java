@@ -5,26 +5,34 @@ import android.support.annotation.Nullable;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
-import com.gank.gankly.network.api.GankApi;
+import com.gank.gankly.network.api.ApiManager;
+import com.gank.gankly.network.service.GankService;
 
 import rx.Observable;
 import rx.functions.Func2;
 
 /**
- * 远程请求数据
+ * 干货远程请求
  * Create by LingYan on 2016-10-25
  * Email:137387869@qq.com
  */
 
-public class RemoteDataSource extends BaseDataSourceModel {
-    @Nullable
-    private static RemoteDataSource INSTANCE = null;
+public class GankDataSource extends BaseDataSourceModel {
+    private static final String BASE_URL = "http://gank.io/api/data/";
+    private GankService mGankService;
 
-    public static RemoteDataSource getInstance() {
+    @Nullable
+    private static GankDataSource INSTANCE;
+
+    private GankDataSource() {
+        mGankService = ApiManager.init(BASE_URL).createService(GankService.class);
+    }
+
+    public static GankDataSource getInstance() {
         if (INSTANCE == null) {
-            synchronized (RemoteDataSource.class) {
+            synchronized (GankDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new RemoteDataSource();
+                    INSTANCE = new GankDataSource();
                 }
             }
         }
@@ -39,10 +47,8 @@ public class RemoteDataSource extends BaseDataSourceModel {
      * @return Observable
      */
     public Observable<GankResult> fetchAndroid(final int page, final int limit) {
-        final Observable<GankResult> androidGoods = GankApi.getInstance()
-                .getService().fetchAndroidGoods(limit, page);
-        Observable<GankResult> images = GankApi.getInstance()
-                .getService().fetchBenefitsGoods(limit, page);
+        final Observable<GankResult> androidGoods = mGankService.fetchAndroidGoods(limit, page);
+        final Observable<GankResult> images = mGankService.fetchBenefitsGoods(limit, page);
 
         return toObservable(Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
             @Override
@@ -53,6 +59,7 @@ public class RemoteDataSource extends BaseDataSourceModel {
         }));
     }
 
-
-
+    public Observable<GankResult> fetchIos(final int page, final int limit) {
+        return toObservable(mGankService.fetchIosGoods(limit, page));
+    }
 }

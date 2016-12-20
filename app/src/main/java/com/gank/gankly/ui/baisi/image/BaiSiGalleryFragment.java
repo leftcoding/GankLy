@@ -16,7 +16,6 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.gank.gankly.R;
 import com.gank.gankly.mvp.base.BaseFragment;
-import com.socks.library.KLog;
 
 import java.io.File;
 
@@ -28,10 +27,10 @@ import butterknife.BindView;
  */
 
 public class BaiSiGalleryFragment extends BaseFragment {
+    private static final String IMAGE_GIF = ".gif";
     public static final String URL = "BaiSi_Url";
     public static final String SIZE_HEIGHT = "Height";
     public static final String SIZE_WIDTH = "Width";
-
 
     @BindView(R.id.largetImageview)
     SubsamplingScaleImageView sliderIv;
@@ -62,29 +61,25 @@ public class BaiSiGalleryFragment extends BaseFragment {
     protected void initValues() {
         sliderIv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
         sliderIv.setDoubleTapZoomStyle(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER);
-//        sliderIv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CUSTOM);
-//        sliderIv.setMinScale(0.0F);
-//        sliderIv.setMaxScale(3.0F);//必须设置
         Bundle bundle = getArguments();
         if (bundle != null) {
             mUrl = bundle.getString(URL);
             mWidth = bundle.getInt(SIZE_WIDTH);
             mHeight = bundle.getInt(SIZE_HEIGHT);
         }
-        KLog.d("mWidth:" + mWidth + ",mHeight:" + mHeight);
         loadImageBitmap(mUrl);
     }
 
     public void loadImageBitmap(final String url) {
-        if (url.endsWith(".gif")) {
+        if (url.endsWith(IMAGE_GIF)) {
             sliderIv.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
             Glide.with(this)
                     .load(mUrl)
                     .asGif()
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE) // gif must be add this
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(mImageView);
-        } else if (url.endsWith(".png") || url.endsWith(".jpg")) {
+        } else {
             ViewGroup.LayoutParams layoutParams = sliderIv.getLayoutParams();
             layoutParams.width = 1080;
             sliderIv.setLayoutParams(layoutParams);

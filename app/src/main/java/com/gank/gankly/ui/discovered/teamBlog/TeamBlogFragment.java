@@ -66,7 +66,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     protected void initValues() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
-        setMultipleStatusView(mMultipleStatusView);
+//        setMultipleStatusView(mMultipleStatusView);
 
         mAdapter = new TeamBlogAdapter();
         mAdapter.setListener(this);
@@ -109,6 +109,31 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
 
     @Override
     public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
 
     }
 

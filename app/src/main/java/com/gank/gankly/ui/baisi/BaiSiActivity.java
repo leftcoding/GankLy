@@ -1,10 +1,7 @@
 package com.gank.gankly.ui.baisi;
 
-import android.support.v4.app.Fragment;
-
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.socks.library.KLog;
 
 /**
  * Create by LingYan on 2016-11-29
@@ -21,7 +18,6 @@ public class BaiSiActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
-        KLog.d("initValues");
         if (mBaiSiMainFragment == null) {
             mBaiSiMainFragment = new BaiSiMainFragment();
             getSupportFragmentManager().beginTransaction()
@@ -48,12 +44,5 @@ public class BaiSiActivity extends BaseActivity {
         } else {
             getSupportFragmentManager().popBackStack();
         }
-    }
-
-    public void replaceFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction()
-                .addToBackStack("BaiSiGalleryFragment")
-                .add(R.id.setting_frame_layout, fragment)
-                .commitAllowingStateLoss();
     }
 }

@@ -25,7 +25,6 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
 
     @Override
     public void fetchNew() {
-        KLog.d("fetchNew");
         np = 0;
         fetchData();
     }

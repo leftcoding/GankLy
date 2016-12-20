@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.mvp.FetchPresenter;
-import com.gank.gankly.mvp.source.remote.RemoteDataSource;
+import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -19,12 +19,12 @@ import rx.Subscriber;
 
 public class AndroidPresenter extends FetchPresenter implements AndroidContract.Presenter {
     @NonNull
-    private RemoteDataSource mTask;
+    private GankDataSource mTask;
     @NonNull
     private AndroidContract.View mModelView;
 
-    public AndroidPresenter(@NonNull RemoteDataSource remoteDataSource, @NonNull AndroidContract.View view) {
-        mTask = remoteDataSource;
+    public AndroidPresenter(@NonNull GankDataSource gankDataSource, @NonNull AndroidContract.View view) {
+        mTask = gankDataSource;
         mModelView = view;
     }
 

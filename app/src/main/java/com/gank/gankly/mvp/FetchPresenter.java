@@ -117,6 +117,14 @@ public abstract class FetchPresenter extends BasePresenter {
         return null;
     }
 
+    /**
+     * 过滤数据，数据加载完、空数据、显示数据
+     *
+     * @param t    集合
+     * @param view IFetch 视图
+     * @param <T>  实体类
+     * @return 最后返回数据集合
+     */
     public <T> List<T> filterDataBase(List<T> t, IFetchView view) {
         if (t != null) {
             int size = ListUtils.getListSize(t);
@@ -146,7 +154,11 @@ public abstract class FetchPresenter extends BasePresenter {
         return null;
     }
 
-
+    /**
+     * 解析请求失败，显示网络错误、服务器问题
+     *
+     * @param view IFetch 视图
+     */
     public void parseError(IFetchView view) {
         view.hideRefresh();
         if (App.isNetConnect()) {

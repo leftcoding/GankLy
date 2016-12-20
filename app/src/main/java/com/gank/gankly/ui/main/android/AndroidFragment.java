@@ -18,7 +18,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.mvp.source.remote.RemoteDataSource;
+import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
@@ -66,12 +66,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initPresenter() {
-        mPresenter = new AndroidPresenter(RemoteDataSource.getInstance(), this);
+        mPresenter = new AndroidPresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
     protected void initValues() {
-        setMultipleStatusView(mMultipleStatusView);
+//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
@@ -173,6 +173,31 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void hasNoMoreDate() {
         Snackbar.make(mSwipeRefreshLayout, R.string.loading_no_more, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     @Override

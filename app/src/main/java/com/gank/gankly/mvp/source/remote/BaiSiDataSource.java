@@ -6,7 +6,7 @@ import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
-import com.gank.gankly.network.api.BaiSiApi;
+import com.gank.gankly.network.api.ApiManager;
 import com.gank.gankly.network.service.BaiSiService;
 import com.gank.gankly.utils.DateUtils;
 
@@ -20,12 +20,15 @@ import rx.Observable;
  */
 
 public class BaiSiDataSource extends BaseDataSourceModel {
+    private static final String BASE_URL = "http://s.budejie.com/";
+
     @Nullable
-    private static BaiSiDataSource INSTANCE = null;
+    private volatile static BaiSiDataSource INSTANCE = null;
     private BaiSiService mGankService;
 
     private BaiSiDataSource() {
-        mGankService = BaiSiApi.getInstance().getService();
+//        mGankService = BaiSiApi.getInstance().getService();
+        mGankService = ApiManager.init(BASE_URL).createService(BaiSiService.class);
     }
 
     public static BaiSiDataSource getInstance() {

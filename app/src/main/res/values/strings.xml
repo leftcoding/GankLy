@@ -87,4 +87,6 @@
     <string name="about_contact_email">137387869@qq.com</string>
     <string name="about_app_str">GankLy是一个关于程序猿的干货，基于学习和分享的应用。基本上每天都有会有新Android、ios等内容，以及福（mei）利（zi）、精彩视频等，让你在精神和视觉上都有不同的享受，后期有时间还会加入其他的语言干货。由于时间和能力有限，还有许多不足的地方，请大家多多指教。</string>
     <string name="about_thanks_str">GankLy里用到的大部分接口均来自 http://gank.io，在这里感谢@daimajia @drakket @xiongwei-git的无私帮助。</string>
+
+    <string name="baisi_click_big_picture"><![CDATA[点击查看全图>>]]></string>
 </resources>

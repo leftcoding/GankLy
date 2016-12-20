@@ -14,7 +14,6 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.utils.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
@@ -48,7 +47,6 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
 
     @Override
     protected void initData() {
-        KLog.d("initData");
     }
 
     @Override
@@ -93,7 +91,6 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
             public void onPlayclick(int position, View image, String url, int height, int width, String title, String shareUrl) {
                 int[] location = new int[2];
                 image.getLocationInWindow(location);
-                KLog.d("height:" + location[0] + ":" + location[1] + "," + image.getMeasuredHeight() + ":" + image.getMeasuredWidth());
                 startActivity(new GallerySize(height, width, url, location[1], title, shareUrl));
 
             }
@@ -126,6 +123,31 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
 
     @Override
     public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
 
     }
 

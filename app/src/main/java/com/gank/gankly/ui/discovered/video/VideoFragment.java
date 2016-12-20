@@ -73,7 +73,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initViews() {
-        setMultipleStatusView(mMultipleStatusView);
+//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
@@ -186,11 +186,30 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
     public void showContent() {
-        super.showContent();
         if (mMultipleStatusView != null) {
             mMultipleStatusView.showContent();
         }
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     @Override

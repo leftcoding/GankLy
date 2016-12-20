@@ -192,8 +192,27 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     public void showContent() {
-        super.showContent();
         mMultipleStatusView.showContent();
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     @Override
