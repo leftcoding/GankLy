@@ -103,15 +103,6 @@
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/mvp/source/remote/BaiSiDataSource.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/mvp/source/remote/BaiSiDataSource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/api/ApiManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/api/ApiManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/service/BaiSiService.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/network/service/BaiSiService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiMainFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiMainFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/GankAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/GankAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/ios/IosFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/ios/IosFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ios_state_list.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ios_state_list.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/adapter_ios.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_ios.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/adapter_welfare.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/adapter_welfare.xml" />
     </list>
     <list id="f4d3f1a8-e422-4454-8c00-c701df1d746b" name="ganklyKotlin" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/main/MainActivity.java" />
@@ -5960,13 +5951,6 @@
       <option name="presentableId" value="Default" />
       <updated>1482112786728</updated>
     </task>
-    <task id="LOCAL-00097" summary="1.Update Night Theme">
-      <created>1477042267421</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1477042267421</updated>
-    </task>
     <task id="LOCAL-00098" summary="1.Update Night Theme&#10;2.Update MVP">
       <created>1477388014761</created>
       <option name="number" value="00098" />
@@ -6306,7 +6290,14 @@
       <option name="project" value="LOCAL" />
       <updated>1482225730087</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="1.Update Mvp">
+      <created>1482312348883</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1482312348926</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TodoView">
