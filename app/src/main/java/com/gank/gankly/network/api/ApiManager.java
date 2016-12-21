@@ -18,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiManager {
     private static final int DEFAULT_OUT_TIME = 30;
-    private static ApiManager sApiManager;
 
     private final static Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -28,18 +27,11 @@ public class ApiManager {
     private Retrofit retrofit;
 
     public static ApiManager init(String url) {
-        if (sApiManager == null) {
-            synchronized (ApiManager.class) {
-                if (sApiManager == null) {
-                    sApiManager = new ApiManager(url);
-                }
-            }
-        }
-        return sApiManager;
+        return new ApiManager(url);
     }
 
 
-    public ApiManager(String url) {
+    private ApiManager(String url) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS); //手动创建一个OkHttpClient并设置超时时间
         builder.addNetworkInterceptor(new StethoInterceptor()); //chrome test databases

@@ -68,8 +68,9 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         if (position < holder.mSize) {
             Glide.with(mContext)
                     .load(holder.list.get(position).getUrl())
+                    .placeholder(R.drawable.item_default_img)
+//                    .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .centerCrop()
                     .into(holder.img);
         }
     }
@@ -117,14 +118,14 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         mMeiZiOnClick = onItemClickListener;
     }
 
-    class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.goods_txt_title)
         TextView txtDesc;
         @BindView(R.id.goods_txt_author_name)
         TextView txtName;
         @BindView(R.id.goods_txt_time)
         TextView txtTime;
-        @BindView(R.id.ri_img)
+        @BindView(R.id.adapter_ios_ratio_img_head)
         RatioImageView img;
         ResultsBean mBean;
         int mSize;
@@ -132,8 +133,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
 
         public GankViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
             list = MeiziArrayList.getInstance().getImagesList();
             mSize = list.size();
             Collections.shuffle(list);

@@ -1,13 +1,9 @@
 package com.gank.gankly.network.service;
 
-import com.gank.gankly.bean.BaiSiBean;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.bean.BuDeJieVideo;
 
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -18,19 +14,6 @@ import rx.Observable;
  */
 
 public interface BaiSiService {
-    @FormUrlEncoded
-    @POST("255-1")
-    Observable<BaiSiBean> fetchBaiSi(
-            @Field("showapi_appid") String appid,
-            @Field("showapi_sign") String sign,
-            @Field("showapi_timestamp") String timestamp,
-            @Field("showapi_sign_method") String method,
-            @Field("showapi_res_gzip") String gzip,
-            @Field("type") String type,
-            @Field("title") String title,
-            @Field("page") int page
-    );
-
     @GET("topic/list/zuixin/10/budejie-android-6.6.1/{limit}-20.json")
     Observable<BuDeJieBean> fetchImage(
             @Path("limit") int nextPage,
@@ -49,7 +32,7 @@ public interface BaiSiService {
             @Query("country") String country
     );
 
-    @GET("/topic/list/zuixin/41/budejie-android-6.6.1/{limit}-20.json")
+    @GET("topic/list/zuixin/41/budejie-android-6.6.1/{limit}-20.json")
     Observable<BuDeJieVideo> fetchVideo(
             @Path("limit") int nextPage
     );

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
+    <item android:state_pressed="true" >
         <set>
-            <objectAnimator android:duration="150"
-                            android:propertyName="translationZ"
-                            android:valueTo="10"
-                            android:valueType="floatType"/>
-            <objectAnimator android:duration="150"
+            <!--<objectAnimator android:duration="150"-->
+                            <!--android:propertyName="translationZ"-->
+                            <!--android:valueTo="10"-->
+                            <!--android:valueType="floatType"/>-->
+            <objectAnimator android:duration="100"
                             android:propertyName="rotationX"
-                            android:valueTo="45"
+                            android:valueTo="15"
                             android:valueType="floatType"/>
         </set>
     </item>
     <item android:state_pressed="false">
         <set>
-            <objectAnimator android:duration="150"
-                            android:propertyName="translationZ"
-                            android:valueTo="0"
-                            android:valueType="floatType"/>
-            <objectAnimator android:duration="150"
+            <!--<objectAnimator android:duration="150"-->
+                            <!--android:propertyName="translationZ"-->
+                            <!--android:valueTo="0"-->
+                            <!--android:valueType="floatType"/>-->
+            <objectAnimator android:duration="100"
                             android:propertyName="rotationX"
                             android:valueTo="0"
                             android:valueType="floatType"/>

@@ -65,7 +65,6 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     @Override
     protected void initViews() {
-        KLog.d("initViews");
         mToolbar.setTitle("休闲");
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();

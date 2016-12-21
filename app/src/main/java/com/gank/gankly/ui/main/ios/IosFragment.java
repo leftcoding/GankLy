@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main.ios;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
-import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -29,14 +29,12 @@ import butterknife.BindView;
  * Create by LingYan on 2016-4-26
  * Email:137387869@qq.com
  */
-public class IosFragment extends LazyFragment implements
-        RecyclerOnClick, IosContract.View {
+public class IosFragment extends LazyFragment implements RecyclerOnClick, IosContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
-    private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
     private GankAdapter mRecyclerAdapter;
     private IosContract.Presenter mPresenter;
@@ -55,18 +53,11 @@ public class IosFragment extends LazyFragment implements
 
     @Override
     protected void initPresenter() {
-//        mPresenter = new IosGoodsPresenterImpl(mActivity, this);
         mPresenter = new IosPresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
     protected void initValues() {
-//        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-//            @Override
-//            public void call(ThemeEvent event) {
-//                refreshUi();
-//            }
-//        });
     }
 
     @Override
@@ -76,7 +67,7 @@ public class IosFragment extends LazyFragment implements
         mRecyclerAdapter = new GankAdapter(mActivity, GankAdapter.LAYOUT_IOS);
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
 
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
+        RecyclerView mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -113,72 +104,6 @@ public class IosFragment extends LazyFragment implements
         mPresenter.fetchNew();
     }
 
-//    @Override
-//    public void refreshUi() {
-//        Resources.Theme theme = mActivity.getTheme();
-//        TypedValue typedValue = new TypedValue();
-//        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-//        int background = typedValue.data;
-//        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
-//        int textColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
-//        int textSecondaryColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
-//        int mainColor = typedValue.data;
-//        mRecyclerView.setBackgroundColor(mainColor);
-//
-//        int childCount = mRecyclerView.getChildCount();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-//            childView.setBackgroundColor(background);
-//            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            title.setTextColor(textColor);
-//            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
-//            time.setTextColor(textSecondaryColor);
-//        }
-//
-//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-//    }
-
-//    @Override
-//    public void onRefresh() {
-//        showRefresh();
-//        initFetchDate();
-//    }
-
-//    @Override
-//    public void refillDate(List<ResultsBean> list) {
-//        mRecyclerAdapter.updateItems(list);
-//    }
-//
-//    @Override
-//    public void appendMoreDate(List<ResultsBean> list) {
-//        mRecyclerAdapter.appendMoreDate(list);
-//    }
-//
-//    @Override
-//    public void showRefreshError(String errorStr) {
-//        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
-//                .setActionTextColor(App.getAppColor(R.color.Blue))
-//                .setAction(R.string.retry, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mPresenter.fetchMore();
-//                    }
-//                }).show();
-//    }
-//
-//    @Override
-//    public void hasNoMoreDate() {
-//        Snackbar.make(mRecyclerView, R.string.tip_no_more_load, Snackbar.LENGTH_LONG).show();
-//    }
-//
-//    @Override
-//    public void clear() {
-//
-//    }
-
     @Override
     public void showLoading() {
         mMultipleStatusView.showLoading();
@@ -186,7 +111,13 @@ public class IosFragment extends LazyFragment implements
 
     @Override
     public void showRefreshError(String errorStr) {
-
+        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPresenter.fetchMore();
+                    }
+                });
     }
 
     @Override
@@ -224,16 +155,6 @@ public class IosFragment extends LazyFragment implements
         mMultipleStatusView.showNoNetwork();
     }
 
-//    @Override
-//    public void hideRefresh() {
-//        mSwipeRefreshLayout.setRefreshing(false);
-//    }
-//
-//    @Override
-//    public void showRefresh() {
-//        mSwipeRefreshLayout.setRefreshing(true);
-//    }
-
     @Override
     public void onClick(View view, ResultsBean bean) {
         Bundle bundle = new Bundle();
@@ -269,41 +190,16 @@ public class IosFragment extends LazyFragment implements
 
     @Override
     protected void callBackRefreshUi() {
-//        Resources.Theme theme = mActivity.getTheme();
-//        TypedValue typedValue = new TypedValue();
-//        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-//        int background = typedValue.data;
-//        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
-//        int textColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
-//        int textSecondaryColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
-//        int mainColor = typedValue.data;
-//        mRecyclerView.setBackgroundColor(mainColor);
-//
-//        int childCount = mRecyclerView.getChildCount();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-//            childView.setBackgroundColor(background);
-//            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            title.setTextColor(textColor);
-//            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
-//            time.setTextColor(textSecondaryColor);
-//        }
-//
-//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        ThemeColor theme = new ThemeColor(this);
     }
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-
+        mRecyclerAdapter.updateItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-
+        mRecyclerAdapter.appendMoreDate(list);
     }
 }
