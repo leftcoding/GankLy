@@ -38,3 +38,13 @@ captures/
 
 # Keystore files
 *.jks
+!/.idea/workspace.xml
+app/src/androidTest/
+app/src/main/java/com/gank/gankly/ui/main/meizi/A.java
+app/src/main/res/drawable-hdpi/
+app/src/main/res/drawable-mdpi/
+app/src/main/res/drawable-xhdpi/
+app/src/test/
+app/src/testDebug/
+test/libs/
+/.idea/workspace.xml

@@ -68,17 +68,17 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         if (position < holder.mSize) {
             Glide.with(mContext)
                     .load(holder.list.get(position).getUrl())
-                    .placeholder(R.drawable.item_default_img)
+//                    .placeholder(R.drawable.item_default_img)
 //                    .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.img);
+                    .into(holder.imgHead);
         }
     }
 
     @Override
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.img);
+        Glide.clear(holder.imgHead);
     }
 
     private View getLayoutView(ViewGroup parent) {
@@ -89,7 +89,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
                 resLayout = R.layout.adapter_ios;
                 break;
             default:
-                resLayout = R.layout.adapter_welfare;
+                resLayout = R.layout.adapter_android;
                 break;
         }
         return layoutInflater.inflate(resLayout, parent, false);
@@ -126,7 +126,8 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         @BindView(R.id.goods_txt_time)
         TextView txtTime;
         @BindView(R.id.adapter_ios_ratio_img_head)
-        RatioImageView img;
+        RatioImageView imgHead;
+
         ResultsBean mBean;
         int mSize;
         List<ResultsBean> list;

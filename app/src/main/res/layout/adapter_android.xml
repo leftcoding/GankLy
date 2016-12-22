@@ -18,7 +18,7 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:scaleType="centerCrop"
-        android:src="@drawable/item_default_img"/>
+        android:src="@color/dim_foreground_disabled_material_dark"/>
 
     <RelativeLayout
         android:id="@+id/goods_rl_data"
