@@ -102,110 +102,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="776fb9aa-8e70-4665-b2a4-ded033c485d5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/arm64-v8a/libijkffmpeg.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/arm64-v8a/libijkplayer.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/arm64-v8a/libijksdl.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi-v7a/libijkffmpeg.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi-v7a/libijkplayer.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi-v7a/libijksdl.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi/libijkffmpeg.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi/libijkplayer.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/armeabi/libijksdl.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/x86/libijkffmpeg.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/x86/libijkplayer.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/jniLibs/x86/libijksdl.so" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-hdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-mdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_back.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_brightness_6_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_center_pause.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_center_play.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_chevron_left_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_circles.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_enlarge.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_fullscreen_exit_white_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_fullscreen_exit_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_fullscreen_white_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_live_number.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_not_fullscreen.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_pause.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_play.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_play_arrow_white_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_play_circle_outline_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_setting.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_share.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_stop_white_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_volume_off_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xhdpi/ic_volume_up_white_36dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable-xxhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/proguard-rules.pro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/androidTest/java/tv/danmaku/ijk/media/player/ApplicationTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/AbstractMediaPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/AndroidMediaPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/IMediaPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/ISurfaceTextureHolder.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/ISurfaceTextureHost.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/IjkLibLoader.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/IjkMediaCodecInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/IjkMediaMeta.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/IjkMediaPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/MediaInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/MediaPlayerProxy.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/TextureMediaPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/annotations/AccessedByNative.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/annotations/CalledByNative.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/exceptions/IjkMediaException.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/ffmpeg/FFmpegApi.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/AndroidMediaFormat.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/AndroidTrackInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/IMediaDataSource.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/IMediaFormat.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/ITrackInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/IjkMediaFormat.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/misc/IjkTrackInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/pragma/DebugLog.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/pragma/Pragma.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/IMediaController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/IRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/IjkVideoView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/MeasureHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/MediaPlayerCompat.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/SurfaceRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/java/tv/danmaku/ijk/media/player/widget/TextureRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/main/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ijkplayerlibrary/src/test/java/tv/danmaku/ijk/media/player/ExampleUnitTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/build.gradle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/proguard-rules.pro" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/androidTest/java/com/superplayer/library/ApplicationTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/AndroidManifest.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/SuperPlayer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/SuperPlayerManage.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/Test.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/IMediaController.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/IRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/IjkVideoView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/MeasureHelper.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/SurfaceRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/mediaplayer/TextureRenderView.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/utils/NetUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/java/com/superplayer/library/utils/SuperPlayerUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable/app_video_center_bg.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable/bg_jky_player_continue.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/drawable/jky_player_progressbar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/layout/view_super_player.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/layout/view_super_player_bottom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/layout/view_super_player_center.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/layout/view_super_player_control.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/layout/view_super_player_top.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/values/strings.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/main/res/values/styles.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/superplayerlibrary/src/test/java/com/superplayer/library/ExampleUnitTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GankLy.iws" />
@@ -286,38 +182,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BaiSiVideoFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiVideoFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1470">
-              <caret line="96" column="94" selection-start-line="96" selection-start-column="94" selection-end-line="96" selection-end-column="94" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1717#1718#0" expanded="true" />
-                <element signature="e#1754#1755#0" expanded="true" />
-                <element signature="e#4160#4161#0" expanded="true" />
-                <element signature="e#4191#4192#0" expanded="true" />
-                <element signature="e#4235#4236#0" expanded="true" />
-                <element signature="e#4267#4268#0" expanded="true" />
-                <element signature="e#4312#4313#0" expanded="true" />
-                <element signature="e#4345#4346#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiSiVideoPresenter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiVideoPresenter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1239">
-              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="483">
+                <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+                <folding />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
           <provider editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="882">
@@ -325,81 +200,6 @@
                 <folding />
               </first_editor>
               <second_editor />
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="297">
-                <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
-                <folding />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="image_0.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/art/image_0.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="image_2.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/art/image_2.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="image_1.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/art/image_1.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiSiVideoPreViewActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiVideoPreViewActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4095">
-              <caret line="220" column="44" selection-start-line="220" selection-start-column="44" selection-end-line="220" selection-end-column="44" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiSiImageFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/image/BaiSiImageFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="693">
-              <caret line="47" column="36" selection-start-line="47" selection-start-column="36" selection-end-line="47" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiSiImagePresenter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/image/BaiSiImagePresenter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1113">
-              <caret line="60" column="17" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="17" />
-              <folding>
-                <element signature="e#1070#1071#0" expanded="true" />
-                <element signature="e#1121#1122#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BaiSiVideoAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiVideoAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2436">
-              <caret line="138" column="103" selection-start-line="138" selection-start-column="103" selection-end-line="138" selection-end-column="103" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -4768,6 +4568,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -4786,14 +4587,169 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gankly" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gankly" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GankLy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gankly" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane />
       </pane>
       <pane id="Scratches" />
       <pane id="AndroidView">
-        <subPane />
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane">
         <subPane />
       </pane>
     </panes>
@@ -5756,7 +5712,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2262181" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -5775,7 +5731,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32946634" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2689951" sideWeight="0.48839906" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2689951" sideWeight="0.48839906" order="6" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32965687" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.28921568" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32965687" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
@@ -6123,7 +6079,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/BaiSiVideoFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1470">
+        <state relative-caret-position="1890">
           <caret line="96" column="94" selection-start-line="96" selection-start-column="94" selection-end-line="96" selection-end-column="94" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -6159,7 +6115,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/gank/gankly/ui/baisi/image/BaiSiImagePresenter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1113">
+        <state relative-caret-position="1155">
           <caret line="60" column="17" selection-start-line="60" selection-start-column="17" selection-end-line="60" selection-end-column="17" />
           <folding>
             <element signature="e#1070#1071#0" expanded="true" />
@@ -6192,19 +6148,19 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="882">
-            <caret line="42" column="71" selection-start-line="42" selection-start-column="71" selection-end-line="42" selection-end-column="71" />
+          <first_editor relative-caret-position="483">
+            <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
             <folding />
           </first_editor>
           <second_editor />
         </state>
       </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+      <provider editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="297">
-            <caret line="22" column="11" selection-start-line="22" selection-start-column="11" selection-end-line="22" selection-end-column="11" />
+          <first_editor relative-caret-position="882">
+            <caret line="42" column="71" selection-start-line="42" selection-start-column="71" selection-end-line="42" selection-end-column="71" />
             <folding />
           </first_editor>
           <second_editor />
