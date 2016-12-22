@@ -178,4 +178,29 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     protected void callBackRefreshUi() {
 
     }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
 }

@@ -18,12 +18,11 @@
         android:orientation="horizontal">
 
         <com.gank.gankly.widget.RatioImageView
-            android:id="@+id/ri_img"
+            android:id="@+id/adapter_ios_ratio_img_head"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_gravity="center_vertical"
             android:scaleType="centerCrop"
-            android:src="@drawable/item_default_img"/>
+            android:layout_gravity="center_vertical"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

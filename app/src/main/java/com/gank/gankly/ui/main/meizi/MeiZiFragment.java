@@ -173,26 +173,27 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, SwipeRe
 
     @Override
     public void showContent() {
-        super.showContent();
         mMultipleStatusView.showContent();
     }
 
     @Override
     public void showDisNetWork() {
-        super.showDisNetWork();
         mMultipleStatusView.showNoNetwork();
     }
 
     @Override
     public void showEmpty() {
-        super.showEmpty();
         mMultipleStatusView.showEmpty();
     }
 
     @Override
     public void showError() {
-        super.showError();
         mMultipleStatusView.showError();
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     @Override

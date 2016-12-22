@@ -12,7 +12,7 @@
     android:padding="16dp">
 
     <com.gank.gankly.widget.RatioImageView
-        android:id="@+id/ri_img"
+        android:id="@+id/adapter_ios_ratio_img_head"
         android:layout_width="120dp"
         android:layout_height="96dp"
         android:layout_centerVertical="true"
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_toEndOf="@id/ri_img"
+        android:layout_toEndOf="@id/adapter_ios_ratio_img_head"
         android:orientation="horizontal">
 
         <TextView

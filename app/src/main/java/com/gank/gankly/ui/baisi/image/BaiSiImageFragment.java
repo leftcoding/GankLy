@@ -64,7 +64,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
         mAdapter.setPlayClick(new BaiSiImageAdapter.onClickImage() {
 
             @Override
-            public void onClickImage(GallerySize gallerySize) {
+            public void onClick(GallerySize gallerySize) {
                 mActivity.getSupportFragmentManager().beginTransaction()
                         .addToBackStack("BaiSiGalleryFragment")
                         .add(R.id.setting_frame_layout, BaiSiGalleryFragment.newInstance(gallerySize))
@@ -88,7 +88,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     protected void initViews() {
-        setMultipleStatusView(mMultipleStatusView);
+//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
@@ -112,6 +112,31 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
 
     }
 

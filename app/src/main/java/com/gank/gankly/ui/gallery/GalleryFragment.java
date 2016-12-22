@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.gallery;//package com.gank.gankly.ui.browse;
+package com.gank.gankly.ui.gallery;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,13 @@ import com.gank.gankly.widget.ProgressImageView;
 
 import butterknife.BindView;
 
+/**
+ * 图片浏览
+ * Create by LingYan on 2016-12-19
+ */
 public class GalleryFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
+    public static final String IMAGE_URL = "Image_Url";
+
     @BindView(R.id.progress_img)
     ProgressImageView mProgressImageView;
     private GalleryActivity mActivity;
@@ -26,7 +32,6 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
         this.mActivity = (GalleryActivity) context;
     }
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +40,12 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
         setHasOptionsMenu(true);
     }
 
-
     private void parseArguments() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mUrl = bundle.getString("url");
+            mUrl = bundle.getString(IMAGE_URL);
         }
     }
-
 
     @Override
     protected void initValues() {
@@ -83,7 +86,7 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
     public static GalleryFragment newInstance(String url) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
-        args.putString("url", url);
+        args.putString(IMAGE_URL, url);
         fragment.setArguments(args);
         return fragment;
     }

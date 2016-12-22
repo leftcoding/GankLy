@@ -189,8 +189,28 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     }
 
     @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
     }
 
     @Override

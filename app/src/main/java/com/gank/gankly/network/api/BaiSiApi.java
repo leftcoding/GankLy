@@ -22,7 +22,6 @@ import rx.schedulers.Schedulers;
  */
 
 public class BaiSiApi {
-//    private static final String BASE_URL = "http://route.showapi.com/";
     private static final String BASE_URL = "http://s.budejie.com/";
     private static final int DEFAULT_OUT_TIME = 30;
 

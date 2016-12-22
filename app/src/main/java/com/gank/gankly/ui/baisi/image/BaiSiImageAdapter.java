@@ -27,9 +27,6 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-11
  */
 public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String IMAGE_JPG = ".jpg";
-    private static final String IMAGE_PNG = ".png";
-    private static final String IMAGE_GIF = ".gif";
     private Map<String, Integer> mGifHeight = new ArrayMap<>();
     private Map<String, Integer> mImageHeight = new ArrayMap<>();
     private List<BuDeJieBean.ListBean> mList;
@@ -91,7 +88,6 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mPreWidth = imageBean.getWidth();
 
             if (!mImageHeight.containsKey(imgUrl)) {
-                KLog.d(mPreHeight + ":" + mPreWidth + ",imgUrl:" + imgUrl);
                 height = mPreHeight * 1080 / mPreWidth;
                 height = height > 630 ? 630 : height;
                 mImageHeight.put(imgUrl, height);
@@ -183,7 +179,7 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 public void onClick(View v) {
                     if (mOnClickImage != null) {
                         KLog.d("url:" + url);
-                        mOnClickImage.onClickImage(new GallerySize(height, width, url, position));
+                        mOnClickImage.onClick(new GallerySize(height, width, url, position));
                     }
                 }
             });
@@ -217,7 +213,7 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 @Override
                 public void onClick(View v) {
                     if (mOnClickImage != null) {
-                        mOnClickImage.onClickImage(new GallerySize(height, width, url, position));
+                        mOnClickImage.onClick(new GallerySize(height, width, url, position));
                     }
                 }
             });
@@ -251,6 +247,6 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public interface onClickImage {
-        void onClickImage(GallerySize gallerySize);
+        void onClick(GallerySize gallerySize);
     }
 }

@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieVideo;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,6 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
         int width = bean.getVideo().getWidth();
         holder.height = height;
         holder.width = width;
-        KLog.d("height:" + height + ",width:" + width + ",videoUrl:" + videoUrl);
         if (!heights.containsKey(videoUrl)) {
             if (Math.max(height, width) == 0) {
                 height = 1066;
@@ -74,8 +72,6 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
         } else {
             height = heights.get(videoUrl);
         }
-
-        KLog.d("height:" + height + ",width:" + width);
 
         ViewGroup.LayoutParams layoutParams = holder.mPlay.getLayoutParams();
         layoutParams.width = 1080;
@@ -155,13 +151,6 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
         mList.addAll(list);
         notifyItemRangeInserted(size, list.size());
     }
-
-//    public static int getScreenWidth(Activity activity) {
-//        DisplayMetrics dm = new DisplayMetrics();
-//        activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
-//        int screenWidth = dm.widthPixels;
-//        return screenWidth;
-//    }
 
     public void setPlayClick(onPlayClick playclick) {
         this.playclick = playclick;
