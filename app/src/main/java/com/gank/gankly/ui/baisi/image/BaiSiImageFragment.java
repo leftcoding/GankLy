@@ -5,7 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
-import com.gank.gankly.mvp.source.remote.BaiSiDataSource;
+import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.utils.SpaceItemDecoration;
@@ -45,7 +45,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     protected void initPresenter() {
-        mPresenter = new BaiSiImagePresenter(BaiSiDataSource.getInstance(), this);
+        mPresenter = new BaiSiImagePresenter(BuDeJieDataSource.getInstance(), this);
     }
 
     @Override

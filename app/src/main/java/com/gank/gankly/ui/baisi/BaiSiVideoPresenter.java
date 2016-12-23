@@ -2,13 +2,14 @@ package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.mvp.FetchPresenter;
-import com.gank.gankly.mvp.source.remote.BaiSiDataSource;
+import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-11-30
@@ -16,11 +17,11 @@ import rx.Subscriber;
  */
 
 public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoContract.Presenter {
-    private BaiSiDataSource mTask;
+    private BuDeJieDataSource mTask;
     private BaiSiVideoContract.View mView;
     private int mNextPage;
 
-    public BaiSiVideoPresenter(BaiSiDataSource task, BaiSiVideoContract.View view) {
+    public BaiSiVideoPresenter(BuDeJieDataSource task, BaiSiVideoContract.View view) {
         mTask = task;
         mView = view;
     }
@@ -37,17 +38,22 @@ public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoCon
     }
 
     private void fetchData(int page) {
-        mTask.fetchVideo(page).subscribe(new Subscriber<BuDeJieVideo>() {
+        mTask.fetchVideo(page).subscribe(new Observer<BuDeJieVideo>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                mView.hideRefresh();
+                KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
                 mView.hideRefresh();
                 setFetchPage(getFetchPage() + 1);
             }
 
             @Override
-            public void onError(Throwable e) {
-                mView.hideRefresh();
-                KLog.e(e);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

@@ -13,7 +13,8 @@ import com.socks.library.KLog;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-06-13
@@ -31,9 +32,16 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     }
 
     public void fetchNew(final int page) {
-        mGiftModel.fetchGiftPage(page, new Subscriber<GiftResult>() {
+        mGiftModel.fetchGiftPage(page, new Observer<GiftResult>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                mIView.hideRefresh();
+                KLog.e(e);
+                CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onComplete() {
                 int _page = page + 1;
                 mIView.setNextPage(_page);
                 mIView.hideRefresh();
@@ -41,10 +49,8 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             }
 
             @Override
-            public void onError(Throwable e) {
-                mIView.hideRefresh();
-                KLog.e(e);
-                CrashUtils.crashReport(e);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -76,17 +82,22 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
 
     public void fetchImagePageList(final String url) {
         initProgress();
-        Subscriber<GiftResult> subscriber = new Subscriber<GiftResult>() {
-            @Override
-            public void onCompleted() {
-                mIView.hideRefresh();
-            }
-
+        Observer<GiftResult> subscriber = new Observer<GiftResult>() {
             @Override
             public void onError(Throwable e) {
                 mIView.hideRefresh();
                 KLog.e(e);
                 CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onComplete() {
+                mIView.hideRefresh();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -104,9 +115,16 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
         isUnSubscribe = false;
         mGiftModel.setIsUnSubscribe(isUnSubscribe);
         girls.clear();
-        Subscriber<List<GiftBean>> subscriber = new Subscriber<List<GiftBean>>() {
+        Observer<List<GiftBean>> subscriber = new Observer<List<GiftBean>>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                mIView.hideRefresh();
+                KLog.e(e);
+                CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onComplete() {
                 mIView.disDialog();
                 mIView.refillImagesCount(girls);
                 if (!isUnSubscribe) {
@@ -117,10 +135,8 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
             }
 
             @Override
-            public void onError(Throwable e) {
-                mIView.hideRefresh();
-                KLog.e(e);
-                CrashUtils.crashReport(e);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -134,11 +150,8 @@ public class GiftPresenter extends BasePresenter<IGiftView> {
     }
 
     public void unSubscribe() {
-        if (mGiftModel.getSubscription() != null) {
-            mGiftModel.getSubscription().unsubscribe();
-            isUnSubscribe = true;
-            initProgress();
-        }
+        isUnSubscribe = true;
+        initProgress();
     }
 
     public void initProgress() {

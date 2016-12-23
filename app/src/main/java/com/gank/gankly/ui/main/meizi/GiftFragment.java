@@ -27,17 +27,18 @@ import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.view.IGiftView;
-import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
 
 /**
  * 清纯妹子
@@ -76,13 +77,13 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @Override
     protected void initValues() {
         initRefresh();
-
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-            @Override
-            public void call(ThemeEvent event) {
-                changeUi();
-            }
-        });
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(new Consumer<ThemeEvent>() {
+                    @Override
+                    public void accept(ThemeEvent themeEvent) throws Exception {
+                        changeUi();
+                    }
+                });
     }
 
     @Override
@@ -289,18 +290,17 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         showDialog();
         mImageCountList.clear();
         final GiftBean giftBean = (GiftBean) object;
-        Observable.create(new Observable.OnSubscribe<GiftBean>() {
-
+        Observable.create(new ObservableOnSubscribe<GiftBean>() {
             @Override
-            public void call(Subscriber<? super GiftBean> subscriber) {
+            public void subscribe(ObservableEmitter<GiftBean> subscriber) throws Exception {
                 subscriber.onNext(giftBean);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         })
                 .throttleFirst(100, TimeUnit.MILLISECONDS)
-                .subscribe(new Action1<GiftBean>() {
+                .subscribe(new Consumer<GiftBean>() {
                     @Override
-                    public void call(GiftBean giftBean) {
+                    public void accept(GiftBean giftBean) throws Exception {
                         mPresenter.fetchImagePageList(giftBean.getUrl());
                     }
                 });

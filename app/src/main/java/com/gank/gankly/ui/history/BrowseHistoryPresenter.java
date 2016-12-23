@@ -8,7 +8,8 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-10-31
@@ -42,17 +43,22 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
     private void fetch() {
         int offset = getOffSet();
         mTask.selectReadHistory(offset, getFetchLimit())
-                .subscribe(new Subscriber<List<ReadHistory>>() {
+                .subscribe(new Observer<List<ReadHistory>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
                         mModelView.hideRefresh();
                         int nextOffsetPage = getOffSetPage() + 1;
                         setOffSetPage(nextOffsetPage);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
@@ -82,14 +88,20 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
 
     @Override
     public void deleteHistory(long id) {
-        mTask.deleteHistory(id).subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-            }
-
+        mTask.deleteHistory(id).subscribe(new Observer<String>() {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

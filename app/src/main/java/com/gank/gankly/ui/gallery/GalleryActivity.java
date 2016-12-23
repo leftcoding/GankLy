@@ -31,11 +31,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.network.api.GankApi;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
@@ -54,12 +52,15 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -105,7 +106,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private List<GiftBean> mGiftList = new ArrayList<>();
     private Bitmap mBitmap;
     private WallpaperManager myWallpaperManager;
-    private Subscription subscription;
+    private Disposable subscription;
     private boolean isScroll = true;
     private boolean isPlay;
 
@@ -154,31 +155,33 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         final int limit = 20;
         mPage = MeiziArrayList.getInstance().getPage();
         mPage = mPage + 1;
-        GankApi.getInstance().fetchWelfare(limit, mPage, new Subscriber<GankResult>() {
-            @Override
-            public void onCompleted() {
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-                CrashUtils.crashReport(e);
-                ToastUtils.showToast(R.string.tip_server_error);
-            }
-
-            @Override
-            public void onNext(GankResult gankResult) {
-                if (!gankResult.isEmpty()) {
-                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
-                    mGiftList.addAll(changeImageList(gankResult.getResults()));
-                }
-                if (gankResult.getSize() < limit) {
-                    isLoadMore = false;
-                    ToastUtils.longBottom(R.string.loading_pic_no_more);
-                }
-                mPagerAdapter.notifyDataSetChanged();
-            }
-        });
+//        GankApi.getInstance().fetchWelfare(limit, mPage, new Observable<GankResult>() {
+//
+//
+//            @Override
+//            public void onCompleted() {
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                KLog.e(e);
+//                CrashUtils.crashReport(e);
+//                ToastUtils.showToast(R.string.tip_server_error);
+//            }
+//
+//            @Override
+//            public void onNext(GankResult gankResult) {
+//                if (!gankResult.isEmpty()) {
+//                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
+//                    mGiftList.addAll(changeImageList(gankResult.getResults()));
+//                }
+//                if (gankResult.getSize() < limit) {
+//                    isLoadMore = false;
+//                    ToastUtils.longBottom(R.string.loading_pic_no_more);
+//                }
+//                mPagerAdapter.notifyDataSetChanged();
+//            }
+//        });
     }
 
     private void setNumberText(int position) {
@@ -289,24 +292,14 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void timerBrowse() {
-        if (subscription == null || subscription.isUnsubscribed()) {
+        if (subscription == null || subscription.isDisposed()) {
             mImageView.setBackgroundResource(R.drawable.ic_gallery_stop);
             isScroll = false;
-            subscription = Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
+            Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Long>() {
+                    .subscribe(new Consumer<Long>() {
                         @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            KLog.e(e);
-                        }
-
-                        @Override
-                        public void onNext(Long aLong) {
+                        public void accept(Long aLong) throws Exception {
                             int count = mPagerAdapter.getCount();
                             if (aLong >= count) {
                                 unSubscribeTime();
@@ -315,14 +308,24 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                                 mViewPager.setCurrentItem(mPosition);
                             }
                         }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+
+                        }
+                    }, new Action() {
+                        @Override
+                        public void run() throws Exception {
+
+                        }
                     });
         }
     }
 
     private void unSubscribeTime() {
         mImageView.setBackgroundResource(R.drawable.ic_gallery_play);
-        if (subscription != null && !subscription.isUnsubscribed()) {
-            subscription.unsubscribe();
+        if (subscription != null ) {
+            subscription.dispose();
         }
     }
 
@@ -345,9 +348,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void setWallPaper(final String url, final FragmentActivity activity) {
-        Observable.create(new Observable.OnSubscribe<Bitmap>() {
+        Observable.create(new ObservableOnSubscribe<Bitmap>() {
             @Override
-            public void call(Subscriber<? super Bitmap> subscriber) {
+            public void subscribe(ObservableEmitter<Bitmap> subscriber) throws Exception {
                 Bitmap bitmap = null;
                 try {
                     bitmap = Glide.with(activity)
@@ -363,22 +366,27 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     CrashUtils.crashReport(e);
                 }
                 subscriber.onNext(bitmap);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Bitmap>() {
-                    @Override
-                    public void onCompleted() {
-                        revokeWallpaper();
-                    }
-
+                .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onError(Throwable e) {
                         ToastUtils.showToast(R.string.meizi_wallpaper_failure);
                         KLog.e(e);
                         CrashUtils.crashReport(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        revokeWallpaper();
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override
@@ -431,16 +439,22 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private void saveImagePath(String imgUrl, final boolean isShare) {
         RxSaveImage.saveImageAndGetPathObservable(this, imgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Uri>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
+                .subscribe(new Observer<Uri>() {
                     @Override
                     public void onError(Throwable e) {
                         KLog.e(e);
                         CrashUtils.crashReport(e);
                         ToastUtils.showToast(e.getMessage() + "\n再试试...");
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override

@@ -29,7 +29,6 @@ import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
-import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
@@ -44,10 +43,13 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-5-10
@@ -169,9 +171,9 @@ public class JiandanWebActivity extends BaseActivity {
 
     private void parseLoadUrlData(final String url) {
         KLog.d("url:" + url);
-        Observable<String> observable = Observable.create(new Observable.OnSubscribe<String>() {
+        Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void subscribe(ObservableEmitter<String> subscriber) throws Exception {
                 try {
                     Document doc = Jsoup.connect(url)
                             .userAgent(USERAGENT)
@@ -185,31 +187,32 @@ public class JiandanWebActivity extends BaseActivity {
                         _url = doc.html();
                     }
                     subscriber.onNext(_url);
-                    subscriber.onCompleted();
+                    subscriber.onComplete();
                 } catch (IOException e) {
                     KLog.e(e);
                     subscriber.onError(e);
                 }
             }
         })
-//                .map(new Func1<String, String>() {
-//                    @Override
-//                    public String call(String s) {
-//                        return s.replace("#", "%23").replace("%", "%25").replace("\\", "%27").replace("\'\'", "%3f");
-//                    }
-//                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        observable.subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-            }
+        observable.subscribe(new Observer<String>() {
 
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
                 CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -480,7 +483,7 @@ public class JiandanWebActivity extends BaseActivity {
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
             if (mFromWay == FROM_COLLECT) {
-                RxUtils.getInstance().OnUnCollect();
+//                RxUtils.getInstance().OnUnCollect();
             }
         }
     }

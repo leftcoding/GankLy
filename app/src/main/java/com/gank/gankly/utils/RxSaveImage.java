@@ -16,9 +16,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-04-20
@@ -27,9 +28,9 @@ public class RxSaveImage {
     private static final String IMAGE_PATH = "Gankly/pic";
 
     public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final String url) {
-        return Observable.create(new Observable.OnSubscribe<Uri>() {
+        return Observable.create(new ObservableOnSubscribe<Uri>() {
             @Override
-            public void call(Subscriber<? super Uri> subscriber) {
+            public void subscribe(ObservableEmitter<Uri> subscriber) throws Exception {
                 Bitmap bitmap = null;
                 try {
                     bitmap = Glide.with(context)
@@ -51,7 +52,7 @@ public class RxSaveImage {
                     subscriber.onError(new Exception("bitmap can't be null"));
                     CrashUtils.crashReport(new Exception("bitmap can't be null"));
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io());
     }

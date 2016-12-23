@@ -1,6 +1,5 @@
 package com.gank.gankly.mvp;
 
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Create by LingYan on 2016-10-21
@@ -8,9 +7,5 @@ import rx.subscriptions.CompositeSubscription;
  */
 
 public abstract class BasePresenter {
-    protected CompositeSubscription mRxManager = new CompositeSubscription();
 
-    protected void onUnSubscribe() {
-        mRxManager.clear();
-    }
 }

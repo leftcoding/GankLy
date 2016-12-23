@@ -12,10 +12,12 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Create by LingYan on 2016-11-21
@@ -51,23 +53,28 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Func1<Document, List<JianDanBean>>() {
+                .map(new Function<Document, List<JianDanBean>>() {
                     @Override
-                    public List<JianDanBean> call(Document document) {
+                    public List<JianDanBean> apply(Document document) throws Exception {
                         return mapResult(document);
                     }
                 })
-                .subscribe(new Subscriber<List<JianDanBean>>() {
+                .subscribe(new Observer<List<JianDanBean>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
                         mView.showContent();
                         int nextPage = getFetchPage() + 1;
                         setFetchPage(nextPage);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override

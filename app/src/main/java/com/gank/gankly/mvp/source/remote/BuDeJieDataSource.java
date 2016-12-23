@@ -8,29 +8,29 @@ import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.network.api.ApiManager;
 import com.gank.gankly.network.service.BaiSiService;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-11-30
  * Email:137387869@qq.com
  */
 
-public class BaiSiDataSource extends BaseDataSourceModel {
+public class BuDeJieDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://s.budejie.com/";
 
     @Nullable
-    private volatile static BaiSiDataSource INSTANCE = null;
+    private volatile static BuDeJieDataSource INSTANCE = null;
     private BaiSiService mGankService;
 
-    private BaiSiDataSource() {
+    private BuDeJieDataSource() {
         mGankService = ApiManager.init(BASE_URL).createService(BaiSiService.class);
     }
 
-    public static BaiSiDataSource getInstance() {
+    public static BuDeJieDataSource getInstance() {
         if (INSTANCE == null) {
-            synchronized (BaiSiDataSource.class) {
+            synchronized (BuDeJieDataSource.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new BaiSiDataSource();
+                    INSTANCE = new BuDeJieDataSource();
                 }
             }
         }

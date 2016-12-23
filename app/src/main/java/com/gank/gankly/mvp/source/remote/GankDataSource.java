@@ -8,8 +8,8 @@ import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.network.api.ApiManager;
 import com.gank.gankly.network.service.GankService;
 
-import rx.Observable;
-import rx.functions.Func2;
+import io.reactivex.Observable;
+import io.reactivex.functions.BiFunction;
 
 /**
  * 干货远程请求
@@ -50,9 +50,9 @@ public class GankDataSource extends BaseDataSourceModel {
         final Observable<GankResult> androidGoods = mGankService.fetchAndroidGoods(limit, page);
         final Observable<GankResult> images = mGankService.fetchBenefitsGoods(limit, page);
 
-        return toObservable(Observable.zip(androidGoods, images, new Func2<GankResult, GankResult, GankResult>() {
+        return toObservable(Observable.zip(androidGoods, images, new BiFunction<GankResult, GankResult, GankResult>() {
             @Override
-            public GankResult call(GankResult androidGoods, GankResult images) {
+            public GankResult apply(GankResult androidGoods, GankResult images) throws Exception {
                 MeiziArrayList.getInstance().addGiftItems(images.getResults());
                 return androidGoods;
             }
@@ -61,5 +61,9 @@ public class GankDataSource extends BaseDataSourceModel {
 
     public Observable<GankResult> fetchIos(final int page, final int limit) {
         return toObservable(mGankService.fetchIosGoods(limit, page));
+    }
+
+    public Observable<GankResult> fetchBenefitsGoods(final int page, final int limit) {
+        return toObservable(mGankService.fetchBenefitsGoods(limit, page));
     }
 }

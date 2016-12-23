@@ -14,7 +14,8 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-07-14
@@ -48,9 +49,17 @@ public class VideoPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
         super.fetchData();
         mIView.showRefresh();
         final int page = getNextPage();
-        mModel.fetchData(page, getLimit(), new Subscriber<GankResult>() {
+        mModel.fetchData(page, getLimit(), new Observer<GankResult>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
+                mIView.hideRefresh();
+                mViewControl.onError(page, isFirst(), isNetworkAvailable(), mIView);
+            }
+
+            @Override
+            public void onComplete() {
                 mIView.hideRefresh();
                 mIView.showContent();
                 setFirst(false);
@@ -59,11 +68,8 @@ public class VideoPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
             }
 
             @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-                CrashUtils.crashReport(e);
-                mIView.hideRefresh();
-                mViewControl.onError(page, isFirst(), isNetworkAvailable(), mIView);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

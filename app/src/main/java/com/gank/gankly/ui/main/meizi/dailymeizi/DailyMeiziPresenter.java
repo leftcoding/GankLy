@@ -15,8 +15,9 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
-import rx.functions.Func1;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -36,10 +37,10 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void fetchNew() {
-        mRxManager.add(mTask.fetchDailyGirls()
-                .subscribe(new Subscriber<Document>() {
+        mTask.fetchDailyGirls()
+                .subscribe(new Observer<Document>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                         mModelView.showContent();
                         mModelView.hideRefresh();
                     }
@@ -51,10 +52,15 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
                     public void onNext(Document document) {
                         parseDocument(document);
                     }
-                }));
+                });
     }
 
     @Override
@@ -69,16 +75,15 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void unSubscribe() {
-        onUnSubscribe();
+//        onUnSubscribe();
     }
 
     @Override
     public void girlsImages(final String url) {
-        mRxManager.add(mTask.fetchImageUrls(url)
-                .map(new Func1<Document, List<GiftBean>>() {
-
+        mTask.fetchImageUrls(url)
+                .map(new Function<Document, List<GiftBean>>() {
                     @Override
-                    public List<GiftBean> call(Document document) {
+                    public List<GiftBean> apply(Document document) throws Exception {
                         int max = getImageUrlsMax(document);
                         if (max > 0) {
                             return getImageUrls(url, max);
@@ -86,9 +91,9 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                         return null;
                     }
                 })
-                .subscribe(new Subscriber<List<GiftBean>>() {
+                .subscribe(new Observer<List<GiftBean>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
 
                     }
 
@@ -98,29 +103,34 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
+                    public void onSubscribe(Disposable d) {
+                        
+                    }
+
+                    @Override
                     public void onNext(List<GiftBean> list) {
                         if (!ListUtils.isListEmpty(list)) {
                             mModelView.setMaxProgress(list.size());
                             getImages(list);
                         }
                     }
-                }));
+                });
     }
 
     private void getImages(List<GiftBean> list) {
         imagesList = new ArrayList<>();
         progress = 0;
 
-        mRxManager.add(mTask.getImageList(list)
-                .map(new Func1<Document, ArrayList<GiftBean>>() {
+        mTask.getImageList(list)
+                .map(new Function<Document, ArrayList<GiftBean>>() {
                     @Override
-                    public ArrayList<GiftBean> call(Document document) {
+                    public ArrayList<GiftBean> apply(Document document) throws Exception {
                         return getImageCountList(document);
                     }
                 })
-                .subscribe(new Subscriber<ArrayList<GiftBean>>() {
+                .subscribe(new Observer<ArrayList<GiftBean>>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                         mModelView.disProgressDialog();
                         mModelView.openBrowseActivity(imagesList);
                     }
@@ -132,13 +142,18 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
                     public void onNext(ArrayList<GiftBean> list) {
                         if (ListUtils.getListSize(list) > 0) {
                             mModelView.setProgressValue(progress++);
                             imagesList.addAll(list);
                         }
                     }
-                }));
+                });
     }
 
     private void parseDocument(Document document) {

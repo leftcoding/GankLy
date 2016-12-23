@@ -13,9 +13,11 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.functions.Func1;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.functions.Function;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -43,9 +45,9 @@ public class MeiziDataSource extends GirlsDataSource {
      * 获取每日更新妹子天数
      */
     public Observable<Document> fetchDailyGirls() {
-        return toObservable(Observable.create(new Observable.OnSubscribe<Document>() {
+        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
-            public void call(Subscriber<? super Document> subscriber) {
+            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
                 try {
                     Document doc = Jsoup.connect(MEIZI_DAILY_URL)
                             .ignoreContentType(true)
@@ -57,7 +59,7 @@ public class MeiziDataSource extends GirlsDataSource {
                     KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }));
     }
@@ -68,9 +70,9 @@ public class MeiziDataSource extends GirlsDataSource {
      * @param url 每日更新页面的连接
      */
     public Observable<Document> fetchImageUrls(final String url) {
-        return toObservable(Observable.create(new Observable.OnSubscribe<Document>() {
+        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
-            public void call(Subscriber<? super Document> subscriber) {
+            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
                 try {
                     Document doc = Jsoup.connect(url)
                             .userAgent(USERAGENT)
@@ -81,34 +83,51 @@ public class MeiziDataSource extends GirlsDataSource {
                     KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }));
     }
 
     public Observable<Document> getImageList(List<GiftBean> list) {
-        return toObservable(Observable.from(list).flatMap(new Func1<GiftBean, Observable<Document>>() {
+        return toObservable(Observable.fromIterable(list).flatMap(new Function<GiftBean, ObservableSource<Document>>() {
             @Override
-            public Observable<Document> call(GiftBean giftBean) {
+            public ObservableSource<Document> apply(GiftBean giftBean) throws Exception {
                 final String url = giftBean.getImgUrl();
-                return Observable.create(new Observable.OnSubscribe<Document>() {
-                    @Override
-                    public void call(Subscriber<? super Document> subscriber) {
-                        try {
-                            Document doc = Jsoup.connect(url)
-                                    .userAgent(USERAGENT)
-                                    .timeout(TIME_OUT)
-                                    .get();
-                            subscriber.onNext(doc);
-                        } catch (IOException e) {
-                            KLog.e(e);
-                            CrashUtils.crashReport(e);
-                        }
-                        subscriber.onCompleted();
-                    }
-                });
+                Document doc = null;
+                try {
+                    doc = Jsoup.connect(url)
+                            .userAgent(USERAGENT)
+                            .timeout(TIME_OUT)
+                            .get();
+                } catch (IOException e) {
+                    KLog.e(e);
+                    CrashUtils.crashReport(e);
+                }
+                return (ObservableSource<Document>) doc;
             }
         }));
+//        return toObservable(Observable.from(list).flatMap(new Func1<GiftBean, Observable<Document>>() {
+//            @Override
+//            public Observable<Document> call(GiftBean giftBean) {
+//                final String url = giftBean.getImgUrl();
+//                return Observable.create(new ObservableOnSubscribe<Document>() {
+//                    @Override
+//                    public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
+//                        try {
+//                            Document doc = Jsoup.connect(url)
+//                                    .userAgent(USERAGENT)
+//                                    .timeout(TIME_OUT)
+//                                    .get();
+//                            subscriber.onNext(doc);
+//                        } catch (IOException e) {
+//                            KLog.e(e);
+//                            CrashUtils.crashReport(e);
+//                        }
+//                        subscriber.onComplete();
+//                    }
+//                });
+//            }
+//        }));
     }
 }
 

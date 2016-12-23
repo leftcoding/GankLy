@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.meizi.welfare;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -116,9 +116,9 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         return mResults.size();
     }
 
-    public void updateItems(List<ResultsBean> goods) {
+    public void refillItems(List<ResultsBean> goods) {
         clear();
-        addItems(goods);
+        appendItems(goods);
     }
 
     public void clear() {
@@ -126,7 +126,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         heights.clear();
     }
 
-    public void addItems(List<ResultsBean> goods) {
+    public void appendItems(List<ResultsBean> goods) {
         mResults.addAll(goods);
         notifyItemRangeInserted(mResults.size(), goods.size());
     }

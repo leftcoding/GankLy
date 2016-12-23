@@ -19,8 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import rx.Subscriber;
-import rx.functions.Action1;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-06-01
@@ -42,17 +43,22 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
 
     public void checkVersion() {
         mIView.showDialog();
-        mDownloadApi.checkVersion(new Subscriber<CheckVersion>() {
-            @Override
-            public void onCompleted() {
-                mIView.hiddenDialog();
-            }
-
+        mDownloadApi.checkVersion(new Observer<CheckVersion>() {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
                 CrashUtils.crashReport(e);
                 mIView.hiddenDialog();
+            }
+
+            @Override
+            public void onComplete() {
+                mIView.hiddenDialog();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -68,9 +74,9 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
     }
 
     public void downloadApk() {
-        mDownloadApi.downloadApk(new Action1<InputStream>() {
+        mDownloadApi.downloadApk(new Consumer<InputStream>() {
             @Override
-            public void call(InputStream inputStream) {
+            public void accept(InputStream inputStream) throws Exception {
                 try {
                     FileUtils.writeFile(inputStream, mFile);
                 } catch (IOException e) {
@@ -78,15 +84,22 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
                     CrashUtils.crashReport(e);
                 }
             }
-        }, new Subscriber<InputStream>() {
-            @Override
-            public void onCompleted() {
-            }
+        }, new Observer<InputStream>() {
 
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
                 CrashUtils.crashReport(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

@@ -11,7 +11,8 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-11-23
@@ -33,9 +34,15 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
     }
 
     private void fetchData(int page) {
-        mTask.fetchData(page).subscribe(new Subscriber<Document>() {
+        mTask.fetchData(page).subscribe(new Observer<Document>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                mView.hideRefresh();
+                KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
                 mView.showContent();
                 mView.hideRefresh();
                 int nextPage = getFetchPage() + 1;
@@ -43,9 +50,8 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
             }
 
             @Override
-            public void onError(Throwable e) {
-                mView.hideRefresh();
-                KLog.e(e);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

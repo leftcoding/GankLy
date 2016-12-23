@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-07-01
@@ -55,13 +55,13 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
 
     @Override
     protected void bindListener() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(new Consumer<ThemeEvent>() {
                     @Override
-                    public void call(ThemeEvent event) {
+                    public void accept(ThemeEvent themeEvent) throws Exception {
                         refreshUi();
                     }
-                }
-        );
+                });
     }
 
     @Override

@@ -2,10 +2,11 @@ package com.gank.gankly.ui.baisi.image;
 
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.mvp.FetchPresenter;
-import com.gank.gankly.mvp.source.remote.BaiSiDataSource;
+import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.socks.library.KLog;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-05
@@ -14,11 +15,11 @@ import rx.Subscriber;
 
 public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageContract.Presenter {
     private static final String TYPE_IMAGE = "10";
-    private BaiSiDataSource mTask;
+    private BuDeJieDataSource mTask;
     private BaiSiImageContract.View mView;
     private int np;
 
-    public BaiSiImagePresenter(BaiSiDataSource task, BaiSiImageContract.View view) {
+    public BaiSiImagePresenter(BuDeJieDataSource task, BaiSiImageContract.View view) {
         mTask = task;
         mView = view;
     }
@@ -36,16 +37,21 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
     }
 
     private void fetchData() {
-        mTask.fetchImage(np).subscribe(new Subscriber<BuDeJieBean>() {
-            @Override
-            public void onCompleted() {
-                mView.hideRefresh();
-            }
-
+        mTask.fetchImage(np).subscribe(new Observer<BuDeJieBean>() {
             @Override
             public void onError(Throwable e) {
                 mView.hideRefresh();
                 KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
+                mView.hideRefresh();
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

@@ -15,7 +15,7 @@ import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
 import com.socks.library.KLog;
 
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -42,10 +42,9 @@ public class App extends Application {
             public void run() {
                 InitializeService.start(mContext);
                 initPreferences();
-
-                RxBus.getInstance().toSubscription(SQLiteDatabase.class, new Action1<SQLiteDatabase>() {
+                RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(new Consumer<SQLiteDatabase>() {
                     @Override
-                    public void call(SQLiteDatabase sqLiteDatabase) {
+                    public void accept(SQLiteDatabase sqLiteDatabase) throws Exception {
                         if (sqLiteDatabase != null) {
                             DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
                             daoSession = daoMaster.newSession();

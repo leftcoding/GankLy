@@ -10,15 +10,14 @@ import android.view.ViewGroup;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.RxBus.RxSubscriptions;
 import com.gank.gankly.ui.baisi.image.GallerySize;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ShareUtils;
 import com.superplayer.library.SuperPlayer;
 
 import butterknife.BindView;
-import rx.Subscriber;
-import rx.Subscription;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-14
@@ -39,8 +38,6 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     @BindView(R.id.baisi_preview_toolbar)
     Toolbar mToolbar;
 
-    private Subscription rxGallery;
-
     private String mUrl;
     private int mWidth;
     private int mHeigth;
@@ -55,16 +52,21 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
 
     @Override
     protected void initValues() {
-        rxGallery = RxBus_.getDefault()
+        RxBus_.getDefault()
                 .toObservableSticky(GallerySize.class)
-                .subscribe(new Subscriber<GallerySize>() {
+                .subscribe(new Observer<GallerySize>() {
                     @Override
-                    public void onCompleted() {
+                    public void onError(Throwable e) {
 
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onComplete() {
+
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
                     }
 
@@ -80,8 +82,6 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
                         }
                     }
                 });
-
-        RxSubscriptions.add(rxGallery);
     }
 
     @Override
@@ -184,8 +184,6 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
             }
         }).start();
         super.onDestroy();
-
-        RxSubscriptions.remove(rxGallery);
     }
 
     @Override

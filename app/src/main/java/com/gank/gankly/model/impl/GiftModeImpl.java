@@ -18,14 +18,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-06-29
@@ -36,7 +37,6 @@ public class GiftModeImpl implements GiftModel {
     private String url = "http://www.mzitu.com/mm";
     private String nextUrl = url + "/page/";
 
-    private Subscription mSubscription;
     private boolean isUnSubscribe;
     private int progress = 0;
 
@@ -44,10 +44,10 @@ public class GiftModeImpl implements GiftModel {
     }
 
     @Override
-    public void fetchGiftPage(final int page, Subscriber<GiftResult> subscriber) {
-        Observable<GiftResult> observable = Observable.create(new Observable.OnSubscribe<GiftResult>() {
+    public void fetchGiftPage(final int page, Observer<GiftResult> subscriber) {
+        Observable<GiftResult> observable = Observable.create(new ObservableOnSubscribe<GiftResult>() {
             @Override
-            public void call(Subscriber<? super GiftResult> subscriber) {
+            public void subscribe(ObservableEmitter<GiftResult> subscriber) throws Exception {
                 try {
                     String _url = getUrl(page);
                     Document doc = Jsoup.connect(_url)
@@ -60,7 +60,7 @@ public class GiftModeImpl implements GiftModel {
                     KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         })
                 .subscribeOn(Schedulers.io())
@@ -132,10 +132,10 @@ public class GiftModeImpl implements GiftModel {
     }
 
     @Override
-    public void fetchImagesPageList(final String url, Subscriber<GiftResult> subscription) {
-        Observable.create(new Observable.OnSubscribe<GiftResult>() {
+    public void fetchImagesPageList(final String url, Observer<GiftResult> subscription) {
+        Observable.create(new ObservableOnSubscribe<GiftResult>() {
             @Override
-            public void call(Subscriber<? super GiftResult> subscriber) {
+            public void subscribe(ObservableEmitter<GiftResult> subscriber) throws Exception {
                 try {
                     Document doc = Jsoup.connect(url)
                             .userAgent(DESKTOP_USERAGENT)
@@ -146,7 +146,7 @@ public class GiftModeImpl implements GiftModel {
                 } catch (Exception e) {
                     CrashUtils.crashReport(e);
                 }
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -181,34 +181,26 @@ public class GiftModeImpl implements GiftModel {
     }
 
     @Override
-    public void fetchImagesList(List<GiftBean> list, Subscriber<List<GiftBean>> _subscriber, final IGiftView iGiftView) {
+    public void fetchImagesList(List<GiftBean> list, Observer<List<GiftBean>> _subscriber, final IGiftView iGiftView) {
         progress = 0;
-        mSubscription = Observable.from(list).flatMap(new Func1<GiftBean, Observable<List<GiftBean>>>() {
+        Observable.fromIterable(list).flatMap(new Function<GiftBean, ObservableSource<List<GiftBean>>>() {
             @Override
-            public Observable<List<GiftBean>> call(GiftBean giftBean) {
-                final String url = giftBean.getImgUrl();
+            public ObservableSource<List<GiftBean>> apply(GiftBean giftBean) throws Exception {
+                String url = giftBean.getImgUrl();
                 iGiftView.setProgress(progress++);
-                return Observable.create(new Observable.OnSubscribe<List<GiftBean>>() {
-                    @Override
-                    public void call(Subscriber<? super List<GiftBean>> subscriber) {
-                        try {
-                            if (!isUnSubscribe) {
-                                Document doc = Jsoup.connect(url)
-                                        .userAgent(DESKTOP_USERAGENT)
-                                        .timeout(timeout)
-                                        .get();
-                                subscriber.onNext(getImageCountList(doc));
-                            }
-                        } catch (IOException e) {
-                            KLog.e(e);
-                            CrashUtils.crashReport(e);
-                        }
-                        subscriber.onCompleted();
-                    }
-                });
+                Document doc = null;
+                try {
+                    doc = Jsoup.connect(url)
+                            .userAgent(DESKTOP_USERAGENT)
+                            .timeout(timeout)
+                            .get();
+                } catch (IOException e) {
+                    KLog.e(e);
+                    CrashUtils.crashReport(e);
+                }
+                return (ObservableSource<List<GiftBean>>) getImageCountList(doc);
             }
-        })
-                .subscribeOn(Schedulers.io())
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(_subscriber);
     }
@@ -221,11 +213,6 @@ public class GiftModeImpl implements GiftModel {
             giftBeen.add(new GiftBean(img));
         }
         return giftBeen;
-    }
-
-    @Override
-    public Subscription getSubscription() {
-        return mSubscription;
     }
 
     @Override

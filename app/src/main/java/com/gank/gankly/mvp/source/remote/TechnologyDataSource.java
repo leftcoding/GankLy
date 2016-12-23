@@ -6,7 +6,7 @@ import com.gank.gankly.mvp.source.BaseDataSourceModel;
 
 import org.jsoup.nodes.Document;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-11-23

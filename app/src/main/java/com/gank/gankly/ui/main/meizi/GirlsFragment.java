@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * 美しい妹
@@ -35,18 +35,10 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     private HomeActivity mActivity;
     private List<String> mTitles;
-    private static GirlsFragment sMainFragment;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_girls;
-    }
-
-    public static GirlsFragment getInstance() {
-        if (sMainFragment == null) {
-            sMainFragment = new GirlsFragment();
-        }
-        return sMainFragment;
     }
 
     @Override
@@ -56,13 +48,12 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     protected void bindListener() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-                    @Override
-                    public void call(ThemeEvent event) {
-                        refreshUi();
-                    }
-                }
-        );
+        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
+            @Override
+            public void accept(ThemeEvent themeEvent) throws Exception {
+                refreshUi();
+            }
+        });
     }
 
     @Override

@@ -30,7 +30,6 @@ import com.gank.gankly.mvp.base.BaseActivity;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
-import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 
@@ -366,7 +365,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         } else if (mStates == CollectStates.UN_COLLECT) {
 //            cancelCollect();
             if (mFromType == FROM_COLLECT) {
-                RxUtils.getInstance().OnUnCollect();
+//                RxUtils.getInstance().OnUnCollect();
             }
         }
     }

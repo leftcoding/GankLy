@@ -6,7 +6,7 @@ import com.gank.gankly.bean.BuDeJieVideo;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-11-30

@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-6-13
@@ -67,13 +67,12 @@ public class HomeActivity extends BaseActivity {
 
         changeBottomBar();
 
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
             @Override
-            public void call(ThemeEvent themeEvent) {
+            public void accept(ThemeEvent themeEvent) throws Exception {
                 changeBottomBar();
             }
         });
-
     }
 
     @Override
@@ -142,12 +141,15 @@ public class HomeActivity extends BaseActivity {
         theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
         final int color = typedValue.resourceId;
 
-        Observable.from(mBottomBarTabs).subscribeOn(AndroidSchedulers.mainThread()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer integer) {
-                mBottomBar.getTabWithId(integer).setBackgroundResource(color);
-            }
-        });
+        Observable.fromArray(mBottomBarTabs)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        mBottomBar.getTabWithId(integer).setBackgroundResource(color);
+                    }
+                });
     }
 
     @Override

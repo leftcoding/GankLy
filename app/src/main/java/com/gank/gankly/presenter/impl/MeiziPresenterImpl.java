@@ -15,7 +15,8 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-07-13
@@ -49,9 +50,17 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
     public void fetchData() {
         final int page = getNextPage();
         final int limit = getLimit();
-        mModel.fetchData(page, limit, new Subscriber<GankResult>() {
+        mModel.fetchData(page, limit, new Observer<GankResult>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
+                mIView.hideRefresh();
+                mViewControl.onError(page, isFirst(), isNetworkAvailable(), mIView);
+            }
+
+            @Override
+            public void onComplete() {
                 mIView.hideRefresh();
                 mIView.showContent();
                 int nextPage = page + 1;
@@ -60,11 +69,8 @@ public class MeiziPresenterImpl extends BaseAsynDataSource<IMeiziView<List<Resul
             }
 
             @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-                CrashUtils.crashReport(e);
-                mIView.hideRefresh();
-                mViewControl.onError(page, isFirst(), isNetworkAvailable(), mIView);
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

@@ -12,13 +12,13 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
-import com.gank.gankly.utils.RxUtils;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -27,8 +27,9 @@ import com.socks.library.KLog;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
-import rx.Subscriber;
 
 /**
  * 收藏
@@ -64,10 +65,17 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     @Override
     public void onResume() {
         super.onResume();
-        RxUtils.getInstance().unCollect(new Subscriber<RxCollect>() {
+        RxBus.getInstance().toObservable(RxCollect.class).subscribe(new Observer<RxCollect>() {
             @Override
-            public void onCompleted() {
+            public void onSubscribe(Disposable d) {
 
+            }
+
+            @Override
+            public void onNext(RxCollect rxCollect) {
+                if (rxCollect.isCollect()) {
+                    onDelete();
+                }
             }
 
             @Override
@@ -76,10 +84,8 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
             }
 
             @Override
-            public void onNext(RxCollect rxCollect) {
-                if (rxCollect.isCollect()) {
-                    onDelete();
-                }
+            public void onComplete() {
+
             }
         });
     }

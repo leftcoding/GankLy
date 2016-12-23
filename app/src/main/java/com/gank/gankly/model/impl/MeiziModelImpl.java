@@ -1,9 +1,8 @@
 package com.gank.gankly.model.impl;
 
 import com.gank.gankly.model.BaseModel;
-import com.gank.gankly.network.api.GankApi;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
 
 /**
  * Create by LingYan on 2016-07-13
@@ -14,8 +13,13 @@ public class MeiziModelImpl implements BaseModel {
 
     }
 
+//    @Override
+//    public void fetchData(int page, int limit, Subscriber subscriber) {
+//        GankApi.getInstance().fetchWelfare(limit, page, subscriber);
+//    }
+
     @Override
-    public void fetchData(int page, int limit, Subscriber subscriber) {
-        GankApi.getInstance().fetchWelfare(limit, page, subscriber);
+    public void fetchData(int page, int limit, Observer subscriber) {
+
     }
 }

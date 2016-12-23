@@ -1,24 +1,25 @@
 package com.gank.gankly.network.api;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
+import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.network.DownloadProgressInterceptor;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.service.DownloadService;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -44,17 +45,19 @@ public class DownloadApi {
             builder.addInterceptor(interceptor);
         }
 
+        RxJava2CallAdapterFactory rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//RxJava
+                .addCallAdapterFactory(rxJavaCallAdapterFactory)//RxJava2
                 .baseUrl(BASE_URL)
                 .build();
 
         mDownloadService = retrofit.create(DownloadService.class);
     }
 
-    public void checkVersion(Subscriber subscriber) {
+    public void checkVersion(Observer<CheckVersion> subscriber) {
         mDownloadService.checkVersion()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
@@ -62,13 +65,13 @@ public class DownloadApi {
                 .subscribe(subscriber);
     }
 
-    public void downloadApk(Action1<InputStream> next, Subscriber subscriber) {
+    public void downloadApk(Consumer<InputStream> next, Observer subscriber) {
         mDownloadService.downloadApk()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .map(new Func1<ResponseBody, InputStream>() {
+                .map(new Function<ResponseBody, InputStream>() {
                     @Override
-                    public InputStream call(ResponseBody responseBody) {
+                    public InputStream apply(ResponseBody responseBody) throws Exception {
                         return responseBody.byteStream();
                     }
                 })

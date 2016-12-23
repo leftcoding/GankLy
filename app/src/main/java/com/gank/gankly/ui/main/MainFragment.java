@@ -19,7 +19,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.android.AndroidFragment;
 import com.gank.gankly.ui.main.ios.IosFragment;
-import com.gank.gankly.ui.main.meizi.MeiZiFragment;
+import com.gank.gankly.ui.main.meizi.welfare.MeiZiFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.view.ILauncher;
 import com.socks.library.KLog;

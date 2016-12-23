@@ -24,17 +24,17 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
+import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * 妹子每日更新
@@ -65,9 +65,9 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     protected void initValues() {
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
             @Override
-            public void call(ThemeEvent event) {
+            public void accept(ThemeEvent themeEvent) throws Exception {
                 changeUi();
             }
         });
@@ -81,8 +81,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
         mSwipeRefreshLayout.setRefreshing(false);
         mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-//        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new RecycleViewDivider(mActivity,
-//                R.drawable.shape_item_divider));
     }
 
     @Override

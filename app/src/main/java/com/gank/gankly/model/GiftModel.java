@@ -6,20 +6,17 @@ import com.gank.gankly.view.IGiftView;
 
 import java.util.List;
 
-import rx.Subscriber;
-import rx.Subscription;
+import io.reactivex.Observer;
 
 /**
  * Create by LingYan on 2016-06-29
  */
 public interface GiftModel {
-    void fetchGiftPage(int page, Subscriber<GiftResult> subscriber);
+    void fetchGiftPage(int page, Observer<GiftResult> subscriber);
 
-    void fetchImagesPageList(String url, Subscriber<GiftResult> subscription);
+    void fetchImagesPageList(String url, Observer<GiftResult> subscription);
 
-    void fetchImagesList(List<GiftBean> list, Subscriber<List<GiftBean>> subscriber, IGiftView iGiftView);
-
-    Subscription getSubscription();
+    void fetchImagesList(List<GiftBean> list, Observer<List<GiftBean>> subscriber, IGiftView iGiftView);
 
     void setIsUnSubscribe(boolean isUnSubscribe);
 }

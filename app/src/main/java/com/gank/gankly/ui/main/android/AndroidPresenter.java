@@ -10,7 +10,8 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-10-25
@@ -50,9 +51,9 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
 
     private void taskAndroid(final int page) {
         mTask.fetchAndroid(page, getFetchLimit())
-                .subscribe(new Subscriber<GankResult>() {
+                .subscribe(new Observer<GankResult>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                         int nextPage = page + 1;
                         setFetchPage(nextPage);
                     }
@@ -61,6 +62,11 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
                     public void onError(Throwable e) {
                         KLog.e(e);
                         parseError(mModelView);
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override

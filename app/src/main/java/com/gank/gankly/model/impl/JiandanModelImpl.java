@@ -3,7 +3,8 @@ package com.gank.gankly.model.impl;
 import com.gank.gankly.model.JiandanModel;
 import com.gank.gankly.network.api.JiandanApi;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+
 
 /**
  * Create by LingYan on 2016-07-20
@@ -15,7 +16,7 @@ public class JiandanModelImpl implements JiandanModel {
     }
 
     @Override
-    public void fetchData(int page, Subscriber subscriber) {
+    public void fetchData(int page, Observer subscriber) {
         JiandanApi.getInstance().fetchJianDan(page, subscriber);
     }
 }

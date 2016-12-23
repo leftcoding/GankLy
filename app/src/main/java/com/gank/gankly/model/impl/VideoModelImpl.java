@@ -5,11 +5,11 @@ import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.model.BaseModel;
 import com.gank.gankly.network.api.GankApi;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.BiFunction;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-07-14
@@ -21,18 +21,19 @@ public class VideoModelImpl implements BaseModel {
     }
 
     @Override
-    public void fetchData(final int mPage, int limit, Subscriber subscriber) {
+    public void fetchData(final int mPage, int limit, Observer subscriber) {
         Observable<GankResult> video = GankApi.getInstance()
                 .getService().fetchVideo(limit, mPage);
         Observable<GankResult> image = GankApi.getInstance()
                 .getService().fetchBenefitsGoods(limit, mPage);
-        Observable.zip(video, image, new Func2<GankResult, GankResult, GankResult>() {
+        Observable.zip(video, image, new BiFunction<GankResult, GankResult, GankResult>() {
             @Override
-            public GankResult call(GankResult gankResult, GankResult gankResult2) {
+            public GankResult apply(GankResult gankResult, GankResult gankResult2) throws Exception {
                 addImages(gankResult2, mPage);
                 return gankResult;
             }
-        }).subscribeOn(Schedulers.io())
+        })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);
     }

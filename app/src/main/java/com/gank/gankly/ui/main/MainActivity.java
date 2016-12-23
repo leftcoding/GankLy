@@ -24,15 +24,15 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
-import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
+import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.more.AboutFragment;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.BindView;
-import rx.functions.Action1;
+import io.reactivex.functions.Consumer;
 
 /**
  * Kotlin
@@ -57,9 +57,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initViews() {
         changeNavigationView();
 
-        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
+        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
             @Override
-            public void call(ThemeEvent event) {
+            public void accept(ThemeEvent themeEvent) throws Exception {
                 changeNavigationView();
             }
         });
@@ -225,7 +225,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 fragmentTo = new AboutFragment();
                 break;
             case R.id.navigation_gift:
-                fragmentTo = GirlsFragment.getInstance();
+                fragmentTo = new GirlsFragment();
                 break;
             case R.id.navigation_settings:
                 fragmentTo = SettingFragment.getInstance();

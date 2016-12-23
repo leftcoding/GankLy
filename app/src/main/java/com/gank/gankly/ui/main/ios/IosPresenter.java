@@ -10,7 +10,8 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-20
@@ -40,9 +41,9 @@ public class IosPresenter extends FetchPresenter implements IosContract.Presente
 
     private void fetchData(final int page) {
         mTask.fetchIos(page, getFetchLimit())
-                .subscribe(new Subscriber<GankResult>() {
+                .subscribe(new Observer<GankResult>() {
                     @Override
-                    public void onCompleted() {
+                    public void onComplete() {
                         setFetchPage(page + 1);
                     }
 
@@ -50,6 +51,11 @@ public class IosPresenter extends FetchPresenter implements IosContract.Presente
                     public void onError(Throwable e) {
                         KLog.e(e);
                         parseError(mModelView);
+                    }
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
                     }
 
                     @Override

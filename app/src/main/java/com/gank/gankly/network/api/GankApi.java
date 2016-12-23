@@ -1,21 +1,16 @@
 package com.gank.gankly.network.api;
 
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.network.service.GankService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Retrofit请求封装
@@ -54,7 +49,8 @@ public class GankApi {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
 
@@ -73,40 +69,5 @@ public class GankApi {
 
     public GankService getService() {
         return mGankService;
-    }
-
-    private <T> void toSubscribe(Observable<T> o, Subscriber<T> s) {
-        o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s);
-    }
-
-    public void fetchAndroid(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = mGankService.fetchAndroidGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchIos(int limit, int page, Subscriber<GankResult> subscriber) {
-        if (subscriber == null) {
-            throw new RuntimeException("subscriber is null");
-        }
-        Observable<GankResult> observable = mGankService.fetchIosGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchAll(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = mGankService.fetchAllGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchWelfare(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = mGankService.fetchBenefitsGoods(limit, page);
-        toSubscribe(observable, subscriber);
-    }
-
-    public void fetchVideo(int limit, int page, Subscriber<GankResult> subscriber) {
-        Observable<GankResult> observable = mGankService.fetchVideo(limit, page);
-        toSubscribe(observable, subscriber);
     }
 }

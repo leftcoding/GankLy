@@ -13,11 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-10-27
@@ -29,7 +32,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     private WebContract.View mView;
     private long endTime;
     private List<UrlCollect> mCollects;
-    private Subscription subscription;
+    private Disposable subscription;
 
     public WebPresenter(LocalDataSource task, WebContract.View view) {
         mTask = task;
@@ -39,14 +42,19 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void findCollectUrl(@NonNull String url) {
-        mTask.findUrlCollect(url).subscribe(new Subscriber<List<UrlCollect>>() {
+        mTask.findUrlCollect(url).subscribe(new Observer<List<UrlCollect>>() {
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
 
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
 
             }
 
@@ -61,14 +69,20 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void insetHistoryUrl(final ReadHistory readHistory) {
-        mTask.insertOrReplaceHistory(readHistory).subscribe(new Subscriber<Long>() {
-            @Override
-            public void onCompleted() {
-            }
-
+        mTask.insertOrReplaceHistory(readHistory).subscribe(new Observer<Long>() {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -82,15 +96,20 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     public void cancelCollect() {
         if (ListUtils.getListSize(mCollects) > 0) {
             long deleteByKey = mCollects.get(0).getId();
-            mTask.cancelCollect(deleteByKey).subscribe(new Subscriber<String>() {
+            mTask.cancelCollect(deleteByKey).subscribe(new Observer<String>() {
                 @Override
-                public void onCompleted() {
+                public void onError(Throwable e) {
+                    KLog.e(e);
+                }
+
+                @Override
+                public void onComplete() {
 
                 }
 
                 @Override
-                public void onError(Throwable e) {
-                    KLog.e(e);
+                public void onSubscribe(Disposable d) {
+
                 }
 
                 @Override
@@ -103,14 +122,20 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     @Override
     public void collect() {
         UrlCollect urlCollect = mView.getCollect();
-        mTask.insertCollect(urlCollect).subscribe(new Subscriber<Long>() {
-            @Override
-            public void onCompleted() {
-            }
-
+        mTask.insertCollect(urlCollect).subscribe(new Observer<Long>() {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
@@ -124,31 +149,22 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
         long curTime = System.currentTimeMillis();
         long subTime = curTime - endTime;
         if (curTime - endTime < 2000) {
-            subscription.unsubscribe();
+            subscription.dispose();
         }
         endTime = curTime;
 
-        subscription = Observable.create(new Observable.OnSubscribe<Boolean>() {
+        subscription = Observable.create(new ObservableOnSubscribe<Boolean>() {
             @Override
-            public void call(Subscriber<? super Boolean> subscriber) {
+            public void subscribe(ObservableEmitter<Boolean> subscriber) throws Exception {
                 subscriber.onNext(isCollect);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .delay(1, TimeUnit.SECONDS)
-                .subscribe(new Subscriber<Boolean>() {
+                .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                    }
-
-                    @Override
-                    public void onNext(Boolean aBoolean) {
+                    public void accept(Boolean aBoolean) throws Exception {
                         if (aBoolean) {
                             collect();
                         } else {
@@ -156,8 +172,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
                         }
                     }
                 });
-
-        mRxManager.add(subscription);
     }
 
 
@@ -168,6 +182,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void unSubscribe() {
-        mRxManager.clear();
+//        mRxManager.clear();
     }
 }

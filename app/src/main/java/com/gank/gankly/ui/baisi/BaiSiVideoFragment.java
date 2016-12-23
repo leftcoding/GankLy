@@ -8,7 +8,7 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.bean.BuDeJieVideo;
-import com.gank.gankly.mvp.source.remote.BaiSiDataSource;
+import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.baisi.image.GallerySize;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.utils.SpaceItemDecoration;
@@ -51,7 +51,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
 
     @Override
     protected void initPresenter() {
-        mPresenter = new BaiSiVideoPresenter(BaiSiDataSource.getInstance(), this);
+        mPresenter = new BaiSiVideoPresenter(BuDeJieDataSource.getInstance(), this);
     }
 
     @Override

@@ -3,11 +3,12 @@ package com.gank.gankly.RxBus;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
 
 /**
  * Create by LingYan on 2016-12-15
@@ -16,12 +17,12 @@ import rx.subjects.Subject;
 
 public class RxBus_ {
     private static volatile RxBus_ mDefaultInstance;
-    private final Subject<Object, Object> mBus;
+    private final Subject<Object> mBus;
 
     private final Map<Class<?>, Object> mStickyEventMap;
 
     public RxBus_() {
-        mBus = new SerializedSubject<>(PublishSubject.create());
+        mBus = PublishSubject.create();
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
@@ -84,9 +85,9 @@ public class RxBus_ {
             final Object event = mStickyEventMap.get(eventType);
 
             if (event != null) {
-                return observable.mergeWith(Observable.create(new Observable.OnSubscribe<T>() {
+                return observable.mergeWith(Observable.create(new ObservableOnSubscribe<T>() {
                     @Override
-                    public void call(Subscriber<? super T> subscriber) {
+                    public void subscribe(ObservableEmitter<T> subscriber) throws Exception {
                         subscriber.onNext(eventType.cast(event));
                     }
                 }));

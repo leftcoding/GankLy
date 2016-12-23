@@ -8,10 +8,11 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -30,9 +31,9 @@ public class BaseDataSourceModel {
     }
 
     public Observable<Document> jsoupUrlData(final String url) {
-        return Observable.create(new Observable.OnSubscribe<Document>() {
+        return Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
-            public void call(Subscriber<? super Document> subscriber) {
+            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
                 Document doc = null;
                 try {
                     doc = Jsoup.connect(url)
@@ -44,7 +45,7 @@ public class BaseDataSourceModel {
                     CrashUtils.crashReport(e);
                 }
                 subscriber.onNext(doc);
-                subscriber.onCompleted();
+                subscriber.onComplete();
             }
         });
     }

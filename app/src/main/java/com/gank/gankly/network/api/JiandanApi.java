@@ -5,17 +5,15 @@ import com.gank.gankly.bean.JiandanResult;
 import com.gank.gankly.network.service.JiandanService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-07-20
@@ -54,7 +52,8 @@ public class JiandanApi {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
 
@@ -71,15 +70,7 @@ public class JiandanApi {
         return SingletonHolder.INSTANCE;
     }
 
-    private <T> void toSubscribe(Observable<T> o, Subscriber<T> s) {
-        o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s);
-    }
-
-    public void fetchJianDan(int page, Subscriber<JiandanResult> subscriber) {
+    public void fetchJianDan(int page, Observer<JiandanResult> subscriber) {
         Observable<JiandanResult> observable = mService.fetchData("get_recent_posts", "url,date,tags,author,title,comment_count,custom_fields", "thumb_c,views", "1", String.valueOf(page));
-        toSubscribe(observable, subscriber);
     }
 }

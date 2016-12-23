@@ -4,7 +4,7 @@ import com.gank.gankly.bean.GankResult;
 
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-04-06

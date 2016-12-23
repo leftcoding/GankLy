@@ -4,14 +4,13 @@ import com.gank.gankly.bean.JiandanResult;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
+import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-07-20
  * Email:137387869@qq.com
  */
 public interface JiandanService {
-//    @GET("")
     @GET("/")
     Observable<JiandanResult> fetchData(
             @Query("oxwlxojflwblxbsapi") String oxw, @Query("include") String includes,
