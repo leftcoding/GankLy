@@ -3,20 +3,20 @@
 _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，有问题请联系我。_
 
 ##技术、第三方库
-* MVP(MVP 模式)
-* Retrofit2(Retrofit 网络请求的框架)
-* RxJava2(RxJava 响应式编程框架)
-* GreenDao(移动数据库)
-* ButterKnife(依赖注入绑定视图)
-* Glide(图片加载库)
-* Jsoup(Java 的HTML解析器)
-* Bugly(腾讯异常收集工具)
-* Klog(Log日志调试)
-* Recyclerview-animators(Recyclerview 动画)
-* Stetho (查看数据库 请求连接等，Fackbook 出品)
-* Superplayerlibrary (视频播放库)
-* Bottom-bar (底部导航栏)
-* Okhttp3 (网络请求库)
+* MVP（MVP 模式）
+* Retrofit2（Retrofit 网络请求的框架）
+* RxJava2（RxJava 响应式编程框架）
+* GreenDao（移动数据库）
+* ButterKnife（依赖注入绑定视图）
+* Glide（图片加载库）
+* Jsoup（Java 的HTML解析器）
+* Bugly（腾讯异常收集工具）
+* Klog（Log日志调试）
+* Recyclerview-animators（Recyclerview 动画）
+* Stetho （查看数据库 请求连接等，Fackbook 出品）
+* Superplayerlibrary （视频播放库）
+* Bottom-bar （底部导航栏）
+* Okhttp3 （网络请求库）
 
 ##联系方式
 137387869@qq.com
@@ -39,9 +39,9 @@ _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，�
 * 修复 一些已知问题
 
 ##V 1.0
-* Gank (Android、ios、福利)内容的浏览
+* Gank （Android、ios、福利）内容的浏览
 * 娱乐休息视频
-* 程序员大(ni)福(dong)利(de) 美しい妹
+* 程序员大（ni）福（dong）利（de） 美しい妹
 * 收藏
 * 关于
 
@@ -63,7 +63,7 @@ _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，�
 ##声明
     Copyright 2016 LeftCoding
 
-    Licensed under the Apache License, Version 2.0 (the "License");
+    Licensed under the Apache License, Version 2.0 （the "License"）;
     you may not use this file except in compliance with the License.
     You may obtain a copy of the License at
 
