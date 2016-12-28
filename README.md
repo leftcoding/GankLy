@@ -3,14 +3,20 @@
 _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，有问题请联系我。_
 
 ##技术、第三方库
-* mvp + retrofit + rxJava
-* greenDao
-* butterKnife
-* glide
-* jsoup
-* bugly(腾讯异常收集工具)
-* klog(Log日志调试)
-* recyclerview-animators
+* MVP(MVP 模式)
+* Retrofit2(Retrofit 网络请求的框架)
+* RxJava2(RxJava 响应式编程框架)
+* GreenDao(移动数据库)
+* ButterKnife(依赖注入绑定视图)
+* Glide(图片加载库)
+* Jsoup(Java 的HTML解析器)
+* Bugly(腾讯异常收集工具)
+* Klog(Log日志调试)
+* Recyclerview-animators(Recyclerview 动画)
+* Stetho (查看数据库 请求连接等，Fackbook 出品)
+* Superplayerlibrary (视频播放库)
+* Bottom-bar (底部导航栏)
+* Okhttp3 (网络请求库)
 
 ##联系方式
 137387869@qq.com
@@ -18,10 +24,10 @@ _提示:应用最低版本 5.0 系统，如果想安4.请修minSdkVersion 19，�
 ##V 2.1
 * 新增 团队博客
 * 新增 科技资讯
-* 新增 更多（包含：不得姐）
+* 新增 更多（不得姐）
 * 新增 我的收藏
-* 新增 设置添加关于
-* 优化 煎蛋杂集 改名 新鲜事
+* 新增 关于
+* 优化 煎蛋杂集 更名 新鲜事
 
 ##V 2.0
 * 新增 夜间模式

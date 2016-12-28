@@ -29,6 +29,7 @@ import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,14 +43,14 @@ import io.reactivex.functions.Consumer;
  * Email:137387869@qq.com
  */
 public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContract.View, ItemClick {
-    private DailyMeiziPresenter mPresenter;
-    private HomeActivity mActivity;
-
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.meizi_swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
-    DailyMeiziAdapter mDailyMeiziAdapter;
+
+    private DailyMeiziAdapter mDailyMeiziAdapter;
+    private DailyMeiziPresenter mPresenter;
+    private HomeActivity mActivity;
 
     private ProgressDialog mDialog;
 
@@ -93,7 +94,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
             @Override
             public void onLoadMore() {
-
+                //empty
             }
         });
 
@@ -130,16 +131,14 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
-    private void createDialog() {
+    private void showLoadingDialog() {
         if (mDialog == null) {
             mDialog = new ProgressDialog(mActivity);
         }
-        mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
-        mDialog.setIndeterminate(false);
+        mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setProgress(0);
-        mDialog.setMax(0);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -148,13 +147,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         });
         if (!mDialog.isShowing()) {
             mDialog.show();
-        }
-    }
-
-    @Override
-    public void setProgressValue(int value) {
-        if (mDialog != null) {
-            mDialog.setProgress(value);
         }
     }
 
@@ -217,8 +209,9 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     public void onClick(int position, Object object) {
         DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
         String url = dailyMeiziBean.getUrl();
+        KLog.d("url:" + url);
         if (!TextUtils.isEmpty(url)) {
-            createDialog();
+            showLoadingDialog();
             mPresenter.girlsImages(url);
         }
     }

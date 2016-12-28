@@ -1,9 +1,13 @@
 package com.gank.gankly.ui.main.meizi.welfare;
 
 import com.gank.gankly.bean.GankResult;
+import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.socks.library.KLog;
+
+import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -37,21 +41,25 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
 
                     @Override
                     public void onNext(GankResult gankResult) {
-                        if (page == 1) {
-                            mModelView.refillData(gankResult.getResults());
-                        } else {
-                            mModelView.appendData(gankResult.getResults());
+                        List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
+                        if (list != null) {
+                            if (page == 1) {
+                                mModelView.refillData(list);
+                            } else {
+                                mModelView.appendData(list);
+                            }
+                            MeiziArrayList.getInstance().addBeanAndPage(list, page);
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e(e);
+                        parseError(mModelView);
                     }
 
                     @Override
                     public void onComplete() {
-                        mModelView.showContent();
                         setFetchPage(page + 1);
                     }
                 });
@@ -59,7 +67,10 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
 
     @Override
     public void fetchMore() {
-        fetchData(getFetchPage());
+        if (hasMore()) {
+            mModelView.showRefresh();
+            fetchData(getFetchPage());
+        }
     }
 
     @Override

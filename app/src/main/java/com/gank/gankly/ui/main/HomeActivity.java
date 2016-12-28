@@ -25,6 +25,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class HomeActivity extends BaseActivity {
 
     private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_news};
     private List<Fragment> mFragmentList;
+    private int mIndex = 0;
 
     @Override
     protected int getContentId() {
@@ -95,20 +97,25 @@ public class HomeActivity extends BaseActivity {
                         index = 3;
                         break;
                 }
+                mIndex = index;
 
-                Fragment fragmentTo = mFragmentList.get(index);
-
-                if (mCurFragment == null) {
-                    addMainFragment(fragmentTo);
-                    mCurFragment = fragmentTo;
-                } else {
-                    if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
-                        addAnimFragment(mCurFragment, fragmentTo, true);
-                        mCurFragment = fragmentTo;
-                    }
-                }
+                openFragment(index);
             }
         });
+    }
+
+    private void openFragment(int index) {
+        Fragment fragmentTo = mFragmentList.get(index);
+
+        if (mCurFragment == null) {
+            addMainFragment(fragmentTo);
+            mCurFragment = fragmentTo;
+        } else {
+            if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
+                addAnimFragment(mCurFragment, fragmentTo, true);
+                mCurFragment = fragmentTo;
+            }
+        }
     }
 
     @Override
@@ -170,7 +177,12 @@ public class HomeActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
+            KLog.d("mIndex");
+            if (mIndex == 3) {
+//                openFragment(0);
+                mBottomBar.selectTabAtPosition(0);
+                return false;
+            } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
                 mKeyDownTime = System.currentTimeMillis();
                 ToastUtils.shortBottom(R.string.app_again_out);
                 return false;

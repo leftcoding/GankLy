@@ -159,7 +159,7 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showNoNetwork();
+        mMultipleStatusView.showDisNetwork();
     }
 
     @Override

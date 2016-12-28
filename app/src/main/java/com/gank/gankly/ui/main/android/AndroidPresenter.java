@@ -36,7 +36,10 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
 
     @Override
     public void fetchMore() {
-        taskAndroid(getFetchPage());
+        if (hasMore()) {
+            mModelView.showRefresh();
+            taskAndroid(getFetchPage());
+        }
     }
 
     @Override

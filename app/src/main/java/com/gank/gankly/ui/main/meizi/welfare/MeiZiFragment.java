@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 福利妹子
+ * 干货福利妹子
  * Create by LingYan on 2016-5-12
  * Email:137387869@qq.com
  */
@@ -153,7 +153,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showNoNetwork();
+        mMultipleStatusView.showDisNetwork();
     }
 
     @Override

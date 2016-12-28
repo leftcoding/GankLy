@@ -20,7 +20,6 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.GankAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
@@ -49,7 +48,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
-    private GankAdapter mGankAdapter;
+    private AndroidIosAdapter mAndroidIosAdapter;
     private AndroidContract.Presenter mPresenter;
 
     @Override
@@ -83,7 +82,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void bindListener() {
-        mGankAdapter.setOnItemClickListener(this);
+        mAndroidIosAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
             @Override
@@ -121,8 +120,8 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void initAdapter() {
-        mGankAdapter = new GankAdapter(mActivity);
-        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mGankAdapter);
+        mAndroidIosAdapter = new AndroidIosAdapter(mActivity);
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAndroidIosAdapter);
         alphaAdapter.setFirstOnly(true);
         alphaAdapter.setDuration(500);
         alphaAdapter.setInterpolator(new OvershootInterpolator(0.5f));
@@ -157,12 +156,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mGankAdapter.updateItems(list);
+        mAndroidIosAdapter.updateItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-        mGankAdapter.appendMoreDate(list);
+        mAndroidIosAdapter.appendMoreDate(list);
     }
 
     @Override

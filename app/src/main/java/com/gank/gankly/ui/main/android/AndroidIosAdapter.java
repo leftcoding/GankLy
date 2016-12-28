@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui.main.android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-25
  * Email:137387869@qq.com
  */
-public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder> {
+public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.GankViewHolder> {
     public static final int LAYOUT_Android = 1;
     public static final int LAYOUT_IOS = 2;
 
@@ -37,11 +37,11 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
     private Context mContext;
     public int mLayout;
 
-    public GankAdapter(Context context) {
+    public AndroidIosAdapter(Context context) {
         this(context, LAYOUT_Android);
     }
 
-    public GankAdapter(Context context, int type) {
+    public AndroidIosAdapter(Context context, int type) {
         mResults = new ArrayList<>();
         mContext = context;
         mLayout = type;
@@ -68,8 +68,7 @@ public class GankAdapter extends RecyclerView.Adapter<GankAdapter.GankViewHolder
         if (position < holder.mSize) {
             Glide.with(mContext)
                     .load(holder.list.get(position).getUrl())
-//                    .placeholder(R.drawable.item_default_img)
-//                    .fitCenter()
+                    .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.imgHead);
         }

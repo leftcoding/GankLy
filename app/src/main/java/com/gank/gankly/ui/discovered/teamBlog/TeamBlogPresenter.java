@@ -93,7 +93,7 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
 
     @Override
     public void fetchMore() {
-        if (isHasMore()) {
+        if (hasMore()) {
             mView.showRefresh();
             fetchData(getFetchPage());
         }

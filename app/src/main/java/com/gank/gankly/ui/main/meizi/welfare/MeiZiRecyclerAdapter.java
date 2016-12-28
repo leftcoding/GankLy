@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.Glide;
@@ -134,6 +135,8 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
     class GoodsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.meizi_img_picture)
         ImageView imgMeizi;
+        @BindView(R.id.meizi_card_view)
+        RelativeLayout mRelativeLayout;
 
         public GoodsViewHolder(View itemView) {
             super(itemView);

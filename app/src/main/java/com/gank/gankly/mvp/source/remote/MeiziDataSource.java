@@ -2,8 +2,7 @@ package com.gank.gankly.mvp.source.remote;
 
 import android.support.annotation.Nullable;
 
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.source.GirlsDataSource;
+import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.utils.CrashUtils;
 import com.socks.library.KLog;
 
@@ -11,20 +10,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
 
 /**
  * Create by LingYan on 2016-10-26
  * Email:137387869@qq.com
  */
 
-public class MeiziDataSource extends GirlsDataSource {
+public class MeiziDataSource extends BaseDataSourceModel {
     private static final String MEIZI_DAILY_URL = "http://m.mzitu.com/all";
 
     @Nullable
@@ -42,16 +38,41 @@ public class MeiziDataSource extends GirlsDataSource {
     }
 
     /**
+     * 清纯妹子页面数据
+     *
+     * @param url
+     * @return
+     */
+    public Observable<Document> fetchPure(final String url) {
+        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
+            @Override
+            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
+                try {
+                    Document doc = Jsoup.connect(url)
+                            .userAgent(DESKTOP_USERAGENT)
+                            .timeout(TIME_OUT)
+                            .get();
+                    subscriber.onNext(doc);
+                } catch (IOException e) {
+                    KLog.e(e);
+                    CrashUtils.crashReport(e);
+                }
+                subscriber.onComplete();
+            }
+        }));
+    }
+
+    /**
      * 获取每日更新妹子天数
      */
-    public Observable<Document> fetchDailyGirls() {
+    public Observable<Document> fetchDaily() {
         return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
             public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
                 try {
                     Document doc = Jsoup.connect(MEIZI_DAILY_URL)
                             .ignoreContentType(true)
-                            .userAgent(MEIZI_USERAGENT)
+                            .userAgent(USERAGENT)
                             .timeout(TIME_OUT)
                             .get();
                     subscriber.onNext(doc);
@@ -69,7 +90,7 @@ public class MeiziDataSource extends GirlsDataSource {
      *
      * @param url 每日更新页面的连接
      */
-    public Observable<Document> fetchImageUrls(final String url) {
+    public Observable<Document> fetchDailyDays(final String url) {
         return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
             public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
@@ -88,14 +109,13 @@ public class MeiziDataSource extends GirlsDataSource {
         }));
     }
 
-    public Observable<Document> getImageList(List<GiftBean> list) {
-        return toObservable(Observable.fromIterable(list).flatMap(new Function<GiftBean, ObservableSource<Document>>() {
+    public Observable<Document> fetchDailyDetailUrls(final String imageUrl) {
+        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
-            public ObservableSource<Document> apply(GiftBean giftBean) throws Exception {
-                final String url = giftBean.getImgUrl();
+            public void subscribe(ObservableEmitter<Document> subscribe) throws Exception {
                 Document doc = null;
                 try {
-                    doc = Jsoup.connect(url)
+                    doc = Jsoup.connect(imageUrl)
                             .userAgent(USERAGENT)
                             .timeout(TIME_OUT)
                             .get();
@@ -103,31 +123,10 @@ public class MeiziDataSource extends GirlsDataSource {
                     KLog.e(e);
                     CrashUtils.crashReport(e);
                 }
-                return (ObservableSource<Document>) doc;
+                subscribe.onNext(doc);
+                subscribe.onComplete();
             }
         }));
-//        return toObservable(Observable.from(list).flatMap(new Func1<GiftBean, Observable<Document>>() {
-//            @Override
-//            public Observable<Document> call(GiftBean giftBean) {
-//                final String url = giftBean.getImgUrl();
-//                return Observable.create(new ObservableOnSubscribe<Document>() {
-//                    @Override
-//                    public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
-//                        try {
-//                            Document doc = Jsoup.connect(url)
-//                                    .userAgent(USERAGENT)
-//                                    .timeout(TIME_OUT)
-//                                    .get();
-//                            subscriber.onNext(doc);
-//                        } catch (IOException e) {
-//                            KLog.e(e);
-//                            CrashUtils.crashReport(e);
-//                        }
-//                        subscriber.onComplete();
-//                    }
-//                });
-//            }
-//        }));
     }
 }
 

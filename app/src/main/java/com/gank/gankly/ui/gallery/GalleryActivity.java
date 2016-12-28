@@ -58,7 +58,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
@@ -107,7 +106,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private Bitmap mBitmap;
     private WallpaperManager myWallpaperManager;
     private Disposable subscription;
-    private boolean isScroll = true;
+    private boolean isAutoScroll = false;
     private boolean isPlay;
 
     @Override
@@ -136,7 +135,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             }
         }
 
-        if (isScroll) {
+        if (!isAutoScroll) {
             mPosition = position;
         }
         setNumberText(position);
@@ -145,7 +144,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @Override
     public void onPageScrollStateChanged(int state) {
         if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-            isScroll = true;
+            isAutoScroll = false;
             hideSystemUi();
             unSubscribeTime();
         }
@@ -185,7 +184,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void setNumberText(int position) {
-        int size = mPagerAdapter.getCount();
+        int size = getAapterCount();
         txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
                 position + 1, size));
     }
@@ -291,31 +290,37 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         return super.onOptionsItemSelected(item);
     }
 
+    private int getAapterCount() {
+        return mPagerAdapter == null ? 0 : mPagerAdapter.getCount();
+    }
+
+    private boolean isPositionEnd() {
+        return getAapterCount() == mPosition + 1;
+    }
+
     private void timerBrowse() {
-        if (subscription == null || subscription.isDisposed()) {
+        if (!isPositionEnd()) {
             mImageView.setBackgroundResource(R.drawable.ic_gallery_stop);
-            isScroll = false;
-            Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
+            isAutoScroll = true;
+            subscription = Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<Long>() {
                         @Override
                         public void accept(Long aLong) throws Exception {
-                            int count = mPagerAdapter.getCount();
-                            if (aLong >= count) {
+                            if (aLong >= getAapterCount()) {
                                 unSubscribeTime();
                             } else {
                                 mPosition = mPosition + 1;
                                 mViewPager.setCurrentItem(mPosition);
                             }
+
+                            if (isPositionEnd()) {
+                                unSubscribeTime();
+                            }
                         }
                     }, new Consumer<Throwable>() {
                         @Override
                         public void accept(Throwable throwable) throws Exception {
-
-                        }
-                    }, new Action() {
-                        @Override
-                        public void run() throws Exception {
 
                         }
                     });
@@ -324,7 +329,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private void unSubscribeTime() {
         mImageView.setBackgroundResource(R.drawable.ic_gallery_play);
-        if (subscription != null ) {
+        if (subscription != null) {
             subscription.dispose();
         }
     }
@@ -444,7 +449,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     public void onError(Throwable e) {
                         KLog.e(e);
                         CrashUtils.crashReport(e);
-                        ToastUtils.showToast(e.getMessage() + "\n再试试...");
+                        ToastUtils.showToast(e.getMessage());
                     }
 
                     @Override

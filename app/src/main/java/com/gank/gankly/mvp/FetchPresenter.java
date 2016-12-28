@@ -35,7 +35,7 @@ public abstract class FetchPresenter extends BasePresenter {
         return fetchPage = 1;
     }
 
-    public boolean isHasMore() {
+    public boolean hasMore() {
         return hasMore;
     }
 

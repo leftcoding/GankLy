@@ -37,9 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/ic_gallery_play"
         android:contentDescription="@null"
-        android:padding="5dp"/>
+        android:padding="15dp"/>
 </RelativeLayout>

@@ -125,7 +125,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
 
     @Override
     public void fetchMore() {
-        if (isHasMore()) {
+        if (hasMore()) {
             mView.showRefresh();
             fetchData(getFetchPage());
         }

@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 
 import java.io.IOException;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -22,6 +23,7 @@ import io.reactivex.schedulers.Schedulers;
 public class BaseDataSourceModel {
     protected static final int TIME_OUT = 50 * 1000;
     protected static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
+    protected static final String DESKTOP_USERAGENT = "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; Desktop) AppleWebKit/534.13 (KHTML, like Gecko) UCBrowser/8.9.0.25";
 
     protected <T> Observable<T> toObservable(Observable<T> o) {
         return o.retry(3)
@@ -48,5 +50,12 @@ public class BaseDataSourceModel {
                 subscriber.onComplete();
             }
         });
+    }
+
+    protected <T> Flowable<T> toObservable(Flowable<T> o) {
+        return o.retry(3)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

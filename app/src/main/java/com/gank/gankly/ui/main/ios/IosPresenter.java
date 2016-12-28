@@ -36,7 +36,10 @@ public class IosPresenter extends FetchPresenter implements IosContract.Presente
 
     @Override
     public void fetchMore() {
-        fetchData(getFetchPage());
+        if (hasMore()) {
+            mModelView.showRefresh();
+            fetchData(getFetchPage());
+        }
     }
 
     private void fetchData(final int page) {

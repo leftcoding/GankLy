@@ -121,7 +121,7 @@ public class MultipleStatusView extends RelativeLayout {
         showView(mViewStatus);
     }
 
-    public void showNoNetwork() {
+    public void showDisNetwork() {
         mViewStatus = STATUS_NO_NETWORK;
         if (mNoNetworkView == null) {
             mNoNetworkView = mInflater.inflate(mNoNetworkViewId, null);

@@ -1,5 +1,6 @@
 package com.gank.gankly.config.glide;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -7,22 +8,31 @@ import android.os.Looper;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.MemoryCategory;
-import com.bumptech.glide.integration.okhttp.OkHttpUrlLoader;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.GlideModule;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okio.Buffer;
 import okio.BufferedSource;
 import okio.ForwardingSource;
@@ -39,10 +49,64 @@ public class OkHttpProgressGlideModule implements GlideModule {
 
 	@Override
 	public void registerComponents(Context context, Glide glide) {
-		OkHttpClient client = new OkHttpClient();
+//		OkHttpClient client = new OkHttpClient();
+		OkHttpClient.Builder client = new OkHttpClient.Builder();
 		client.networkInterceptors().add(createInterceptor(new DispatchingProgressListener()));
-		glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client));
+		glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client.build()));
 		glide.setMemoryCategory(MemoryCategory.LOW);
+	}
+
+	private okhttp3.OkHttpClient getHttpClient() {
+		okhttp3.OkHttpClient.Builder mBuilder = new okhttp3.OkHttpClient.Builder();
+		mBuilder.sslSocketFactory(createSSLSocketFactory(), new TrustAllManager());
+		mBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
+		return mBuilder.build();
+	}
+	/**
+	 * 默认信任所有的证书
+	 * TODO 最好加上证书认证，主流App都有自己的证书
+	 *
+	 * @return
+	 */
+	@SuppressLint("TrulyRandom")
+	private static SSLSocketFactory createSSLSocketFactory() {
+
+		SSLSocketFactory sSLSocketFactory = null;
+
+		try {
+			SSLContext sc = SSLContext.getInstance("TLS");
+			sc.init(null, new TrustManager[]{new TrustAllManager()},
+					new SecureRandom());
+			sSLSocketFactory = sc.getSocketFactory();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return sSLSocketFactory;
+	}
+
+	private static class TrustAllManager implements X509TrustManager {
+		@Override
+		public void checkClientTrusted(X509Certificate[] chain, String authType)
+				throws CertificateException {
+		}
+
+		@Override
+		public void checkServerTrusted(X509Certificate[] chain, String authType)
+				throws CertificateException {
+		}
+
+		@Override
+		public X509Certificate[] getAcceptedIssuers() {
+			return new X509Certificate[0];
+		}
+	}
+
+	private static class TrustAllHostnameVerifier implements HostnameVerifier {
+		@Override
+		public boolean verify(String hostname, SSLSession session) {
+			return true;
+		}
 	}
 
 	private static Interceptor createInterceptor(final ResponseProgressListener listener) {
@@ -52,7 +116,7 @@ public class OkHttpProgressGlideModule implements GlideModule {
 				Request request = chain.request();
 				Response response = chain.proceed(request);
 				return response.newBuilder()
-						.body(new OkHttpProgressResponseBody(request.httpUrl(), response.body(), listener))
+						.body(new OkHttpProgressResponseBody(request.url(), response.body(), listener))
 						.build();
 			}
 		};
@@ -156,12 +220,12 @@ public class OkHttpProgressGlideModule implements GlideModule {
 		}
 
 		@Override
-		public long contentLength() throws IOException {
+		public long contentLength() {
 			return responseBody.contentLength();
 		}
 
 		@Override
-		public BufferedSource source() throws IOException {
+		public BufferedSource source() {
 			if (bufferedSource == null) {
 				bufferedSource = Okio.buffer(source(responseBody.source()));
 			}

@@ -15,6 +15,7 @@ import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.main.meizi.dailymeizi.DailyMeiziFragment;
+import com.gank.gankly.ui.main.meizi.pure.PureFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
-        mList.add(new GiftFragment());
+        mList.add(new PureFragment());
         mList.add(new DailyMeiziFragment());
 
         mTitles = new ArrayList<>();

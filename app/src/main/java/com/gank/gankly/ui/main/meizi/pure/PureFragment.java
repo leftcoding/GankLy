@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.meizi.pure;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,13 +20,12 @@ import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.presenter.GiftPresenter;
+import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.view.IGiftView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -36,8 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -45,33 +43,32 @@ import io.reactivex.functions.Consumer;
  * Create by LingYan on 2016-05-17
  * Email:137387869@qq.com
  */
-public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
+public class PureFragment extends LazyFragment implements ItemClick, PureContract.View {
     @BindView(R.id.meizi_swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
 
     private RecyclerView mRecyclerView;
-    private GiftAdapter mAdapter;
+    private PureAdapter mAdapter;
     private HomeActivity mActivity;
 
-    private int mCurPage = 1;
     private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
-    private GiftPresenter mPresenter;
+    private PureContract.Presenter mPresenter;
 
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_gift;
     }
 
-    public static GiftFragment getInstance() {
-        return new GiftFragment();
+    public static PureFragment getInstance() {
+        return new PureFragment();
     }
 
     @Override
     protected void initPresenter() {
-        mPresenter = new GiftPresenter(mActivity, this);
+        mPresenter = new PurePresenter(MeiziDataSource.getInstance(), this);
     }
 
     @Override
@@ -104,7 +101,7 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
     private void initRefresh() {
         mMultipleStatusView.showLoading();
-        onFetchNew();
+        mPresenter.fetchNew();
     }
 
     private void changeUi() {
@@ -132,17 +129,10 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
-    private void onFetchNew() {
-        mCurPage = 1;
-        mPresenter.fetchNew(mCurPage);
-    }
-
-    private void onFetchNext() {
-        showRefresh();
-        mPresenter.fetchNext(mCurPage);
-    }
-
     private void initRecycler() {
+        mAdapter = new PureAdapter(mActivity);
+        mSwipeRefreshLayout.setAdapter(mAdapter);
+
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
@@ -153,17 +143,14 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
 
             @Override
             public void onRefresh() {
-                onFetchNew();
+                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                onFetchNext();
+                mPresenter.fetchMore();
             }
         });
-
-        mAdapter = new GiftAdapter(mActivity);
-        mSwipeRefreshLayout.setAdapter(mAdapter);
     }
 
 
@@ -172,11 +159,10 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
             mDialog = new ProgressDialog(mActivity);
         }
 
-        mDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
-        mDialog.setIndeterminate(false);
+        mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setProgress(0);
         mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -187,124 +173,26 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
-    }
 
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showContent() {
-        mMultipleStatusView.showContent();
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void showRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void clear() {
-        mAdapter.clear();
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
-    @Override
-    public void refillDate(List<GiftBean> list) {
-        mAdapter.updateItems(list);
-    }
-
-    @Override
-    public void setMax(int max) {
-        if (mDialog != null) {
-            mDialog.setMax(max);
+        if (!mDialog.isShowing()) {
+            mDialog.show();
         }
-    }
-
-    @Override
-    public void setProgress(int progress) {
-        if (mDialog != null) {
-            mDialog.setProgress(progress);
-        }
-    }
-
-    @Override
-    public void disDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
-        }
-    }
-
-    @Override
-    public void setNextPage(int page) {
-        this.mCurPage = page;
-    }
-
-    @Override
-    public void refillImagesCount(List<GiftBean> giftResult) {
-        mImageCountList.addAll(giftResult);
-    }
-
-    @Override
-    public void gotoBrowseActivity(ArrayList<GiftBean> list) {
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(mActivity, GalleryActivity.class);
-        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
-        intent.putExtra(GalleryActivity.TAG, bundle);
-        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
-        mActivity.startActivity(intent);
     }
 
     @Override
     public void onClick(int position, Object object) {
         showDialog();
-        mImageCountList.clear();
         final GiftBean giftBean = (GiftBean) object;
-        Observable.create(new ObservableOnSubscribe<GiftBean>() {
-            @Override
-            public void subscribe(ObservableEmitter<GiftBean> subscriber) throws Exception {
-                subscriber.onNext(giftBean);
-                subscriber.onComplete();
-            }
-        })
+        Observable.just(giftBean)
                 .throttleFirst(100, TimeUnit.MILLISECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<GiftBean>() {
                     @Override
                     public void accept(GiftBean giftBean) throws Exception {
-                        mPresenter.fetchImagePageList(giftBean.getUrl());
+                        mPresenter.fetchImages(giftBean.getUrl());
                     }
                 });
-
     }
 
     public List<GiftBean> getList() {
@@ -327,5 +215,77 @@ public class GiftFragment extends LazyFragment implements ItemClick, IGiftView {
     @Override
     protected void callBackRefreshUi() {
 
+    }
+
+    @Override
+    public void showRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+        mMultipleStatusView.showContent();
+    }
+
+    @Override
+    public void showEmpty() {
+        mMultipleStatusView.showEmpty();
+    }
+
+    @Override
+    public void showDisNetWork() {
+        mMultipleStatusView.showDisNetwork();
+    }
+
+    @Override
+    public void showError() {
+        mMultipleStatusView.showError();
+    }
+
+    @Override
+    public void showLoading() {
+        mMultipleStatusView.showLoading();
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
+
+    }
+
+    @Override
+    public void refillData(List<GiftBean> list) {
+        mAdapter.refillItems(list);
+    }
+
+    @Override
+    public void appendData(List<GiftBean> list) {
+        mAdapter.appedItems(list);
+    }
+
+    @Override
+    public void openGalleryActivity(ArrayList<GiftBean> list) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
+        intent.putExtra(GalleryActivity.TAG, bundle);
+        intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+        mActivity.startActivity(intent);
+    }
+
+    @Override
+    public void disLoadingDialog() {
+        if (mDialog != null && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
     }
 }

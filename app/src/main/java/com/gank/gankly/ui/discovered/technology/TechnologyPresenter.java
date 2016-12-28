@@ -92,7 +92,7 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
 
     @Override
     public void fetchMore() {
-        if (isHasMore()) {
+        if (hasMore()) {
             mView.showRefresh();
             fetchData(getFetchPage());
         }

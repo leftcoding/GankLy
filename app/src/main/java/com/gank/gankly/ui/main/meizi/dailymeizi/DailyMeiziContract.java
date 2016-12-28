@@ -21,8 +21,6 @@ public interface DailyMeiziContract {
 
         void disProgressDialog();
 
-        void setProgressValue(int value);
-
         void openBrowseActivity(ArrayList<GiftBean> list);
     }
 

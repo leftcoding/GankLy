@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.main.meizi.pure;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
@@ -23,12 +24,12 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-25
  * Email:137387869@qq.com
  */
-public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder> {
+public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder> {
     private List<GiftBean> mResults;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 
-    public GiftAdapter(Context context) {
+    public PureAdapter(Context context) {
         mResults = new ArrayList<>();
         mContext = context;
     }
@@ -50,6 +51,7 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
                 .load(bean.getImgUrl())
                 .asBitmap()
                 .fitCenter()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(holder.mImageView);
     }
 
@@ -64,7 +66,14 @@ public class GiftAdapter extends RecyclerView.Adapter<GiftAdapter.GankViewHolder
         Glide.clear(holder.mImageView);
     }
 
-    public void updateItems(List<GiftBean> getResults) {
+    public void refillItems(List<GiftBean> getResults) {
+        int size = mResults.size();
+        mResults.clear();
+        notifyItemRangeRemoved(0, size);
+        appedItems(getResults);
+    }
+
+    public void appedItems(List<GiftBean> getResults) {
         mResults.addAll(getResults);
         notifyItemRangeInserted(mResults.size(), getResults.size());
     }

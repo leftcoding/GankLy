@@ -230,7 +230,7 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showNoNetwork();
+        mMultipleStatusView.showDisNetwork();
     }
 
     @Override

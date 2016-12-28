@@ -34,7 +34,7 @@ public class BrowseHistoryPresenter extends FetchPresenter implements BrowseHist
 
     @Override
     public void fetchMore() {
-        if (isHasMore()) {
+        if (hasMore()) {
             mModelView.showRefresh();
             fetch();
         }

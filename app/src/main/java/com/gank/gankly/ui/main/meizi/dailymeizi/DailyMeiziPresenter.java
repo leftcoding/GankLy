@@ -1,7 +1,5 @@
 package com.gank.gankly.ui.main.meizi.dailymeizi;
 
-import android.text.TextUtils;
-
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.FetchPresenter;
@@ -27,8 +25,8 @@ import io.reactivex.functions.Function;
 public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziContract.Presenter {
     private MeiziDataSource mTask;
     private DailyMeiziContract.View mModelView;
-    private int progress;
     private ArrayList<GiftBean> imagesList;
+    private int max;
 
     public DailyMeiziPresenter(MeiziDataSource task, DailyMeiziContract.View view) {
         mTask = task;
@@ -37,7 +35,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void fetchNew() {
-        mTask.fetchDailyGirls()
+        mTask.fetchDaily()
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
@@ -75,23 +73,23 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void unSubscribe() {
-//        onUnSubscribe();
+
     }
 
     @Override
     public void girlsImages(final String url) {
-        mTask.fetchImageUrls(url)
-                .map(new Function<Document, List<GiftBean>>() {
+        mTask.fetchDailyDays(url)
+                .map(new Function<Document, String>() {
                     @Override
-                    public List<GiftBean> apply(Document document) throws Exception {
-                        int max = getImageUrlsMax(document);
+                    public String apply(Document document) throws Exception {
+                        max = getImageUrlsMax(document);
                         if (max > 0) {
-                            return getImageUrls(url, max);
+                            return getImageUrl(url);
                         }
                         return null;
                     }
                 })
-                .subscribe(new Observer<List<GiftBean>>() {
+                .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {
 
@@ -104,31 +102,26 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
                     @Override
                     public void onSubscribe(Disposable d) {
-                        
+
                     }
 
                     @Override
-                    public void onNext(List<GiftBean> list) {
-                        if (!ListUtils.isListEmpty(list)) {
-                            mModelView.setMaxProgress(list.size());
-                            getImages(list);
-                        }
+                    public void onNext(String url) {
+                        mModelView.setMaxProgress(max);
+                        getImages(url);
                     }
                 });
     }
 
-    private void getImages(List<GiftBean> list) {
-        imagesList = new ArrayList<>();
-        progress = 0;
-
-        mTask.getImageList(list)
-                .map(new Function<Document, ArrayList<GiftBean>>() {
+    private void getImages(String url) {
+        mTask.fetchDailyDetailUrls(url)
+                .map(new Function<Document, String>() {
                     @Override
-                    public ArrayList<GiftBean> apply(Document document) throws Exception {
+                    public String apply(Document document) throws Exception {
                         return getImageCountList(document);
                     }
                 })
-                .subscribe(new Observer<ArrayList<GiftBean>>() {
+                .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {
                         mModelView.disProgressDialog();
@@ -147,14 +140,40 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
-                    public void onNext(ArrayList<GiftBean> list) {
-                        if (ListUtils.getListSize(list) > 0) {
-                            mModelView.setProgressValue(progress++);
-                            imagesList.addAll(list);
+                    public void onNext(String url) {
+                        imagesList = new ArrayList<>();
+                        String baseUrl = null;
+                        String name = null;
+                        String endType = null;
+                        int lastPointIndex;
+                        int lastNameIndex;
+                        if (url.contains(".")) {
+                            if (url.contains("-")) {
+                                lastPointIndex = url.lastIndexOf("-");
+                            } else {
+                                lastPointIndex = url.lastIndexOf(".");
+                            }
+                            lastNameIndex = url.lastIndexOf("/");
+                            baseUrl = url.substring(0, lastNameIndex);
+                            name = url.substring(lastNameIndex, lastPointIndex - 2);
+                            endType = url.substring(lastPointIndex, url.length());
+                        }
+
+                        String number;
+                        String lastUrl;
+                        for (int i = 1; i <= max; i++) {
+                            if (i < 10) {
+                                number = "0" + i;
+                            } else {
+                                number = String.valueOf(i);
+                            }
+                            lastUrl = baseUrl + name + number + endType;
+                            imagesList.add(new GiftBean(lastUrl));
                         }
                     }
                 });
     }
+
 
     private void parseDocument(Document document) {
         if (document != null) {
@@ -203,28 +222,18 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
         return max;
     }
 
-    private List<GiftBean> getImageUrls(String url, int max) {
-        List<GiftBean> list = new ArrayList<>();
-        if (!TextUtils.isEmpty(url) && max > 0) {
-            for (int i = 1; i <= max; i++) {
-                String u = url + "/" + i;
-                list.add(new GiftBean(u));
-            }
-        }
-
-        return list;
+    private String getImageUrl(String url) {
+        return url + "/" + 0;
     }
 
-    private ArrayList<GiftBean> getImageCountList(Document doc) {
-        ArrayList<GiftBean> list = new ArrayList<>();
+    private String getImageCountList(Document doc) {
+        String imgUrl = null;
         if (doc != null) {
-            Elements page = doc.select("#content a img");
+            Elements page = doc.select(".place-padding p a img");
             for (int i = 0; i < page.size(); i++) {
-                String imgUrl = page.get(i).attr("src");
-                list.add(new GiftBean(imgUrl));
+                imgUrl = page.get(i).attr("src");
             }
         }
-
-        return list;
+        return imgUrl;
     }
 }
