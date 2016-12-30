@@ -52,7 +52,7 @@ public class ItemTextView extends RelativeLayout {
         try {
             mTitle = array.getString(R.styleable.ItemTextView_TextTitle);
             mSummary = array.getString(R.styleable.ItemTextView_TextSummary);
-            mTitleSize = array.getInteger(R.styleable.ItemTextView_TextTitleSize, 16);
+            mTitleSize = array.getInteger(R.styleable.ItemTextView_TextTitleSize, 14);
             mSummarySize = array.getInteger(R.styleable.ItemTextView_TextSummarySize, 12);
             mTitleColor = array.getColor(R.styleable.ItemTextView_TextTitleColor, App.getAppColor(R.color.text_default));
             mSummaryColor = array.getColor(R.styleable.ItemTextView_TextSummaryColor, App.getAppColor(R.color.text_999999));
@@ -67,28 +67,12 @@ public class ItemTextView extends RelativeLayout {
         txtTitle.setText(resId);
     }
 
-    public void setTextName(String res) {
-        txtTitle.setText(res);
-    }
-
     public void setTextSummary(String res) {
         txtSummary.setText(res);
     }
 
-    public void setNameSize(int size) {
-        txtTitle.setTextSize(size);
-    }
-
-    public void setSummarySize(int size) {
-        txtSummary.setTextSize(size);
-    }
-
     public void showVersion() {
         txtVersion.setVisibility(View.VISIBLE);
-    }
-
-    public TextView getTextView(){
-        return txtTitle;
     }
 
     @Override

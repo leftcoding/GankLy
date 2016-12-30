@@ -21,11 +21,13 @@ public interface CollectContract {
         void onDelete();
 
         int getItemsCount();
+
+        void revokeCollect();
     }
 
     interface Presenter extends IFetchPresenter {
         void cancelCollect(long position);
 
-        void backCollect();
+        void insertCollect(UrlCollect collect);
     }
 }

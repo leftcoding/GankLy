@@ -104,12 +104,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void bindListener() {
-//        RxBus.getInstance().toSubscription(ThemeEvent.class, new Action1<ThemeEvent>() {
-//            @Override
-//            public void call(ThemeEvent themeEvent) {
-//                callBackRefreshUi();
-//            }
-//        });
     }
 
     @Override

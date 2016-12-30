@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.gallery;//package com.gank.gankly.ui.browse;
+package com.gank.gankly.ui.gallery;
 
 import android.app.WallpaperManager;
 import android.content.DialogInterface;

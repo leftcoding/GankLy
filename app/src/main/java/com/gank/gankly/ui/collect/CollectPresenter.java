@@ -9,7 +9,6 @@ import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -32,7 +31,6 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
     private int mPage = 0;
     private boolean isNoMore;
-    private Disposable disposable;
 
     public CollectPresenter(@NonNull LocalDataSource task, @NonNull CollectContract.View modelView) {
         this.mTask = task;
@@ -67,7 +65,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
         isNoMore = false;
         mPage = 0;
         int offset = getOffset();
-        collect(offset);
+        getCollects(offset);
     }
 
     @Override
@@ -75,7 +73,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
         if (!isNoMore) {
             mModelView.showRefresh();
             int offset = getOffset();
-            collect(offset);
+            getCollects(offset);
         }
     }
 
@@ -83,7 +81,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
         return mPage * LIMIT;
     }
 
-    private void collect(int offset) {
+    private void getCollects(int offset) {
         mTask.getCollect(offset, LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -113,8 +111,8 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
     @Override
     public void cancelCollect(final long position) {
-        disposable = mTask.cancelCollect(position)
-                .delaySubscription(4, TimeUnit.SECONDS)
+         mTask.cancelCollect(position)
+//                .delaySubscription(4, TimeUnit.SECONDS)
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String s) throws Exception {
@@ -136,10 +134,28 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     }
 
     @Override
-    public void backCollect() {
-        if (disposable != null) {
-            disposable.dispose();
-        }
+    public void insertCollect(UrlCollect collect) {
+        mTask.insertCollect(collect).subscribe(new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                mModelView.revokeCollect();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                KLog.e(e);
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
     }
 
     @Override

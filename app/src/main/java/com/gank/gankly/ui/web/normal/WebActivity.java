@@ -360,14 +360,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void onStop() {
         super.onStop();
-        if (mStates == CollectStates.COLLECT) {
-//            collectUrl();
-        } else if (mStates == CollectStates.UN_COLLECT) {
-//            cancelCollect();
-            if (mFromType == FROM_COLLECT) {
-//                RxUtils.getInstance().OnUnCollect();
-            }
-        }
     }
 
     @Override

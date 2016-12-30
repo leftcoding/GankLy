@@ -34,6 +34,8 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
     private List<UrlCollect> mCollects;
     private Disposable subscription;
 
+    private boolean isCollect;
+
     public WebPresenter(LocalDataSource task, WebContract.View view) {
         mTask = task;
         mView = view;
@@ -45,7 +47,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
         mTask.findUrlCollect(url).subscribe(new Observer<List<UrlCollect>>() {
             @Override
             public void onError(Throwable e) {
-
+                KLog.e(e);
             }
 
             @Override
@@ -61,8 +63,9 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
             @Override
             public void onNext(List<UrlCollect> urlCollects) {
                 mCollects = urlCollects;
-                boolean isCollect = ListUtils.getListSize(urlCollects) > 0;
-                mView.setCollectIcon(isCollect);
+                boolean isCollect_ = ListUtils.getListSize(urlCollects) > 0;
+                isCollect = isCollect_;
+                mView.setCollectIcon(isCollect_);
             }
         });
     }
@@ -114,6 +117,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
                 @Override
                 public void onNext(String string) {
+                    isCollect = false;
                 }
             });
         }
@@ -121,33 +125,35 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void collect() {
-        UrlCollect urlCollect = mView.getCollect();
-        mTask.insertCollect(urlCollect).subscribe(new Observer<Long>() {
-            @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-            }
+        if (!isCollect) {
+            UrlCollect urlCollect = mView.getCollect();
+            mTask.insertCollect(urlCollect).subscribe(new Observer<Long>() {
+                @Override
+                public void onError(Throwable e) {
+                    KLog.e(e);
+                }
 
-            @Override
-            public void onComplete() {
+                @Override
+                public void onComplete() {
 
-            }
+                }
 
-            @Override
-            public void onSubscribe(Disposable d) {
+                @Override
+                public void onSubscribe(Disposable d) {
 
-            }
+                }
 
-            @Override
-            public void onNext(Long aLong) {
-            }
-        });
+                @Override
+                public void onNext(Long aLong) {
+                    isCollect = true;
+                }
+            });
+        }
     }
 
     @Override
     public void collectAction(final boolean isCollect) {
         long curTime = System.currentTimeMillis();
-        long subTime = curTime - endTime;
         if (curTime - endTime < 2000) {
             subscription.dispose();
         }
@@ -182,6 +188,5 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void unSubscribe() {
-//        mRxManager.clear();
     }
 }

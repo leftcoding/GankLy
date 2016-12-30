@@ -63,8 +63,26 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    protected void initPresenter() {
+        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
+    }
+
+    @Override
+    protected void initValues() {
+        mToolbar.setTitle(R.string.mine_my_collect);
+        mActivity.setSupportActionBar(mToolbar);
+        ActionBar bar = mActivity.getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.finish();
+            }
+        });
+
         RxBus.getInstance().toObservable(RxCollect.class).subscribe(new Observer<RxCollect>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,28 +109,6 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initValues() {
-        mToolbar.setTitle(R.string.mine_my_collect);
-        mActivity.setSupportActionBar(mToolbar);
-        ActionBar bar = mActivity.getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.finish();
-            }
-        });
-    }
-
-    @Override
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
         initAdapter();
@@ -134,11 +130,12 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
                         .setAction(R.string.revoke, new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mCollectAdapter.backAdapter();
-                                mPresenter.backCollect();
-                                if (mCollectAdapter.getItemCount() > 0) {
-                                    showContent();
-                                }
+//                                mCollectAdapter.backAdapter();
+//                                mPresenter.backCollect();
+//                                if (mCollectAdapter.getItemCount() > 0) {
+//                                    showContent();
+//                                }
+                                mPresenter.insertCollect(urlCollect);
                             }
                         })
                         .show();
@@ -216,6 +213,14 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     @Override
     public int getItemsCount() {
         return mCollectAdapter.getItemCount();
+    }
+
+    @Override
+    public void revokeCollect() {
+        mCollectAdapter.backAdapter();
+        if (mCollectAdapter.getItemCount() > 0) {
+            showContent();
+        }
     }
 
     @Override
