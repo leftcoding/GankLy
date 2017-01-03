@@ -38,7 +38,7 @@ captures/
 
 # Keystore files
 *.jks
-!/.idea/workspace.xml
+
 app/src/androidTest/
 app/src/main/java/com/gank/gankly/ui/main/meizi/A.java
 app/src/main/res/drawable-hdpi/
