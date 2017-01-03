@@ -73,15 +73,9 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initViews() {
-//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
-            @Override
-            public void retry(View v) {
-                onLoading();
-            }
-        });
+        mMultipleStatusView.setListener(v -> onLoading());
 
         mVideoRecyclerAdapter = new VideoAdapter(mActivity);
         mVideoRecyclerAdapter.setOnItemClickListener(this);
@@ -118,7 +112,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
         int mainColor = typedValue.data;
         mRecyclerView.setBackgroundColor(mainColor);
-//        mRecyclerView.setBackgroundResource(typedValue.resourceId);
 
         int childCount = mRecyclerView.getChildCount();
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
@@ -127,11 +120,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
             TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
             view.setBackgroundResource(background);
             title.setTextColor(textColor);
-//            themeUtils.backgroundColor(R.attr.baseAdapterItemBackground, view);
-//            themeUtils.textViewColor(R.attr.baseAdapterItemTextColor, title);
         }
-//        themeUtils.backgroundColor(R.attr.themeBackground, mRecyclerView);
-//        themeUtils.start();
         StyleUtils.clearRecyclerViewItem(mRecyclerView);
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }

@@ -48,3 +48,4 @@ app/src/test/
 app/src/testDebug/
 test/libs/
 /.idea/workspace.xml
+/.idea/misc.xml

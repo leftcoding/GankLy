@@ -10,7 +10,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.gank.gankly.App;
@@ -83,12 +82,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
 
     @Override
     protected void bindListener() {
-        themeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                selectTheme(isChecked);
-            }
-        });
+        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> selectTheme(isChecked));
     }
 
     private void selectTheme(boolean isChecked) {

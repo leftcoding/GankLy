@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
-// 注：需要配置符号表时，使用bugly插件
+//需要配置符号表时，使用bugly插件
 apply plugin: 'bugly'
+//rolambda
+apply plugin: 'me.tatarka.retrolambda'
 bugly {
     appId = '900039150'
     appKey = 'WbIvNJ77rAjdcEK1'
@@ -8,7 +10,7 @@ bugly {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "com.gank.gankly"
         minSdkVersion 21
@@ -32,8 +34,8 @@ android {
 
     // java版本
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     signingConfigs {
 

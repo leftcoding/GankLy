@@ -16,7 +16,8 @@
     <FrameLayout
         android:id="@+id/baisi_preview_fl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <com.superplayer.library.SuperPlayer
             android:id="@+id/super_player"

@@ -13,6 +13,7 @@ import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.ui.baisi.image.GallerySize;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ShareUtils;
+import com.socks.library.KLog;
 import com.superplayer.library.SuperPlayer;
 
 import butterknife.BindView;
@@ -26,9 +27,6 @@ import io.reactivex.disposables.Disposable;
 
 public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlayer.OnNetChangeListener {
     public static final String URL = "Url";
-    public static final String SIZE_HEIGTH = "Size_Height";
-    public static final String SIZE_WIDTH = "Size_Width";
-    public static final String LOCATION_Y = "Location_Y";
     public static final String TITLE = "title";
 
     @BindView(R.id.super_player)
@@ -41,9 +39,9 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     private String mUrl;
     private int mWidth;
     private int mHeigth;
-    private int mLocationY;
     private String mTitle;
     private String mShareUrl;
+    private int mFrom;
 
     @Override
     protected int getContentId() {
@@ -57,7 +55,7 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
                 .subscribe(new Observer<GallerySize>() {
                     @Override
                     public void onError(Throwable e) {
-
+                        KLog.e(e);
                     }
 
                     @Override
@@ -77,8 +75,8 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
                             mHeigth = gallerySize.getHeight();
                             mWidth = gallerySize.getWidth();
                             mTitle = gallerySize.getTitle();
-                            mLocationY = gallerySize.getPosition();
                             mShareUrl = gallerySize.getShareUrl();
+                            mFrom = gallerySize.getFrom();
                         }
                     }
                 });
@@ -92,12 +90,8 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_ab_back);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
+        mToolbar.setNavigationOnClickListener(v -> finish());
     }
 
     @Override
@@ -110,17 +104,18 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
         mSuperPlayer.setScaleType(SuperPlayer.SCALETYPE_FITXY);
         mSuperPlayer.setShowTopControl(false);
         mSuperPlayer.setPlayerWH(0, mSuperPlayer.getMeasuredHeight());
-        mSuperPlayer.onPrepared(new SuperPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared() {
+        mSuperPlayer.onPrepared(() -> {
+            if (mFrom == 0) {
                 setPlayerParames();
+            } else {
+                ViewGroup.LayoutParams m = mSuperPlayer.getLayoutParams();
+                m.height = mHeigth;
+                m.width = mWidth;
+                mSuperPlayer.setLayoutParams(m);
             }
         })
-                .onComplete(new Runnable() {
-                    @Override
-                    public void run() {
+                .onComplete(() -> {
 
-                    }
                 });
     }
 
@@ -175,12 +170,9 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     @Override
     protected void onDestroy() {
         mSuperPlayer.unregisterNetReceiver();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (mSuperPlayer != null) {
-                    mSuperPlayer.onDestroy();
-                }
+        new Thread(() -> {
+            if (mSuperPlayer != null) {
+                mSuperPlayer.onDestroy();
             }
         }).start();
         super.onDestroy();

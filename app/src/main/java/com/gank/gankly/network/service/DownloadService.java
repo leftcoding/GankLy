@@ -2,10 +2,10 @@ package com.gank.gankly.network.service;
 
 import com.gank.gankly.bean.CheckVersion;
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import retrofit2.http.Streaming;
-import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-05-30

@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.Map;
 
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
@@ -36,17 +37,44 @@ public class BaseDataSourceModel {
         return Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
             public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
-                Document doc = null;
+                Document doc ;
                 try {
                     doc = Jsoup.connect(url)
                             .userAgent(USERAGENT)
                             .timeout(TIME_OUT)
                             .get();
+                    subscriber.onNext(doc);
                 } catch (IOException e) {
                     KLog.e(e);
                     CrashUtils.crashReport(e);
+                    subscriber.onError(new Throwable("error"));
                 }
-                subscriber.onNext(doc);
+                subscriber.onComplete();
+            }
+        });
+    }
+
+    public Observable<Document> jsoupUrlData(final String url, final Map<String, String> strings) {
+        return Observable.create(new ObservableOnSubscribe<Document>() {
+            @Override
+            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
+                Document doc;
+                try {
+                    doc = Jsoup.connect(url)
+                            .userAgent(USERAGENT)
+                            .timeout(TIME_OUT)
+                            .data(strings)
+                            .get();
+                    if (doc != null) {
+                        subscriber.onNext(doc);
+                    } else {
+                        subscriber.onError(new Throwable("service error"));
+                    }
+                } catch (IOException e) {
+                    KLog.e(e);
+                    CrashUtils.crashReport(e);
+                    subscriber.onError(e);
+                }
                 subscriber.onComplete();
             }
         });

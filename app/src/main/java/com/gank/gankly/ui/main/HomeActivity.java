@@ -25,7 +25,6 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -177,9 +176,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            KLog.d("mIndex");
             if (mIndex == 3) {
-//                openFragment(0);
                 mBottomBar.selectTabAtPosition(0);
                 return false;
             } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {

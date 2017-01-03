@@ -13,6 +13,7 @@ public class GallerySize {
     private int position;
     private String title;
     private String shareUrl;
+    private int from;
 
     public GallerySize(int height, int width, String url, int locationY, String title) {
         this.height = height;
@@ -35,6 +36,13 @@ public class GallerySize {
         this.url = url;
     }
 
+    public GallerySize(String url, int height, int width, int from) {
+        this.height = height;
+        this.width = width;
+        this.url = url;
+        this.from = from;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -52,8 +60,27 @@ public class GallerySize {
         this.shareUrl = shareUrl;
     }
 
+    public GallerySize(int height, int width, String url, int locationY, int position, String title, String shareUrl, int from) {
+        this.height = height;
+        this.width = width;
+        this.url = url;
+        this.locationY = locationY;
+        this.position = position;
+        this.title = title;
+        this.shareUrl = shareUrl;
+        this.from = from;
+    }
+
     public String getShareUrl() {
         return shareUrl;
+    }
+
+    public int getFrom() {
+        return from;
+    }
+
+    public void setFrom(int from) {
+        this.from = from;
     }
 
     public void setShareUrl(String shareUrl) {

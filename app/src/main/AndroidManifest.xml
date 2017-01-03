@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
           package="com.gank.gankly">
 
     <uses-permission android:name="com.company.app.fileprovider.READ"/>
@@ -30,7 +29,7 @@
         <meta-data
             android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"
             android:value="GlideModule"/>
-         <!--OkHttp3 -->
+        <!--OkHttp3 -->
         <meta-data
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule"/>
@@ -77,6 +76,11 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.baisi.BaiSiVideoPreViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Day.NoActionBar"/>
+        <activity
+            android:name=".ui.hvideo.HVideoViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Day.NoActionBar"/>
