@@ -7,5 +7,5 @@ import com.gank.gankly.mvp.FetchPresenter;
  * Email:137387869@qq.com
  */
 
-public class VideoPresenter extends FetchPresenter {
+public class VideoPresenter extends FetchPresenter   {
 }

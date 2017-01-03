@@ -35,12 +35,12 @@ captures/
 
 # Intellij
 *.iml
+.idea
 
 # Keystore files
 *.jks
 
 app/src/androidTest/
-app/src/main/java/com/gank/gankly/ui/main/meizi/A.java
 app/src/main/res/drawable-hdpi/
 app/src/main/res/drawable-mdpi/
 app/src/main/res/drawable-xhdpi/
@@ -48,4 +48,3 @@ app/src/test/
 app/src/testDebug/
 test/libs/
 /.idea/misc.xml
-/.idea/workspace.xml
