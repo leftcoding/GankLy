@@ -9,7 +9,6 @@ import com.gank.gankly.network.api.ApiManager;
 import com.gank.gankly.network.service.GankService;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.BiFunction;
 
 /**
  * 干货远程请求
@@ -46,24 +45,49 @@ public class GankDataSource extends BaseDataSourceModel {
      * @param limit 请求个数
      * @return Observable
      */
-    public Observable<GankResult> fetchAndroid(final int page, final int limit) {
-        final Observable<GankResult> androidGoods = mGankService.fetchAndroidGoods(limit, page);
-        final Observable<GankResult> images = mGankService.fetchBenefitsGoods(limit, page);
+    public Observable<GankResult> fetchAndroidAndImages(final int page, final int limit) {
+        final Observable<GankResult> androidGoods = mGankService.fetchAndroid(limit, page);
+        final Observable<GankResult> images = mGankService.fetchImages(limit, page);
 
-        return toObservable(Observable.zip(androidGoods, images, new BiFunction<GankResult, GankResult, GankResult>() {
-            @Override
-            public GankResult apply(GankResult androidGoods, GankResult images) throws Exception {
-                MeiziArrayList.getInstance().addGiftItems(images.getResults());
-                return androidGoods;
-            }
+        return toObservable(Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
+            MeiziArrayList.getInstance().refillOneItems(images1.getResults());
+            return androidGoods1;
         }));
     }
+
+    public Observable<GankResult> fetchAndroid(final int page, final int limit) {
+        return toObservable(mGankService.fetchAndroid(limit, page));
+    }
+
 
     public Observable<GankResult> fetchIos(final int page, final int limit) {
         return toObservable(mGankService.fetchIosGoods(limit, page));
     }
 
-    public Observable<GankResult> fetchBenefitsGoods(final int page, final int limit) {
-        return toObservable(mGankService.fetchBenefitsGoods(limit, page));
+    /**
+     * 干货图片
+     */
+    public Observable<GankResult> fetchWelfare(final int page, final int limit) {
+        return toObservable(mGankService.fetchImages(limit, page));
+    }
+
+    /**
+     * 视频
+     */
+    public Observable<GankResult> fetchVideo(final int page, final int limit) {
+        return toObservable(mGankService.fetchVideo(limit, page));
+    }
+
+    /**
+     * 视频和图片
+     */
+    public Observable<GankResult> fetchVideoAndImages(final int page, final int limit) {
+        final Observable<GankResult> androidGoods = mGankService.fetchVideo(limit, page);
+        final Observable<GankResult> images = mGankService.fetchImages(limit, page);
+
+        return toObservable(Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
+            MeiziArrayList.getInstance().refillOneItems(images1.getResults());
+            return androidGoods1;
+        }));
     }
 }

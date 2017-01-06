@@ -156,12 +156,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mAndroidIosAdapter.updateItems(list);
+        mAndroidIosAdapter.refillItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-        mAndroidIosAdapter.appendMoreDate(list);
+        mAndroidIosAdapter.appendItems(list);
     }
 
     @Override

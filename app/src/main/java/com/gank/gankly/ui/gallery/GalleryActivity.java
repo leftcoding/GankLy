@@ -198,7 +198,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         }
 
         if (EXTRA_GANK.equals(mViewsModel)) {
-            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getArrayList();
+            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getOneItemsList();
             mGiftList = changeImageList(giftBeen);
         } else {
             mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);

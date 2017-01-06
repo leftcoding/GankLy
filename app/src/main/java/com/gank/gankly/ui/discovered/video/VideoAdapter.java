@@ -13,8 +13,10 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +29,7 @@ import butterknife.ButterKnife;
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHolder> {
     private List<ResultsBean> mResults;
+    private List<ResultsBean> mImagesList;
     private MeiziOnClick mMeiZiOnClick;
     private Context mContext;
 
@@ -47,13 +50,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         holder.txtDesc.setText(bean.getDesc());
         holder.txtAuthor.setText(bean.getWho());
 
-        int size = MeiziArrayList.getInstance().getArrayList().size();
+        int size = MeiziArrayList.getInstance().getOneItemsList().size();
         if (position > size && size > 0) {
             position = position % size;
         }
-        if (position < size) {
+        if (position < size && mImagesList != null) {
             Glide.with(mContext)
-                    .load(MeiziArrayList.getInstance().getArrayList().get(position).getUrl())
+                    .load(mImagesList.get(position).getUrl())
                     .asBitmap()
                     .fitCenter()
                     .into(holder.mImageView);
@@ -72,16 +75,23 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         return mResults.size();
     }
 
-    public void updateItems(List<ResultsBean> getResults) {
+    public void refillItems(List<ResultsBean> getResults) {
         int size = mResults.size();
         mResults.clear();
         notifyItemRangeRemoved(0, size);
-        addItems(getResults);
+        appendItems(getResults);
     }
 
-    public void addItems(List<ResultsBean> getResults) {
+    public void appendItems(List<ResultsBean> getResults) {
+        setImages();
+
         mResults.addAll(getResults);
         notifyItemRangeInserted(mResults.size(), getResults.size());
+    }
+
+    private void setImages() {
+        mImagesList = MeiziArrayList.getInstance().getOneItemsList();
+        Collections.shuffle(mImagesList);
     }
 
     public List<ResultsBean> getResults() {
@@ -102,6 +112,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
 
         public GankViewHolder(View itemView) {
             super(itemView);
+            KLog.d("GankViewHolder");
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
         }

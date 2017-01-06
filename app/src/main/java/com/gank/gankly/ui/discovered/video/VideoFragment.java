@@ -15,14 +15,11 @@ import android.widget.TextView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.presenter.IBaseRefreshPresenter;
-import com.gank.gankly.presenter.impl.VideoPresenterImpl;
+import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.utils.theme.ThemeColor;
-import com.gank.gankly.view.IMeiziView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -36,16 +33,16 @@ import butterknife.BindView;
  * Email:137387869@qq.com
  */
 public class VideoFragment extends LazyFragment implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, IMeiziView<List<ResultsBean>> {
+        SwipeRefreshLayout.OnRefreshListener, VideoContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
-    private IBaseRefreshPresenter mPresenter;
+    private VideoContract.Presenter mPresenter;
     private HomeActivity mActivity;
-    private VideoAdapter mVideoRecyclerAdapter;
+    private VideoAdapter mAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -60,7 +57,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initPresenter() {
-        mPresenter = new VideoPresenterImpl(mActivity, this);
+        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
@@ -68,7 +65,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     private void onLoading() {
-        onDownRefresh();
+        mPresenter.fetchNew();
     }
 
     @Override
@@ -77,16 +74,16 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
         mMultipleStatusView.setListener(v -> onLoading());
 
-        mVideoRecyclerAdapter = new VideoAdapter(mActivity);
-        mVideoRecyclerAdapter.setOnItemClickListener(this);
-        mSwipeRefreshLayout.setAdapter(mVideoRecyclerAdapter);
+        mAdapter = new VideoAdapter(mActivity);
+        mAdapter.setOnItemClickListener(this);
+        mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
-                onDownRefresh();
+                mPresenter.fetchNew();
             }
 
             @Override
@@ -102,7 +99,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void callBackRefreshUi() {
-        ThemeColor themeColor = new ThemeColor(this);
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
         theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
@@ -125,37 +121,43 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
-    private void onDownRefresh() {
-        mPresenter.fetchNew();
-    }
-
     @Override
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        List<ResultsBean> list = mVideoRecyclerAdapter.getResults();
-        bundle.putString("title", list.get(position).getDesc());
-        bundle.putString("url", list.get(position).getUrl());
+        List<ResultsBean> list = mAdapter.getResults();
+        bundle.putString(WebVideoViewActivity.TITLE, list.get(position).getDesc());
+        bundle.putString(WebVideoViewActivity.URL, list.get(position).getUrl());
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
     }
 
     @Override
     public void onRefresh() {
-        onDownRefresh();
+        onLoading();
     }
 
     @Override
-    public void refillDate(List<ResultsBean> list) {
-        mVideoRecyclerAdapter.updateItems(list);
+    protected void initData() {
+        mPresenter.fetchNew();
     }
 
     @Override
-    public void appendMoreDate(List<ResultsBean> list) {
-        mVideoRecyclerAdapter.addItems(list);
+    public void refillData(List<ResultsBean> list) {
+        mAdapter.refillItems(list);
     }
 
     @Override
-    public void showRefreshError(String error) {
-        Snackbar.make(mRecyclerView, error, Snackbar.LENGTH_LONG).show();
+    public void appendData(List<ResultsBean> list) {
+        mAdapter.appendItems(list);
+    }
+
+    @Override
+    public void showRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
+    public void hideRefresh() {
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -164,53 +166,32 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    public void clear() {
-
+    public void showContent() {
+        mMultipleStatusView.showContent();
     }
 
     @Override
     public void showEmpty() {
-
+        mMultipleStatusView.showEmpty();
     }
 
     @Override
     public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showContent() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showContent();
-        }
+        mMultipleStatusView.showDisNetwork();
     }
 
     @Override
     public void showError() {
-
+        mMultipleStatusView.showError();
     }
 
     @Override
     public void showLoading() {
-
+        mMultipleStatusView.showLoading();
     }
 
     @Override
-    public void hideRefresh() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
-    }
-
-    @Override
-    public void showRefresh() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
-        }
-    }
-
-    @Override
-    protected void initData() {
-        mPresenter.fetchNew();
+    public void showRefreshError(String errorStr) {
+        Snackbar.make(mRecyclerView, errorStr, Snackbar.LENGTH_LONG).show();
     }
 }

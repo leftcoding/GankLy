@@ -32,13 +32,13 @@ import butterknife.BindView;
  * Create by LingYan on 2016-5-12
  * Email:137387869@qq.com
  */
-public class MeiZiFragment extends LazyFragment implements MeiziOnClick, WelfareContract.View {
+public class WelfareFragment extends LazyFragment implements MeiziOnClick, WelfareContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
-    private MeiZiRecyclerAdapter mMeiZiRecyclerAdapter;
+    private WelfareAdapter mWelfareAdapter;
     private HomeActivity mActivity;
     private RecyclerView mRecyclerView;
 
@@ -49,11 +49,11 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
         return R.layout.layout_swipe_normal;
     }
 
-    public MeiZiFragment() {
+    public WelfareFragment() {
     }
 
-    public static MeiZiFragment newInstance() {
-        MeiZiFragment fragment = new MeiZiFragment();
+    public static WelfareFragment newInstance() {
+        WelfareFragment fragment = new WelfareFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -67,8 +67,8 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        mMeiZiRecyclerAdapter = new MeiZiRecyclerAdapter(mActivity);
-        mMeiZiRecyclerAdapter.setMeiZiOnClick(this);
+        mWelfareAdapter = new WelfareAdapter(mActivity);
+        mWelfareAdapter.setMeiZiOnClick(this);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
@@ -84,17 +84,14 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
                 fetchMore();
             }
         });
-        mSwipeRefreshLayout.setAdapter(mMeiZiRecyclerAdapter);
+        mSwipeRefreshLayout.setAdapter(mWelfareAdapter);
     }
 
     @Override
     protected void bindListener() {
-        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
-            @Override
-            public void retry(View v) {
-                mMultipleStatusView.showLoading();
-                fetchNew();
-            }
+        mMultipleStatusView.setListener(v -> {
+            mMultipleStatusView.showLoading();
+            fetchNew();
         });
     }
 
@@ -120,12 +117,7 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
     public void showRefreshError(String errorStr) {
         Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
                 .setActionTextColor(App.getAppColor(R.color.Blue))
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fetchMore();
-                    }
-                }).show();
+                .setAction(R.string.retry, v -> fetchMore()).show();
     }
 
     private void fetchNew() {
@@ -208,11 +200,11 @@ public class MeiZiFragment extends LazyFragment implements MeiziOnClick, Welfare
 
     @Override
     public void refillData(List<ResultsBean> list) {
-        mMeiZiRecyclerAdapter.refillItems(list);
+        mWelfareAdapter.refillItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-        mMeiZiRecyclerAdapter.appendItems(list);
+        mWelfareAdapter.appendItems(list);
     }
 }

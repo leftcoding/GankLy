@@ -12,13 +12,12 @@ public class GankResult extends BaseResult implements Serializable {
 
     private List<ResultsBean> results;
 
+    public GankResult(List<ResultsBean> results) {
+        this.results = results;
+    }
 
     public List<ResultsBean> getResults() {
         return results;
-    }
-
-    public void setResults(List<ResultsBean> results) {
-        this.results = results;
     }
 
     public boolean isEmpty() {

@@ -11,7 +11,7 @@ import io.reactivex.Observable;
  */
 public interface GankService {
     @GET("Android/{limit}/{page}")
-    Observable<GankResult> fetchAndroidGoods(
+    Observable<GankResult> fetchAndroid(
             @Path("limit") int limit,
             @Path("page") int page
     );
@@ -29,7 +29,7 @@ public interface GankService {
     );
 
     @GET("福利/{limit}/{page}")
-    Observable<GankResult> fetchBenefitsGoods(
+    Observable<GankResult> fetchImages(
             @Path("limit") int limit,
             @Path("page") int page
     );

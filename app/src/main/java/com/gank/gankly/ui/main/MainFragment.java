@@ -19,7 +19,7 @@ import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.android.AndroidFragment;
 import com.gank.gankly.ui.main.ios.IosFragment;
-import com.gank.gankly.ui.main.meizi.welfare.MeiZiFragment;
+import com.gank.gankly.ui.main.meizi.welfare.WelfareFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.view.ILauncher;
 import com.socks.library.KLog;
@@ -92,7 +92,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
         mList = new ArrayList<>();
         mList.add(AndroidFragment.newInstance());
         mList.add(IosFragment.newInstance());
-        mList.add(MeiZiFragment.newInstance());
+        mList.add(WelfareFragment.newInstance());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.ANDROID);

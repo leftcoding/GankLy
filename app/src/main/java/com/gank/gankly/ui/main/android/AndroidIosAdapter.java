@@ -37,6 +37,9 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
     private Context mContext;
     public int mLayout;
 
+    private int mImageSize;
+    private List<ResultsBean> mImagesList;
+
     public AndroidIosAdapter(Context context) {
         this(context, LAYOUT_Android);
     }
@@ -62,12 +65,12 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_DD));
         holder.txtName.setText(bean.getWho());
-        if (position > holder.mSize && holder.mSize != 0) {
-            position = position % holder.mSize;
+        if (position > mImageSize && mImageSize != 0) {
+            position = position % mImageSize;
         }
-        if (position < holder.mSize) {
+        if (position < mImageSize) {
             Glide.with(mContext)
-                    .load(holder.list.get(position).getUrl())
+                    .load(mImagesList.get(position).getUrl())
                     .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.imgHead);
@@ -99,18 +102,26 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
         return mResults.size();
     }
 
-    public void updateItems(List<ResultsBean> results) {
+    public void refillItems(List<ResultsBean> results) {
         int size = mResults.size();
         mResults.clear();
         notifyItemRangeRemoved(0, size);
-        appendMoreDate(results);
+        appendItems(results);
     }
 
-    public void appendMoreDate(List<ResultsBean> results) {
+    public void appendItems(List<ResultsBean> results) {
+        setImages();
+
         mResults.addAll(results);
         int size = mResults.size();
         int position = size - 1 < 0 ? 0 : size - 1;
         notifyItemRangeInserted(position, results.size());
+    }
+
+    private void setImages() {
+        mImagesList = MeiziArrayList.getInstance().getOneItemsList();
+        mImageSize = mImagesList.size();
+        Collections.shuffle(mImagesList);
     }
 
     public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
@@ -128,16 +139,11 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
         RatioImageView imgHead;
 
         ResultsBean mBean;
-        int mSize;
-        List<ResultsBean> list;
 
         public GankViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-            list = MeiziArrayList.getInstance().getImagesList();
-            mSize = list.size();
-            Collections.shuffle(list);
         }
 
         @Override

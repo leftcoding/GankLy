@@ -195,11 +195,11 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mRecyclerAdapter.updateItems(list);
+        mRecyclerAdapter.refillItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-        mRecyclerAdapter.appendMoreDate(list);
+        mRecyclerAdapter.appendItems(list);
     }
 }

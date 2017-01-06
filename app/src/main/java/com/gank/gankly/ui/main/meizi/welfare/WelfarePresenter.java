@@ -32,7 +32,7 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
     }
 
     private void fetchData(final int page) {
-        mTask.fetchBenefitsGoods(page, getFetchLimit())
+        mTask.fetchWelfare(page, getFetchLimit())
                 .subscribe(new Observer<GankResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -48,7 +48,7 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
                             } else {
                                 mModelView.appendData(list);
                             }
-                            MeiziArrayList.getInstance().addBeanAndPage(list, page);
+                            MeiziArrayList.getInstance().addImages(list, page);
                         }
                     }
 

@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-06
  * Email:137387869@qq.com
  */
-public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdapter.GoodsViewHolder> {
+public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsViewHolder> {
     private List<ResultsBean> mResults;
     private Activity mContext;
     private LayoutInflater inflater;
@@ -45,7 +45,7 @@ public class MeiZiRecyclerAdapter extends RecyclerView.Adapter<MeiZiRecyclerAdap
         mMeiZiOnClick = meiZiOnClick;
     }
 
-    public MeiZiRecyclerAdapter(Activity context) {
+    public WelfareAdapter(Activity context) {
         inflater = LayoutInflater.from(context);
         mContext = context;
         mResults = new ArrayList<>();

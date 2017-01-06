@@ -17,6 +17,9 @@ import butterknife.BindView;
  * Create by LingYan on 2016-04-26
  */
 public class WebVideoViewActivity extends BaseActivity {
+    public static final String TITLE = "Title";
+    public static final String URL = "url";
+
     @BindView(R.id.video_view)
     LoveVideoView mLoveVideoView;
     private String mUrl;
@@ -40,7 +43,7 @@ public class WebVideoViewActivity extends BaseActivity {
     protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mUrl = bundle.getString("url");
+            mUrl = bundle.getString(URL);
         }
         if (!TextUtils.isEmpty(mUrl)) {
             mLoveVideoView.loadUrl(mUrl);
