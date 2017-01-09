@@ -29,7 +29,7 @@ public class UrlCollectDao extends AbstractDao<UrlCollect, Long> {
         public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
         public final static Property G_type = new Property(4, String.class, "g_type", false, "G_TYPE");
         public final static Property G_author = new Property(5, String.class, "g_author", false, "G_AUTHOR");
-    };
+    }
 
 
     public UrlCollectDao(DaoConfig config) {

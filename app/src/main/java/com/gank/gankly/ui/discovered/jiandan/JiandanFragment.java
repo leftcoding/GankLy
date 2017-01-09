@@ -91,7 +91,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
 
     @Override
     protected void initValues() {
-//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 

@@ -15,7 +15,6 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -53,12 +52,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map(new Function<Document, List<JianDanBean>>() {
-                    @Override
-                    public List<JianDanBean> apply(Document document) throws Exception {
-                        return mapResult(document);
-                    }
-                })
+                .map(document -> mapResult(document))
                 .subscribe(new Observer<List<JianDanBean>>() {
                     @Override
                     public void onError(Throwable e) {

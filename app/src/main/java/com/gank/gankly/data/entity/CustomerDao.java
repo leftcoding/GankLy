@@ -25,7 +25,7 @@ public class CustomerDao extends AbstractDao<Customer, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-    };
+    }
 
     private DaoSession daoSession;
 

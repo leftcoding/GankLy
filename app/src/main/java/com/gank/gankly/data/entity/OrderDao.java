@@ -31,7 +31,7 @@ public class OrderDao extends AbstractDao<Order, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
         public final static Property CustomerId = new Property(2, long.class, "customerId", false, "CUSTOMER_ID");
-    };
+    }
 
     private DaoSession daoSession;
 

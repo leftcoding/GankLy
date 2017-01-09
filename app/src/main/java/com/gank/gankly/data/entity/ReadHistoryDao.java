@@ -29,7 +29,7 @@ public class ReadHistoryDao extends AbstractDao<ReadHistory, Long> {
         public final static Property Comment = new Property(2, String.class, "comment", false, "COMMENT");
         public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
         public final static Property G_type = new Property(4, String.class, "g_type", false, "G_TYPE");
-    };
+    }
 
 
     public ReadHistoryDao(DaoConfig config) {

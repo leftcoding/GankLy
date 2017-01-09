@@ -63,11 +63,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         }
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recyclerView);
 
-        if (mRecyclerView instanceof LyRecyclerView) {
-            isGesture = true;
-        } else {
-            isGesture = false;
-        }
+        isGesture = mRecyclerView instanceof LyRecyclerView;
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
