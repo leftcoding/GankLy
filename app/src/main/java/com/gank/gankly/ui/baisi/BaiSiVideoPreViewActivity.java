@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.ui.baisi.image.GallerySize;
+import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ShareUtils;
 import com.socks.library.KLog;

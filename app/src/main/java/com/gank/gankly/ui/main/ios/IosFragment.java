@@ -75,12 +75,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
 
     @Override
     protected void bindListener() {
-        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
-            @Override
-            public void retry(View v) {
-                initFetchDate();
-            }
-        });
+        mMultipleStatusView.setListener(v -> initFetchDate());
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -112,12 +107,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     @Override
     public void showRefreshError(String errorStr) {
         Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPresenter.fetchMore();
-                    }
-                });
+                .setAction(R.string.retry, v -> mPresenter.fetchMore());
     }
 
     @Override

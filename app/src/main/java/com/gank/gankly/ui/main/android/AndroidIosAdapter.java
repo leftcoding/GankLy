@@ -110,7 +110,7 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
     }
 
     public void appendItems(List<ResultsBean> results) {
-        setImages();
+        shuffleImages();
 
         mResults.addAll(results);
         int size = mResults.size();
@@ -118,8 +118,9 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
         notifyItemRangeInserted(position, results.size());
     }
 
-    private void setImages() {
-        mImagesList = MeiziArrayList.getInstance().getOneItemsList();
+    private void shuffleImages() {
+        List<ResultsBean> list = MeiziArrayList.getInstance().getOneItemsList();
+        mImagesList = new ArrayList<>(list);
         mImageSize = mImagesList.size();
         Collections.shuffle(mImagesList);
     }

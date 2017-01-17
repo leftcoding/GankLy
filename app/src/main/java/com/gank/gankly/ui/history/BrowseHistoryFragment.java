@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.ReadHistory;
@@ -77,12 +76,7 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
         if (barLayout != null) {
             barLayout.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
 
         setSwipeRefreshLayout(mSwipeRefreshLayout);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));

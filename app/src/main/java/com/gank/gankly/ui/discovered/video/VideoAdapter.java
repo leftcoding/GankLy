@@ -13,7 +13,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -90,7 +89,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     private void setImages() {
-        mImagesList = MeiziArrayList.getInstance().getOneItemsList();
+        List<ResultsBean> list = MeiziArrayList.getInstance().getOneItemsList();
+        mImagesList = new ArrayList<>(list);
         Collections.shuffle(mImagesList);
     }
 
@@ -112,7 +112,6 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
 
         public GankViewHolder(View itemView) {
             super(itemView);
-            KLog.d("GankViewHolder");
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
         }

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.TimingLogger;
 
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.config.Preferences;
@@ -13,9 +14,7 @@ import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
-import com.socks.library.KLog;
-
-import io.reactivex.functions.Consumer;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -32,31 +31,31 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-        final long start = System.currentTimeMillis();
         super.onCreate();
+        TimingLogger timingLogger = new TimingLogger("Application", "onCreate");
         mContext = this;
 
+        // leakCanary -- start
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        LeakCanary.install(this);
+        // leakCanary -- end
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                InitializeService.start(mContext);
-                initPreferences();
-                RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(new Consumer<SQLiteDatabase>() {
-                    @Override
-                    public void accept(SQLiteDatabase sqLiteDatabase) throws Exception {
-                        if (sqLiteDatabase != null) {
-                            DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-                            daoSession = daoMaster.newSession();
-                        }
-                    }
-                });
-            }
+        new Thread(() -> {
+            InitializeService.start(mContext);
+            initPreferences();
+            RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(sqLiteDatabase -> {
+                if (sqLiteDatabase != null) {
+                    DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
+                    daoSession = daoMaster.newSession();
+                }
+            });
         }).start();
-
-
-        long e = System.currentTimeMillis() - start;
-        KLog.d("s-e:" + e);
+        timingLogger.addSplit("start b");
+        timingLogger.dumpToLog();
     }
 
     private void initPreferences() {

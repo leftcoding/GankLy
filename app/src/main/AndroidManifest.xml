@@ -79,11 +79,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Day.NoActionBar"/>
-        <activity
-            android:name=".ui.hvideo.HVideoViewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Day.NoActionBar"/>
 
         <service android:name=".ui.base.InitializeService"/>
     </application>

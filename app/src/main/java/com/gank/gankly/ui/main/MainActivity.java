@@ -23,11 +23,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
-import com.gank.gankly.ui.collect.CollectFragment;
-import com.gank.gankly.ui.discovered.video.VideoFragment;
-import com.gank.gankly.ui.main.meizi.GirlsFragment;
-import com.gank.gankly.ui.more.AboutFragment;
-import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
@@ -212,25 +207,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mDrawerLayout.closeDrawers();
         Fragment fragmentTo = null;
         switch (menuItem.getItemId()) {
-            case R.id.navigation_home:
-                fragmentTo = MainFragment.getInstance();
-                break;
-            case R.id.navigation_collect:
-                fragmentTo = new CollectFragment();
-                break;
-            case R.id.navigation_video:
-                fragmentTo = new VideoFragment();
-                break;
-            case R.id.navigation_about:
-                fragmentTo = new AboutFragment();
-                break;
-            case R.id.navigation_gift:
-                fragmentTo = new GirlsFragment();
-                break;
-            case R.id.navigation_settings:
-                fragmentTo = SettingFragment.getInstance();
-                break;
-            case R.id.navigation_jiandan:
+//            case R.id.navigation_home:
+//                fragmentTo = MainFragment.getInstance();
+//                break;
+//            case R.id.navigation_collect:
+//                fragmentTo = new CollectFragment();
+//                break;
+//            case R.id.navigation_video:
+//                fragmentTo = new VideoFragment();
+//                break;
+//            case R.id.navigation_about:
+//                fragmentTo = new AboutFragment();
+//                break;
+//            case R.id.navigation_gift:
+//                fragmentTo = new GirlsFragment();
+//                break;
+//            case R.id.navigation_settings:
+//                fragmentTo = SettingFragment.getInstance();
+//                break;
+//            case R.id.navigation_jiandan:
 //                menuItem.setChecked(false);
 //                Intent intent = new Intent(MainActivity.this, JiandanActivity.class);
 //                startActivity(intent);

@@ -61,16 +61,10 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     @Override
     protected void initValues() {
         mAdapter = new BaiSiImageAdapter(mActivity);
-        mAdapter.setPlayClick(new BaiSiImageAdapter.onClickImage() {
-
-            @Override
-            public void onClick(GallerySize gallerySize) {
-                mActivity.getSupportFragmentManager().beginTransaction()
-                        .addToBackStack("BaiSiGalleryFragment")
-                        .add(R.id.setting_frame_layout, BaiSiGalleryFragment.newInstance(gallerySize))
-                        .commitAllowingStateLoss();
-            }
-        });
+        mAdapter.setPlayClick(gallerySize -> mActivity.getSupportFragmentManager().beginTransaction()
+                .addToBackStack("BaiSiGalleryFragment")
+                .add(R.id.setting_frame_layout, BaiSiGalleryFragment.newInstance(gallerySize))
+                .commitAllowingStateLoss());
         mSwipeRefreshLayout.setAdapter(mAdapter);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
@@ -88,7 +82,6 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
 
     @Override
     protected void initViews() {
-//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);

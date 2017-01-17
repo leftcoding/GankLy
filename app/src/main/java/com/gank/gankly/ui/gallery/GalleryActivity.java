@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.gallery;
 
 import android.app.WallpaperManager;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -34,6 +33,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
+import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
@@ -58,14 +58,14 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
 /**
  * Create by LingYan on 2016-4-25
  */
-public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
+        GalleryContract.View {
     private static final int SYSTEM_UI_BASE_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
@@ -95,12 +95,11 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @BindView(R.id.browse_rl)
     RelativeLayout mRelativeLayout;
 
-
+    private GalleryContract.Presenter mPresenter;
     private PagerAdapter mPagerAdapter;
     private int mPosition;
-    private int mPage;
 
-    private boolean isLoadMore = true;
+    //    private boolean isLoadMore = true;
     private String mViewsModel = EXTRA_GANK;
     private List<GiftBean> mGiftList = new ArrayList<>();
     private Bitmap mBitmap;
@@ -118,6 +117,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     protected void initTheme() {
         super.initTheme();
         setTheme(R.style.BrowseThemeBase);
+        mPresenter = new GalleryPresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
@@ -126,12 +126,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int position) {
+        KLog.d("mViewsModel:" + mViewsModel);
         if (EXTRA_GANK.equals(mViewsModel)) {
             int p = mGiftList.size() - 5;
+            KLog.d("p:" + p + ",position:" + position);
             if (position == p) {
-                if (isLoadMore) {
-                    fetchDate();
-                }
+                mPresenter.fetchMore();
             }
         }
 
@@ -151,9 +151,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void fetchDate() {
-        final int limit = 20;
-        mPage = MeiziArrayList.getInstance().getPage();
-        mPage = mPage + 1;
 //        GankApi.getInstance().fetchWelfare(limit, mPage, new Observable<GankResult>() {
 //
 //
@@ -198,8 +195,15 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         }
 
         if (EXTRA_GANK.equals(mViewsModel)) {
-            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getOneItemsList();
+            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getImagesList();
             mGiftList = changeImageList(giftBeen);
+            int size = ListUtils.getListSize(giftBeen);
+            if (size > 5) {
+                int point = size - 5;
+                if (mPosition >= point) {
+                    mPresenter.fetchMore();
+                }
+            }
         } else {
             mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
         }
@@ -231,12 +235,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     protected void bindListener() {
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private List<GiftBean> changeImageList(List<ResultsBean> giftBeen) {
@@ -247,6 +246,62 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             }
         }
         return list;
+    }
+
+    @Override
+    public void refillDate(List<ResultsBean> list) {
+
+    }
+
+    @Override
+    public void appendData(List<ResultsBean> list) {
+        mGiftList.addAll(changeImageList(list));
+        mPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void showRefresh() {
+
+    }
+
+    @Override
+    public void hideRefresh() {
+
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void showRefreshError(String errorStr) {
+
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
@@ -304,26 +359,18 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             isAutoScroll = true;
             subscription = Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<Long>() {
-                        @Override
-                        public void accept(Long aLong) throws Exception {
-                            if (aLong >= getAapterCount()) {
-                                unSubscribeTime();
-                            } else {
-                                mPosition = mPosition + 1;
-                                mViewPager.setCurrentItem(mPosition);
-                            }
-
-                            if (isPositionEnd()) {
-                                unSubscribeTime();
-                            }
+                    .subscribe(aLong -> {
+                        if (aLong >= getAapterCount()) {
+                            unSubscribeTime();
+                        } else {
+                            mPosition = mPosition + 1;
+                            mViewPager.setCurrentItem(mPosition);
                         }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) throws Exception {
 
+                        if (isPositionEnd()) {
+                            unSubscribeTime();
                         }
-                    });
+                    }, KLog::e);
         }
     }
 
@@ -337,18 +384,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private void makeWallpaperDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.meizi_is_wallpaper);
-        builder.setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                setWallPaper(getImageUrl(), GalleryActivity.this);
-            }
-        });
+        builder.setNegativeButton(R.string.dialog_cancel, (dialog, which) -> dialog.cancel());
+        builder.setPositiveButton(R.string.dialog_ok, (dialog, which) -> setWallPaper(getImageUrl(), GalleryActivity.this));
         builder.create().show();
     }
 
@@ -412,20 +449,17 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private void revokeWallpaper() {
         Snackbar.make(mViewPager, R.string.meizi_wallpaper_success, Snackbar.LENGTH_LONG)
-                .setAction(R.string.revoke, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            if (mBitmap != null) {
-                                myWallpaperManager.setBitmap(mBitmap);
-                            }
-                        } catch (IOException e) {
-                            KLog.e(e);
-                        } finally {
-                            mBitmap = null;
+                .setAction(R.string.revoke, v -> {
+                    try {
+                        if (mBitmap != null) {
+                            myWallpaperManager.setBitmap(mBitmap);
                         }
-                        ToastUtils.showToast(R.string.meizi_revoke_success);
+                    } catch (IOException e) {
+                        KLog.e(e);
+                    } finally {
+                        mBitmap = null;
                     }
+                    ToastUtils.showToast(R.string.meizi_revoke_success);
                 })
                 .show();
     }

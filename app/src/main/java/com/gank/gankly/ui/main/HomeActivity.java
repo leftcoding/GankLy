@@ -3,7 +3,6 @@ package com.gank.gankly.ui.main;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
@@ -24,7 +23,6 @@ import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnTabSelectListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,6 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-6-13
@@ -68,38 +65,32 @@ public class HomeActivity extends BaseActivity {
 
         changeBottomBar();
 
-        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
-            @Override
-            public void accept(ThemeEvent themeEvent) throws Exception {
-                changeBottomBar();
-            }
+        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(themeEvent -> {
+            changeBottomBar();
         });
     }
 
     @Override
     protected void bindListener() {
-        mBottomBar.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelected(@IdRes int tabId) {
-                int index = 0;
-                switch (tabId) {
-                    case R.id.tab_home:
-                        index = 0;
-                        break;
-                    case R.id.tab_news:
-                        index = 1;
-                        break;
-                    case R.id.tab_image:
-                        index = 2;
-                        break;
-                    case R.id.tab_more:
-                        index = 3;
-                        break;
-                }
-                mIndex = index;
-
-                openFragment(index);
+        mBottomBar.setOnTabSelectListener(tabId -> {
+            int index = 0;
+            switch (tabId) {
+                case R.id.tab_home:
+                    index = 0;
+                    break;
+                case R.id.tab_news:
+                    index = 1;
+                    break;
+                case R.id.tab_image:
+                    index = 2;
+                    break;
+                case R.id.tab_more:
+                    index = 3;
+                    break;
             }
+            mIndex = index;
+
+            openFragment(index);
         });
     }
 
@@ -150,11 +141,8 @@ public class HomeActivity extends BaseActivity {
         Observable.fromArray(mBottomBarTabs)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Integer>() {
-                    @Override
-                    public void accept(Integer integer) throws Exception {
-                        mBottomBar.getTabWithId(integer).setBackgroundResource(color);
-                    }
+                .subscribe(integer -> {
+                    mBottomBar.getTabWithId(integer).setBackgroundResource(color);
                 });
     }
 

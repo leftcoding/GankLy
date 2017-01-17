@@ -2,8 +2,6 @@ package com.gank.gankly.RxBus;
 
 
 import java.util.Collection;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.PublishSubject;
@@ -13,35 +11,22 @@ import io.reactivex.subjects.Subject;
  *
  */
 public class RxBus {
-    private static volatile RxBus sRxBus;
     private final Subject<Object> subject;
-
+    // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
     private RxBus() {
-//        subject = new SerializedSubject<>(PublishSubject.create());
         subject = PublishSubject.create().toSerialized();
     }
 
-    @SuppressWarnings("rawtypes")
-    private ConcurrentHashMap<Object, List<Subject>> subjectMapper = new ConcurrentHashMap<>();
-
     public static RxBus getInstance() {
-        RxBus bus = sRxBus;
-        if (bus == null) {
-            synchronized (RxBus.class) {
-                bus = sRxBus;
-                if (sRxBus == null) {
-                    bus = new RxBus();
-                    sRxBus = bus;
-                }
-            }
-        }
-        return bus;
+        return RxBusHolder.sInstance;
+    }
+
+    private static class RxBusHolder {
+        private static final RxBus sInstance = new RxBus();
     }
 
     /**
      * 发送
-     *
-     * @param object
      */
     public void post(Object object) {
         subject.onNext(object);
@@ -49,10 +34,6 @@ public class RxBus {
 
     /**
      * 接收
-     *
-     * @param type
-     * @param <T>
-     * @return
      */
     public <T> Observable<T> toObservable(final Class<T> type) {
         return subject.ofType(type);

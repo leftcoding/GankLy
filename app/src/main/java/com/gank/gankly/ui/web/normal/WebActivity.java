@@ -39,6 +39,7 @@ import java.util.Date;
 import butterknife.BindView;
 
 /**
+ * 普通web
  * Create by LingYan on 2016-5-10
  * Email:137387869@qq.com
  */
@@ -85,8 +86,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         parseBundle();
-        initTheme();
         super.onCreate(savedInstanceState);
+        initTheme();
     }
 
     @Override
@@ -106,6 +107,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     @Override
     protected void initViews() {
+//        mWebView = new WebView(App.getContext());
         WebSettings settings = mWebView.getSettings();
         mWebView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
         settings.setJavaScriptEnabled(true);  //支持js
@@ -137,19 +139,19 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
-            }
+        mToolbar.setNavigationOnClickListener(v -> {
+            CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
+//            finish();
         });
     }
 
     @Override
     protected void initValues() {
         isInitCollect = true;
-        mPresenter.findCollectUrl(mUrl);
-        mPresenter.insetHistoryUrl(new ReadHistory(null, mUrl, mTitle, new Date(), mCollectType));
+        if (!TextUtils.isEmpty(mUrl)) {
+            mPresenter.findCollectUrl(mUrl);
+            mPresenter.insetHistoryUrl(new ReadHistory(null, mUrl, mTitle, new Date(), mCollectType));
+        }
     }
 
     private void parseBundle() {

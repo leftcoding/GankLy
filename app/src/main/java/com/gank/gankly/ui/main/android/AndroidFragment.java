@@ -70,7 +70,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initValues() {
-//        setMultipleStatusView(mMultipleStatusView);
         setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
@@ -84,12 +83,9 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     protected void bindListener() {
         mAndroidIosAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mMultipleStatusView.setListener(new MultipleStatusView.OnMultipleClick() {
-            @Override
-            public void retry(View v) {
-                showLoading();
-                mPresenter.fetchNew();
-            }
+        mMultipleStatusView.setListener(v -> {
+            showLoading();
+            mPresenter.fetchNew();
         });
     }
 
@@ -261,7 +257,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        setMultipleStatusView(mMultipleStatusView);
     }
 
     private ColorStateList getSwitchThumbColorStateList() {

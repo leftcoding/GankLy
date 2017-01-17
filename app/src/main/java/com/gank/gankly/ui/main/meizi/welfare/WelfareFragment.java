@@ -3,7 +3,6 @@ package com.gank.gankly.ui.main.meizi.welfare;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -47,9 +46,6 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     @Override
     protected int getLayoutId() {
         return R.layout.layout_swipe_normal;
-    }
-
-    public WelfareFragment() {
     }
 
     public static WelfareFragment newInstance() {
@@ -160,7 +156,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
 
     @Override
     public void showLoading() {
-
+        mMultipleStatusView.showLoading();
     }
 
     @Override
@@ -176,16 +172,6 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (HomeActivity) context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

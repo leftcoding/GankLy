@@ -14,7 +14,6 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageContract.Presenter {
-    private static final String TYPE_IMAGE = "10";
     private BuDeJieDataSource mTask;
     private BaiSiImageContract.View mView;
     private int np;
@@ -56,8 +55,10 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
 
             @Override
             public void onNext(BuDeJieBean buDeJieBean) {
+                KLog.d("buDeJieBean:" + buDeJieBean);
                 if (buDeJieBean != null) {
                     np = buDeJieBean.getInfo().getNp();
+                    KLog.d("np:" + np);
                     if (np == 0) {
                         mView.refillData(buDeJieBean.getList());
                     } else {

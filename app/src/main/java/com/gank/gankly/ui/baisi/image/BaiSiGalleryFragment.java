@@ -15,7 +15,9 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.gank.gankly.R;
+import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.base.BaseFragment;
+import com.socks.library.KLog;
 
 import java.io.File;
 
@@ -42,7 +44,6 @@ public class BaiSiGalleryFragment extends BaseFragment {
     private int mWidth;
 
     public static BaiSiGalleryFragment newInstance(GallerySize gallerySize) {
-
         Bundle args = new Bundle();
         args.putString(URL, gallerySize.getUrl());
         args.putInt(SIZE_HEIGHT, gallerySize.getHeight());
@@ -67,6 +68,7 @@ public class BaiSiGalleryFragment extends BaseFragment {
             mWidth = bundle.getInt(SIZE_WIDTH);
             mHeight = bundle.getInt(SIZE_HEIGHT);
         }
+        KLog.d("mUrl:" + mUrl);
         loadImageBitmap(mUrl);
     }
 

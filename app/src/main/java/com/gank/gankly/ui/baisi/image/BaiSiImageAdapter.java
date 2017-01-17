@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.baisi.image;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +14,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
+import com.gank.gankly.bean.GallerySize;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private Map<String, Integer> mGifHeight = new ArrayMap<>();
     private Map<String, Integer> mImageHeight = new ArrayMap<>();
     private List<BuDeJieBean.ListBean> mList;
-    private final Activity mContext;
+    private Context mContext;
     private onClickImage mOnClickImage;
 
-    public BaiSiImageAdapter(Activity context) {
-        this.mContext = context;
+    public BaiSiImageAdapter(Context context) {
+        mContext = context;
         mList = new ArrayList<>();
     }
 
@@ -116,7 +117,8 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             ViewGroup.LayoutParams layoutParams = gifHolder.rlayPlayerControl.getLayoutParams();
             layoutParams.width = 1080;
-            layoutParams.height = height;
+//            layoutParams.height = height;
+            layoutParams.height = 630;
             gifHolder.rlayPlayerControl.setLayoutParams(layoutParams);
 
         } else if (holder instanceof BaiSiNormalImageHolder) {
@@ -174,13 +176,10 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         public void update(final int position, final String url) {
-            rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnClickImage != null) {
-                        KLog.d("url:" + url);
-                        mOnClickImage.onClick(new GallerySize(height, width, url, position));
-                    }
+            rlayPlayerControl.setOnClickListener(v -> {
+                if (mOnClickImage != null) {
+                    KLog.d("url:" + url);
+                    mOnClickImage.onClick(new GallerySize(height, width, url, position));
                 }
             });
         }
@@ -209,12 +208,9 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         public void update(final int position, final String url) {
             //点击回调 播放视频
-            rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mOnClickImage != null) {
-                        mOnClickImage.onClick(new GallerySize(height, width, url, position));
-                    }
+            rlayPlayerControl.setOnClickListener(v -> {
+                if (mOnClickImage != null) {
+                    mOnClickImage.onClick(new GallerySize(height, width, url, position));
                 }
             });
         }
@@ -225,6 +221,9 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder instanceof BaiSiGifHolder) {
             BaiSiGifHolder baiSiGifHolder = (BaiSiGifHolder) holder;
             Glide.clear(baiSiGifHolder.mGif);
+        } else if (holder instanceof BaiSiNormalImageHolder) {
+            BaiSiNormalImageHolder baiSiGifHolder = (BaiSiNormalImageHolder) holder;
+            Glide.clear(baiSiGifHolder.mPicture);
         }
         super.onViewRecycled(holder);
     }

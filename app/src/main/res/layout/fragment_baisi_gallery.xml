@@ -19,6 +19,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
-        android:contentDescription="@null"
-        android:scaleType="fitCenter"/>
+        android:contentDescription="@null"/>
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.baisi.image;
+package com.gank.gankly.bean;
 
 /**
  * Create by LingYan on 2016-12-12
