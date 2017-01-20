@@ -92,7 +92,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     protected void initData() {
         showLoading();
-        onDownRefresh();
+        mPresenter.fetchNew();
     }
 
     private void initRecycler() {
@@ -124,18 +124,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         mSwipeRefreshLayout.setAdapter(alphaAdapter);
     }
 
-    private void onDownRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        fetchDate();
-    }
-
-    private void fetchDate() {
-        mPresenter.fetchNew();
-    }
-
     @Override
     public void onRefresh() {
-        onDownRefresh();
+        mSwipeRefreshLayout.setRefreshing(true);
+        mPresenter.fetchNew();
     }
 
     @Override
@@ -172,27 +164,27 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void showContent() {
-
+        mMultipleStatusView.showContent();
     }
 
     @Override
     public void showEmpty() {
-
+        mMultipleStatusView.showEmpty();
     }
 
     @Override
     public void showDisNetWork() {
-
+        mMultipleStatusView.showDisNetwork();
     }
 
     @Override
     public void showError() {
-
+        mMultipleStatusView.showError();
     }
 
     @Override
     public void showLoading() {
-
+        mMultipleStatusView.showLoading();
     }
 
     @Override

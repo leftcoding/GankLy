@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-06-01
@@ -57,13 +56,14 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initValues() {
+        start();
+    }
+
+    private void start() {
         Observable.timer(50, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        startAnim();
-                    }
+                .subscribe(aLong -> {
+                    startAnim();
                 });
     }
 

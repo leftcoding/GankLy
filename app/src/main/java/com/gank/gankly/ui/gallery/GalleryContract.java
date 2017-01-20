@@ -14,8 +14,6 @@ import java.util.List;
 public interface GalleryContract {
 
     interface View extends IFetchView {
-        void refillDate(List<ResultsBean> list);
-
         void appendData(List<ResultsBean> list);
     }
 

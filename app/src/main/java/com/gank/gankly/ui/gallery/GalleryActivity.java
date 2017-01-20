@@ -126,10 +126,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     public void onPageSelected(int position) {
-        KLog.d("mViewsModel:" + mViewsModel);
         if (EXTRA_GANK.equals(mViewsModel)) {
             int p = mGiftList.size() - 5;
-            KLog.d("p:" + p + ",position:" + position);
             if (position == p) {
                 mPresenter.fetchMore();
             }
@@ -148,36 +146,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             hideSystemUi();
             unSubscribeTime();
         }
-    }
-
-    private void fetchDate() {
-//        GankApi.getInstance().fetchWelfare(limit, mPage, new Observable<GankResult>() {
-//
-//
-//            @Override
-//            public void onCompleted() {
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                KLog.e(e);
-//                CrashUtils.crashReport(e);
-//                ToastUtils.showToast(R.string.tip_server_error);
-//            }
-//
-//            @Override
-//            public void onNext(GankResult gankResult) {
-//                if (!gankResult.isEmpty()) {
-//                    MeiziArrayList.getInstance().addBeanAndPage(gankResult.getResults(), mPage);
-//                    mGiftList.addAll(changeImageList(gankResult.getResults()));
-//                }
-//                if (gankResult.getSize() < limit) {
-//                    isLoadMore = false;
-//                    ToastUtils.longBottom(R.string.loading_pic_no_more);
-//                }
-//                mPagerAdapter.notifyDataSetChanged();
-//            }
-//        });
     }
 
     private void setNumberText(int position) {
@@ -246,11 +214,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             }
         }
         return list;
-    }
-
-    @Override
-    public void refillDate(List<ResultsBean> list) {
-
     }
 
     @Override
