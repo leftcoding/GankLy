@@ -46,7 +46,7 @@ public class GanklyPreferences {
         if (mSharedPreferences == null) {
             synchronized (GanklyPreferences.class) {
                 if (mSharedPreferences == null) {
-                    mSharedPreferences = App.getContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+                    mSharedPreferences = App.getGankContext().getSharedPreferences(name, Context.MODE_PRIVATE);
                 }
             }
         }

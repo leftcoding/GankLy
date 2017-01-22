@@ -13,11 +13,9 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -69,12 +67,7 @@ public class DownloadApi {
         mDownloadService.downloadApk()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .map(new Function<ResponseBody, InputStream>() {
-                    @Override
-                    public InputStream apply(ResponseBody responseBody) throws Exception {
-                        return responseBody.byteStream();
-                    }
-                })
+                .map(responseBody -> responseBody.byteStream())
                 .observeOn(Schedulers.io())
                 .doOnNext(next)
                 .observeOn(AndroidSchedulers.mainThread())

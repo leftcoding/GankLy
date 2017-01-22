@@ -88,12 +88,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
     }
 
     private void initPreferences() {
@@ -116,12 +111,7 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     @Override
     protected void bindListener() {
-        mAutoCheckSwitch.setSwitchListener(new ItemSwitchView.OnSwitch() {
-            @Override
-            public void onSwitch(boolean isCheck) {
-                savePreferences(isCheck);
-            }
-        });
+        mAutoCheckSwitch.setSwitchListener(isCheck -> savePreferences(isCheck));
 
     }
 

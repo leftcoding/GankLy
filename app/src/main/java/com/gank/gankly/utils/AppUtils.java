@@ -72,12 +72,12 @@ public class AppUtils {
     }
 
     public static int getDisplayWidth() {
-        DisplayMetrics dm = App.getContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = App.getGankContext().getResources().getDisplayMetrics();
         return dm.widthPixels;
     }
 
     public static int getDisplayHeight() {
-        DisplayMetrics dm = App.getContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = App.getGankContext().getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 }

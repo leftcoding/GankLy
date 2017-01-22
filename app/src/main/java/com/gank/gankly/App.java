@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.TimingLogger;
 
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.config.Preferences;
@@ -32,8 +31,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        TimingLogger timingLogger = new TimingLogger("Application", "onCreate");
-        mContext = this;
+        mContext = getApplicationContext();
 
         // leakCanary -- start
         if (LeakCanary.isInAnalyzerProcess(this)) {
@@ -44,18 +42,14 @@ public class App extends Application {
         LeakCanary.install(this);
         // leakCanary -- end
 
-        new Thread(() -> {
-            InitializeService.start(mContext);
-            initPreferences();
-            RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(sqLiteDatabase -> {
-                if (sqLiteDatabase != null) {
-                    DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-                    daoSession = daoMaster.newSession();
-                }
-            });
-        }).start();
-        timingLogger.addSplit("start b");
-        timingLogger.dumpToLog();
+        InitializeService.start(mContext);
+        initPreferences();
+        RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(sqLiteDatabase -> {
+            if (sqLiteDatabase != null) {
+                DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
+                daoSession = daoMaster.newSession();
+            }
+        });
     }
 
     private void initPreferences() {
@@ -74,8 +68,8 @@ public class App extends Application {
         super.attachBaseContext(base);
     }
 
-    public static Context getContext() {
-        return mContext.getApplicationContext();
+    public static Context getGankContext() {
+        return App.mContext;
     }
 
     public static Resources getAppResources() {
@@ -112,6 +106,6 @@ public class App extends Application {
     }
 
     public static boolean isNetConnect() {
-        return NetworkUtils.isNetworkAvailable(getContext());
+        return NetworkUtils.isNetworkAvailable(getGankContext());
     }
 }

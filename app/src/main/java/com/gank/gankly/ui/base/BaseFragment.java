@@ -18,6 +18,7 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment extends Fragment {
     protected Unbinder unBinder;
+    private View mView;
 
     @Override
     public void onAttach(Context context) {
@@ -27,7 +28,10 @@ public abstract class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutId(), container, false);
+        if (mView == null) {
+            mView = inflater.inflate(getLayoutId(), container, false);
+        }
+        return mView;
     }
 
     @Override
@@ -44,6 +48,7 @@ public abstract class BaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         changeThemes();
     }
+
     protected abstract int getLayoutId();
 
     protected abstract void initValues();

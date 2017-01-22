@@ -18,7 +18,6 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Create by LingYan on 2016-12-27
@@ -141,7 +140,6 @@ public class PurePresenter extends FetchPresenter implements PureContract.Presen
                 number = String.valueOf(i);
             }
             lastUrl = baseUrl + name + number + endType;
-            KLog.d("lastUrl：" + lastUrl);
             imagesList.add(new GiftBean(lastUrl));
         }
         return imagesList;
@@ -222,13 +220,10 @@ public class PurePresenter extends FetchPresenter implements PureContract.Presen
     @Override
     public void fetchImages(String url) {
         mTask.fetchPure(url)
-                .map(new Function<Document, ArrayList<GiftBean>>() {
-                    @Override
-                    public ArrayList<GiftBean> apply(Document document) throws Exception {
-                        mMaxPageNumber = getImageMaxPage(document);
-                        String firstUrl = getImageFirstUrl(document);
-                        return getImages(firstUrl);
-                    }
+                .map(document -> {
+                    mMaxPageNumber = getImageMaxPage(document);
+                    String firstUrl = getImageFirstUrl(document);
+                    return getImages(firstUrl);
                 })
                 .subscribe(new Observer<ArrayList<GiftBean>>() {
                     @Override
