@@ -65,9 +65,10 @@ public class HomeActivity extends BaseActivity {
 
         changeBottomBar();
 
-        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(themeEvent -> {
-            changeBottomBar();
-        });
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    changeBottomBar();
+                });
     }
 
     @Override

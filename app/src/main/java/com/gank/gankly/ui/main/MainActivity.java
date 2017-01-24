@@ -27,7 +27,6 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 
 import butterknife.BindView;
-import io.reactivex.functions.Consumer;
 
 /**
  * Kotlin
@@ -35,7 +34,7 @@ import io.reactivex.functions.Consumer;
  * Email:137387869@qq.com
  */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
-//    @BindView(R.id.main_navigation)
+    //    @BindView(R.id.main_navigation)
 //    NavigationView mNavigationView;
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
@@ -52,12 +51,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initViews() {
         changeNavigationView();
 
-        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
-            @Override
-            public void accept(ThemeEvent themeEvent) throws Exception {
-                changeNavigationView();
-            }
-        });
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    changeNavigationView();
+                });
     }
 
     @Override

@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gank.gankly.App;
+import com.squareup.leakcanary.RefWatcher;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -64,6 +67,9 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        RefWatcher refWatcher = App.getRefWatcher();
+        refWatcher.watch(this);
+
         if (unBinder != null) {
             unBinder.unbind();
             unBinder = null;

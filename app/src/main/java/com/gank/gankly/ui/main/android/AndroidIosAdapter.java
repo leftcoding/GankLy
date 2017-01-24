@@ -65,12 +65,20 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
         Date date = DateUtils.formatDateFromStr(bean.getPublishedAt());
         holder.txtTime.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_DD));
         holder.txtName.setText(bean.getWho());
-        if (position > mImageSize && mImageSize != 0) {
-            position = position % mImageSize;
+
+        if (mImageSize != 0) {
+            if (position > mImageSize) {
+                position = position % mImageSize;
+            } else if (position == mImageSize) {
+                position = 0;
+            }
         }
+
         if (position < mImageSize) {
+            String url = mImagesList.get(position).getUrl();
             Glide.with(mContext)
-                    .load(mImagesList.get(position).getUrl())
+                    .load(url)
+                    .error(R.drawable.item_default_img)
                     .fitCenter()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.imgHead);
@@ -114,8 +122,7 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
 
         mResults.addAll(results);
         int size = mResults.size();
-        int position = size - 1 < 0 ? 0 : size - 1;
-        notifyItemRangeInserted(position, results.size());
+        notifyItemRangeInserted(size, results.size());
     }
 
     private void shuffleImages() {

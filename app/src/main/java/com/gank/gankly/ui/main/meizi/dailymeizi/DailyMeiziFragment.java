@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.functions.Consumer;
 
 /**
  * 妹子每日更新
@@ -66,12 +65,10 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     protected void initValues() {
-        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
-            @Override
-            public void accept(ThemeEvent themeEvent) throws Exception {
-                changeUi();
-            }
-        });
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    changeUi();
+                });
     }
 
     @Override

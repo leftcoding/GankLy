@@ -76,36 +76,32 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
             bar.setDisplayHomeAsUpEnabled(true);
         }
 
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> mActivity.finish());
 
-        RxBus.getInstance().toObservable(RxCollect.class).subscribe(new Observer<RxCollect>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        RxBus.getInstance().toObservable(RxCollect.class)
+                .subscribe(new Observer<RxCollect>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(RxCollect rxCollect) {
-                if (rxCollect.isCollect()) {
-                    onDelete();
-                }
-            }
+                    @Override
+                    public void onNext(RxCollect rxCollect) {
+                        if (rxCollect.isCollect()) {
+                            onDelete();
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                KLog.e(e);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                    }
 
-            @Override
-            public void onComplete() {
+                    @Override
+                    public void onComplete() {
 
-            }
-        });
+                    }
+                });
     }
 
     @Override

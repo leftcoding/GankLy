@@ -14,6 +14,7 @@ import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -27,6 +28,7 @@ public class App extends Application {
     private static DaoSession daoSession;
 
     private static boolean isNight;
+    private static RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -39,17 +41,22 @@ public class App extends Application {
             // You should not init your app in this process.
             return;
         }
-        LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this);
         // leakCanary -- end
 
         InitializeService.start(mContext);
         initPreferences();
-        RxBus.getInstance().toObservable(SQLiteDatabase.class).subscribe(sqLiteDatabase -> {
-            if (sqLiteDatabase != null) {
-                DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-                daoSession = daoMaster.newSession();
-            }
-        });
+        RxBus.getInstance().toObservable(SQLiteDatabase.class)
+                .subscribe(sqLiteDatabase -> {
+                    if (sqLiteDatabase != null) {
+                        DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
+                        daoSession = daoMaster.newSession();
+                    }
+                });
+    }
+
+    public static RefWatcher getRefWatcher() {
+        return refWatcher;
     }
 
     private void initPreferences() {

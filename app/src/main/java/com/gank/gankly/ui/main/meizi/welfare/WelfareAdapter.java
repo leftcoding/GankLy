@@ -64,6 +64,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         BitmapRequestBuilder requestBuilder = Glide.with(mContext)
                 .load(url)
                 .asBitmap()
+                .error(R.drawable.item_default_img)
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
         if (heights.containsKey(url)) {

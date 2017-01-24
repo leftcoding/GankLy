@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.functions.Consumer;
 
 /**
  * 美しい妹
@@ -49,12 +48,10 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     protected void bindListener() {
-        RxBus.getInstance().toObservable(ThemeEvent.class).subscribe(new Consumer<ThemeEvent>() {
-            @Override
-            public void accept(ThemeEvent themeEvent) throws Exception {
-                refreshUi();
-            }
-        });
+        RxBus.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    refreshUi();
+                });
     }
 
     @Override

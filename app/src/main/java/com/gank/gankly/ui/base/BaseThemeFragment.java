@@ -17,7 +17,6 @@ import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import java.util.List;
 
 import butterknife.ButterKnife;
-import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-09-13
@@ -31,11 +30,8 @@ public abstract class BaseThemeFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         RxBus.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(new Consumer<ThemeEvent>() {
-                    @Override
-                    public void accept(ThemeEvent themeEvent) throws Exception {
-                        callBackRefreshUi();
-                    }
+                .subscribe(themeEvent -> {
+                    callBackRefreshUi();
                 });
     }
 

@@ -6,7 +6,7 @@ import java.util.List;
  * Create by LingYan on 2016-07-20
  * Email:137387869@qq.com
  */
-public class JiandanResult {
+public class JianDanResult {
     private String status;
     private int count;
     private int count_total;

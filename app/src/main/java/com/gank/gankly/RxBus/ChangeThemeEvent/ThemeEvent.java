@@ -10,12 +10,4 @@ public class ThemeEvent {
     public ThemeEvent(boolean isRefreshUi) {
         this.isRefreshUi = isRefreshUi;
     }
-
-    public boolean isRefreshUi() {
-        return isRefreshUi;
-    }
-
-    public void setRefreshUi(boolean refreshUi) {
-        isRefreshUi = refreshUi;
-    }
 }

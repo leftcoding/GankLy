@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -186,6 +187,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        RefWatcher refWatcher = App.getRefWatcher();
+        refWatcher.watch(this);
+
         if (mUnBinder != null) {
             mUnBinder.unbind();
             mUnBinder = null;
