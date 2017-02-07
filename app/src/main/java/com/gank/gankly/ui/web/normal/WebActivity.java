@@ -32,6 +32,7 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.socks.library.KLog;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -141,7 +142,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         }
         mToolbar.setNavigationOnClickListener(v -> {
             CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618);
-//            finish();
         });
     }
 
@@ -214,6 +214,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 }
 
                 isCollect = !isCollect;
+                KLog.d("isCollect:" + isCollect);
                 mPresenter.collectAction(isCollect);
                 showSnackbar(mView, resText, App.getAppColor(resColor));
                 switchCollectIcon(isCollect);

@@ -8,7 +8,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
@@ -123,16 +122,13 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
                 mPresenter.cancelCollect(id);
                 mCollectAdapter.deleteItem(position);
                 Snackbar.make(mCoordinatorLayout, R.string.collect_revoke, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.revoke, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                        .setAction(R.string.revoke, v -> {
 //                                mCollectAdapter.backAdapter();
 //                                mPresenter.backCollect();
 //                                if (mCollectAdapter.getItemCount() > 0) {
 //                                    showContent();
 //                                }
-                                mPresenter.insertCollect(urlCollect);
-                            }
+                            mPresenter.insertCollect(urlCollect);
                         })
                         .show();
                 if (mCollectAdapter.getItemCount() == 0) {

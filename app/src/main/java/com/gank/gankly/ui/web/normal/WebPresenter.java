@@ -2,6 +2,8 @@ package com.gank.gankly.ui.web.normal;
 
 import android.support.annotation.NonNull;
 
+import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.BasePresenter;
@@ -13,14 +15,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-10-27
@@ -97,7 +98,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void cancelCollect() {
-        if (ListUtils.getListSize(mCollects) > 0) {
+        if (isCollect) {
             long deleteByKey = mCollects.get(0).getId();
             mTask.cancelCollect(deleteByKey).subscribe(new Observer<String>() {
                 @Override
@@ -118,6 +119,8 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
                 @Override
                 public void onNext(String string) {
                     isCollect = false;
+
+                    RxBus.getInstance().post(new RxCollect(true));
                 }
             });
         }
@@ -153,6 +156,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
 
     @Override
     public void collectAction(final boolean isCollect) {
+        KLog.d("isCollect:" + isCollect);
         long curTime = System.currentTimeMillis();
         if (curTime - endTime < 2000) {
             subscription.dispose();
@@ -168,14 +172,11 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
         }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .delay(1, TimeUnit.SECONDS)
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-                        if (aBoolean) {
-                            collect();
-                        } else {
-                            cancelCollect();
-                        }
+                .subscribe(aBoolean -> {
+                    if (aBoolean) {
+                        collect();
+                    } else {
+                        cancelCollect();
                     }
                 });
     }
