@@ -2,7 +2,6 @@ package com.gank.gankly.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -60,19 +59,11 @@ public class DeleteDialog extends DialogFragment {
         mBuilder = new AlertDialog.Builder(mContext);
         mBuilder.setTitle(R.string.tip_to_delete);
         mBuilder.setMessage(mContent);
-        mBuilder.setNegativeButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mDialogFragment.dismiss();
-                mListener.onNavigationClick();
-            }
+        mBuilder.setNegativeButton(R.string.dialog_ok, (dialog, which) -> {
+            mDialogFragment.dismiss();
+            mListener.onNavigationClick();
         });
-        mBuilder.setPositiveButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mDialogFragment.dismiss();
-            }
-        });
+        mBuilder.setPositiveButton(R.string.dialog_cancel, (dialog, which) -> mDialogFragment.dismiss());
         return mBuilder.create();
     }
 

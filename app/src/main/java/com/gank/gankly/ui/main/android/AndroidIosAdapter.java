@@ -32,10 +32,10 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
     public static final int LAYOUT_Android = 1;
     public static final int LAYOUT_IOS = 2;
 
-    private List<ResultsBean> mResults;
+    private final List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
-    public int mLayout;
+    public final int mLayout;
 
     private int mImageSize;
     private List<ResultsBean> mImagesList;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/baseAdapterItemBackground"
@@ -11,26 +10,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="更新提示"
-        android:textSize="18sp"
-        android:textColor="?attr/updateVersionTextColor"/>
+        android:text="@string/update_note"
+        android:textColor="?attr/updateVersionTextColor"
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:gravity="center">
 
         <TextView
             android:id="@+id/update_txt_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="200dp"
-            android:lineSpacingExtra="10dp"
             android:gravity="start"
+            android:lineSpacingExtra="10dp"
+            android:minWidth="200dp"
             android:text=""
-            android:textColor="?attr/updateVersionTextColor"/>
+            android:textColor="?attr/updateVersionTextColor" />
     </LinearLayout>
 
     <LinearLayout
@@ -40,20 +39,22 @@
 
         <Button
             android:id="@+id/update_btn_cancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:text="@string/dialog_cancel"
-            android:textColor="?attr/updateVersionButtonTextColor"/>
+            android:textColor="?attr/updateVersionButtonTextColor" />
 
         <Button
             android:id="@+id/update_btn_update"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:text="@string/dialog_update"
-            android:textColor="?attr/updateVersionButtonTextColor"/>
+            android:textColor="?attr/updateVersionButtonTextColor" />
     </LinearLayout>
 </LinearLayout>

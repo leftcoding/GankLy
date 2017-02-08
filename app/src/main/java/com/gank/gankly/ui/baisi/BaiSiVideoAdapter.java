@@ -128,12 +128,9 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
         }
 
         public void update(final int position, final String url) {
-            mPlay.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (playclick != null) {
-                        playclick.onPlayclick(position, imgThumb, url, height, width, mTitle, mShareUrl);
-                    }
+            mPlay.setOnClickListener(v -> {
+                if (playclick != null) {
+                    playclick.onPlayclick(position, imgThumb, url, height, width, mTitle, mShareUrl);
                 }
             });
         }

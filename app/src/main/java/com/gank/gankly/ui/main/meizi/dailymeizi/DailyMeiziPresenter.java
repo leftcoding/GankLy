@@ -15,7 +15,6 @@ import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 
 /**
  * Create by LingYan on 2016-10-26
@@ -23,8 +22,8 @@ import io.reactivex.functions.Function;
  */
 
 public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziContract.Presenter {
-    private MeiziDataSource mTask;
-    private DailyMeiziContract.View mModelView;
+    private final MeiziDataSource mTask;
+    private final DailyMeiziContract.View mModelView;
     private ArrayList<GiftBean> imagesList;
     private int max;
 
@@ -79,15 +78,12 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
     @Override
     public void girlsImages(final String url) {
         mTask.fetchDailyDays(url)
-                .map(new Function<Document, String>() {
-                    @Override
-                    public String apply(Document document) throws Exception {
-                        max = getImageUrlsMax(document);
-                        if (max > 0) {
-                            return getImageUrl(url);
-                        }
-                        return null;
+                .map(document -> {
+                    max = getImageUrlsMax(document);
+                    if (max > 0) {
+                        return getImageUrl(url);
                     }
+                    return null;
                 })
                 .subscribe(new Observer<String>() {
                     @Override
@@ -115,12 +111,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     private void getImages(String url) {
         mTask.fetchDailyDetailUrls(url)
-                .map(new Function<Document, String>() {
-                    @Override
-                    public String apply(Document document) throws Exception {
-                        return getImageCountList(document);
-                    }
-                })
+                .map(document -> getImageCountList(document))
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {

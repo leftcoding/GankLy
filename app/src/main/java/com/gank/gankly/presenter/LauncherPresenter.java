@@ -21,7 +21,6 @@ import java.io.InputStream;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 /**
  * Create by LingYan on 2016-06-01
@@ -74,15 +73,12 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
     }
 
     public void downloadApk() {
-        mDownloadApi.downloadApk(new Consumer<InputStream>() {
-            @Override
-            public void accept(InputStream inputStream) throws Exception {
-                try {
-                    FileUtils.writeFile(inputStream, mFile);
-                } catch (IOException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
+        mDownloadApi.downloadApk(inputStream -> {
+            try {
+                FileUtils.writeFile(inputStream, mFile);
+            } catch (IOException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
         }, new Observer<InputStream>() {
 

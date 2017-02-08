@@ -2,7 +2,6 @@ package com.gank.gankly.ui.main.meizi.pure;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -36,7 +35,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 
 /**
  * 清纯妹子
@@ -160,12 +158,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                mPresenter.unSubscribe();
-            }
-        });
+        mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());
 
         if (!mDialog.isShowing()) {
             mDialog.show();
@@ -184,11 +177,8 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
                 .throttleFirst(100, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<GiftBean>() {
-                    @Override
-                    public void accept(GiftBean giftBean) throws Exception {
-                        mPresenter.fetchImages(giftBean.getUrl());
-                    }
+                .subscribe(giftBean1 -> {
+                    mPresenter.fetchImages(giftBean1.getUrl());
                 });
     }
 

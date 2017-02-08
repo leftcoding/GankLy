@@ -44,7 +44,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     private HomeActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
-    private List<LazyFragment> mList;
 
     @Override
     protected int getLayoutId() {
@@ -89,7 +88,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     protected void initValues() {
-        mList = new ArrayList<>();
+        List<LazyFragment> mList = new ArrayList<>();
         mList.add(AndroidFragment.newInstance());
         mList.add(IosFragment.newInstance());
         mList.add(WelfareFragment.newInstance());

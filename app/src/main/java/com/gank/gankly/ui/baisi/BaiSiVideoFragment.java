@@ -3,13 +3,12 @@ package com.gank.gankly.ui.baisi;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.bean.BuDeJieVideo;
-import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.bean.GallerySize;
+import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.utils.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -86,14 +85,10 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
             }
         });
 
-        mBaiSiVideoAdapter.setPlayClick(new BaiSiVideoAdapter.onPlayClick() {
-            @Override
-            public void onPlayclick(int position, View image, String url, int height, int width, String title, String shareUrl) {
-                int[] location = new int[2];
-                image.getLocationInWindow(location);
-                startActivity(new GallerySize(height, width, url, location[1], title, shareUrl));
-
-            }
+        mBaiSiVideoAdapter.setPlayClick((position, image, url, height, width, title, shareUrl) -> {
+            int[] location = new int[2];
+            image.getLocationInWindow(location);
+            startActivity(new GallerySize(height, width, url, location[1], title, shareUrl));
         });
 
     }

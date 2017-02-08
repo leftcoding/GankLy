@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -54,12 +53,7 @@ public class AboutFragment extends BaseFragment {
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mActivity.onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
     }
 
     @Override

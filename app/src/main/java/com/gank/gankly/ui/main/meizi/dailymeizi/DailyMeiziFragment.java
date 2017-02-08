@@ -2,7 +2,6 @@ package com.gank.gankly.ui.main.meizi.dailymeizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -136,12 +135,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                mPresenter.unSubscribe();
-            }
-        });
+        mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());
         if (!mDialog.isShowing()) {
             mDialog.show();
         }

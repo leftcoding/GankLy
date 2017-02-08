@@ -13,8 +13,6 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 
@@ -113,22 +111,11 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     public void cancelCollect(final long position) {
          mTask.cancelCollect(position)
 //                .delaySubscription(4, TimeUnit.SECONDS)
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String s) throws Exception {
+                .subscribe(s -> {
 
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        KLog.e(throwable);
-                    }
-                }, new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        if (mModelView.getItemsCount() == 0) {
-                            mModelView.showEmpty();
-                        }
+                }, throwable -> KLog.e(throwable), () -> {
+                    if (mModelView.getItemsCount() == 0) {
+                        mModelView.showEmpty();
                     }
                 });
     }

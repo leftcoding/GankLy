@@ -14,8 +14,8 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageContract.Presenter {
-    private BuDeJieDataSource mTask;
-    private BaiSiImageContract.View mView;
+    private final BuDeJieDataSource mTask;
+    private final BaiSiImageContract.View mView;
     private int np;
 
     public BaiSiImagePresenter(BuDeJieDataSource task, BaiSiImageContract.View view) {

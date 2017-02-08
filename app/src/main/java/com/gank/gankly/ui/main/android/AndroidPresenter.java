@@ -22,9 +22,9 @@ import io.reactivex.disposables.Disposable;
 
 public class AndroidPresenter extends FetchPresenter implements AndroidContract.Presenter {
     @NonNull
-    private GankDataSource mTask;
+    private final GankDataSource mTask;
     @NonNull
-    private AndroidContract.View mModelView;
+    private final AndroidContract.View mModelView;
 
     public AndroidPresenter(@NonNull GankDataSource gankDataSource, @NonNull AndroidContract.View view) {
         mTask = gankDataSource;

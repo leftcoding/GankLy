@@ -17,8 +17,8 @@ import io.reactivex.disposables.Disposable;
  */
 
 public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoContract.Presenter {
-    private BuDeJieDataSource mTask;
-    private BaiSiVideoContract.View mView;
+    private final BuDeJieDataSource mTask;
+    private final BaiSiVideoContract.View mView;
     private int mNextPage;
 
     public BaiSiVideoPresenter(BuDeJieDataSource task, BaiSiVideoContract.View view) {

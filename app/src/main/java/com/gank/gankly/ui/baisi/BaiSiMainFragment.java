@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -17,7 +16,6 @@ import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,6 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     private BaiSiActivity mActivity;
     private List<String> mTitles;
-    private List<LazyFragment> mList;
 
     @Override
     protected int getLayoutId() {
@@ -71,12 +68,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mActivity.finish();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(view -> mActivity.finish());
     }
 
     @Override
@@ -86,7 +78,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     @Override
     protected void initValues() {
-        mList = new ArrayList<>();
+        List<LazyFragment> mList = new ArrayList<>();
         mList.add(new BaiSiVideoFragment());
         mList.add(new BaiSiImageFragment());
 
