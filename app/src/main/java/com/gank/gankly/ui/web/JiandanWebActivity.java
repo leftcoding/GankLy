@@ -1,23 +1,21 @@
 package com.gank.gankly.ui.web;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.JsResult;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.gank.gankly.App;
@@ -32,6 +30,13 @@ import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse;
+import com.tencent.smtt.sdk.ValueCallback;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -69,13 +74,14 @@ public class JiandanWebActivity extends BaseActivity {
     public static final String FROM_WAY = "from_type";
 
     @BindView(R.id.web_view)
-    WebView mWebView;
+    FrameLayout mViewParent;
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.web_progress_bar)
     ProgressBar mProgressBar;
     @BindView(R.id.web_main)
     View mView;
+    WebView mWebView;
 
     private String mUrl;
     private String mTitle;
@@ -99,8 +105,15 @@ public class JiandanWebActivity extends BaseActivity {
         return R.layout.activity_web;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initViews() {
+        mWebView = new WebView(this, null);
+
+        mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
+
         WebSettings settings = mWebView.getSettings();
         mWebView.requestFocusFromTouch(); //支持获取手势焦点，输入用户名、密码或其他
         settings.setJavaScriptEnabled(true);  //支持js
@@ -131,12 +144,7 @@ public class JiandanWebActivity extends BaseActivity {
             bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -418,24 +426,28 @@ public class JiandanWebActivity extends BaseActivity {
         mUrlCollectDao.deleteByKey(mUrlCollect.getId());
     }
 
-    public class MyWebViewClient extends android.webkit.WebViewClient {
+
+    public class MyWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (!TextUtils.isEmpty(url)) {
                 mWebView.loadUrl(url);
             }
             return true;
+//            return false;
         }
 
         @Override
-        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+        public WebResourceResponse shouldInterceptRequest
+                (WebView view,
+                 com.tencent.smtt.export.external.interfaces.WebResourceRequest request) {
+            // TODO Auto-generated method stub
+
+            Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
+
             return super.shouldInterceptRequest(view, request);
         }
 
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-        }
 
         @Override
         public void onPageFinished(WebView view, String url) {
@@ -447,9 +459,20 @@ public class JiandanWebActivity extends BaseActivity {
         }
     }
 
-    public class MyWebChromeClient extends android.webkit.WebChromeClient {
+    public class MyWebChromeClient extends WebChromeClient {
+
         @Override
-        public void onProgressChanged(WebView view, int newProgress) {
+        public boolean onJsConfirm(WebView arg0, String arg1, String arg2, com.tencent.smtt.export.external.interfaces.JsResult
+                arg3) {
+            return super.onJsConfirm(arg0, arg1, arg2, arg3);
+        }
+
+        View myVideoView;
+        View myNormalView;
+        IX5WebChromeClient.CustomViewCallback callback;
+
+        @Override
+        public void onProgressChanged(WebView webView, int newProgress) {
             if (mProgressBar == null) {
                 return;
             }
@@ -460,20 +483,148 @@ public class JiandanWebActivity extends BaseActivity {
             } else {
                 mProgressBar.setVisibility(View.VISIBLE);
             }
-            super.onProgressChanged(view, newProgress);
+            super.onProgressChanged(webView, newProgress);
+        }
+
+        /**
+         * 全屏播放配置
+         */
+        @Override
+        public void onShowCustomView(View view, IX5WebChromeClient.CustomViewCallback
+                customViewCallback) {
+            FrameLayout normalView = (FrameLayout) findViewById(R.id.web_filechooser);
+            ViewGroup viewGroup = (ViewGroup) normalView.getParent();
+            viewGroup.removeView(normalView);
+            viewGroup.addView(view);
+            myVideoView = view;
+            myNormalView = normalView;
+            callback = customViewCallback;
         }
 
         @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-
+        public void onHideCustomView() {
+            if (callback != null) {
+                callback.onCustomViewHidden();
+                callback = null;
+            }
+            if (myVideoView != null) {
+                ViewGroup viewGroup = (ViewGroup) myVideoView.getParent();
+                viewGroup.removeView(myVideoView);
+                viewGroup.addView(myNormalView);
+            }
         }
 
         @Override
-        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-            return true;
+        public boolean onShowFileChooser(WebView arg0,
+                                         ValueCallback<Uri[]> arg1, WebChromeClient.FileChooserParams arg2) {
+            // TODO Auto-generated method stub
+            Log.e("app", "onShowFileChooser");
+            return super.onShowFileChooser(arg0, arg1, arg2);
+        }
+
+        @Override
+        public void openFileChooser(ValueCallback<Uri> uploadFile, String acceptType, String captureType) {
+//            JiandanWebActivity.this.uploadFile = uploadFile;
+//            Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+//            i.addCategory(Intent.CATEGORY_OPENABLE);
+//            i.setType("*/*");
+//            startActivityForResult(Intent.createChooser(i, "test"), 0);
+        }
+
+
+        @Override
+        public boolean onJsAlert(WebView arg0, String arg1, String arg2, com.tencent.smtt.export.external.interfaces.JsResult
+                arg3) {
+            /**
+             * 这里写入你自定义的window alert
+             */
+            // AlertDialog.Builder builder = new Builder(getContext());
+            // builder.setTitle("X5内核");
+            // builder.setPositiveButton("确定", new
+            // DialogInterface.OnClickListener() {
+            //
+            // @Override
+            // public void onClick(DialogInterface dialog, int which) {
+            // // TODO Auto-generated method stub
+            // dialog.dismiss();
+            // }
+            // });
+            // builder.show();
+            // arg3.confirm();
+            // return true;
+            Log.i("yuanhaizhou", "setX5webview = null");
+            return super.onJsAlert(null, "www.baidu.com", "aa", arg3);
+        }
+
+        /**
+         * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
+         */
+
+
+        @Override
+        public void onReceivedTitle(WebView arg0, final String arg1) {
+            super.onReceivedTitle(arg0, arg1);
+            Log.i("yuanhaizhou", "webpage title is " + arg1);
+
         }
     }
+
+//    public class MyWebViewClient extends android.webkit.WebViewClient {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            if (!TextUtils.isEmpty(url)) {
+//                mWebView.loadUrl(url);
+//            }
+//            return true;
+//        }
+//
+//        @Override
+//        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+//            return super.shouldInterceptRequest(view, request);
+//        }
+//
+//        @Override
+//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//            super.onPageStarted(view, url, favicon);
+//        }
+//
+//        @Override
+//        public void onPageFinished(WebView view, String url) {
+//            super.onPageFinished(view, url);
+//            mHistory = url;
+//            if (!mStrings.contains(url)) {
+//                mStrings.add(url);
+//            }
+//        }
+//    }
+//
+//    public class MyWebChromeClient extends android.webkit.WebChromeClient {
+//        @Override
+//        public void onProgressChanged(WebView view, int newProgress) {
+//            if (mProgressBar == null) {
+//                return;
+//            }
+//            mProgressBar.setProgress(newProgress);
+//
+//            if (newProgress == 100) {
+//                mProgressBar.setVisibility(View.GONE);
+//            } else {
+//                mProgressBar.setVisibility(View.VISIBLE);
+//            }
+//            super.onProgressChanged(view, newProgress);
+//        }
+//
+//        @Override
+//        public void onReceivedTitle(WebView view, String title) {
+//            super.onReceivedTitle(view, title);
+//
+//        }
+//
+//        @Override
+//        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+//            return true;
+//        }
+//    }
 
     @Override
     protected void onStop() {
@@ -482,9 +633,9 @@ public class JiandanWebActivity extends BaseActivity {
             collectUrl();
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
-            if (mFromWay == FROM_COLLECT) {
+//            if (mFromWay == FROM_COLLECT) {
 //                RxUtils.getInstance().OnUnCollect();
-            }
+//            }
         }
     }
 

@@ -1,13 +1,16 @@
-package com.gank.gankly.ui.discovered;
+package com.gank.gankly.ui.discovered.more;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.LinearLayout;
 
 import com.gank.gankly.R;
+import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.baisi.BaiSiActivity;
+import com.gank.gankly.utils.theme.ThemeColor;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -16,6 +19,9 @@ import butterknife.OnClick;
  */
 
 public class DiscoveredMoreFragment extends LazyFragment {
+    @BindView(R.id.discovered_parent)
+    LinearLayout mLinearLayout;
+
     private HomeActivity mActivity;
 
     @Override
@@ -36,7 +42,9 @@ public class DiscoveredMoreFragment extends LazyFragment {
 
     @Override
     protected void callBackRefreshUi() {
-
+        ThemeColor color = new ThemeColor(this);
+        color.backgroundResource(R.attr.themeBackground, mLinearLayout);
+        color.start();
     }
 
     @Override

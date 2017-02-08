@@ -13,6 +13,8 @@ import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
+import com.gank.gankly.ui.discovered.more.DiscoveredAdapter;
+import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
 import com.gank.gankly.ui.discovered.teamBlog.TeamBlogFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
@@ -24,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
+ * 发现
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */

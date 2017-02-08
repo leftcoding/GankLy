@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/discovered_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/themeBackground"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -20,9 +21,8 @@
             android:layout_marginStart="16dp"
             android:background="#90000000"
             android:padding="4dp"
-            android:text="搞笑视屏集合"
+            android:text="@string/discovered_funnys"
             android:textColor="@color/white"
-            android:textSize="20sp"/>
-
+            android:textSize="20sp" />
     </RelativeLayout>
 </LinearLayout>

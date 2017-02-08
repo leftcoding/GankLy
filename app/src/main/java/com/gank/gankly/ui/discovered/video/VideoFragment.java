@@ -62,6 +62,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initValues() {
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     private void onLoading() {

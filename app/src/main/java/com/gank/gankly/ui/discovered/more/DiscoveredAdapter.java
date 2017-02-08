@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.discovered;
+package com.gank.gankly.ui.discovered.more;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

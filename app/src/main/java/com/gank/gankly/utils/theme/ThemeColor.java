@@ -50,6 +50,13 @@ public final class ThemeColor {
         return this;
     }
 
+    /**
+     * 改变背景
+     *
+     * @param arrId 要的改变arr id
+     * @param args  控件
+     * @return ThemeColor
+     */
     public ThemeColor backgroundResource(int arrId, @NonNull View... args) {
         if (args.length != 0) {
             int resource = getResourceId(arrId);
@@ -61,11 +68,11 @@ public final class ThemeColor {
     }
 
     public void backgroundDrawable(int resId, @NonNull View... args) {
-        if (args.length != 0) {
-            for (int i = 0; i < args.length; i++) {
+//        if (args.length != 0) {
+//            for (int i = 0; i < args.length; i++) {
                 //empty
-            }
-        }
+//            }
+//        }
     }
 
     public ThemeColor swipeRefresh(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
@@ -90,12 +97,19 @@ public final class ThemeColor {
         return typedValue.data;
     }
 
+    /**
+     * 启动变化颜色
+     */
     public void start() {
         changeTextColor();
         changeBackGround();
-        changeSwipeRefreshLayout(mSwipeRefreshLayout);
+        if (mSwipeRefreshLayout != null) {
+            changeSwipeRefreshLayout(mSwipeRefreshLayout);
+        }
 //        clearRecyclerViewItem(mRecyclerView);
-        mRecyclerViewColor.start();
+        if (mRecyclerViewColor != null) {
+            mRecyclerViewColor.start();
+        }
         clean();
     }
 
