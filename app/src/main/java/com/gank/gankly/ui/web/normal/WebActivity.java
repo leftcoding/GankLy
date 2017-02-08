@@ -467,8 +467,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         /**
          * 对应js 的通知弹框 ，可以用来实现js 和 android之间的通信
          */
-
-
         @Override
         public void onReceivedTitle(WebView arg0, final String arg1) {
             super.onReceivedTitle(arg0, arg1);
