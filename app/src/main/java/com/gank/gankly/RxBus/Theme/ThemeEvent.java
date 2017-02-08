@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus.ChangeThemeEvent;
+package com.gank.gankly.RxBus.Theme;
 
 /**
  * Create by LingYan on 2016-09-02

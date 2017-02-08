@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.HomeActivity;

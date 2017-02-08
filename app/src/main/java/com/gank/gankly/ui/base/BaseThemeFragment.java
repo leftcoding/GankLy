@@ -8,7 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.StyleUtils;

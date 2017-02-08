@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.ChangeThemeEvent.ThemeEvent;
+import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.ui.base.BaseActivity;
