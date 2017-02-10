@@ -10,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,7 +44,7 @@ import java.util.Date;
 import butterknife.BindView;
 
 /**
- * 普通web
+ * 普通webView
  * Create by LingYan on 2016-5-10
  * Email:137387869@qq.com
  */
@@ -76,13 +75,11 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     private String mAuthor;
     private boolean isCollect;
     private boolean isInitCollect;
-    private UrlCollect mUrlCollect;
     private CollectStates mStates = CollectStates.NORMAL;
     private int mFromType;
     private WebContract.Presenter mPresenter;
     private MenuItem mMenuItem;
 
-    private static boolean isSmallWebViewDisplayed = false;
     private ValueCallback<Uri> uploadFile;
 
     enum CollectStates {
@@ -190,7 +187,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             mAuthor = bundle.getString(AUTHOR);
             mFromType = bundle.getInt(FROM_TYPE);
         }
-        KLog.d("mUrl:" + mUrl);
+//        KLog.d("mUrl:" + mUrl);
     }
 
     public static void startWebActivity(Activity activity, Bundle bundle) {
@@ -242,7 +239,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 }
 
                 isCollect = !isCollect;
-                KLog.d("isCollect:" + isCollect);
                 mPresenter.collectAction(isCollect);
                 showSnackbar(mView, resText, App.getAppColor(resColor));
                 switchCollectIcon(isCollect);
@@ -311,7 +307,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         public com.tencent.smtt.export.external.interfaces.WebResourceResponse shouldInterceptRequest
                 (WebView view,
                  com.tencent.smtt.export.external.interfaces.WebResourceRequest request) {
-            Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
+            KLog.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
             return super.shouldInterceptRequest(view, request);
         }
 
@@ -329,44 +325,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             }
         }
     }
-
-//    public class MyWebViewClient extends com.tencent.smtt.sdk.WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            if (!TextUtils.isEmpty(url)) {
-//                mWebView.loadUrl(url);
-//            }
-//            return true;
-//        }
-//
-//        @Override
-//        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-//            String url = request.getUrl().toString();
-//            KLog.d("url:" + url);
-//            return new WebResourceResponse("application/x-javascript", "utf-8", null);
-//            return new WebResourceResponse("image/jpeg", "UTF-8", null);
-//            return super.shouldInterceptRequest(view, request);
-//        }
-//
-//        @Override
-//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            super.onPageStarted(view, url, favicon);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//            super.onPageFinished(view, url);
-
-//             这些视频需要hack CSS才能达到全屏播放的效果
-//            if (url.contains("www.vmovier.com")) {
-//                injectCSS("vmovier.css");
-//            } else if (url.contains("video.weibo.com")) {
-//                injectCSS("weibo.css");
-//            } else if (url.contains("m.miaopai.com")) {
-//                injectCSS("miaopai.css");
-//            }
-//        }
-//    }
 
     public class MyWebChromeClient extends WebChromeClient {
 
@@ -426,8 +384,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         @Override
         public boolean onShowFileChooser(WebView arg0,
                                          ValueCallback<Uri[]> arg1, WebChromeClient.FileChooserParams arg2) {
-            // TODO Auto-generated method stub
-            Log.e("app", "onShowFileChooser");
+            KLog.e("onShowFileChooser");
             return super.onShowFileChooser(arg0, arg1, arg2);
         }
 
@@ -460,7 +417,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             // builder.show();
             // arg3.confirm();
             // return true;
-            Log.i("yuanhaizhou", "setX5webview = null");
+            KLog.d("setX5webview = null");
             return super.onJsAlert(null, "www.baidu.com", "aa", arg3);
         }
 
@@ -470,7 +427,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         @Override
         public void onReceivedTitle(WebView arg0, final String arg1) {
             super.onReceivedTitle(arg0, arg1);
-            Log.i("yuanhaizhou", "webpage title is " + arg1);
+            KLog.d("webpage title is " + arg1);
 
         }
     }
