@@ -7,11 +7,11 @@ import android.view.View;
  * Email:137387869@qq.com
  */
 
-public class ViewBackground {
+public class ViewResorceBean {
     private View mView;
     private int mResId;
 
-    public ViewBackground(int resId, View view) {
+    public ViewResorceBean(int resId, View view) {
         mView = view;
         mResId = resId;
     }

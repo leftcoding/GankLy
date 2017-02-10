@@ -7,8 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
+ * 日期转换
  * Create by LingYan on 2016-04-28
  */
 public class DateUtils {
@@ -28,19 +30,25 @@ public class DateUtils {
         if (null == date || TextUtils.isEmpty(type)) {
             return null;
         }
+
         SimpleDateFormat sdf;
         try {
-            sdf = new SimpleDateFormat(type, Locale.getDefault());
+            sdf = new SimpleDateFormat(type, Locale.SIMPLIFIED_CHINESE);
         } catch (Exception e) {
-            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         }
+        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+        sdf.setTimeZone(timeZone);
         return sdf.format(date);
     }
 
     public static Date formatDateFromStr(final String dateStr) {
         Date date = new Date();
         if (!TextUtils.isEmpty(dateStr)) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'", Locale.getDefault());
+            String format = "yyyy-MM-dd'T'HH:mm:ss.sss'Z'";
+            SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.SIMPLIFIED_CHINESE);
+            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            sdf.setTimeZone(timeZone);
             try {
                 date = sdf.parse(dateStr);
             } catch (Exception e) {
@@ -53,6 +61,8 @@ public class DateUtils {
     public static String getMonth(final Date date) {
         if (date != null) {
             Calendar calendar = Calendar.getInstance();
+            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            calendar.setTimeZone(timeZone);
             calendar.setTime(date);
             return String.valueOf(calendar.get(Calendar.MONTH) + 1);
         }
@@ -62,6 +72,8 @@ public class DateUtils {
     public static String getDay(final Date date) {
         if (date != null) {
             Calendar calendar = Calendar.getInstance();
+            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            calendar.setTimeZone(timeZone);
             calendar.setTime(date);
             return String.valueOf(calendar.get(Calendar.DATE));
         }

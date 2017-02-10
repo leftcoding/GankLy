@@ -198,42 +198,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     @Override
-    public void refreshUi() {
-//        Resources.Theme theme = mActivity.getTheme();
-//        TypedValue typedValue = new TypedValue();
-//        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, typedValue, true);
-//        int textColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.textSecondaryColor, typedValue, true);
-//        int textSecondaryColor = typedValue.data;
-//        theme.resolveAttribute(R.attr.themeBackground, typedValue, true);
-//        int mainColor = typedValue.data;
-//        mRecyclerView.setBackgroundColor(mainColor);
-//        theme.resolveAttribute(R.attr.androidItemTimeIcon, typedValue, true);
-//        int leftResource = typedValue.resourceId;
-//
-//        int childCount = mRecyclerView.getChildCount();
-//        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-//            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-//            LYRelativeLayoutRipple rl = (LYRelativeLayoutRipple) childView.findViewById(R.id.welfare_rl);
-//            rl.setCustomBackgroundResource(R.attr.lyItemSelectBackground);
-//
-//            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            title.setTextColor(textColor);
-//            TextView time = (TextView) childView.findViewById(R.id.goods_txt_time);
-//            time.setTextColor(textSecondaryColor);
-//
-//            Drawable drawable = App.getAppResources().getDrawable(leftResource);
-//            if (drawable != null) {
-//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-//                time.setCompoundDrawables(drawable, null, null, null);
-//            }
-//        }
-//
-//        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-//        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
-
-    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mActivity = (HomeActivity) context;

@@ -67,7 +67,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="@string/qq_x5"
+            android:text="@string/x5_qq"
             android:textColor="#4195f4"
             android:textSize="18sp" />
 

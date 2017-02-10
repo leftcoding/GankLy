@@ -28,7 +28,8 @@
     <color name="video_item_black_light_bg">#553a3a3a</color>
 
     <color name="setting_line_bg">#80bebebe</color>
-
+    <color name="android_item_img_bg">@color/setting_line_bg</color>
+    <color name="browse_toolbar_bg">#2f000000</color>
 
     <!-- start deprecated -->
     <color name="body_text_1">#de000000</color>

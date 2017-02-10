@@ -44,3 +44,8 @@ app/src/androidTest/
 app/src/test/
 app/src/testDebug/
 test/libs/
+/test/
+app/src/main/java/com/gank/gankly/ui/baisi/video/
+app/src/main/res/drawable-hdpi/
+app/src/main/res/drawable-mdpi/
+app/src/main/res/drawable-xhdpi/

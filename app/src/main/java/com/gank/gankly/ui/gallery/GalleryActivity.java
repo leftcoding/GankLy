@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,7 +29,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.bean.ResultsBean;
@@ -39,8 +39,10 @@ import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
+import com.gank.gankly.utils.StringHtml;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.DepthPageTransformer;
+import com.gank.gankly.widget.WheelView;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -74,7 +76,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-
     private static final String FILE_PATH = "GankLy_pic";
     public static final String TAG = "BrowseActivity";
     public static final String EXTRA_GANK = "Gank";
@@ -83,6 +84,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     public static final String EXTRA_MODEL = "Model";
     public static final String EXTRA_POSITION = "Position";
     public static final String EXTRA_LIST = "Extra_List";
+    // number / color
+    private static final String COLOR = "#8b0000";
 
     @BindView(R.id.progress_txt_page)
     TextView txtLimit;
@@ -99,7 +102,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private PagerAdapter mPagerAdapter;
     private int mPosition;
 
-    //    private boolean isLoadMore = true;
     private String mViewsModel = EXTRA_GANK;
     private List<GiftBean> mGiftList = new ArrayList<>();
     private Bitmap mBitmap;
@@ -107,6 +109,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private Disposable subscription;
     private boolean isAutoScroll = false;
     private boolean isPlay;
+    private int curItem = -1;
 
     @Override
     protected int getContentId() {
@@ -150,8 +153,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private void setNumberText(int position) {
         int size = getAapterCount();
-        txtLimit.setText(App.getAppResources().getString(R.string.meizi_limit_page,
-                position + 1, size));
+        String imgSize = String.valueOf(size);
+        String p = String.valueOf(position + 1);
+        txtLimit.setText(StringHtml.getStringSize(p, imgSize, "/", COLOR, 22));
     }
 
     @Override
@@ -267,23 +271,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     }
 
-    private class PagerAdapter extends FragmentStatePagerAdapter {
-
-        public PagerAdapter() {
-            super(getSupportFragmentManager());
-        }
-
-        @Override
-        public int getCount() {
-            return mGiftList.size();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.meizi_menu, menu);
@@ -306,6 +293,79 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.brose_img_auto)
+    void onBrowseAuto() {
+        if (isPlay) {
+            unSubscribeTime();
+        } else {
+            hideSystemUi();
+            timerBrowse();
+        }
+        isPlay = !isPlay;
+    }
+
+    @OnClick(R.id.progress_txt_page)
+    void onPageClick() {
+        ArrayList<String> list = getSelectList();
+        if (list != null) {
+            curItem = mPosition;
+            View outerView = LayoutInflater.from(this).inflate(R.layout.view_wheel, null);
+            WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
+            wv.setOffset(1);
+            wv.setItems(list);
+            wv.setSeletion(mPosition);
+            wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
+                @Override
+                public void onSelected(int selectedIndex, String item) {
+                    curItem = selectedIndex;
+                }
+            });
+
+            AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+            dialog.setTitle(R.string.gallery_page_select);
+            dialog.setView(outerView);
+            dialog.setPositiveButton(R.string.dialog_ok, (dialog1, which) -> {
+                if (curItem - 1 != mPosition) {
+                    mViewPager.setCurrentItem(curItem - 1);
+                }
+                dialog1.dismiss();
+            });
+            dialog.show();
+        }
+    }
+
+    private ArrayList<String> getSelectList() {
+        ArrayList<String> list = null;
+        if (!isEmpty()) {
+            list = new ArrayList<>();
+            for (int i = 0; i < mGiftList.size(); i++) {
+                list.add(i, String.valueOf(i + 1));
+            }
+        }
+        return list;
+    }
+
+    private boolean isEmpty() {
+        return ListUtils.isListEmpty(mGiftList);
+    }
+
+    private class PagerAdapter extends FragmentStatePagerAdapter {
+
+        public PagerAdapter() {
+            super(getSupportFragmentManager());
+        }
+
+        @Override
+        public int getCount() {
+            return mGiftList.size();
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
+        }
     }
 
     private int getAapterCount() {
@@ -474,17 +534,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                         }
                     }
                 });
-    }
-
-    @OnClick(R.id.brose_img_auto)
-    void onBrowseAuto() {
-        if (isPlay) {
-            unSubscribeTime();
-        } else {
-            hideSystemUi();
-            timerBrowse();
-        }
-        isPlay = !isPlay;
     }
 
     private String getImagePath() {

@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 主题控制
  * Create by LingYan on 2016-11-25
  * Email:137387869@qq.com
  */
@@ -22,9 +23,8 @@ import java.util.List;
 public final class ThemeColor {
     @NonNull
     private Activity mActivity;
-    private List<ViewTextView> mViewTextView = new ArrayList<>();
-    private List<ViewBackground> mBackGroundView = new ArrayList<>();
-    private List<ViewBackground> mBackGroundDrawable = new ArrayList<>();
+    private List<TextViewBean> mTextViewBean = new ArrayList<>();
+    private List<ViewResorceBean> mBackGroundView = new ArrayList<>();
     private RecyclerViewColor mRecyclerViewColor;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -44,7 +44,7 @@ public final class ThemeColor {
         if (args.length != 0) {
             int color = getResourceData(resId);
             for (TextView textView : args) {
-                mViewTextView.add(new ViewTextView(color, textView));
+                mTextViewBean.add(new TextViewBean(color, textView));
             }
         }
         return this;
@@ -61,18 +61,10 @@ public final class ThemeColor {
         if (args.length != 0) {
             int resource = getResourceId(arrId);
             for (View view : args) {
-                mBackGroundView.add(new ViewBackground(resource, view));
+                mBackGroundView.add(new ViewResorceBean(resource, view));
             }
         }
         return this;
-    }
-
-    public void backgroundDrawable(int resId, @NonNull View... args) {
-//        if (args.length != 0) {
-//            for (int i = 0; i < args.length; i++) {
-                //empty
-//            }
-//        }
     }
 
     public ThemeColor swipeRefresh(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
@@ -106,7 +98,6 @@ public final class ThemeColor {
         if (mSwipeRefreshLayout != null) {
             changeSwipeRefreshLayout(mSwipeRefreshLayout);
         }
-//        clearRecyclerViewItem(mRecyclerView);
         if (mRecyclerViewColor != null) {
             mRecyclerViewColor.start();
         }
@@ -114,17 +105,17 @@ public final class ThemeColor {
     }
 
     private void changeTextColor() {
-        ViewTextView viewTextView;
+        TextViewBean textViewBean;
         TextView textView;
-        for (int i = 0; i < mViewTextView.size(); i++) {
-            viewTextView = mViewTextView.get(i);
-            textView = viewTextView.getTextView();
-            textView.setTextColor(viewTextView.getResId());
+        for (int i = 0; i < mTextViewBean.size(); i++) {
+            textViewBean = mTextViewBean.get(i);
+            textView = textViewBean.getTextView();
+            textView.setTextColor(textViewBean.getResId());
         }
     }
 
     private void changeBackGround() {
-        ViewBackground back;
+        ViewResorceBean back;
         View view;
         for (int i = 0; i < mBackGroundView.size(); i++) {
             back = mBackGroundView.get(i);
@@ -134,10 +125,8 @@ public final class ThemeColor {
     }
 
     private void clean() {
-        mViewTextView.clear();
-        mBackGroundDrawable.clear();
+        mTextViewBean.clear();
         mSwipeRefreshLayout = null;
-//        mRecyclerView = null;
     }
 
     private void changeSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {

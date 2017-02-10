@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
-        android:text="@string/update_note"
+        android:text="@string/x5_update_note"
         android:textColor="?attr/updateVersionTextColor"
         android:textSize="18sp" />
 
