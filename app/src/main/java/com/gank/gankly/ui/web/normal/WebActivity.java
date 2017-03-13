@@ -307,7 +307,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         public com.tencent.smtt.export.external.interfaces.WebResourceResponse shouldInterceptRequest
                 (WebView view,
                  com.tencent.smtt.export.external.interfaces.WebResourceRequest request) {
-            KLog.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
             return super.shouldInterceptRequest(view, request);
         }
 

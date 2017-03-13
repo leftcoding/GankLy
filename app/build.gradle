@@ -112,6 +112,6 @@ dependencies {
     //内存泄漏监测
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    //
+    //运行时权限
     compile 'pub.devrel:easypermissions:0.2.1'
 }

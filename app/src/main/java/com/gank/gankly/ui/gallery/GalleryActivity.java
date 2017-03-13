@@ -16,6 +16,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,8 +43,8 @@ import com.gank.gankly.utils.RxSaveImage;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.StringHtml;
 import com.gank.gankly.utils.ToastUtils;
-import com.gank.gankly.widget.DepthPageTransformer;
 import com.gank.gankly.widget.WheelView;
+import com.gank.gankly.widget.ZoomOutPageTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -55,7 +57,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -76,14 +77,18 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN;
 
-    private static final String FILE_PATH = "GankLy_pic";
     public static final String TAG = "BrowseActivity";
+    private static final String FILE_PATH = "GankLy_pic";
     public static final String EXTRA_GANK = "Gank";
     public static final String EXTRA_GIFT = "Gift";
     public static final String EXTRA_DAILY = "Daily";
     public static final String EXTRA_MODEL = "Model";
     public static final String EXTRA_POSITION = "Position";
     public static final String EXTRA_LIST = "Extra_List";
+
+    public static final String TYPE = "Type";
+    public static final int TYPE_TRANSITION = 1;
+
     // number / color
     private static final String COLOR = "#8b0000";
 
@@ -110,6 +115,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private boolean isAutoScroll = false;
     private boolean isPlay;
     private int curItem = -1;
+
+    private int type_code;
 
     @Override
     protected int getContentId() {
@@ -160,12 +167,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     @Override
     protected void initValues() {
-        Bundle bundle = getIntent().getBundleExtra(TAG);
-        if (bundle != null) {
-            mPosition = bundle.getInt(EXTRA_POSITION, 0);
-            mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
-        }
+        parseBundle();
+        toTransition();
+        getList();
+    }
 
+    private void getList() {
         if (EXTRA_GANK.equals(mViewsModel)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getImagesList();
             mGiftList = changeImageList(giftBeen);
@@ -178,6 +185,31 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             }
         } else {
             mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
+        }
+    }
+
+    private void toTransition() {
+        Transition transition = null;
+        switch (type_code) {
+            case TYPE_TRANSITION:
+                transition = TransitionInflater.from(this).inflateTransition(R.transition.gallery_mid);
+                break;
+            default:
+                break;
+        }
+
+        if (transition != null) {
+            getWindow().setEnterTransition(transition);
+            getWindow().setExitTransition(transition);
+        }
+    }
+
+    private void parseBundle() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mPosition = bundle.getInt(EXTRA_POSITION, 0);
+            mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
+            type_code = bundle.getInt(TYPE, -1);
         }
     }
 
@@ -197,8 +229,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         setNumberText(mPosition);
 
-//        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+//        mViewPager.setPageTransformer(true, new DepthPageTransformer());
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.setCurrentItem(mPosition);
         mViewPager.addOnPageChangeListener(this);
@@ -413,26 +445,23 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void setWallPaper(final String url, final FragmentActivity activity) {
-        Observable.create(new ObservableOnSubscribe<Bitmap>() {
-            @Override
-            public void subscribe(ObservableEmitter<Bitmap> subscriber) throws Exception {
-                Bitmap bitmap = null;
-                try {
-                    bitmap = Glide.with(activity)
-                            .load(url)
-                            .asBitmap()
-                            .atMost()
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .skipMemoryCache(true)
-                            .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                            .get();
-                } catch (InterruptedException | ExecutionException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
-                subscriber.onNext(bitmap);
-                subscriber.onComplete();
+        Observable.create((ObservableOnSubscribe<Bitmap>) subscriber -> {
+            Bitmap bitmap = null;
+            try {
+                bitmap = Glide.with(activity)
+                        .load(url)
+                        .asBitmap()
+                        .atMost()
+                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                        .skipMemoryCache(true)
+                        .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .get();
+            } catch (InterruptedException | ExecutionException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
+            subscriber.onNext(bitmap);
+            subscriber.onComplete();
         })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -589,7 +618,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-            finish();
+            finishAfterTransition();
             return true;
         }
         return super.onKeyDown(keyCode, event);

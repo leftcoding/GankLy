@@ -16,6 +16,7 @@
         android:layout_height="100dp"
         android:contentDescription="@null"
         android:elevation="@dimen/activity_horizontal_margin"
+        android:transitionName="welfare_image"
         android:scaleType="centerCrop"/>
 
 </RelativeLayout>

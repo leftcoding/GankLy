@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="okhttp3-integration-1.4.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.bumptech.glide/okhttp3-integration/1.4.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.bumptech.glide/okhttp3-integration/1.4.0/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/514a57c38d5549af2d4c330f09fade9c9c065c93/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/514a57c38d5549af2d4c330f09fade9c9c065c93/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

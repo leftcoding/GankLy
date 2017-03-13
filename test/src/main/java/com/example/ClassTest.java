@@ -1,11 +1,7 @@
 package com.example;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Create by LingYan on 2017-01-09
@@ -42,13 +38,20 @@ public class ClassTest {
 //        for (String a1 : a){
 //            System.out.println(a1);
 //        }
+//
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE);
+//        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+//        simpleDateFormat.setTimeZone(timeZone);
+////        long time = Long.valueOf("1486709632118");
+//        System.out.println(simpleDateFormat.format(new Date()));
+//        System.out.print("" +System.currentTimeMillis());
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.SIMPLIFIED_CHINESE);
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
-        simpleDateFormat.setTimeZone(timeZone);
-//        long time = Long.valueOf("1486709632118");
-        System.out.println(simpleDateFormat.format(new Date()));
-        System.out.print("" +System.currentTimeMillis());
+//        int i = 0;
+//        i++;
+//        int y = i++ == i-- ? i++ : i--;
+//        System.out.print("y:" + y);
+        int x = 4;
+        int w = 16;
     }
 
     public void getA(IA a) {

@@ -147,7 +147,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         Intent intent = new Intent(mActivity, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
-        intent.putExtra(GalleryActivity.TAG, bundle);
+        intent.putExtras(bundle);
         mActivity.startActivity(intent);
     }
 

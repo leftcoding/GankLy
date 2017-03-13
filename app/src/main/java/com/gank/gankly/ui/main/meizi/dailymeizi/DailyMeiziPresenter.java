@@ -72,7 +72,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void unSubscribe() {
-
+        //empty
     }
 
     @Override
@@ -88,7 +88,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {
-
+                        //empty
                     }
 
                     @Override
@@ -98,7 +98,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //empty
                     }
 
                     @Override
@@ -127,7 +127,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        //empty
                     }
 
                     @Override

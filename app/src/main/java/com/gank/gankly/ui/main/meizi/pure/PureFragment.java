@@ -264,8 +264,8 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         Bundle bundle = new Bundle();
         Intent intent = new Intent(mActivity, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
-        intent.putExtra(GalleryActivity.TAG, bundle);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
+        intent.putExtras(bundle);
         mActivity.startActivity(intent);
     }
 

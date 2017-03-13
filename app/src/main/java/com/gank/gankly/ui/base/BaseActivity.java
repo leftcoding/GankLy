@@ -200,7 +200,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0) {
-            super.onBackPressed();
+//            super.onBackPressed();
+            finishAfterTransition();
         } else {
             getSupportFragmentManager().popBackStack();
         }

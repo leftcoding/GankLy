@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
@@ -16,7 +17,6 @@ import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -164,8 +164,14 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         Bundle bundle = new Bundle();
         bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
         Intent intent = new Intent(mActivity, GalleryActivity.class);
-        intent.putExtra(GalleryActivity.TAG, bundle);
-        CircularAnimUtils.startActivity(mActivity, intent, view, R.color.color_2f);
+        intent.putExtra(GalleryActivity.TYPE, 1);
+        intent.putExtras(bundle);
+
+        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity);
+        mActivity.startActivity(intent, activityOptionsCompat.toBundle());
+//        mActivity.startActivity(intent);
+//        CircularAnimUtils.startActivity(mActivity, intent, view, R.color.color_2f);
+
     }
 
     @Override
