@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main.meizi.welfare;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.ArrayMap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,9 +21,7 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.utils.AppUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,7 +36,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
     private int mScreenHeight = AppUtils.getDisplayWidth() / 2;
-    private Map<String, Integer> heights = new HashMap<>();
+    private ArrayMap<String,Integer> heights = new ArrayMap<>();
 
     private MeiziOnClick mMeiZiOnClick;
 
