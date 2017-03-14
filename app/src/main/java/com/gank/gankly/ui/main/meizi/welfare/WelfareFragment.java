@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -66,6 +67,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         mWelfareAdapter = new WelfareAdapter(mActivity);
         mWelfareAdapter.setMeiZiOnClick(this);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
+        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {

@@ -35,6 +35,7 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private onClickImage mOnClickImage;
 
     public BaiSiImageAdapter(Context context) {
+        setHasStableIds(true);
         mContext = context;
         mList = new ArrayList<>();
     }
@@ -247,5 +248,10 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public interface onClickImage {
         void onClick(GallerySize gallerySize);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

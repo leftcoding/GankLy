@@ -33,6 +33,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     private Context mContext;
 
     public VideoAdapter(Context context) {
+        setHasStableIds(true);
         mResults = new ArrayList<>();
         mContext = context;
     }

@@ -31,6 +31,7 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
     private Map<String, Integer> heights = new ArrayMap<>();
 
     public BaiSiVideoAdapter(Context context) {
+        setHasStableIds(true);
         this.mContext = context;
         mList = new ArrayList<>();
     }
@@ -155,5 +156,11 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
 
     public interface onPlayClick {
         void onPlayclick(int position, View image, String url, int height, int width, String title, String shareUrl);
+    }
+
+    //防止多个viewType，出现2个item不同问题
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }

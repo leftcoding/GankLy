@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
@@ -126,6 +126,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     private void initRecycler() {
         mAdapter = new PureAdapter(mActivity);
+        mAdapter.setHasStableIds(true);//设置唯一标识，防止adapter部分刷新闪屏
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
