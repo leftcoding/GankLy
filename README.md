@@ -17,6 +17,8 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * Superplayerlibrary （视频播放库）
 * Bottom-bar （底部导航栏）
 * Okhttp3 （网络请求库）
+##安装包 
+<a href="https://github.com/leftcoding/GankLy/blob/master/art/Gankly.apk">下载apk</a>
 
 ##联系方式
 137387869@qq.com
