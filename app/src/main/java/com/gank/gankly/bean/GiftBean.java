@@ -1,13 +1,12 @@
 package com.gank.gankly.bean;
 
 import android.os.Parcel;
-
-import java.io.Serializable;
+import android.os.Parcelable;
 
 /**
  * Create by LingYan on 2016-05-18
  */
-public class GiftBean implements Serializable {
+public class GiftBean implements Parcelable {
     private String imgUrl;
     private String url;
     private String time;
@@ -33,6 +32,18 @@ public class GiftBean implements Serializable {
         views = in.readString();
         title = in.readString();
     }
+
+    public static final Creator<GiftBean> CREATOR = new Creator<GiftBean>() {
+        @Override
+        public GiftBean createFromParcel(Parcel in) {
+            return new GiftBean(in);
+        }
+
+        @Override
+        public GiftBean[] newArray(int size) {
+            return new GiftBean[size];
+        }
+    };
 
     public String getTime() {
         return time;
@@ -72,5 +83,19 @@ public class GiftBean implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(imgUrl);
+        dest.writeString(url);
+        dest.writeString(time);
+        dest.writeString(views);
+        dest.writeString(title);
     }
 }

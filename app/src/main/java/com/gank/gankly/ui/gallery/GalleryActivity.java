@@ -184,7 +184,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 }
             }
         } else {
-            mGiftList = (ArrayList<GiftBean>) getIntent().getSerializableExtra(EXTRA_LIST);
+            mGiftList = getIntent().getParcelableArrayListExtra(EXTRA_LIST);
         }
     }
 

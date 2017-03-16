@@ -90,8 +90,6 @@ public class App extends Application {
                         daoSession = daoMaster.newSession();
                     }
                 });
-
-
     }
 
     public static RefWatcher getRefWatcher() {
