@@ -65,9 +65,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     protected void initValues() {
         RxBus.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    changeUi();
-                });
+                .subscribe(themeEvent -> changeUi());
     }
 
     @Override

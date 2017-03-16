@@ -1,8 +1,8 @@
-#Gank
+### Gank
 本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教！ </br>
 _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19。有任何问题，请联系我。_
 
-##技术、第三方库
+#### 技术、第三方库
 * MVP（MVP 模式）
 * Retrofit2（Retrofit 网络请求的框架）
 * RxJava2（RxJava 响应式编程框架）
@@ -18,13 +18,13 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * Bottom-bar （底部导航栏）
 * Okhttp3 （网络请求库）
 
-##安装包 
+#### 安装包 
 <a href="https://pro-app-qn.fir.im/2b036e08fae0422dcea0be18c2a3cafcd8916b25.apk?attname=Gankly.apk_2.1.0.apk&e=1489473698&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:pPKJ_2aaw4rUT6yKrSBhzurd_iM=">下载apk</a>
 
-##联系方式
+#### 联系方式
 137387869@qq.com
 
-##V 2.1
+#### V2.1
 * 新增 团队博客
 * 新增 科技资讯
 * 新增 更多（不得姐）
@@ -32,7 +32,7 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * 新增 关于
 * 优化 煎蛋杂集 更名 新鲜事
 
-##V 2.0
+#### V2.0
 * 新增 夜间模式
 * 新增 煎蛋杂集
 * 优化 侧滑栏UI
@@ -41,14 +41,14 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * 修改 欢迎页界面
 * 修复 一些已知问题
 
-##V 1.0
+#### V 1.0
 * Gank （Android、ios、福利）内容的浏览
 * 娱乐休息视频
 * 程序员大（ni）福（dong）利（de） 美しい妹
 * 收藏
 * 关于
 
-##应用截图
+#### 应用截图
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/image_0.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/image_1.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/image_2.png)
@@ -57,13 +57,13 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/image_5.png)
 ![image](https://github.com/leftcoding/GankLy/raw/master/art/image_6.png)
 
-##感谢
+#### 感谢
 * @代码家 提供接口
 * 瓶子同学的友情帮助
 * 远耕同学的友情帮助
 * Google
 
-##声明
+#### 声明
     Copyright 2016 LeftCoding
 
     Licensed under the Apache License, Version 2.0 （the "License"）;
