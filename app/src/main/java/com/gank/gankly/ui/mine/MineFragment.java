@@ -18,7 +18,6 @@ import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.HomeActivity;
-import com.gank.gankly.ui.main.SplashActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
@@ -31,7 +30,6 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
 
 
@@ -123,17 +121,15 @@ public class MineFragment extends BaseSwipeRefreshFragment {
 
     @OnClick(R.id.mine_rl_setting)
     void onSetting() {
-//        openActivity(MoreActivity.TYPE_SETTING);
-//        RestartAPPTool.restartAPP(mActivity);
-        restart();
+        openActivity(MoreActivity.TYPE_SETTING);
     }
 
-    public void restart() {
-        Intent intent = new Intent(mActivity, SplashActivity.class);
-        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-        this.startActivity(intent);
-        mActivity.finish();
-    }
+//    public void restart() {
+//        Intent intent = new Intent(mActivity, SplashActivity.class);
+//        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+//        this.startActivity(intent);
+//        mActivity.finish();
+//    }
 
     @OnClick(R.id.mine_rl_night)
     void onNight() {
