@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.base.FetchFragment;
@@ -77,7 +77,7 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
 
         mToolbar.setNavigationOnClickListener(v -> mActivity.finish());
 
-        RxBus.getInstance().toObservable(RxCollect.class)
+        RxBus_.getInstance().toObservable(RxCollect.class)
                 .subscribe(new Observer<RxCollect>() {
                     @Override
                     public void onSubscribe(Disposable d) {

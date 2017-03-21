@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.facebook.stetho.Stetho;
-import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.data.DaoMaster;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -49,7 +49,7 @@ public class InitializeService extends IntentService {
         //GreenDao
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
-        RxBus.getInstance().post(db);
+        RxBus_.getInstance().post(db);
 
         //Bugly 测试：true
         CrashReport.initCrashReport(getApplicationContext(), CRASH_LOG_ID, true);

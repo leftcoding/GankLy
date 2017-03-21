@@ -14,10 +14,11 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.SplashActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
@@ -30,6 +31,7 @@ import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
 
 
@@ -40,6 +42,8 @@ import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
  */
 
 public class MineFragment extends BaseSwipeRefreshFragment {
+    public static final String TAG = "MineFragment";
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.mine_ls_theme)
@@ -95,7 +99,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
             mActivity.setTheme(R.style.AppTheme_Day);
         }
         themeSwitch.setChecked(isChecked);
-        RxBus.getInstance().post(new ThemeEvent(isChecked));
+        RxBus_.getInstance().post(new ThemeEvent(isChecked));
         refreshStatusBar();
         callBackRefreshUi();
     }
@@ -119,7 +123,16 @@ public class MineFragment extends BaseSwipeRefreshFragment {
 
     @OnClick(R.id.mine_rl_setting)
     void onSetting() {
-        openActivity(MoreActivity.TYPE_SETTING);
+//        openActivity(MoreActivity.TYPE_SETTING);
+//        RestartAPPTool.restartAPP(mActivity);
+        restart();
+    }
+
+    public void restart() {
+        Intent intent = new Intent(mActivity, SplashActivity.class);
+        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+        this.startActivity(intent);
+        mActivity.finish();
     }
 
     @OnClick(R.id.mine_rl_night)

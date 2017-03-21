@@ -13,9 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.RxBus.RxBus_;
+import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.discovered.DiscoveredFragment;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
@@ -65,7 +64,7 @@ public class HomeActivity extends BaseActivity {
 
         changeBottomBar();
 
-        RxBus.getInstance().toObservable(ThemeEvent.class)
+        RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     changeBottomBar();
                 });
@@ -183,7 +182,7 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus_.getDefault().removeAllStickyEvents();// 移除所有Sticky事件
+        RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
     }
 
     @Override

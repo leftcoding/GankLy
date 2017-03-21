@@ -94,7 +94,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     }
 
     private void startActivity(GallerySize gs) {
-        RxBus_.getDefault().postSticky(gs);
+        RxBus_.getInstance().postSticky(gs);
         Intent intent = new Intent(mActivity, BaiSiVideoPreViewActivity.class);
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(0, 0);

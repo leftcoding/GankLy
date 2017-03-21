@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
@@ -83,7 +83,7 @@ public class App extends Application {
 
         InitializeService.start(mContext);
         initPreferences();
-        RxBus.getInstance().toObservable(SQLiteDatabase.class)
+        RxBus_.getInstance().toObservable(SQLiteDatabase.class)
                 .subscribe(sqLiteDatabase -> {
                     if (sqLiteDatabase != null) {
                         DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);

@@ -7,13 +7,18 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!-- 设为壁纸 -->
+
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- 设为壁纸 start -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
-    <!-- Bugly-->
+    <!-- 设为壁纸 end -->
+
+    <!-- Bugly start -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <!--  android:fullBackupContent="true" on sdk 23 and up,automatically backed up and restored on app install-->
+    <!-- Bugly end -->
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -84,5 +89,7 @@
         <meta-data
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
+
+        <service android:name=".ui.mine.KillSelfService" />
     </application>
 </manifest>

@@ -50,7 +50,7 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
 
     @Override
     protected void initValues() {
-        RxBus_.getDefault()
+        RxBus_.getInstance()
                 .toObservableSticky(GallerySize.class)
                 .subscribe(new Observer<GallerySize>() {
                     @Override

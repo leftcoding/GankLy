@@ -2,7 +2,7 @@ package com.gank.gankly.ui.web.normal;
 
 import android.support.annotation.NonNull;
 
-import com.gank.gankly.RxBus.RxBus;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
@@ -120,7 +120,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
                 public void onNext(String string) {
                     isCollect = false;
 
-                    RxBus.getInstance().post(new RxCollect(true));
+                    RxBus_.getInstance().post(new RxCollect(true));
                 }
             });
         }

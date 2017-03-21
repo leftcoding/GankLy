@@ -8,8 +8,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
@@ -29,7 +29,7 @@ public abstract class BaseThemeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RxBus.getInstance().toObservable(ThemeEvent.class)
+        RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     callBackRefreshUi();
                 });

@@ -20,8 +20,8 @@ import android.view.MenuItem;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -51,7 +51,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     protected void initViews() {
         changeNavigationView();
 
-        RxBus.getInstance().toObservable(ThemeEvent.class)
+        RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     changeNavigationView();
                 });

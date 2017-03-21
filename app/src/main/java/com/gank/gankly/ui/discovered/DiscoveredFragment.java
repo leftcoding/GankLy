@@ -8,8 +8,8 @@ import android.util.TypedValue;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
+import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
-import com.gank.gankly.RxBus.RxBus;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
@@ -57,7 +57,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
 
     @Override
     protected void bindListener() {
-        RxBus.getInstance().toObservable(ThemeEvent.class)
+        RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     refreshUi();
                 });

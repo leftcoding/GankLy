@@ -22,11 +22,11 @@ public class RxBus_ {
     private final Map<Class<?>, Object> mStickyEventMap;
 
     public RxBus_() {
-        mBus = PublishSubject.create();
+        mBus = PublishSubject.create().toSerialized();
         mStickyEventMap = new ConcurrentHashMap<>();
     }
 
-    public static RxBus_ getDefault() {
+    public static RxBus_ getInstance() {
         if (mDefaultInstance == null) {
             synchronized (RxBus_.class) {
                 if (mDefaultInstance == null) {

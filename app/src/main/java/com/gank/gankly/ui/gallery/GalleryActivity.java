@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,11 +45,13 @@ import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.StringHtml;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.WheelView;
-import com.gank.gankly.widget.ZoomOutPageTransformer;
+import com.gank.gankly.widget.transforms.FixedSpeedScroller;
+import com.gank.gankly.widget.transforms.ZoomOutSlideTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -108,7 +111,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private int mPosition;
 
     private String mViewsModel = EXTRA_GANK;
-    private List<GiftBean> mGiftList = new ArrayList<>();
+    private List<GiftBean> mGiftList;
     private Bitmap mBitmap;
     private WallpaperManager myWallpaperManager;
     private Disposable subscription;
@@ -137,8 +140,8 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     @Override
     public void onPageSelected(int position) {
         if (EXTRA_GANK.equals(mViewsModel)) {
-            int p = mGiftList.size() - 5;
-            if (position == p) {
+            boolean isFetch = isFetch();
+            if (isFetch) {
                 mPresenter.fetchMore();
             }
         }
@@ -173,6 +176,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void getList() {
+        mGiftList = new ArrayList<>();
         if (EXTRA_GANK.equals(mViewsModel)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getImagesList();
             mGiftList = changeImageList(giftBeen);
@@ -229,12 +233,21 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         setNumberText(mPosition);
 
-        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-//        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setPageTransformer(true, new ZoomOutSlideTransformer());
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.setCurrentItem(mPosition);
         mViewPager.addOnPageChangeListener(this);
         mPagerAdapter.notifyDataSetChanged();
+
+        try {
+            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new LinearInterpolator());
+            // scroller.setFixedDuration(5000);
+            mScroller.set(mViewPager, scroller);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -242,11 +255,13 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
-    private List<GiftBean> changeImageList(List<ResultsBean> giftBeen) {
+    private List<GiftBean> changeImageList(List<ResultsBean> resultsBeen) {
         List<GiftBean> list = new ArrayList<>();
-        if (!ListUtils.isListEmpty(giftBeen)) {
-            for (ResultsBean gift : giftBeen) {
-                list.add(new GiftBean(gift.getUrl()));
+        if (!ListUtils.isListEmpty(resultsBeen)) {
+            ResultsBean resultsBean;
+            for (int i = 0; i < resultsBeen.size(); i++) {
+                resultsBean = resultsBeen.get(i);
+                list.add(new GiftBean(resultsBean.getUrl()));
             }
         }
         return list;
@@ -256,6 +271,11 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     public void appendData(List<ResultsBean> list) {
         mGiftList.addAll(changeImageList(list));
         mPagerAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void sysNumText() {
+        setNumberText(mPosition);
     }
 
     @Override
@@ -343,15 +363,15 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         ArrayList<String> list = getSelectList();
         if (list != null) {
             curItem = mPosition;
-            View outerView = LayoutInflater.from(this).inflate(R.layout.view_wheel, null);
+            View outerView = LayoutInflater.from(this).inflate(R.layout.view_wheel, mRelativeLayout, false);
             WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
             wv.setOffset(1);
             wv.setItems(list);
-            wv.setSeletion(mPosition);
+            wv.setSeletion(curItem);
             wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                 @Override
                 public void onSelected(int selectedIndex, String item) {
-                    curItem = selectedIndex;
+                    curItem = selectedIndex - 1;
                 }
             });
 
@@ -359,24 +379,32 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             dialog.setTitle(R.string.gallery_page_select);
             dialog.setView(outerView);
             dialog.setPositiveButton(R.string.dialog_ok, (dialog1, which) -> {
-                if (curItem - 1 != mPosition) {
-                    mViewPager.setCurrentItem(curItem - 1);
-                }
+                mViewPager.setCurrentItem(curItem);
                 dialog1.dismiss();
             });
             dialog.show();
         }
     }
 
+    private boolean isFetch() {
+        int curPosition = mViewPager.getCurrentItem() + 1;
+        int p = getGiftSize() - curPosition;
+        return p <= 5;
+    }
+
     private ArrayList<String> getSelectList() {
         ArrayList<String> list = null;
         if (!isEmpty()) {
             list = new ArrayList<>();
-            for (int i = 0; i < mGiftList.size(); i++) {
+            for (int i = 0; i < getGiftSize(); i++) {
                 list.add(i, String.valueOf(i + 1));
             }
         }
         return list;
+    }
+
+    private int getGiftSize() {
+        return mGiftList == null ? 0 : mGiftList.size();
     }
 
     private boolean isEmpty() {
@@ -391,13 +419,14 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         @Override
         public int getCount() {
-            return mGiftList.size();
+            return getGiftSize();
         }
 
         @Override
         public Fragment getItem(int position) {
             return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
         }
+
     }
 
     private int getAapterCount() {
@@ -419,7 +448,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                             unSubscribeTime();
                         } else {
                             mPosition = mPosition + 1;
-                            mViewPager.setCurrentItem(mPosition);
+                            mViewPager.setCurrentItem(mPosition, true);
                         }
 
                         if (isPositionEnd()) {

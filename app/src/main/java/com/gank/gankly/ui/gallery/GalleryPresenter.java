@@ -34,6 +34,7 @@ public class GalleryPresenter extends FetchPresenter implements GalleryContract.
 
     @Override
     public void fetchMore() {
+        KLog.d("--fetchMore--");
         int nextPage = MeiziArrayList.getInstance().getPage() + 1;
         mTask.fetchWelfare(nextPage, getFetchLimit())
                 .subscribe(new Observer<GankResult>() {
@@ -47,6 +48,7 @@ public class GalleryPresenter extends FetchPresenter implements GalleryContract.
                         List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
                         if (ListUtils.getListSize(list) > 0) {
                             mModelView.appendData(list);
+                            mModelView.sysNumText();
                             MeiziArrayList.getInstance().addImages(gankResult.getResults(), nextPage);
                         }
                     }

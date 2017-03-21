@@ -15,6 +15,8 @@ public interface GalleryContract {
 
     interface View extends IFetchView {
         void appendData(List<ResultsBean> list);
+
+        void sysNumText();
     }
 
     interface Presenter extends IFetchPresenter {
