@@ -1,4 +1,4 @@
-/app/proguard-rules.pro
+#/app/proguard-rules.pro
 # Built application files
 *.apk
 *.ap_
@@ -49,3 +49,4 @@ app/src/main/java/com/gank/gankly/ui/baisi/video/
 app/src/main/res/drawable-hdpi/
 app/src/main/res/drawable-mdpi/
 app/src/main/res/drawable-xhdpi/
+projectFilesBackup/
