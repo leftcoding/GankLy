@@ -18,8 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.socks.library.KLog;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +47,6 @@ public class WheelView extends ScrollView {
      * 获取选中区域的边界
      */
     private int[] selectedAreaBorder;
-    private static final int SCROLL_DIRECTION_UP = 0;
-    private static final int SCROLL_DIRECTION_DOWN = 1;
 
     private Paint paint;
     private int viewWidth;
@@ -73,10 +69,6 @@ public class WheelView extends ScrollView {
     public static class OnWheelViewListener {
         public void onSelected(int selectedIndex, String item) {
         }
-    }
-
-    private List<String> getItems() {
-        return items;
     }
 
     public void setItems(List<String> list) {
@@ -105,7 +97,6 @@ public class WheelView extends ScrollView {
 
     private void init(Context context) {
         this.context = context;
-        KLog.d(TAG, "parent: " + this.getParent());
 //        this.setOrientation(VERTICAL);
         this.setVerticalScrollBarEnabled(false);
 

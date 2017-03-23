@@ -23,7 +23,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 首页
+ * 百思不得姐
  * Create by LingYan on 2016-04-22
  * Email:137387869@qq.com
  */
@@ -33,7 +33,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     @BindView(R.id.baisi_toolbar)
     Toolbar mToolbar;
-    @BindView(R.id.main_tabLayout)
+    @BindView(R.id.baisi_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
@@ -62,7 +62,7 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
 
     @Override
     protected void initViews() {
-        mToolbar.setTitle("休闲");
+        mToolbar.setTitle(R.string.baisi_leisure_time);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {

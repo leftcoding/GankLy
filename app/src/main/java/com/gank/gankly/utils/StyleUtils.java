@@ -18,7 +18,7 @@ import java.lang.reflect.Method;
 public class StyleUtils {
     public static void changeSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
         if (swipeRefreshLayout == null) {
-            throw new RuntimeException("swipeRefreshLayout not be null");
+            throw new NullPointerException("swipeRefreshLayout not be null");
         }
 
         int progressColor = R.color.white;

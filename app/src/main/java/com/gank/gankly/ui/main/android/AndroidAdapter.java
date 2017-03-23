@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-25
  * Email:137387869@qq.com
  */
-public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.GankViewHolder> {
+public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder> {
     public static final int LAYOUT_Android = 1;
     public static final int LAYOUT_IOS = 2;
 
@@ -42,11 +42,12 @@ public class AndroidIosAdapter extends RecyclerView.Adapter<AndroidIosAdapter.Ga
     private int mImageSize;
     private List<ResultsBean> mImagesList;
 
-    public AndroidIosAdapter(Context context) {
+    public AndroidAdapter(Context context) {
         this(context, LAYOUT_Android);
     }
 
-    public AndroidIosAdapter(Context context, int type) {
+    public AndroidAdapter(Context context, int type) {
+        setHasStableIds(true);
         mResults = new ArrayList<>();
         mContext = context;
         mLayout = type;

@@ -24,17 +24,17 @@ public class MeiziDataSource extends BaseDataSourceModel {
     private static final String MEIZI_DAILY_URL = "http://m.mzitu.com/all";
 
     @Nullable
-    private static MeiziDataSource INSTANCE = null;
+    private static MeiziDataSource mInstance = null;
 
     public static MeiziDataSource getInstance() {
-        if (INSTANCE == null) {
+        if (mInstance == null) {
             synchronized (MeiziDataSource.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new MeiziDataSource();
+                if (mInstance == null) {
+                    mInstance = new MeiziDataSource();
                 }
             }
         }
-        return INSTANCE;
+        return mInstance;
     }
 
     /**

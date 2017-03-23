@@ -36,7 +36,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
     private int mScreenHeight = AppUtils.getDisplayWidth() / 2;
-    private ArrayMap<String,Integer> heights = new ArrayMap<>();
+    private ArrayMap<String, Integer> heights = new ArrayMap<>();
 
     private MeiziOnClick mMeiZiOnClick;
 
@@ -125,6 +125,8 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     public void clear() {
         mResults.clear();
         heights.clear();
+        int size = mResults.size();
+        notifyItemRangeRemoved(0, size);
     }
 
     public void appendItems(List<ResultsBean> goods) {

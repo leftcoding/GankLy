@@ -14,8 +14,8 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.android.AndroidIosAdapter;
 import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.android.AndroidAdapter;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -36,7 +36,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private HomeActivity mActivity;
-    private AndroidIosAdapter mRecyclerAdapter;
+    private AndroidAdapter mRecyclerAdapter;
     private IosContract.Presenter mPresenter;
 
     @Override
@@ -64,7 +64,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        mRecyclerAdapter = new AndroidIosAdapter(mActivity, AndroidIosAdapter.LAYOUT_IOS);
+        mRecyclerAdapter = new AndroidAdapter(mActivity, IosAdapter.LAYOUT_IOS);
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
 
         RecyclerView mRecyclerView = mSwipeRefreshLayout.getRecyclerView();

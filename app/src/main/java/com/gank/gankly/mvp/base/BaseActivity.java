@@ -76,7 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        if (mContent != to) {
+        if (!mContent.equals(to)) {
             mContent = to;
             if (bundle != null) {
                 to.setArguments(bundle);
@@ -115,7 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void addFragment(Fragment fragment, Bundle bundle, String tag, @Nullable int contentId) {
         if (fragment == null) {
-            throw new RuntimeException(new NullPointerException("fragment can't be null"));
+            throw new NullPointerException("fragment can't be null");
         }
 
         if (isOpenMore()) {

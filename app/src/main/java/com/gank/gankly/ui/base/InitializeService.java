@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.data.DaoMaster;
+import com.socks.library.KLog;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.TbsListener;
 
 /**
  * Create by LingYan on 2016-09-18
@@ -29,10 +32,8 @@ public class InitializeService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent != null) {
-            if (SERVICE_ACTION.equals(intent.getAction())) {
-                initStart();
-            }
+        if (intent != null && SERVICE_ACTION.equals(intent.getAction())) {
+            initStart();
         }
     }
 
@@ -53,5 +54,36 @@ public class InitializeService extends IntentService {
 
         //Bugly 测试：true
         CrashReport.initCrashReport(getApplicationContext(), CRASH_LOG_ID, true);
+
+        //x5 -- start
+        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+        //TbsDownloader.needDownload(getApplicationContext(), false);
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                KLog.e("onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+            }
+        };
+        QbSdk.setTbsListener(new TbsListener() {
+            @Override
+            public void onDownloadFinish(int i) {
+            }
+
+            @Override
+            public void onInstallFinish(int i) {
+            }
+
+            @Override
+            public void onDownloadProgress(int i) {
+            }
+        });
+
+        QbSdk.initX5Environment(getApplicationContext(), cb);
+        //x5 -- end
     }
 }

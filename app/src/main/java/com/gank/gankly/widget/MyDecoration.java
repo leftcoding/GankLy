@@ -16,8 +16,6 @@ import android.view.View;
  * Created by wnw on 16-5-22.
  */
 public class MyDecoration extends RecyclerView.ItemDecoration {
-
-    private Context mContext;
     private Drawable mDivider;
     private int mOrientation;
 
@@ -30,7 +28,6 @@ public class MyDecoration extends RecyclerView.ItemDecoration {
     };
 
     public MyDecoration(Context context, int orientation) {
-        this.mContext = context;
         final TypedArray ta = context.obtainStyledAttributes(ATRRS);
         this.mDivider = ta.getDrawable(0);
         ta.recycle();

@@ -32,8 +32,8 @@ public class MoreActivity extends BaseActivity {
     @Override
     protected void initValues() {
         parseIntent();
-
-        selectFragment();
+        Fragment fragment = getFragment(mType);
+        addFragment(fragment);
     }
 
     @Override
@@ -53,22 +53,26 @@ public class MoreActivity extends BaseActivity {
         }
     }
 
-    private void selectFragment() {
-        Fragment fragment = null;
-        switch (mType) {
-            case TYPE_SETTING:
-                fragment = new SettingFragment();
-                break;
+    private Fragment getFragment(int type) {
+        Fragment fragment;
+        switch (type) {
             case TYPE_COLLECT:
                 fragment = new CollectFragment();
                 break;
             case TYPE_BROWSE:
                 fragment = new BrowseHistoryFragment();
+                break;
+            case TYPE_SETTING:
+            default:
+                fragment = new SettingFragment();
+                break;
         }
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(CONTENT_ID, fragment)
-                    .commitAllowingStateLoss();
-        }
+        return fragment;
+    }
+
+    private void addFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .add(CONTENT_ID, fragment)
+                .commitAllowingStateLoss();
     }
 }

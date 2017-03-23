@@ -28,7 +28,7 @@ import io.reactivex.ObservableOnSubscribe;
 
 public class LocalDataSource extends BaseModel {
     @Nullable
-    private static LocalDataSource INSTANCE = null;
+    private static LocalDataSource mInstance = null;
 
     @NonNull
     private UrlCollectDao mUrlCollectDao;
@@ -37,14 +37,14 @@ public class LocalDataSource extends BaseModel {
     private ReadHistoryDao mReadHistoryDao;
 
     public static LocalDataSource getInstance() {
-        if (INSTANCE == null) {
+        if (mInstance == null) {
             synchronized (LocalDataSource.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new LocalDataSource();
+                if (mInstance == null) {
+                    mInstance = new LocalDataSource();
                 }
             }
         }
-        return INSTANCE;
+        return mInstance;
     }
 
     private LocalDataSource() {

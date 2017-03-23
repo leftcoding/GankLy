@@ -17,17 +17,17 @@ public class TechnologyDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://gank.io/xiandu/wow/page/";
 
     @Nullable
-    private static TechnologyDataSource INSTANCE = null;
+    private static TechnologyDataSource mInstance = null;
 
     public static TechnologyDataSource getInstance() {
-        if (INSTANCE == null) {
+        if (mInstance == null) {
             synchronized (TechnologyDataSource.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new TechnologyDataSource();
+                if (mInstance == null) {
+                    mInstance = new TechnologyDataSource();
                 }
             }
         }
-        return INSTANCE;
+        return mInstance;
     }
 
     public Observable<Document> fetchData(int page) {

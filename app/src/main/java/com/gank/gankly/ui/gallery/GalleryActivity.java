@@ -68,6 +68,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 /**
+ * 相册
  * Create by LingYan on 2016-4-25
  */
 public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
@@ -90,6 +91,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     public static final String EXTRA_LIST = "Extra_List";
 
     public static final String TYPE = "Type";
+    // 转场动画
     public static final int TYPE_TRANSITION = 1;
 
     // number / color

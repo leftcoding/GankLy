@@ -434,17 +434,13 @@ public class JiandanWebActivity extends BaseActivity {
                 mWebView.loadUrl(url);
             }
             return true;
-//            return false;
         }
 
         @Override
         public WebResourceResponse shouldInterceptRequest
                 (WebView view,
                  com.tencent.smtt.export.external.interfaces.WebResourceRequest request) {
-            // TODO Auto-generated method stub
-
             Log.e("should", "request.getUrl().toString() is " + request.getUrl().toString());
-
             return super.shouldInterceptRequest(view, request);
         }
 

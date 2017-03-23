@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.gankly.App;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -22,11 +20,7 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
     protected Unbinder unBinder;
     private View mView;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    private App mApp;
 
     @Nullable
     @Override
@@ -40,6 +34,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mApp = new App();
         unBinder = ButterKnife.bind(this, view);
         initValues();
         initViews();
@@ -67,22 +62,11 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        RefWatcher refWatcher = App.getRefWatcher();
-        refWatcher.watch(this);
+        ((App) getActivity().getApplication()).getRefWatcher().watch(this);
 
         if (unBinder != null) {
             unBinder.unbind();
             unBinder = null;
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 }

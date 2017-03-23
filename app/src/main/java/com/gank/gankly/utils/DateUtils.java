@@ -14,6 +14,7 @@ import java.util.TimeZone;
  * Create by LingYan on 2016-04-28
  */
 public class DateUtils {
+    private static final String GMT_8 = "GMT+8";
     public static final String TYPE_ONE = "yyyy/MM/dd";
     public static final String TYPE_TWO = "yyyy-MM-dd";
     public static final String TYPE_DD = "MM-dd";
@@ -37,7 +38,7 @@ public class DateUtils {
         } catch (Exception e) {
             sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
         }
-        TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+        TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
         sdf.setTimeZone(timeZone);
         return sdf.format(date);
     }
@@ -47,7 +48,7 @@ public class DateUtils {
         if (!TextUtils.isEmpty(dateStr)) {
             String format = "yyyy-MM-dd'T'HH:mm:ss.sss'Z'";
             SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.SIMPLIFIED_CHINESE);
-            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
             sdf.setTimeZone(timeZone);
             try {
                 date = sdf.parse(dateStr);
@@ -61,7 +62,7 @@ public class DateUtils {
     public static String getMonth(final Date date) {
         if (date != null) {
             Calendar calendar = Calendar.getInstance();
-            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
             calendar.setTimeZone(timeZone);
             calendar.setTime(date);
             return String.valueOf(calendar.get(Calendar.MONTH) + 1);
@@ -72,7 +73,7 @@ public class DateUtils {
     public static String getDay(final Date date) {
         if (date != null) {
             Calendar calendar = Calendar.getInstance();
-            TimeZone timeZone = TimeZone.getTimeZone("GMT+8");
+            TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
             calendar.setTimeZone(timeZone);
             calendar.setTime(date);
             return String.valueOf(calendar.get(Calendar.DATE));

@@ -73,6 +73,8 @@ public class DaoMaster extends AbstractDaoMaster {
                     db.execSQL("ALTER TABLE " + UrlCollectDao.TABLENAME + " add \"g_type\" TEXT");
                 case 3:
                     db.execSQL("ALTER TABLE " + UrlCollectDao.TABLENAME + " add \"g_author\" TEXT");
+                default:
+                    break;
             }
 
 

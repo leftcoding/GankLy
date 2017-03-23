@@ -2,8 +2,6 @@ package com.gank.gankly.ui.main;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
@@ -36,7 +34,7 @@ import butterknife.BindView;
  */
 public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener,
         DownloadProgressListener, ILauncher {
-    @BindView(R.id.main_tabLayout)
+    @BindView(R.id.baisi_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
@@ -48,10 +46,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     @Override
     protected int getLayoutId() {
         return R.layout.include_app_head;
-    }
-
-    public static MainFragment getInstance() {
-        return new MainFragment();
     }
 
     @Override
@@ -166,11 +160,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
 
     @Override
     public void hiddenDialog() {
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

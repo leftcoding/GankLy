@@ -38,9 +38,6 @@ public abstract class ThemeFragment extends BaseFragment {
     }
 
     public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
-        if (swipeRefreshLayout == null) {
-            throw new NullPointerException("SwipeRefreshLayout can't be null");
-        }
         this.mSwipeRefreshLayout = swipeRefreshLayout;
     }
 

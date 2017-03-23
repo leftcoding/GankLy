@@ -34,10 +34,6 @@ public class LyRecyclerView extends RecyclerView {
     private ILyRecycler mILyRecycler;
     private int position;
     private boolean intrList = false;
-    private static final long CLICK_MAX_TIME = 200;
-    private boolean isSlide;
-    private long startTime = 0;
-    private boolean isGesture;
 
     public LyRecyclerView(Context context) {
         this(context, null);
@@ -63,8 +59,6 @@ public class LyRecyclerView extends RecyclerView {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                isSlide = false;
-                startTime = System.currentTimeMillis();
                 //所有菜单不显示
                 xDown = x;
                 yDown = y;
@@ -104,7 +98,6 @@ public class LyRecyclerView extends RecyclerView {
                 if (itemLayout == null) {
                     break;
                 }
-                isSlide = true;
                 xMove = x;
                 yMove = y;
                 int dx = xMove - xDown;

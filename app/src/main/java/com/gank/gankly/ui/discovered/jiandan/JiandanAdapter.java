@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanHolder> {
-    private List<JianDanBean> mList;
+    private final List<JianDanBean> mList;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 

@@ -77,7 +77,6 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             mPreWidth = gif.getWidth();
 
             if (!mGifHeight.containsKey(imgUrl)) {
-                KLog.d(mPreHeight + ":" + mPreWidth + ",imgUrl:" + imgUrl);
                 height = mPreHeight * 1080 / mPreWidth;
                 mGifHeight.put(imgUrl, height);
             } else {
@@ -179,7 +178,6 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         public void update(final int position, final String url) {
             rlayPlayerControl.setOnClickListener(v -> {
                 if (mOnClickImage != null) {
-                    KLog.d("url:" + url);
                     mOnClickImage.onClick(new GallerySize(height, width, url, position));
                 }
             });

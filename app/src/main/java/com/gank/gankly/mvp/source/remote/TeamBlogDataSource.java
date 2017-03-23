@@ -17,17 +17,17 @@ public class TeamBlogDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://gank.io/xiandu/teamblog/page/";
 
     @Nullable
-    private static TeamBlogDataSource INSTANCE = null;
+    private static TeamBlogDataSource mInstance = null;
 
     public static TeamBlogDataSource getInstance() {
-        if (INSTANCE == null) {
+        if (mInstance == null) {
             synchronized (TeamBlogDataSource.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new TeamBlogDataSource();
+                if (mInstance == null) {
+                    mInstance = new TeamBlogDataSource();
                 }
             }
         }
-        return INSTANCE;
+        return mInstance;
     }
 
     public Observable<Document> fetchData(int page) {

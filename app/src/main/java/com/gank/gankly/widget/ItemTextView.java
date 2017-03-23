@@ -57,7 +57,7 @@ public class ItemTextView extends RelativeLayout {
             mTitleColor = array.getColor(R.styleable.ItemTextView_TextTitleColor, App.getAppColor(R.color.text_default));
             mSummaryColor = array.getColor(R.styleable.ItemTextView_TextSummaryColor, App.getAppColor(R.color.text_999999));
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
         ButterKnife.bind(this, view);
         array.recycle();

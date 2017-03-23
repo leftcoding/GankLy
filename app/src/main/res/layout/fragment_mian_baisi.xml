@@ -19,7 +19,7 @@
             app:layout_scrollFlags="scroll|enterAlways"/>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/main_tabLayout"
+            android:id="@+id/baisi_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/themeTabLayoutBackground"/>

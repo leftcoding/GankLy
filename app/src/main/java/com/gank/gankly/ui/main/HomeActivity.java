@@ -1,15 +1,10 @@
 package com.gank.gankly.ui.main;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.gank.gankly.R;
@@ -31,14 +26,13 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
+ * 首页
  * Create by LingYan on 2016-6-13
  * Email:137387869@qq.com
  */
 public class HomeActivity extends BaseActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
-    @BindView(R.id.home_coordinator)
-    CoordinatorLayout mCoordinatorLayout;
 
     private long mKeyDownTime;
     private Fragment mCurFragment;
@@ -53,11 +47,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected void initViews() {
         mFragmentList = getFragmentList();
         mBottomBar.setDefaultTabPosition(0);
@@ -65,9 +54,7 @@ public class HomeActivity extends BaseActivity {
         changeBottomBar();
 
         RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    changeBottomBar();
-                });
+                .subscribe(themeEvent -> changeBottomBar());
     }
 
     @Override
@@ -101,7 +88,7 @@ public class HomeActivity extends BaseActivity {
             addMainFragment(fragmentTo);
             mCurFragment = fragmentTo;
         } else {
-            if (!mCurFragment.getClass().getName().equals(fragmentTo.getClass().getName())) {
+            if (!mCurFragment.equals(fragmentTo)) {
                 addAnimFragment(mCurFragment, fragmentTo, true);
                 mCurFragment = fragmentTo;
             }
@@ -141,24 +128,7 @@ public class HomeActivity extends BaseActivity {
         Observable.fromArray(mBottomBarTabs)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(integer -> {
-                    mBottomBar.getTabWithId(integer).setBackgroundResource(color);
-                });
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+                .subscribe(integer -> mBottomBar.getTabWithId(integer).setBackgroundResource(color));
     }
 
     @Override
@@ -183,16 +153,6 @@ public class HomeActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
     }
 
     @Override

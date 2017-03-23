@@ -24,11 +24,12 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.JiandanHolder> {
-    private List<JianDanBean> mList;
+    private final List<JianDanBean> mList;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 
     public TeamBlogAdapter() {
+        setHasStableIds(true);
         mList = new ArrayList<>();
     }
 

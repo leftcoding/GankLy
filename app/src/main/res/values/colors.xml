@@ -32,17 +32,20 @@
     <color name="browse_toolbar_bg">#2f000000</color>
 
     <!-- start deprecated -->
-    <color name="body_text_1">#de000000</color>
-    <color name="body_text_2">#8a000000</color>
+    <color name="body_text_1">#212121</color>
+    <color name="body_text_2">#757575</color>
     <color name="body_text_3">#60000000</color>
     <color name="body_text_disabled">#44000000</color>
 
     <color name="collect_snackbar_text_color">#4093c6</color>
 
     <!-- light theme color start -->
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#5C6BC0</color>
+    <!--<color name="colorPrimary">#3F51B5</color>-->
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <!--<color name="colorAccent">#5C6BC0</color>-->
+    <color name="colorPrimaryDark">#00796B</color>
+    <color name="colorPrimary">#009688</color>
+    <color name="colorAccent">#009688</color>
     <color name="aboutBackground_light">#EFEEF4</color>
     <color name="collect_background_light">#F1F3F6</color>
     <color name="refresh_background_light">#f3f6f9</color><!--#f2f4f7-->

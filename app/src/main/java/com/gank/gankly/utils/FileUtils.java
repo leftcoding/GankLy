@@ -33,16 +33,14 @@ public class FileUtils {
 
     public static String getGlideDefaultPath(Context context) {
         if (context == null) {
-            throw new RuntimeException("context can't be null");
+            throw new NullPointerException("context can't be null");
         }
         String path = context.getCacheDir().getAbsolutePath();
         if (isSDCard()) {
             String directory = Environment.getExternalStorageDirectory() + "/GankLy/cache/img";
             File file = new File(directory);
-            if (!file.exists()) {
-                if (file.mkdirs()) {
-                    return directory;
-                }
+            if (!file.exists() && file.mkdirs()) {
+                return directory;
             }
         }
         return path;

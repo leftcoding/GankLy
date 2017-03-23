@@ -67,22 +67,6 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
         return R.layout.fragment_browse_picture;
     }
 
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
     public static GalleryFragment newInstance(String url) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();

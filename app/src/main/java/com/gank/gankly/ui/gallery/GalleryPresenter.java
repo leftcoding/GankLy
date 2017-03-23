@@ -5,6 +5,7 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
+import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
@@ -21,6 +22,7 @@ import io.reactivex.disposables.Disposable;
 public class GalleryPresenter extends FetchPresenter implements GalleryContract.Presenter {
     private GankDataSource mTask;
     private GalleryContract.View mModelView;
+    private boolean isFetch;
 
     public GalleryPresenter(GankDataSource task, GalleryContract.View view) {
         mTask = task;
@@ -34,36 +36,38 @@ public class GalleryPresenter extends FetchPresenter implements GalleryContract.
 
     @Override
     public void fetchMore() {
-        KLog.d("--fetchMore--");
-        int nextPage = MeiziArrayList.getInstance().getPage() + 1;
-        mTask.fetchWelfare(nextPage, getFetchLimit())
-                .subscribe(new Observer<GankResult>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(GankResult gankResult) {
-                        List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
-                        if (ListUtils.getListSize(list) > 0) {
-                            mModelView.appendData(list);
-                            mModelView.sysNumText();
-                            MeiziArrayList.getInstance().addImages(gankResult.getResults(), nextPage);
+        if (!isFetch) {
+            int nextPage = MeiziArrayList.getInstance().getPage() + 1;
+            mTask.fetchWelfare(nextPage, getFetchLimit())
+                    .subscribe(new Observer<GankResult>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            isFetch = true;
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                        parseError(mModelView);
-                    }
+                        @Override
+                        public void onNext(GankResult gankResult) {
+                            List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
+                            if (ListUtils.getListSize(list) > 0) {
+                                mModelView.appendData(list);
+                                mModelView.sysNumText();
+                                MeiziArrayList.getInstance().addImages(gankResult.getResults(), nextPage);
+                            }
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onError(Throwable e) {
+                            KLog.e(e);
+                            CrashUtils.crashReport(e);
+                            parseError(mModelView);
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onComplete() {
+                            isFetch = false;
+                        }
+                    });
+        }
     }
 
     @Override

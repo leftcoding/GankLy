@@ -89,6 +89,7 @@
     <string name="about_thanks_str">GankLy里用到的大部分接口均来自 http://gank.io，在这里感谢@daimajia @drakket @xiongwei-git的无私帮助。</string>
 
     <string name="baisi_click_big_picture"><![CDATA[点击查看全图>>]]></string>
+    <string name="baisi_leisure_time">休闲</string>
     <string name="discovered_funnys">搞笑视屏集合</string>
 
     <string name="x5_down_refresh">向下拉刷新页面</string>

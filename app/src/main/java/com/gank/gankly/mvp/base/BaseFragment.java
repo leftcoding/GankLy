@@ -1,6 +1,5 @@
 package com.gank.gankly.mvp.base;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,11 +17,6 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment {
     protected Unbinder unBinder;
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
 
     @Nullable
     @Override
@@ -64,16 +58,6 @@ public abstract class BaseFragment extends Fragment {
             unBinder.unbind();
             unBinder = null;
         }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
     }
 }
 

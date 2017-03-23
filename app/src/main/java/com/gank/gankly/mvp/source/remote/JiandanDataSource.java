@@ -23,17 +23,17 @@ import io.reactivex.ObservableOnSubscribe;
 public class JiandanDataSource extends BaseDataSourceModel {
 
     @Nullable
-    private static JiandanDataSource INSTANCE = null;
+    private static JiandanDataSource mInstance = null;
 
     public static JiandanDataSource getInstance() {
-        if (INSTANCE == null) {
+        if (mInstance == null) {
             synchronized (JiandanDataSource.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new JiandanDataSource();
+                if (mInstance == null) {
+                    mInstance = new JiandanDataSource();
                 }
             }
         }
-        return INSTANCE;
+        return mInstance;
     }
 
     /**

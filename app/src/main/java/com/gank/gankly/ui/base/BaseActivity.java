@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.presenter.BasePresenter;
-import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,7 +29,7 @@ import butterknife.Unbinder;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     private static final int contentAreaId = R.id.main_frame_layout;
     private long mLastTime;
-    private Fragment mContent = null;
+    private Fragment prevFragment;
     protected P mPresenter;
     protected Unbinder mUnBinder;
 
@@ -78,8 +77,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        if (mContent != to) {
-            mContent = to;
+        if (!prevFragment.equals(to)) {
+            prevFragment = to;
             if (bundle != null) {
                 to.setArguments(bundle);
             }
@@ -114,15 +113,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         addFragment(fragment, bundle, tag);
     }
 
-
     private void addFragment(Fragment fragment, Bundle bundle, String tag) {
         if (fragment == null) {
-            throw new RuntimeException(new NullPointerException("fragment can't be null"));
+            throw new NullPointerException("fragment can't be null");
         }
 
         if (isOpenMore()) {
             return;
         }
+
         FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
 
@@ -135,6 +134,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
 
         if (!fragment.isAdded()) {
+            prevFragment = fragment;
             mFragmentTransaction.add(contentAreaId, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();
@@ -189,9 +189,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = App.getRefWatcher();
-        refWatcher.watch(this);
-
+        ((App) this.getApplication()).getRefWatcher().watch(this);
         if (mUnBinder != null) {
             mUnBinder.unbind();
             mUnBinder = null;
@@ -202,7 +200,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public void onBackPressed() {
         int count = getSupportFragmentManager().getBackStackEntryCount();
         if (count == 0) {
-//            super.onBackPressed();
             finishAfterTransition();
         } else {
             getSupportFragmentManager().popBackStack();

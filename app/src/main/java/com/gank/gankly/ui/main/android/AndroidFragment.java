@@ -11,7 +11,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
@@ -31,8 +30,6 @@ import com.gank.gankly.widget.MultipleStatusView;
 import java.util.List;
 
 import butterknife.BindView;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 /**
  * Android
@@ -48,7 +45,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     private RecyclerView mRecyclerView;
     private HomeActivity mActivity;
-    private AndroidIosAdapter mAndroidIosAdapter;
+    private AndroidAdapter mAndroidAdapter;
     private AndroidContract.Presenter mPresenter;
 
     @Override
@@ -81,7 +78,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void bindListener() {
-        mAndroidIosAdapter.setOnItemClickListener(this);
+        mAndroidAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mMultipleStatusView.setListener(v -> {
             showLoading();
@@ -98,8 +95,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     private void initRecycler() {
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-//        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setItemAnimator(new SlideInUpAnimator(new OvershootInterpolator(1f)));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -116,12 +111,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void initAdapter() {
-        mAndroidIosAdapter = new AndroidIosAdapter(mActivity);
-        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAndroidIosAdapter);
-        alphaAdapter.setFirstOnly(true);
-        alphaAdapter.setDuration(500);
-        alphaAdapter.setInterpolator(new OvershootInterpolator(0.5f));
-        mSwipeRefreshLayout.setAdapter(alphaAdapter);
+        mAndroidAdapter = new AndroidAdapter(mActivity);
+//        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(mAndroidAdapter);
+//        alphaAdapter.setFirstOnly(true);
+//        alphaAdapter.setDuration(500);
+//        alphaAdapter.setInterpolator(new OvershootInterpolator(0.5f));
+        mSwipeRefreshLayout.setAdapter(mAndroidAdapter);
     }
 
     @Override
@@ -144,12 +139,12 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void refillDate(List<ResultsBean> list) {
-        mAndroidIosAdapter.refillItems(list);
+        mAndroidAdapter.refillItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
-        mAndroidIosAdapter.appendItems(list);
+        mAndroidAdapter.appendItems(list);
     }
 
     @Override

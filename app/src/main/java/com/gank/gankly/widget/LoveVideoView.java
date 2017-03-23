@@ -34,12 +34,7 @@ import java.io.InputStream;
  * Created by LingYan on 2016-4-26
  */
 public class LoveVideoView extends WebView {
-    private static final int timeout = 50 * 1000;
-    private static final String USERAGENT = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.76 Mobile Safari/537.36";
-
     private final Context mContext;
-    private boolean isLoaded;
-    private String mUrl;
 
     public LoveVideoView(Context context) {
         this(context, null);
@@ -52,11 +47,11 @@ public class LoveVideoView extends WebView {
     public LoveVideoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
-        init();
+        initData();
     }
 
 
-    void init() {
+    public void initData() {
         setWebViewClient(new LoveClient());
         setWebChromeClient(new Chrome());
         WebSettings webSettings = getSettings();
