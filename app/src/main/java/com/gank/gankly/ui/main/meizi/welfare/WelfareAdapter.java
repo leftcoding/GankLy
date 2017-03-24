@@ -45,6 +45,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     }
 
     public WelfareAdapter(Activity context) {
+        setHasStableIds(true);
         inflater = LayoutInflater.from(context);
         mContext = context;
         mResults = new ArrayList<>();
@@ -80,6 +81,11 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         super.onViewRecycled(holder);
         Glide.clear(holder.imgMeizi);//view recycled,clear image request
         holder.imgMeizi.setImageBitmap(null);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     private class DriverViewTarget extends BitmapImageViewTarget {

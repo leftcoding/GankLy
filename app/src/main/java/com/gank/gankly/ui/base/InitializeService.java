@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.data.DaoMaster;
-import com.socks.library.KLog;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.TbsListener;
@@ -62,7 +61,6 @@ public class InitializeService extends IntentService {
 
             @Override
             public void onViewInitFinished(boolean arg0) {
-                KLog.e("onViewInitFinished is " + arg0);
             }
 
             @Override

@@ -71,6 +71,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return mResults.size();
     }

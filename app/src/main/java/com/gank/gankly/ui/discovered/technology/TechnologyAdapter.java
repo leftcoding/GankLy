@@ -74,6 +74,11 @@ public class TechnologyAdapter extends RecyclerView.Adapter<TechnologyAdapter.Ji
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return mList.size();
     }

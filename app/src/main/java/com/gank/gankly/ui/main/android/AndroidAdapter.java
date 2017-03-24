@@ -109,6 +109,11 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
         return mResults.size();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public void refillItems(List<ResultsBean> results) {
         int size = mResults.size();
         mResults.clear();

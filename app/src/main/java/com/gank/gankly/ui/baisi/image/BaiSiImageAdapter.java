@@ -15,7 +15,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.bean.GallerySize;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +149,11 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return mList == null ? 0 : mList.size();
     }
@@ -246,10 +250,5 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     public interface onClickImage {
         void onClick(GallerySize gallerySize);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
     }
 }

@@ -74,6 +74,11 @@ public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.Jianda
     }
 
     @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
     public int getItemCount() {
         return mList.size();
     }

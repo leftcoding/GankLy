@@ -55,6 +55,7 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
     }
 
     private void fetchAndroid(final int page) {
+        KLog.d("--page:" + page);
         Observable<GankResult> observable;
         if (MeiziArrayList.getInstance().isOneItemsEmpty()) {
             observable = mTask.fetchAndroidAndImages(page, getFetchLimit());
