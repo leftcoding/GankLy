@@ -19,7 +19,7 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * Okhttp3 （网络请求库）
 
 #### 安装包 
-<a href="https://pro-app-qn.fir.im/2b036e08fae0422dcea0be18c2a3cafcd8916b25.apk?attname=Gankly.apk_2.1.0.apk&e=1489473698&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:pPKJ_2aaw4rUT6yKrSBhzurd_iM=">下载apk</a>
+<a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
 
 #### 联系方式
 137387869@qq.com
