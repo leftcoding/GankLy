@@ -39,6 +39,7 @@
         </activity>
         <activity
             android:name=".ui.main.HomeActivity"
+            android:alwaysRetainTaskState="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

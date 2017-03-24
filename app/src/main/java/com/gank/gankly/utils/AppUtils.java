@@ -49,7 +49,6 @@ public class AppUtils {
         PackageManager manager = context.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
-//            String appVersionName = info.versionName;
             currentVersionCode = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             KLog.e(e);

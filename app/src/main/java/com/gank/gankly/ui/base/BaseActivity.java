@@ -29,7 +29,6 @@ import butterknife.Unbinder;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     private static final int contentAreaId = R.id.main_frame_layout;
     private long mLastTime;
-    private Fragment prevFragment;
     protected P mPresenter;
     protected Unbinder mUnBinder;
 
@@ -72,13 +71,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
                                 Bundle bundle, String tag, boolean isAnim) {
+
         if (isOpenMore()) {
             return;
         }
-        FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
-                .beginTransaction();
-        if (!prevFragment.equals(to)) {
-            prevFragment = to;
+        if (from != null && !from.equals(to) && to != null) {
+            FragmentTransaction mFragmentTransaction = getSupportFragmentManager()
+                    .beginTransaction();
             if (bundle != null) {
                 to.setArguments(bundle);
             }
@@ -134,7 +133,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
 
         if (!fragment.isAdded()) {
-            prevFragment = fragment;
             mFragmentTransaction.add(contentAreaId, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();

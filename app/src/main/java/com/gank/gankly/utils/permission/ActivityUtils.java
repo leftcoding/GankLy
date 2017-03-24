@@ -11,7 +11,7 @@ public class ActivityUtils {
     private ActivityUtils() {
     }
 
-    public static boolean isRequest() {
+    public static boolean isRequestPermission() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 

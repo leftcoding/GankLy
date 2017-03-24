@@ -9,6 +9,7 @@ import android.os.Environment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.Target;
+import com.gank.gankly.config.Constants;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -25,8 +26,6 @@ import io.reactivex.schedulers.Schedulers;
  * Create by LingYan on 2016-04-20
  */
 public class RxSaveImage {
-    private static final String IMAGE_PATH = "Gankly/pic";
-
     public static Observable<Uri> saveImageAndGetPathObservable(final Context context, final String url) {
         return Observable.create(new ObservableOnSubscribe<Uri>() {
             @Override
@@ -58,7 +57,7 @@ public class RxSaveImage {
     }
 
     public static Uri saveImage(Context context, Bitmap bm, String name) {
-        File appDir = new File(Environment.getExternalStorageDirectory(), IMAGE_PATH);
+        File appDir = new File(Environment.getExternalStorageDirectory(), Constants.IMAGE_PATH);
         if (!appDir.exists()) {
             appDir.mkdir();
         }

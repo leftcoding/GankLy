@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.main;
 
 import android.content.res.Resources;
-import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
@@ -16,7 +16,9 @@ import com.gank.gankly.ui.main.meizi.GirlsFragment;
 import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
+import com.gank.gankly.utils.permission.PermissionUtils;
 import com.roughike.bottombar.BottomBar;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,8 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initViews() {
+        PermissionUtils.requestAllPermissions(this);
+
         mFragmentList = getFragmentList();
         mBottomBar.setDefaultTabPosition(0);
 
@@ -55,6 +59,14 @@ public class HomeActivity extends BaseActivity {
 
         RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeBottomBar());
+
+        KLog.d("" + android.os.Build.MODEL);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -93,11 +105,6 @@ public class HomeActivity extends BaseActivity {
                 mCurFragment = fragmentTo;
             }
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override

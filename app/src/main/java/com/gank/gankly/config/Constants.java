@@ -4,15 +4,19 @@ package com.gank.gankly.config;
  * Create by LingYan on 2016-04-06
  * Email:137387869@qq.com
  */
-public interface Constants {
-    String ANDROID = "android";
-    String IOS = "ios";
-    String WELFRAE = "福利";
-    String ALL = "all";
-    String VIDEO = "video";
-    String JIANDAN = "新鲜事";
-    String TECHNOLOGY = "科技资讯";
+public class Constants {
+    //title
+    public static final String ANDROID = "android";
+    public static final String IOS = "ios";
+    public static final String WELFRAE = "福利";
+    public static final String ALL = "all";
+    public static final String VIDEO = "video";
+    public static final String JIANDAN = "新鲜事";
+    public static final String TECHNOLOGY = "科技资讯";
 
-    String QINGCHUN = "清纯";
-    String DAILY_GIRL = "每日更新";
+    public static final String QINGCHUN = "清纯";
+    public static final String DAILY_GIRL = "每日更新";
+
+    //image save path
+    public static final String IMAGE_PATH = "Gankly/pic";
 }
