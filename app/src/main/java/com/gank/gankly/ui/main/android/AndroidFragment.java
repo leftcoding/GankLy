@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.theme.RecyclerViewColor;
@@ -44,7 +43,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView mRecyclerView;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private AndroidAdapter mAndroidAdapter;
     private AndroidContract.Presenter mPresenter;
 
@@ -195,19 +194,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (HomeActivity) context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        this.mActivity = (MainActivity) context;
     }
 
     private ColorStateList getSwitchThumbColorStateList() {

@@ -17,7 +17,7 @@ import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -41,7 +41,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     private RecyclerView mRecyclerView;
 
     private VideoContract.Presenter mPresenter;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private VideoAdapter mAdapter;
 
     @Override
@@ -52,7 +52,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

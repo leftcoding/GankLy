@@ -13,7 +13,7 @@ import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.main.meizi.dailymeizi.DailyMeiziFragment;
 import com.gank.gankly.ui.main.meizi.pure.PureFragment;
 
@@ -33,7 +33,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     @BindView(R.id.girl_view_pager)
     ViewPager mViewPager;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private List<String> mTitles;
 
     @Override
@@ -106,7 +106,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

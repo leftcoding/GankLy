@@ -71,7 +71,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
                                 Bundle bundle, String tag, boolean isAnim) {
-
         if (isOpenMore()) {
             return;
         }

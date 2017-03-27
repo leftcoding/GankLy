@@ -16,7 +16,7 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GallerySize;
-import com.gank.gankly.mvp.base.BaseFragment;
+import com.gank.gankly.ui.base.BaseFragment;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -109,7 +109,7 @@ public class BaiSiGalleryFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
 
     }
 }

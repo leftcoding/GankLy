@@ -154,7 +154,7 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {

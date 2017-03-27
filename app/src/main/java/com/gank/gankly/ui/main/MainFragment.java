@@ -39,7 +39,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     @BindView(R.id.main_view_pager)
     ViewPager mViewPager;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
 
@@ -51,7 +51,7 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

@@ -18,7 +18,7 @@ import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
 import com.gank.gankly.ui.discovered.teamBlog.TeamBlogFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     @BindView(R.id.discovered_view_pager)
     ViewPager mViewPager;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private List<String> mTitles;
 
     @Override
@@ -121,7 +121,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

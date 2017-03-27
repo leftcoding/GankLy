@@ -24,7 +24,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -48,7 +48,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     private DailyMeiziAdapter mDailyMeiziAdapter;
     private DailyMeiziPresenter mPresenter;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
 
     private ProgressDialog mDialog;
 
@@ -208,7 +208,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

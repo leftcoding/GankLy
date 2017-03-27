@@ -17,7 +17,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
 import com.gank.gankly.RxBus.Theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
@@ -57,7 +57,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @BindViews({R.id.mine_rl_collect, R.id.mine_rl_night, R.id.mine_rl_setting, R.id.mine_rl_browse})
     List<LYRelativeLayoutRipple> mViewList;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private boolean isNight;
 
     @Override
@@ -159,7 +159,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

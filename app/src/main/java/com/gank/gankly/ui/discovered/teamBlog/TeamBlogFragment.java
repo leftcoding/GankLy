@@ -13,7 +13,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.theme.RecyclerViewColor;
@@ -36,7 +36,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private TeamBlogAdapter mAdapter;
 
     private TechnologyContract.Presenter mPresenter;
@@ -44,7 +44,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

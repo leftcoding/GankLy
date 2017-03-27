@@ -101,7 +101,7 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
     }
 
     @Override
-    protected void bindLister() {
+    protected void bindListener() {
         mAdapter.setOnItemClick(this);
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override

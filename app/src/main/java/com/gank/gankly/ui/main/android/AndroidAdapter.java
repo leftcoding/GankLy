@@ -106,7 +106,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
 
     @Override
     public int getItemCount() {
-        return mResults.size();
+        return mResults == null ? 0 : mResults.size();
     }
 
     @Override

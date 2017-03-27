@@ -20,6 +20,7 @@ public class InitializeService extends IntentService {
     public static final String SERVICE_ACTION = "com.gank.gankly.ui.base.InitializeService";
     private static final String DB_NAME = "gank.db";
     private static final String CRASH_LOG_ID = "900039150";
+    private Context mContext;
 
     public InitializeService() {
         this(SERVICE_ACTION);
@@ -43,16 +44,19 @@ public class InitializeService extends IntentService {
     }
 
     private void initStart() {
-        //数据库Chrome上调试
+        //数据库Chrome上调试 -- start
         Stetho.initializeWithDefaults(getApplicationContext());
+        //stetho -- end
 
-        //GreenDao
+        // GreenDao -- start
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         RxBus_.getInstance().post(db);
+        // GreenDao end --
 
-        //Bugly 测试：true
+        //Bugly 测试：true -- start
         CrashReport.initCrashReport(getApplicationContext(), CRASH_LOG_ID, true);
+        //Bugly -- end
 
         //x5 -- start
         //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。

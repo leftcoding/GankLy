@@ -38,8 +38,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.HomeActivity"
+            android:name=".ui.main.MainActivity"
             android:alwaysRetainTaskState="true"
+            android:configChanges="orientation|fontScale|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity

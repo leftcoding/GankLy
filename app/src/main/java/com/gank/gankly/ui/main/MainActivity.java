@@ -1,11 +1,12 @@
 package com.gank.gankly.ui.main;
 
 import android.content.res.Resources;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
@@ -32,7 +33,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
  * Create by LingYan on 2016-6-13
  * Email:137387869@qq.com
  */
-public class HomeActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.bottomBar)
     BottomBar mBottomBar;
 
@@ -42,6 +43,7 @@ public class HomeActivity extends BaseActivity {
     private Integer[] mBottomBarTabs = {R.id.tab_home, R.id.tab_image, R.id.tab_more, R.id.tab_news};
     private List<Fragment> mFragmentList;
     private int mIndex = 0;
+    private boolean isRestore = false;
 
     @Override
     protected int getContentId() {
@@ -52,16 +54,15 @@ public class HomeActivity extends BaseActivity {
     protected void initViews() {
         PermissionUtils.requestAllPermissions(this);
 
-        mFragmentList = getFragmentList();
+        if (mFragmentList == null) {
+            mFragmentList = getFragmentList();
+        }
         mBottomBar.setDefaultTabPosition(0);
 
         changeBottomBar();
 
         RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeBottomBar());
-
-        KLog.d("" + android.os.Build.MODEL);
-
     }
 
     @Override
@@ -72,32 +73,39 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void bindListener() {
         mBottomBar.setOnTabSelectListener(tabId -> {
-            int index = 0;
-            switch (tabId) {
-                case R.id.tab_home:
-                    index = 0;
-                    break;
-                case R.id.tab_news:
-                    index = 1;
-                    break;
-                case R.id.tab_image:
-                    index = 2;
-                    break;
-                case R.id.tab_more:
-                    index = 3;
-                    break;
-            }
-            mIndex = index;
-
-            openFragment(index);
+            mIndex = getFragmentIndex(tabId);
+            openFragment(mIndex);
         });
+    }
+
+    private int getFragmentIndex(int tabId) {
+        int index;
+        switch (tabId) {
+            case R.id.tab_home:
+                index = 0;
+                break;
+            case R.id.tab_news:
+                index = 1;
+                break;
+            case R.id.tab_image:
+                index = 2;
+                break;
+            case R.id.tab_more:
+                index = 3;
+                break;
+            default:
+                index = 0;
+                break;
+        }
+        return index;
     }
 
     private void openFragment(int index) {
         Fragment fragmentTo = mFragmentList.get(index);
-
         if (mCurFragment == null) {
-            addMainFragment(fragmentTo);
+            if (!isRestore) {
+                addMainFragment(fragmentTo);
+            }
             mCurFragment = fragmentTo;
         } else {
             if (!mCurFragment.equals(fragmentTo)) {
@@ -164,13 +172,62 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onStart() {
-        getWindow().
-                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        KLog.d("onStart");
+//        getWindow().
+//                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         super.onStart();
     }
 
     @Override
     protected void onResume() {
+        KLog.d("onResume");
         super.onResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        KLog.d("onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        KLog.d("onCreate");
+        if (savedInstanceState != null) {
+            isRestore = savedInstanceState.getBoolean("isRestore");
+            mIndex = savedInstanceState.getInt("index");
+        }
+        KLog.d("isRestore:" + isRestore + "，mIndex：" + mIndex);
+        super.onCreate(savedInstanceState);
+    }
+
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        KLog.d("onRestoreInstanceState");
+//        if (savedInstanceState != null) {
+//            isRestore = savedInstanceState.getBoolean("isRestore");
+//        }
+//        KLog.d("isRestore:" + isRestore);
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        KLog.d("onSaveInstanceState");
+        outState.putBoolean("isRestore", true);
+        outState.putInt("index", mIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onPause() {
+        KLog.d("onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        KLog.d("onStop");
+        super.onStop();
     }
 }

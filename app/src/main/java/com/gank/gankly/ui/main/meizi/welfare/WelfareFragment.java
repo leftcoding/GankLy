@@ -17,7 +17,7 @@ import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -39,7 +39,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private WelfareAdapter mWelfareAdapter;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private RecyclerView mRecyclerView;
 
     private WelfareContract.Presenter mPresenter;
@@ -179,7 +179,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (HomeActivity) context;
+        this.mActivity = (MainActivity) context;
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.JiandanDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -40,7 +40,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     LySwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private JiandanAdapter mAdapter;
     private JiandanContract.Presenter mPresenter;
 
@@ -48,7 +48,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

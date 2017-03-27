@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.theme.ThemeColor;
 
 import butterknife.BindView;
@@ -22,12 +22,12 @@ public class DiscoveredMoreFragment extends LazyFragment {
     @BindView(R.id.discovered_parent)
     LinearLayout mLinearLayout;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mActivity = (HomeActivity) context;
+        mActivity = (MainActivity) context;
     }
 
     @Override

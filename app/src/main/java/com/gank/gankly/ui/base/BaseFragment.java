@@ -20,7 +20,6 @@ import butterknife.Unbinder;
 public abstract class BaseFragment extends Fragment {
     protected Unbinder unBinder;
     private View mView;
-    private App mApp;
 
     @Nullable
     @Override
@@ -34,7 +33,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mApp = new App();
         unBinder = ButterKnife.bind(this, view);
         initValues();
         initViews();

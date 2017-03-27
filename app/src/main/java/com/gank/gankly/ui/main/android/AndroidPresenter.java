@@ -9,6 +9,7 @@ import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.socks.library.KLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -26,9 +27,12 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
     @NonNull
     private final AndroidContract.View mModelView;
 
+    private final List<ResultsBean> mResultsBeanList;
+
     public AndroidPresenter(@NonNull GankDataSource gankDataSource, @NonNull AndroidContract.View view) {
         mTask = gankDataSource;
         mModelView = view;
+        mResultsBeanList = new ArrayList<>();
     }
 
     @Override
@@ -55,7 +59,6 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
     }
 
     private void fetchAndroid(final int page) {
-        KLog.d("--page:" + page);
         Observable<GankResult> observable;
         if (MeiziArrayList.getInstance().isOneItemsEmpty()) {
             observable = mTask.fetchAndroidAndImages(page, getFetchLimit());
@@ -92,10 +95,17 @@ public class AndroidPresenter extends FetchPresenter implements AndroidContract.
         List<ResultsBean> list = filterData(gankResult, mModelView);
         if (list != null) {
             if (getFetchPage() == 1) {
+                mResultsBeanList.clear();
                 mModelView.refillDate(list);
             } else {
                 mModelView.appendData(list);
             }
+            mResultsBeanList.addAll(list);
         }
+    }
+
+    @Override
+    public List<ResultsBean> getResultList() {
+        return null;
     }
 }

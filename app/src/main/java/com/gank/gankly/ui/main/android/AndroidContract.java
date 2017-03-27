@@ -19,6 +19,6 @@ public interface AndroidContract {
     }
 
     interface Presenter extends IFetchPresenter {
-
+        List<ResultsBean> getResultList();
     }
 }

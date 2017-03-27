@@ -22,7 +22,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.DisplayUtils;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -49,7 +49,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     private RecyclerView mRecyclerView;
     private PureAdapter mAdapter;
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
 
     private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
@@ -190,7 +190,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (HomeActivity) context;
+        this.mActivity = (MainActivity) context;
     }
 
     @Override

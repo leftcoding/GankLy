@@ -14,9 +14,11 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.main.HomeActivity;
+import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.main.android.AndroidAdapter;
 import com.gank.gankly.ui.web.normal.WebActivity;
+import com.gank.gankly.utils.theme.RecyclerViewColor;
+import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -35,9 +37,10 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
-    private HomeActivity mActivity;
+    private MainActivity mActivity;
     private AndroidAdapter mRecyclerAdapter;
     private IosContract.Presenter mPresenter;
+    private RecyclerView mRecyclerView;
 
     @Override
     protected int getLayoutId() {
@@ -67,7 +70,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
         mRecyclerAdapter = new AndroidAdapter(mActivity, IosAdapter.LAYOUT_IOS);
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
 
-        RecyclerView mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
+        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mRecyclerView.setHasFixedSize(true);
         mRecyclerAdapter.setOnItemClickListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -158,14 +161,12 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (HomeActivity) context;
+        this.mActivity = (MainActivity) context;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -180,7 +181,16 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
 
     @Override
     protected void callBackRefreshUi() {
+        ThemeColor themeColor = new ThemeColor(this);
+        RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
+        mRecycler.textViewColor(R.id.goods_txt_title, R.attr.baseAdapterItemTextColor);
+        mRecycler.textViewColor(R.id.goods_txt_time, R.attr.textSecondaryColor);
+        mRecycler.backGroundColor(R.id.ios_ll, R.attr.lyItemSelectBackground);
 
+        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.swipeRefresh(mSwipeRefreshLayout);
+        themeColor.recyclerViewColor(mRecycler);
+        themeColor.start();
     }
 
     @Override

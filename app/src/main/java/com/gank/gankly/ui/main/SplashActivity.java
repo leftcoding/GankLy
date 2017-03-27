@@ -62,9 +62,7 @@ public class SplashActivity extends BaseActivity {
     private void start() {
         Observable.timer(50, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> {
-                    startAnim();
-                });
+                .subscribe(aLong -> startAnim());
     }
 
     private void startAnim() {
@@ -80,8 +78,7 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-//                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                Intent intent = new Intent(SplashActivity.this, HomeActivity.class);
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                 startActivity(intent);
                 SplashActivity.this.overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
                 finish();
