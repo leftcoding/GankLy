@@ -168,11 +168,11 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     protected void callBackRefreshUi() {
         RecyclerViewColor recyclerViewColor = new RecyclerViewColor(mRecyclerView);
-        recyclerViewColor.backGroundColor(R.id.team_ll_body, R.attr.lyItemSelectBackground);
-        recyclerViewColor.textViewColor(R.id.team_blog_txt_title, R.attr.baseAdapterItemTextColor);
+        recyclerViewColor.setItemBackgroundColor(R.id.team_ll_body, R.attr.lyItemSelectBackground);
+        recyclerViewColor.setItemColor(R.id.team_blog_txt_title, R.attr.baseAdapterItemTextColor);
 
         ThemeColor themeColor = new ThemeColor(this);
-        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.setBackgroundResource(R.attr.themeBackground, mRecyclerView);
         themeColor.swipeRefresh(mSwipeRefreshLayout);
         themeColor.recyclerViewColor(recyclerViewColor);
         themeColor.start();

@@ -1,13 +1,16 @@
 apply plugin: 'com.android.application'
 //需要配置符号表时，使用bugly插件
 apply plugin: 'bugly'
-//rolambda
-apply plugin: 'me.tatarka.retrolambda'
-apply plugin: "findbugs"
 bugly {
     appId = '900039150'
     appKey = 'WbIvNJ77rAjdcEK1'
 }
+//rolambda
+apply plugin: 'me.tatarka.retrolambda'
+//findbugs
+apply plugin: "findbugs"
+//butterknife
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 25
@@ -98,8 +101,8 @@ dependencies {
     //Log
     compile 'com.github.zhaokaiqiang.klog:library:1.3.0'
     //butterknife 注解控件
-    compile 'com.jakewharton:butterknife:8.3.0'
-    compile 'com.jakewharton:butterknife-compiler:8.3.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     //retrofit
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'

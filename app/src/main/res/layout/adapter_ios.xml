@@ -28,7 +28,7 @@
             android:orientation="horizontal">
 
             <com.gank.gankly.widget.RatioImageView
-                android:id="@+id/adapter_ios_ratio_img_head"
+                android:id="@+id/ios_ratio_img_head"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center_vertical"
@@ -45,10 +45,10 @@
                 android:paddingTop="16dp">
 
                 <TextView
-                    android:id="@+id/goods_txt_title"
+                    android:id="@+id/ios_txt_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_above="@+id/goods_rl_data"
+                    android:layout_above="@+id/ios_rl_data"
                     android:ellipsize="end"
                     android:maxLines="3"
                     android:text="@{Result.desc}"
@@ -56,7 +56,7 @@
                     android:textSize="16sp" />
 
                 <LinearLayout
-                    android:id="@+id/goods_rl_data"
+                    android:id="@+id/ios_rl_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
@@ -64,7 +64,7 @@
                     android:paddingTop="8dp">
 
                     <TextView
-                        android:id="@+id/goods_txt_time"
+                        android:id="@+id/ios_txt_time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -76,7 +76,7 @@
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/goods_txt_author_name"
+                        android:id="@+id/ios_txt_author_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="end"

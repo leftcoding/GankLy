@@ -2,7 +2,6 @@ package com.gank.gankly.ui.main.ios;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,6 @@ import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.ui.main.android.AndroidAdapter;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.theme.RecyclerViewColor;
 import com.gank.gankly.utils.theme.ThemeColor;
@@ -38,7 +36,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private MainActivity mActivity;
-    private AndroidAdapter mRecyclerAdapter;
+    private IosAdapter mRecyclerAdapter;
     private IosContract.Presenter mPresenter;
     private RecyclerView mRecyclerView;
 
@@ -67,7 +65,7 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     protected void initViews() {
         setSwipeRefreshLayout(mSwipeRefreshLayout);
 
-        mRecyclerAdapter = new AndroidAdapter(mActivity, IosAdapter.LAYOUT_IOS);
+        mRecyclerAdapter = new IosAdapter(mActivity);
         mSwipeRefreshLayout.setAdapter(mRecyclerAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
@@ -165,29 +163,14 @@ public class IosFragment extends LazyFragment implements RecyclerOnClick, IosCon
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
     protected void callBackRefreshUi() {
         ThemeColor themeColor = new ThemeColor(this);
         RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
-        mRecycler.textViewColor(R.id.goods_txt_title, R.attr.baseAdapterItemTextColor);
-        mRecycler.textViewColor(R.id.goods_txt_time, R.attr.textSecondaryColor);
-        mRecycler.backGroundColor(R.id.ios_ll, R.attr.lyItemSelectBackground);
+        mRecycler.setItemColor(R.id.ios_txt_title, R.attr.baseAdapterItemTextColor);
+        mRecycler.setItemColor(R.id.ios_txt_time, R.attr.textSecondaryColor);
+        mRecycler.setItemBackgroundColor(R.id.ios_ll, R.attr.lyItemSelectBackground);
 
-        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.setBackgroundResource(R.attr.themeBackground, mRecyclerView);
         themeColor.swipeRefresh(mSwipeRefreshLayout);
         themeColor.recyclerViewColor(mRecycler);
         themeColor.start();

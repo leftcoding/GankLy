@@ -152,7 +152,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         if (App.isNight()) {
             setTheme(R.style.AppTheme_Night);
         } else {
-            setTheme(R.style.AppTheme_Day);
+            setTheme(R.style.AppTheme_light);
         }
     }
 

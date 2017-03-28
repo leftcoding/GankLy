@@ -43,7 +43,7 @@ public class DiscoveredMoreFragment extends LazyFragment {
     @Override
     protected void callBackRefreshUi() {
         ThemeColor color = new ThemeColor(this);
-        color.backgroundResource(R.attr.themeBackground, mLinearLayout);
+        color.setBackgroundResource(R.attr.themeBackground, mLinearLayout);
         color.start();
     }
 

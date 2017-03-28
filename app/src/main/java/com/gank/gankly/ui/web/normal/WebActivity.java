@@ -109,7 +109,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         if (App.isNight()) {
             setTheme(R.style.AppTheme_Night_NoActionBar);
         } else {
-            setTheme(R.style.AppTheme_Day_NoActionBar);
+            setTheme(R.style.AppTheme_light_NoActionBar);
         }
     }
 

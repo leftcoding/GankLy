@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- light theme -->
-    <style name="AppTheme.Day" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.light" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -55,13 +55,14 @@
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/background_dark</item>
         <item name="lyItemSelectBackground">@drawable/ripple_bg_dark</item>
-        <item name="swipeRefreshLayoutProgressSchemeColor">@color/baseSwipeRefreshLayoutProgressSchemeColor</item>
+        <item name="swipeRefreshLayoutProgressSchemeColor">
+            @color/baseSwipeRefreshLayoutProgressSchemeColor
+        </item>
         <item name="swipeRefreshLayoutSchemeColors">@color/baseSwipeRefreshLayoutSchemeColors</item>
         <item name="budejieAdapterTitleColor">@color/book_recycler_item_bg</item>
     </style>
 
-
-    <style name="AppTheme.Day.NoActionBar">
+    <style name="AppTheme.light.NoActionBar">
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowIsTranslucent">true</item>

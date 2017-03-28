@@ -75,7 +75,7 @@
             android:name=".ui.baisi.BaiSiVideoPreViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Day.NoActionBar" />
+            android:theme="@style/AppTheme.light.NoActionBar" />
 
         <service android:name=".ui.base.InitializeService" />
 

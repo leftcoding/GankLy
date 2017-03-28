@@ -233,11 +233,11 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     protected void callBackRefreshUi() {
         ThemeColor themeColor = new ThemeColor(this);
         RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
-        mRecycler.textViewColor(R.id.goods_txt_title, R.attr.baseAdapterItemTextColor);
-        mRecycler.textViewColor(R.id.goods_txt_time, R.attr.textSecondaryColor);
-        mRecycler.backGroundColor(R.id.welfare_rl, R.attr.lyItemSelectBackground);
+        mRecycler.setItemColor(R.id.android_txt_title, R.attr.baseAdapterItemTextColor);
+        mRecycler.setItemColor(R.id.android_txt_time, R.attr.textSecondaryColor);
+        mRecycler.setItemBackgroundColor(R.id.android_rl, R.attr.lyItemSelectBackground);
 
-        themeColor.backgroundResource(R.attr.themeBackground, mRecyclerView);
+        themeColor.setBackgroundResource(R.attr.themeBackground, mRecyclerView);
         themeColor.swipeRefresh(mSwipeRefreshLayout);
         themeColor.recyclerViewColor(mRecycler);
         themeColor.start();

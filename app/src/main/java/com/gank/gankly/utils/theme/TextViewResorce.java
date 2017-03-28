@@ -7,11 +7,11 @@ import android.widget.TextView;
  * Email:137387869@qq.com
  */
 
-public class TextViewBean {
+public class TextViewResorce {
     private TextView mTextView;
     private int mResId;
 
-    public TextViewBean(int resId, TextView textView) {
+    public TextViewResorce(int resId, TextView textView) {
         mTextView = textView;
         mResId = resId;
     }

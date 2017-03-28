@@ -24,31 +24,29 @@ import java.util.List;
 
 public class RecyclerViewColor {
     private RecyclerView mRecyclerView;
-    private List<TextViewId> mTextViewList;
-    private List<TextViewId> mViews;
+    private List<RecyclerViewItem> tvColorList = new ArrayList<>();
+    private List<RecyclerViewItem> mViews = new ArrayList<>();
     private Resources.Theme mTheme;
 
     public RecyclerViewColor(RecyclerView recyclerView) {
         mRecyclerView = recyclerView;
-        mTextViewList = new ArrayList<>();
-        mViews = new ArrayList<>();
     }
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
 
-    public List<TextViewId> getTextViewList() {
-        return mTextViewList;
+    public List<RecyclerViewItem> getTvColorList() {
+        return tvColorList;
     }
 
-    public List<TextViewId> getViews() {
+    public List<RecyclerViewItem> getViews() {
         return mViews;
     }
 
     public RecyclerViewColor(@NonNull RecyclerViewColor recyclerViewColor, @NonNull Resources.Theme theme) {
         mRecyclerView = recyclerViewColor.getRecyclerView();
-        mTextViewList = recyclerViewColor.getTextViewList();
+        tvColorList = recyclerViewColor.getTvColorList();
         mViews = recyclerViewColor.getViews();
         mTheme = theme;
     }
@@ -59,9 +57,9 @@ public class RecyclerViewColor {
      * @param id    TextView id
      * @param resId TextView attr id
      */
-    public void textViewColor(int id, int resId) {
-        if (!mTextViewList.contains(id)) {
-            mTextViewList.add(new TextViewId(id, resId));
+    public void setItemColor(int id, int resId) {
+        if (!isContains(tvColorList, id)) {
+            tvColorList.add(new RecyclerViewItem(id, resId));
         }
     }
 
@@ -71,36 +69,29 @@ public class RecyclerViewColor {
      * @param id    Views id
      * @param resId Views attr id
      */
-    public void backGroundColor(int id, int resId) {
-        if (!mViews.contains(id)) {
-            mViews.add(new TextViewId(id, resId));
+    public void setItemBackgroundColor(int id, int resId) {
+        if (!isContains(mViews, id)) {
+            mViews.add(new RecyclerViewItem(id, resId));
         }
     }
 
-    private class TextViewId {
-        int id;
-        int resId;
-
-        public TextViewId(int id, int resId) {
-            this.id = id;
-            this.resId = resId;
+    private boolean isContains(List<RecyclerViewItem> list, int id) {
+        if (list != null) {
+            for (RecyclerViewItem aMTextViewList : list) {
+                int _id = aMTextViewList.getId();
+                if (id == _id && id != 0) {
+                    return true;
+                }
+            }
         }
-
-        public int getId() {
-            return id;
-        }
-
-        public int getResId() {
-            return resId;
-        }
-
+        return false;
     }
 
     public void start() {
-        change();
+        changeView();
         clearRecyclerViewItem(mRecyclerView);
 
-        mTextViewList.clear();
+        tvColorList.clear();
         mViews.clear();
         mRecyclerView = null;
     }
@@ -117,26 +108,26 @@ public class RecyclerViewColor {
         return typedValue.data;
     }
 
-    private void change() {
-        int size = mTextViewList.size();
+    private void changeView() {
+        int tvColorSize = tvColorList.size();
         int views = mViews.size();
         int childCount = mRecyclerView.getChildCount();
         ViewGroup childView;
 
         TextView textView;
-        TextViewId textViewId;
+        RecyclerViewItem recyclerViewItem;
         View view;
-        TextViewId viewId;
+        RecyclerViewItem viewId;
 
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
 
-            if (size > 0) {
+            if (tvColorSize > 0) {
                 try {
-                    for (int i = 0; i < size; i++) {
-                        textViewId = mTextViewList.get(i);
-                        textView = (TextView) childView.findViewById(textViewId.getId());
-                        textView.setTextColor(getResourceData(textViewId.getResId()));
+                    for (int i = 0; i < tvColorSize; i++) {
+                        recyclerViewItem = tvColorList.get(i);
+                        textView = (TextView) childView.findViewById(recyclerViewItem.getId());
+                        textView.setTextColor(getResourceData(recyclerViewItem.getResId()));
                     }
                 } catch (Exception e) {
                     KLog.e(e);
@@ -145,7 +136,6 @@ public class RecyclerViewColor {
 
             if (views > 0) {
                 try {
-
                     for (int x = 0; x < views; x++) {
                         viewId = mViews.get(x);
                         view = childView.findViewById(viewId.getId());
@@ -155,14 +145,6 @@ public class RecyclerViewColor {
                     KLog.e(e);
                 }
             }
-//            rl = (LYRelativeLayoutRipple) childView.findViewById(R.id.welfare_rl);
-//            title = (TextView) childView.findViewById(R.id.goods_txt_title);
-//            time = (TextView) childView.findViewById(R.id.goods_txt_time);
-
-//            rl.setCustomBackgroundResource(R.attr.lyItemSelectBackground);
-//            title.setTextColor(textColor);
-//            time.setTextColor(textSecondaryColor);
-//            time.setCompoundDrawables(drawable, null, null, null);
         }
     }
 

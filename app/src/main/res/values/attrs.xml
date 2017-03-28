@@ -2,64 +2,73 @@
 <resources>
     <!--glide 自定义控件 带进度条-->
     <declare-styleable name="ProgressImageView">
-        <attr name="showProgressText" format="boolean"/>
-        <attr name="showProgressBar" format="boolean"/>
+        <attr name="showProgressText" format="boolean" />
+        <attr name="showProgressBar" format="boolean" />
     </declare-styleable>
 
     <!-- 选择开关 -->
     <declare-styleable name="ItemSwitchView">
-        <attr name="switch_name" format="string"/>
-        <attr name="switch_summary" format="string"/>
+        <attr name="switch_name" format="string" />
+        <attr name="switch_summary" format="string" />
     </declare-styleable>
 
     <!-- 关于文本-->
     <declare-styleable name="ItemTextView">
-        <attr name="TextTitle" format="string"/>
-        <attr name="TextSummary" format="string"/>
-        <attr name="TextTitleSize" format="integer"/>
-        <attr name="TextSummarySize" format="integer"/>
-        <attr name="TextTitleColor" format="color"/>
-        <attr name="TextSummaryColor" format="color"/>
+        <attr name="TextTitle" format="string" />
+        <attr name="TextSummary" format="string" />
+        <attr name="TextTitleSize" format="integer" />
+        <attr name="TextSummarySize" format="integer" />
+        <attr name="TextTitleColor" format="color" />
+        <attr name="TextSummaryColor" format="color" />
     </declare-styleable>
 
     <!-- Loading Empty Error -->
     <declare-styleable name="MultipleStatusView">
-        <attr name="content_view" format="reference"/>
-        <attr name="loading_view" format="reference"/>
-        <attr name="empty_view" format="reference"/>
-        <attr name="error_view" format="reference"/>
-        <attr name="no_network_view" format="reference"/>
+        <attr name="content_view" format="reference" />
+        <attr name="loading_view" format="reference" />
+        <attr name="empty_view" format="reference" />
+        <attr name="error_view" format="reference" />
+        <attr name="no_network_view" format="reference" />
     </declare-styleable>
 
     <!-- 自定义主题-->
-    <attr name="lyItemTextColor" format="reference|color"/>
+    <attr name="lyItemTextColor" format="reference|color" />
 
-    <!-- Night Day Custom Colors -->
-    <attr name="themeBackground" format="reference|color"/>
-    <attr name="textPrimaryColor" format="reference|color"/>
-    <attr name="textSecondaryColor" format="reference|color"/>
-    <attr name="themeTabLayoutBackground" format="color"/>
-    <attr name="settingBackground" format="reference|color"/>
-    <attr name="baseAdapterItemBackground" format="reference|color"/>
-    <attr name="baseAdapterItemTextColor" format="reference|color"/>
-    <attr name="navigationBackground" format="reference|color"/>
-    <attr name="aboutTextViewBackground" format="reference|color"/>
-    <attr name="aboutBackground" format="reference|color"/>
-    <attr name="updateVersionButtonTextColor" format="reference|color"/>
-    <attr name="updateVersionBackgroundColor" format="reference|color"/>
-    <attr name="updateVersionTextColor" format="reference|color"/>
-    <attr name="collectBackground" format="reference|color"/>
-    <attr name="meiziDailyItemBackground" format="reference|color"/>
-    <attr name="lyItemSelectBackground" format="reference|color"/>
-    <attr name="swipeRefreshLayoutProgressSchemeColor" format="reference|color"/>
-    <attr name="swipeRefreshLayoutSchemeColors" format="reference|color"/>
-    <attr name="budejieAdapterTitleColor" format="reference|color"/>
+    <!-- Night Day Custom Colors start -->
+    <attr name="themeBackground" format="reference|color" />
+    <attr name="textPrimaryColor" format="reference|color" />
+    <attr name="textSecondaryColor" format="reference|color" />
+    <attr name="themeTabLayoutBackground" format="color" />
+    <attr name="settingBackground" format="reference|color" />
+    <attr name="baseAdapterItemBackground" format="reference|color" />
+    <attr name="baseAdapterItemTextColor" format="reference|color" />
+    <attr name="navigationBackground" format="reference|color" />
+    <attr name="aboutTextViewBackground" format="reference|color" />
+    <attr name="aboutBackground" format="reference|color" />
+    <attr name="updateVersionButtonTextColor" format="reference|color" />
+    <attr name="updateVersionBackgroundColor" format="reference|color" />
+    <attr name="updateVersionTextColor" format="reference|color" />
+    <attr name="collectBackground" format="reference|color" />
+    <attr name="meiziDailyItemBackground" format="reference|color" />
+    <attr name="lyItemSelectBackground" format="reference|color" />
+    <attr name="swipeRefreshLayoutProgressSchemeColor" format="reference|color" />
+    <attr name="swipeRefreshLayoutSchemeColors" format="reference|color" />
+    <attr name="budejieAdapterTitleColor" format="reference|color" />
+    <!-- 全局字体大小 -->
+    <attr name="smallSize" format="reference|dimension" />
+    <attr name="normalSize" format="reference|dimension" />
+    <attr name="bigSize" format="reference|dimension" />
+    <attr name="strongSize" format="reference|dimension" />
+    <attr name="heavySize" format="reference|dimension" />
+    <attr name="superSize" format="reference|dimension" />
+    <attr name="superBigSize" format="reference|dimension" />
+    <!-- Night Day Custom Colors end -->
 
     <!--recyclerView 是否带有侧滑-->
     <declare-styleable name="LySwipeRefreshLayout">
         <attr name="refreshState" format="enum">
-            <enum name="normal" value="1"/>
-            <enum name="gesture" value="2"/>
+            <enum name="normal" value="1" />
+            <enum name="gesture" value="2" />
         </attr>
     </declare-styleable>
 </resources>

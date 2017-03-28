@@ -12,7 +12,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.databinding.AdapterAndroidBinding;
 import com.gank.gankly.databinding.AdapterIosBinding;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
@@ -31,26 +30,17 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> {
-    public static final int LAYOUT_Android = 1;
-    public static final int LAYOUT_IOS = 2;
-
     private final List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
-    public final int mLayout;
 
     private int mImageSize;
     private List<ResultsBean> mImagesList;
 
     public IosAdapter(Context context) {
-        this(context, LAYOUT_Android);
-    }
-
-    public IosAdapter(Context context, int type) {
         setHasStableIds(true);
         mResults = new ArrayList<>();
         mContext = context;
-        mLayout = type;
     }
 
     @Override
@@ -92,16 +82,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
 
     private View getLayoutView(ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        int resLayout;
-        switch (mLayout) {
-            case LAYOUT_IOS:
-                resLayout = R.layout.adapter_ios;
-                break;
-            default:
-                resLayout = R.layout.adapter_android;
-                break;
-        }
-        return layoutInflater.inflate(resLayout, parent, false);
+        return layoutInflater.inflate(R.layout.adapter_ios, parent, false);
     }
 
     @Override
@@ -136,12 +117,10 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
     }
 
     public class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.adapter_ios_ratio_img_head)
+        @BindView(R.id.ios_ratio_img_head)
         RatioImageView imgHead;
 
         private ResultsBean mBean;
-
-        private AdapterAndroidBinding mAndroidBinding;
         private AdapterIosBinding mIosBinding;
 
         public GankViewHolder(View itemView) {
@@ -155,11 +134,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
             Date date = DateUtils.formatDateFromStr(resultsBean.getPublishedAt());
             String formatDate = DateUtils.getFormatDate(date, DateUtils.TYPE_DD);
             resultsBean.setPublishedAt(formatDate);
-            if (mLayout == LAYOUT_Android) {
-                mAndroidBinding.setResult(resultsBean);
-            } else {
-                mIosBinding.setResult(resultsBean);
-            }
+            mIosBinding.setResult(resultsBean);
         }
 
         @Override
@@ -170,11 +145,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
         }
 
         private void bindView(View itemView) {
-            if (mLayout == LAYOUT_Android) {
-                mAndroidBinding = DataBindingUtil.bind(itemView);
-            } else {
-                mIosBinding = DataBindingUtil.bind(itemView);
-            }
+            mIosBinding = DataBindingUtil.bind(itemView);
         }
     }
 }

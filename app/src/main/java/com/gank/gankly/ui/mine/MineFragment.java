@@ -94,7 +94,7 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         if (isChecked) {
             mActivity.setTheme(R.style.AppTheme_Night);
         } else {
-            mActivity.setTheme(R.style.AppTheme_Day);
+            mActivity.setTheme(R.style.AppTheme_light);
         }
         themeSwitch.setChecked(isChecked);
         RxBus_.getInstance().post(new ThemeEvent(isChecked));

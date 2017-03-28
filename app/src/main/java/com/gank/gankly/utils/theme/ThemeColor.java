@@ -23,8 +23,9 @@ import java.util.List;
 public final class ThemeColor {
     @NonNull
     private Activity mActivity;
-    private List<TextViewBean> tvList = new ArrayList<>();
-    private List<ViewResorceBean> mBackGroundView = new ArrayList<>();
+    private List<TextViewResorce> tvList = new ArrayList<>();
+    private List<TextViewResorce> textViewSizeList = new ArrayList<>();
+    private List<ViewResorce> mViewResorceList = new ArrayList<>();
     private RecyclerViewColor mRecyclerViewColor;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -40,11 +41,11 @@ public final class ThemeColor {
         mActivity.setTheme(resId);
     }
 
-    public ThemeColor textViewColor(int resId, @NonNull TextView... args) {
+    public ThemeColor setTextViewColor(int resId, @NonNull TextView... args) {
         if (args.length != 0) {
             int color = getResourceData(resId);
             for (TextView textView : args) {
-                tvList.add(new TextViewBean(color, textView));
+                tvList.add(new TextViewResorce(color, textView));
             }
         }
         return this;
@@ -57,11 +58,21 @@ public final class ThemeColor {
      * @param args  控件
      * @return ThemeColor
      */
-    public ThemeColor backgroundResource(int arrId, @NonNull View... args) {
+    public ThemeColor setBackgroundResource(int arrId, @NonNull View... args) {
         if (args.length != 0) {
             int resource = getResourceId(arrId);
             for (View view : args) {
-                mBackGroundView.add(new ViewResorceBean(resource, view));
+                mViewResorceList.add(new ViewResorce(resource, view));
+            }
+        }
+        return this;
+    }
+
+    public ThemeColor setTextViewSize(int resId, @NonNull TextView... args) {
+        if (args.length != 0) {
+            int size = getResourceId(resId);
+            for (TextView view : args) {
+                textViewSizeList.add(new TextViewResorce(size, view));
             }
         }
         return this;
@@ -94,7 +105,7 @@ public final class ThemeColor {
      */
     public void start() {
         changeTextColor();
-        changeBackGround();
+        changeBackground();
         if (mSwipeRefreshLayout != null) {
             changeSwipeRefreshLayout(mSwipeRefreshLayout);
         }
@@ -105,20 +116,20 @@ public final class ThemeColor {
     }
 
     private void changeTextColor() {
-        TextViewBean textViewBean;
+        TextViewResorce textViewResorce;
         TextView textView;
         for (int i = 0; i < tvList.size(); i++) {
-            textViewBean = tvList.get(i);
-            textView = textViewBean.getTextView();
-            textView.setTextColor(textViewBean.getResId());
+            textViewResorce = tvList.get(i);
+            textView = textViewResorce.getTextView();
+            textView.setTextColor(textViewResorce.getResId());
         }
     }
 
-    private void changeBackGround() {
-        ViewResorceBean back;
+    private void changeBackground() {
+        ViewResorce back;
         View view;
-        for (int i = 0; i < mBackGroundView.size(); i++) {
-            back = mBackGroundView.get(i);
+        for (int i = 0; i < mViewResorceList.size(); i++) {
+            back = mViewResorceList.get(i);
             view = back.getBackGroundView();
             view.setBackgroundResource(back.getResId());
         }
@@ -126,6 +137,8 @@ public final class ThemeColor {
 
     private void clean() {
         tvList.clear();
+        mViewResorceList.clear();
+        textViewSizeList.clear();
         mSwipeRefreshLayout = null;
     }
 
