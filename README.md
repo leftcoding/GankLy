@@ -6,7 +6,7 @@
 
 ### 前言
 
-一款包含知识干货、视频、新鲜事、妹子、搞笑等应用，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava + Rxbus + butterknife。
+应用含有知识干货、新鲜事、妹子、搞笑视频、图片、科技资讯等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava + Rxbus + butterknife。
 
 
 ### 安装包 
