@@ -23,6 +23,9 @@
 ![image](art/8.png)
 ![image](art/9.png)
 
+### Gif
+![image](art/1.gif)
+
 ### 技术、第三方库
 * MVP（MVP 模式）
 * Retrofit2（Retrofit 网络请求的框架）

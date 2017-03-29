@@ -85,7 +85,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return position + 10000;
     }
 
     private class DriverViewTarget extends BitmapImageViewTarget {
