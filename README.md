@@ -9,6 +9,18 @@
 本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教！ </br>
 _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19。有任何问题，请联系我。_
 
+### 安装包 
+<a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
+
+### 应用截图
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_0.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_1.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_2.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_3.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_4.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_5.png)
+![image](https://github.com/leftcoding/GankLy/raw/master/art/image_6.png)
+
 ### 技术、第三方库
 * MVP（MVP 模式）
 * Retrofit2（Retrofit 网络请求的框架）
@@ -24,9 +36,6 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * Superplayerlibrary （视频播放库）
 * Bottom-bar （底部导航栏）
 * Okhttp3 （网络请求库）
-
-### 安装包 
-<a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
 
 ### 联系方式
 137387869@qq.com
@@ -55,15 +64,6 @@ _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19
 * 程序员大（ni）福（dong）利（de） 美しい妹
 * 收藏
 * 关于
-
-### 应用截图
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_0.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_1.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_2.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_3.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_4.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_5.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_6.png)
 
 ### 感谢
 * @代码家 提供接口
