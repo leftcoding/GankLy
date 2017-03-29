@@ -6,8 +6,8 @@
 
 ### 前言
 
-本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教！ </br>
-_提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19。有任何问题，请联系我。_
+一款包含知识干货、视频、新鲜事、妹子、搞笑等应用，图片来源于![妹子图](http://www.mzitu.com/)，图标来源于![阿里巴巴矢量图](http://iconfont.cn/)，项目采用mvp-clean架构，基于 Glide + retrofit2 + rxjava + Rxbus + butterknife。
+
 
 ### 安装包 
 <a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
