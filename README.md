@@ -1,4 +1,11 @@
-### Gank
+# Gank
+
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/leftcoding/GankLy#声明)
+[![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
+[![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=21)
+
+### 前言
+
 本应用是一个知识点、视频、杂谈、妹子等福利分享，基于学习和分享的应用，请多指教！ </br>
 _提示:应用最低版本 5.0 系统，4.0以下请自行修改minSdkVersion 19。有任何问题，请联系我。_
 
