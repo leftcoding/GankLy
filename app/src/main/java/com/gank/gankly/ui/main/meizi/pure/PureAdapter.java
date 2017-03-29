@@ -30,6 +30,7 @@ public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder
     private Context mContext;
 
     public PureAdapter(Context context) {
+        setHasStableIds(true);
         mResults = new ArrayList<>();
         mContext = context;
     }
@@ -58,6 +59,11 @@ public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder
     @Override
     public int getItemCount() {
         return mResults.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override

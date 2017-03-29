@@ -126,7 +126,6 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     private void initRecycler() {
         mAdapter = new PureAdapter(mActivity);
-        mAdapter.setHasStableIds(true);//设置唯一标识，防止adapter部分刷新闪屏
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();

@@ -25,6 +25,7 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
     private List<DailyMeiziBean> mDailyMeiziBeanList;
 
     public DailyMeiziAdapter() {
+        setHasStableIds(true);
         mDailyMeiziBeanList = new ArrayList<>();
     }
 
@@ -50,6 +51,11 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
     @Override
     public int getItemCount() {
         return mDailyMeiziBeanList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public void updateItem(List<DailyMeiziBean> dailyMeiziBeanList) {
