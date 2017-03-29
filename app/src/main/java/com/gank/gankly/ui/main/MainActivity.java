@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.RxBus.RxBus_;
@@ -173,8 +174,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         KLog.d("onStart");
-//        getWindow().
-//                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+        //防止底部导航栏会下移
+        getWindow().
+                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         super.onStart();
     }
 

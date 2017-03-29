@@ -6,20 +6,22 @@
 
 ### 前言
 
-应用含有知识干货、新鲜事、妹子、搞笑视频、图片、科技资讯等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava2 + Rxbus + butterknife。
+应用含有知识干货、新鲜事、妹子、科技资讯，搞笑视频和图片，动态更新皮肤等，图片来源于<a href="http://www.mzitu.com/">妹子图</a>，图标来源于<a href="http://iconfont.cn/">阿里巴巴矢量图</a>，项目采用 mvp-clean 架构，基于 Glide + retrofit2 + rxjava2 + Rxbus + butterknife。
 
 
 ### 安装包 
 <a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
 
 ### 应用截图
-![图1](https://github.com/leftcoding/GankLy/raw/master/art/image_0.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_1.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_2.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_3.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_4.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_5.png)
-![image](https://github.com/leftcoding/GankLy/raw/master/art/image_6.png)
+![image](art/1.png)
+![image](art/2.png)
+![image](art/3.png)
+![image](art/4.png)
+![image](art/5.png)
+![image](art/6.png)
+![image](art/7.png)
+![image](art/8.png)
+![image](art/9.png)
 
 ### 技术、第三方库
 * MVP（MVP 模式）
