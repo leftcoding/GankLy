@@ -168,11 +168,8 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         Intent intent = new Intent(mActivity, GalleryActivity.class);
         intent.putExtra(GalleryActivity.TYPE, 1);
         intent.putExtras(bundle);
-
         ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity);
         mActivity.startActivity(intent, activityOptionsCompat.toBundle());
-//        mActivity.startActivity(intent);
-//        CircularAnimUtils.startActivity(mActivity, intent, view, R.color.color_2f);
 
     }
 

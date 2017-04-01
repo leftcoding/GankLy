@@ -14,6 +14,7 @@ import butterknife.BindView;
 /**
  * 图片浏览
  * Create by LingYan on 2016-12-19
+ * Email:137387869@qq.com
  */
 public class GalleryFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
     public static final String IMAGE_URL = "Image_Url";

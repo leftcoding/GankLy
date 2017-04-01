@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus;
+package com.gank.gankly.rxjava;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -245,7 +245,7 @@ public class LxBus {
         if (methods != null && methods.size() > 0) {
             for (SubscriberMethod subscriberMethod : methods) {
 
-                com.gank.gankly.RxBus.Subscribe sub = subscriberMethod.method.getAnnotation(Subscribe.class);
+                com.gank.gankly.rxjava.Subscribe sub = subscriberMethod.method.getAnnotation(Subscribe.class);
                 int c = sub.code();
                 if (c == code) {
                     subscriberMethod.invoke(object);

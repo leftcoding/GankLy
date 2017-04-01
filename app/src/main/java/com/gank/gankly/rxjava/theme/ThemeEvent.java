@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus.Theme;
+package com.gank.gankly.rxjava.theme;
 
 /**
  * Create by LingYan on 2016-09-02

@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus;
+package com.gank.gankly.rxjava;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

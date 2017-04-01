@@ -10,8 +10,8 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.discovered.DiscoveredFragment;
 import com.gank.gankly.ui.main.meizi.GirlsFragment;
@@ -20,7 +20,6 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.utils.permission.PermissionUtils;
 import com.roughike.bottombar.BottomBar;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,7 +149,7 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (mIndex == 3) {
+            if (mIndex != 0) {
                 mBottomBar.selectTabAtPosition(0);
                 return false;
             } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
@@ -173,7 +172,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onStart() {
-        KLog.d("onStart");
         //防止底部导航栏会下移
         getWindow().
                 getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
@@ -181,55 +179,18 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        KLog.d("onResume");
-        super.onResume();
-    }
-
-    @Override
-    protected void onRestart() {
-        KLog.d("onRestart");
-        super.onRestart();
-    }
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        KLog.d("onCreate");
         if (savedInstanceState != null) {
             isRestore = savedInstanceState.getBoolean("isRestore");
             mIndex = savedInstanceState.getInt("index");
         }
-        KLog.d("isRestore:" + isRestore + "，mIndex：" + mIndex);
         super.onCreate(savedInstanceState);
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        KLog.d("onRestoreInstanceState");
-//        if (savedInstanceState != null) {
-//            isRestore = savedInstanceState.getBoolean("isRestore");
-//        }
-//        KLog.d("isRestore:" + isRestore);
-//        super.onRestoreInstanceState(savedInstanceState);
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        KLog.d("onSaveInstanceState");
         outState.putBoolean("isRestore", true);
         outState.putInt("index", mIndex);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onPause() {
-        KLog.d("onPause");
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        KLog.d("onStop");
-        super.onStop();
     }
 }

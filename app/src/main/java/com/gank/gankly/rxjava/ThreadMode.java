@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus;
+package com.gank.gankly.rxjava;
 
 public enum  ThreadMode {
 

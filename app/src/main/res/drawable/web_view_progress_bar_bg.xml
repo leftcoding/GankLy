@@ -3,7 +3,6 @@
     <!--  设置背景色（透明）  -->
     <item android:id="@android:id/background">
         <shape>
-            <!--     <corners android:radius="5dip" />                  -->
             <gradient
                 android:startColor="#00000000"
                 android:endColor="#00000000" />
@@ -14,10 +13,9 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <!--         <corners android:radius="5dip" />                   -->
                 <gradient
-                    android:startColor="#ff7373"
-                    android:endColor="#ff7373" />
+                    android:startColor="?attr/colorAccent"
+                    android:endColor="?attr/colorAccent" />
             </shape>
         </clip>
     </item>

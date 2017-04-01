@@ -292,6 +292,10 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             if (mWebView != null && mWebView.canGoBack()) {
                 mWebView.goBack();
                 return true;
+            } else {
+                finish();
+                overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
+                return true;
             }
         }
         return super.onKeyDown(keyCode, event);

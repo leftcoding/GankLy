@@ -31,7 +31,7 @@
     <string name="loading_empty">暂无数据</string>
     <string name="loading_meizi_images">正在解析图片地址</string>
     <string name="loading_network_failure">Wi-Fi和移动数据已断开</string>
-    <string name="loading_no_more">全部加载完毕</string>
+    <string name="loading_all_over">全部加载完毕</string>
 
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
@@ -97,4 +97,5 @@
     <string name="x5_update_note">更新提示</string>
 
     <string name="gallery_page_select">选择页数</string>
+    <string name="gralley_auto_tip">已开启自动浏览模式</string>
 </resources>

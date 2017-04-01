@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
@@ -28,7 +27,6 @@ import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +68,10 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
         mDailyMeiziAdapter = new DailyMeiziAdapter();
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
+        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
-        mSwipeRefreshLayout.setRefreshing(false);
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        setSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
             @Override
             public void onLoadMore() {
-                //empty
+                mPresenter.fetchMore();
             }
         });
 
@@ -191,14 +187,13 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     public void showLoading() {
-
+        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void onClick(int position, Object object) {
         DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
         String url = dailyMeiziBean.getUrl();
-        KLog.d("url:" + url);
         if (!TextUtils.isEmpty(url)) {
             showLoadingDialog();
             mPresenter.girlsImages(url);
@@ -214,13 +209,16 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     @Override
     public void refillData(List<DailyMeiziBean> list) {
-        mDailyMeiziAdapter.updateItem(list);
+        mDailyMeiziAdapter.refillItem(list);
+    }
+
+    @Override
+    public void appendItem(List<DailyMeiziBean> list) {
+        mDailyMeiziAdapter.appendItem(list);
     }
 
     @Override

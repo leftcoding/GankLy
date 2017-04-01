@@ -17,6 +17,8 @@ public interface DailyMeiziContract {
     interface View extends IFetchView {
         void refillData(List<DailyMeiziBean> list);
 
+        void appendItem(List<DailyMeiziBean> list);
+
         void setMaxProgress(int value);
 
         void disProgressDialog();

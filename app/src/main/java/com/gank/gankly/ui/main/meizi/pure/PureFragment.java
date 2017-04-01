@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.TypedValue;
@@ -15,8 +16,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
@@ -73,9 +74,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     protected void initValues() {
         initRefresh();
         RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    changeUi();
-                });
+                .subscribe(themeEvent -> changeUi());
     }
 
     @Override
@@ -177,9 +176,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
                 .throttleFirst(100, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(giftBean1 -> {
-                    mPresenter.fetchImages(giftBean1.getUrl());
-                });
+                .subscribe(giftBean1 -> mPresenter.fetchImages(giftBean1.getUrl()));
     }
 
     public List<GiftBean> getList() {
@@ -266,7 +263,9 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        mActivity.startActivity(intent);
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(mActivity,
+                R.anim.alpha_in, R.anim.alpha_out);
+        mActivity.startActivity(intent, compat.toBundle());
     }
 
     @Override

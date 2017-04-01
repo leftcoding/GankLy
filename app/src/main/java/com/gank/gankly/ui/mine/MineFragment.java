@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus_;
-import com.gank.gankly.RxBus.Theme.ThemeEvent;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.more.MoreActivity;

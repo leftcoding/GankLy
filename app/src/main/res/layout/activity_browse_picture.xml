@@ -17,16 +17,19 @@
         android:fitsSystemWindows="true" />
 
     <RelativeLayout
+        android:id="@+id/browse_rl_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/item_author_bg">
 
         <TextView
             android:id="@+id/progress_txt_page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="?attr/selectableItemBackground"
             android:gravity="center"
             android:padding="6dp"
             android:text="@string/meizi_limit_page"
@@ -35,12 +38,28 @@
 
         <ImageView
             android:id="@+id/brose_img_auto"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            style="@style/Widget.AppCompat.ActionButton.Overflow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/ic_gallery_play"
-            android:contentDescription="@null" />
+            android:background="?actionBarItemBackground"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_gallery_play" />
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/browse_txt_auto_tip"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_above="@id/browse_rl_navigation"
+        android:layout_marginEnd="-180dp"
+        android:layout_toEndOf="@id/browse_rl_navigation"
+        android:background="@drawable/item_author_bg"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/gralley_auto_tip"
+        android:textColor="?attr/colorAccent"
+        android:textSize="@dimen/normalSize" />
 </RelativeLayout>

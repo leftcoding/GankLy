@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.gank.gankly.R;
-import com.gank.gankly.RxBus.RxBus_;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;

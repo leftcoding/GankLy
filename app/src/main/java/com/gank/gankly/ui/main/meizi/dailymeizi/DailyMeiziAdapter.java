@@ -58,10 +58,16 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         return position;
     }
 
-    public void updateItem(List<DailyMeiziBean> dailyMeiziBeanList) {
+    public void refillItem(List<DailyMeiziBean> dailyMeiziBeanList) {
+        int size = mDailyMeiziBeanList.size();
         mDailyMeiziBeanList.clear();
+        notifyItemRangeRemoved(0, size);
+        appendItem(dailyMeiziBeanList);
+    }
+
+    public void appendItem(List<DailyMeiziBean> dailyMeiziBeanList) {
         mDailyMeiziBeanList.addAll(dailyMeiziBeanList);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(getItemCount(), dailyMeiziBeanList.size());
     }
 
     public class DailyMeiziHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

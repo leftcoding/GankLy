@@ -153,7 +153,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void hasNoMoreDate() {
-        Snackbar.make(mSwipeRefreshLayout, R.string.loading_no_more, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mSwipeRefreshLayout, R.string.loading_all_over, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override

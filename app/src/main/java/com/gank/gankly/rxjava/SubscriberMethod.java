@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus;
+package com.gank.gankly.rxjava;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

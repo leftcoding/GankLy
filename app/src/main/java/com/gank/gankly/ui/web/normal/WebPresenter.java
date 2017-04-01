@@ -2,7 +2,7 @@ package com.gank.gankly.ui.web.normal;
 
 import android.support.annotation.NonNull;
 
-import com.gank.gankly.RxBus.RxBus_;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;

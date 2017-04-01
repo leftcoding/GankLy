@@ -138,7 +138,7 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
 
     @Override
     public void hasNoMoreDate() {
-        Snackbar.make(mCoordinatorLayout, R.string.loading_no_more, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(mCoordinatorLayout, R.string.loading_all_over, Snackbar.LENGTH_LONG).show();
     }
 
     @Override

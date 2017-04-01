@@ -11,6 +11,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,6 +34,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     private long mLastTime;
     protected P mPresenter;
     protected Unbinder mUnBinder;
+    FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +47,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initViews();
         bindListener();
         changeThemes();
+        mFragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
     }
 
     public void changeThemes() {
@@ -67,6 +73,35 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {
         addHideFragment(from, to, contentAreaId, null, tag, isAnim);
+    }
+
+    public void transitionHideFragment(Fragment from, Fragment to, int contentAreaId,
+                                       Bundle bundle, String tag, Pair<View, String> transitionViews) {
+        if (isOpenMore()) {
+            return;
+        }
+
+        from = checkNull(from);
+        to = checkNull(to);
+        transitionViews = checkNull(transitionViews);
+
+        Transition imageTransition = TransitionInflater.from(this).inflateTransition(R.transition.image_transfom);
+        mFragmentTransaction.addSharedElement(transitionViews.first, transitionViews.second);
+        to.setSharedElementEnterTransition(imageTransition);
+        to.setSharedElementReturnTransition(imageTransition);
+
+        if (bundle != null) {
+            to.setArguments(bundle);
+        }
+
+        if (!TextUtils.isEmpty(tag)) {
+            mFragmentTransaction.addToBackStack(tag);
+        }
+
+        mFragmentTransaction
+                .hide(from)
+                .add(contentAreaId, to, tag)
+                .commitAllowingStateLoss();
     }
 
     public void addHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -101,6 +136,20 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
                         .commitAllowingStateLoss();
             }
         }
+    }
+
+    private Fragment checkNull(Fragment o) {
+        if (o == null) {
+            throw new NullPointerException("fragment is null");
+        }
+        return o;
+    }
+
+    private Pair<View, String> checkNull(Pair<View, String> o) {
+        if (o == null) {
+            throw new NullPointerException("Pair is null");
+        }
+        return o;
     }
 
     public void addToBackFragment(Fragment fragment, @Nullable String tag) {

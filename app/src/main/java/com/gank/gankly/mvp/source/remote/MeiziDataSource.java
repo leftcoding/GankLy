@@ -21,8 +21,6 @@ import io.reactivex.ObservableOnSubscribe;
  */
 
 public class MeiziDataSource extends BaseDataSourceModel {
-    private static final String MEIZI_DAILY_URL = "http://m.mzitu.com/all";
-
     @Nullable
     private static MeiziDataSource mInstance = null;
 
@@ -65,12 +63,12 @@ public class MeiziDataSource extends BaseDataSourceModel {
     /**
      * 获取每日更新妹子天数
      */
-    public Observable<Document> fetchDaily() {
+    public Observable<Document> fetchDaily(final String url) {
         return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
             @Override
             public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
                 try {
-                    Document doc = Jsoup.connect(MEIZI_DAILY_URL)
+                    Document doc = Jsoup.connect(url)
                             .ignoreContentType(true)
                             .userAgent(USERAGENT)
                             .timeout(TIME_OUT)

@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.facebook.stetho.Stetho;
-import com.gank.gankly.RxBus.RxBus_;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.data.DaoMaster;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.smtt.sdk.QbSdk;

@@ -45,7 +45,7 @@ public class ApiManager {
 //                        .header("Content-Type", "application/json")
 //                        .header("Cache-Control", "public, max-age=" + 60 * 60 * 4)
 //                        .build();
-//                KLog.d(chain.proceed(request).body().string());
+//                KLog.d("--api--" + chain.proceed(request).body().string());
 //                return chain.proceed(request);
 //            }
 //        });

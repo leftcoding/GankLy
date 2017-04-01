@@ -1,4 +1,4 @@
-package com.gank.gankly.RxBus;
+package com.gank.gankly.rxjava;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

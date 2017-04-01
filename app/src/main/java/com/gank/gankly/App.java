@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.gank.gankly.RxBus.RxBus_;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;

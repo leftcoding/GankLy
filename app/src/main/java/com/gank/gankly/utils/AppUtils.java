@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.DisplayMetrics;
 
 import com.gank.gankly.App;
@@ -78,5 +79,9 @@ public class AppUtils {
     public static int getDisplayHeight() {
         DisplayMetrics dm = App.getGankContext().getResources().getDisplayMetrics();
         return dm.heightPixels;
+    }
+
+    public static String getDeviceName() {
+        return Build.BRAND + Build.MODEL;
     }
 }
