@@ -64,7 +64,7 @@
         <activity
             android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="landscape" />
         <activity
             android:name=".ui.more.MoreActivity"
             android:launchMode="singleTask"

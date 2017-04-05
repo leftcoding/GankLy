@@ -226,8 +226,8 @@ public class WebVideoViewActivity extends BaseActivity {
 
     @Override
     protected void onPause() {
-        super.onPause();
         mWebView.onPause();
+        super.onPause();
     }
 
     @Override
