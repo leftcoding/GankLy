@@ -7,14 +7,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.ui.discovered.DiscoveredFragment;
-import com.gank.gankly.ui.main.meizi.GirlsFragment;
+import com.gank.gankly.ui.girls.GirlsFragment;
 import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -173,8 +172,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         //防止底部导航栏会下移
-        getWindow().
-                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+//        getWindow().
+//                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
         super.onStart();
     }
 

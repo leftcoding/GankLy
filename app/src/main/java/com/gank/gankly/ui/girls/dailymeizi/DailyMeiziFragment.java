@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.dailymeizi;
+package com.gank.gankly.ui.girls.dailymeizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -84,7 +84,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
 

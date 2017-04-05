@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.pure;
+package com.gank.gankly.ui.girls.pure;
 
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.IFetchPresenter;

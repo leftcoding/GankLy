@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.welfare;
+package com.gank.gankly.ui.main.welfare;
 
 import android.content.Context;
 import android.content.Intent;

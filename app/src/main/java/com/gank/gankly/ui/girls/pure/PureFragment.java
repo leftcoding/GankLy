@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.pure;
+package com.gank.gankly.ui.girls.pure;
 
 import android.app.ProgressDialog;
 import android.content.Context;

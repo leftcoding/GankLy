@@ -565,63 +565,6 @@ public class JiandanWebActivity extends BaseActivity {
         }
     }
 
-//    public class MyWebViewClient extends android.webkit.WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            if (!TextUtils.isEmpty(url)) {
-//                mWebView.loadUrl(url);
-//            }
-//            return true;
-//        }
-//
-//        @Override
-//        public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-//            return super.shouldInterceptRequest(view, request);
-//        }
-//
-//        @Override
-//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            super.onPageStarted(view, url, favicon);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//            super.onPageFinished(view, url);
-//            mHistory = url;
-//            if (!mStrings.contains(url)) {
-//                mStrings.add(url);
-//            }
-//        }
-//    }
-//
-//    public class MyWebChromeClient extends android.webkit.WebChromeClient {
-//        @Override
-//        public void onProgressChanged(WebView view, int newProgress) {
-//            if (mProgressBar == null) {
-//                return;
-//            }
-//            mProgressBar.setProgress(newProgress);
-//
-//            if (newProgress == 100) {
-//                mProgressBar.setVisibility(View.GONE);
-//            } else {
-//                mProgressBar.setVisibility(View.VISIBLE);
-//            }
-//            super.onProgressChanged(view, newProgress);
-//        }
-//
-//        @Override
-//        public void onReceivedTitle(WebView view, String title) {
-//            super.onReceivedTitle(view, title);
-//
-//        }
-//
-//        @Override
-//        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-//            return true;
-//        }
-//    }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -629,9 +572,6 @@ public class JiandanWebActivity extends BaseActivity {
             collectUrl();
         } else if (mStates == CollectStates.UN_COLLECT) {
             cancelCollect();
-//            if (mFromWay == FROM_COLLECT) {
-//                RxUtils.getInstance().OnUnCollect();
-//            }
         }
     }
 

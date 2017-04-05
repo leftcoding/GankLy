@@ -137,7 +137,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
 
         public void bind(ResultsBean resultsBean) {
             Date date = DateUtils.formatDateFromStr(resultsBean.getPublishedAt());
-            String formatDate = DateUtils.getFormatDate(date, DateUtils.TYPE_DD);
+            String formatDate = DateUtils.getFormatDate(date, DateUtils.MM_DD);
             resultsBean.setPublishedAt(formatDate);
             mAndroidBinding.setResult(resultsBean);
         }

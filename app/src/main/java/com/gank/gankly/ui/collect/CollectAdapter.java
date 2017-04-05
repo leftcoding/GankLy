@@ -50,7 +50,7 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
         holder.title.setText(urlCollect.getComment());
         Date date = urlCollect.getDate();
 
-        holder.time.setText(DateUtils.getFormatDate(date, DateUtils.TYPE_TWO));
+        holder.time.setText(DateUtils.getFormatDate(date, DateUtils.YY_MM_DD_));
         holder.type.setText(urlCollect.getG_type());
         holder.author.setText(urlCollect.getG_author());
 

@@ -15,9 +15,9 @@ import java.util.TimeZone;
  */
 public class DateUtils {
     private static final String GMT_8 = "GMT+8";
-    public static final String TYPE_ONE = "yyyy/MM/dd";
-    public static final String TYPE_TWO = "yyyy-MM-dd";
-    public static final String TYPE_DD = "MM-dd";
+    public static final String YY_MM_DD = "yyyy/MM/dd";
+    public static final String YY_MM_DD_ = "yyyy-MM-dd";
+    public static final String MM_DD = "MM-dd";
 
 
     public static String getFormatDateStr(final Date date) {
@@ -36,7 +36,7 @@ public class DateUtils {
         try {
             sdf = new SimpleDateFormat(type, Locale.SIMPLIFIED_CHINESE);
         } catch (Exception e) {
-            sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.SIMPLIFIED_CHINESE);
+            sdf = new SimpleDateFormat(YY_MM_DD_, Locale.SIMPLIFIED_CHINESE);
         }
         TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
         sdf.setTimeZone(timeZone);

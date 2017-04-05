@@ -8,7 +8,7 @@ import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.utils.SpaceItemDecoration;
+import com.gank.gankly.widget.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 

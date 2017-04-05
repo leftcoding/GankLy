@@ -19,6 +19,9 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- Bugly end -->
 
+    <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -61,7 +64,7 @@
         <activity
             android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.more.MoreActivity"
             android:launchMode="singleTask"

@@ -10,7 +10,7 @@ import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.utils.SpaceItemDecoration;
+import com.gank.gankly.widget.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 

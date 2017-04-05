@@ -1,12 +1,10 @@
-package com.gank.gankly.ui.main.meizi.dailymeizi;
+package com.gank.gankly.ui.girls.dailymeizi;
 
-import com.gank.gankly.R;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.utils.ListUtils;
-import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;
@@ -25,7 +23,6 @@ import io.reactivex.disposables.Disposable;
 
 public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziContract.Presenter {
     private static final String MEIZI_FIRST_URL = "http://m.mzitu.com/all";
-    private static final String MEIZI_SECOND_URL = "http://m.mzitu.com/page/";
     private final MeiziDataSource mTask;
     private final DailyMeiziContract.View mModelView;
     private ArrayList<GiftBean> imagesList;
@@ -44,13 +41,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
     @Override
     public void fetchMore() {
-        if (hasMore()) {
-            mModelView.showLoading();
-            String url = MEIZI_SECOND_URL + getFetchPage();
-            fetchData(url);
-        } else {
-            ToastUtils.showToast(R.string.loading_all_over);
-        }
+        //empty
     }
 
     private void fetchData(String url) {
@@ -186,12 +177,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
             List<DailyMeiziBean> list = getDays(document);
             list = filterData(list, mModelView);
             if (ListUtils.getListSize(list) > 0) {
-                int page = getFetchPage();
-                if (page == 1) {
-                    mModelView.refillData(list);
-                } else {
-                    mModelView.appendItem(list);
-                }
+                mModelView.refillData(list);
             }
         }
     }
@@ -202,13 +188,15 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
     private List<DailyMeiziBean> getDays(Document doc) {
         List<DailyMeiziBean> list = new ArrayList<>();
         if (doc != null) {
-            Elements a_href = doc.select(".place-padding h2 a");
+            Elements times = doc.select(".post-content .archive-brick");
+            Elements a_href = doc.select(".post-content .archive-brick a");
             for (int i = 0; i < a_href.size(); i++) {
-                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), a_href.get(i).text()));
+                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), times.get(i).text()));
             }
         }
         return list;
     }
+
 
     private int getImageUrlsMax(Document doc) {
         int max = 0;

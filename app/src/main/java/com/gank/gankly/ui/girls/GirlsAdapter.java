@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi;
+package com.gank.gankly.ui.girls;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

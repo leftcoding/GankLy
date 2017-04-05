@@ -122,7 +122,7 @@ dependencies {
     //Bugly
     compile 'com.tencent.bugly:crashreport:2.1.9'
     //底部导航
-    compile 'com.roughike:bottom-bar:2.0.2'
+    compile 'com.roughike:bottom-bar:2.2.0'
     //视频库
     compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
     //大图库

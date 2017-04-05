@@ -1,4 +1,4 @@
-package com.gank.gankly.utils;
+package com.gank.gankly.widget;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

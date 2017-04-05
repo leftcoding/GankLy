@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.dailymeizi;
+package com.gank.gankly.ui.girls.dailymeizi;
 
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;

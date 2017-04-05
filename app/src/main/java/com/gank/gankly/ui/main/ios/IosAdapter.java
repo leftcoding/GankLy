@@ -132,7 +132,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
 
         public void bind(ResultsBean resultsBean) {
             Date date = DateUtils.formatDateFromStr(resultsBean.getPublishedAt());
-            String formatDate = DateUtils.getFormatDate(date, DateUtils.TYPE_DD);
+            String formatDate = DateUtils.getFormatDate(date, DateUtils.MM_DD);
             resultsBean.setPublishedAt(formatDate);
             mIosBinding.setResult(resultsBean);
         }

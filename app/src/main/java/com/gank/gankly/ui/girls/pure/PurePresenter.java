@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.meizi.pure;
+package com.gank.gankly.ui.girls.pure;
 
 import android.text.TextUtils;
 

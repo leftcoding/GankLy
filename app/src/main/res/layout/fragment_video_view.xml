@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <com.gank.gankly.widget.LoveVideoView
-        android:id="@+id/video_view"
-        android:layout_width="match_parent"
+    <com.gank.gankly.ui.web.X5WebView
+        android:id="@+id/web_video"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"/>
-</LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/web_progress_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:maxHeight="5dip"
+        android:minHeight="5dip"
+        android:progress="0"
+        android:progressDrawable="@drawable/web_view_progress_bar_bg" />
+</RelativeLayout>
