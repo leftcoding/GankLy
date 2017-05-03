@@ -4,17 +4,28 @@ package com.gank.gankly.bean;
  * Create by LingYan on 2016-06-01
  */
 public class CheckVersion {
+    private boolean must;
     private int code;
     private String version;
     private String url;
     private String changelog;
+    private long appLength;
+    private String appSize;
+
+    public boolean isMust() {
+        return must;
+    }
+
+    public String getAppSize() {
+        return appSize;
+    }
+
+    public long getAppLength() {
+        return appLength;
+    }
 
     public String getChangelog() {
         return changelog;
-    }
-
-    public void setChangelog(String changelog) {
-        this.changelog = changelog;
     }
 
     public int getCode() {

@@ -12,7 +12,8 @@ import retrofit2.http.Streaming;
  */
 public interface DownloadService {
     @Streaming
-    @GET("gankly.apk")
+//    @GET("gankly.apk")
+    @GET("")
     Observable<ResponseBody> downloadApk();
 
     @GET("checkVersion.json")

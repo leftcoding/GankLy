@@ -8,9 +8,9 @@ import com.gank.gankly.bean.CheckVersion;
 public interface ILauncher extends IBaseView {
     void callUpdate(CheckVersion checkVersion);
 
-    void noNewVersion();
-
     void showDialog();
+
+    void noNewVersion();
 
     void hiddenDialog();
 }

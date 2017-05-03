@@ -3,12 +3,15 @@
     <color name="black">#ff000000</color>
     <color name="white">#ffffffff</color>
     <color name="transparent">#00000000</color>
-
+    <!-- 全局颜色 start-->
+    <color name="image_default_bg">#E0E0DF</color>
+    <color name="image_default_text">#CACACA</color>
     <color name="text_default">#ff2F2F2F</color>
-    <color name="text_999999">#ff999999</color>
+    <color name="text_999999">#999999</color>
     <color name="text_555555">#ff555555</color>
     <color name="text_666666">#666666</color>
-
+    <color name="text_333333">#333333</color>
+    <!-- 全局颜色 end-->
     <color name="dark_color">#ff00A0DC</color>
 
     <color name="color_2f">#ff2f2f2f</color>

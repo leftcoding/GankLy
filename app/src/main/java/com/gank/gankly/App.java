@@ -5,16 +5,18 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
+import static com.gank.gankly.utils.GanklyPreferences.getBoolean;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -27,6 +29,9 @@ public class App extends Application {
     private static boolean isNight;
 
     private RefWatcher mRefWatcher;
+
+    public App() {
+    }
 
     @Override
     public void onCreate() {
@@ -42,8 +47,10 @@ public class App extends Application {
         mRefWatcher = LeakCanary.install(this);
         // leakCanary -- end
 
-        InitializeService.start(getApplicationContext());
         initPreferences();
+
+        InitializeService.start(getApplicationContext());
+
         RxBus_.getInstance().toObservable(SQLiteDatabase.class)
                 .subscribe(sqLiteDatabase -> {
                     if (sqLiteDatabase != null) {
@@ -61,7 +68,7 @@ public class App extends Application {
             GanklyPreferences.putInt(Preferences.APP_VERSION, PREFERENCES_VERSION);
         }
 
-        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
+        isNight = getBoolean(SettingFragment.IS_NIGHT, false);
     }
 
     @Override

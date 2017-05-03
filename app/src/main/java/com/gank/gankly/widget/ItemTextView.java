@@ -50,12 +50,12 @@ public class ItemTextView extends RelativeLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view, this);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemTextView);
         try {
-            mTitle = array.getString(R.styleable.ItemTextView_TextTitle);
-            mSummary = array.getString(R.styleable.ItemTextView_TextSummary);
-            mTitleSize = array.getInteger(R.styleable.ItemTextView_TextTitleSize, 14);
-            mSummarySize = array.getInteger(R.styleable.ItemTextView_TextSummarySize, 12);
-            mTitleColor = array.getColor(R.styleable.ItemTextView_TextTitleColor, App.getAppColor(R.color.text_default));
-            mSummaryColor = array.getColor(R.styleable.ItemTextView_TextSummaryColor, App.getAppColor(R.color.text_999999));
+            mTitle = array.getString(R.styleable.ItemTextView_textTitle);
+            mSummary = array.getString(R.styleable.ItemTextView_textSummary);
+            mTitleSize = array.getInteger(R.styleable.ItemTextView_textTitleSize, 14);
+            mSummarySize = array.getInteger(R.styleable.ItemTextView_textSummarySize, 12);
+            mTitleColor = array.getColor(R.styleable.ItemTextView_textTitleColor, App.getAppColor(R.color.text_default));
+            mSummaryColor = array.getColor(R.styleable.ItemTextView_textSummaryColor, App.getAppColor(R.color.text_999999));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

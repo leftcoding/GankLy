@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/layout_bar"/>
+    <include layout="@layout/layout_bar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,25 +24,30 @@
             <com.gank.gankly.widget.ItemSwitchView
                 android:id="@+id/setting_switch_check"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:summaryVisible="false"
+                app:textTitle="@string/setting_auto_check" />
 
             <com.gank.gankly.widget.ItemTextView
                 android:id="@+id/setting_item_text_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/setting_switch_check"/>
+                android:layout_below="@id/setting_switch_check" />
 
-            <com.gank.gankly.widget.LYRelativeLayoutRipple
-                android:id="@+id/setting_rl_about"
+            <com.gank.gankly.widget.ItemSwitchView
+                android:id="@+id/setting_item_switch_save_flow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_item_text_update"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:paddingBottom="16dp"
-                android:paddingEnd="16dp"
-                android:paddingStart="16dp"
-                android:paddingTop="16dp">
+                app:textSummary="@string/setting_save_flow_summary"
+                app:textTitle="@string/setting_save_flow" />
+
+            <com.gank.gankly.widget.LYRelativeLayoutRipple
+                android:id="@+id/setting_rl_about"
+                style="@style/setting_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/setting_item_switch_save_flow">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -51,7 +55,7 @@
                     android:layout_centerVertical="true"
                     android:gravity="start"
                     android:text="@string/navigation_about"
-                    android:textColor="?attr/TextTitleColor"/>
+                    android:textColor="?attr/textTitleColor" />
             </com.gank.gankly.widget.LYRelativeLayoutRipple>
         </android.support.v7.widget.LinearLayoutCompat>
 
@@ -63,6 +67,6 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
             android:text="@string/app_website"
-            android:textColor="?attr/TextTitleColor"/>
+            android:textColor="?attr/textTitleColor" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -12,7 +12,7 @@
         <item name="baseAdapterItemTextColor">@color/body_text_1</item>
         <item name="navigationBackground">@color/white</item>
         <item name="themeBackground">@color/refresh_background_light</item>
-        <item name="TextTitleColor">@color/text_default</item>
+        <item name="textTitleColor">@color/text_default</item>
         <item name="aboutTextViewBackground">@color/white</item>
         <item name="aboutBackground">@color/aboutBackground_light</item>
         <item name="colorControlHighlight">@color/colorControlHighlight_light</item>
@@ -42,7 +42,7 @@
         <item name="baseAdapterItemTextColor">#fff5f5f5</item>
         <item name="navigationBackground">@color/colorAccent_dark</item>
         <item name="themeBackground">@color/background_dark</item><!-- 应用背景色 -->
-        <item name="TextTitleColor">@color/material_grey_50</item>
+        <item name="textTitleColor">@color/material_grey_50</item>
         <item name="aboutTextViewBackground">@color/base_adapter_item_background</item>
         <item name="aboutBackground">@color/background_dark</item>
         <item name="colorControlHighlight">@color/colorControlHighlight_dark</item>

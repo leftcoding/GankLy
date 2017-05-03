@@ -1,16 +1,17 @@
 package com.gank.gankly.ui.main;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.config.Preferences;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
@@ -18,7 +19,6 @@ import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.android.AndroidFragment;
 import com.gank.gankly.ui.main.ios.IosFragment;
 import com.gank.gankly.ui.main.welfare.WelfareFragment;
-import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.view.ILauncher;
 import com.socks.library.KLog;
 
@@ -42,6 +42,8 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     private MainActivity mActivity;
     private List<String> mTitles;
     private LauncherPresenter mPresenter;
+    private ProgressDialog mProgressDialog;
+    private long mAppLength;
 
     @Override
     protected int getLayoutId() {
@@ -65,10 +67,6 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     @Override
     protected void initPresenter() {
         mPresenter = new LauncherPresenter(mActivity, this, this);
-        boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
-        if (isAutoCheck) {
-            mPresenter.checkVersion();
-        }
     }
 
     @Override
@@ -136,26 +134,51 @@ public class MainFragment extends BaseSwipeRefreshFragment implements ViewPager.
     public void onPageScrollStateChanged(int state) {
     }
 
-    private void downloadApk() {
-        mPresenter.downloadApk();
-    }
-
     @Override
     public void update(long bytesRead, long contentLength, boolean done) {
         KLog.d("bytesRead:" + bytesRead + ",contentLength:" + contentLength + ",done:" + done);
+        if (bytesRead > 0 && mProgressDialog != null && mAppLength > 0) {
+            mProgressDialog.setProgress((int) bytesRead);
+        }
+
+        if (done) {
+            if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                mProgressDialog.dismiss();
+            }
+        }
     }
 
     @Override
     public void callUpdate(CheckVersion checkVersion) {
-        downloadApk();
-    }
-
-    @Override
-    public void noNewVersion() {
+        mAppLength = checkVersion.getAppLength();
+        KLog.d("mAppLength:" + mAppLength);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        builder.setMessage(checkVersion.getChangelog());
+        builder.setNegativeButton("取消", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.setPositiveButton("更新", (dialog, which) -> {
+            mPresenter.downloadApk();
+            if (mProgressDialog == null) {
+                mProgressDialog = new ProgressDialog(mActivity);
+                mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                mProgressDialog.setCancelable(true);
+                mProgressDialog.setCanceledOnTouchOutside(false);
+            }
+            mProgressDialog.setMessage("更新中...");
+            mProgressDialog.setMax((int) mAppLength);
+            mProgressDialog.show();
+        });
+        builder.show();
     }
 
     @Override
     public void showDialog() {
+    }
+
+    @Override
+    public void noNewVersion() {
+
     }
 
     @Override

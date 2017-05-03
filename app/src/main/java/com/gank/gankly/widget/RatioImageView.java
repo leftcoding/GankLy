@@ -38,14 +38,13 @@ package com.gank.gankly.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 /**
  * 固定图片大小
  * pick from drakeet https://github.com/drakeet
  * Create by LingYan on 2016-4-19
  */
-public class RatioImageView extends ImageView {
+public class RatioImageView extends android.support.v7.widget.AppCompatImageView {
 
     private int originalWidth;
     private int originalHeight;

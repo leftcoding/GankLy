@@ -1,6 +1,8 @@
 package com.gank.gankly.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,46 +11,67 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
+import com.socks.library.KLog;
+
+import java.util.IllegalFormatException;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
  * Create by LingYan on 2016-06-06
  */
 public class ItemSwitchView extends RelativeLayout implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
-    private TextView txtName;
-    private View viItem;
-    private LSwitch mSwitch;
-    private boolean isCheck;
+    @BindView(R.id.item_switch_txt_title)
+    TextView txtTitle;
+    @BindView(R.id.item_switch_txt_summary)
+    TextView txtSummary;
+    @BindView(R.id.item_switch_auto_check)
+    LSwitch mSwitch;
+    @BindView(R.id.setting_rl_auto_check)
+    View viItem;
+
     private OnSwitch mOnSwitch;
+
+    private boolean isSummaryVisibility;
+    private boolean isCheck;
+    private String mTitle;
+    private String mSummary;
+    private int mTitleSize;
+    private int mSummarySize;
+    private int mTitleColor;
+    private int mSummaryColor;
 
     public interface OnSwitch {
         void onSwitch(boolean isCheck);
     }
 
     public ItemSwitchView(Context context) {
-        super(context);
-        initView(context);
+        this(context, null);
     }
 
     public ItemSwitchView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context);
+        this(context, attrs, 0);
     }
 
     public ItemSwitchView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    private void initView(Context context) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this, true);
-        txtName = (TextView) view.findViewById(R.id.item_switch_txt_name);
-        mSwitch = (LSwitch) view.findViewById(R.id.item_switch_auto_check);
-        viItem = view.findViewById(R.id.setting_rl_auto_check);
-    }
-
-    public void setTextName(String name) {
-        txtName.setText(name);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_item_text_view_switch, this);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ItemSwitchView);
+        try {
+            mTitle = array.getString(R.styleable.ItemSwitchView_textTitle);
+            mSummary = array.getString(R.styleable.ItemSwitchView_textSummary);
+            mTitleSize = array.getInt(R.styleable.ItemSwitchView_textTitleSize, 14);
+            mSummarySize = array.getInt(R.styleable.ItemSwitchView_textSummarySize, 12);
+            mTitleColor = array.getInt(R.styleable.ItemSwitchView_textTitleColor, getResources().getColor(R.color.text_333333));
+            mSummaryColor = array.getInt(R.styleable.ItemSwitchView_textSummaryColor, getResources().getColor(R.color.text_999999));
+            isSummaryVisibility = array.getBoolean(R.styleable.ItemSwitchView_summaryVisible, false);
+        } catch (IllegalFormatException e) {
+            KLog.e(e);
+        }
+        ButterKnife.bind(this, view);
+        array.recycle();
     }
 
     public void setSwitchChecked(boolean isCheck) {
@@ -70,10 +93,6 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         return mSwitch;
     }
 
-    public TextView getTextView() {
-        return txtName;
-    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -82,7 +101,6 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
                 mSwitch.setChecked(isCheck);
                 onViewClick(isCheck);
                 break;
-
             default:
                 break;
         }
@@ -93,6 +111,16 @@ public class ItemSwitchView extends RelativeLayout implements View.OnClickListen
         super.onFinishInflate();
         viItem.setOnClickListener(this);
         mSwitch.setOnCheckedChangeListener(this);
+        txtTitle.setText(mTitle);
+        txtSummary.setText(mSummary);
+        txtTitle.setTextColor(mTitleColor);
+        txtSummary.setTextColor(mSummaryColor);
+        txtTitle.setTextSize(mTitleSize);
+        txtSummary.setTextSize(mSummarySize);
+
+        if (!isSummaryVisibility && TextUtils.isEmpty(mSummary)) {
+            txtSummary.setVisibility(View.GONE);
+        }
     }
 
     @Override

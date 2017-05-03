@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/image_default_bg"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/image_default_txt_click_load"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/image_click_loading"
+        android:textColor="@color/image_default_text"
+        android:textSize="14sp"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/image_default_ratio"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@color/android_item_img_bg"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/image_default_ll_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textColor="@color/image_default_text"
+            android:textSize="14sp" />
+
+        <com.gank.gankly.widget.HorizontalLoading
+            android:id="@+id/image_default_horizontal_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp" />
+    </LinearLayout>
+</LinearLayout>

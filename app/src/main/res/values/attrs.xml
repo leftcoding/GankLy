@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 自定义文本 start -->
+    <attr name="textTitle" format="reference|string" />
+    <attr name="textSummary" format="reference|string" />
+    <attr name="textTitleSize" format="reference|integer" />
+    <attr name="textSummarySize" format="reference|integer" />
+    <attr name="textTitleColor" format="reference|color" />
+    <attr name="textSummaryColor" format="reference|color" />
+    <!-- 自定义文本 end -->
+
     <!--glide 自定义控件 带进度条-->
     <declare-styleable name="ProgressImageView">
         <attr name="showProgressText" format="boolean" />
@@ -8,18 +17,23 @@
 
     <!-- 选择开关 -->
     <declare-styleable name="ItemSwitchView">
-        <attr name="switch_name" format="string" />
-        <attr name="switch_summary" format="string" />
+        <attr name="summaryVisible" format="boolean" />
+        <attr name="textTitle" />
+        <attr name="textSummary" />
+        <attr name="textTitleSize" />
+        <attr name="textSummarySize" />
+        <attr name="textTitleColor" />
+        <attr name="textSummaryColor" />
     </declare-styleable>
 
-    <!-- 关于文本-->
+    <!-- 自定义文本 -->
     <declare-styleable name="ItemTextView">
-        <attr name="TextTitle" format="string" />
-        <attr name="TextSummary" format="string" />
-        <attr name="TextTitleSize" format="integer" />
-        <attr name="TextSummarySize" format="integer" />
-        <attr name="TextTitleColor" format="color" />
-        <attr name="TextSummaryColor" format="color" />
+        <attr name="textTitle" />
+        <attr name="textSummary" />
+        <attr name="textTitleSize" />
+        <attr name="textSummarySize" />
+        <attr name="textTitleColor" />
+        <attr name="textSummaryColor" />
     </declare-styleable>
 
     <!-- Loading Empty Error -->

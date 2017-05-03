@@ -6,6 +6,9 @@
     <string name="app_website">© GankLy</string>
     <string name="revoke">撤销</string>
     <string name="bye_burger_bottom_behavior">com.gank.gankly.widget.ByeBurgerBottomBehavior</string>
+    <string name="loading">加载中</string>
+
+    <string name="image_click_loading">点击加载此图片</string>
 
     <string name="navigation_collect">收藏</string>
     <string name="navigation_mine">我的</string>
@@ -26,7 +29,7 @@
 
     <string name="loading_error">加载失败，点击重新获取数据</string>
     <string name="loading_retry">重试</string>
-    <string name="loading">拼命加载中&#8230;</string>
+    <string name="loading_strive">拼命加载中&#8230;</string>
     <string name="loading_pic_no_more">╮(╯_╰)╭，妹子都加载完了！</string>
     <string name="loading_empty">暂无数据</string>
     <string name="loading_meizi_images">正在解析图片地址</string>
@@ -73,6 +76,8 @@
     <string name="setting_check_version">检查更新</string>
     <string name="setting_current_version">当前版本 %1$s</string>
     <string name="setting_theme_night">夜间模式</string>
+    <string name="setting_save_flow">省流量模式</string>
+    <string name="setting_save_flow_summary">仅在 Wi-Fi 环境下才会自动加载图片</string>
 
     <string name="preference_category_base_settings">基本设置</string>
     <string name="preference_category_help">帮助</string>

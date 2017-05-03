@@ -7,9 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
+import com.gank.gankly.config.Constants;
+import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.rxjava.RxBus_;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.gank.gankly.utils.GanklyPreferences;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.smtt.sdk.QbSdk;
 
 /**
@@ -19,7 +23,6 @@ import com.tencent.smtt.sdk.QbSdk;
 public class InitializeService extends IntentService {
     public static final String SERVICE_ACTION = "com.gank.gankly.ui.base.InitializeService";
     private static final String DB_NAME = "gank.db";
-    private static final String CRASH_LOG_ID = "900039150";
     private Context mContext;
 
     public InitializeService() {
@@ -55,7 +58,9 @@ public class InitializeService extends IntentService {
         // GreenDao end --
 
         //Bugly 测试：true -- start
-        CrashReport.initCrashReport(getApplicationContext(), CRASH_LOG_ID, true);
+        Beta.autoDownloadOnWifi = true;
+        Beta.autoCheckUpgrade = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
+        Bugly.init(getApplicationContext(), Constants.CRASH_LOG_ID, false);
         //Bugly -- end
 
         //x5 -- start

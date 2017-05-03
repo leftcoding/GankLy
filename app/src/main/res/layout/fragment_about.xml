@@ -56,7 +56,7 @@
                 android:paddingEnd="12dp"
                 android:paddingStart="12dp"
                 android:textSize="14sp"
-                android:textColor="?attr/TextTitleColor"
+                android:textColor="?attr/textTitleColor"
                 android:text="@string/about_app_str"/>
 
             <TextView
@@ -68,7 +68,7 @@
                 android:paddingStart="12dp"
                 android:textSize="14sp"
                 android:text="@string/about_thanks_str"
-                android:textColor="?attr/TextTitleColor"/>
+                android:textColor="?attr/textTitleColor"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,29 +84,29 @@
                     android:id="@+id/about_item_text_gank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:TextSummary="@string/about_gank_url"
-                    app:TextTitle="@string/about_gank"/>
+                    app:textSummary="@string/about_gank_url"
+                    app:textTitle="@string/about_gank"/>
 
                 <com.gank.gankly.widget.ItemTextView
                     android:id="@+id/about_item_text_mzitu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:TextSummary="@string/about_mzitu_url"
-                    app:TextTitle="@string/about_mzitu"/>
+                    app:textSummary="@string/about_mzitu_url"
+                    app:textTitle="@string/about_mzitu"/>
 
                 <com.gank.gankly.widget.ItemTextView
                     android:id="@+id/about_item_text_github"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:TextSummary="@string/about_my_github_url"
-                    app:TextTitle="@string/about_my_github"/>
+                    app:textSummary="@string/about_my_github_url"
+                    app:textTitle="@string/about_my_github"/>
 
                 <com.gank.gankly.widget.ItemTextView
                     android:id="@+id/about_item_text_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:TextSummary="@string/about_contact_email"
-                    app:TextTitle="@string/about_contact"/>
+                    app:textSummary="@string/about_contact_email"
+                    app:textTitle="@string/about_contact"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

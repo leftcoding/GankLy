@@ -6,10 +6,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.gank.gankly.BuildConfig;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.api.DownloadApi;
-import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.FileUtils;
 import com.gank.gankly.view.ILauncher;
@@ -62,11 +62,10 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
 
             @Override
             public void onNext(CheckVersion checkVersion) {
-                int curVersion = AppUtils.getVersionCode(mActivity);
+                int curVersion = BuildConfig.VERSION_CODE ;
+                KLog.d("curVersion:" + curVersion);
                 if (checkVersion.getCode() > curVersion) {
                     mIView.callUpdate(checkVersion);
-                } else {
-                    mIView.noNewVersion();
                 }
             }
         });
@@ -105,7 +104,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
         });
     }
 
-    public void downloadSuccess(Context context, File file) {
+    private void downloadSuccess(Context context, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(Uri.parse("file://" + file.getAbsolutePath()), "application/vnd.android.package-archive");

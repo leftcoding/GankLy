@@ -19,4 +19,7 @@ public class Constants {
 
     //image save path
     public static final String IMAGE_PATH = "Gankly/pic";
+
+    // bugly id
+    public static final String CRASH_LOG_ID = "900039150";
 }

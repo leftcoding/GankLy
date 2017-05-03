@@ -22,7 +22,7 @@ public class FileUtils {
 
         FileOutputStream out = new FileOutputStream(file);
         byte[] buffer = new byte[1024 * 128];
-        int len = -1;
+        int len;
         while ((len = in.read(buffer)) != -1) {
             out.write(buffer, 0, len);
         }

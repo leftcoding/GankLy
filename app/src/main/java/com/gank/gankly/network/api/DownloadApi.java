@@ -16,6 +16,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -26,7 +27,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class DownloadApi {
     private static final int DEFAULT_OUT_TIME = 30;
-    private static final String BASE_URL = "http://gank.leftyan.com/";
+//    private static final String BASE_URL = "http://gank.leftyan.com/";
+    private static final String BASE_URL = "https://coding.net/u/leftcoding/p/Gank/git/raw/master/";
     private DownloadService mDownloadService;
 
     public DownloadApi(DownloadProgressListener listener) {
@@ -67,7 +69,7 @@ public class DownloadApi {
         mDownloadService.downloadApk()
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
-                .map(responseBody -> responseBody.byteStream())
+                .map(ResponseBody::byteStream)
                 .observeOn(Schedulers.io())
                 .doOnNext(next)
                 .observeOn(AndroidSchedulers.mainThread())

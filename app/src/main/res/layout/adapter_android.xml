@@ -21,13 +21,20 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <com.gank.gankly.widget.RatioImageView
+        <!--<com.gank.gankly.widget.RatioImageView-->
+            <!--android:id="@+id/android_ratio_img_head"-->
+            <!--android:layout_width="120dp"-->
+            <!--android:layout_height="96dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--android:src="@color/android_item_img_bg" />-->
+
+        <com.gank.gankly.widget.ImageDefaultLoading
             android:id="@+id/android_ratio_img_head"
             android:layout_width="120dp"
             android:layout_height="96dp"
             android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerCrop"
             android:src="@color/android_item_img_bg" />
 
         <RelativeLayout

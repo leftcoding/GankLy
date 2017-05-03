@@ -12,7 +12,6 @@ import org.jsoup.nodes.Document;
 import java.io.IOException;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
 /**
@@ -37,26 +36,20 @@ public class MeiziDataSource extends BaseDataSourceModel {
 
     /**
      * 清纯妹子页面数据
-     *
-     * @param url
-     * @return
      */
     public Observable<Document> fetchPure(final String url) {
-        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
-            @Override
-            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
-                try {
-                    Document doc = Jsoup.connect(url)
-                            .userAgent(DESKTOP_USERAGENT)
-                            .timeout(TIME_OUT)
-                            .get();
-                    subscriber.onNext(doc);
-                } catch (IOException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
-                subscriber.onComplete();
+        return toObservable(Observable.create((ObservableOnSubscribe<Document>) subscriber -> {
+            try {
+                Document doc = Jsoup.connect(url)
+                        .userAgent(DESKTOP_USERAGENT)
+                        .timeout(TIME_OUT)
+                        .get();
+                subscriber.onNext(doc);
+            } catch (IOException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
+            subscriber.onComplete();
         }));
     }
 
@@ -64,22 +57,19 @@ public class MeiziDataSource extends BaseDataSourceModel {
      * 获取每日更新妹子天数
      */
     public Observable<Document> fetchDaily(final String url) {
-        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
-            @Override
-            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
-                try {
-                    Document doc = Jsoup.connect(url)
-                            .ignoreContentType(true)
-                            .userAgent(USERAGENT)
-                            .timeout(TIME_OUT)
-                            .get();
-                    subscriber.onNext(doc);
-                } catch (IOException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
-                subscriber.onComplete();
+        return toObservable(Observable.create((ObservableOnSubscribe<Document>) subscriber -> {
+            try {
+                Document doc = Jsoup.connect(url)
+                        .ignoreContentType(true)
+                        .userAgent(USERAGENT)
+                        .timeout(TIME_OUT)
+                        .get();
+                subscriber.onNext(doc);
+            } catch (IOException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
+            subscriber.onComplete();
         }));
     }
 
@@ -89,41 +79,35 @@ public class MeiziDataSource extends BaseDataSourceModel {
      * @param url 每日更新页面的连接
      */
     public Observable<Document> fetchDailyDays(final String url) {
-        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
-            @Override
-            public void subscribe(ObservableEmitter<Document> subscriber) throws Exception {
-                try {
-                    Document doc = Jsoup.connect(url)
-                            .userAgent(USERAGENT)
-                            .timeout(TIME_OUT)
-                            .get();
-                    subscriber.onNext(doc);
-                } catch (IOException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
-                subscriber.onComplete();
+        return toObservable(Observable.create((ObservableOnSubscribe<Document>) subscriber -> {
+            try {
+                Document doc = Jsoup.connect(url)
+                        .userAgent(USERAGENT)
+                        .timeout(TIME_OUT)
+                        .get();
+                subscriber.onNext(doc);
+            } catch (IOException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
+            subscriber.onComplete();
         }));
     }
 
     public Observable<Document> fetchDailyDetailUrls(final String imageUrl) {
-        return toObservable(Observable.create(new ObservableOnSubscribe<Document>() {
-            @Override
-            public void subscribe(ObservableEmitter<Document> subscribe) throws Exception {
-                Document doc = null;
-                try {
-                    doc = Jsoup.connect(imageUrl)
-                            .userAgent(USERAGENT)
-                            .timeout(TIME_OUT)
-                            .get();
-                } catch (IOException e) {
-                    KLog.e(e);
-                    CrashUtils.crashReport(e);
-                }
-                subscribe.onNext(doc);
-                subscribe.onComplete();
+        return toObservable(Observable.create((ObservableOnSubscribe<Document>) subscribe -> {
+            Document doc = null;
+            try {
+                doc = Jsoup.connect(imageUrl)
+                        .userAgent(USERAGENT)
+                        .timeout(TIME_OUT)
+                        .get();
+            } catch (IOException e) {
+                KLog.e(e);
+                CrashUtils.crashReport(e);
             }
+            subscribe.onNext(doc);
+            subscribe.onComplete();
         }));
     }
 }

@@ -22,6 +22,7 @@ import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
 import com.gank.gankly.widget.ItemTextView;
 import com.gank.gankly.widget.UpdateVersionDialog;
+import com.tencent.bugly.beta.Beta;
 
 import java.util.List;
 
@@ -45,7 +46,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @BindView(R.id.setting_rl_body)
     View mView;
     @BindView(R.id.setting_switch_check)
-    ItemSwitchView mAutoCheckSwitch;
+    ItemSwitchView itemCheckSwitch;
+    @BindView(R.id.setting_item_switch_save_flow)
+    ItemSwitchView itemSaveFlow;
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
     @BindView(R.id.setting_text_copyright)
@@ -97,26 +100,20 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         itemUpdate.setTextSummary(summary);
         itemUpdate.setTextName(R.string.setting_check_version);
 
-        if (false) {
-            itemUpdate.showVersion();
-        }
-
         selectItemSwitch();
     }
 
     private void selectItemSwitch() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
-        mAutoCheckSwitch.setSwitchChecked(isAutoCheck);
+        boolean isOnlyWifi = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
+        itemCheckSwitch.setSwitchChecked(isAutoCheck);
+        itemSaveFlow.setSwitchChecked(isOnlyWifi);
     }
 
     @Override
     protected void bindListener() {
-        mAutoCheckSwitch.setSwitchListener(isCheck -> savePreferences(isCheck));
-
-    }
-
-    private void savePreferences(boolean isCheck) {
-        GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck);
+        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
+        itemSaveFlow.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override
@@ -167,7 +164,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         }
     }
 
-
     @Override
     public void showDialog() {
         createDialog();
@@ -179,8 +175,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     @OnClick(R.id.setting_item_text_update)
-    void clickUpdate() {
-        mPresenter.checkVersion();
+    void onClickUpdate() {
+        Beta.checkUpgrade();
     }
 
     @OnClick(R.id.setting_rl_about)
