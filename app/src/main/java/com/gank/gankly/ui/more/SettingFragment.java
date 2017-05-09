@@ -17,6 +17,7 @@ import com.gank.gankly.presenter.LauncherPresenter;
 import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.GanklyPreferences;
+import com.gank.gankly.utils.GlideCatchUtil;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.view.ILauncher;
 import com.gank.gankly.widget.ItemSwitchView;
@@ -47,8 +48,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     View mView;
     @BindView(R.id.setting_switch_check)
     ItemSwitchView itemCheckSwitch;
-    @BindView(R.id.setting_item_switch_save_flow)
-    ItemSwitchView itemSaveFlow;
+    @BindView(R.id.setting_item_text_clean_cache)
+    ItemTextView itemCleanCache;
     @BindView(R.id.setting_item_text_update)
     ItemTextView itemUpdate;
     @BindView(R.id.setting_text_copyright)
@@ -92,6 +93,9 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
+
+        String cacheSize = GlideCatchUtil.getInstance().getCacheSize();
+        itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache, cacheSize));
     }
 
     private void initPreferences() {
@@ -105,15 +109,12 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
     private void selectItemSwitch() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
-        boolean isOnlyWifi = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
         itemCheckSwitch.setSwitchChecked(isAutoCheck);
-        itemSaveFlow.setSwitchChecked(isOnlyWifi);
     }
 
     @Override
     protected void bindListener() {
         itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
-        itemSaveFlow.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override
@@ -182,6 +183,12 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @OnClick(R.id.setting_rl_about)
     void onClickAbout() {
         mActivity.addHideFragment(this, new AboutFragment(), TAG, R.id.setting_frame_layout);
+    }
+
+    @OnClick(R.id.setting_item_text_clean_cache)
+    void onClickCache() {
+        GlideCatchUtil.getInstance().clearCacheDiskSelf();
+        itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache_string));
     }
 
     @Override

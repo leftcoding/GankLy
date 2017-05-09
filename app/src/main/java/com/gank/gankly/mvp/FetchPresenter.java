@@ -51,12 +51,12 @@ public abstract class FetchPresenter extends BasePresenter {
         this.fetchLimit = fetchLimit;
     }
 
-    public int getFetchPage() {
-        return fetchPage;
-    }
-
     public void setFetchPage(int fetchPage) {
         this.fetchPage = fetchPage;
+    }
+
+    public int getFetchPage() {
+        return fetchPage;
     }
 
     public List<ResultsBean> filterData(GankResult gankResult, IFetchView view) {

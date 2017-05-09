@@ -105,7 +105,7 @@ public class App extends Application {
     }
 
     public static boolean isNetConnect() {
-        return NetworkUtils.isNetworkAvailable(getGankContext());
+        return NetworkUtils.isNetworkAvailable();
     }
 
     public RefWatcher getRefWatcher() {

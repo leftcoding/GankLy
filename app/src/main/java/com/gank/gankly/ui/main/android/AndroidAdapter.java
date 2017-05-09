@@ -7,14 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.databinding.AdapterAndroidBinding;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
-import com.gank.gankly.widget.ImageDefaultLoading;
-import com.socks.library.KLog;
+import com.gank.gankly.widget.RatioImageView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,7 +29,7 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-25
  * Email:137387869@qq.com
  */
-public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder> {
+class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder> {
     private final List<ResultsBean> mResults;
     private RecyclerOnClick mMeiZiOnClick;
     private Context mContext;
@@ -36,7 +37,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
     private int mImageSize;
     private List<ResultsBean> mImagesList;
 
-    public AndroidAdapter(Context context) {
+    AndroidAdapter(Context context) {
         setHasStableIds(true);
         mResults = new ArrayList<>();
         mContext = context;
@@ -64,21 +65,19 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
 
         if (position < mImageSize) {
             String url = mImagesList.get(position).getUrl();
-            holder.mDefaultLoading.setImageView(url);
-//            GlideUtils.wifiRequest(mContext, true)
-//            Glide.with(mContext)
-//                    .load(url)
-//                    .error(R.drawable.item_default_img)
-//                    .fitCenter()
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .into(holder.imgHead);
+            Glide.with(mContext)
+                    .load(url)
+                    .error(R.drawable.item_default_img)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.imgHead);
         }
     }
 
     @Override
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
-//        Glide.clear(holder.imgHead);
+        Glide.clear(holder.imgHead);
     }
 
     private View getLayoutView(ViewGroup parent) {
@@ -122,28 +121,18 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankView
         mMeiZiOnClick = onItemClickListener;
     }
 
-    public class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //        @BindView(R.id.android_ratio_img_head)
-//        RatioImageView imgHead;
+    class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.android_ratio_img_head)
-        ImageDefaultLoading mDefaultLoading;
+        RatioImageView imgHead;
 
         private ResultsBean mBean;
         private AdapterAndroidBinding mAndroidBinding;
 
-        public GankViewHolder(View itemView) {
+        private GankViewHolder(View itemView) {
             super(itemView);
             bindView(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-
-            mDefaultLoading.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    KLog.d("mDefaultLoading  onClick");
-                    mDefaultLoading.toLoading();
-                }
-            });
         }
 
         public void bind(ResultsBean resultsBean) {

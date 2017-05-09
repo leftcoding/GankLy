@@ -34,20 +34,20 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_switch_check" />
 
-            <com.gank.gankly.widget.ItemSwitchView
-                android:id="@+id/setting_item_switch_save_flow"
+            <com.gank.gankly.widget.ItemTextView
+                android:id="@+id/setting_item_text_clean_cache"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/setting_item_text_update"
-                app:textSummary="@string/setting_save_flow_summary"
-                app:textTitle="@string/setting_save_flow" />
+                app:textSummary=""
+                app:textTitle="@string/setting_clean_cache" />
 
             <com.gank.gankly.widget.LYRelativeLayoutRipple
                 android:id="@+id/setting_rl_about"
                 style="@style/setting_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/setting_item_switch_save_flow">
+                android:layout_below="@id/setting_item_text_clean_cache">
 
                 <TextView
                     android:layout_width="wrap_content"

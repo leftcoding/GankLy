@@ -389,18 +389,18 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             e.onNext("");
             e.onComplete();
         })
-                .delay(1000, TimeUnit.MILLISECONDS)
+                .delay(800, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
                     if (!isCanPlay) {
-                        animaAutoTips();
+                        animAutoTips();
                     }
                 });
     }
 
-    private void animaAutoTips() {
-        txtAutoTip.animate().translationX(-getTipWidth).setDuration(300).setListener(new Animator.AnimatorListener() {
+    private void animAutoTips() {
+        txtAutoTip.animate().translationX(-getTipWidth).setDuration(800).setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 txtAutoTip.setAlpha(1);
@@ -408,7 +408,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                txtAutoTip.animate().alpha(0).translationX(0).setDuration(3000).setListener(new Animator.AnimatorListener() {
+                txtAutoTip.animate().alpha(0).translationX(0).setDuration(800).setListener(new Animator.AnimatorListener() {
                     @Override
                     public void onAnimationStart(Animator animation) {
 
@@ -428,7 +428,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     public void onAnimationRepeat(Animator animation) {
 
                     }
-                }).start();
+                }).setStartDelay(1500).start();
             }
 
             @Override
@@ -728,7 +728,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         getTipWidth = txtAutoTip.getWidth();
-        KLog.d(getTipWidth);
+//        KLog.d(getTipWidth);
     }
 
     @Override

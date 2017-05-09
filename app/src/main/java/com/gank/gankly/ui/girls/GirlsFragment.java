@@ -13,7 +13,7 @@ import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.BaseFragment;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.girls.dailymeizi.DailyMeiziFragment;
+import com.gank.gankly.ui.girls.cure.CureFragment;
 import com.gank.gankly.ui.girls.pure.PureFragment;
 import com.gank.gankly.ui.main.MainActivity;
 
@@ -60,11 +60,12 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new PureFragment());
-        mList.add(new DailyMeiziFragment());
+//        mList.add(new DailyMeiziFragment());
+        mList.add(new CureFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.QINGCHUN);
-        mTitles.add(Constants.DAILY_GIRL);
+        mTitles.add(Constants.CURE);
 
         mPagerAdapter = new GirlsAdapter(mActivity.getSupportFragmentManager(), mList,
                 mTitles);

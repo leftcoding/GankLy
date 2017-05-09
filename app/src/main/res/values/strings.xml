@@ -78,6 +78,9 @@
     <string name="setting_theme_night">夜间模式</string>
     <string name="setting_save_flow">省流量模式</string>
     <string name="setting_save_flow_summary">仅在 Wi-Fi 环境下才会自动加载图片</string>
+    <string name="setting_picture_cache">图片缓存（%1$s）</string>
+    <string name="setting_picture_cache_string">图片缓存</string>
+    <string name="setting_clean_cache">清除缓存</string>
 
     <string name="preference_category_base_settings">基本设置</string>
     <string name="preference_category_help">帮助</string>
