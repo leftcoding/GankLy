@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.gank.gankly.R;
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.widget.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.SpaceItemDecoration;
 
 import java.util.List;
 

@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name=".App"
+        android:name="com.gank.gankly.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.main.SplashActivity"
+            android:name="com.gank.gankly.ui.main.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -41,44 +41,45 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.gank.gankly.ui.main.MainActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|fontScale|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.web.normal.WebActivity"
+            android:name="com.gank.gankly.ui.web.normal.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
 
         <activity
-            android:name=".ui.web.JiandanWebActivity"
+            android:name="com.gank.gankly.ui.web.JiandanWebActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.gallery.GalleryActivity"
+            android:name="com.gank.gankly.ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.web.WebVideoViewActivity"
+            android:name="com.gank.gankly.ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ui.more.MoreActivity"
+            android:name="com.gank.gankly.ui.more.MoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.baisi.BaiSiActivity"
+            android:name="com.gank.gankly.ui.baisi.BaiSiActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.baisi.BaiSiVideoPreViewActivity"
+            android:name="com.gank.gankly.ui.baisi.BaiSiVideoPreViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.light.NoActionBar" />
+
         <!-- bugly start-->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -95,7 +96,7 @@
         </provider>
         <!-- bugly end-->
 
-        <service android:name=".ui.base.InitializeService" />
+        <service android:name="com.gank.gankly.ui.base.InitializeService" />
 
         <!-- Glide 默认配置 -->
         <meta-data

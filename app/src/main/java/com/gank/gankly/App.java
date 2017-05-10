@@ -16,8 +16,6 @@ import com.gank.gankly.utils.NetworkUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
-import static com.gank.gankly.utils.GanklyPreferences.getBoolean;
-
 /**
  * Create by LingYan on 2016-04-01
  * Email:137387869@qq.com
@@ -68,7 +66,7 @@ public class App extends Application {
             GanklyPreferences.putInt(Preferences.APP_VERSION, PREFERENCES_VERSION);
         }
 
-        isNight = getBoolean(SettingFragment.IS_NIGHT, false);
+        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
     }
 
     @Override

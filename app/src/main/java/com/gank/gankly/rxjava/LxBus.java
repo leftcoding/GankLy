@@ -244,8 +244,7 @@ public class LxBus {
         List<SubscriberMethod> methods = subscriberMethodByEventType.get(eventClass);
         if (methods != null && methods.size() > 0) {
             for (SubscriberMethod subscriberMethod : methods) {
-
-                com.gank.gankly.rxjava.Subscribe sub = subscriberMethod.method.getAnnotation(Subscribe.class);
+                Subscribe sub = subscriberMethod.method.getAnnotation(Subscribe.class);
                 int c = sub.code();
                 if (c == code) {
                     subscriberMethod.invoke(object);

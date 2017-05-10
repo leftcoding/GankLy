@@ -67,8 +67,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
         mTitles.add(Constants.QINGCHUN);
         mTitles.add(Constants.CURE);
 
-        mPagerAdapter = new GirlsAdapter(mActivity.getSupportFragmentManager(), mList,
-                mTitles);
+        mPagerAdapter = new GirlsAdapter(mActivity.getSupportFragmentManager(), mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
