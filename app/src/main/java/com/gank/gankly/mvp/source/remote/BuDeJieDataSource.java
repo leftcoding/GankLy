@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
-
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
@@ -18,7 +16,6 @@ import io.reactivex.Observable;
 public class BuDeJieDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://s.budejie.com/";
 
-    @Nullable
     private volatile static BuDeJieDataSource INSTANCE = null;
     private BaiSiService mGankService;
 

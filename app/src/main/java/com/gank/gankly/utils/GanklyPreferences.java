@@ -15,8 +15,8 @@ import javax.annotation.Nullable;
  */
 public class GanklyPreferences {
     public static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
-    private static SharedPreferences mSharedPreferences;
-    private static SharedPreferences.Editor sEditor;
+    private volatile static SharedPreferences mSharedPreferences;
+    private volatile static SharedPreferences.Editor sEditor;
 
     public static SharedPreferences getDefaultPreference() {
         return initPreference(PREFERENCES_NAME_DEFAULT);

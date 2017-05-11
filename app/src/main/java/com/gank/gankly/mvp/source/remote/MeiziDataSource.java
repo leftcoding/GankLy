@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
-
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.utils.CrashUtils;
 import com.socks.library.KLog;
@@ -20,8 +18,7 @@ import io.reactivex.ObservableOnSubscribe;
  */
 
 public class MeiziDataSource extends BaseDataSourceModel {
-    @Nullable
-    private static MeiziDataSource mInstance = null;
+    private volatile static MeiziDataSource mInstance;
 
     public static MeiziDataSource getInstance() {
         if (mInstance == null) {

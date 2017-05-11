@@ -16,7 +16,7 @@ import io.reactivex.subjects.Subject;
  */
 
 public class RxBus_ {
-    private static volatile RxBus_ mDefaultInstance;
+    private volatile static RxBus_ mDefaultInstance;
     private final Subject<Object> mBus;
 
     private final Map<Class<?>, Object> mStickyEventMap;

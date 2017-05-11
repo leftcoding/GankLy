@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
-
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
 
 import org.jsoup.nodes.Document;
@@ -16,8 +14,7 @@ import io.reactivex.Observable;
 public class TeamBlogDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://gank.io/xiandu/teamblog/page/";
 
-    @Nullable
-    private static TeamBlogDataSource mInstance = null;
+    private volatile static TeamBlogDataSource mInstance;
 
     public static TeamBlogDataSource getInstance() {
         if (mInstance == null) {

@@ -1,7 +1,6 @@
 package com.gank.gankly.mvp.source;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
 import com.gank.gankly.App;
 import com.gank.gankly.data.entity.ReadHistory;
@@ -27,8 +26,7 @@ import io.reactivex.ObservableOnSubscribe;
  */
 
 public class LocalDataSource extends BaseModel {
-    @Nullable
-    private static LocalDataSource mInstance = null;
+    private volatile static LocalDataSource mInstance ;
 
     @NonNull
     private UrlCollectDao mUrlCollectDao;

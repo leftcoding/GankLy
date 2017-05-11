@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
-
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
@@ -20,8 +18,7 @@ public class GankDataSource extends BaseDataSourceModel {
     private static final String BASE_URL = "http://gank.io/api/data/";
     private GankService mGankService;
 
-    @Nullable
-    private static GankDataSource INSTANCE;
+    private volatile static GankDataSource INSTANCE;
 
     private GankDataSource() {
         mGankService = ApiManager.init(BASE_URL).createService(GankService.class);

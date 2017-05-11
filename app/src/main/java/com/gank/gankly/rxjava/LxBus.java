@@ -19,7 +19,7 @@ import io.reactivex.subjects.Subject;
  * Created by CM on 2016-4-22 19:30:48.
  */
 public class LxBus {
-    private static volatile LxBus defaultInstance;
+    private volatile static LxBus defaultInstance;
 
     private Map<Class, List<Disposable>> subscriptionsByEventType = new HashMap<>();
 
@@ -203,7 +203,7 @@ public class LxBus {
 
         Disposable subscription = postToObservable(observable, subscriberMethod)
                 .subscribe(o -> {
-                    callEvent(subscriberMethod.code,o);
+                    callEvent(subscriberMethod.code, o);
                 });
         addSubscriptionToMap(subscriberMethod.eventType, subscription);
     }

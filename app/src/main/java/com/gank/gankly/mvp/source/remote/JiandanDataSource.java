@@ -1,7 +1,5 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
-
 import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.utils.CrashUtils;
 import com.socks.library.KLog;
@@ -22,8 +20,7 @@ import io.reactivex.ObservableOnSubscribe;
 
 public class JiandanDataSource extends BaseDataSourceModel {
 
-    @Nullable
-    private static JiandanDataSource mInstance = null;
+    private volatile static JiandanDataSource mInstance = null;
 
     public static JiandanDataSource getInstance() {
         if (mInstance == null) {
