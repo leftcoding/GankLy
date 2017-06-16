@@ -108,7 +108,6 @@ public class HorizontalLoading extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.translate(10, h / 2);
-//        canvas.drawColor(Color.BLUE);
         if (lastPath > radius * 3) {
             canvas.drawCircle(firstPath, 0, radius, mPaint1);
         }
@@ -122,14 +121,18 @@ public class HorizontalLoading extends View {
     }
 
     public void onStart() {
-        if (animatorSet != null && animatorSet.isStarted()) {
-            animatorSet.pause();
-        }
+        endAnimator();
         startAnimator();
     }
 
-    private void startAnimator() {
+    public void endAnimator() {
+        if (animatorSet != null && animatorSet.isStarted()) {
+            animatorSet.removeAllListeners();
+            animatorSet.cancel();
+        }
+    }
 
+    private void startAnimator() {
         final ValueAnimator firstAnim = ValueAnimator.ofInt(-radius * 4, 0);
         firstAnim.setRepeatCount(ValueAnimator.INFINITE);
         firstAnim.setRepeatMode(ValueAnimator.RESTART);

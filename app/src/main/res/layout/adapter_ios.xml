@@ -27,12 +27,16 @@
             android:background="?attr/selectableItemBackground"
             android:orientation="horizontal">
 
-            <com.gank.gankly.widget.RatioImageView
+            <com.gank.gankly.widget.ImageDefaultView
                 android:id="@+id/ios_ratio_img_head"
                 android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="centerCrop" />
+                android:layout_height="120dp" />
+
+            <!--<com.gank.gankly.widget.RatioImageView-->
+                <!--android:layout_width="120dp"-->
+                <!--android:layout_height="120dp"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:scaleType="centerCrop" />-->
 
             <RelativeLayout
                 android:layout_width="match_parent"

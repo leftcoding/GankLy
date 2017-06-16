@@ -15,6 +15,7 @@ public class ResultsBean implements Parcelable {
     private String url;
     private boolean used;
     private String who;
+    private boolean isLoad;
 
     protected ResultsBean(Parcel in) {
         _id = in.readString();
@@ -27,6 +28,7 @@ public class ResultsBean implements Parcelable {
         url = in.readString();
         used = in.readByte() != 0;
         who = in.readString();
+        isLoad = in.readByte() != 0;
     }
 
     public static final Creator<ResultsBean> CREATOR = new Creator<ResultsBean>() {
@@ -124,6 +126,14 @@ public class ResultsBean implements Parcelable {
         this.who = who;
     }
 
+    public boolean isLoad() {
+        return isLoad;
+    }
+
+    public void setLoad(boolean load) {
+        isLoad = load;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -141,5 +151,6 @@ public class ResultsBean implements Parcelable {
         dest.writeString(url);
         dest.writeByte((byte) (used ? 1 : 0));
         dest.writeString(who);
+        dest.writeByte((byte) (isLoad ? 1 : 0));
     }
 }

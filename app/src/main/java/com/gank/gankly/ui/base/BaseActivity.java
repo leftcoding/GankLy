@@ -194,8 +194,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected abstract void bindListener();
 
-    protected void initPresenter() {
-    }
+    protected void initPresenter() {}
 
     protected void initTheme() {
         if (App.isNight()) {

@@ -51,8 +51,8 @@ public class NetworkUtils {
     /**
      * 判断是否是WiFi
      */
-    public static boolean isWiFi(Context context) {
-        NetworkInfo networkInfo = ((ConnectivityManager) context.getSystemService(Context
+    public static boolean isWiFi() {
+        NetworkInfo networkInfo = ((ConnectivityManager) App.getGankContext().getSystemService(Context
                 .CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI);
     }

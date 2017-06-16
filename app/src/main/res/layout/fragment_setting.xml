@@ -42,6 +42,13 @@
                 app:textSummary=""
                 app:textTitle="@string/setting_clean_cache" />
 
+            <com.gank.gankly.widget.ItemSwitchView
+                android:id="@+id/setting_switch_only_wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:textSummary="@string/setting_save_flow_summary"
+                app:textTitle="@string/setting_save_flow" />
+
             <com.gank.gankly.widget.LYRelativeLayoutRipple
                 android:id="@+id/setting_rl_about"
                 style="@style/setting_item"

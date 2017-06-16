@@ -54,6 +54,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     ItemTextView itemUpdate;
     @BindView(R.id.setting_text_copyright)
     TextView txtCopyRight;
+    @BindView(R.id.setting_switch_only_wifi)
+    ItemSwitchView itemOnlyWifi;
     @BindViews({R.id.setting_switch_check})
     List<ItemSwitchView> switchTextViews;
     @BindViews({R.id.setting_item_text_update})
@@ -110,11 +112,14 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     private void selectItemSwitch() {
         boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
         itemCheckSwitch.setSwitchChecked(isAutoCheck);
+        boolean isOnlyWifi = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
+        itemOnlyWifi.setSwitchChecked(isOnlyWifi);
     }
 
     @Override
     protected void bindListener() {
         itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
+        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override

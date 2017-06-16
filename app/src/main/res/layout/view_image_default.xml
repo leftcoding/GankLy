@@ -16,12 +16,11 @@
         android:textSize="14sp"
         android:visibility="gone" />
 
-    <ImageView
-        android:id="@+id/image_default_ratio"
+    <FrameLayout
+        android:id="@+id/image_default_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
-        android:scaleType="centerCrop"
         android:visibility="visible" />
 
     <LinearLayout

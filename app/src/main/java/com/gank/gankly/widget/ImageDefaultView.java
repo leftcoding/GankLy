@@ -5,17 +5,15 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 
-import java.util.List;
-
 import butterknife.BindView;
-import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 /**
@@ -23,7 +21,7 @@ import butterknife.ButterKnife;
  * Email:137387869@qq.com
  */
 
-public class ImageDefaultLoading extends LinearLayout {
+public class ImageDefaultView extends LinearLayout {
     private static final int NORMAL = 0;
     private static final int LOADING = 1;
     private static final int OVER = 2;
@@ -35,10 +33,8 @@ public class ImageDefaultLoading extends LinearLayout {
     View mLoading;
     @BindView(R.id.image_default_txt_click_load)
     TextView txtTip;
-    @BindView(R.id.image_default_ratio)
-    ImageView mImageView;
-    @BindViews({R.id.image_default_ll_loading, R.id.image_default_txt_click_load, R.id.image_default_ratio})
-    List<View> mViews;
+    @BindView(R.id.image_default_frame)
+    FrameLayout mFrameLayout;
 
     private ImageLoaderUtil mImageLoaderUtil;
     private Context mContext;
@@ -46,28 +42,32 @@ public class ImageDefaultLoading extends LinearLayout {
     private String imgUrl;
     private int w, h;
     private int loadType = NORMAL;
+    private boolean isCanLoad = true;
 
-    public ImageDefaultLoading(Context context) {
+    public ImageDefaultView(Context context) {
         this(context, null);
     }
 
-    public ImageDefaultLoading(Context context, @Nullable AttributeSet attrs) {
+    public ImageDefaultView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.setOrientation(HORIZONTAL);
         mImageLoaderUtil = new ImageLoaderUtil();
         mContext = context;
-        View mView = LayoutInflater.from(context).inflate(R.layout.view_image_default_loading, this, true);
+        View mView = LayoutInflater.from(context).inflate(R.layout.view_image_default, this, true);
         ButterKnife.bind(this, mView);
-    }
-
-    public ImageView getImageView() {
-        return mImageView;
     }
 
     public void setViewVisible(int loading, int img, int tip) {
         mLoading.setVisibility(loading);
-        mImageView.setVisibility(img);
+        mFrameLayout.setVisibility(img);
         txtTip.setVisibility(tip);
+    }
+
+    public void setFrameLayout(View view) {
+        mFrameLayout.removeAllViews();
+        FrameLayout.LayoutParams tparams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);//定义显示组件参数
+        mFrameLayout.addView(view, tparams);
     }
 
     public void showLoadText() {
@@ -79,23 +79,26 @@ public class ImageDefaultLoading extends LinearLayout {
     }
 
     public void showText(String str) {
+        isCanLoad = true;
         mHorizontalLoading.endAnimator();
         setViewVisible(View.GONE, View.GONE, View.VISIBLE);
         txtTip.setText(str);
     }
 
     public void showLoading() {
+        isCanLoad = false;
         mHorizontalLoading.onStart();
         setViewVisible(View.VISIBLE, View.GONE, View.GONE);
     }
 
     public void showImage() {
+        isCanLoad = false;
         mHorizontalLoading.endAnimator();
         setViewVisible(View.GONE, View.VISIBLE, View.GONE);
     }
 
-    public Context getImageContext() {
-        return mContext;
+    public boolean isCanLoad() {
+        return isCanLoad;
     }
 
     @Override

@@ -22,3 +22,4 @@ E:\GankLy\app\build\outputs\mapping\release\app-mapping.txt --> 4ca6741d2ee357ba
 E:\GankLy\app\build\outputs\mapping\release\app-mapping.txt --> 2d68c9125dce401feb389141386373dee61aa390
 E:\GankLy\app\build\outputs\mapping\release\app-mapping.txt --> ffa89ad7f67f5a2e96da89b1a2d47794b8d7d260
 E:\GankLy\app\build\outputs\mapping\release\app-mapping.txt --> 29a8ede9be5c2194020893d504343c69817669c8
+E:\GankLy\app\build\outputs\mapping\release\app-mapping.txt --> 47aba6569485234000b867ea57c99ec6e0512b8f
