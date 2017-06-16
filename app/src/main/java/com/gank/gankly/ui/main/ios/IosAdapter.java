@@ -22,6 +22,7 @@ import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
 import com.gank.gankly.widget.RatioImageView;
+import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,18 +63,18 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
         holder.mBean = bean;
         holder.bind(bean);
 
-        int imgPosition = position;
+        int imgPosition = holder.getAdapterPosition();
 
         if (mImageSize != 0) {
             if (imgPosition > mImageSize) {
-                imgPosition = position % mImageSize;
-            } else if (position == mImageSize) {
+                imgPosition = holder.getAdapterPosition() % mImageSize;
+            } else if (holder.getAdapterPosition() == mImageSize) {
                 imgPosition = 0;
             }
         }
+        KLog.d("imgPosition:" + imgPosition + ",position:" + holder.getAdapterPosition());
 
         String url = mImagesList.get(imgPosition).getUrl();
-        holder.imgHead.setFrameLayout(holder.view);
         if (imgPosition < mImageSize) {
             boolean isOnlyWif = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
             ImageLoaderUtil.getInstance().loadWifiImage(mContext, url, isWiFi(), isOnlyWif).listener(new RequestListener<String, GlideDrawable>() {
@@ -100,7 +101,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
                 mMeiZiOnClick.onClick(v, bean);
             }
 
-            if(!holder.imgHead.isCanLoad()){
+            if (!holder.imgHead.isCanLoad()) {
                 return;
             }
 
@@ -151,6 +152,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
     public void appendItems(List<ResultsBean> results) {
         mResults.addAll(results);
         int size = mResults.size();
+        KLog.d("size:" + size);
         notifyItemRangeInserted(size, results.size());
     }
 
@@ -180,6 +182,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
             view = new RatioImageView(mContext);
+            imgHead.setFrameLayout(view);
         }
 
         public void bind(ResultsBean resultsBean) {

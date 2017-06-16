@@ -26,53 +26,6 @@ import java.io.InputStream;
  */
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
-    /**
-     * load cache image with Glide
-     */
-    @Override
-    public void loadCache(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener) {
-        Glide.with(imageLoade.getImageView().getContext())
-                .using(new StreamModelLoader<String>() {
-                    @Override
-                    public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
-                        return new DataFetcher<InputStream>() {
-                            @Override
-                            public InputStream loadData(Priority priority) throws Exception {
-                                throw new IOException("Download not allowed");
-                            }
-
-                            @Override
-                            public void cleanup() {
-
-                            }
-
-                            @Override
-                            public String getId() {
-                                return s;
-                            }
-
-                            @Override
-                            public void cancel() {
-
-                            }
-                        };
-                    }
-                })
-                .load(imageLoade.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(listener)
-                .into(imageLoade.getImageView());
-    }
-
-    @Override
-    public void loadImage(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener) {
-        Glide.with(imageLoade.getImageView().getContext())
-                .load(imageLoade.getUrl())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .listener(listener)
-                .into(imageLoade.getImageView());
-    }
-
     @Override
     public void loadImage(String url, ImageView imageView) {
         Glide.with(imageView.getContext()).load(url)
@@ -89,11 +42,6 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     @Override
     public void loadImage(String url, int placeholder, ImageView imageView) {
         loadNormal(imageView.getContext(), url, placeholder, imageView);
-    }
-
-    @Override
-    public void loadImage(ImageLoade imageLoade) {
-        loadNormal(imageLoade.getImageView().getContext(), imageLoade.getUrl(), 0, imageLoade.getImageView());
     }
 
     @Override

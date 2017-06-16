@@ -43,10 +43,6 @@ public class ImageLoaderUtil {
         return mInstance;
     }
 
-    public void loadImage(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener) {
-        mStrategy.loadImage(imageLoade, listener);
-    }
-
     public void loadImage(String url, int placeholder, ImageView imageView) {
         mStrategy.loadImage(imageView.getContext(), url, placeholder, imageView);
     }
@@ -73,10 +69,6 @@ public class ImageLoaderUtil {
 
     public void loadImageWithAppCxt(String url, ImageView imageView) {
         mStrategy.loadImageWithAppCxt(url, imageView);
-    }
-
-    public void loadCache(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener) {
-        mStrategy.loadCache(imageLoade, listener);
     }
 
     public DrawableRequestBuilder<String> loadWifiImage(Context context, String url, boolean isWifi, boolean isOnlyWifi) {

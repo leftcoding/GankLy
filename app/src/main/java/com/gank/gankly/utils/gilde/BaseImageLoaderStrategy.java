@@ -17,14 +17,10 @@ public interface BaseImageLoaderStrategy {
     //无占位图
     void loadImage(String url, ImageView imageView);
 
-    void loadImage(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener);
-
     //这里的context指定为ApplicationContext
     void loadImageWithAppCxt(String url, ImageView imageView);
 
     void loadImage(String url, int placeholder, ImageView imageView);
-
-    void loadImage(ImageLoade imageLoade);
 
     void loadImage(Context context, String url, int placeholder, ImageView imageView);
 
@@ -49,8 +45,6 @@ public interface BaseImageLoaderStrategy {
 
     //获取缓存大小
     String getCacheSize(Context context);
-
-    void loadCache(ImageLoade imageLoade, RequestListener<String, GlideDrawable> listener);
 
     void saveImage(Context context, String url, String savePath, String saveFileName, ImageSaveListener listener);
 
