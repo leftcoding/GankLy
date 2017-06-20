@@ -1,8 +1,10 @@
 package com.gank.gankly.utils.gilde;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
@@ -14,6 +16,9 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
+import com.gank.gankly.config.Preferences;
+import com.gank.gankly.utils.GanklyPreferences;
+import com.gank.gankly.utils.NetworkUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,49 +55,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public DrawableRequestBuilder<String> loadWifiImage(Context context, String url, boolean isWifi, boolean isOnlyWifi) {
-        boolean isCache = false;
-        DrawableRequestBuilder<String> requestBuilder;
-        if (isOnlyWifi) {
-            if (!isWifi) {
-                isCache = true;
-            }
-        }
+    public DrawableRequestBuilder<String> loadWifiImage(Context context, String url) {
+        return getImageCache(context, url, isAllowDown());
+    }
 
-        if (!isCache) {
-            requestBuilder = Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.ALL);
-        } else {
-            requestBuilder = Glide.with(context)
-                    .using(new StreamModelLoader<String>() {
-                        @Override
-                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
-                            return new DataFetcher<InputStream>() {
-                                @Override
-                                public InputStream loadData(Priority priority) throws Exception {
-                                    throw new IOException("Download not allowed");
-                                }
+    @Override
+    public DrawableRequestBuilder<String> loadManualImage(Context context, String url) {
+        return getImageCache(context, url, true);
+    }
 
-                                @Override
-                                public void cleanup() {
-
-                                }
-
-                                @Override
-                                public String getId() {
-                                    return s;
-                                }
-
-                                @Override
-                                public void cancel() {
-
-                                }
-                            };
-                        }
-                    })
-                    .load(url)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL);
-        }
-        return requestBuilder;
+    @Override
+    public BitmapRequestBuilder<String, Bitmap> loadAsImage(Context context, String url) {
+        return Glide.with(context).load(url).asBitmap().diskCacheStrategy(DiskCacheStrategy.SOURCE);
     }
 
     @Override
@@ -151,6 +125,47 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     }
 
+    @Override
+    public BitmapRequestBuilder<String, Bitmap> glideAsBitmap(Context context, String imgUrl) {
+        if (isAllowDown()) {
+            return Glide.with(context)
+                    .load(imgUrl)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        } else {
+            return Glide.with(context)
+                    .using(new StreamModelLoader<String>() {
+                        @Override
+                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
+                            return new DataFetcher<InputStream>() {
+                                @Override
+                                public InputStream loadData(Priority priority) throws Exception {
+                                    throw new IOException("Download not allowed");
+                                }
+
+                                @Override
+                                public void cleanup() {
+
+                                }
+
+                                @Override
+                                public String getId() {
+                                    return s;
+                                }
+
+                                @Override
+                                public void cancel() {
+
+                                }
+                            };
+                        }
+                    })
+                    .load(imgUrl)
+                    .asBitmap()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        }
+    }
+
     /**
      * load image with Glide
      */
@@ -181,7 +196,54 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
             public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
                 return false;
             }
-        })      .fitCenter()
+        }).fitCenter()
                 .into(imageView);
+    }
+
+    private boolean isAllowDown() {
+        boolean allowDownload = true;
+        boolean isOnlyWif = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
+        if (isOnlyWif) {
+            if (!NetworkUtils.isWiFi()) {
+                allowDownload = false;
+            }
+        }
+        return allowDownload;
+    }
+
+    private DrawableRequestBuilder<String> getImageCache(Context context, String url, boolean isAllowDown) {
+        if (isAllowDown) {
+            return Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        } else {
+            return Glide.with(context)
+                    .using(new StreamModelLoader<String>() {
+                        @Override
+                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
+                            return new DataFetcher<InputStream>() {
+                                @Override
+                                public InputStream loadData(Priority priority) throws Exception {
+                                    throw new IOException("Download not allowed");
+                                }
+
+                                @Override
+                                public void cleanup() {
+
+                                }
+
+                                @Override
+                                public String getId() {
+                                    return s;
+                                }
+
+                                @Override
+                                public void cancel() {
+
+                                }
+                            };
+                        }
+                    })
+                    .load(url)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+        }
     }
 }

@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/meizi_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
     android:layout_marginLeft="4dp"
     android:layout_marginRight="4dp"
-    android:layout_marginTop="5dp"
-    android:background="@color/white"
-    android:layout_marginBottom="5dp">
+    android:layout_marginTop="5dp">
 
-    <ImageView
+    <com.gank.gankly.widget.ImageDefaultView
         android:id="@+id/meizi_img_picture"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:contentDescription="@null"
         android:elevation="@dimen/activity_horizontal_margin"
-        android:transitionName="welfare_image"
-        android:scaleType="centerCrop"/>
-
+        android:foreground="?android:attr/selectableItemBackground"
+        android:scaleType="centerCrop"
+        android:transitionName="welfare_image" />
 </RelativeLayout>

@@ -15,12 +15,9 @@ import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.config.Preferences;
 import com.gank.gankly.databinding.AdapterAndroidBinding;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
-import com.gank.gankly.utils.GanklyPreferences;
-import com.gank.gankly.utils.NetworkUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
 
@@ -72,11 +69,9 @@ class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder>
             }
         }
 
+        String url = mImagesList.get(imgPosition).getUrl();
         if (imgPosition < mImageSize) {
-            String url = mImagesList.get(imgPosition).getUrl();
-
-            boolean isOnlyWif = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
-            ImageLoaderUtil.getInstance().loadWifiImage(mContext, url, NetworkUtils.isWiFi(), isOnlyWif).listener(new RequestListener<String, GlideDrawable>() {
+            ImageLoaderUtil.getInstance().loadWifiImage(mContext, url).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                     holder.imgHead.showLoadText();
@@ -90,19 +85,19 @@ class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder>
                     holder.imgHead.showImage();
                     return false;
                 }
-            })      .centerCrop()
+            }).centerCrop()
                     .into(holder.mImageView);
+        }
 
-            holder.imgHead.setOnClickListener(v -> {
-                if (bean.isLoad()) {
-                    mMeiZiOnClick.onClick(v, bean);
-                }
-
+        holder.imgHead.setOnClickListener(v -> {
+            if (bean.isLoad()) {
+                mMeiZiOnClick.onClick(v, bean);
+            } else {
                 if (!holder.imgHead.isCanLoad()) {
                     return;
                 }
                 holder.imgHead.showLoading();
-                ImageLoaderUtil.getInstance().loadImageCall(url, holder.mImageView, R.drawable.item_default_img, new RequestListener<String, GlideDrawable>() {
+                ImageLoaderUtil.getInstance().loadManualImage(mContext, url).listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                         holder.imgHead.showErrorText();
@@ -116,9 +111,9 @@ class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.GankViewHolder>
                         mResults.set(position, bean);
                         return false;
                     }
-                });
-            });
-        }
+                }).centerCrop().into(holder.mImageView);
+            }
+        });
     }
 
     @Override

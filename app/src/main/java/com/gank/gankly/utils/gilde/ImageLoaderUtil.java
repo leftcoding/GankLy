@@ -1,8 +1,10 @@
 package com.gank.gankly.utils.gilde;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
+import com.bumptech.glide.BitmapRequestBuilder;
 import com.bumptech.glide.DrawableRequestBuilder;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -71,8 +73,20 @@ public class ImageLoaderUtil {
         mStrategy.loadImageWithAppCxt(url, imageView);
     }
 
-    public DrawableRequestBuilder<String> loadWifiImage(Context context, String url, boolean isWifi, boolean isOnlyWifi) {
-        return mStrategy.loadWifiImage(context, url, isWifi, isOnlyWifi);
+    public DrawableRequestBuilder<String> loadWifiImage(Context context, String url) {
+        return mStrategy.loadWifiImage(context, url);
+    }
+
+    public DrawableRequestBuilder<String> loadManualImage(Context context, String url) {
+        return mStrategy.loadManualImage(context, url);
+    }
+
+    public BitmapRequestBuilder<String, Bitmap> loadAsImage(Context context, String url) {
+        return mStrategy.loadAsImage(context, url);
+    }
+
+    public BitmapRequestBuilder<String, Bitmap> glideAsBitmap(Context context, String url) {
+        return mStrategy.glideAsBitmap(context, url);
     }
 
     /**

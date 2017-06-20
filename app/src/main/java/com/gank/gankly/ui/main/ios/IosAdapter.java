@@ -14,15 +14,12 @@ import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.config.Preferences;
 import com.gank.gankly.databinding.AdapterIosBinding;
 import com.gank.gankly.listener.RecyclerOnClick;
 import com.gank.gankly.utils.DateUtils;
-import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
 import com.gank.gankly.widget.RatioImageView;
-import com.socks.library.KLog;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,8 +27,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.gank.gankly.utils.NetworkUtils.isWiFi;
 
 /**
  * Create by LingYan on 2016-04-25
@@ -63,21 +58,19 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
         holder.mBean = bean;
         holder.bind(bean);
 
-        int imgPosition = holder.getAdapterPosition();
+        int imgPosition = position;
 
         if (mImageSize != 0) {
             if (imgPosition > mImageSize) {
-                imgPosition = holder.getAdapterPosition() % mImageSize;
-            } else if (holder.getAdapterPosition() == mImageSize) {
+                imgPosition = position % mImageSize;
+            } else if (position == mImageSize) {
                 imgPosition = 0;
             }
         }
-        KLog.d("imgPosition:" + imgPosition + ",position:" + holder.getAdapterPosition());
 
         String url = mImagesList.get(imgPosition).getUrl();
         if (imgPosition < mImageSize) {
-            boolean isOnlyWif = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
-            ImageLoaderUtil.getInstance().loadWifiImage(mContext, url, isWiFi(), isOnlyWif).listener(new RequestListener<String, GlideDrawable>() {
+            ImageLoaderUtil.getInstance().loadWifiImage(mContext, url).listener(new RequestListener<String, GlideDrawable>() {
                 @Override
                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                     holder.imgHead.showLoadText();
@@ -93,41 +86,40 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
                 }
             })
                     .centerCrop()
-                    .into(holder.view);
+                    .into(holder.mImageView);
         }
 
         holder.imgHead.setOnClickListener(v -> {
             if (bean.isLoad()) {
                 mMeiZiOnClick.onClick(v, bean);
-            }
-
-            if (!holder.imgHead.isCanLoad()) {
-                return;
-            }
-
-            holder.imgHead.showLoading();
-            ImageLoaderUtil.getInstance().loadImageCall(url, holder.view, R.drawable.item_default_img, new RequestListener<String, GlideDrawable>() {
-                @Override
-                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                    holder.imgHead.showErrorText();
-                    return false;
+            } else {
+                if (!holder.imgHead.isCanLoad()) {
+                    return;
                 }
+                holder.imgHead.showLoading();
+                ImageLoaderUtil.getInstance().loadManualImage(mContext, url).listener(new RequestListener<String, GlideDrawable>() {
+                    @Override
+                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        holder.imgHead.showErrorText();
+                        return false;
+                    }
 
-                @Override
-                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                    holder.imgHead.showImage();
-                    bean.setLoad(true);
-                    mResults.set(position, bean);
-                    return false;
-                }
-            });
+                    @Override
+                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        holder.imgHead.showImage();
+                        bean.setLoad(true);
+                        mResults.set(position, bean);
+                        return false;
+                    }
+                }).centerCrop().into(holder.mImageView);
+            }
         });
     }
 
     @Override
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.view);
+        Glide.clear(holder.mImageView);
     }
 
     private View getLayoutView(ViewGroup parent) {
@@ -152,7 +144,6 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
     public void appendItems(List<ResultsBean> results) {
         mResults.addAll(results);
         int size = mResults.size();
-        KLog.d("size:" + size);
         notifyItemRangeInserted(size, results.size());
     }
 
@@ -163,6 +154,11 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
 //        Collections.shuffle(mImagesList);
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
         mMeiZiOnClick = onItemClickListener;
     }
@@ -170,7 +166,7 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
     public class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.ios_ratio_img_head)
         ImageDefaultView imgHead;
-        RatioImageView view;
+        RatioImageView mImageView;
 
 
         private ResultsBean mBean;
@@ -181,8 +177,8 @@ public class IosAdapter extends RecyclerView.Adapter<IosAdapter.GankViewHolder> 
             bindView(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-            view = new RatioImageView(mContext);
-            imgHead.setFrameLayout(view);
+            mImageView = new RatioImageView(mContext);
+            imgHead.setFrameLayout(mImageView);
         }
 
         public void bind(ResultsBean resultsBean) {
