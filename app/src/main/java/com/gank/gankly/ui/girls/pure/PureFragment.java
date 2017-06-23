@@ -36,6 +36,7 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 清纯妹子
@@ -51,6 +52,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     private RecyclerView mRecyclerView;
     private PureAdapter mAdapter;
     private MainActivity mActivity;
+    private Disposable mDisposable;
 
     private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
@@ -73,7 +75,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     @Override
     protected void initValues() {
         initRefresh();
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeUi());
     }
 
@@ -272,6 +274,14 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     public void disLoadingDialog() {
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
     }
 }

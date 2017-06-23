@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 妹子每日更新
@@ -47,6 +48,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     private DailyMeiziAdapter mDailyMeiziAdapter;
     private DailyMeiziPresenter mPresenter;
     private MainActivity mActivity;
+    private Disposable mDisposable;
 
     private ProgressDialog mDialog;
 
@@ -62,7 +64,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     protected void initValues() {
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeUi());
     }
 
@@ -238,5 +240,13 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     protected void callBackRefreshUi() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }

@@ -9,15 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gank.gankly.R;
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.GallerySize;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.ui.base.BaseActivity;
 import com.gank.gankly.utils.ShareUtils;
-import com.socks.library.KLog;
 import com.superplayer.library.SuperPlayer;
 
 import butterknife.BindView;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -36,6 +34,8 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     @BindView(R.id.baisi_preview_toolbar)
     Toolbar mToolbar;
 
+    private Disposable mDisposable;
+
     private String mUrl;
     private int mWidth;
     private int mHeigth;
@@ -50,34 +50,16 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
 
     @Override
     protected void initValues() {
-        RxBus_.getInstance()
+        mDisposable = RxBus_.getInstance()
                 .toObservableSticky(GallerySize.class)
-                .subscribe(new Observer<GallerySize>() {
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(GallerySize gallerySize) {
-                        if (gallerySize != null) {
-                            mUrl = gallerySize.getUrl();
-                            mHeigth = gallerySize.getHeight();
-                            mWidth = gallerySize.getWidth();
-                            mTitle = gallerySize.getTitle();
-                            mShareUrl = gallerySize.getShareUrl();
-                            mFrom = gallerySize.getFrom();
-                        }
+                .subscribe(gallerySize -> {
+                    if (gallerySize != null) {
+                        mUrl = gallerySize.getUrl();
+                        mHeigth = gallerySize.getHeight();
+                        mWidth = gallerySize.getWidth();
+                        mTitle = gallerySize.getTitle();
+                        mShareUrl = gallerySize.getShareUrl();
+                        mFrom = gallerySize.getFrom();
                     }
                 });
     }
@@ -176,6 +158,10 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
             }
         }).start();
         super.onDestroy();
+
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 
     @Override

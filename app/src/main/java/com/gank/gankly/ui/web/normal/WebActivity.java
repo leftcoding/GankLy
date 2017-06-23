@@ -430,8 +430,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         @Override
         public void onReceivedTitle(WebView arg0, final String arg1) {
             super.onReceivedTitle(arg0, arg1);
-            KLog.d("webpage title is " + arg1);
-
         }
     }
 

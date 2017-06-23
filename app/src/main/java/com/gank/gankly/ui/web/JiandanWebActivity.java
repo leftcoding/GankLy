@@ -157,6 +157,7 @@ public class JiandanWebActivity extends BaseActivity {
             mAuthor = bundle.getString(AUTHOR);
             mFromWay = bundle.getInt(FROM_WAY);
         }
+
         mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
         if (!ListUtils.isListEmpty(list)) {
@@ -178,7 +179,6 @@ public class JiandanWebActivity extends BaseActivity {
     }
 
     private void parseLoadUrlData(final String url) {
-        KLog.d("url:" + url);
         Observable<String> observable = Observable.create(new ObservableOnSubscribe<String>() {
             @Override
             public void subscribe(ObservableEmitter<String> subscriber) throws Exception {
@@ -235,7 +235,6 @@ public class JiandanWebActivity extends BaseActivity {
     }
 
     private String getLoadDataBaseUrl() {
-        KLog.d("isJianDanUrl:" + isJianDanUrl() + ",isPmUrl:" + isPmUrl());
         if (!TextUtils.isEmpty(mUrl)) {
             if (isJianDanUrl()) {
                 return "http://i.jandan.net";
@@ -248,7 +247,6 @@ public class JiandanWebActivity extends BaseActivity {
 
     private Document removeDivs(Document doc) {
         List<String> list = new ArrayList<>();
-        KLog.d("isJianDanUrl:" + isJianDanUrl() + ",isPmUrl:" + isPmUrl());
         if (isJianDanUrl()) {
             list = getJianDanRemoveDivs();
         } else if (isPmUrl()) {

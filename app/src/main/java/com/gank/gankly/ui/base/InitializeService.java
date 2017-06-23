@@ -3,14 +3,11 @@ package com.gank.gankly.ui.base;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.Preferences;
-import com.gank.gankly.data.DaoMaster;
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -50,12 +47,6 @@ public class InitializeService extends IntentService {
         //数据库Chrome上调试 -- start
         Stetho.initializeWithDefaults(getApplicationContext());
         //stetho -- end
-
-        // GreenDao -- start
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        RxBus_.getInstance().post(db);
-        // GreenDao end --
 
         //Bugly 测试：true -- start
         Beta.autoDownloadOnWifi = true;

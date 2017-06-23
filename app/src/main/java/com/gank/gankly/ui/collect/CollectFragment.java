@@ -11,22 +11,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
+import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.socks.library.KLog;
 
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
@@ -49,6 +47,7 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     private MoreActivity mActivity;
     private CollectContract.Presenter mPresenter;
     private CollectAdapter mCollectAdapter;
+    private Disposable mDisposable;
 
     @Override
     protected int getLayoutId() {
@@ -77,28 +76,10 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
 
         mToolbar.setNavigationOnClickListener(v -> mActivity.finish());
 
-        RxBus_.getInstance().toObservable(RxCollect.class)
-                .subscribe(new Observer<RxCollect>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(RxCollect rxCollect) {
-                        if (rxCollect.isCollect()) {
-                            onDelete();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        KLog.e(e);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
+        mDisposable = RxBus_.getInstance().toObservable(RxCollect.class)
+                .subscribe(rxCollect -> {
+                    if (rxCollect.isCollect()) {
+                        onDelete();
                     }
                 });
     }
@@ -257,5 +238,13 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     @Override
     public void hideRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }

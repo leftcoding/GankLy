@@ -17,6 +17,7 @@ import com.gank.gankly.widget.LYRelativeLayoutRipple;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-09-13
@@ -25,14 +26,13 @@ import butterknife.ButterKnife;
 public abstract class BaseThemeFragment extends BaseFragment {
     @NonNull
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private Disposable mDisposable;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    callBackRefreshUi();
-                });
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> callBackRefreshUi());
     }
 
     protected abstract void callBackRefreshUi();
@@ -74,6 +74,14 @@ public abstract class BaseThemeFragment extends BaseFragment {
                     view.setCustomBackgroundResource(backgroundResource);
                 }
             });
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
         }
     }
 }

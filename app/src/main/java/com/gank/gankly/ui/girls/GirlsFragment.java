@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 美しい妹
@@ -35,6 +36,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     private MainActivity mActivity;
     private GirlsAdapter mPagerAdapter;
+    private Disposable mDisposable;
 
     private List<String> mTitles;
 
@@ -50,7 +52,7 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
 
     @Override
     protected void bindListener() {
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     refreshUi();
                 });

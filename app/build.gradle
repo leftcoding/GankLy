@@ -135,7 +135,7 @@ dependencies {
     //okhttp3
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     //leakcanary 内存泄漏监测
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 
 }

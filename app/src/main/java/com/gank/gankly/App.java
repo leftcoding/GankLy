@@ -8,13 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
 import com.gank.gankly.data.DaoSession;
-import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
+import static de.greenrobot.dao.test.DbTest.DB_NAME;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -49,13 +50,12 @@ public class App extends Application {
 
         InitializeService.start(getApplicationContext());
 
-        RxBus_.getInstance().toObservable(SQLiteDatabase.class)
-                .subscribe(sqLiteDatabase -> {
-                    if (sqLiteDatabase != null) {
-                        DaoMaster daoMaster = new DaoMaster(sqLiteDatabase);
-                        daoSession = daoMaster.newSession();
-                    }
-                });
+        // GreenDao -- start
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
+        // GreenDao -- end
     }
 
     private void initPreferences() {

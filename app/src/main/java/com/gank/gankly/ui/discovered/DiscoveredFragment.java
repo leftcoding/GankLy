@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * 发现
@@ -43,6 +44,8 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     ViewPager mViewPager;
 
     private MainActivity mActivity;
+    private Disposable mDisposable;
+
     private List<String> mTitles;
 
     @Override
@@ -57,7 +60,7 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
 
     @Override
     protected void bindListener() {
-        RxBus_.getInstance().toObservable(ThemeEvent.class)
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     refreshUi();
                 });
@@ -137,5 +140,13 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     @Override
     protected void callBackRefreshUi() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }
