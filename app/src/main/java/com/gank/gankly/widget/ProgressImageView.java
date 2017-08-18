@@ -12,13 +12,17 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.ProgressTarget;
+
+import static com.bumptech.glide.Glide.with;
 
 /**
  * Glide image with progress
@@ -94,36 +98,54 @@ public class ProgressImageView extends RelativeLayout {
 //        if (url.endsWith("gif")) {
         target.setModel(url); // update target's cache
 
-        Glide.with(fragment).load(url)
-                .asBitmap()
+        DrawableTypeRequest request1;
+
+        if (url.contains("i.meizitu.net/")) {
+            if (url.contains("-")) {
+                int point = url.lastIndexOf("-");
+                int name = url.lastIndexOf(".");
+                String first = url.substring(0, point);
+                String end = url.substring(name, url.length());
+                url = first + end;
+            }
+            GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                    .addHeader("referer", "http://www.mzitu.com/mm/")
+                    .build());
+
+            request1 = Glide.with(fragment).load(glideUrl);
+        } else {
+            request1 = Glide.with(fragment).load(url);
+        }
+
+        request1.asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.image_loading)
                 .error(R.drawable.image_failure)
-                .listener(new RequestListener<String, Bitmap>() {
-                    @Override
-                    public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
-                        if (model.contains("i.meizitu.net/")) {
-                            if (model.contains("-")) {
-                                int point = model.lastIndexOf("-");
-                                int name = model.lastIndexOf(".");
-                                String first = model.substring(0, point);
-                                String end = model.substring(name, model.length());
-                                String url = first + end;
-                                Glide.with(fragment).load(url)
-                                        .asBitmap()
-                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                                        .fitCenter()
-                                        .into(target);
-                            }
-                        }
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                        return false;
-                    }
-                })
+//                .listener(new RequestListener<GlideUrl, Bitmap>() {
+//                    @Override
+//                    public boolean onException(Exception e, GlideUrl model, Target<Bitmap> target, boolean isFirstResource) {
+//                        if (model.get.contains("i.meizitu.net/")) {
+//                            if (model.contains("-")) {
+//                                int point = model.lastIndexOf("-");
+//                                int name = model.lastIndexOf(".");
+//                                String first = model.substring(0, point);
+//                                String end = model.substring(name, model.length());
+//                                String url = first + end;
+//                                Glide.with(fragment).load(url)
+//                                        .asBitmap()
+//                                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                                        .fitCenter()
+//                                        .into(target);
+//                            }
+//                        }
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public boolean onResourceReady(Bitmap resource, GlideUrl model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                        return false;
+//                    }
+//                })
 //                .sizeMultiplier(0.6f)
                 .fitCenter() // needs explicit transformation, because we're using a custom target
 //                .crossFade()
@@ -135,7 +157,7 @@ public class ProgressImageView extends RelativeLayout {
 //        if (url.endsWith("gif")) {
         target.setModel(url); // update target's cache
 
-        Glide.with(fragment).load(url)
+        with(fragment).load(url)
                 .asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.image_loading)
