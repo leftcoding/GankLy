@@ -53,6 +53,7 @@ public class PurePresenter extends FetchPresenter implements PureContract.Presen
     }
 
     private void fetchData(final int page) {
+        KLog.d("fetchData");
         String url = getUrl(page);
         mTask.fetchPure(url)
                 .subscribe(new Observer<Document>() {
@@ -63,6 +64,7 @@ public class PurePresenter extends FetchPresenter implements PureContract.Presen
 
                     @Override
                     public void onNext(Document document) {
+//                        KLog.d(document);
                         mMaxPageNumber = getMaxPageNum(document);
                         List<GiftBean> list = getPageLists(document);
                         list = filterData(list, mModelView);
@@ -162,6 +164,7 @@ public class PurePresenter extends FetchPresenter implements PureContract.Presen
         if (size > 0) {
             for (int i = 0; i < size; i++) {
                 String imgUrl = img.get(i).attr("data-original");
+                KLog.d("imgurl:"+imgUrl);
                 String title = img.get(i).attr("alt");
                 String url = hrefs.get(i).attr("href");
                 String time = times.get(i).text();

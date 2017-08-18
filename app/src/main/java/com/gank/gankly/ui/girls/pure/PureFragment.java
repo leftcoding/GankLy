@@ -74,7 +74,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     @Override
     protected void initValues() {
-        initRefresh();
+//        initRefresh();
         mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeUi());
     }
