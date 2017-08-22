@@ -98,7 +98,7 @@ public class ProgressImageView extends RelativeLayout {
 //        if (url.endsWith("gif")) {
         target.setModel(url); // update target's cache
 
-        DrawableTypeRequest request1;
+        DrawableTypeRequest request;
 
         if (url.contains("i.meizitu.net/")) {
             if (url.contains("-")) {
@@ -112,12 +112,12 @@ public class ProgressImageView extends RelativeLayout {
                     .addHeader("referer", "http://www.mzitu.com/mm/")
                     .build());
 
-            request1 = Glide.with(fragment).load(glideUrl);
+            request = Glide.with(fragment).load(glideUrl);
         } else {
-            request1 = Glide.with(fragment).load(url);
+            request = Glide.with(fragment).load(url);
         }
 
-        request1.asBitmap()
+        request.asBitmap()
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .placeholder(R.drawable.image_loading)
                 .error(R.drawable.image_failure)
