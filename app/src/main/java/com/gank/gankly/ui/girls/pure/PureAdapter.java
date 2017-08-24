@@ -52,7 +52,7 @@ public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder
         holder.txtDesc.setText(bean.getTitle());
         holder.txtAuthor.setText(bean.getTime());
         GlideUrl glideUrl = new GlideUrl(bean.getImgUrl(), new LazyHeaders.Builder()
-                .addHeader("Referer", "http://www.mzitu.com/mm/")
+                .addHeader("referer", "http://www.mzitu.com/mm/")
                 .build());
         Glide.with(mContext)
                 .asBitmap()
