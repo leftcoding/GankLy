@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.bean.GallerySize;
@@ -110,8 +111,10 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
             Glide.with(mContext)
                     .load(imgUrl)
-                    .priority(Priority.IMMEDIATE)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(new RequestOptions()
+                            .priority(Priority.IMMEDIATE)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
                     .into(gifHolder.mGif);
 
             ViewGroup.LayoutParams layoutParams = gifHolder.rlayPlayerControl.getLayoutParams();
@@ -132,8 +135,10 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             Glide.with(mContext).load(bean.getU().getHeader().get(0)).into(imageHolder.imgPortarit);
             Glide.with(mContext)
                     .load(imgUrl)
-                    .centerCrop()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .apply(new RequestOptions()
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    )
                     .into(imageHolder.mPicture);
 
             ViewGroup.LayoutParams layoutParams = imageHolder.rlayPlayerControl.getLayoutParams();
@@ -222,11 +227,11 @@ public class BaiSiImageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onViewRecycled(RecyclerView.ViewHolder holder) {
         if (holder instanceof BaiSiGifHolder) {
-            BaiSiGifHolder baiSiGifHolder = (BaiSiGifHolder) holder;
-            Glide.clear(baiSiGifHolder.mGif);
+            Glide.get(mContext).clearMemory();
         } else if (holder instanceof BaiSiNormalImageHolder) {
-            BaiSiNormalImageHolder baiSiGifHolder = (BaiSiNormalImageHolder) holder;
-            Glide.clear(baiSiGifHolder.mPicture);
+//            BaiSiNormalImageHolder baiSiGifHolder = (BaiSiNormalImageHolder) holder;
+//            Glide.clear(baiSiGifHolder.mPicture);
+            Glide.get(mContext).clearMemory();
         }
         super.onViewRecycled(holder);
     }

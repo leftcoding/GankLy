@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
@@ -56,9 +57,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         }
         if (position < size && mImagesList != null) {
             Glide.with(mContext)
-                    .load(mImagesList.get(position).getUrl())
                     .asBitmap()
-                    .fitCenter()
+                    .load(mImagesList.get(position).getUrl())
+                    .apply(new RequestOptions()
+                            .fitCenter()
+                    )
                     .into(holder.mImageView);
         }
     }
@@ -66,8 +69,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     @Override
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.mImageView);
-        holder.mImageView.setImageBitmap(null);
+        Glide.get(mContext).clearMemory();
+//        holder.mImageView.setImageBitmap(null);
     }
 
     @Override

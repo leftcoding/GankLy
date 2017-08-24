@@ -2,18 +2,13 @@ package com.gank.gankly.utils.gilde;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.BitmapRequestBuilder;
-import com.bumptech.glide.DrawableRequestBuilder;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.request.RequestListener;
 
 /**
- * Created by Anthony on 2016/3/3.
- * Class Note:
- * abstract class/interface defined to load image
- * (Strategy Pattern used here)
  */
 public interface BaseImageLoaderStrategy {
     //无占位图
@@ -32,7 +27,7 @@ public interface BaseImageLoaderStrategy {
 
     void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor, int heightPx, int widthPx);
 
-    void loadImageCall(String url, ImageView imageView, int placeholder, final RequestListener<String, GlideDrawable> listener);
+    void loadImageCall(String url, ImageView imageView, int placeholder, final RequestListener<Drawable> listener);
 
     void loadGifImage(String url, int placeholder, ImageView imageView);
 
@@ -50,11 +45,11 @@ public interface BaseImageLoaderStrategy {
 
     void saveImage(Context context, String url, String savePath, String saveFileName, ImageSaveListener listener);
 
-    DrawableRequestBuilder<String> loadWifiImage(Context context, String url);
+    RequestBuilder<Drawable> loadWifiImage(Context context, String url);
 
-    DrawableRequestBuilder<String> loadManualImage(Context context, String url);
+    RequestBuilder<Drawable> loadManualImage(Context context, String url);
 
-    BitmapRequestBuilder<String,Bitmap> loadAsImage(Context context, String url);
+    RequestBuilder<Bitmap> loadAsImage(Context context, String url);
 
-    BitmapRequestBuilder<String, Bitmap> glideAsBitmap(Context context, String imgUrl);
+    RequestBuilder<Bitmap> glideAsBitmap(Context context, String imgUrl);
 }

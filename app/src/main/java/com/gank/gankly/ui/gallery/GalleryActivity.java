@@ -33,6 +33,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
@@ -562,12 +565,16 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         Observable.create((ObservableOnSubscribe<Bitmap>) subscriber -> {
             Bitmap bitmap = null;
             try {
+                GlideUrl glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                        .addHeader("Referer", "http://www.mzitu.com/mm/")
+                        .build());
                 bitmap = Glide.with(activity)
-                        .load(url)
                         .asBitmap()
-                        .atMost()
-                        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                        .skipMemoryCache(true)
+                        .load(glideUrl)
+                        .apply(new RequestOptions()
+                                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                .skipMemoryCache(true)
+                        )
                         .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .get();
             } catch (InterruptedException | ExecutionException e) {

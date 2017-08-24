@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
@@ -54,10 +55,12 @@ public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder
                 .addHeader("Referer", "http://www.mzitu.com/mm/")
                 .build());
         Glide.with(mContext)
-                .load(glideUrl)
                 .asBitmap()
-                .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .load(glideUrl)
+                .apply(new RequestOptions()
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
                 .into(holder.mImageView);
     }
 
@@ -74,7 +77,7 @@ public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder
     @Override
     public void onViewRecycled(GankViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.mImageView);
+        Glide.get(mContext).clearMemory();
     }
 
     public void refillItems(List<GiftBean> getResults) {

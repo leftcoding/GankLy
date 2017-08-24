@@ -8,6 +8,9 @@ import android.os.Environment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.LazyHeaders;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.config.Constants;
 import com.socks.library.KLog;
@@ -32,13 +35,24 @@ public class RxSaveImage {
             public void subscribe(ObservableEmitter<Uri> subscriber) throws Exception {
                 Bitmap bitmap = null;
                 try {
+                    GlideUrl glideUrl;
+                    if (url.contains("meizitu") || url.contains("mzitu")) {
+                        glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                                .addHeader("Referer", "http://www.mzitu.com/mm/")
+                                .build());
+                    } else {
+                        glideUrl = new GlideUrl(url, new LazyHeaders.Builder()
+                                .build());
+                    }
                     bitmap = Glide.with(context)
-                            .load(url)
                             .asBitmap()
-                            .atMost()
-                            .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                            .skipMemoryCache(true)
-                            .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .load(glideUrl)
+                            .apply(new RequestOptions()
+                                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                                    .skipMemoryCache(true)
+                            )
+//                            .atMost()
+                            .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                             .get();
                 } catch (InterruptedException | ExecutionException e) {
                     KLog.e(e);

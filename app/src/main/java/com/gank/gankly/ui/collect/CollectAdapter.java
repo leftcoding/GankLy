@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.GlideRoundTransform;
 import com.gank.gankly.data.entity.UrlCollect;
@@ -56,7 +57,9 @@ public class CollectAdapter extends RecyclerView.Adapter<CollectAdapter.CollectH
 
         Glide.with(mContext)
                 .load(mImages[0])
-                .transform(new GlideRoundTransform(mContext, 10))
+                .apply(new RequestOptions()
+                        .transform(new GlideRoundTransform(mContext, 10))
+                )
                 .into(holder.userPicture);
     }
 

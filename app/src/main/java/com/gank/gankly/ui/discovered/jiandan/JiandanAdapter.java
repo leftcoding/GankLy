@@ -68,7 +68,7 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
     @Override
     public void onViewRecycled(JiandanHolder holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.img);
+        Glide.get(mContext).clearMemory();
     }
 
     @Override

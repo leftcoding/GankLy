@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieVideo;
 
@@ -82,12 +83,17 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
 
         Glide.with(mContext)
                 .load(bean.getU().getHeader().get(0))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
                 .into(holder.imgPortarit);
+
         Glide.with(mContext)
                 .load(bean.getVideo().getThumbnail().get(0))
-                .fitCenter()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .apply(new RequestOptions()
+                        .fitCenter()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
                 .into(holder.imgThumb);
     }
 
@@ -95,8 +101,7 @@ public class BaiSiVideoAdapter extends RecyclerView.Adapter<BaiSiVideoAdapter.Ba
     @Override
     public void onViewRecycled(BaiSiHolderView holder) {
         super.onViewRecycled(holder);
-        Glide.clear(holder.imgPortarit);
-        holder.imgPortarit.setImageBitmap(null);
+        Glide.get(mContext).clearMemory();
     }
 
     @Override

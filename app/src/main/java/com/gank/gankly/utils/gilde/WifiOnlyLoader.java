@@ -1,15 +1,15 @@
 package com.gank.gankly.utils.gilde;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 
-import com.bumptech.glide.load.data.DataFetcher;
-import com.bumptech.glide.load.model.GenericLoaderFactory;
+import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.ModelCache;
 import com.bumptech.glide.load.model.ModelLoader;
 import com.bumptech.glide.load.model.ModelLoaderFactory;
-import com.bumptech.glide.load.model.stream.HttpUrlGlideUrlLoader;
+import com.bumptech.glide.load.model.MultiModelLoaderFactory;
+import com.bumptech.glide.load.model.stream.HttpGlideUrlLoader;
 import com.gank.gankly.utils.GanklyPreferences;
 
 import java.io.InputStream;
@@ -23,23 +23,26 @@ public class WifiOnlyLoader implements ModelLoader<GlideUrl, InputStream> {
         defaultLoader = loader;
     }
 
+    @Nullable
     @Override
-    public DataFetcher<InputStream> getResourceFetcher(GlideUrl model, int width, int height) {
+    public LoadData<InputStream> buildLoadData(GlideUrl glideUrl, int width, int height, Options options) {
         SharedPreferences prefs = GanklyPreferences.getDefaultPreference();
         if (prefs.getBoolean(SETTING_WIFI_ONLY, true)) {
-            return new NetworkDisablingFetcher(model);
+            return new NetworkDisablingLoader().buildLoadData(glideUrl, width, height, options);
         } else {
-            return defaultLoader.getResourceFetcher(model, width, height);
+            return defaultLoader.buildLoadData(glideUrl, width, height, options);
         }
+    }
+
+    @Override
+    public boolean handles(GlideUrl glideUrl) {
+        return false;
     }
 
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
         @Override
-        public ModelLoader<GlideUrl, InputStream> build(Context context, GenericLoaderFactory factories) {
-            //ModelLoader<GlideUrl, InputStream> loader = factories.buildModelLoader(GlideUrl.class, InputStream.class);
-            // the above could be used when you have a custom model, this version already replaced the default loader,
-            // so it needs to be created explicitly. If you use OkHttp or Volley create that.
-            return new WifiOnlyLoader(new HttpUrlGlideUrlLoader(new ModelCache<GlideUrl, GlideUrl>(500)));
+        public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
+            return new WifiOnlyLoader(new HttpGlideUrlLoader(new ModelCache<>(500)));
         }
 
         @Override

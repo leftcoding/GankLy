@@ -1,33 +1,41 @@
 package com.gank.gankly.utils.gilde;
 
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.data.DataFetcher;
+import com.bumptech.glide.load.model.GlideUrl;
 
-import java.io.IOException;
 import java.io.InputStream;
 
 public class NetworkDisablingFetcher implements DataFetcher<InputStream> {
-    private final Object model;
+    private final GlideUrl model;
 
-    public NetworkDisablingFetcher(Object model) {
+    public NetworkDisablingFetcher(GlideUrl model) {
         this.model = model;
     }
 
     @Override
-    public InputStream loadData(Priority priority) throws Exception {
-        throw new IOException("Fake network error");
+    public void loadData(Priority priority, DataCallback<? super InputStream> callback) {
+
     }
 
     @Override
     public void cleanup() {
-    }
 
-    @Override
-    public String getId() {
-        return model.toString();
     }
 
     @Override
     public void cancel() {
+
+    }
+
+    @Override
+    public Class<InputStream> getDataClass() {
+        return null;
+    }
+
+    @Override
+    public DataSource getDataSource() {
+        return null;
     }
 }

@@ -98,18 +98,18 @@
 
         <service android:name="com.gank.gankly.ui.base.InitializeService" />
 
-        <!-- Glide 默认配置 -->
-        <meta-data
-            android:name="com.gank.gankly.config.glide.MyGlideModule"
-            android:value="GlideModule" />
-        <!-- 进度条 -->
-        <meta-data
-            android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"
-            android:value="GlideModule" />
-        <!--OkHttp3 -->
-        <meta-data
-            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
-            android:value="GlideModule" />
+        <!--&lt;!&ndash; Glide 默认配置 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="com.gank.gankly.config.glide.MyGlideModule"-->
+            <!--android:value="GlideModule" />-->
+        <!--&lt;!&ndash; 进度条 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"-->
+            <!--android:value="GlideModule" />-->
+        <!--&lt;!&ndash;OkHttp3 &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
+            <!--android:value="GlideModule" />-->
 
     </application>
 </manifest>

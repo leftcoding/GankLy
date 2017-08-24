@@ -1,13 +1,22 @@
 package com.gank.gankly.utils.gilde;
 
-import com.bumptech.glide.load.data.DataFetcher;
-import com.bumptech.glide.load.model.stream.StreamModelLoader;
+import android.support.annotation.Nullable;
+
+import com.bumptech.glide.load.Options;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.ModelLoader;
 
 import java.io.InputStream;
 
-public class NetworkDisablingLoader<T> implements StreamModelLoader<T> {
+public class NetworkDisablingLoader implements ModelLoader<GlideUrl, InputStream> {
+    @Nullable
     @Override
-    public DataFetcher<InputStream> getResourceFetcher(final T model, int width, int height) {
-        return new NetworkDisablingFetcher(model);
+    public LoadData<InputStream> buildLoadData(GlideUrl t, int width, int height, Options options) {
+        return new LoadData<>(t, new NetworkDisablingFetcher(t));
+    }
+
+    @Override
+    public boolean handles(GlideUrl file) {
+        return false;
     }
 }

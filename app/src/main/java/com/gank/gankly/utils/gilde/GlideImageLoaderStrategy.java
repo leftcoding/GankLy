@@ -2,40 +2,36 @@ package com.gank.gankly.utils.gilde;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
-import com.bumptech.glide.BitmapRequestBuilder;
-import com.bumptech.glide.DrawableRequestBuilder;
-import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Priority;
-import com.bumptech.glide.load.data.DataFetcher;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.stream.StreamModelLoader;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 
 /**
- * Created by Anthony on 2016/3/3.
- * Class Note:
- * using {@link Glide} to load image
  */
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadImage(String url, ImageView imageView) {
-        Glide.with(imageView.getContext()).load(url)
-                .placeholder(imageView.getDrawable())
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(imageView.getContext())
+                .load(url)
+                .apply(new RequestOptions()
+                        .placeholder(imageView.getDrawable())
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                )
                 .into(imageView);
     }
 
@@ -55,18 +51,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public DrawableRequestBuilder<String> loadWifiImage(Context context, String url) {
+    public RequestBuilder<Drawable> loadWifiImage(Context context, String url) {
         return getImageCache(context, url, isAllowDown());
     }
 
     @Override
-    public DrawableRequestBuilder<String> loadManualImage(Context context, String url) {
+    public RequestBuilder<Drawable> loadManualImage(Context context, String url) {
         return getImageCache(context, url, true);
     }
 
     @Override
-    public BitmapRequestBuilder<String, Bitmap> loadAsImage(Context context, String url) {
-        return Glide.with(context).load(url).asBitmap().diskCacheStrategy(DiskCacheStrategy.SOURCE);
+    public RequestBuilder<Bitmap> loadAsImage(Context context, String url) {
+        return Glide.with(context).asBitmap().load(url).apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE));
     }
 
     @Override
@@ -85,13 +81,16 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadImageCall(String url, ImageView imageView, int placeholder, RequestListener<String, GlideDrawable> listener) {
-        Glide.with(imageView.getContext()).load(url)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .error(R.drawable.ic_bottom_bar_more)
+    public void loadImageCall(String url, ImageView imageView, int placeholder, RequestListener<Drawable> listener) {
+        Glide.with(imageView.getContext())
+                .load(url)
+                .apply(new RequestOptions()
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                        .error(R.drawable.ic_bottom_bar_more)
+                        .centerCrop()
+                )
                 .listener(listener)
-                .centerCrop()
                 .into(imageView);
     }
 
@@ -126,43 +125,45 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public BitmapRequestBuilder<String, Bitmap> glideAsBitmap(Context context, String imgUrl) {
+    public RequestBuilder<Bitmap> glideAsBitmap(Context context, String imgUrl) {
         if (isAllowDown()) {
             return Glide.with(context)
-                    .load(imgUrl)
                     .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                    .load(imgUrl)
+                    .apply(new RequestOptions().diskCacheStrategy(DiskCacheStrategy.RESOURCE));
         } else {
             return Glide.with(context)
-                    .using(new StreamModelLoader<String>() {
-                        @Override
-                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
-                            return new DataFetcher<InputStream>() {
-                                @Override
-                                public InputStream loadData(Priority priority) throws Exception {
-                                    throw new IOException("Download not allowed");
-                                }
-
-                                @Override
-                                public void cleanup() {
-
-                                }
-
-                                @Override
-                                public String getId() {
-                                    return s;
-                                }
-
-                                @Override
-                                public void cancel() {
-
-                                }
-                            };
-                        }
-                    })
-                    .load(imgUrl)
+//                    .using(new StreamModelLoader<String>() {
+//                        @Override
+//                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
+//                            return new DataFetcher<InputStream>() {
+//                                @Override
+//                                public InputStream loadData(Priority priority) throws Exception {
+//                                    throw new IOException("Download not allowed");
+//                                }
+//
+//                                @Override
+//                                public void cleanup() {
+//
+//                                }
+//
+//                                @Override
+//                                public String getId() {
+//                                    return s;
+//                                }
+//
+//                                @Override
+//                                public void cancel() {
+//
+//                                }
+//                            };
+//                        }
+//                    })
                     .asBitmap()
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                    .load(imgUrl)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    );
         }
     }
 
@@ -180,23 +181,26 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
         //去掉动画 解决与CircleImageView冲突的问题 这个只是其中的一个解决方案
         //使用SOURCE 图片load结束再显示而不是先显示缩略图再显示最终的图片（导致图片大小不一致变化）
-        DrawableTypeRequest<String> drawableTypeRequest = Glide.with(ctx).load(url);
+        RequestBuilder<Drawable> drawableTypeRequest = Glide.with(ctx).load(url);
         if (placeholder != 0) {
-            drawableTypeRequest.placeholder(placeholder);
+            drawableTypeRequest.apply(new RequestOptions().placeholder(placeholder));
         }
 
-        drawableTypeRequest.diskCacheStrategy(DiskCacheStrategy.SOURCE);
-        drawableTypeRequest.listener(new RequestListener<String, GlideDrawable>() {
+        drawableTypeRequest.apply(new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .fitCenter()
+        );
+        drawableTypeRequest.listener(new RequestListener<Drawable>() {
             @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 return false;
             }
 
             @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                 return false;
             }
-        }).fitCenter()
+        })
                 .into(imageView);
     }
 
@@ -211,39 +215,20 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         return allowDownload;
     }
 
-    private DrawableRequestBuilder<String> getImageCache(Context context, String url, boolean isAllowDown) {
+    private RequestBuilder<Drawable> getImageCache(Context context, String url, boolean isAllowDown) {
         if (isAllowDown) {
-            return Glide.with(context).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE);
+            return Glide.with(context)
+                    .load(url)
+                    .apply(new RequestOptions()
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    );
         } else {
             return Glide.with(context)
-                    .using(new StreamModelLoader<String>() {
-                        @Override
-                        public DataFetcher<InputStream> getResourceFetcher(final String s, int i, int i1) {
-                            return new DataFetcher<InputStream>() {
-                                @Override
-                                public InputStream loadData(Priority priority) throws Exception {
-                                    throw new IOException("Download not allowed");
-                                }
-
-                                @Override
-                                public void cleanup() {
-
-                                }
-
-                                @Override
-                                public String getId() {
-                                    return s;
-                                }
-
-                                @Override
-                                public void cancel() {
-
-                                }
-                            };
-                        }
-                    })
                     .load(url)
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE);
+                    .apply(new RequestOptions()
+                            .onlyRetrieveFromCache(true)
+                            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                    );
         }
     }
 }

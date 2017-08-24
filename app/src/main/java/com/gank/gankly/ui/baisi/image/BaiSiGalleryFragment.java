@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
@@ -77,9 +76,9 @@ public class BaiSiGalleryFragment extends BaseFragment {
             sliderIv.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
             Glide.with(this)
-                    .load(mUrl)
                     .asGif()
-                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .load(mUrl)
+//                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .into(mImageView);
         } else {
             ViewGroup.LayoutParams layoutParams = sliderIv.getLayoutParams();
@@ -88,7 +87,7 @@ public class BaiSiGalleryFragment extends BaseFragment {
 
             Glide.with(this).load(mUrl).downloadOnly(new SimpleTarget<File>() {
                 @Override
-                public void onResourceReady(File resource, GlideAnimation<? super File> glideAnimation) {
+                public void onResourceReady(File resource, Transition<? super File> transition) {
                     //设置图片初始化状态 = 从顶部开始加载
                     ImageViewState state = new ImageViewState(0, new PointF(0, 0), 0);
                     if (mHeight < 1920 || mWidth > 1080) {
