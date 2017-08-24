@@ -10,7 +10,7 @@
 
 
 ### 安装包 
-<a href="http://pro-app-qn.fir.im/3deeebab6b33bcb76f561dab79cff2b62e4ac1b2.apk?attname=Gankly.apk_2.1.0.apk&e=1490351848&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:iHMjOF0O6DU-a1-w29nkY5wfLYs=">下载apk</a>
+<a href="https://pro-app-qn.fir.im/39d225b22b239c79c88751f3297ec7f4a6057a5c.apk?attname=gankly_2.1.1_8.24.apk_2.1.1.apk&e=1503562220&token=LOvmia8oXF4xnLh0IdH05XMYpH6ENHNpARlmPc-T:kJonnEV5WckLuOeJuA4TACw5U2M=">下载最新apk</a>
 
 ### 应用截图
 ![image](art/1.png)
@@ -46,6 +46,18 @@
 137387869@qq.com
 
 ### 历史更新
+#### V2.1.1
+* 修复 妹子图防盗链问题
+* 优化 使用Glide 4.0版本
+* 优化 查看图片显示方式，更加平滑
+* 优化 查看图片开启自动滑动模式
+* 优化 查看图片选择页数
+* 优化 在5.0上点击显示效果
+* 优化 查看妹子（清纯、治愈系）访问速度提高
+* 新增 图片可以设置为桌面背景
+* 新增 在wifi下加载图片
+* 新增 清除图片缓存
+
 #### V2.1
 * 新增 团队博客
 * 新增 科技资讯
