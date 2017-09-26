@@ -5,7 +5,6 @@ import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.network.DownloadProgressInterceptor;
 import com.gank.gankly.network.DownloadProgressListener;
 import com.gank.gankly.network.service.DownloadService;
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +17,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
@@ -49,7 +49,6 @@ public class DownloadApi {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//RxJava
                 .addCallAdapterFactory(rxJavaCallAdapterFactory)//RxJava2
                 .baseUrl(BASE_URL)
                 .build();

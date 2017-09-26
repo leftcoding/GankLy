@@ -99,7 +99,7 @@
 -keep class com.google.gson. {*;}
 -keep class com.google.gson.JsonObject { *; }
 
-#################### ReJava ####################
+#################### RJava ####################
 -dontwarn sun.misc.**
 -keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
  long producerIndex;
@@ -116,7 +116,9 @@
 -dontwarn retrofit.**
 -keep class retrofit.** { *; }
 -keepattributes Signature
--keepattributes Exceptions
+-keepattributes Exceptionsx
+-dontwarn okio.**
+-dontwarn javax.annotation.**
 
 #################### GreenDao ####################
 -keep class com.manjay.housebox.greendao.** {*;}
