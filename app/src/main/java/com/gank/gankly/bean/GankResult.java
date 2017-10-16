@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.gank.gankly.utils.ListUtils;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class GankResult extends BaseResult implements Parcelable {
     }
 
     public int getSize() {
-        return ListUtils.getListSize(results);
+        return ListUtils.getSize(results);
     }
 
     @Override

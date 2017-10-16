@@ -3,6 +3,7 @@ package com.gank.gankly.ui.baisi.image;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +16,7 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GallerySize;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -27,7 +28,7 @@ import butterknife.BindView;
  * Email:137387869@qq.com
  */
 
-public class BaiSiGalleryFragment extends BaseFragment {
+public class BaiSiGalleryFragment extends SupportFragment {
     private static final String IMAGE_GIF = ".gif";
     public static final String URL = "BaiSi_Url";
     public static final String SIZE_HEIGHT = "Height";
@@ -58,7 +59,8 @@ public class BaiSiGalleryFragment extends BaseFragment {
     }
 
     @Override
-    protected void initValues() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         sliderIv.setMinimumScaleType(SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP);
         sliderIv.setDoubleTapZoomStyle(SubsamplingScaleImageView.ZOOM_FOCUS_CENTER);
         Bundle bundle = getArguments();
@@ -69,6 +71,11 @@ public class BaiSiGalleryFragment extends BaseFragment {
         }
         KLog.d("mUrl:" + mUrl);
         loadImageBitmap(mUrl);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     public void loadImageBitmap(final String url) {
@@ -100,15 +107,5 @@ public class BaiSiGalleryFragment extends BaseFragment {
                 }
             });
         }
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
     }
 }

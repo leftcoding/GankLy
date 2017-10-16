@@ -12,7 +12,6 @@ import com.gank.gankly.R;
 
 /**
  * Create by LingYan on 2016-09-01
- * Email:137387869@qq.com
  */
 public class LSwitch extends SwitchCompat {
     private int mColor = 1;

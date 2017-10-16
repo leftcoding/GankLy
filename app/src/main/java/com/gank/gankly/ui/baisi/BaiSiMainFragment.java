@@ -9,12 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
 
 import java.util.ArrayList;
@@ -25,9 +26,8 @@ import butterknife.BindView;
 /**
  * 百思不得姐
  * Create by LingYan on 2016-04-22
- * Email:137387869@qq.com
  */
-public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener {
+public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.OnPageChangeListener {
     private static final String TYPE_VIDEO = "视频";
     private static final String TYPE_IMAGE = "图片";
 
@@ -57,27 +57,21 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
     }
 
     @Override
-    protected void initPresenter() {
-    }
-
-    @Override
-    protected void initViews() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mToolbar.setTitle(R.string.baisi_leisure_time);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(true);
         }
-        mToolbar.setNavigationOnClickListener(view -> mActivity.finish());
-    }
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.finish();
+            }
+        });
 
-    @Override
-    protected void bindListener() {
-        changeThemeBackground();
-    }
-
-    @Override
-    protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new BaiSiVideoFragment());
         mList.add(new BaiSiImageFragment());
@@ -93,6 +87,8 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
         mViewPager.addOnPageChangeListener(this);
 
         initTabLayout();
+
+        changeThemeBackground();
     }
 
     private void initTabLayout() {
@@ -133,10 +129,5 @@ public class BaiSiMainFragment extends BaseSwipeRefreshFragment implements ViewP
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    protected void callBackRefreshUi() {
-
     }
 }

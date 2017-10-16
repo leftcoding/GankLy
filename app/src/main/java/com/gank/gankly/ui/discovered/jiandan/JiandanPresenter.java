@@ -37,11 +37,6 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
     }
 
     @Override
-    public void subscribe() {
-
-    }
-
-    @Override
     public void unSubscribe() {
 
     }
@@ -74,7 +69,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                     @Override
                     public void onNext(List<JianDanBean> list) {
                         list = filterData(list, mView);
-                        if (ListUtils.getListSize(list) > 0) {
+                        if (ListUtils.getSize(list) > 0) {
                             if (getFetchPage() > 1) {
                                 mView.appendMoreDate(list);
                             } else {
@@ -120,7 +115,7 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
     @Override
     public void fetchMore() {
         if (hasMore()) {
-            mView.showRefresh();
+            mView.showProgress();
             fetchData(getFetchPage());
         }
     }

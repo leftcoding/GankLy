@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.main.welfare;
 
-import com.gank.gankly.bean.ResultsBean;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
@@ -12,12 +12,12 @@ import java.util.List;
  */
 
 public class WelfareContract {
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void refillData(List<ResultsBean> list);
 
         void appendData(List<ResultsBean> list);
     }
 
-    interface Presenter extends IFetchPresenter {
+    interface Presenter extends ILoadMorePresenter {
     }
 }

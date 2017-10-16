@@ -15,7 +15,6 @@ import com.gank.gankly.listener.DialogOnClick;
 
 /**
  * Create by LingYan on 2016-09-09
- * Email:137387869@qq.com
  */
 public class UpdateVersionDialog extends DialogFragment {
     public static final String UPDATE_CONTENT = "update_content";

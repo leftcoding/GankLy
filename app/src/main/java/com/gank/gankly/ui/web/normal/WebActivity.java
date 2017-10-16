@@ -24,7 +24,7 @@ import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.source.LocalDataSource;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.ShareUtils;
@@ -81,6 +81,11 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     private MenuItem mMenuItem;
 
     private ValueCallback<Uri> uploadFile;
+
+    @Override
+    public void showShortToast(String string) {
+
+    }
 
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
@@ -173,8 +178,10 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     protected void initValues() {
         isInitCollect = true;
         if (!TextUtils.isEmpty(mUrl)) {
-            mPresenter.findCollectUrl(mUrl);
-            mPresenter.insetHistoryUrl(new ReadHistory(null, mUrl, mTitle, new Date(), mCollectType));
+            if (mPresenter != null) {
+                mPresenter.findCollectUrl(mUrl);
+                mPresenter.insetHistoryUrl(new ReadHistory(null, mUrl, mTitle, new Date(), mCollectType));
+            }
         }
     }
 

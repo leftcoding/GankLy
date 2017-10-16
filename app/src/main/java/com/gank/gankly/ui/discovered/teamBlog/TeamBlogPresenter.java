@@ -39,14 +39,14 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
             @Override
             public void onComplete() {
                 mView.showContent();
-                mView.hideRefresh();
+                mView.hideProgress();
                 int nextPage = getFetchPage() + 1;
                 setFetchPage(nextPage);
             }
 
             @Override
             public void onError(Throwable e) {
-                mView.hideRefresh();
+                mView.hideProgress();
                 KLog.e(e);
             }
 
@@ -94,14 +94,9 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
     @Override
     public void fetchMore() {
         if (hasMore()) {
-            mView.showRefresh();
+            mView.showProgress();
             fetchData(getFetchPage());
         }
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

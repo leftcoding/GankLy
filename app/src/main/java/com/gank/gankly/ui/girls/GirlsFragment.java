@@ -2,17 +2,20 @@ package com.gank.gankly.ui.girls;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.BaseFragment;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.girls.cure.CureFragment;
 import com.gank.gankly.ui.girls.pure.PureFragment;
 import com.gank.gankly.ui.main.MainActivity;
@@ -28,7 +31,7 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */
-public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class GirlsFragment extends SupportFragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.girl_tabLayout)
     TabLayout mTabLayout;
     @BindView(R.id.girl_view_pager)
@@ -46,20 +49,8 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    refreshUi();
-                });
-    }
-
-    @Override
-    protected void initValues() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new PureFragment());
 //        mList.add(new DailyMeiziFragment());
@@ -75,6 +66,16 @@ public class GirlsFragment extends BaseFragment implements ViewPager.OnPageChang
         mViewPager.addOnPageChangeListener(this);
 
         initTabLayout();
+
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> {
+                    refreshUi();
+                });
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void initTabLayout() {

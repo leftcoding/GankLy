@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.baisi.image;
 
 import com.gank.gankly.bean.BuDeJieBean;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
 
@@ -12,16 +12,13 @@ import java.util.List;
  */
 
 public interface BaiSiImageContract {
-    interface View extends IFetchView {
-        //        void refillData(List<BaiSiBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> list);
-//
-//        void appendData(List<BaiSiBean.ShowapiResBodyBean.PagebeanBean.ContentlistBean> list);
+    interface View extends SupportView {
         void refillData(List<BuDeJieBean.ListBean> list);
 
         void appendData(List<BuDeJieBean.ListBean> list);
     }
 
-    interface Presenter extends IFetchPresenter {
+    interface Presenter extends ILoadMorePresenter {
 
     }
 }

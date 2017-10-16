@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main.welfare;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,16 +13,16 @@ import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
@@ -57,12 +58,9 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     }
 
     @Override
-    protected void initValues() {
-    }
-
-    @Override
-    protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //        setSwipeRefreshLayout(mSwipeRefreshLayout);
 
         mWelfareAdapter = new WelfareAdapter(mActivity);
         mWelfareAdapter.setMeiZiOnClick(this);
@@ -83,10 +81,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
             }
         });
         mSwipeRefreshLayout.setAdapter(mWelfareAdapter);
-    }
 
-    @Override
-    protected void bindListener() {
         mMultipleStatusView.setListener(v -> {
             mMultipleStatusView.showLoading();
             fetchNew();
@@ -94,14 +89,15 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     }
 
     @Override
-    protected void initData() {
-        mMultipleStatusView.showLoading();
-        fetchNew();
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new WelfarePresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new WelfarePresenter(GankDataSource.getInstance(), this);
+    protected void initLazy() {
+        mMultipleStatusView.showLoading();
+        fetchNew();
     }
 
     @Override
@@ -127,12 +123,12 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
@@ -179,7 +175,6 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         this.mActivity = (MainActivity) context;
     }
 
-    @Override
     protected void callBackRefreshUi() {
         ThemeColor themeColor = new ThemeColor(this);
         int resource = themeColor.getResourceId(R.attr.themeBackground);

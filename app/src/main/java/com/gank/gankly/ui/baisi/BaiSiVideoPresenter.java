@@ -13,7 +13,6 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-11-30
- * Email:137387869@qq.com
  */
 
 public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoContract.Presenter {
@@ -41,13 +40,13 @@ public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoCon
         mTask.fetchVideo(page).subscribe(new Observer<BuDeJieVideo>() {
             @Override
             public void onError(Throwable e) {
-                mView.hideRefresh();
+                mView.hideProgress();
                 KLog.e(e);
             }
 
             @Override
             public void onComplete() {
-                mView.hideRefresh();
+                mView.hideProgress();
                 setFetchPage(getFetchPage() + 1);
             }
 
@@ -69,11 +68,6 @@ public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoCon
                 }
             }
         });
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

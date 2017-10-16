@@ -3,6 +3,7 @@ package com.gank.gankly.ui.discovered.video;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,15 +14,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
@@ -56,22 +57,10 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initValues() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-    private void onLoading() {
-        mPresenter.fetchNew();
-    }
-
-    @Override
-    protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
+        //        setSwipeRefreshLayout(mSwipeRefreshLayout);
 
         mMultipleStatusView.setListener(v -> onLoading());
 
@@ -95,10 +84,15 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    protected void bindListener() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
     }
 
-    @Override
+    private void onLoading() {
+        mPresenter.fetchNew();
+    }
+
     protected void callBackRefreshUi() {
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
@@ -126,8 +120,8 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
         List<ResultsBean> list = mAdapter.getResults();
-        bundle.putString(WebVideoViewActivity.TITLE, list.get(position).getDesc());
-        bundle.putString(WebVideoViewActivity.URL, list.get(position).getUrl());
+        bundle.putString(WebVideoViewActivity.TITLE, list.get(position).desc);
+        bundle.putString(WebVideoViewActivity.URL, list.get(position).url);
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
     }
 
@@ -137,7 +131,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    protected void initData() {
+    protected void initLazy() {
         mPresenter.fetchNew();
     }
 
@@ -152,12 +146,12 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -189,10 +183,5 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void showLoading() {
         mMultipleStatusView.showLoading();
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-        Snackbar.make(mRecyclerView, errorStr, Snackbar.LENGTH_LONG).show();
     }
 }

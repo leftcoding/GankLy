@@ -3,7 +3,7 @@ package com.gank.gankly.ui.collect;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.BasePresenter;
+import com.gank.gankly.mvp.ISubscribePresenter;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
@@ -19,7 +19,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter extends BasePresenter implements CollectContract.Presenter {
+public class CollectPresenter extends CollectContract.Presenter implements ISubscribePresenter {
     private static final int LIMIT = 10;
 
     @NonNull
@@ -36,7 +36,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     }
 
     private void parseData(List<UrlCollect> list) {
-        int size = ListUtils.getListSize(list);
+        int size = ListUtils.getSize(list);
         if (size > 0) {
             if (mPage == 0) {
                 mModelView.setAdapterList(list);
@@ -69,7 +69,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
     @Override
     public void fetchMore() {
         if (!isNoMore) {
-            mModelView.showRefresh();
+            mModelView.showProgress();
             int offset = getOffset();
             getCollects(offset);
         }
@@ -91,7 +91,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
                     @Override
                     public void onComplete() {
-                        mModelView.hideRefresh();
+                        mModelView.hideProgress();
                         mPage = mPage + 1;
                     }
 
@@ -109,7 +109,7 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
     @Override
     public void cancelCollect(final long position) {
-         mTask.cancelCollect(position)
+        mTask.cancelCollect(position)
 //                .delaySubscription(4, TimeUnit.SECONDS)
                 .subscribe(s -> {
 
@@ -143,11 +143,6 @@ public class CollectPresenter extends BasePresenter implements CollectContract.P
 
             }
         });
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

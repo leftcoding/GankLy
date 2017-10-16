@@ -1,10 +1,10 @@
 package com.gank.gankly.ui.discovered.video;
 
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
+import com.leftcoding.http.bean.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -74,11 +74,6 @@ public class VideoPresenter extends FetchPresenter implements VideoContract.Pres
                 setFetchPage(page + 1);
             }
         });
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

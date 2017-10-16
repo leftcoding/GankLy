@@ -1,1 +1,1 @@
-include ':app', ':test', ':superplayerlibrary', ':ijkplayerlibrary'
+include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':javalib', ':support-ly-http', ':support-ly-rxbus'

@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.collect;
 
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface CollectContract {
 
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void setAdapterList(List<UrlCollect> list);
 
         void appendAdapter(List<UrlCollect> list);
@@ -25,9 +25,9 @@ public interface CollectContract {
         void revokeCollect();
     }
 
-    interface Presenter extends IFetchPresenter {
-        void cancelCollect(long position);
+    abstract class Presenter implements ILoadMorePresenter {
+        abstract void cancelCollect(long position);
 
-        void insertCollect(UrlCollect collect);
+        abstract void insertCollect(UrlCollect collect);
     }
 }

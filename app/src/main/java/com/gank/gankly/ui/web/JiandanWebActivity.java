@@ -23,7 +23,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.data.entity.UrlCollectDao;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;

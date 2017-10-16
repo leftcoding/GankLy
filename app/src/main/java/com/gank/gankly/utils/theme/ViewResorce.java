@@ -4,7 +4,6 @@ import android.view.View;
 
 /**
  * Create by LingYan on 2016-11-25
- * Email:137387869@qq.com
  */
 
 public class ViewResorce {

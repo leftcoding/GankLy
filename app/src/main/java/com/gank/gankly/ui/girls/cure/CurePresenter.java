@@ -47,7 +47,7 @@ class CurePresenter extends FetchPresenter implements CureContract.Presenter {
     public void fetchMore() {
         String url = getMeiziUrl();
         if (hasMore()) {
-            mModelView.showRefresh();
+            mModelView.showProgress();
             fetchData(url);
         }
         //empty
@@ -60,7 +60,7 @@ class CurePresenter extends FetchPresenter implements CureContract.Presenter {
                     public void onComplete() {
                         setFetchPage(getFetchPage() + 1);
                         mModelView.showContent();
-                        mModelView.hideRefresh();
+                        mModelView.hideProgress();
                     }
 
                     @Override
@@ -79,11 +79,6 @@ class CurePresenter extends FetchPresenter implements CureContract.Presenter {
                         parseMeiZiTu(document);
                     }
                 });
-    }
-
-    @Override
-    public void subscribe() {
-        //empty
     }
 
     @Override
@@ -195,7 +190,7 @@ class CurePresenter extends FetchPresenter implements CureContract.Presenter {
         if (document != null) {
             List<DailyMeiziBean> list = getColumnList(document);
             list = filterData(list, mModelView);
-            if (ListUtils.getListSize(list) > 0) {
+            if (ListUtils.getSize(list) > 0) {
                 if(getFetchPage() >1){
                     mModelView.appendItem(list);
                 }else {
@@ -209,7 +204,7 @@ class CurePresenter extends FetchPresenter implements CureContract.Presenter {
         if (document != null) {
             List<DailyMeiziBean> list = getDays(document);
             list = filterData(list, mModelView);
-            if (ListUtils.getListSize(list) > 0) {
+            if (ListUtils.getSize(list) > 0) {
                 mModelView.refillData(list);
             }
         }

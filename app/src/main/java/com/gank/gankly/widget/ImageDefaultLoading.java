@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2017-04-28
- * Email:137387869@qq.com
  */
 
 public class ImageDefaultLoading extends LinearLayout {

@@ -1,18 +1,13 @@
 apply plugin: 'com.android.application'
-//需要配置符号表时，使用bugly插件
-apply plugin: 'bugly'
-bugly {
-    appId = '900039150'
-    appKey = 'WbIvNJ77rAjdcEK1'
-}
+
 //rolambda
 apply plugin: 'me.tatarka.retrolambda'
 //findbugs
 apply plugin: "findbugs"
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.gank.gankly"
         minSdkVersion 21
@@ -47,6 +42,7 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
+            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
         }
         release {
             minifyEnabled true
@@ -59,10 +55,6 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/rxjava.properties'
-    }
-
-    dataBinding {
-        enabled true
     }
 
     apply plugin: 'findbugs'
@@ -96,46 +88,43 @@ dependencies {
     compile "com.android.support:cardview-v7:${supportVersion}"
     compile "com.android.support:recyclerview-v7:${supportVersion}"
     compile "com.android.support:support-v4:${supportVersion}"
-    //Log
     compile "com.github.zhaokaiqiang.klog:library:${klogVersion}"
-    //butterknife 注解控件
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:retrofit-converters:2.3.0'
-    compile 'com.squareup.retrofit2:retrofit-adapters:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    //Glide
-    compile 'com.github.bumptech.glide:glide:4.0.0'
-    compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'
+    compile "com.jakewharton:butterknife:${butterknife}"
+    annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
+    compile "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
+    compile "com.squareup.retrofit2:converter-gson:${converterGson}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+    compile "com.squareup.okhttp3:okhttp:${okhttp}"
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+    debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
+    compile "com.github.bumptech.glide:glide:${glide}"
+    compile "com.github.bumptech.glide:okhttp3-integration:${glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
     //greendao 数据库
-    compile 'de.greenrobot:greendao:2.1.0'
-    compile 'de.greenrobot:greendao-generator:2.1.0'
+    compile "de.greenrobot:greendao:${greendao}"
+    compile "de.greenrobot:greendao-generator:${greendao}"
     //chrome stetho 数据库查看
-    compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+    compile "com.facebook.stetho:stetho:${stethoVersion}"
+    compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
     // recyclerview-animators
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     //jsoup
-    compile 'org.jsoup:jsoup:1.10.3'
-    //Bugly
-    //    compile 'com.tencent.bugly:crashreport:2.1.9'
-    compile 'com.tencent.bugly:crashreport_upgrade:1.2.5'
+    compile "org.jsoup:jsoup:${jsoup}"
     //底部导航
-    compile 'com.roughike:bottom-bar:2.3.1'
+    compile "com.roughike:bottom-bar:${bottomBar}"
     //视频库
-    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
+
+    //    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
+
     //大图库
-    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
+    compile "com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}"
     //rxjava2
-    compile 'io.reactivex.rxjava2:rxjava:2.0.3'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    //okhttp3
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    //leakcanary 内存泄漏监测
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    compile "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
+    compile project(':support-ly-http')
+    compile project(':support-ly-rxbus')
 }

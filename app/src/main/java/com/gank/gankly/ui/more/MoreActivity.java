@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.ui.collect.CollectFragment;
 import com.gank.gankly.ui.history.BrowseHistoryFragment;
 

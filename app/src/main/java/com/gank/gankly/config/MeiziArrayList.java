@@ -1,7 +1,7 @@
 package com.gank.gankly.config;
 
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.utils.ListUtils;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class MeiziArrayList {
     }
 
     public boolean isOneItemsEmpty() {
-        return ListUtils.getListSize(mOneItemsList) <= 0;
+        return ListUtils.getSize(mOneItemsList) <= 0;
     }
 
     public int getPage() {

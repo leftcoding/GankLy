@@ -1,64 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/android_rl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="4dp"
+    android:layout_marginTop="4dp"
+    android:background="?attr/lyItemSelectBackground"
+    android:elevation="1dp"
+    android:foreground="?attr/selectableItemBackground"
+    android:orientation="horizontal">
 
-    <data>
-
-        <import type="com.gank.gankly.bean.ResultsBean" />
-
-        <variable
-            name="Result"
-            type="ResultsBean" />
-    </data>
-
-    <com.gank.gankly.widget.LYRelativeLayoutRipple
-        android:id="@+id/android_rl"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:background="?attr/lyItemSelectBackground"
-        android:elevation="1dp"
-        android:orientation="horizontal"
-        android:padding="16dp">
-
-        <!--<com.gank.gankly.widget.RatioImageView-->
-        <!--android:id="@+id/android_ratio_img_head"-->
-        <!--android:layout_width="120dp"-->
-        <!--android:layout_height="96dp"-->
-        <!--android:layout_gravity="center_vertical"-->
-        <!--android:scaleType="centerCrop"-->
-        <!--android:src="@color/android_item_img_bg" />-->
-
-        <com.gank.gankly.widget.ImageDefaultView
-            android:id="@+id/android_ratio_img_head"
-            android:layout_width="120dp"
-            android:layout_height="96dp"
-            android:layout_gravity="center_vertical"
-            android:scaleType="centerCrop" />
+        android:paddingBottom="10dp"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:paddingTop="10dp">
 
         <RelativeLayout
             android:id="@+id/android_rl_data"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_toEndOf="@id/android_ratio_img_head"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/android_txt_author_name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:ellipsize="end"
-                android:gravity="end"
-                android:maxLines="1"
-                android:text="@{Result.who}"
-                android:textColor="@color/book_item_name"
-                android:textSize="@dimen/normalSize" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:layout_marginEnd="6dp"
+                    android:src="@drawable/bg_consulting_placeholder_guest" />
+
+                <TextView
+                    android:id="@+id/author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text=""
+                    android:textColor="#23c5d9"
+                    android:textSize="@dimen/normalSize" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/android_txt_time"
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -66,23 +61,24 @@
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="@{Result.publishedAt}"
-                android:textColor="?attr/textSecondaryColor"
+                android:text=""
+                android:textColor="@color/text_666666"
                 android:textSize="@dimen/smallSize" />
+
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/android_txt_title"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/android_rl_data"
             android:layout_below="@id/android_rl_data"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:ellipsize="end"
+            android:gravity="start"
             android:maxLines="3"
-            android:text="@{Result.desc}"
-            android:textColor="?attr/baseAdapterItemTextColor"
-            android:textSize="@dimen/bigSize" />
-
-    </com.gank.gankly.widget.LYRelativeLayoutRipple>
-</layout>
+            android:lineSpacingExtra="3dp"
+            android:text=""
+            android:textColor="@color/text_333333"
+            android:textSize="@dimen/normalSize" />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

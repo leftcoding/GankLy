@@ -24,11 +24,11 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
+import com.leftcoding.http.bean.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -73,7 +73,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     @Override
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
         final ResultsBean bean = mResults.get(position);
-        final String url = bean.getUrl();
+        final String url = bean.url;
         RequestBuilder<Bitmap> requestBuilder = ImageLoaderUtil.getInstance()
                 .glideAsBitmap(mContext, url);
         requestBuilder
@@ -89,7 +89,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
                     @Override
                     public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                         holder.imgMeizi.showImage();
-                        bean.setLoad(true);
+                        bean.isLoaded = true;
                         mResults.set(position, bean);
                         return false;
                     }
@@ -114,7 +114,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         }
 
         holder.imgMeizi.setOnClickListener(v -> {
-            if (bean.isLoad()) {
+            if (bean.isLoaded) {
                 mMeiZiOnClick.onClick(v, position);
             } else {
                 if (!holder.imgMeizi.isCanLoad()) {
@@ -136,7 +136,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
                             @Override
                             public boolean onResourceReady(Bitmap resource, Object model, Target<Bitmap> target, DataSource dataSource, boolean isFirstResource) {
                                 holder.imgMeizi.showImage();
-                                bean.setLoad(true);
+                                bean.isLoaded = true;
                                 mResults.set(position, bean);
                                 return false;
                             }

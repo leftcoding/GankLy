@@ -1,5 +1,6 @@
 package com.gank.gankly.ui.base;
 
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.view.ISwipeRefreshView;
 
 /**

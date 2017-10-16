@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ import java.util.List;
  */
 
 public interface JiandanContract {
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void refillData(List<JianDanBean> list);
 
         void appendMoreDate(List<JianDanBean> list);
     }
 
-    interface Presenter extends IFetchPresenter {
+    interface Presenter extends ILoadMorePresenter {
 
     }
 }

@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
+        }
+        release {
+            minifyEnabled false
+            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.google.code.gson:gson:${gsonVersion}"
+
+    compile "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}"
+
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
+    compile "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
+    compile "com.squareup.retrofit2:converter-gson:${converterGson}"
+    compile "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+
+    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
+    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+
+    compile "com.facebook.stetho:stetho:${stethoVersion}"
+    compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
+
+    compile "com.github.zhaokaiqiang.klog:library:${klogVersion}"
+}

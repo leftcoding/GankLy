@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 
 /**
  * 百思不得姐

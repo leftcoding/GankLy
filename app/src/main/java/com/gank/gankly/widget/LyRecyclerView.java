@@ -17,7 +17,6 @@ import com.gank.gankly.ui.base.BaseHolder;
 /**
  * reference https://github.com/moodstrikerdd/Test_Android/blob/53ecf70a131e553a68daad2b57bfe3f09722ddc2/sidesliplist/src/main/java/com/example/sidesliplist/MyRecyclerView.java
  * Create by LingYan on 2016-11-07
- * Email:137387869@qq.com
  */
 
 public class LyRecyclerView extends RecyclerView {

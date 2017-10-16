@@ -12,7 +12,6 @@ import io.reactivex.subjects.Subject;
 
 /**
  * Create by LingYan on 2016-12-15
- * Email:137387869@qq.com
  */
 
 public class RxBus_ {

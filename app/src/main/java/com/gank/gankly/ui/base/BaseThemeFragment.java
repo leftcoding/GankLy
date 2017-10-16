@@ -10,8 +10,8 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
+import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
 import com.gank.gankly.utils.ListUtils;
-import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
@@ -21,9 +21,8 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-09-13
- * Email:137387869@qq.com
  */
-public abstract class BaseThemeFragment extends BaseFragment {
+public abstract class BaseThemeFragment extends ButterKnifeFragment {
     @NonNull
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Disposable mDisposable;
@@ -37,13 +36,13 @@ public abstract class BaseThemeFragment extends BaseFragment {
 
     protected abstract void callBackRefreshUi();
 
-    @Override
-    public void changeThemes() {
-        super.changeThemes();
-        if (mSwipeRefreshLayout != null) {
-            StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-        }
-    }
+//    @Override
+//    public void changeThemes() {
+//        super.changeThemes();
+//        if (mSwipeRefreshLayout != null) {
+//            StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
+//        }
+//    }
 
     public void setSwipeRefreshLayout(@NonNull SwipeRefreshLayout swipeRefreshLayout) {
         this.mSwipeRefreshLayout = swipeRefreshLayout;

@@ -10,7 +10,6 @@ import okhttp3.Call;
 
 /**
  * Create by LingYan on 2017-08-23
- * Email:137387869@qq.com
  */
 
 public class MyOkHttpStreamFetcher extends OkHttpStreamFetcher {

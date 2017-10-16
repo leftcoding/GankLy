@@ -3,6 +3,7 @@ package com.gank.gankly.ui.more;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,8 +14,8 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.listener.DialogOnClick;
-import com.gank.gankly.presenter.LauncherPresenter;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
+import com.gank.gankly.ui.main.LauncherPresenter;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.GlideCatchUtil;
@@ -36,7 +37,7 @@ import butterknife.OnClick;
  * Create by LingYan on 2016-05-10
  * Email:137387869@qq.com
  */
-public class SettingFragment extends BaseSwipeRefreshFragment implements ILauncher {
+public class SettingFragment extends SupportFragment implements ILauncher {
     public static final String TAG = "SettingFragment";
 
     public static final String IS_NIGHT = "isNight";
@@ -76,16 +77,8 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new LauncherPresenter(mActivity, this);
-    }
-
-    @Override
-    protected void initValues() {
-    }
-
-    @Override
-    protected void initViews() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         initPreferences();
 
         mToolbar.setTitle(R.string.navigation_settings);
@@ -98,7 +91,17 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
 
         String cacheSize = GlideCatchUtil.getInstance().getCacheSize();
         itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache, cacheSize));
+
+        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
+        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new LauncherPresenter(mActivity, this);
+    }
+
 
     private void initPreferences() {
         String summary = App.getAppResources().getString(R.string.setting_current_version,
@@ -114,12 +117,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
         itemCheckSwitch.setSwitchChecked(isAutoCheck);
         boolean isOnlyWifi = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
         itemOnlyWifi.setSwitchChecked(isOnlyWifi);
-    }
-
-    @Override
-    protected void bindListener() {
-        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
-        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override
@@ -205,11 +202,6 @@ public class SettingFragment extends BaseSwipeRefreshFragment implements ILaunch
     @Override
     public void onResume() {
         super.onResume();
-    }
-
-    @Override
-    protected void callBackRefreshUi() {
-
     }
 
     @Override

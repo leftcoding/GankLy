@@ -3,15 +3,17 @@ package com.gank.gankly.ui.discovered.teamBlog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
@@ -48,13 +50,20 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     }
 
     @Override
-    protected void initData() {
-        showRefresh();
+    protected void initLazy() {
+        showProgress();
         mPresenter.fetchNew();
     }
 
     @Override
-    protected void initPresenter() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initValues();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mPresenter = new TeamBlogPresenter(TeamBlogDataSource.getInstance(), this);
     }
 
@@ -63,11 +72,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         return R.layout.layout_swipe_normal;
     }
 
-    @Override
     protected void initValues() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
-//        setMultipleStatusView(mMultipleStatusView);
-
         mAdapter = new TeamBlogAdapter();
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setAdapter(mAdapter);
@@ -88,58 +93,13 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     }
 
     @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
-    }
-
-    @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
     }
 
     @Override
@@ -165,7 +125,6 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         JiandanWebActivity.startWebActivity(mActivity, bundle);
     }
 
-    @Override
     protected void callBackRefreshUi() {
         RecyclerViewColor recyclerViewColor = new RecyclerViewColor(mRecyclerView);
         recyclerViewColor.setItemBackgroundColor(R.id.team_ll_body, R.attr.lyItemSelectBackground);

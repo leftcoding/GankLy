@@ -3,17 +3,17 @@ package com.gank.gankly.mvp;
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.bean.ResultsBean;
+import com.gank.gankly.mvp.base.SupportView;
 import com.gank.gankly.utils.ListUtils;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
 /**
  * Create by LingYan on 2016-10-25
- * Email:137387869@qq.com
  */
 
-public abstract class FetchPresenter extends BasePresenter {
+public abstract class FetchPresenter implements ISubscribePresenter {
     private int fetchLimit = 20;
     private int fetchPage = 1;
     private boolean hasMore = true;
@@ -59,8 +59,8 @@ public abstract class FetchPresenter extends BasePresenter {
         return fetchPage;
     }
 
-    public List<ResultsBean> filterData(GankResult gankResult, IFetchView view) {
-        view.hideRefresh();
+    public List<ResultsBean> filterData(GankResult gankResult, SupportView view) {
+        view.hideProgress();
         if (gankResult != null) {
             int size = gankResult.getSize();
             if (size > 0) {
@@ -87,10 +87,10 @@ public abstract class FetchPresenter extends BasePresenter {
         return null;
     }
 
-    public <T> List<T> filterData(List<T> t, IFetchView view) {
-        view.hideRefresh();
+    public <T> List<T> filterData(List<T> t, SupportView view) {
+        view.hideProgress();
         if (t != null) {
-            int size = ListUtils.getListSize(t);
+            int size = ListUtils.getSize(t);
             if (size > 0) {
                 if (size >= fetchLimit) {
                     view.showContent();
@@ -125,9 +125,9 @@ public abstract class FetchPresenter extends BasePresenter {
      * @param <T>  实体类
      * @return 最后返回数据集合
      */
-    public <T> List<T> filterDataBase(List<T> t, IFetchView view) {
+    public <T> List<T> filterDataBase(List<T> t, SupportView view) {
         if (t != null) {
-            int size = ListUtils.getListSize(t);
+            int size = ListUtils.getSize(t);
             if (size > 0) {
                 if (size >= fetchLimit) {
                     view.showContent();
@@ -159,8 +159,8 @@ public abstract class FetchPresenter extends BasePresenter {
      *
      * @param view IFetch 视图
      */
-    public void parseError(IFetchView view) {
-        view.hideRefresh();
+    public void parseError(SupportView view) {
+        view.hideProgress();
         if (App.isNetConnect()) {
             if (fetchPage > 1) {
                 view.showRefreshError(App.getAppString(R.string.loading_error));

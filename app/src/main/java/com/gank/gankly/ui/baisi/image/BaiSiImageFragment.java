@@ -1,13 +1,16 @@
 package com.gank.gankly.ui.baisi.image;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.widget.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -38,28 +41,17 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
-    protected void initData() {
+    protected void initLazy() {
         mSwipeRefreshLayout.setRefreshing(true);
         mPresenter.fetchNew();
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new BaiSiImagePresenter(BuDeJieDataSource.getInstance(), this);
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
+        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
-    @Override
-    protected void callBackRefreshUi() {
-
-    }
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.layout_swipe_normal;
-    }
-
-    @Override
-    protected void initValues() {
         mAdapter = new BaiSiImageAdapter(mActivity);
         mAdapter.setPlayClick(gallerySize -> mActivity.getSupportFragmentManager().beginTransaction()
                 .addToBackStack("BaiSiGalleryFragment")
@@ -81,61 +73,24 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
-    protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
-
-        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
-        mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new BaiSiImagePresenter(BuDeJieDataSource.getInstance(), this);
     }
 
     @Override
-    protected void bindListener() {
-
+    protected int getLayoutId() {
+        return R.layout.layout_swipe_normal;
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
     }
 
     @Override

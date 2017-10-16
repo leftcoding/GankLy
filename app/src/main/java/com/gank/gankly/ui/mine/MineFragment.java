@@ -6,17 +6,19 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
+import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
@@ -39,7 +41,7 @@ import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
  * Email:137387869@qq.com
  */
 
-public class MineFragment extends BaseSwipeRefreshFragment {
+public class MineFragment extends ButterKnifeFragment {
     public static final String TAG = "MineFragment";
 
     @BindView(R.id.toolbar)
@@ -66,25 +68,13 @@ public class MineFragment extends BaseSwipeRefreshFragment {
     }
 
     @Override
-    protected void initPresenter() {
-
-    }
-
-    @Override
-    protected void initValues() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         selectItemSwitch();
 
-        mNestedScrollView.setNestedScrollingEnabled(false);
-    }
-
-    @Override
-    protected void initViews() {
         mToolbar.setTitle(R.string.navigation_mine);
-    }
-
-    @Override
-    protected void bindListener() {
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> selectTheme(isChecked));
+        mNestedScrollView.setNestedScrollingEnabled(false);
     }
 
     private void selectTheme(boolean isChecked) {
@@ -99,7 +89,40 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         themeSwitch.setChecked(isChecked);
         RxBus_.getInstance().post(new ThemeEvent(isChecked));
         refreshStatusBar();
-        callBackRefreshUi();
+
+        TypedValue typeValue = new TypedValue();
+        Resources.Theme theme = mActivity.getTheme();
+        theme.resolveAttribute(R.attr.themeBackground, typeValue, true);
+        mNestedScrollView.setBackgroundResource(typeValue.resourceId);
+        theme.resolveAttribute(R.attr.colorPrimary, typeValue, true);
+        mToolbar.setBackgroundResource(typeValue.resourceId);
+        theme.resolveAttribute(R.attr.textPrimaryColor, typeValue, true);
+        final int itemTextColor = typeValue.resourceId;
+        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typeValue, true);
+        final int itemBackground = typeValue.resourceId;
+
+//        setItemBackground(mViewList);
+
+        ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
+            @Override
+            public void apply(@NonNull LSwitch view, int index) {
+                view.changeTheme();
+            }
+        });
+
+        ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
+            @Override
+            public void apply(@NonNull TextView view, int index) {
+                view.setTextColor(App.getAppColor(itemTextColor));
+            }
+        });
+
+        ButterKnife.apply(mLinearLayoutCompatList, new ButterKnife.Action<LinearLayoutCompat>() {
+            @Override
+            public void apply(@NonNull LinearLayoutCompat view, int index) {
+                view.setBackgroundResource(itemBackground);
+            }
+        });
     }
 
     private void selectItemSwitch() {
@@ -162,41 +185,4 @@ public class MineFragment extends BaseSwipeRefreshFragment {
         mActivity = (MainActivity) context;
     }
 
-    @Override
-    protected void callBackRefreshUi() {
-
-        TypedValue typeValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.themeBackground, typeValue, true);
-        mNestedScrollView.setBackgroundResource(typeValue.resourceId);
-        theme.resolveAttribute(R.attr.colorPrimary, typeValue, true);
-        mToolbar.setBackgroundResource(typeValue.resourceId);
-        theme.resolveAttribute(R.attr.textPrimaryColor, typeValue, true);
-        final int itemTextColor = typeValue.resourceId;
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typeValue, true);
-        final int itemBackground = typeValue.resourceId;
-
-        setItemBackground(mViewList);
-
-        ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
-            @Override
-            public void apply(@NonNull LSwitch view, int index) {
-                view.changeTheme();
-            }
-        });
-
-        ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
-            @Override
-            public void apply(@NonNull TextView view, int index) {
-                view.setTextColor(App.getAppColor(itemTextColor));
-            }
-        });
-
-        ButterKnife.apply(mLinearLayoutCompatList, new ButterKnife.Action<LinearLayoutCompat>() {
-            @Override
-            public void apply(@NonNull LinearLayoutCompat view, int index) {
-                view.setBackgroundResource(itemBackground);
-            }
-        });
-    }
 }

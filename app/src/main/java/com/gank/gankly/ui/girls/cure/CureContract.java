@@ -2,8 +2,8 @@ package com.gank.gankly.ui.girls.cure;
 
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  */
 
 public interface CureContract {
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void refillData(List<DailyMeiziBean> list);
 
         void appendItem(List<DailyMeiziBean> list);
@@ -26,7 +26,7 @@ public interface CureContract {
         void openBrowseActivity(ArrayList<GiftBean> list);
     }
 
-    interface Presenter extends IFetchPresenter {
+    interface Presenter extends ILoadMorePresenter {
         void girlsImages(String url);
     }
 }

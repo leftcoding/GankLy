@@ -2,14 +2,17 @@ package com.gank.gankly.ui.baisi;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.SpaceItemDecoration;
@@ -20,7 +23,6 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-11-30
- * Email:137387869@qq.com
  */
 
 public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContract.View {
@@ -34,37 +36,35 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     private BaiSiActivity mActivity;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.layout_swipe_normal;
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (BaiSiActivity) context;
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.layout_swipe_normal;
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initViews();
     }
 
     @Override
-    protected void initData() {
-    }
-
-    @Override
-    protected void initPresenter() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mPresenter = new BaiSiVideoPresenter(BuDeJieDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void callBackRefreshUi() {
-
-    }
-
-    @Override
-    protected void initValues() {
         mPresenter.fetchNew();
     }
 
     @Override
-    protected void initViews() {
+    protected void initLazy() {
+
+    }
+
+    private void initViews() {
         mBaiSiVideoAdapter = new BaiSiVideoAdapter(mActivity);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeRefreshLayout.setAdapter(mBaiSiVideoAdapter);
@@ -75,7 +75,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onLoadMore() {
-                showRefresh();
+                showProgress();
                 mPresenter.fetchMore();
             }
 
@@ -100,55 +100,14 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
         mActivity.overridePendingTransition(0, 0);
     }
 
-
     @Override
-    protected void bindListener() {
-
-    }
-
-    @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
     }
 
     @Override

@@ -11,7 +11,7 @@ import android.view.KeyEvent;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.ui.discovered.DiscoveredFragment;
 import com.gank.gankly.ui.girls.GirlsFragment;
 import com.gank.gankly.ui.mine.MineFragment;
@@ -28,9 +28,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
- * 首页
  * Create by LingYan on 2016-6-13
- * Email:137387869@qq.com
  */
 public class MainActivity extends BaseActivity {
     @BindView(R.id.bottomBar)
@@ -125,7 +123,7 @@ public class MainActivity extends BaseActivity {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new MainFragment());
+        fragments.add(new IndexFragment());
         fragments.add(new DiscoveredFragment());
         fragments.add(new GirlsFragment());
         fragments.add(new MineFragment());
@@ -167,14 +165,6 @@ public class MainActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
-    }
-
-    @Override
-    protected void onStart() {
-        //防止底部导航栏会下移
-//        getWindow().
-//                getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-        super.onStart();
     }
 
     @Override

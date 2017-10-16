@@ -2,7 +2,6 @@ package com.gank.gankly.rxjava.theme;
 
 /**
  * Create by LingYan on 2016-09-02
- * Email:137387869@qq.com
  */
 public class ThemeEvent {
     private boolean isRefreshUi;

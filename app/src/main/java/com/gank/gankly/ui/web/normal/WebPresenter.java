@@ -6,7 +6,6 @@ import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.BasePresenter;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
@@ -28,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
  * Email:137387869@qq.com
  */
 
-public class WebPresenter extends BasePresenter implements WebContract.Presenter {
+public class WebPresenter implements WebContract.Presenter {
     private LocalDataSource mTask;
     private WebContract.View mView;
     private long endTime;
@@ -64,7 +63,7 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
             @Override
             public void onNext(List<UrlCollect> urlCollects) {
                 mCollects = urlCollects;
-                boolean isCollect_ = ListUtils.getListSize(urlCollects) > 0;
+                boolean isCollect_ = ListUtils.getSize(urlCollects) > 0;
                 isCollect = isCollect_;
                 mView.setCollectIcon(isCollect_);
             }
@@ -179,12 +178,6 @@ public class WebPresenter extends BasePresenter implements WebContract.Presenter
                         cancelCollect();
                     }
                 });
-    }
-
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

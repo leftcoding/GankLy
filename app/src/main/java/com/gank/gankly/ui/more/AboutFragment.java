@@ -4,13 +4,16 @@ package com.gank.gankly.ui.more;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -21,7 +24,7 @@ import butterknife.OnClick;
  * Create by LingYan on 2016-05-10
  * Email:137387869@qq.com
  */
-public class AboutFragment extends BaseFragment {
+public class AboutFragment extends SupportFragment {
     @BindView(R.id.about_toolbar)
     Toolbar mToolbar;
     @BindView(R.id.about_collapsing)
@@ -42,11 +45,8 @@ public class AboutFragment extends BaseFragment {
     }
 
     @Override
-    protected void initValues() {
-    }
-
-    @Override
-    protected void initViews() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mCollapsingToolbarLayout.setTitle(App.getAppString(R.string.navigation_about));
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -57,7 +57,8 @@ public class AboutFragment extends BaseFragment {
     }
 
     @Override
-    protected void bindListener() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

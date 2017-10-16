@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.history;
 
 import com.gank.gankly.data.entity.ReadHistory;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
 
@@ -12,13 +12,13 @@ import java.util.List;
  */
 
 public interface BrowseHistoryContract {
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void refillData(List<ReadHistory> history);
 
         void appendData(List<ReadHistory> history);
     }
 
-    interface Presenter extends IFetchPresenter {
+    interface Presenter extends ILoadMorePresenter {
         void deleteHistory(long id);
     }
 }

@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
+import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,8 +48,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     @Override
     public void onBindViewHolder(GankViewHolder holder, int position) {
         ResultsBean bean = mResults.get(position);
-        holder.txtDesc.setText(bean.getDesc());
-        holder.txtAuthor.setText(bean.getWho());
+        holder.txtDesc.setText(bean.desc);
+        holder.txtAuthor.setText(bean.who);
 
         int size = MeiziArrayList.getInstance().getOneItemsList().size();
         if (position > size && size > 0) {
@@ -58,7 +58,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         if (position < size && mImagesList != null) {
             Glide.with(mContext)
                     .asBitmap()
-                    .load(mImagesList.get(position).getUrl())
+                    .load(mImagesList.get(position).url)
                     .apply(new RequestOptions()
                             .fitCenter()
                     )

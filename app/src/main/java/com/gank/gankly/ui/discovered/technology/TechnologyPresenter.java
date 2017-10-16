@@ -37,14 +37,14 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
         mTask.fetchData(page).subscribe(new Observer<Document>() {
             @Override
             public void onError(Throwable e) {
-                mView.hideRefresh();
+                mView.hideProgress();
                 KLog.e(e);
             }
 
             @Override
             public void onComplete() {
                 mView.showContent();
-                mView.hideRefresh();
+                mView.hideProgress();
                 int nextPage = getFetchPage() + 1;
                 setFetchPage(nextPage);
             }
@@ -93,14 +93,9 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
     @Override
     public void fetchMore() {
         if (hasMore()) {
-            mView.showRefresh();
+            mView.showProgress();
             fetchData(getFetchPage());
         }
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

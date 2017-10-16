@@ -3,6 +3,7 @@ package com.gank.gankly.ui.discovered.jiandan;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
@@ -15,7 +16,7 @@ import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.JiandanDataSource;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.utils.StyleUtils;
@@ -57,18 +58,14 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    protected void initData() {
+    protected void initLazy() {
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
     }
 
     @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mAdapter = new JiandanAdapter();
         mAdapter.setListener(this);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
@@ -91,16 +88,11 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    protected void initValues() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
-
-    @Override
-    protected void initPresenter() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         mPresenter = new JiandanPresenter(JiandanDataSource.getInstance(), this);
     }
 
-    @Override
     protected void callBackRefreshUi() {
         Resources.Theme theme = mActivity.getTheme();
         TypedValue typedValue = new TypedValue();
@@ -141,7 +133,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
@@ -151,7 +143,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

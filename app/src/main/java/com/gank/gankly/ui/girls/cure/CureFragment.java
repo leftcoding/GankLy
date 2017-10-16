@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
@@ -58,26 +59,12 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new CurePresenter(MeiziDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initValues() {
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> changeUi());
-    }
-
-    @Override
-    protected void initViews() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mCureAdapter = new CureAdapter();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         mSwipeRefreshLayout.setAdapter(mCureAdapter);
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
 
-    @Override
-    protected void bindListener() {
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
             public void onRefresh() {
@@ -91,10 +78,19 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
         });
 
         mCureAdapter.setOnItemClickListener(this);
+
+        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
+                .subscribe(themeEvent -> changeUi());
     }
 
     @Override
-    protected void initData() {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new CurePresenter(MeiziDataSource.getInstance(), this);
+    }
+
+    @Override
+    protected void initLazy() {
         mMultipleStatusView.showLoading();
         mPresenter.fetchNew();
     }
@@ -148,7 +144,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -158,7 +154,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
@@ -235,11 +231,6 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
         if (mDialog != null && mDialog.isShowing()) {
             mDialog.dismiss();
         }
-    }
-
-    @Override
-    protected void callBackRefreshUi() {
-
     }
 
     @Override

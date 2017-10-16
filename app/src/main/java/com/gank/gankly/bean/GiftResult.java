@@ -33,6 +33,6 @@ public class GiftResult {
     }
 
     public int getSize() {
-        return ListUtils.getListSize(mList);
+        return ListUtils.getSize(mList);
     }
 }

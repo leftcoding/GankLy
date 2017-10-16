@@ -14,7 +14,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-11-08
- * Email:137387869@qq.com
  */
 
 public class NoAlphaItemAnimator extends SimpleItemAnimator {

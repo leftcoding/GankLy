@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * Created by Lingyan on 2017/3/22 0022.
- * Email:137387869@qq.com
  */
 
 public class PermissionUtils {

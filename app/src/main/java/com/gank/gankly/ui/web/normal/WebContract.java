@@ -4,8 +4,8 @@ import android.support.annotation.NonNull;
 
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.IBasePresenter;
-import com.gank.gankly.mvp.IBaseView;
+import com.gank.gankly.mvp.ISubscribePresenter;
+import com.gank.gankly.mvp.base.BaseView;
 
 /**
  * Create by LingYan on 2016-10-27
@@ -13,7 +13,7 @@ import com.gank.gankly.mvp.IBaseView;
  */
 
 public interface WebContract {
-    interface View extends IBaseView {
+    interface View extends BaseView {
         void onCollect();
 
         void onCancelCollect();
@@ -23,7 +23,7 @@ public interface WebContract {
         void setCollectIcon(boolean isCollect);
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter extends ISubscribePresenter {
         void findCollectUrl(@NonNull String url);
 
         void insetHistoryUrl(@NonNull ReadHistory readHistory);

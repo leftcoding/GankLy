@@ -1,8 +1,11 @@
 package com.gank.gankly.ui.girls.pure;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.IFetchPresenter;
-import com.gank.gankly.mvp.IFetchView;
+import com.gank.gankly.mvp.base.LoadMorePresenter;
+import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +16,7 @@ import java.util.List;
  */
 
 public interface PureContract {
-    interface View extends IFetchView {
+    interface View extends SupportView {
         void refillData(List<GiftBean> list);
 
         void appendData(List<GiftBean> list);
@@ -23,7 +26,16 @@ public interface PureContract {
         void disLoadingDialog();
     }
 
-    interface Presenter extends IFetchPresenter {
-        void fetchImages(String url);
+    public abstract class Presenter extends LoadMorePresenter<View> {
+
+        public Presenter(@NonNull Context context, @NonNull View view) {
+            super(context, view);
+        }
+
+        abstract void refreshImages(String url);
+
+        abstract void refreshPure();
+
+        abstract void appendPure();
     }
 }

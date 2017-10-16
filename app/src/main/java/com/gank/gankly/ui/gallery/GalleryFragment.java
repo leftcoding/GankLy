@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseFragment;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.widget.ProgressImageView;
 
 import butterknife.BindView;
@@ -16,7 +16,7 @@ import butterknife.BindView;
  * Create by LingYan on 2016-12-19
  * Email:137387869@qq.com
  */
-public class GalleryFragment extends BaseFragment implements ProgressImageView.ImageViewOnClick {
+public class GalleryFragment extends SupportFragment implements ProgressImageView.ImageViewOnClick {
     public static final String IMAGE_URL = "Image_Url";
 
     @BindView(R.id.progress_img)
@@ -41,26 +41,24 @@ public class GalleryFragment extends BaseFragment implements ProgressImageView.I
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mProgressImageView.load(mUrl, GalleryFragment.this);
+        mProgressImageView.setImageViewOnClick(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
     private void parseArguments() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mUrl = bundle.getString(IMAGE_URL);
         }
-    }
-
-    @Override
-    protected void initValues() {
-        mProgressImageView.load(mUrl, GalleryFragment.this);
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-        mProgressImageView.setImageViewOnClick(this);
     }
 
     @Override

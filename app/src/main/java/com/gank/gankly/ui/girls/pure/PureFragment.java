@@ -16,12 +16,11 @@ import android.widget.TextView;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
-import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.MeiziDataSource;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.DisplayUtils;
@@ -68,36 +67,30 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new PurePresenter(MeiziDataSource.getInstance(), this);
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initRecycler();
 
-    @Override
-    protected void initValues() {
-//        initRefresh();
+        mAdapter.setOnItemClickListener(this);
+
         mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeUi());
     }
 
     @Override
-    protected void initViews() {
-        initRecycler();
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new PurePresenter(getContext(), this);
     }
 
     @Override
-    protected void bindListener() {
-        mAdapter.setOnItemClickListener(this);
-    }
-
-    @Override
-    protected void initData() {
+    protected void initLazy() {
         initRefresh();
     }
 
     private void initRefresh() {
         mMultipleStatusView.showLoading();
-        mPresenter.fetchNew();
+        mPresenter.refreshPure();
     }
 
     private void changeUi() {
@@ -139,12 +132,12 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+                mPresenter.refreshPure();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+                mPresenter.appendPure();
             }
         });
     }
@@ -178,7 +171,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
                 .throttleFirst(100, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(giftBean1 -> mPresenter.fetchImages(giftBean1.getUrl()));
+                .subscribe(giftBean1 -> mPresenter.refreshImages(giftBean1.getUrl()));
     }
 
     public List<GiftBean> getList() {
@@ -199,17 +192,12 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     }
 
     @Override
-    protected void callBackRefreshUi() {
-
-    }
-
-    @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

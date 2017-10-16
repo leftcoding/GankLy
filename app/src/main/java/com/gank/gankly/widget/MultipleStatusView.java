@@ -15,7 +15,6 @@ import com.socks.library.KLog;
 /**
  * 包括Loading Empty Error DisNetWork界面
  * Create by LingYan on 2016-06-15
- * Email:137387869@qq.com
  */
 public class MultipleStatusView extends RelativeLayout {
     public static final int STATUS_CONTENT = 0x01;

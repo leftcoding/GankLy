@@ -2,16 +2,19 @@ package com.gank.gankly.ui.discovered;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
+import android.view.View;
 
 import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.BaseSwipeRefreshFragment;
-import com.gank.gankly.ui.base.LazyFragment;
+import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
 import com.gank.gankly.ui.discovered.more.DiscoveredAdapter;
 import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
@@ -31,7 +34,7 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-07-01
  * Email:137387869@qq.com
  */
-public class DiscoveredFragment extends BaseSwipeRefreshFragment implements ViewPager.OnPageChangeListener {
+public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager.OnPageChangeListener {
     private static final String TYPE_VIDEO = "视频";
     private static final String TYPE_JIANDAN = "新鲜事";
     private static final String TYPE_THCHNOLOGY = "科技资讯";
@@ -54,20 +57,13 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     }
 
     @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
                     refreshUi();
                 });
-    }
 
-    @Override
-    protected void initValues() {
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new VideoFragment());
         mList.add(new JiandanFragment());
@@ -125,21 +121,6 @@ public class DiscoveredFragment extends BaseSwipeRefreshFragment implements View
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (MainActivity) context;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void initPresenter() {
-
-    }
-
-    @Override
-    protected void callBackRefreshUi() {
-
     }
 
     @Override

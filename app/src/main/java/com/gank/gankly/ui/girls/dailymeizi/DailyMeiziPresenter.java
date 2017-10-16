@@ -51,7 +51,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     public void onComplete() {
                         setFetchPage(getFetchPage() + 1);
                         mModelView.showContent();
-                        mModelView.hideRefresh();
+                        mModelView.hideProgress();
                     }
 
                     @Override
@@ -70,11 +70,6 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                         parseDocument(document);
                     }
                 });
-    }
-
-    @Override
-    public void subscribe() {
-        //empty
     }
 
     @Override
@@ -176,7 +171,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
         if (document != null) {
             List<DailyMeiziBean> list = getDays(document);
             list = filterData(list, mModelView);
-            if (ListUtils.getListSize(list) > 0) {
+            if (ListUtils.getSize(list) > 0) {
                 mModelView.refillData(list);
             }
         }

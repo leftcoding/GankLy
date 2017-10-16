@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.ToastUtils;
 import com.socks.library.KLog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;

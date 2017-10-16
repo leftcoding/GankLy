@@ -23,7 +23,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Create by LingYan on 2016-05-30
- * Email:137387869@qq.com
  */
 public class DownloadApi {
     private static final int DEFAULT_OUT_TIME = 30;

@@ -118,7 +118,7 @@ public class LocalDataSource extends BaseModel {
                 String url = history.getUrl();
                 QueryBuilder<ReadHistory> query = mReadHistoryDao.queryBuilder();
                 List<ReadHistory> list = query.where(ReadHistoryDao.Properties.Url.eq(url)).list();
-                boolean isNull = ListUtils.getListSize(list) <= 0;
+                boolean isNull = ListUtils.getSize(list) <= 0;
                 long rasId = 0;
                 if (isNull) {
                     rasId = mReadHistoryDao.insert(history);

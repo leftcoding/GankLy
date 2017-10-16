@@ -8,7 +8,6 @@ import io.reactivex.functions.Cancellable;
 
 /**
  * Created by Lingyan on 2017/4/1 0001.
- * Email:137387869@qq.com
  */
 
 public final class ViewClickSubscribe implements ObservableOnSubscribe<String> {

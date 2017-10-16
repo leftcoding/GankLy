@@ -13,7 +13,6 @@ import android.view.animation.LinearInterpolator;
 
 /**
  * Create by LingYan on 2017-04-27
- * Email:137387869@qq.com
  */
 
 public class HorizontalLoading extends View {

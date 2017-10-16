@@ -3,17 +3,19 @@ package com.gank.gankly.ui.history;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
@@ -30,7 +32,7 @@ import butterknife.BindView;
  * Email:137387869@qq.com
  */
 
-public class BrowseHistoryFragment extends FetchFragment implements BrowseHistoryContract.View, ItemClick {
+public class BrowseHistoryFragment extends SupportFragment implements BrowseHistoryContract.View, ItemClick {
     private BrowseHistoryContract.Presenter mPresenter;
     private BrowseHistoryAdapter mAdapter;
 
@@ -52,24 +54,8 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
     }
 
     @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_browse;
-    }
-
-    @Override
-    protected void initPresenter() {
-        mPresenter = new BrowseHistoryPresenter(LocalDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initValues() {
-        mPresenter.fetchNew();
-        mAdapter = new BrowseHistoryAdapter();
-        mSwipeRefreshLayout.setAdapter(mAdapter);
-    }
-
-    @Override
-    protected void initViews() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mToolbar.setTitle(R.string.mine_browse);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar barLayout = mActivity.getSupportActionBar();
@@ -78,7 +64,6 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
         }
         mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
 
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
         mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new NoAlphaItemAnimator());
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
@@ -98,10 +83,10 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
                 openWebActivity(readHistory);
             }
         });
-    }
 
-    @Override
-    protected void bindListener() {
+        mAdapter = new BrowseHistoryAdapter();
+        mSwipeRefreshLayout.setAdapter(mAdapter);
+
         mAdapter.setOnItemClick(this);
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
             @Override
@@ -117,6 +102,18 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new BrowseHistoryPresenter(LocalDataSource.getInstance(), this);
+        mPresenter.fetchNew();
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_browse;
+    }
+
+    @Override
     public void refillData(List<ReadHistory> history) {
         mAdapter.updateList(history);
     }
@@ -127,12 +124,12 @@ public class BrowseHistoryFragment extends FetchFragment implements BrowseHistor
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

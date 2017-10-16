@@ -39,10 +39,9 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.bean.ResultsBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxSaveImage;
@@ -52,6 +51,7 @@ import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.WheelView;
 import com.gank.gankly.widget.transforms.FixedSpeedScroller;
 import com.gank.gankly.widget.transforms.ZoomOutSlideTransformer;
+import com.leftcoding.http.bean.ResultsBean;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -189,7 +189,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         if (EXTRA_GANK.equals(mViewsModel)) {
             List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getImagesList();
             mGiftList = changeImageList(giftBeen);
-            int size = ListUtils.getListSize(giftBeen);
+            int size = ListUtils.getSize(giftBeen);
             if (size > 5) {
                 int point = size - 5;
                 if (mPosition >= point) {
@@ -269,14 +269,13 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             String url;
             for (int i = 0; i < resultsBeen.size(); i++) {
                 resultsBean = resultsBeen.get(i);
-                url = resultsBean.getUrl();
+                url = resultsBean.url;
                 list.add(new GiftBean(url));
             }
         }
         return list;
     }
 
-    @Override
     public void appendData(List<ResultsBean> list) {
         mGiftList.addAll(changeImageList(list));
         mPagerAdapter.notifyDataSetChanged();
@@ -288,12 +287,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
 
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
 
     }
 
@@ -506,6 +505,11 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         return ListUtils.isListEmpty(mGiftList);
     }
 
+    @Override
+    public void showShortToast(String string) {
+
+    }
+
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         public PagerAdapter() {
@@ -641,7 +645,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         int position = mViewPager.getCurrentItem();
         String mUrl;
         if (EXTRA_GANK.equals(mViewsModel)) {
-            mUrl = MeiziArrayList.getInstance().getResultBean(position).getUrl();
+            mUrl = MeiziArrayList.getInstance().getResultBean(position).url;
         } else {
             mUrl = mGiftList.get(position).getImgUrl();
         }

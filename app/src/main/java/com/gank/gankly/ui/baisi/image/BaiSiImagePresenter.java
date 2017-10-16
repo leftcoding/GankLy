@@ -10,7 +10,6 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-05
- * Email:137387869@qq.com
  */
 
 public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageContract.Presenter {
@@ -31,7 +30,7 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
 
     @Override
     public void fetchMore() {
-        mView.showRefresh();
+        mView.showProgress();
         fetchData();
     }
 
@@ -39,13 +38,13 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
         mTask.fetchImage(np).subscribe(new Observer<BuDeJieBean>() {
             @Override
             public void onError(Throwable e) {
-                mView.hideRefresh();
+                mView.hideProgress();
                 KLog.e(e);
             }
 
             @Override
             public void onComplete() {
-                mView.hideRefresh();
+                mView.hideProgress();
             }
 
             @Override
@@ -55,10 +54,8 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
 
             @Override
             public void onNext(BuDeJieBean buDeJieBean) {
-                KLog.d("buDeJieBean:" + buDeJieBean);
                 if (buDeJieBean != null) {
                     np = buDeJieBean.getInfo().getNp();
-                    KLog.d("np:" + np);
                     if (np == 0) {
                         mView.refillData(buDeJieBean.getList());
                     } else {
@@ -67,11 +64,6 @@ public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageCon
                 }
             }
         });
-    }
-
-    @Override
-    public void subscribe() {
-
     }
 
     @Override

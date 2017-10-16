@@ -2,20 +2,22 @@ package com.gank.gankly.ui.collect;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.base.FetchFragment;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
@@ -31,9 +33,8 @@ import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 /**
  * 收藏
  * Create by LingYan on 2016-4-25
- * Email:137387869@qq.com
  */
-public class CollectFragment extends FetchFragment implements CollectContract.View {
+public class CollectFragment extends SupportFragment implements CollectContract.View {
     @BindView(R.id.coordinator)
     CoordinatorLayout mCoordinatorLayout;
     @BindView(R.id.multiple_status_view)
@@ -61,12 +62,8 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     }
 
     @Override
-    protected void initPresenter() {
-        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initValues() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mToolbar.setTitle(R.string.mine_my_collect);
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
@@ -82,14 +79,29 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
                         onDelete();
                     }
                 });
-    }
 
-    @Override
-    protected void initViews() {
-        setSwipeRefreshLayout(mSwipeRefreshLayout);
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+            @Override
+            public void onRefresh() {
+                showProgress();
+                mPresenter.fetchNew();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPresenter.fetchMore();
+            }
+        });
+
         initAdapter();
         setRecyclerView();
         initRefresh();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mPresenter = new CollectPresenter(LocalDataSource.getInstance(), this);
     }
 
     private void setRecyclerView() {
@@ -132,22 +144,6 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
 
     private void initAdapter() {
         mCollectAdapter = new CollectAdapter(mActivity);
-    }
-
-    @Override
-    protected void bindListener() {
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
-            @Override
-            public void onRefresh() {
-                showRefresh();
-                mPresenter.fetchNew();
-            }
-
-            @Override
-            public void onLoadMore() {
-                mPresenter.fetchMore();
-            }
-        });
     }
 
     private void initRefresh() {
@@ -231,12 +227,12 @@ public class CollectFragment extends FetchFragment implements CollectContract.Vi
     }
 
     @Override
-    public void showRefresh() {
+    public void showProgress() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
-    public void hideRefresh() {
+    public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

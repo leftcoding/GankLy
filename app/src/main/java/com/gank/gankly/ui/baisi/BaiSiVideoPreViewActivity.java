@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.ui.base.BaseActivity;
+import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.ShareUtils;
 import com.superplayer.library.SuperPlayer;
 
