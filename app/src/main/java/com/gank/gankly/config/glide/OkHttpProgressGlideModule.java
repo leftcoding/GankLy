@@ -7,6 +7,7 @@ import android.os.Looper;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Registry;
+import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.LibraryGlideModule;
 
@@ -39,8 +40,8 @@ import okio.Okio;
 import okio.Source;
 
 // TODO add <meta-data android:value="GlideModule" android:name="....OkHttpProgressGlideModule" />
-// TODO add <meta-data android:value="GlideModule" tools:node="remove" android:name="com.bumptech.glide.integration.okhttp.OkHttpGlideModule" />
-// or not use 'okhttp@aar' in Gradle depdendencies
+// TODO add <meta-data android:value="GlideModule" tools:node="remove" android:name="com.bumptech.glide.integration.okhttp.OkHttpGlideModule"// or not use 'okhttp@aar' in Gradle depdendencies
+@GlideModule
 public class OkHttpProgressGlideModule extends LibraryGlideModule {
 //	@Override
 //	public void applyOptions(Context context, GlideBuilder builder) {
@@ -57,8 +58,8 @@ public class OkHttpProgressGlideModule extends LibraryGlideModule {
 
     private okhttp3.OkHttpClient getHttpClient() {
         okhttp3.OkHttpClient.Builder mBuilder = new okhttp3.OkHttpClient.Builder();
-        mBuilder.sslSocketFactory(createSSLSocketFactory(), new TrustAllManager());
-        mBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
+//        mBuilder.sslSocketFactory(createSSLSocketFactory(), new TrustAllManager());
+//        mBuilder.hostnameVerifier(new TrustAllHostnameVerifier());
         return mBuilder.build();
     }
 
@@ -88,8 +89,8 @@ public class OkHttpProgressGlideModule extends LibraryGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
         OkHttpClient client = getHttpClient();
-        client.networkInterceptors().add(createInterceptor(new DispatchingProgressListener()));
-        registry.replace(GlideUrl.class, InputStream.class, new MyOkHttpUrlLoader.Factory(client));
+//        client.networkInterceptors().add(createInterceptor(new DispatchingProgressListener()));
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(client));
     }
 
     private static class TrustAllManager implements X509TrustManager {

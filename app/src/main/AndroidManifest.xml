@@ -107,6 +107,7 @@
             <!--android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"-->
             <!--android:value="GlideModule" />-->
         <!--&lt;!&ndash;OkHttp3 &ndash;&gt;-->
+
         <!--<meta-data-->
             <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
             <!--android:value="GlideModule" />-->

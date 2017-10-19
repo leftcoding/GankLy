@@ -20,6 +20,8 @@ android {
             // 设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+
+        buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
     }
 
     //执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关闭
@@ -42,7 +44,6 @@ android {
         debug {
             minifyEnabled false
             shrinkResources false
-            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
         }
         release {
             minifyEnabled true
@@ -101,6 +102,7 @@ dependencies {
     debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
     compile "com.github.bumptech.glide:glide:${glide}"
+    compile "com.github.bumptech.glide:annotations:${glide}"
     compile "com.github.bumptech.glide:okhttp3-integration:${glide}"
     annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
     //greendao 数据库

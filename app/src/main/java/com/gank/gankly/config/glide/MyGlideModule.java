@@ -1,6 +1,7 @@
 package com.gank.gankly.config.glide;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -15,6 +16,7 @@ import com.gank.gankly.utils.FileUtils;
 import com.gank.gankly.utils.gilde.WifiOnlyLoader;
 
 import java.io.InputStream;
+
 @GlideModule
 public class MyGlideModule extends AppGlideModule {
     @Override
@@ -27,10 +29,10 @@ public class MyGlideModule extends AppGlideModule {
         super.applyOptions(context, builder);
         String diskCache = FileUtils.getGlideDefaultPath(context);
         builder.setDiskCache(new DiskLruCacheFactory(diskCache, 100 * 1024 * 1024));
-//        builder.setDecodeFormat(DecodeFormat.PREFER_ARGB_8888);
         builder.setDefaultRequestOptions(new RequestOptions()
-                        .format(DecodeFormat.PREFER_ARGB_8888)
+                .format(DecodeFormat.PREFER_ARGB_8888)
         );
+        builder.setLogLevel(Log.DEBUG);
     }
 
     @Override

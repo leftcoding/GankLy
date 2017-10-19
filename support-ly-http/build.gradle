@@ -11,17 +11,15 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
     }
     buildTypes {
         debug {
             minifyEnabled false
             shrinkResources false
-            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
         }
         release {
             minifyEnabled false
-            buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

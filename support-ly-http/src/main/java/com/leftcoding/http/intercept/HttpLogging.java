@@ -1,7 +1,8 @@
-package com.leftcoding.http.api;
+package com.leftcoding.http.intercept;
 
 import android.support.annotation.NonNull;
 
+import com.leftcoding.http.BuildConfig;
 import com.socks.library.KLog;
 
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -22,7 +23,7 @@ public class HttpLogging {
             }
         });
 
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
     }
 
     public HttpLoggingInterceptor build() {
