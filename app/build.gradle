@@ -1,7 +1,5 @@
 apply plugin: 'com.android.application'
 
-//rolambda
-apply plugin: 'me.tatarka.retrolambda'
 //findbugs
 apply plugin: "findbugs"
 
@@ -10,8 +8,8 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.gank.gankly"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 4
         versionName "2.1.1"
         // 4 2.1.1
@@ -81,52 +79,62 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile project(':superplayerlibrary')
-    compile "com.android.support:appcompat-v7:${supportVersion}"
-    compile "com.android.support:design:${supportVersion}"
-    compile "com.android.support:cardview-v7:${supportVersion}"
-    compile "com.android.support:recyclerview-v7:${supportVersion}"
-    compile "com.android.support:support-v4:${supportVersion}"
-    compile "com.github.zhaokaiqiang.klog:library:${klogVersion}"
-    compile "com.jakewharton:butterknife:${butterknife}"
+
+    implementation project(':support-ly-http')
+    implementation project(':support-ly-rxbus')
+    implementation project(':superplayerlibrary')
+
+    implementation "com.android.support:appcompat-v7:${supportVersion}"
+    implementation "com.android.support:design:${supportVersion}"
+    implementation "com.android.support:cardview-v7:${supportVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportVersion}"
+    implementation "com.github.zhaokaiqiang.klog:library:${klogVersion}"
+
+    implementation "com.jakewharton:butterknife:${butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
-    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    compile "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
-    compile "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
-    compile "com.squareup.retrofit2:converter-gson:${converterGson}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
-    compile "com.squareup.okhttp3:okhttp:${okhttp}"
-    compile "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
+    implementation "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
+    implementation "com.squareup.retrofit2:converter-gson:${converterGson}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+
+    implementation "com.squareup.okhttp3:okhttp:${okhttp}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
+
     debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
-    compile "com.github.bumptech.glide:glide:${glide}"
-    compile "com.github.bumptech.glide:annotations:${glide}"
-    compile "com.github.bumptech.glide:okhttp3-integration:${glide}"
-    annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
-    //greendao 数据库
-    compile "de.greenrobot:greendao:${greendao}"
-    compile "de.greenrobot:greendao-generator:${greendao}"
-    //chrome stetho 数据库查看
-    compile "com.facebook.stetho:stetho:${stethoVersion}"
-    compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
-    // recyclerview-animators
-    compile 'jp.wasabeef:recyclerview-animators:2.2.3'
-    //jsoup
-    compile "org.jsoup:jsoup:${jsoup}"
-    //底部导航
-    compile "com.roughike:bottom-bar:${bottomBar}"
-    //视频库
 
-    //    compile 'com.supercwn.superrecycleview:superlibrary:1.2.0'
+    implementation "com.github.bumptech.glide:glide:${glide}"
+    implementation "com.github.bumptech.glide:annotations:${glide}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${glide}"
+    annotationProcessor "com.github.bumptech.glide:compiler:${glide}"
+
+    //greendao 数据库
+    implementation "de.greenrobot:greendao:${greendao}"
+    implementation "de.greenrobot:greendao-generator:${greendao}"
+
+    //chrome stetho 数据库查看
+    implementation "com.facebook.stetho:stetho:${stethoVersion}"
+    implementation "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
+
+    // recyclerview-animators
+    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
+
+    //jsoup
+    implementation "org.jsoup:jsoup:${jsoup}"
+
+    //底部导航
+    implementation "com.roughike:bottom-bar:${bottomBar}"
 
     //大图库
-    compile "com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}"
+    implementation "com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}"
+
     //rxjava2
-    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
-    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
-    compile "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
-    compile project(':support-ly-http')
-    compile project(':support-ly-rxbus')
+    implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
+
 }

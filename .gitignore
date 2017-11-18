@@ -40,21 +40,5 @@ captures/
 # Keystore files
 *.jks
 
-app/src/androidTest/
-app/src/test/
-app/src/testDebug/
-test/libs/
-/test/
-app/src/main/java/com/gank/gankly/ui/baisi/video/
-app/src/main/res/drawable-hdpi/
-app/src/main/res/drawable-mdpi/
-app/src/main/res/drawable-xhdpi/
 projectFilesBackup/
 
-/javalib/
-javalib/libs/
-javalib/src/main/res/drawable/
-support-ly-http/libs/
-support-ly-http/src/main/res/drawable/
-support-ly-rxbus/libs/
-support-ly-rxbus/src/main/res/drawable/

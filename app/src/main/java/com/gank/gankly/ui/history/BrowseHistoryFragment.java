@@ -21,7 +21,6 @@ import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.gank.gankly.widget.NoAlphaItemAnimator;
 
 import java.util.List;
 
@@ -65,7 +64,6 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
         mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
 
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.getRecyclerView().setItemAnimator(new NoAlphaItemAnimator());
         mSwipeRefreshLayout.setILyRecycler(new LyRecyclerView.ILyRecycler() {
             @Override
             public void removeRecycle(int pos) {

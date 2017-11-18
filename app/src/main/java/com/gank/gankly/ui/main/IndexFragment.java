@@ -16,9 +16,9 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.DownloadProgressListener;
+import com.gank.gankly.ui.android.AndroidFragment;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
-import com.gank.gankly.ui.android.AndroidFragment;
 import com.gank.gankly.ui.ios.IosFragment;
 import com.gank.gankly.ui.main.welfare.WelfareFragment;
 import com.gank.gankly.view.ILauncher;
@@ -71,8 +71,7 @@ public class IndexFragment extends SupportFragment implements ViewPager.OnPageCh
         mTitles.add(Constants.IOS);
         mTitles.add(Constants.WELFRAE);
 
-        GankPagerAdapter mPagerAdapter = new GankPagerAdapter(mActivity.getSupportFragmentManager(),
-                mList, mTitles);
+        GankPagerAdapter mPagerAdapter = new GankPagerAdapter(getChildFragmentManager(), mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
