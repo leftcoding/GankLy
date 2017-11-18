@@ -8,25 +8,20 @@ import io.reactivex.annotations.NonNull;
  * Create by LingYan on 2017-10-12
  */
 
-public abstract class PageObserver<T> extends BaseObserver<T> implements ILoadMoreException {
+public abstract class PageObserver<T> extends BaseObserver<T> {
     private boolean isFirst;
 
-    public PageObserver(String key, boolean isFirst) {
-        super(key);
+    public PageObserver(String tag, boolean isFirst) {
+        super(tag);
         this.isFirst = isFirst;
     }
 
     @Override
     public void onNext(@NonNull T t) {
-        if (t == null) {
-            onException();
-            return;
-        }
-
         if (t instanceof PageResult) {
             PageResult result = (PageResult) t;
-            if (result.results == null) {
-                onException();
+            if (result.results == null || result.results.isEmpty()) {
+                onSuccessEmpty();
             }
         }
     }
@@ -34,24 +29,34 @@ public abstract class PageObserver<T> extends BaseObserver<T> implements ILoadMo
     @Override
     public void onError(@NonNull Throwable e) {
         super.onError(e);
-        onException();
+        onErrorException();
     }
 
     @Override
-    public void refreshError(String str) {
+    protected void refreshError() {
 
     }
 
     @Override
-    public void appendError(String str) {
+    protected void appendError() {
 
     }
 
-    private void onException() {
+    @Override
+    protected void onErrorException() {
         if (isFirst) {
-            refreshError(REQUEST_ERROR);
+            refreshError();
         } else {
-            appendError(REQUEST_ERROR);
+            appendError();
+        }
+    }
+
+    @Override
+    protected void onSuccessEmpty() {
+        if (isFirst) {
+            refreshEmpty();
+        } else {
+            appendEmpty();
         }
     }
 }

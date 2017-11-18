@@ -1,6 +1,7 @@
 package com.gank.gankly.mvp.observer;
 
 import com.leftcoding.rxbus.RxManager;
+import com.socks.library.KLog;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -11,19 +12,33 @@ import io.reactivex.disposables.Disposable;
  */
 
 public abstract class BaseObserver<T> implements Observer<T> {
-    protected static final String REQUEST_ERROR = "网络请求错误.";
-    private final String mKey;
+    private final String mTag;
 
-    public BaseObserver(String key) {
-        this.mKey = key;
+    BaseObserver(String tag) {
+        this.mTag = tag;
     }
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-        RxManager.get().add(mKey, d);
+        RxManager.get().add(mTag, d);
     }
 
     @Override
     public void onError(@NonNull Throwable e) {
+        KLog.e(e);
     }
+
+    protected abstract void onSuccessEmpty();
+
+    protected abstract void refreshEmpty();
+
+    protected abstract void appendEmpty();
+
+    protected abstract void onErrorException();
+
+    protected abstract void refreshError();
+
+    protected abstract void appendError();
+
+
 }

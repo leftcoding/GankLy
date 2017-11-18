@@ -137,4 +137,5 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
     implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
 
+    compile 'org.jetbrains:annotations:15.0'
 }

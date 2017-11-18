@@ -5,5 +5,5 @@ import android.view.View;
 import com.leftcoding.http.bean.ResultsBean;
 
 public interface RecyclerOnClick {
-    void onClick(View view, ResultsBean bean);
+    void onClick(View view, int position, ResultsBean bean);
 }

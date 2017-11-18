@@ -143,8 +143,8 @@ class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
         public void bindItem(Fragment fragment, TextItem item) {
             final Context context = fragment.getContext();
             final ResultsBean resultsBean = item.getResultsBean();
-            Date date = DateUtils.formatDateFromStr(resultsBean.publishedAt);
-            String formatDate = DateUtils.getFormatDate(date, DateUtils.MM_DD);
+            Date date = DateUtils.formatToDate(resultsBean.publishedAt);
+            String formatDate = DateUtils.formatString(date, DateUtils.MM_DD);
             time.setText(formatDate);
 
             title.setText(resultsBean.desc);
@@ -154,7 +154,7 @@ class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
                 @Override
                 public void onClick(View v) {
                     if (mMeiZiOnClick != null) {
-                        mMeiZiOnClick.onClick(v, resultsBean);
+                        mMeiZiOnClick.onClick(v, getAdapterPosition(), resultsBean);
                     }
                 }
             });

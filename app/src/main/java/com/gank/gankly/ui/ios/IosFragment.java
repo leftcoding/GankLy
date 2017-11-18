@@ -94,7 +94,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     private RecyclerOnClick mRecyclerOnClick = new RecyclerOnClick() {
 
         @Override
-        public void onClick(View view, ResultsBean bean) {
+        public void onClick(View view, int position, ResultsBean bean) {
             Bundle bundle = new Bundle();
             bundle.putString(WebActivity.TITLE, bean.desc);
             bundle.putString(WebActivity.URL, bean.url);

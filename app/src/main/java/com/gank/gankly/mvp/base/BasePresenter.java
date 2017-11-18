@@ -19,7 +19,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
         this.mContext = context;
     }
 
-    private static <T> T checkNotNull(T reference) {
+    protected static <T> T checkNotNull(T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }

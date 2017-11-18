@@ -1,13 +1,14 @@
 package com.gank.gankly.utils;
 
 import android.text.TextUtils;
+import android.util.Log;
 
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
 
 /**
  * 日期转换
@@ -15,70 +16,48 @@ import java.util.TimeZone;
  */
 public class DateUtils {
     private static final String GMT_8 = "GMT+8";
-    public static final String YY_MM_DD = "yyyy/MM/dd";
-    public static final String YY_MM_DD_ = "yyyy-MM-dd";
+    public static final String YY_MM_DD_SLASH = "yyyy/MM/dd";
+    public static final String YY_MM_DD_HORIZONTAL = "yyyy-MM-dd";
     public static final String MM_DD = "MM-dd";
+    public static final String YMD_S = "yyyy-MM-dd'T'HH:mm:ss.sss'Z'";
 
-
-    public static String getFormatDateStr(final Date date) {
-        if (null == date) {
+    public static String formatString(final Date date, final String format) {
+        if (null == date || TextUtils.isEmpty(format)) {
             return null;
         }
-        return DateFormat.getDateInstance(DateFormat.DEFAULT).format(date);
+        SimpleDateFormat simpleDateFormat = getDateFormat(format);
+        return getSimpleFormat(simpleDateFormat, date);
     }
 
-    public static String getFormatDate(final Date date, String type) {
-        if (null == date || TextUtils.isEmpty(type)) {
-            return null;
-        }
-
-        SimpleDateFormat sdf;
-        try {
-            sdf = new SimpleDateFormat(type, Locale.SIMPLIFIED_CHINESE);
-        } catch (Exception e) {
-            sdf = new SimpleDateFormat(YY_MM_DD_, Locale.SIMPLIFIED_CHINESE);
-        }
-        TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
-        sdf.setTimeZone(timeZone);
-        return sdf.format(date);
+    private static String getSimpleFormat(SimpleDateFormat simpleDateFormat, final Date date) {
+        return simpleDateFormat == null ? "" : simpleDateFormat.format(date);
     }
 
-    public static Date formatDateFromStr(final String dateStr) {
+    public static Date formatToDate(final String dateStr) {
         Date date = new Date();
         if (!TextUtils.isEmpty(dateStr)) {
-            String format = "yyyy-MM-dd'T'HH:mm:ss.sss'Z'";
-            SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.SIMPLIFIED_CHINESE);
-            TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
-            sdf.setTimeZone(timeZone);
-            try {
-                date = sdf.parse(dateStr);
-            } catch (Exception e) {
-                System.out.print("Error,format Date error");
+            SimpleDateFormat dateFormat = getDateFormat(YMD_S);
+            if (dateFormat != null) {
+                try {
+                    return dateFormat.parse(dateStr);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return date;
     }
 
-    public static String getMonth(final Date date) {
-        if (date != null) {
-            Calendar calendar = Calendar.getInstance();
+    private static SimpleDateFormat getDateFormat(String format) {
+        SimpleDateFormat dateFormat;
+        try {
             TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
-            calendar.setTimeZone(timeZone);
-            calendar.setTime(date);
-            return String.valueOf(calendar.get(Calendar.MONTH) + 1);
+            dateFormat = new SimpleDateFormat(format, Locale.SIMPLIFIED_CHINESE);
+            dateFormat.setTimeZone(timeZone);
+        } catch (Exception e) {
+            dateFormat = null;
+            Log.e("", e.toString());
         }
-        return "0";
+        return dateFormat;
     }
-
-    public static String getDay(final Date date) {
-        if (date != null) {
-            Calendar calendar = Calendar.getInstance();
-            TimeZone timeZone = TimeZone.getTimeZone(GMT_8);
-            calendar.setTimeZone(timeZone);
-            calendar.setTime(date);
-            return String.valueOf(calendar.get(Calendar.DATE));
-        }
-        return "0";
-    }
-
 }

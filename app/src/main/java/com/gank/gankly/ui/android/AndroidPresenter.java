@@ -1,59 +1,54 @@
 package com.gank.gankly.ui.android;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.observer.PageObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
 import com.leftcoding.http.api.GankManager;
+import com.leftcoding.http.bean.PageConfig;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
 import com.leftcoding.rxbus.RxManager;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-
-import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
-import io.reactivex.functions.Function;
-import retrofit2.Response;
 
 /**
  * Create by LingYan on 2016-10-25
  */
 class AndroidPresenter extends Presenter {
     private static final String TAG = "android_presenter";
+    private static final int INIT_PAGE = 1;
 
     private PageResult<ResultsBean> mPageResult;
+    private PageConfig mPageConfig;
 
-    private final AtomicBoolean first = new AtomicBoolean(true);
-
-    AndroidPresenter(@NonNull Context context, @NonNull AndroidContract.View view) {
+    AndroidPresenter(Context context, AndroidContract.View view) {
         super(context, view);
+        mPageConfig = new PageConfig();
     }
 
     @Override
     protected void refreshAndroid() {
-        fetchAndroid(getInitPage());
+        fetchAndroid(INIT_PAGE);
     }
 
     @Override
     protected void appendAndroid() {
-        if (mPageResult != null) {
-            fetchAndroid(mPageResult.nextPage);
+        if (mPageResult != null && !mPageResult.hasNoMore(mPageConfig.mLimit)) {
+            fetchAndroid(mPageResult.mNextPage);
         }
     }
 
     @Override
     public void unSubscribe() {
         super.unSubscribe();
-        first.set(true);
         mPageResult = null;
         RxManager.get().clear(TAG);
     }
 
-    private void fetchAndroid(final int page) {
+    private void fetchAndroid(final int curPage) {
+        mPageConfig.mCurPage = curPage;
+
         GankManager.with(mContext)
-                .androids(page, getLimit())
+                .androids(curPage, mPageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
                     if (isActivity()) {
                         mView.showProgress();
@@ -64,39 +59,12 @@ class AndroidPresenter extends Presenter {
                         mView.hideProgress();
                     }
                 })
-                .flatMap(new Function<Response<PageResult<ResultsBean>>, ObservableSource<PageResult<ResultsBean>>>() {
-                    @Override
-                    public ObservableSource<PageResult<ResultsBean>> apply(Response<PageResult<ResultsBean>> pageResultResponse) throws Exception {
-                        if (pageResultResponse == null
-                                || !pageResultResponse.isSuccessful()
-                                || pageResultResponse.body() == null) {
-                            return Observable.error(new Throwable());
-                        }
-                        return Observable.create(e -> e.onNext(pageResultResponse.body()));
-                    }
-                })
-                .map(pageResult -> {
-                    if (pageResult != null) {
-                        pageResult.curPage = page;
-                        return pageResult;
-                    }
-                    return null;
-                })
-                .flatMap(new Function<PageResult<ResultsBean>, ObservableSource<PageResult<ResultsBean>>>() {
-                    @Override
-                    public ObservableSource<PageResult<ResultsBean>> apply(PageResult<ResultsBean> result) throws Exception {
-                        if (result == null) {
-                            return Observable.error(new Throwable());
-                        }
-                        return Observable.create(e -> e.onNext(result));
-                    }
-                })
                 .subscribe(new PageSubscribe());
     }
 
     private class PageSubscribe extends PageObserver<PageResult<ResultsBean>> {
         PageSubscribe() {
-            this(first.get());
+            this(isRefreshRequest());
         }
 
         PageSubscribe(boolean isFirst) {
@@ -110,34 +78,43 @@ class AndroidPresenter extends Presenter {
         }
 
         @Override
-        public void onError(@NonNull Throwable e) {
+        public void onError(Throwable e) {
             super.onError(e);
-            if (isActivity()) {
-                if (isFirst()) {
-                    mView.showEmpty();
-                } else {
-                    mView.appendAndroidFailure("网络请求失败.");
-                }
-            }
         }
 
         @Override
-        public void onComplete() {
-            first.set(false);
-        }
-
-        @Override
-        public void refreshError(String str) {
-            super.refreshError(str);
+        protected void refreshEmpty() {
             if (isActivity()) {
                 mView.showEmpty();
             }
         }
 
         @Override
-        public void appendError(String str) {
-            super.appendError(str);
-            showShortToast(str);
+        protected void appendEmpty() {
+            if (isActivity()) {
+                mView.hasNoMoreDate();
+            }
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+
+        @Override
+        protected void refreshError() {
+            super.refreshError();
+            if (isActivity()) {
+                mView.showError();
+            }
+        }
+
+        @Override
+        protected void appendError() {
+            super.appendError();
+            if (isActivity()) {
+                mView.showShortToast("请求数据出错");
+            }
         }
     }
 
@@ -147,19 +124,23 @@ class AndroidPresenter extends Presenter {
         }
 
         mPageResult = result;
-        mPageResult.nextPage = getNextPage(mPageResult.curPage);
-        if (first.get()) {
+        mPageResult.mNextPage = getNextPage();
+        if (isRefreshRequest()) {
             mView.refreshAndroidSuccess(result.results);
         } else {
             mView.appendAndroidSuccess(result.results);
         }
     }
 
-    private int getNextPage(int curPage) {
-        return curPage + 1;
+    private int getNextPage() {
+        return getCurPage() + 1;
     }
 
-    private boolean isFirst() {
-        return first.get();
+    private boolean isRefreshRequest() {
+        return mPageConfig.isFirstRequest();
+    }
+
+    private int getCurPage() {
+        return mPageConfig.mCurPage;
     }
 }

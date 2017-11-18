@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.leftcoding.http.api.GankManager;
+import com.leftcoding.http.bean.PageConfig;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
 import com.socks.library.KLog;
@@ -29,25 +30,30 @@ public class IosPresenter extends IosContract.Presenter {
     private PageResult<ResultsBean> mPageResult;
     private AtomicBoolean first = new AtomicBoolean(true);
 
+    private PageConfig mPageConfig;
+
     public IosPresenter(@NonNull Context context, IosContract.View view) {
         super(context, view);
+        mPageConfig = new PageConfig();
     }
 
     @Override
     void refreshIos() {
-        fetchData(getInitPage());
+        fetchData(1);
     }
 
     @Override
     void appendIos() {
         if (mPageResult != null) {
-            fetchData(mPageResult.nextPage);
+            fetchData(mPageResult.mNextPage);
         }
     }
 
     private void fetchData(final int page) {
+        mPageConfig.mCurPage = page;
+
         GankManager.with(mContext)
-                .ios(page, getLimit())
+                .ios(page, 20)
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
                     public void accept(Disposable disposable) throws Exception {
@@ -81,7 +87,6 @@ public class IosPresenter extends IosContract.Presenter {
                     @Override
                     public PageResult<ResultsBean> apply(@io.reactivex.annotations.NonNull PageResult<ResultsBean> result) throws Exception {
                         if (result != null) {
-                            result.curPage = page;
                             return result;
                         }
                         return null;
@@ -105,7 +110,7 @@ public class IosPresenter extends IosContract.Presenter {
                     @Override
                     public void onNext(PageResult<ResultsBean> result) {
                         mPageResult = result;
-                        mPageResult.nextPage = mPageResult.curPage + 1;
+                        mPageResult.mNextPage = getNextPage();
 
                         if (isActivity()) {
                             if (isFirst()) {
@@ -136,5 +141,9 @@ public class IosPresenter extends IosContract.Presenter {
 
     private boolean isFirst() {
         return first.get();
+    }
+
+    private int getNextPage() {
+        return mPageConfig.mCurPage + 1;
     }
 }

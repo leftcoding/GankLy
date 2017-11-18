@@ -15,9 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Create by LingYan on 2017-09-29
- * Email:137387869@qq.com
  */
-
 public class GankServer extends BaseServer {
     public static final String GANK_SERVER_URL = BuildConfig.GANK_SERVER_ULR;
 

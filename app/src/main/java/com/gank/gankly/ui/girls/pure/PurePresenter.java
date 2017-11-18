@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StringUtils;
+import com.leftcoding.http.bean.PageConfig;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;
@@ -25,20 +26,22 @@ public class PurePresenter extends PureContract.Presenter {
     private String nextUrl = BASE_URL + "/page/";
 
     private int mMaxPageNumber;
+    private PageConfig mPageConfig;
 
     public PurePresenter(Context context, PureContract.View view) {
         super(context, view);
+        mPageConfig = new PageConfig();
+        mPageConfig.mLimit = 24;
     }
 
     @Override
     public void refreshPure() {
-        setLimit(24);
-        fetchData(getInitPage());
+        fetchData(mPageConfig.mCurPage);
     }
 
     @Override
     public void appendPure() {
-        fetchData(getInitPage());
+        fetchData(mPageConfig.mCurPage);
     }
 
     private void fetchData(final int page) {

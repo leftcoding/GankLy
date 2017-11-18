@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HttpLib</string>
+    <string name="network_request_error">网络请求出错</string>
 </resources>

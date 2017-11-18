@@ -36,6 +36,8 @@
     <string name="loading_network_failure">Wi-Fi和移动数据已断开</string>
     <string name="loading_all_over">全部加载完毕</string>
 
+    <string name="network_request_error">网络请求出错</string>
+
     <string name="dialog_ok">确定</string>
     <string name="dialog_cancel">取消</string>
     <string name="dialog_update">更新</string>

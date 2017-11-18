@@ -5,7 +5,6 @@ import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -32,17 +31,16 @@ import static com.gank.gankly.ui.android.AndroidAdapter.DefaultItem.VIEW_DEFAULT
  * Create by LingYan on 2016-04-25
  */
 class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
-    private RecyclerOnClick mMeiZiOnClick;
-    @NonNull
+    private RecyclerOnClick mRecyclerOnClick;
     private Context mContext;
 
-    private List<ResultsBean> mBeanList;
+    private List<ResultsBean> mResultsBeans;
     private List<DefaultItem> mItemList;
 
     AndroidAdapter(@NonNull Context context) {
         setHasStableIds(true);
-        mBeanList = new ArrayList<>();
         mContext = context;
+        mResultsBeans = new ArrayList<>();
         mItemList = new ArrayList<>();
         registerAdapterDataObserver(dataObserver);
     }
@@ -54,8 +52,10 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
             mItemList.clear();
             int size = getItemCount();
             if (size > 0) {
-                for (ResultsBean resultsBean : mBeanList) {
-                    mItemList.add(new TextItem(resultsBean));
+                for (ResultsBean resultsBean : mResultsBeans) {
+                    if (resultsBean != null) {
+                        mItemList.add(new TextItem(resultsBean));
+                    }
                 }
             }
         }
@@ -86,7 +86,7 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
     @SuppressWarnings("unchecked")
     @Override
     public void onBindViewHolder(DefaultHolder holder, int position) {
-        if (mItemList != null && !mItemList.isEmpty()) {
+        if (holder instanceof TextHolder) {
             holder.bindItem(mContext, mItemList.get(position));
         }
     }
@@ -99,7 +99,7 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
 
     @Override
     public int getItemCount() {
-        return mBeanList == null ? 0 : mBeanList.size();
+        return mResultsBeans == null ? 0 : mResultsBeans.size();
     }
 
     @Override
@@ -108,18 +108,17 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
     }
 
     void fillItems(List<ResultsBean> results) {
+        mResultsBeans.clear();
         appendItems(results);
     }
 
     public void appendItems(List<ResultsBean> results) {
-        if (mBeanList != null) {
-            mBeanList.addAll(results);
-            this.notifyDataSetChanged();
-        }
+        mResultsBeans.addAll(results);
+        this.notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
-        mMeiZiOnClick = onItemClickListener;
+        mRecyclerOnClick = onItemClickListener;
     }
 
     @Override
@@ -129,10 +128,11 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
             mItemList = null;
         }
 
-        if (mBeanList != null) {
-            mBeanList.clear();
-            mBeanList = null;
+        if (mResultsBeans != null) {
+            mResultsBeans.clear();
+            mResultsBeans = null;
         }
+
         unregisterAdapterDataObserver(dataObserver);
     }
 
@@ -152,6 +152,11 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
         ResultsBean getResultsBean() {
             return mResultsBean;
         }
+
+        public String getTime() {
+            Date date = DateUtils.formatToDate(mResultsBean.publishedAt);
+            return DateUtils.formatString(date, DateUtils.MM_DD);
+        }
     }
 
     class TextHolder extends DefaultHolder<TextItem> {
@@ -164,8 +169,6 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        private ResultsBean mResultsBean;
-
         TextHolder(Context context, ViewGroup parent) {
             super(context, parent, R.layout.adapter_android);
         }
@@ -173,28 +176,17 @@ class AndroidAdapter extends BaseAdapter<AndroidAdapter.DefaultHolder> {
         @Override
         public void bindItem(Context context, TextItem item) {
             final ResultsBean resultsBean = item.getResultsBean();
-            if (resultsBean == null) {
-                return;
-            }
-            mResultsBean = resultsBean;
-            itemView.setOnClickListener(clickListener);
 
-            Date date = DateUtils.formatDateFromStr(resultsBean.publishedAt);
-            String formatDate = DateUtils.getFormatDate(date, DateUtils.MM_DD);
-            time.setText(formatDate);
-
+            time.setText(item.getTime());
             title.setText(resultsBean.desc);
             authorName.setText(resultsBean.getWho());
-        }
 
-        View.OnClickListener clickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMeiZiOnClick != null) {
-                    mMeiZiOnClick.onClick(v, mResultsBean);
+            itemView.setOnClickListener(v -> {
+                if (mRecyclerOnClick != null) {
+                    mRecyclerOnClick.onClick(v, getAdapterPosition(), resultsBean);
                 }
-            }
-        };
+            });
+        }
     }
 
     static abstract class DefaultHolder<II extends DefaultItem> extends ButterHolder {

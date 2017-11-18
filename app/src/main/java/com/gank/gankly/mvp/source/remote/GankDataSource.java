@@ -11,7 +11,6 @@ import io.reactivex.Observable;
 /**
  * 干货远程请求
  * Create by LingYan on 2016-10-25
- * Email:137387869@qq.com
  */
 
 public class GankDataSource extends BaseDataSourceModel {
