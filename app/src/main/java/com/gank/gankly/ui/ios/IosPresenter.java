@@ -7,6 +7,7 @@ import com.leftcoding.http.api.GankManager;
 import com.leftcoding.http.bean.PageConfig;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.rxbus.RxManager;
 import com.socks.library.KLog;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,8 +16,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import retrofit2.Response;
 
@@ -26,6 +25,7 @@ import retrofit2.Response;
 
 public class IosPresenter extends IosContract.Presenter {
     private static final String TAG = "ios_presenter";
+    private static final int INIT_PAGE = 1;
 
     private PageResult<ResultsBean> mPageResult;
     private AtomicBoolean first = new AtomicBoolean(true);
@@ -39,7 +39,7 @@ public class IosPresenter extends IosContract.Presenter {
 
     @Override
     void refreshIos() {
-        fetchData(1);
+        fetchData(INIT_PAGE);
     }
 
     @Override
@@ -53,21 +53,15 @@ public class IosPresenter extends IosContract.Presenter {
         mPageConfig.mCurPage = page;
 
         GankManager.with(mContext)
-                .ios(page, 20)
-                .doOnSubscribe(new Consumer<Disposable>() {
-                    @Override
-                    public void accept(Disposable disposable) throws Exception {
-                        if (isActivity()) {
-                            mView.showProgress();
-                        }
+                .ios(page, mPageConfig.mLimit)
+                .doOnSubscribe(disposable -> {
+                    if (isActivity()) {
+                        mView.showProgress();
                     }
                 })
-                .doFinally(new Action() {
-                    @Override
-                    public void run() throws Exception {
-                        if (isActivity()) {
-                            mView.hideProgress();
-                        }
+                .doFinally(() -> {
+                    if (isActivity()) {
+                        mView.hideProgress();
                     }
                 })
                 .flatMap(new Function<Response<PageResult<ResultsBean>>, ObservableSource<PageResult<ResultsBean>>>() {
@@ -137,6 +131,7 @@ public class IosPresenter extends IosContract.Presenter {
     public void unSubscribe() {
         super.unSubscribe();
         mPageResult = null;
+        RxManager.get().clear(TAG);
     }
 
     private boolean isFirst() {

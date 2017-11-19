@@ -11,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 import com.gank.gankly.App;
@@ -51,7 +50,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     private AndroidAdapter mAdapter;
     private AndroidContract.Presenter mPresenter;
 
-    private AtomicBoolean firstLoad = new AtomicBoolean(true);
+    private AtomicBoolean firstRefresh = new AtomicBoolean(true);
 
     @Override
     protected int getLayoutId() {
@@ -88,6 +87,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     protected void initLazy() {
+
     }
 
     private void initRecycler() {
@@ -151,7 +151,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void showProgress() {
-        if (firstLoad.get()) {
+        if (firstRefresh.get()) {
             showLoading();
             return;
         }
@@ -163,11 +163,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void hideProgress() {
-        if (firstLoad.compareAndSet(true, false)) {
-            showContent();
-            return;
-        }
-
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setRefreshing(false);
         }
@@ -180,6 +175,10 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void showContent() {
+        if (firstRefresh.get()) {
+            firstRefresh.set(false);
+        }
+
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
         }
@@ -206,8 +205,7 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
         }
     }
 
-    @Override
-    public void showLoading() {
+    private void showLoading() {
         if (multipleStatusView != null) {
             multipleStatusView.showLoading();
         }
@@ -215,7 +213,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
 
     @Override
     public void showShortToast(String str) {
-        str = TextUtils.isEmpty(str) ? getContext().getString(R.string.loading_error) : str;
         ToastUtils.showToast(str);
     }
 

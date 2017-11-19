@@ -180,8 +180,9 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         mMultipleStatusView.showError();
     }
 
-    @Override
-    public void showLoading() {
-        mMultipleStatusView.showLoading();
+    private void showLoading() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showLoading();
+        }
     }
 }

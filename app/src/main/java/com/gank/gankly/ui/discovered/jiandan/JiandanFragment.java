@@ -148,11 +148,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
-    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
     }
@@ -172,9 +167,10 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         mMultipleStatusView.showError();
     }
 
-    @Override
-    public void showLoading() {
-        mMultipleStatusView.showLoading();
+    private void showLoading() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showLoading();
+        }
     }
 
     @Override

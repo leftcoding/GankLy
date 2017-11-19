@@ -8,7 +8,7 @@ import io.reactivex.annotations.NonNull;
  * Create by LingYan on 2017-10-12
  */
 
-public abstract class PageObserver<T> extends BaseObserver<T> {
+public abstract class PageObserver<T> extends RefreshObserver<T> {
     private boolean isFirst;
 
     public PageObserver(String tag, boolean isFirst) {
@@ -30,16 +30,6 @@ public abstract class PageObserver<T> extends BaseObserver<T> {
     public void onError(@NonNull Throwable e) {
         super.onError(e);
         onErrorException();
-    }
-
-    @Override
-    protected void refreshError() {
-
-    }
-
-    @Override
-    protected void appendError() {
-
     }
 
     @Override

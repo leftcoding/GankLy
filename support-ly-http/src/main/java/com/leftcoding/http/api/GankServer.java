@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Create by LingYan on 2017-09-29
  */
 public class GankServer extends BaseServer {
-    public static final String GANK_SERVER_URL = BuildConfig.GANK_SERVER_ULR;
+    private static final String GANK_SERVER_URL = BuildConfig.GANK_SERVER_ULR;
 
     private GankApi mGankApi;
 
@@ -40,7 +40,6 @@ public class GankServer extends BaseServer {
                 .build();
 
         mGankApi = retrofit.create(GankApi.class);
-
     }
 
     public static synchronized GankServer with(Context context) {

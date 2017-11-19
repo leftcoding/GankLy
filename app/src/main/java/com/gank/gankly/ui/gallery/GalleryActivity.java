@@ -322,16 +322,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.meizi_menu, menu);
         return true;

@@ -223,9 +223,4 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     public void showError() {
 
     }
-
-    @Override
-    public void showLoading() {
-
-    }
 }

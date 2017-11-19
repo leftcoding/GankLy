@@ -158,11 +158,6 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     }
 
     @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
-    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
     }
@@ -182,9 +177,10 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     }
 
-    @Override
-    public void showLoading() {
-        mSwipeRefreshLayout.setRefreshing(true);
+    private void showLoading() {
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override

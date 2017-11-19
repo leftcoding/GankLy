@@ -79,7 +79,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (fetchPage > 1) {
-                view.showRefreshError(App.getAppString(R.string.loading_error));
+                view.showShortToast(App.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -109,7 +109,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (fetchPage > 1) {
-                view.showRefreshError(App.getAppString(R.string.loading_error));
+                view.showShortToast(App.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -146,7 +146,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (offSetPage > 0) {
-                view.showRefreshError(App.getAppString(R.string.loading_error));
+                view.showShortToast(App.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -163,13 +163,13 @@ public abstract class FetchPresenter implements ISubscribePresenter {
         view.hideProgress();
         if (App.isNetConnect()) {
             if (fetchPage > 1) {
-                view.showRefreshError(App.getAppString(R.string.loading_error));
+                view.showShortToast(App.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
         } else {
             if (fetchPage > 1) {
-                view.showRefreshError(App.getAppString(R.string.loading_network_failure));
+                view.showShortToast(App.getAppString(R.string.loading_network_failure));
             } else {
                 view.showDisNetWork();
             }

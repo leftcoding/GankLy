@@ -226,14 +226,10 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         mMultipleStatusView.showError();
     }
 
-    @Override
-    public void showLoading() {
-        mMultipleStatusView.showLoading();
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
+    private void showLoading() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showLoading();
+        }
     }
 
     @Override

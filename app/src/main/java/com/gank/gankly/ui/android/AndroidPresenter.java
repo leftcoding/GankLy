@@ -2,6 +2,7 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 
+import com.gank.gankly.R;
 import com.gank.gankly.mvp.observer.PageObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
 import com.leftcoding.http.api.GankManager;
@@ -113,7 +114,7 @@ class AndroidPresenter extends Presenter {
         protected void appendError() {
             super.appendError();
             if (isActivity()) {
-                mView.showShortToast("请求数据出错");
+                mView.showShortToast(mContext.getString(R.string.loading_error));
             }
         }
     }
@@ -125,6 +126,7 @@ class AndroidPresenter extends Presenter {
 
         mPageResult = result;
         mPageResult.mNextPage = getNextPage();
+        mView.showContent();
         if (isRefreshRequest()) {
             mView.refreshAndroidSuccess(result.results);
         } else {

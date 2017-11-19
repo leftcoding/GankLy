@@ -13,11 +13,16 @@ import java.util.List;
 
 public class WelfareContract {
     interface View extends SupportView {
-        void refillData(List<ResultsBean> list);
+        void refreshData(List<ResultsBean> list);
 
         void appendData(List<ResultsBean> list);
+
+        void refershDataFailure(String msg);
+
+        void appendWelfareFailure(String msg);
     }
 
     interface Presenter extends ILoadMorePresenter {
+
     }
 }

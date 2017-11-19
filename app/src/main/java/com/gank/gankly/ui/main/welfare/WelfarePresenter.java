@@ -44,7 +44,7 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
                         List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
                         if (list != null) {
                             if (page == 1) {
-                                mModelView.refillData(list);
+                                mModelView.refreshData(list);
                             } else {
                                 mModelView.appendData(list);
                             }

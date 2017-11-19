@@ -159,11 +159,6 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
-    @Override
     public void showContent() {
         mMultipleStatusView.showContent();
     }
@@ -180,11 +175,6 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
 
     @Override
     public void showError() {
-
-    }
-
-    @Override
-    public void showLoading() {
 
     }
 

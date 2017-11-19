@@ -19,8 +19,4 @@ public interface SupportView extends BaseView {
     void showDisNetWork();
 
     void showError();
-
-    void showLoading();
-
-    void showRefreshError(String errorStr);
 }

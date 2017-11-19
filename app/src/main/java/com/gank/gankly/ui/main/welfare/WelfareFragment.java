@@ -65,7 +65,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         mWelfareAdapter = new WelfareAdapter(mActivity);
         mWelfareAdapter.setMeiZiOnClick(this);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        ((SimpleItemAnimator)mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
@@ -107,13 +107,6 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
                 .show();
     }
 
-    @Override
-    public void showRefreshError(String errorStr) {
-        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
-                .setActionTextColor(App.getAppColor(R.color.Blue))
-                .setAction(R.string.retry, v -> fetchMore()).show();
-    }
-
     private void fetchNew() {
         mPresenter.fetchNew();
     }
@@ -152,9 +145,10 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
         mMultipleStatusView.showError();
     }
 
-    @Override
-    public void showLoading() {
-        mMultipleStatusView.showLoading();
+    private void showLoading() {
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showLoading();
+        }
     }
 
     @Override
@@ -185,12 +179,30 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     }
 
     @Override
-    public void refillData(List<ResultsBean> list) {
+    public void refreshData(List<ResultsBean> list) {
         mWelfareAdapter.refillItems(list);
     }
 
     @Override
     public void appendData(List<ResultsBean> list) {
         mWelfareAdapter.appendItems(list);
+    }
+
+    @Override
+    public void refershDataFailure(String msg) {
+        showSnackbar(msg);
+    }
+
+    @Override
+    public void appendWelfareFailure(String msg) {
+        showSnackbar(msg);
+    }
+
+    private void showSnackbar(String msg) {
+        if (mSwipeRefreshLayout != null) {
+            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
+                    .setActionTextColor(App.getAppColor(R.color.Blue))
+                    .setAction(R.string.retry, v -> fetchMore()).show();
+        }
     }
 }

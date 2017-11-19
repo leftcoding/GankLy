@@ -39,6 +39,4 @@ public abstract class BaseObserver<T> implements Observer<T> {
     protected abstract void refreshError();
 
     protected abstract void appendError();
-
-
 }

@@ -1,7 +1,6 @@
 package com.gank.gankly.mvp.base;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.ISubscribePresenter;
 
@@ -12,7 +11,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     protected E mView;
     protected Context mContext;
 
-    public BasePresenter(@NonNull Context context, E view) {
+    public BasePresenter(Context context, E view) {
         checkNotNull(context);
         checkNotNull(view);
         this.mView = view;

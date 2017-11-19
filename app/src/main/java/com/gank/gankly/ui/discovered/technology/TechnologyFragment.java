@@ -100,12 +100,6 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
-    }
-
     @Override
     public void refillData(List<JianDanBean> list) {
         mAdapter.updateItem(list);

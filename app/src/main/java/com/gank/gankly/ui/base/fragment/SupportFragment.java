@@ -60,19 +60,9 @@ public abstract class SupportFragment extends ButterKnifeFragment implements Sup
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
     public void showShortToast(String str) {
         if(!TextUtils.isEmpty(str)){
             ToastUtils.showToast(str);
         }
-    }
-
-    @Override
-    public void showRefreshError(String errorStr) {
-
     }
 }

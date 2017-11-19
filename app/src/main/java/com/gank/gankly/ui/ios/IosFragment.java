@@ -21,6 +21,7 @@ import com.gank.gankly.widget.MultipleStatusView;
 import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
 
@@ -39,6 +40,8 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     private IosAdapter mAdapter;
     private IosContract.Presenter mPresenter;
     private RecyclerView mRecyclerView;
+
+    private final AtomicBoolean first = new AtomicBoolean(true);
 
     @Override
     protected int getLayoutId() {
@@ -75,7 +78,6 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     protected void initLazy() {
-        showLoading();
         initRefreshIos();
     }
 
@@ -105,12 +107,6 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     };
 
     @Override
-    public void showRefreshError(String errorStr) {
-        Snackbar.make(mSwipeRefreshLayout, errorStr, Snackbar.LENGTH_LONG)
-                .setAction(R.string.retry, v -> loadMoreIos());
-    }
-
-    @Override
     public void showError() {
         mMultipleStatusView.showError();
     }
@@ -122,6 +118,12 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void showProgress() {
+        if (first.get()) {
+            if (mMultipleStatusView != null) {
+                mMultipleStatusView.showLoading();
+            }
+        }
+
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setRefreshing(true);
         }
@@ -136,7 +138,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void hasNoMoreDate() {
-
+        showSnackBar(mContext.getString(R.string.loading_all_over));
     }
 
     @Override
@@ -158,7 +160,14 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void refreshIosFailure(String msg) {
+        showSnackBar(msg);
+    }
 
+    private void showSnackBar(String msg) {
+        if (mSwipeRefreshLayout != null) {
+            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.retry, v -> loadMoreIos());
+        }
     }
 
     @Override
@@ -170,7 +179,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void appendIosFailure(String msg) {
-
+        showSnackBar(msg);
     }
 
     public static IosFragment newInstance() {
