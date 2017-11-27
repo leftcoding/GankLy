@@ -3,6 +3,7 @@ package com.gank.gankly.ui.baisi;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,11 +12,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mToolbar.setTitle(R.string.baisi_leisure_time);
         mActivity.setSupportActionBar(mToolbar);
@@ -98,7 +99,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
     }
 
     /**

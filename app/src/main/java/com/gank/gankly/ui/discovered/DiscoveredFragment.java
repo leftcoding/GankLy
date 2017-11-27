@@ -3,18 +3,19 @@ package com.gank.gankly.ui.discovered;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
 import com.gank.gankly.ui.discovered.more.DiscoveredAdapter;
 import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
@@ -57,7 +58,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> {
@@ -94,7 +95,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(App.getAppColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
     }
 
     private void refreshUi() {

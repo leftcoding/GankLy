@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.mvp.base.SupportView;
 import com.gank.gankly.utils.ToastUtils;
 

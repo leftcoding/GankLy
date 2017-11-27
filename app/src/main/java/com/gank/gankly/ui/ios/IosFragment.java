@@ -2,6 +2,7 @@ package com.gank.gankly.ui.ios;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,12 +11,9 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.listener.RecyclerOnClick;
+import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
-import com.gank.gankly.utils.theme.RecyclerViewColor;
-import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.leftcoding.http.bean.ResultsBean;
@@ -31,15 +29,13 @@ import butterknife.BindView;
  */
 public class IosFragment extends LazyFragment implements IosContract.View {
     @BindView(R.id.multiple_status_view)
-    MultipleStatusView mMultipleStatusView;
+    MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout swipeRefresh;
 
-    private MainActivity mActivity;
-    private IosAdapter mAdapter;
-    private IosContract.Presenter mPresenter;
-    private RecyclerView mRecyclerView;
+    private IosAdapter iosAdapter;
+    private IosContract.Presenter iosPresenter;
 
     private final AtomicBoolean first = new AtomicBoolean(true);
 
@@ -51,40 +47,39 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAdapter = new IosAdapter(this);
+        iosAdapter = new IosAdapter(getBaseContext());
 
-        mSwipeRefreshLayout.setAdapter(mAdapter);
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnScrollListener(mSwipeRefRecyclerViewListener);
+        swipeRefresh.setAdapter(iosAdapter);
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        swipeRefresh.setOnScrollListener(onSwipeRefRecyclerViewListener);
 
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mRecyclerView.setHasFixedSize(true);
+        RecyclerView recyclerView = swipeRefresh.getRecyclerView();
+        recyclerView.setHasFixedSize(true);
 
-        mAdapter.setOnItemClickListener(mRecyclerOnClick);
-        mMultipleStatusView.setListener(v -> initRefreshIos());
+        iosAdapter.setOnItemClickListener(mItemCallBack);
+        multipleStatusView.setListener(v -> refreshIos());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new IosPresenter(getContext(), this);
+        iosPresenter = new IosPresenter(getBaseContext(), this);
     }
 
     @Override
     protected void initLazy() {
-        initRefreshIos();
+        refreshIos();
     }
 
-    private LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener mSwipeRefRecyclerViewListener = new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+    private LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener onSwipeRefRecyclerViewListener = new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
         @Override
         public void onRefresh() {
-            initRefreshIos();
+            refreshIos();
         }
 
         @Override
@@ -93,68 +88,75 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
     };
 
-    private RecyclerOnClick mRecyclerOnClick = new RecyclerOnClick() {
-
-        @Override
-        public void onClick(View view, int position, ResultsBean bean) {
+    private final ItemCallBack mItemCallBack = (view, position, object) -> {
+        if (object instanceof ResultsBean) {
+            ResultsBean bean = (ResultsBean) object;
             Bundle bundle = new Bundle();
             bundle.putString(WebActivity.TITLE, bean.desc);
             bundle.putString(WebActivity.URL, bean.url);
             bundle.putString(WebActivity.AUTHOR, bean.who);
             bundle.putString(WebActivity.TYPE, Constants.IOS);
-            WebActivity.startWebActivity(mActivity, bundle);
+            WebActivity.startWebActivity(getBaseContext(), bundle);
         }
     };
 
     @Override
     public void showError() {
-        mMultipleStatusView.showError();
+        if (multipleStatusView != null) {
+            multipleStatusView.showError();
+        }
     }
 
     @Override
     public void showEmpty() {
-        mMultipleStatusView.showEmpty();
+        if (multipleStatusView != null) {
+            multipleStatusView.showEmpty();
+        }
     }
 
     @Override
     public void showProgress() {
         if (first.get()) {
-            if (mMultipleStatusView != null) {
-                mMultipleStatusView.showLoading();
+            if (multipleStatusView != null) {
+                multipleStatusView.showLoading();
             }
         }
 
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(true);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(true);
         }
     }
 
     @Override
     public void hideProgress() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(false);
         }
     }
 
     @Override
     public void hasNoMoreDate() {
-        showSnackBar(mContext.getString(R.string.loading_all_over));
+        showSnackBar(getBaseContext().getString(R.string.loading_all_over));
     }
 
     @Override
     public void showContent() {
-        mMultipleStatusView.showContent();
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
+        if (multipleStatusView != null) {
+            multipleStatusView.showDisNetwork();
+        }
     }
 
     @Override
     public void refreshIosSuccess(List<ResultsBean> list) {
-        if (mAdapter != null) {
-            mAdapter.fillItems(list);
+        if (iosAdapter != null) {
+            iosAdapter.fillItems(list);
         }
     }
 
@@ -164,16 +166,16 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     private void showSnackBar(String msg) {
-        if (mSwipeRefreshLayout != null) {
-            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
+        if (swipeRefresh != null) {
+            Snackbar.make(swipeRefresh, msg, Snackbar.LENGTH_LONG)
                     .setAction(R.string.retry, v -> loadMoreIos());
         }
     }
 
     @Override
     public void appendIosSuccess(List<ResultsBean> list) {
-        if (mAdapter != null) {
-            mAdapter.appendItems(list);
+        if (iosAdapter != null) {
+            iosAdapter.appendItems(list);
         }
     }
 
@@ -189,36 +191,35 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         return fragment;
     }
 
-    private void initRefreshIos() {
-        if (mPresenter != null) {
-            mPresenter.refreshIos();
+    private void refreshIos() {
+        if (iosPresenter != null) {
+            iosPresenter.refreshIos();
         }
     }
 
     private void loadMoreIos() {
-        if (mPresenter != null) {
-            mPresenter.appendIos();
+        if (iosPresenter != null) {
+            iosPresenter.appendIos();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mPresenter != null) {
-            mPresenter.unSubscribe();
+        if (iosPresenter != null) {
+            iosPresenter.unSubscribe();
         }
     }
 
-    protected void callBackRefreshUi() {
-        ThemeColor themeColor = new ThemeColor(this);
-        RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
-        mRecycler.setItemColor(R.id.title, R.attr.baseAdapterItemTextColor);
-        mRecycler.setItemColor(R.id.time, R.attr.textSecondaryColor);
-//        mRecycler.setItemBackgroundColor(R.id.ll, R.attr.lyItemSelectBackground);
-
-        themeColor.setBackgroundResource(R.attr.themeBackground, mRecyclerView);
-        themeColor.swipeRefresh(mSwipeRefreshLayout);
-        themeColor.recyclerViewColor(mRecycler);
-        themeColor.start();
-    }
+//    protected void callBackRefreshUi() {
+//        ThemeColor themeColor = new ThemeColor(this);
+//        RecyclerViewColor mRecycler = new RecyclerViewColor(recyclerView);
+//        mRecycler.setItemColor(R.id.title, R.attr.baseAdapterItemTextColor);
+//        mRecycler.setItemColor(R.id.time, R.attr.textSecondaryColor);
+//
+//        themeColor.setBackgroundResource(R.attr.themeBackground, recyclerView);
+//        themeColor.swipeRefresh(swipeRefresh);
+//        themeColor.recyclerViewColor(mRecycler);
+//        themeColor.start();
+//    }
 }

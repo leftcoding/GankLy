@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 import butterknife.BindView;
@@ -54,8 +54,8 @@ public class ItemTextView extends RelativeLayout {
             mSummary = array.getString(R.styleable.ItemTextView_textSummary);
             mTitleSize = array.getInteger(R.styleable.ItemTextView_textTitleSize, 14);
             mSummarySize = array.getInteger(R.styleable.ItemTextView_textSummarySize, 12);
-            mTitleColor = array.getColor(R.styleable.ItemTextView_textTitleColor, App.getAppColor(R.color.text_default));
-            mSummaryColor = array.getColor(R.styleable.ItemTextView_textSummaryColor, App.getAppColor(R.color.text_999999));
+            mTitleColor = array.getColor(R.styleable.ItemTextView_textTitleColor, AppConfig.getAppColor(R.color.text_default));
+            mSummaryColor = array.getColor(R.styleable.ItemTextView_textSummaryColor, AppConfig.getAppColor(R.color.text_999999));
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }

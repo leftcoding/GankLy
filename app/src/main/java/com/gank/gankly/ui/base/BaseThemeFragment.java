@@ -10,7 +10,7 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
@@ -28,7 +28,7 @@ public abstract class BaseThemeFragment extends ButterKnifeFragment {
     private Disposable mDisposable;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> callBackRefreshUi());

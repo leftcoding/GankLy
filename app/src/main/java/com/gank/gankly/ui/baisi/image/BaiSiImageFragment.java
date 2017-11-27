@@ -2,6 +2,7 @@ package com.gank.gankly.ui.baisi.image;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -47,7 +48,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
         mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));

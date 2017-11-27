@@ -3,7 +3,7 @@ package com.gank.gankly.utils;
 import android.os.Looper;
 
 import com.bumptech.glide.Glide;
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -21,7 +21,7 @@ public class GlideCatchUtil {
     // 获取Glide磁盘缓存大小
     public String getCacheSize() {
         try {
-            return getFormatSize(getFolderSize(new File(FileUtils.getGlideDefaultPath(App.getGankContext()))));
+            return getFormatSize(getFolderSize(new File(FileUtils.getGlideDefaultPath(AppConfig.getGankContext()))));
         } catch (Exception e) {
             e.printStackTrace();
             return "获取失败";
@@ -30,16 +30,16 @@ public class GlideCatchUtil {
 
     // 清除Glide磁盘缓存，自己获取缓存文件夹并删除方法
     public boolean cleanCatchDisk() {
-        return deleteFolderFile(FileUtils.getGlideDefaultPath(App.getGankContext()), true);
+        return deleteFolderFile(FileUtils.getGlideDefaultPath(AppConfig.getGankContext()), true);
     }
 
     // 清除图片磁盘缓存，调用Glide自带方法
     public boolean clearCacheDiskSelf() {
         try {
             if (Looper.myLooper() == Looper.getMainLooper()) {
-                new Thread(() -> Glide.get(App.getGankContext()).clearDiskCache()).start();
+                new Thread(() -> Glide.get(AppConfig.getGankContext()).clearDiskCache()).start();
             } else {
-                Glide.get(App.getGankContext()).clearDiskCache();
+                Glide.get(AppConfig.getGankContext()).clearDiskCache();
             }
             return true;
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class GlideCatchUtil {
     public boolean clearCacheMemory() {
         try {
             if (Looper.myLooper() == Looper.getMainLooper()) { //只能在主线程执行
-                Glide.get(App.getGankContext()).clearMemory();
+                Glide.get(AppConfig.getGankContext()).clearMemory();
                 return true;
             }
         } catch (Exception e) {

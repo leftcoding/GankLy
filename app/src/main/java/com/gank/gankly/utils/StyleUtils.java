@@ -3,7 +3,7 @@ package com.gank.gankly.utils;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.socks.library.KLog;
 
@@ -24,13 +24,13 @@ public class StyleUtils {
         int progressColor = R.color.white;
         int schemeColor = R.color.colorAccent;
 
-        if (App.isNight()) {
+        if (AppConfig.isNight()) {
             progressColor = R.color.baseSwipeRefreshLayoutProgressSchemeColor;
             schemeColor = R.color.baseSwipeRefreshLayoutSchemeColors;
         }
 
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(App.getAppColor(progressColor));
-        swipeRefreshLayout.setColorSchemeColors(App.getAppColor(schemeColor));
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(AppConfig.getAppColor(progressColor));
+        swipeRefreshLayout.setColorSchemeColors(AppConfig.getAppColor(schemeColor));
     }
 
     //让 RecyclerView 缓存在 Pool 中的 Item 失效

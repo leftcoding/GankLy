@@ -7,7 +7,7 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 /**
@@ -50,12 +50,12 @@ public class LSwitch extends SwitchCompat {
 
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
-        if (App.isNight()) {
+        if (AppConfig.isNight()) {
             mColor = R.color.switch_thumb_disabled_dark;
         } else {
             mColor = R.color.colorAccent;
         }
-        colors[1] = App.getAppColor(mColor);
+        colors[1] = AppConfig.getAppColor(mColor);
 
         // Unchecked enabled state state
         states[2] = new int[0];
@@ -75,9 +75,9 @@ public class LSwitch extends SwitchCompat {
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
         colors[1] = Color.argb(0x4D, // 30% alpha
-                Color.red(App.getAppColor(mColor)),
-                Color.green(App.getAppColor(mColor)),
-                Color.blue(App.getAppColor(mColor)));
+                Color.red(AppConfig.getAppColor(mColor)),
+                Color.green(AppConfig.getAppColor(mColor)),
+                Color.blue(AppConfig.getAppColor(mColor)));
 
         // Unchecked enabled state state
         states[2] = new int[0];

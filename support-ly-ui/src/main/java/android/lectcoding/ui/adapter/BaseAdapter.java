@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.base;
+package android.lectcoding.ui.adapter;
 
 import android.support.v7.widget.RecyclerView;
 

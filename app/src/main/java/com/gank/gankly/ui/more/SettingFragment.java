@@ -3,13 +3,14 @@ package com.gank.gankly.ui.more;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
@@ -77,7 +78,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initPreferences();
 
@@ -104,7 +105,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
 
     private void initPreferences() {
-        String summary = App.getAppResources().getString(R.string.setting_current_version,
+        String summary = AppConfig.getAppResources().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
         itemUpdate.setTextName(R.string.setting_check_version);
@@ -157,7 +158,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mActivity);
         }
-        mProgressDialog.setMessage(App.getAppString(R.string.dialog_checking));
+        mProgressDialog.setMessage(AppConfig.getAppString(R.string.dialog_checking));
         mProgressDialog.show();
     }
 

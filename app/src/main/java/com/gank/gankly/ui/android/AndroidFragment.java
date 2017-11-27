@@ -2,21 +2,17 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.gank.gankly.App;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.listener.RecyclerOnClick;
+import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
@@ -36,8 +32,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-4-26
  */
-public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.OnRefreshListener,
-        RecyclerOnClick, AndroidContract.View {
+public class AndroidFragment extends LazyFragment implements AndroidContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView multipleStatusView;
 
@@ -66,22 +61,16 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        initAdapter();
         initRecycler();
 
-        mAdapter.setOnItemClickListener(this);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        multipleStatusView.setListener(v -> {
-            showLoading();
-            mPresenter.refreshAndroid();
-        });
+        mAdapter.setOnItemClickListener(itemCallBack);
+        multipleStatusView.setListener(onMultipleClick);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new AndroidPresenter(mContext, this);
+        mPresenter = new AndroidPresenter(getBaseContext(), this);
         mPresenter.refreshAndroid();
     }
 
@@ -91,43 +80,46 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
     }
 
     private void initRecycler() {
-        mRecyclerView = swipeRefreshLayout.getRecyclerView();
-        swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        swipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
-            @Override
-            public void onRefresh() {
-                mPresenter.refreshAndroid();
-            }
-
-            @Override
-            public void onLoadMore() {
-                mPresenter.appendAndroid();
-            }
-        });
-    }
-
-    private void initAdapter() {
-        mAdapter = new AndroidAdapter(mContext);
+        mAdapter = new AndroidAdapter(getBaseContext());
         swipeRefreshLayout.setAdapter(mAdapter);
+        mRecyclerView = swipeRefreshLayout.getRecyclerView();
+        swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
+        swipeRefreshLayout.setOnScrollListener(onRefreshListener);
     }
 
-    @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-        mPresenter.refreshAndroid();
-    }
+    private final ItemCallBack itemCallBack = (view, position, object) -> {
+        if (object instanceof ResultsBean) {
+            ResultsBean resultsBean = (ResultsBean) object;
+            Bundle bundle = new Bundle();
+            bundle.putString(WebActivity.TITLE, resultsBean.desc);
+            bundle.putString(WebActivity.URL, resultsBean.url);
+            bundle.putString(WebActivity.TYPE, Constants.ANDROID);
+            bundle.putString(WebActivity.AUTHOR, resultsBean.who);
+            Intent intent = new Intent(mActivity, WebActivity.class);
+            intent.putExtras(bundle);
+            CircularAnimUtils.startActivity(mActivity, intent, view, R.color.white_half);
+        }
+    };
 
-    @Override
-    public void onClick(View view, int position, ResultsBean bean) {
-        Bundle bundle = new Bundle();
-        bundle.putString(WebActivity.TITLE, bean.desc);
-        bundle.putString(WebActivity.URL, bean.url);
-        bundle.putString(WebActivity.TYPE, Constants.ANDROID);
-        bundle.putString(WebActivity.AUTHOR, bean.who);
-        Intent intent = new Intent(mActivity, WebActivity.class);
-        intent.putExtras(bundle);
-        CircularAnimUtils.startActivity(mActivity, intent, view, R.color.white_half);
-    }
+    private final LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener onRefreshListener = new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        @Override
+        public void onRefresh() {
+            mPresenter.refreshAndroid();
+        }
+
+        @Override
+        public void onLoadMore() {
+            mPresenter.appendAndroid();
+        }
+    };
+
+    private final MultipleStatusView.OnMultipleClick onMultipleClick = new MultipleStatusView.OnMultipleClick() {
+        @Override
+        public void retry(View v) {
+            showLoading();
+            mPresenter.refreshAndroid();
+        }
+    };
 
     @Override
     public void refreshAndroidSuccess(List<ResultsBean> list) {
@@ -235,38 +227,6 @@ public class AndroidFragment extends LazyFragment implements SwipeRefreshLayout.
             mPresenter.unSubscribe();
             mPresenter = null;
         }
-    }
-
-    private ColorStateList getSwitchThumbColorStateList() {
-        int mSelectColor;
-        int unSelectColor;
-
-        if (App.isNight()) {
-            mSelectColor = R.color.switch_thumb_disabled_dark;
-            unSelectColor = R.color.navigation_item_icon;
-        } else {
-            mSelectColor = R.color.colorAccent;
-            unSelectColor = R.color.gray;
-        }
-
-        final int[][] states = new int[3][];
-        final int[] colors = new int[3];
-
-        // Disabled state
-        states[0] = new int[]{-android.R.attr.state_enabled};
-        colors[0] = (Color.DKGRAY);
-
-        // Checked state
-        states[1] = new int[]{android.R.attr.state_checked};
-
-        colors[1] = App.getAppColor(mSelectColor);
-
-        // Unchecked enabled state state
-        states[2] = new int[0];
-
-        colors[2] = App.getAppColor(unSelectColor);
-
-        return new ColorStateList(states, colors);
     }
 
     protected void callBackRefreshUi() {

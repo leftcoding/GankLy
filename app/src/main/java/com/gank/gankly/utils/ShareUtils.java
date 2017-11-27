@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 /**
@@ -36,7 +36,7 @@ public class ShareUtils {
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, share);
         shareIntent.setType("text/plain");
-        context.startActivity(Intent.createChooser(shareIntent, App.getAppString(R.string.share_to)));
+        context.startActivity(Intent.createChooser(shareIntent, AppConfig.getAppString(R.string.share_to)));
     }
 
     public static void shareSingleImage(Context context, Uri result) {

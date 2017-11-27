@@ -1,10 +1,11 @@
 package com.gank.gankly.ui.main.tab;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.gank.gankly.ui.base.fragment.ButterKnifeFragment;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 
 /**
  * Create by LingYan on 2017-09-28
@@ -14,7 +15,7 @@ public abstract class MainTabFragment extends ButterKnifeFragment implements Mai
     private MainTabPresenter mPresenter;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 

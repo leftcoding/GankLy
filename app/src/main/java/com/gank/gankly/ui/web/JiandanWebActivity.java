@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
@@ -158,7 +158,7 @@ public class JiandanWebActivity extends BaseActivity {
             mFromWay = bundle.getInt(FROM_WAY);
         }
 
-        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
+        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
         if (!ListUtils.isListEmpty(list)) {
             isInitCollect = true;

@@ -2,7 +2,9 @@ package com.leftcoding.http.api;
 
 import android.content.Context;
 
+import com.leftcoding.http.BuildConfig;
 import com.leftcoding.http.R;
+import com.leftcoding.http.base.GankServerHelper;
 import com.leftcoding.http.bean.ListResult;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
@@ -18,17 +20,22 @@ import retrofit2.Response;
  * Create by LingYan on 2017-09-30
  */
 
-public class GankManager {
+public class GankServerManager {
     private final String serverError;
     private GankApi mApi;
 
-    private GankManager(Context context) {
-        mApi = GankServer.with(context).api();
+    private GankServerManager(Context context) {
+        mApi = GankServerHelper.get()
+//                .addConverterFactory(MyGsonConverterFactory.create())
+                .baseUrl(BuildConfig.GANK_SERVER_ULR)
+                .newRetrofit()
+                .create(GankApi.class);
+
         serverError = context.getResources().getString(R.string.network_request_error);
     }
 
-    public static synchronized GankManager with(Context context) {
-        return new GankManager(context);
+    public static synchronized GankServerManager with(Context context) {
+        return new GankServerManager(context);
     }
 
     public Observable<PageResult<ResultsBean>> androids(final int page, final int limit) {

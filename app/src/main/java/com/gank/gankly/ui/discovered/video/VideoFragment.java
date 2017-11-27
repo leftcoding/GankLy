@@ -3,6 +3,7 @@ package com.gank.gankly.ui.discovered.video;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -57,7 +58,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mSwipeRefreshLayout.setRefreshing(true);
         //        setSwipeRefreshLayout(mSwipeRefreshLayout);

@@ -3,6 +3,7 @@ package com.gank.gankly.ui.main.welfare;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,7 +12,7 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.listener.MeiziOnClick;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
@@ -58,7 +59,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //        setSwipeRefreshLayout(mSwipeRefreshLayout);
 
@@ -103,7 +104,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     @Override
     public void hasNoMoreDate() {
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
-                .setActionTextColor(App.getAppColor(R.color.Blue))
+                .setActionTextColor(AppConfig.getAppColor(R.color.Blue))
                 .show();
     }
 
@@ -201,7 +202,7 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     private void showSnackbar(String msg) {
         if (mSwipeRefreshLayout != null) {
             Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(App.getAppColor(R.color.Blue))
+                    .setActionTextColor(AppConfig.getAppColor(R.color.Blue))
                     .setAction(R.string.retry, v -> fetchMore()).show();
         }
     }

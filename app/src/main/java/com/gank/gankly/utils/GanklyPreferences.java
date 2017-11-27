@@ -3,7 +3,7 @@ package com.gank.gankly.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +45,7 @@ public class GanklyPreferences {
         if (mSharedPreferences == null) {
             synchronized (GanklyPreferences.class) {
                 if (mSharedPreferences == null) {
-                    mSharedPreferences = App.getGankContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+                    mSharedPreferences = AppConfig.getGankContext().getSharedPreferences(name, Context.MODE_PRIVATE);
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.gank.gankly.ui.collect;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -62,7 +63,7 @@ public class CollectFragment extends SupportFragment implements CollectContract.
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mToolbar.setTitle(R.string.mine_my_collect);
         mActivity.setSupportActionBar(mToolbar);

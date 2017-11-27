@@ -2,6 +2,7 @@ package com.gank.gankly.ui.gallery;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
@@ -42,7 +43,7 @@ public class GalleryFragment extends SupportFragment implements ProgressImageVie
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mProgressImageView.load(mUrl, GalleryFragment.this);
         mProgressImageView.setImageViewOnClick(this);

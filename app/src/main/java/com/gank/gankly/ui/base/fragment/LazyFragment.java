@@ -3,8 +3,6 @@ package com.gank.gankly.ui.base.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
-import com.socks.library.KLog;
-
 /**
  * Create by LingYan on 2016-5-12
  */
@@ -33,7 +31,6 @@ public abstract class LazyFragment extends SupportFragment {
     protected abstract void initLazy();
 
     private void lazyLoadData() {
-        KLog.d("isVisible:" + isVisible + ",isFirstLoad:" + isFirstLoad + ",isView:" + isView);
         if (!isVisible || !isFirstLoad || !isView) {
             return;
         }

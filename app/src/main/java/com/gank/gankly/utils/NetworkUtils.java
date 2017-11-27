@@ -5,7 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 
 /**
  * Create by LingYan on 2016-6-3
@@ -16,9 +16,9 @@ public class NetworkUtils {
      * 判断网络连接是否可用
      */
     public static boolean isNetworkAvailable() {
-        return (App.getGankContext().getSystemService(Context.CONNECTIVITY_SERVICE) !=
+        return (AppConfig.getGankContext().getSystemService(Context.CONNECTIVITY_SERVICE) !=
                 null) && ((
-                (ConnectivityManager) App.getGankContext().getSystemService(Context.CONNECTIVITY_SERVICE))
+                (ConnectivityManager) AppConfig.getGankContext().getSystemService(Context.CONNECTIVITY_SERVICE))
                 .getActiveNetworkInfo() != null);
     }
 
@@ -43,7 +43,7 @@ public class NetworkUtils {
      * 判断是否是移动网络
      */
     public static boolean isMobileNetwork() {
-        NetworkInfo networkInfo = ((ConnectivityManager) App.getGankContext().getSystemService(Context
+        NetworkInfo networkInfo = ((ConnectivityManager) AppConfig.getGankContext().getSystemService(Context
                 .CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE);
     }
@@ -52,7 +52,7 @@ public class NetworkUtils {
      * 判断是否是WiFi
      */
     public static boolean isWiFi() {
-        NetworkInfo networkInfo = ((ConnectivityManager) App.getGankContext().getSystemService(Context
+        NetworkInfo networkInfo = ((ConnectivityManager) AppConfig.getGankContext().getSystemService(Context
                 .CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI);
     }

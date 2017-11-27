@@ -2,7 +2,7 @@ package com.gank.gankly.mvp.source;
 
 import android.support.annotation.NonNull;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.ReadHistoryDao;
 import com.gank.gankly.data.entity.UrlCollect;
@@ -46,8 +46,8 @@ public class LocalDataSource extends BaseModel {
     }
 
     private LocalDataSource() {
-        mUrlCollectDao = App.getDaoSession().getUrlCollectDao();
-        mReadHistoryDao = App.getDaoSession().getReadHistoryDao();
+        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
+        mReadHistoryDao = AppConfig.getDaoSession().getReadHistoryDao();
     }
 
     public Observable<List<UrlCollect>> getCollect(final int offset, final int limit) {

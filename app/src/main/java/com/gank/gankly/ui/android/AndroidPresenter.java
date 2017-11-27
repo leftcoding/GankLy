@@ -5,7 +5,7 @@ import android.content.Context;
 import com.gank.gankly.R;
 import com.gank.gankly.mvp.observer.PageObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
-import com.leftcoding.http.api.GankManager;
+import com.leftcoding.http.api.GankServerManager;
 import com.leftcoding.http.bean.PageConfig;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
@@ -48,7 +48,7 @@ class AndroidPresenter extends Presenter {
     private void fetchAndroid(final int curPage) {
         mPageConfig.mCurPage = curPage;
 
-        GankManager.with(mContext)
+        GankServerManager.with(mContext)
                 .androids(curPage, mPageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
                     if (isActivity()) {

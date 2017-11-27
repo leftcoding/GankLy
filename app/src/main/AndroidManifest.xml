@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name="com.gank.gankly.App"
+        android:name="com.gank.gankly.AppConfig"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"

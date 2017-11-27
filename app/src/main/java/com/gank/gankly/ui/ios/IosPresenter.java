@@ -3,7 +3,7 @@ package com.gank.gankly.ui.ios;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.leftcoding.http.api.GankManager;
+import com.leftcoding.http.api.GankServerManager;
 import com.leftcoding.http.bean.PageConfig;
 import com.leftcoding.http.bean.PageResult;
 import com.leftcoding.http.bean.ResultsBean;
@@ -52,7 +52,7 @@ public class IosPresenter extends IosContract.Presenter {
     private void fetchData(final int page) {
         mPageConfig.mCurPage = page;
 
-        GankManager.with(mContext)
+        GankServerManager.with(mContext)
                 .ios(page, mPageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
                     if (isActivity()) {

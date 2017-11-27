@@ -1,4 +1,4 @@
-package com.leftcoding.http.api;
+package com.leftcoding.http.base;
 
 
 import java.util.concurrent.TimeUnit;
@@ -8,42 +8,41 @@ import okhttp3.OkHttpClient;
 
 /**
  * Create by LingYan on 2017-09-30
- * Email:137387869@qq.com
  */
-public class OkHttpBuilder {
+public class HttpBuilderControl {
     private static final int DEFAULT_OUT_TIME = 30;
     private OkHttpClient.Builder builder;
 
-    private OkHttpBuilder() {
+    private HttpBuilderControl() {
         builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_OUT_TIME, TimeUnit.SECONDS);
     }
 
     @SuppressWarnings("unchecked")
-    public OkHttpBuilder connectTimeout(long timeout, TimeUnit unit) {
+    public HttpBuilderControl connectTimeout(long timeout, TimeUnit unit) {
         builder.connectTimeout(timeout, unit);
         return this;
     }
 
-    OkHttpBuilder addNetworkInterceptor(Interceptor interceptor) {
+    public HttpBuilderControl addNetworkInterceptor(Interceptor interceptor) {
         builder.addNetworkInterceptor(interceptor);
         return this;
     }
 
-    OkHttpBuilder addInterceptor(Interceptor interceptor) {
+    public HttpBuilderControl addInterceptor(Interceptor interceptor) {
         builder.addInterceptor(interceptor);
         return this;
     }
 
-    OkHttpClient build() {
+    public OkHttpClient build() {
         return builder.build();
     }
 
     private static class SingletonHolder {
-        private static final OkHttpBuilder INSTANCE = new OkHttpBuilder();
+        private static final HttpBuilderControl INSTANCE = new HttpBuilderControl();
     }
 
-    static synchronized OkHttpBuilder get() {
+    static synchronized HttpBuilderControl get() {
         return SingletonHolder.INSTANCE;
     }
 }

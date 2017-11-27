@@ -1,6 +1,6 @@
 package com.gank.gankly.mvp;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.mvp.base.SupportView;
@@ -79,7 +79,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (fetchPage > 1) {
-                view.showShortToast(App.getAppString(R.string.loading_error));
+                view.showShortToast(AppConfig.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -109,7 +109,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (fetchPage > 1) {
-                view.showShortToast(App.getAppString(R.string.loading_error));
+                view.showShortToast(AppConfig.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -146,7 +146,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
             }
         } else {
             if (offSetPage > 0) {
-                view.showShortToast(App.getAppString(R.string.loading_error));
+                view.showShortToast(AppConfig.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
@@ -161,15 +161,15 @@ public abstract class FetchPresenter implements ISubscribePresenter {
      */
     public void parseError(SupportView view) {
         view.hideProgress();
-        if (App.isNetConnect()) {
+        if (AppConfig.isNetConnect()) {
             if (fetchPage > 1) {
-                view.showShortToast(App.getAppString(R.string.loading_error));
+                view.showShortToast(AppConfig.getAppString(R.string.loading_error));
             } else {
                 view.showError();
             }
         } else {
             if (fetchPage > 1) {
-                view.showShortToast(App.getAppString(R.string.loading_network_failure));
+                view.showShortToast(AppConfig.getAppString(R.string.loading_network_failure));
             } else {
                 view.showDisNetWork();
             }

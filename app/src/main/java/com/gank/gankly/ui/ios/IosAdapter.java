@@ -1,78 +1,63 @@
 package com.gank.gankly.ui.ios;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.lectcoding.ui.adapter.BaseAdapter;
+import android.lectcoding.ui.adapter.BasicItem;
+import android.lectcoding.ui.adapter.Item;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.listener.RecyclerOnClick;
-import com.gank.gankly.ui.base.BaseAdapter;
-import com.gank.gankly.ui.base.ButterHolder;
+import com.gank.gankly.butterknife.ButterKnifeHolder;
+import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.DateUtils;
 import com.leftcoding.http.bean.ResultsBean;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.gank.gankly.ui.ios.IosAdapter.DefaultItem.VIEW_DEFAULT;
-
 /**
  * Create by LingYan on 2016-04-25
  */
-class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
-    private List<ResultsBean> mResults;
-    private List<DefaultItem> mItemList;
+class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
+    private final List<ResultsBean> resultsBeans = new ArrayList<>();
+    private final List<Item> itemList = new ArrayList<>();
 
-    private Fragment mFragment;
-    private Context mContext;
+    private Context context;
 
-    private RecyclerOnClick mMeiZiOnClick;
+    private ItemCallBack itemCallBack;
 
     IosAdapter(Context context) {
-        mContext = context;
+        this.context = context;
         setHasStableIds(true);
-        mResults = new ArrayList<>();
-        mItemList = new ArrayList<>();
 
         registerAdapterDataObserver(mObserver);
-    }
-
-    IosAdapter(@NonNull Fragment fragment) {
-        this(fragment.getContext());
-        mFragment = fragment;
     }
 
     private RecyclerView.AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
             super.onChanged();
-            mItemList.clear();
-            if (mResults != null && !mResults.isEmpty()) {
-                for (ResultsBean resultsBean : mResults) {
-                    mItemList.add(new TextItem(resultsBean));
+            itemList.clear();
+            if (!resultsBeans.isEmpty()) {
+                for (ResultsBean resultsBean : resultsBeans) {
+                    itemList.add(new TextItem(resultsBean));
                 }
             }
         }
     };
 
     @Override
-    public DefaultHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        DefaultHolder defaultHolder;
+    public ButterKnifeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ButterKnifeHolder defaultHolder;
         switch (viewType) {
-            case VIEW_DEFAULT:
-                defaultHolder = new GankViewHolder(parent.getContext(), parent);
+            case TextHolder.LAYOUT:
+                defaultHolder = new TextHolder(parent, itemCallBack);
                 break;
             default:
                 defaultHolder = null;
@@ -82,32 +67,38 @@ class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
     }
 
     @Override
-    public void onBindViewHolder(DefaultHolder holder, int position) {
-        holder.bindItem(mFragment, mItemList.get(position));
+    public void onBindViewHolder(ButterKnifeHolder holder, int position) {
+        final Item item = itemList.get(position);
+        switch (holder.getItemViewType()) {
+            case TextHolder.LAYOUT:
+                ((TextHolder) holder).bindItem((TextItem) item);
+                break;
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return mItemList.get(position).getType();
+        return itemList.get(position).getViewType();
     }
 
     @Override
-    public void onViewRecycled(DefaultHolder holder) {
+    public void onViewRecycled(ButterKnifeHolder holder) {
         super.onViewRecycled(holder);
-        Glide.get(mContext).clearMemory();
+        Glide.get(context).clearMemory();
     }
 
     @Override
     public int getItemCount() {
-        return mResults == null ? 0 : mResults.size();
+        return resultsBeans.size();
     }
 
-    public void fillItems(List<ResultsBean> results) {
+    void fillItems(List<ResultsBean> results) {
+        resultsBeans.clear();
         appendItems(results);
     }
 
     public void appendItems(List<ResultsBean> results) {
-        mResults.addAll(results);
+        resultsBeans.addAll(results);
         this.notifyDataSetChanged();
     }
 
@@ -121,11 +112,12 @@ class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
         unregisterAdapterDataObserver(mObserver);
     }
 
-    public void setOnItemClickListener(RecyclerOnClick onItemClickListener) {
-        mMeiZiOnClick = onItemClickListener;
+    public void setOnItemClickListener(ItemCallBack itemCallBack) {
+        this.itemCallBack = itemCallBack;
     }
 
-    class GankViewHolder extends DefaultHolder<TextItem> {
+    static class TextHolder extends ButterKnifeHolder<TextItem> {
+        static final int LAYOUT = R.layout.adapter_ios;
         @BindView(R.id.author_name)
         TextView authorName;
 
@@ -135,71 +127,48 @@ class IosAdapter extends BaseAdapter<IosAdapter.DefaultHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        GankViewHolder(Context context, ViewGroup parent) {
-            super(context, parent, R.layout.adapter_ios);
+        ItemCallBack itemCallBack;
+
+        TextHolder(ViewGroup parent, ItemCallBack itemCallBack) {
+            super(parent, LAYOUT);
+            this.itemCallBack = itemCallBack;
         }
 
         @Override
-        public void bindItem(Fragment fragment, TextItem item) {
-            final Context context = fragment.getContext();
+        public void bindItem(TextItem item) {
             final ResultsBean resultsBean = item.getResultsBean();
-            Date date = DateUtils.formatToDate(resultsBean.publishedAt);
-            String formatDate = DateUtils.formatString(date, DateUtils.MM_DD);
-            time.setText(formatDate);
 
+            time.setText(item.getTime());
             title.setText(resultsBean.desc);
             authorName.setText(resultsBean.getWho());
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mMeiZiOnClick != null) {
-                        mMeiZiOnClick.onClick(v, getAdapterPosition(), resultsBean);
-                    }
+            itemView.setOnClickListener(v -> {
+                if (itemCallBack != null) {
+                    itemCallBack.onClick(v, getAdapterPosition(), resultsBean);
                 }
             });
         }
     }
 
-    abstract class DefaultHolder<II extends DefaultItem> extends ButterHolder {
-
-        DefaultHolder(Context context, ViewGroup parent, @LayoutRes int layoutID) {
-            super(context, parent, layoutID);
-        }
-
-        public abstract void bindItem(Fragment fragment, II item);
-    }
-
-    class TextItem implements DefaultItem {
-        private ResultsBean mResultsBean;
+    class TextItem extends BasicItem {
+        private ResultsBean resultsBean;
 
         TextItem(ResultsBean resultsBean) {
-            mResultsBean = resultsBean;
+            this.resultsBean = resultsBean;
         }
 
         ResultsBean getResultsBean() {
-            return mResultsBean;
+            return resultsBean;
+        }
+
+        public String getTime() {
+            Date date = DateUtils.formatToDate(resultsBean.publishedAt);
+            return DateUtils.formatString(date, DateUtils.MM_DD);
         }
 
         @Override
-        public int getType() {
-            return VIEW_DEFAULT;
+        public int getViewType() {
+            return TextHolder.LAYOUT;
         }
-    }
-
-    interface DefaultItem {
-        int VIEW_DEFAULT = 1;
-
-        @IntDef({
-                VIEW_DEFAULT
-        })
-
-        @Retention(RetentionPolicy.SOURCE)
-        @interface ViewType {
-
-        }
-
-        @ViewType
-        int getType();
     }
 }

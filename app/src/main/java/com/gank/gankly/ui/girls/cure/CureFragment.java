@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
@@ -59,7 +59,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCureAdapter = new CureAdapter();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
@@ -124,7 +124,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
             mDialog = new ProgressDialog(mActivity);
         }
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(App.getAppString(R.string.loading_meizi_images));
+        mDialog.setMessage(AppConfig.getAppString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());

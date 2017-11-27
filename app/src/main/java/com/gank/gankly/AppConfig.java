@@ -12,8 +12,13 @@ import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
+import com.leftcoding.http.base.GankServerHelper;
+import com.leftcoding.http.base.MyGsonConverterFactory;
+import com.leftcoding.http.intercept.HttpLogging;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+
+import okhttp3.logging.HttpLoggingInterceptor;
 
 import static de.greenrobot.dao.test.DbTest.DB_NAME;
 
@@ -21,7 +26,7 @@ import static de.greenrobot.dao.test.DbTest.DB_NAME;
  * Create by LingYan on 2016-04-01
  * Email:137387869@qq.com
  */
-public class App extends Application {
+public class AppConfig extends Application {
     private static final int PREFERENCES_VERSION = 1;
     private static Context mContext;
     private static DaoSession daoSession;
@@ -29,7 +34,7 @@ public class App extends Application {
 
     private RefWatcher mRefWatcher;
 
-    public App() {
+    public AppConfig() {
     }
 
     @Override
@@ -39,12 +44,14 @@ public class App extends Application {
         mContext = this;
         // leakCanary -- start
         if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
             return;
         }
         mRefWatcher = LeakCanary.install(this);
         // leakCanary -- end
+
+        GankServerHelper.get()
+                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.BODY).build())
+                .addConverterFactory(MyGsonConverterFactory.create());
 
         initPreferences();
 
@@ -99,7 +106,7 @@ public class App extends Application {
     }
 
     public static void setIsNight(boolean isNight) {
-        App.isNight = isNight;
+        AppConfig.isNight = isNight;
     }
 
     public static boolean isNetConnect() {

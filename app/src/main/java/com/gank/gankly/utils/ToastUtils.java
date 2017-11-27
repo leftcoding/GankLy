@@ -3,7 +3,7 @@ package com.gank.gankly.utils;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -36,21 +36,21 @@ public class ToastUtils {
 
     private static void show(String msg, int duration) {
         cancel();
-        mToast = Toast.makeText(App.getGankContext(), msg, duration);
+        mToast = Toast.makeText(AppConfig.getGankContext(), msg, duration);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }
 
     private static void show(int resText, int duration) {
         cancel();
-        mToast = Toast.makeText(App.getGankContext(), resText, duration);
+        mToast = Toast.makeText(AppConfig.getGankContext(), resText, duration);
         mToast.setGravity(Gravity.CENTER, 0, 0);
         mToast.show();
     }
 
     private static void show(int resText, int duration, int gravity) {
         cancel();
-        mToast = Toast.makeText(App.getGankContext(), resText, duration);
+        mToast = Toast.makeText(AppConfig.getGankContext(), resText, duration);
         mToast.setGravity(gravity, 0, 100);
         mToast.show();
     }

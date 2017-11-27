@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.web.normal;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.ReadHistory;
@@ -111,7 +111,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void initTheme() {
         super.initTheme();
-        if (App.isNight()) {
+        if (AppConfig.isNight()) {
             setTheme(R.style.AppTheme_Night_NoActionBar);
         } else {
             setTheme(R.style.AppTheme_light_NoActionBar);
@@ -194,15 +194,14 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             mAuthor = bundle.getString(AUTHOR);
             mFromType = bundle.getInt(FROM_TYPE);
         }
-//        KLog.d("mUrl:" + mUrl);
     }
 
-    public static void startWebActivity(Activity activity, Bundle bundle) {
-        Intent intent = new Intent(activity, WebActivity.class);
+    public static void startWebActivity(Context context, Bundle bundle) {
+        Intent intent = new Intent(context, WebActivity.class);
         if (bundle != null) {
             intent.putExtras(bundle);
         }
-        activity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
@@ -247,7 +246,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
                 isCollect = !isCollect;
                 mPresenter.collectAction(isCollect);
-                showSnackbar(mView, resText, App.getAppColor(resColor));
+                showSnackbar(mView, resText, AppConfig.getAppColor(resColor));
                 switchCollectIcon(isCollect);
                 return true;
             case R.id.welfare_share:

@@ -23,27 +23,24 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.2'
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile "com.google.code.gson:gson:${gsonVersion}"
+    implementation "com.google.code.gson:gson:${gsonVersion}"
 
-    compile "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}"
+    implementation "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}"
 
-    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
-    compile "com.squareup.retrofit2:retrofit-converters:${retrofitConverters}"
-    compile "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
-    compile "com.squareup.retrofit2:converter-gson:${converterGson}"
-    compile "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${converterGson}"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
 
-    compile "io.reactivex.rxjava2:rxjava:${rxjava}"
-    compile "io.reactivex.rxjava2:rxandroid:${rxandroid}"
+    implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
+    implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
 
-    compile "com.facebook.stetho:stetho:${stethoVersion}"
-    compile "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
+    implementation "com.facebook.stetho:stetho:${stethoVersion}"
+    implementation "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
 
-    compile "com.github.zhaokaiqiang.klog:library:${klogVersion}"
+    implementation "com.github.zhaokaiqiang.klog:library:${klogVersion}"
 }

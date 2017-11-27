@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.gank.gankly.R;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
@@ -24,7 +25,7 @@ public abstract class ThemeFragment extends ButterKnifeFragment {
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 

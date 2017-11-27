@@ -1,33 +1,41 @@
 package com.leftcoding.http.intercept;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.leftcoding.http.BuildConfig;
-import com.socks.library.KLog;
 
 import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * Create by LingYan on 2017-09-30
- * Email:137387869@qq.com
  */
 
 public class HttpLogging {
-    private HttpLoggingInterceptor logging;
+    private static final String TAG = "OkHttpLogging";
+    private HttpLoggingInterceptor mLogging;
+    private HttpLoggingInterceptor.Level mLevel;
 
     private HttpLogging() {
-        logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+        mLogging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(@NonNull String message) {
-                KLog.d(message);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, message);
+                }
             }
         });
 
-        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        mLevel = HttpLoggingInterceptor.Level.NONE;
+    }
+
+    public HttpLogging setLevel(HttpLoggingInterceptor.Level level) {
+        mLevel = level;
+        return this;
     }
 
     public HttpLoggingInterceptor build() {
-        return logging;
+        return mLogging.setLevel(mLevel);
     }
 
     private static class SingletonHolder {

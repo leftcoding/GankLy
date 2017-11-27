@@ -10,22 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gank.gankly.App;
+import com.gank.gankly.AppConfig;
 
 
 /**
  * Create by LingYan on 2016-04-05
- * Email:137387869@qq.com
  */
 public abstract class BaseFragment extends Fragment {
-    protected Context mContext;
-    protected AppCompatActivity mActivity;
+    protected Context context;
+    protected AppCompatActivity activity;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mContext = context;
-        mActivity = (AppCompatActivity) context;
+        this.context = context;
+        this.activity = (AppCompatActivity) context;
     }
 
     @Nullable
@@ -47,6 +46,10 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ((App) mActivity.getApplication()).getRefWatcher().watch(this);
+        ((AppConfig) activity.getApplication()).getRefWatcher().watch(this);
+    }
+
+    public Context getBaseContext() {
+        return this.context;
     }
 }
