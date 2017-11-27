@@ -18,12 +18,12 @@ class AndroidPresenter extends Presenter {
     private static final String TAG = "android_presenter";
     private static final int INIT_PAGE = 1;
 
-    private PageResult<ResultsBean> mPageResult;
-    private PageConfig mPageConfig;
+    private PageResult<ResultsBean> pageResult;
+    private PageConfig pageConfig;
 
     AndroidPresenter(Context context, AndroidContract.View view) {
         super(context, view);
-        mPageConfig = new PageConfig();
+        pageConfig = new PageConfig();
     }
 
     @Override
@@ -33,23 +33,23 @@ class AndroidPresenter extends Presenter {
 
     @Override
     protected void appendAndroid() {
-        if (mPageResult != null && !mPageResult.hasNoMore(mPageConfig.mLimit)) {
-            fetchAndroid(mPageResult.mNextPage);
+        if (pageResult != null && !pageResult.hasNoMore(pageConfig.mLimit)) {
+            fetchAndroid(pageResult.nextPage);
         }
     }
 
     @Override
     public void unSubscribe() {
         super.unSubscribe();
-        mPageResult = null;
         RxManager.get().clear(TAG);
+        pageResult = null;
     }
 
     private void fetchAndroid(final int curPage) {
-        mPageConfig.mCurPage = curPage;
+        pageConfig.mCurPage = curPage;
 
         GankServerManager.with(mContext)
-                .androids(curPage, mPageConfig.mLimit)
+                .androids(curPage, pageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
                     if (isActivity()) {
                         mView.showProgress();
@@ -124,8 +124,8 @@ class AndroidPresenter extends Presenter {
             return;
         }
 
-        mPageResult = result;
-        mPageResult.mNextPage = getNextPage();
+        pageResult = result;
+        pageResult.nextPage = getNextPage();
         mView.showContent();
         if (isRefreshRequest()) {
             mView.refreshAndroidSuccess(result.results);
@@ -139,10 +139,10 @@ class AndroidPresenter extends Presenter {
     }
 
     private boolean isRefreshRequest() {
-        return mPageConfig.isFirstRequest();
+        return pageConfig.isFirstRequest();
     }
 
     private int getCurPage() {
-        return mPageConfig.mCurPage;
+        return pageConfig.mCurPage;
     }
 }

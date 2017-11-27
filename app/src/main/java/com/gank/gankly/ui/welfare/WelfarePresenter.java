@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.welfare;
+package com.gank.gankly.ui.welfare;
 
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
@@ -14,14 +14,13 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-23
- * Email:137387869@qq.com
  */
 
 public class WelfarePresenter extends FetchPresenter implements WelfareContract.Presenter {
     private WelfareContract.View mModelView;
     private GankDataSource mTask;
 
-    public WelfarePresenter(GankDataSource task, WelfareContract.View view) {
+    WelfarePresenter(GankDataSource task, WelfareContract.View view) {
         mTask = task;
         mModelView = view;
     }

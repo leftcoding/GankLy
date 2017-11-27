@@ -45,7 +45,7 @@ public class IosPresenter extends IosContract.Presenter {
     @Override
     void appendIos() {
         if (mPageResult != null) {
-            fetchData(mPageResult.mNextPage);
+            fetchData(mPageResult.nextPage);
         }
     }
 
@@ -104,7 +104,7 @@ public class IosPresenter extends IosContract.Presenter {
                     @Override
                     public void onNext(PageResult<ResultsBean> result) {
                         mPageResult = result;
-                        mPageResult.mNextPage = getNextPage();
+                        mPageResult.nextPage = getNextPage();
 
                         if (isActivity()) {
                             if (isFirst()) {

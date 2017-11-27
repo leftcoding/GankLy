@@ -2,7 +2,6 @@ package com.leftcoding.http.bean;
 
 /**
  * Create by LingYan on 2017-11-18
- * Email:137387869@qq.com
  */
 
 public class PageConfig {

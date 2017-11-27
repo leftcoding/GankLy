@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.welfare;
+package com.gank.gankly.ui.welfare;
 
 import com.gank.gankly.mvp.ILoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;

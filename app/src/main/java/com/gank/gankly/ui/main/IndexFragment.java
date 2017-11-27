@@ -21,7 +21,7 @@ import com.gank.gankly.ui.android.AndroidFragment;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.ios.IosFragment;
-import com.gank.gankly.ui.main.welfare.WelfareFragment;
+import com.gank.gankly.ui.welfare.WelfareFragment;
 import com.gank.gankly.view.ILauncher;
 import com.socks.library.KLog;
 

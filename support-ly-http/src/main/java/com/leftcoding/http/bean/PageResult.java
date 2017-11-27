@@ -5,12 +5,9 @@ package com.leftcoding.http.bean;
  */
 
 public class PageResult<T> extends ListResult<T> {
-    public int mNextPage;
+    public int nextPage;
 
     public boolean hasNoMore(int limit) {
-        if (results != null && !results.isEmpty()) {
-            return results.size() < limit;
-        }
-        return false;
+        return results != null && !results.isEmpty() && results.size() < limit;
     }
 }

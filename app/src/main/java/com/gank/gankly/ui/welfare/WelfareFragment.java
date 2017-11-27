@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.welfare;
+package com.gank.gankly.ui.welfare;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
-import com.gank.gankly.listener.MeiziOnClick;
+import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
@@ -32,9 +32,8 @@ import butterknife.BindView;
 /**
  * 干货福利妹子
  * Create by LingYan on 2016-5-12
- * Email:137387869@qq.com
  */
-public class WelfareFragment extends LazyFragment implements MeiziOnClick, WelfareContract.View {
+public class WelfareFragment extends LazyFragment implements WelfareContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -61,10 +60,8 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //        setSwipeRefreshLayout(mSwipeRefreshLayout);
-
         mWelfareAdapter = new WelfareAdapter(mActivity);
-        mWelfareAdapter.setMeiZiOnClick(this);
+        mWelfareAdapter.setMeiZiOnClick(itemCallBack);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
@@ -108,6 +105,19 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
                 .show();
     }
 
+    private final ItemCallBack itemCallBack = new ItemCallBack() {
+        @Override
+        public void onClick(View view, int position, Object object) {
+            Bundle bundle = new Bundle();
+            bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
+            Intent intent = new Intent(mActivity, GalleryActivity.class);
+            intent.putExtra(GalleryActivity.TYPE, 1);
+            intent.putExtras(bundle);
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity);
+            mActivity.startActivity(intent, activityOptionsCompat.toBundle());
+        }
+    };
+
     private void fetchNew() {
         mPresenter.fetchNew();
     }
@@ -144,24 +154,6 @@ public class WelfareFragment extends LazyFragment implements MeiziOnClick, Welfa
     @Override
     public void showError() {
         mMultipleStatusView.showError();
-    }
-
-    private void showLoading() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showLoading();
-        }
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
-        Intent intent = new Intent(mActivity, GalleryActivity.class);
-        intent.putExtra(GalleryActivity.TYPE, 1);
-        intent.putExtras(bundle);
-        ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity);
-        mActivity.startActivity(intent, activityOptionsCompat.toBundle());
-
     }
 
     @Override

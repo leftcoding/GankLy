@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.main.welfare;
+package com.gank.gankly.ui.welfare;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +24,7 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 import com.gank.gankly.R;
-import com.gank.gankly.listener.MeiziOnClick;
+import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
@@ -49,11 +49,11 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     private int mScreenHeight = AppUtils.getDisplayWidth() / 2;
     private ArrayMap<String, Integer> heights = new ArrayMap<>();
 
-    private MeiziOnClick mMeiZiOnClick;
+    private ItemCallBack itemCallBack;
     private Context mContext;
 
-    public void setMeiZiOnClick(MeiziOnClick meiZiOnClick) {
-        mMeiZiOnClick = meiZiOnClick;
+    public void setMeiZiOnClick(ItemCallBack itemCallBack) {
+        this.itemCallBack = itemCallBack;
     }
 
     public WelfareAdapter(Activity activity) {
@@ -115,7 +115,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
 
         holder.imgMeizi.setOnClickListener(v -> {
             if (bean.isLoaded) {
-                mMeiZiOnClick.onClick(v, position);
+                itemCallBack.onClick(v, position, null);
             } else {
                 if (!holder.imgMeizi.isCanLoad()) {
                     return;

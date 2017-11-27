@@ -94,7 +94,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
 
     @Override
     public int getItemCount() {
-        return resultsBeans == null ? 0 : resultsBeans.size();
+        return resultsBeans.size();
     }
 
     @Override
