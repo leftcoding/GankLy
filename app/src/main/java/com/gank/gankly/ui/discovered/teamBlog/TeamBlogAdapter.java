@@ -21,7 +21,6 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-07-20
- * Email:137387869@qq.com
  */
 public class TeamBlogAdapter extends RecyclerView.Adapter<TeamBlogAdapter.JiandanHolder> {
     private final List<JianDanBean> mList;

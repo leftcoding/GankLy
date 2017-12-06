@@ -21,14 +21,13 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-07-20
- * Email:137387869@qq.com
  */
 public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanHolder> {
     private final List<JianDanBean> mList;
     private ItemClick mMeiZiOnClick;
     private Context mContext;
 
-    public JiandanAdapter() {
+    JiandanAdapter() {
         mList = new ArrayList<>();
     }
 
@@ -55,7 +54,7 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
         this.mMeiZiOnClick = mMeiZiOnClick;
     }
 
-    public void updateItem(List<JianDanBean> list) {
+    void updateItem(List<JianDanBean> list) {
         mList.clear();
         appendItem(list);
     }
@@ -86,7 +85,7 @@ public class JiandanAdapter extends RecyclerView.Adapter<JiandanAdapter.JiandanH
 
         private JianDanBean bean;
 
-        public JiandanHolder(View itemView) {
+        JiandanHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);

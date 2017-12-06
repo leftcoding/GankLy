@@ -51,7 +51,7 @@
     <color name="colorAccent">#009688</color>
     <color name="aboutBackground_light">#EFEEF4</color>
     <color name="collect_background_light">#F1F3F6</color>
-    <color name="refresh_background_light">#f3f6f9</color><!--#f2f4f7-->
+    <color name="refresh_background_light">#f8f8f8</color><!--#f2f4f7-->
     <color name="meizi_item_background_light">#fefefe</color>
     <color name="colorControlHighlight_light">#33000000</color>
     <color name="text_blue">#4093c6</color>

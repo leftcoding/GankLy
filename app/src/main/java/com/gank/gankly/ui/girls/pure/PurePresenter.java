@@ -18,7 +18,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-12-27
- * Email:137387869@qq.com
  */
 
 public class PurePresenter extends PureContract.Presenter {
@@ -28,7 +27,7 @@ public class PurePresenter extends PureContract.Presenter {
     private int mMaxPageNumber;
     private PageConfig mPageConfig;
 
-    public PurePresenter(Context context, PureContract.View view) {
+    PurePresenter(Context context, PureContract.View view) {
         super(context, view);
         mPageConfig = new PageConfig();
         mPageConfig.mLimit = 24;

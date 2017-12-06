@@ -51,12 +51,12 @@ class AndroidPresenter extends Presenter {
         GankServerManager.with(mContext)
                 .androids(curPage, pageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
-                    if (isActivity()) {
+                    if (isActivityLife()) {
                         mView.showProgress();
                     }
                 })
                 .doFinally(() -> {
-                    if (isActivity()) {
+                    if (isActivityLife()) {
                         mView.hideProgress();
                     }
                 })
@@ -85,14 +85,14 @@ class AndroidPresenter extends Presenter {
 
         @Override
         protected void refreshEmpty() {
-            if (isActivity()) {
+            if (isActivityLife()) {
                 mView.showEmpty();
             }
         }
 
         @Override
         protected void appendEmpty() {
-            if (isActivity()) {
+            if (isActivityLife()) {
                 mView.hasNoMoreDate();
             }
         }
@@ -105,7 +105,7 @@ class AndroidPresenter extends Presenter {
         @Override
         protected void refreshError() {
             super.refreshError();
-            if (isActivity()) {
+            if (isActivityLife()) {
                 mView.showError();
             }
         }
@@ -113,14 +113,14 @@ class AndroidPresenter extends Presenter {
         @Override
         protected void appendError() {
             super.appendError();
-            if (isActivity()) {
+            if (isActivityLife()) {
                 mView.showShortToast(mContext.getString(R.string.loading_error));
             }
         }
     }
 
     private void parseAndroidData(final PageResult<ResultsBean> result) {
-        if (!isActivity()) {
+        if (!isActivityLife()) {
             return;
         }
 

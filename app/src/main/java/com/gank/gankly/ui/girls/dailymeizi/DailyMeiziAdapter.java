@@ -18,13 +18,12 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-07-05
- * Email:137387869@qq.com
  */
 public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.DailyMeiziHolder> {
     private ItemClick mMeiZiOnClick;
     private List<DailyMeiziBean> mDailyMeiziBeanList;
 
-    public DailyMeiziAdapter() {
+    DailyMeiziAdapter() {
         setHasStableIds(true);
         mDailyMeiziBeanList = new ArrayList<>();
     }
@@ -58,7 +57,7 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         return position;
     }
 
-    public void refillItem(List<DailyMeiziBean> dailyMeiziBeanList) {
+    void refillItem(List<DailyMeiziBean> dailyMeiziBeanList) {
         int size = mDailyMeiziBeanList.size();
         mDailyMeiziBeanList.clear();
         notifyItemRangeRemoved(0, size);
@@ -75,7 +74,7 @@ public class DailyMeiziAdapter extends RecyclerView.Adapter<DailyMeiziAdapter.Da
         TextView txtTitle;
         DailyMeiziBean dailyMeiziBean;
 
-        public DailyMeiziHolder(View itemView) {
+        DailyMeiziHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);

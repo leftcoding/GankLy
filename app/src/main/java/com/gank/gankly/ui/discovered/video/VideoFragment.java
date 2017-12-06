@@ -32,7 +32,6 @@ import butterknife.BindView;
 /**
  * 休息视频
  * Create by LingYan on 2016-04-25
- * Email:137387869@qq.com
  */
 public class VideoFragment extends LazyFragment implements MeiziOnClick,
         SwipeRefreshLayout.OnRefreshListener, VideoContract.View {

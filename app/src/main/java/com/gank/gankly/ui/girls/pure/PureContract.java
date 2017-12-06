@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-12-27
- * Email:137387869@qq.com
  */
 
 public interface PureContract {
@@ -26,7 +25,7 @@ public interface PureContract {
         void disLoadingDialog();
     }
 
-    public abstract class Presenter extends LoadMorePresenter<View> {
+    abstract class Presenter extends LoadMorePresenter<View> {
 
         public Presenter(@NonNull Context context, @NonNull View view) {
             super(context, view);

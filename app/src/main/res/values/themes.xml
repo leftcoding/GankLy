@@ -24,7 +24,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="settingBackground">@color/white</item>
-        <item name="lyItemSelectBackground">@drawable/ripple_bg_light</item>
+        <item name="lyItemSelectBackground">@drawable/bg_leave_frame_full</item>
         <item name="swipeRefreshLayoutProgressSchemeColor">@color/white</item>
         <item name="swipeRefreshLayoutSchemeColors">@color/colorAccent</item>
         <item name="budejieAdapterTitleColor">@color/text_default</item>

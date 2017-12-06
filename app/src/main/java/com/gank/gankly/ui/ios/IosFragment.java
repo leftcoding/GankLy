@@ -129,6 +129,10 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void hideProgress() {
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
+
         if (swipeRefresh != null) {
             swipeRefresh.setRefreshing(false);
         }

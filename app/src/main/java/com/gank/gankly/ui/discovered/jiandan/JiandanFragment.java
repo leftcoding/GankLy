@@ -32,7 +32,6 @@ import butterknife.BindView;
 /**
  * 新鲜事
  * Create by LingYan on 2016-11-18
- * Email:137387869@qq.com
  */
 
 public class JiandanFragment extends LazyFragment implements JiandanContract.View, ItemClick {

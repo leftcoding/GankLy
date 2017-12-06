@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-11-23
- * Email:137387869@qq.com
  */
 
 public interface TeamBlogContract {

@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 /**
  * 视频
  * Create by LingYan on 2016-04-25
- * Email:137387869@qq.com
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHolder> {
     private List<ResultsBean> mResults;

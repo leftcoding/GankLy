@@ -17,14 +17,13 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-11-23
- * Email:137387869@qq.com
  */
 
 public class TeamBlogPresenter extends FetchPresenter implements TechnologyContract.Presenter {
     private TeamBlogDataSource mTask;
     private TechnologyContract.View mView;
 
-    public TeamBlogPresenter(TeamBlogDataSource task, TechnologyContract.View view) {
+    TeamBlogPresenter(TeamBlogDataSource task, TechnologyContract.View view) {
         mTask = task;
         mView = view;
     }

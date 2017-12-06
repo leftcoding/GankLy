@@ -38,7 +38,6 @@ import io.reactivex.disposables.Disposable;
 /**
  * 妹子每日更新
  * Create by LingYan on 2016-07-01
- * Email:137387869@qq.com
  */
 public class CureFragment extends LazyFragment implements CureContract.View, ItemClick {
     @BindView(R.id.multiple_status_view)

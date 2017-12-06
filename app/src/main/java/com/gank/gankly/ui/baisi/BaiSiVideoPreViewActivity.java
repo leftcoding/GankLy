@@ -20,7 +20,6 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-14
- * Email:137387869@qq.com
  */
 
 public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlayer.OnNetChangeListener {

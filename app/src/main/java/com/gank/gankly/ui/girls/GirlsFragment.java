@@ -30,7 +30,6 @@ import io.reactivex.disposables.Disposable;
 /**
  * 美しい妹
  * Create by LingYan on 2016-07-01
- * Email:137387869@qq.com
  */
 public class GirlsFragment extends SupportFragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.girl_tabLayout)
