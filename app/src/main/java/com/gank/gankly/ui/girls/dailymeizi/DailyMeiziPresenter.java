@@ -18,7 +18,6 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-10-26
- * Email:137387869@qq.com
  */
 
 public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziContract.Presenter {

@@ -15,14 +15,13 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2017-01-03
- * Email:137387869@qq.com
  */
 
 public class VideoPresenter extends FetchPresenter implements VideoContract.Presenter {
     private GankDataSource mTask;
     private VideoContract.View mModelView;
 
-    public VideoPresenter(GankDataSource task, VideoContract.View view) {
+    VideoPresenter(GankDataSource task, VideoContract.View view) {
         mTask = task;
         mModelView = view;
     }

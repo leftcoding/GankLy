@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/android_rl"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="4dp"
-    android:layout_marginTop="4dp"
+    android:layout_marginBottom="8dp"
     android:background="?attr/lyItemSelectBackground"
-    android:elevation="1dp"
+    android:elevation="0dp"
     android:foreground="?attr/selectableItemBackground"
     android:orientation="horizontal">
 
@@ -36,8 +35,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@null"
                     android:layout_marginEnd="6dp"
+                    android:contentDescription="@null"
                     android:src="@drawable/bg_consulting_placeholder_guest" />
 
                 <TextView
@@ -75,10 +74,10 @@
             android:layout_marginTop="4dp"
             android:ellipsize="end"
             android:gravity="start"
-            android:maxLines="3"
             android:lineSpacingExtra="3dp"
+            android:maxLines="3"
             android:text=""
             android:textColor="@color/text_333333"
             android:textSize="@dimen/normalSize" />
     </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

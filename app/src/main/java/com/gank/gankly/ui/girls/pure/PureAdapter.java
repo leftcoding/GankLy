@@ -25,7 +25,6 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-04-25
- * Email:137387869@qq.com
  */
 public class PureAdapter extends RecyclerView.Adapter<PureAdapter.GankViewHolder> {
     private List<GiftBean> mResults;

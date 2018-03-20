@@ -58,7 +58,6 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-5-10
- * Email:137387869@qq.com
  */
 public class JiandanWebActivity extends BaseActivity {
     public static final int FROM_COLLECT = 1;

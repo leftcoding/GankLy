@@ -129,7 +129,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         unregisterAdapterDataObserver(dataObserver);
     }
 
-    private class TextItem extends BasicItem {
+    private static class TextItem extends BasicItem {
         private ResultsBean resultsBean;
 
         TextItem(ResultsBean resultsBean) {
@@ -163,27 +163,25 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        final ItemCallBack itemCallBack;
+        private ResultsBean resultsBean;
 
-        TextKnifeHolder(ViewGroup parent, ItemCallBack itemCallBack) {
+        TextKnifeHolder(ViewGroup parent, final ItemCallBack itemCallBack) {
             super(parent, R.layout.adapter_android);
-            this.itemCallBack = itemCallBack;
+            itemView.setOnClickListener(v -> {
+                if (itemCallBack != null && resultsBean != null) {
+                    itemCallBack.onClick(v, getAdapterPosition(), resultsBean);
+                }
+            });
         }
 
         @Override
         public void bindItem(TextItem item) {
-            item.setContext(itemView.getContext());
             final ResultsBean resultsBean = item.getResultsBean();
+            this.resultsBean = resultsBean;
 
             time.setText(item.getTime());
             title.setText(resultsBean.desc);
             authorName.setText(resultsBean.getWho());
-
-            itemView.setOnClickListener(v -> {
-                if (itemCallBack != null) {
-                    itemCallBack.onClick(v, getAdapterPosition(), resultsBean);
-                }
-            });
         }
     }
 }

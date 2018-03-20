@@ -55,12 +55,12 @@ public class IosPresenter extends IosContract.Presenter {
         GankServerManager.with(mContext)
                 .ios(page, mPageConfig.mLimit)
                 .doOnSubscribe(disposable -> {
-                    if (isActivity()) {
+                    if (isActivityLife()) {
                         mView.showProgress();
                     }
                 })
                 .doFinally(() -> {
-                    if (isActivity()) {
+                    if (isActivityLife()) {
                         mView.hideProgress();
                     }
                 })
@@ -106,7 +106,7 @@ public class IosPresenter extends IosContract.Presenter {
                         mPageResult = result;
                         mPageResult.nextPage = getNextPage();
 
-                        if (isActivity()) {
+                        if (isActivityLife()) {
                             if (isFirst()) {
                                 mView.refreshIosSuccess(result.results);
                             } else {

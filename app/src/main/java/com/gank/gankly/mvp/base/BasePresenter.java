@@ -18,7 +18,8 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
         this.mContext = context;
     }
 
-    protected static <T> T checkNotNull(T reference) {
+    @SuppressWarnings("used")
+    private static <T> T checkNotNull(T reference) {
         if (reference == null) {
             throw new NullPointerException();
         }
@@ -37,7 +38,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
         mContext = null;
     }
 
-    protected boolean isActivity() {
+    protected boolean isActivityLife() {
         return mView != null;
     }
 }

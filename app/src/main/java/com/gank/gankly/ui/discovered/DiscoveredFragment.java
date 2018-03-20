@@ -33,7 +33,6 @@ import io.reactivex.disposables.Disposable;
 /**
  * 发现
  * Create by LingYan on 2016-07-01
- * Email:137387869@qq.com
  */
 public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager.OnPageChangeListener {
     private static final String TYPE_VIDEO = "视频";

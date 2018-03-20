@@ -50,7 +50,7 @@ public class AppConfig extends Application {
         // leakCanary -- end
 
         GankServerHelper.get()
-                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.BODY).build())
+                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build())
                 .addConverterFactory(MyGsonConverterFactory.create());
 
         initPreferences();
