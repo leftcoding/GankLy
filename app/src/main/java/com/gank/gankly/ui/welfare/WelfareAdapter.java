@@ -28,7 +28,7 @@ import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;

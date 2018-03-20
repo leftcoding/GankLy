@@ -1,1 +1,1 @@
-include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':javalib', ':support-ly-http', ':support-ly-rxbus', ':support-ly-ui'
+include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':javalib', ':support-ly-network', ':support-ly-rxbus', ':support-ly-ui', ':support-ly-business'

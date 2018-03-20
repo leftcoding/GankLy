@@ -16,10 +16,13 @@ ext {
     compileSdkVersion = 26
     buildToolsVersion = "26.0.2"
     minSdkVersion = 21
-    targetSdkVersion = 25
+    targetSdkVersion = 14
 
     superplayerVersionCode = 1
     superplayerVersionName = "1.0"
+
+    normalVersionCode = 1
+    normalVersionName = "1.0"
 }
 
 allprojects {

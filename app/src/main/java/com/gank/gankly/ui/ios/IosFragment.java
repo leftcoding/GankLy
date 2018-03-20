@@ -16,7 +16,7 @@ import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;

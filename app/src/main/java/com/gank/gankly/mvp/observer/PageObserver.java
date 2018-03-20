@@ -1,6 +1,6 @@
 package com.gank.gankly.mvp.observer;
 
-import com.leftcoding.http.bean.PageResult;
+import com.leftcoding.network.domain.PageResult;
 
 import io.reactivex.annotations.NonNull;
 

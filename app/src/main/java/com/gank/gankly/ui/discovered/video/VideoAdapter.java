@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.Collections;

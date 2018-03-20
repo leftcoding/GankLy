@@ -13,7 +13,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeHolder;
 import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.DateUtils;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.Date;

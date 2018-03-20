@@ -23,7 +23,7 @@ import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 

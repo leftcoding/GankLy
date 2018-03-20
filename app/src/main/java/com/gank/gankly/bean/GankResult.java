@@ -1,10 +1,10 @@
 package com.gank.gankly.bean;
 
+import android.ly.business.domain.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.List;
 
@@ -13,14 +13,14 @@ import java.util.List;
  */
 public class GankResult extends BaseResult implements Parcelable {
 
-    private List<ResultsBean> results;
+    private List<Entity> results;
 
-    public GankResult(List<ResultsBean> results) {
+    public GankResult(List<Entity> results) {
         this.results = results;
     }
 
     protected GankResult(Parcel in) {
-        results = in.createTypedArrayList(ResultsBean.CREATOR);
+        results = in.createTypedArrayList(Entity.CREATOR);
     }
 
     public static final Creator<GankResult> CREATOR = new Creator<GankResult>() {
@@ -35,7 +35,7 @@ public class GankResult extends BaseResult implements Parcelable {
         }
     };
 
-    public List<ResultsBean> getResults() {
+    public List<Entity> getResults() {
         return results;
     }
 

@@ -1,7 +1,8 @@
 package com.gank.gankly.config;
 
+import android.ly.business.domain.Entity;
+
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.http.bean.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,8 @@ import java.util.List;
  */
 public class MeiziArrayList {
     private static MeiziArrayList sMeiziArrayList;
-    private List<ResultsBean> mOneItemsList;
-    private List<ResultsBean> mMeiziList;
+    private List<Entity> mOneItemsList;
+    private List<Entity> mMeiziList;
     private int mPage = 0;
 
     private MeiziArrayList() {
@@ -27,24 +28,24 @@ public class MeiziArrayList {
         return sMeiziArrayList;
     }
 
-    public void refillOneItems(List<ResultsBean> list) {
+    public void refillOneItems(List<Entity> list) {
         if (ListUtils.isListEmpty(mOneItemsList)) {
             mOneItemsList.addAll(list);
         }
     }
 
-    public void addImages(List<ResultsBean> list, int page) {
+    public void addImages(List<Entity> list, int page) {
         if (mPage < page) {
             mMeiziList.addAll(list);
             mPage = page;
         }
     }
 
-    public List<ResultsBean> getImagesList() {
+    public List<Entity> getImagesList() {
         return mMeiziList;
     }
 
-    public List<ResultsBean> getOneItemsList() {
+    public List<Entity> getOneItemsList() {
         return mOneItemsList;
     }
 
@@ -56,7 +57,7 @@ public class MeiziArrayList {
         return mPage;
     }
 
-    public ResultsBean getResultBean(int position) {
+    public Entity getResultBean(int position) {
         if (ListUtils.isListEmpty(mMeiziList)) {
             return null;
         }

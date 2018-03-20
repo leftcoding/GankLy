@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.ly.business.api.InitGankServer;
 
 import com.gank.gankly.config.Preferences;
 import com.gank.gankly.data.DaoMaster;
@@ -12,9 +13,7 @@ import com.gank.gankly.ui.base.InitializeService;
 import com.gank.gankly.ui.more.SettingFragment;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.utils.NetworkUtils;
-import com.leftcoding.http.base.GankServerHelper;
-import com.leftcoding.http.base.MyGsonConverterFactory;
-import com.leftcoding.http.intercept.HttpLogging;
+import com.leftcoding.network.intercept.HttpLogging;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -49,9 +48,9 @@ public class AppConfig extends Application {
         mRefWatcher = LeakCanary.install(this);
         // leakCanary -- end
 
-        GankServerHelper.get()
-                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build())
-                .addConverterFactory(MyGsonConverterFactory.create());
+        InitGankServer.init(AppConfig.this)
+                .baseUrl(BuildConfig.GANK_SERVER_ULR)
+                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build());
 
         initPreferences();
 

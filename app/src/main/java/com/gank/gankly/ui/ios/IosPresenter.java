@@ -3,10 +3,10 @@ package com.gank.gankly.ui.ios;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.leftcoding.http.api.GankServerManager;
-import com.leftcoding.http.bean.PageConfig;
-import com.leftcoding.http.bean.PageResult;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.api.GankServerManager;
+import com.leftcoding.network.domain.PageConfig;
+import com.leftcoding.network.domain.PageResult;
+import com.leftcoding.network.domain.ResultsBean;
 import com.leftcoding.rxbus.RxManager;
 import com.socks.library.KLog;
 

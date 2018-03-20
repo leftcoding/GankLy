@@ -6,7 +6,7 @@ import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.List;

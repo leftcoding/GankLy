@@ -51,7 +51,7 @@ import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.WheelView;
 import com.gank.gankly.widget.transforms.FixedSpeedScroller;
 import com.gank.gankly.widget.transforms.ZoomOutSlideTransformer;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.io.File;

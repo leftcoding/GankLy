@@ -81,9 +81,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    implementation project(':support-ly-http')
+
+    implementation project(':support-ly-business')
     implementation project(':support-ly-rxbus')
     implementation project(':superplayerlibrary')
+
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
     implementation "com.android.support:cardview-v7:${supportVersion}"
@@ -96,6 +98,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit-adapters:${retrofitAdapters}"
     implementation "com.squareup.retrofit2:converter-gson:${converterGson}"
     implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+
     implementation "com.squareup.okhttp3:okhttp:${okhttp}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
     debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"

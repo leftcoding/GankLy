@@ -2,7 +2,7 @@ package com.gank.gankly.ui.welfare;
 
 import com.gank.gankly.mvp.ILoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 

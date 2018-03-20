@@ -1,14 +1,11 @@
 package com.gank.gankly.ui.android;
 
 import android.content.Context;
+import android.ly.business.domain.Entity;
+import android.ly.business.domain.PageConfig;
 
 import com.gank.gankly.R;
-import com.gank.gankly.mvp.observer.PageObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
-import com.leftcoding.http.api.GankServerManager;
-import com.leftcoding.http.bean.PageConfig;
-import com.leftcoding.http.bean.PageResult;
-import com.leftcoding.http.bean.ResultsBean;
 import com.leftcoding.rxbus.RxManager;
 
 /**
@@ -18,7 +15,7 @@ class AndroidPresenter extends Presenter {
     private static final String TAG = "android_presenter";
     private static final int INIT_PAGE = 1;
 
-    private PageResult<ResultsBean> pageResult;
+    private PageResult<Entity> pageResult;
     private PageConfig pageConfig;
 
     AndroidPresenter(Context context, AndroidContract.View view) {

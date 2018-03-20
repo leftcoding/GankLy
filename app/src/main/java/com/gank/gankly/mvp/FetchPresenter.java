@@ -5,7 +5,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.mvp.base.SupportView;
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 

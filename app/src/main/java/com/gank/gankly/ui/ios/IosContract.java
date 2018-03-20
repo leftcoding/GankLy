@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 

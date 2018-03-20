@@ -10,7 +10,7 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StringUtils;
-import com.leftcoding.http.bean.PageConfig;
+import com.leftcoding.network.domain.PageConfig;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;

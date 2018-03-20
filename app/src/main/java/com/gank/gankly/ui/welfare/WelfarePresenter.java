@@ -4,7 +4,7 @@ import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
-import com.leftcoding.http.bean.ResultsBean;
+import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.List;
