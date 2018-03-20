@@ -82,6 +82,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mPresenter = new PurePresenter(getContext(), this);
+        initRefresh();
     }
 
     @Override
@@ -199,7 +200,12 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        if (mMultipleStatusView != null) {
+            mMultipleStatusView.showContent();
+        }
     }
 
     @Override

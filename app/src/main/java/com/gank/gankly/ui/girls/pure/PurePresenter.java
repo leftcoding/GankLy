@@ -1,9 +1,13 @@
 package com.gank.gankly.ui.girls.pure;
 
 import android.content.Context;
+import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
+import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StringUtils;
 import com.leftcoding.http.bean.PageConfig;
@@ -12,9 +16,16 @@ import com.socks.library.KLog;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.IllegalFormatException;
 import java.util.List;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-27
@@ -22,65 +33,159 @@ import java.util.List;
  */
 
 public class PurePresenter extends PureContract.Presenter {
-    private static String BASE_URL = "http://www.mzitu.com/mm";
+    //    private static String BASE_URL = "http://www.mzitu.com/mm";
+    //http://www.ygdy8.net/html/gndy/china/list_4_1.html
+    private static final String URL = "http://www.ygdy8.net/html/gndy/china/list_4";
+    private static final String HOST = "http://www.ygdy8.net";
+    private static final String BASE_URL = HOST + "/html/gndy/china/index.html";
     private String nextUrl = BASE_URL + "/page/";
+
+    private List<String> pageUrls = new ArrayList<>();
+    private List<String> remoteUrl = new ArrayList<>();
+    private List<String> ftpUrls = new ArrayList<>();
 
     private int mMaxPageNumber;
     private PageConfig mPageConfig;
+    private int urlIndex = 0;
+    private int pageUrlIndex = 0;
+
 
     public PurePresenter(Context context, PureContract.View view) {
         super(context, view);
         mPageConfig = new PageConfig();
         mPageConfig.mLimit = 24;
+        urlIndex = 0;
+        for (int i = 11; i < 43; i++) {
+            remoteUrl.add(mContext.getString(R.string.url_format, URL, i));
+        }
     }
 
     @Override
     public void refreshPure() {
-        fetchData(mPageConfig.mCurPage);
+        fetchData(0);
     }
 
     @Override
     public void appendPure() {
-        fetchData(mPageConfig.mCurPage);
+        fetchData(0);
     }
 
-    private void fetchData(final int page) {
-        String url = getUrl(page);
-//        mTask.fetchPure(url)
-//                .subscribe(new Observer<Document>() {
-//                    @Override
-//                    public void onSubscribe(Disposable d) {
+    private void fetchData(int index) {
+        MeiziDataSource.getInstance().fetchPure(remoteUrl.get(index))
+                .doFinally(() -> mView.hideProgress())
+                .subscribe(new Observer<Document>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Document document) {
+                        Elements content = document.select(".co_content8 table a");
+                        for (int i = 0, s = content.size(); i < s; i++) {
+                            String href = content.get(i).attr("href");
+                            if (!TextUtils.isEmpty(href) && !href.contains("/index.html")) {
+                                pageUrls.add(HOST + href);
+                            }
+                        }
+
+                        pageUrlIndex = 0;
+                        parsePageUrl(pageUrlIndex);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    private void parsePageUrl(int index) {
+        MeiziDataSource.getInstance().fetchPure(pageUrls.get(index))
+                .subscribe(new Observer<Document>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Document document) {
+                        Elements content = document.select("tbody a");
+                        String data = content.get(0).attr("href");
+//                        KLog.d("" + data);
+                        ftpUrls.add(data);
+                        try {
+                            writeFileToSDCard(data + "\n");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        KLog.e(e);
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        pageUrlIndex = index + 1;
+                        if (pageUrlIndex < pageUrls.size()) {
+                            parsePageUrl(pageUrlIndex);
+                        } else {
+                            pageUrls.clear();
+                            urlIndex = urlIndex + 1;
+                            if (urlIndex < remoteUrl.size()) {
+                                fetchData(urlIndex);
+                            } else {
+                                remoteUrl.clear();
+                                KLog.d(">>结束");
+                            }
+                        }
+                    }
+                });
+    }
+
+    // 写一个文件到SDCard
+    private void writeFileToSDCard(String data) throws IOException {
+        // 比如可以将一个文件作为普通的文档存储，那么先获取系统默认的文档存放根目录
+        File parent_path = Environment.getExternalStorageDirectory();
+
+        // 可以建立一个子目录专门存放自己专属文件
+        File dir = new File(parent_path.getAbsoluteFile(), "lingyan");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
+        File file = new File(dir.getAbsoluteFile(), "myfile.txt");
+
+        Log.d("文件路径", file.getAbsolutePath());
+
+        // 创建这个文件，如果不存在
+        file.createNewFile();
+
+//        FileOutputStream fos = new FileOutputStream(file);
 //
-//                    }
+//        byte[] buffer = data.getBytes();
 //
-//                    @Override
-//                    public void onNext(Document document) {
-//                        mMaxPageNumber = getMaxPageNum(document);
-//                        List<GiftBean> list = getPageLists(document);
-//                        list = filterData(list, mModelView);
-//                        if (list != null) {
-//                            if (page == 1) {
-//                                mModelView.refillData(list);
-//                            } else {
-//                                mModelView.appendData(list);
-//                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        KLog.e(e);
-//                        CrashUtils.crashReport(e);
-//                        parseError(mModelView);
-//                    }
-//
-//                    @Override
-//                    public void onComplete() {
-//                        mModelView.showContent();
-//                        mModelView.hideRefresh();
-//                        setFetchPage(page + 1);
-//                    }
-//                });
+//         开始写入数据到这个文件。
+//        fos.write(buffer, 0, buffer.length);
+//        fos.flush();
+//        fos.close();
+
+        try {
+            //第二个参数意义是说是否以append方式添加内容
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+            bw.write(data);
+            bw.flush();
+            Log.d("文件写入", "成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private int getImageMaxPage(Document doc) {

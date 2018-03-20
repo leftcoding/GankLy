@@ -108,4 +108,7 @@
 
     <string name="gallery_page_select">选择页数</string>
     <string name="gralley_auto_tip">已开启自动浏览模式</string>
+
+    <!-- 电影 -->
+    <string name="url_format">%1$s_%2$d.html</string>
 </resources>

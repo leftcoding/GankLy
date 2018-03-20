@@ -30,7 +30,6 @@ import io.reactivex.disposables.Disposable;
 /**
  * 美しい妹
  * Create by LingYan on 2016-07-01
- * Email:137387869@qq.com
  */
 public class GirlsFragment extends SupportFragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.girl_tabLayout)
@@ -54,17 +53,17 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
         super.onViewCreated(view, savedInstanceState);
         List<LazyFragment> mList = new ArrayList<>();
         mList.add(new PureFragment());
-//        mList.add(new DailyMeiziFragment());
         mList.add(new CureFragment());
 
         mTitles = new ArrayList<>();
         mTitles.add(Constants.QINGCHUN);
         mTitles.add(Constants.CURE);
 
-        mPagerAdapter = new GirlsAdapter(mActivity.getSupportFragmentManager(), mList, mTitles);
+        mPagerAdapter = new GirlsAdapter(getChildFragmentManager(), mList, mTitles);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setOffscreenPageLimit(1);
         mViewPager.addOnPageChangeListener(this);
+        mViewPager.setCurrentItem(0);
 
         initTabLayout();
 
