@@ -122,7 +122,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void refreshAndroidSuccess(List<Gank> list) {
         if (pageConfig != null) {
-            pageConfig.curPage += 1;
+            pageConfig.curPage = pageConfig.initPage + 1;
         }
         if (androidAdapter != null) {
             androidAdapter.fillItems(list);
