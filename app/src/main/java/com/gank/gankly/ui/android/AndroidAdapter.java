@@ -4,7 +4,7 @@ import android.content.Context;
 import android.lectcoding.ui.adapter.BaseAdapter;
 import android.lectcoding.ui.adapter.BasicItem;
 import android.lectcoding.ui.adapter.Item;
-import android.ly.business.domain.Entity;
+import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
@@ -30,7 +30,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     private ItemCallBack itemCallBack;
     private Context context;
 
-    private final List<Entity> resultsBeans = new ArrayList<>();
+    private final List<Gank> resultsBeans = new ArrayList<>();
     private final List<Item> itemList = new ArrayList<>();
 
     AndroidAdapter(@NonNull Context context) {
@@ -45,7 +45,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
             super.onChanged();
             itemList.clear();
             if (!resultsBeans.isEmpty()) {
-                for (Entity resultsBean : resultsBeans) {
+                for (Gank resultsBean : resultsBeans) {
                     if (resultsBean != null) {
                         itemList.add(new TextItem(resultsBean));
                     }
@@ -102,14 +102,13 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         return position;
     }
 
-    void fillItems(List<Entity> results) {
+    void fillItems(List<Gank> results) {
         resultsBeans.clear();
         appendItems(results);
     }
 
-    public void appendItems(List<Entity> results) {
+    public void appendItems(List<Gank> results) {
         resultsBeans.addAll(results);
-        this.notifyDataSetChanged();
     }
 
     public void setOnItemClickListener(ItemCallBack itemCallBack) {
@@ -130,13 +129,13 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     private static class TextItem extends BasicItem {
-        private Entity resultsBean;
+        private Gank resultsBean;
 
-        TextItem(Entity resultsBean) {
+        TextItem(Gank resultsBean) {
             this.resultsBean = resultsBean;
         }
 
-        Entity getResultsBean() {
+        Gank getResultsBean() {
             return resultsBean;
         }
 
@@ -163,7 +162,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        private Entity resultsBean;
+        private Gank resultsBean;
 
         TextKnifeHolder(ViewGroup parent, final ItemCallBack itemCallBack) {
             super(parent, R.layout.adapter_android);
@@ -176,7 +175,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
 
         @Override
         public void bindItem(TextItem item) {
-            final Entity resultsBean = item.getResultsBean();
+            final Gank resultsBean = item.getResultsBean();
             this.resultsBean = resultsBean;
 
             time.setText(item.getTime());

@@ -1,4 +1,4 @@
-package com.leftcoding.network.rxjava;
+package com.leftcoding.rxbus;
 
 import android.util.ArrayMap;
 

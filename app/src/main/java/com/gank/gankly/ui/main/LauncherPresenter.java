@@ -44,18 +44,18 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
     }
 
     public void checkVersion() {
-        mView.showDialog();
+        view.showDialog();
         mDownloadApi.checkVersion(new Observer<CheckVersion>() {
             @Override
             public void onError(Throwable e) {
                 KLog.e(e);
                 CrashUtils.crashReport(e);
-                mView.hiddenDialog();
+                view.hiddenDialog();
             }
 
             @Override
             public void onComplete() {
-                mView.hiddenDialog();
+                view.hiddenDialog();
             }
 
             @Override
@@ -67,7 +67,7 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
             public void onNext(CheckVersion checkVersion) {
                 int curVersion = BuildConfig.VERSION_CODE;
                 if (checkVersion.getCode() > curVersion) {
-                    mView.callUpdate(checkVersion);
+                    view.callUpdate(checkVersion);
                 }
             }
         });

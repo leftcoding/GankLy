@@ -5,6 +5,7 @@ import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.ly.business.domain.Gank;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -51,7 +52,6 @@ import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.WheelView;
 import com.gank.gankly.widget.transforms.FixedSpeedScroller;
 import com.gank.gankly.widget.transforms.ZoomOutSlideTransformer;
-import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.io.File;
@@ -187,7 +187,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private void getGiftList() {
         mGiftList = new ArrayList<>();
         if (EXTRA_GANK.equals(mViewsModel)) {
-            List<ResultsBean> giftBeen = MeiziArrayList.getInstance().getImagesList();
+            List<Gank> giftBeen = MeiziArrayList.getInstance().getImagesList();
             mGiftList = changeImageList(giftBeen);
             int size = ListUtils.getSize(giftBeen);
             if (size > 5) {
@@ -262,10 +262,10 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
-    private List<GiftBean> changeImageList(List<ResultsBean> resultsBeen) {
+    private List<GiftBean> changeImageList(List<Gank> resultsBeen) {
         List<GiftBean> list = new ArrayList<>();
         if (!ListUtils.isListEmpty(resultsBeen)) {
-            ResultsBean resultsBean;
+            Gank resultsBean;
             String url;
             for (int i = 0; i < resultsBeen.size(); i++) {
                 resultsBean = resultsBeen.get(i);
@@ -276,7 +276,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         return list;
     }
 
-    public void appendData(List<ResultsBean> list) {
+    public void appendData(List<Gank> list) {
         mGiftList.addAll(changeImageList(list));
         mPagerAdapter.notifyDataSetChanged();
     }

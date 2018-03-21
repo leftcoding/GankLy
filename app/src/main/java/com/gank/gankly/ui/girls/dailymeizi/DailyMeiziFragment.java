@@ -65,7 +65,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
         mSwipeRefreshLayout.setAdapter(mDailyMeiziAdapter);
 
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

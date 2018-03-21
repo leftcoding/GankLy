@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.discovered.video;
 
 import android.content.Context;
+import android.ly.business.domain.Gank;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,8 +27,8 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2016-04-25
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHolder> {
-    private List<ResultsBean> mResults;
-    private List<ResultsBean> mImagesList;
+    private List<Gank> mResults;
+    private List<Gank> mImagesList;
     private MeiziOnClick mMeiZiOnClick;
     private Context mContext;
 
@@ -46,7 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
 
     @Override
     public void onBindViewHolder(GankViewHolder holder, int position) {
-        ResultsBean bean = mResults.get(position);
+        Gank bean = mResults.get(position);
         holder.txtDesc.setText(bean.desc);
         holder.txtAuthor.setText(bean.who);
 
@@ -82,14 +82,14 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
         return mResults.size();
     }
 
-    public void refillItems(List<ResultsBean> getResults) {
+    public void refillItems(List<Gank> getResults) {
         int size = mResults.size();
         mResults.clear();
         notifyItemRangeRemoved(0, size);
         appendItems(getResults);
     }
 
-    public void appendItems(List<ResultsBean> getResults) {
+    public void appendItems(List<Gank> getResults) {
         setImages();
 
         mResults.addAll(getResults);
@@ -97,12 +97,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     private void setImages() {
-        List<ResultsBean> list = MeiziArrayList.getInstance().getOneItemsList();
+        List<Gank> list = MeiziArrayList.getInstance().getOneItemsList();
         mImagesList = new ArrayList<>(list);
         Collections.shuffle(mImagesList);
     }
 
-    public List<ResultsBean> getResults() {
+    public List<Gank> getResults() {
         return mResults;
     }
 

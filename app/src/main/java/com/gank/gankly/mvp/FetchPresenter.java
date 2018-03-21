@@ -1,11 +1,12 @@
 package com.gank.gankly.mvp;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.mvp.base.SupportView;
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public abstract class FetchPresenter implements ISubscribePresenter {
         return fetchPage;
     }
 
-    public List<ResultsBean> filterData(GankResult gankResult, SupportView view) {
+    public List<Gank> filterData(GankResult gankResult, SupportView view) {
         view.hideProgress();
         if (gankResult != null) {
             int size = gankResult.getSize();

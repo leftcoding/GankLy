@@ -1,8 +1,9 @@
 package com.gank.gankly.ui.discovered.video;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.mvp.ILoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ import java.util.List;
 
 public interface VideoContract {
     interface View extends SupportView {
-        void refillData(List<ResultsBean> list);
+        void refillData(List<Gank> list);
 
-        void appendData(List<ResultsBean> list);
+        void appendData(List<Gank> list);
     }
 
     interface Presenter extends ILoadMorePresenter {

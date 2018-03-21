@@ -60,7 +60,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
                 .commitAllowingStateLoss());
         mSwipeRefreshLayout.setAdapter(mAdapter);
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

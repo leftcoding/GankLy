@@ -87,7 +87,7 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
         mSwipeRefreshLayout.setAdapter(mAdapter);
 
         mAdapter.setOnItemClick(this);
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

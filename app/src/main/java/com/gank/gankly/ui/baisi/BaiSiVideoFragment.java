@@ -73,7 +73,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
         int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.recycler_view_space);
         mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new SpaceItemDecoration(spacingInPixels));
 
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onLoadMore() {
                 showProgress();

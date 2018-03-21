@@ -2,6 +2,7 @@ package com.gank.gankly.ui.discovered.video;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +24,6 @@ import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -70,7 +70,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();
@@ -119,7 +119,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void onClick(View view, int position) {
         Bundle bundle = new Bundle();
-        List<ResultsBean> list = mAdapter.getResults();
+        List<Gank> list = mAdapter.getResults();
         bundle.putString(WebVideoViewActivity.TITLE, list.get(position).desc);
         bundle.putString(WebVideoViewActivity.URL, list.get(position).url);
         WebVideoViewActivity.startWebActivity(mActivity, bundle);
@@ -136,12 +136,12 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     }
 
     @Override
-    public void refillData(List<ResultsBean> list) {
+    public void refillData(List<Gank> list) {
         mAdapter.refillItems(list);
     }
 
     @Override
-    public void appendData(List<ResultsBean> list) {
+    public void appendData(List<Gank> list) {
         mAdapter.appendItems(list);
     }
 

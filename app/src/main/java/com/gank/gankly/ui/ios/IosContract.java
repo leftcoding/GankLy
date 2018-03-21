@@ -1,11 +1,11 @@
 package com.gank.gankly.ui.ios;
 
 import android.content.Context;
+import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -16,11 +16,11 @@ import java.util.List;
 
 public interface IosContract {
     interface View extends SupportView {
-        void refreshIosSuccess(List<ResultsBean> list);
+        void refreshIosSuccess(List<Gank> list);
 
         void refreshIosFailure(String msg);
 
-        void appendIosSuccess(List<ResultsBean> list);
+        void appendIosSuccess(List<Gank> list);
 
         void appendIosFailure(String msg);
     }

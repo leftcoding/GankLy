@@ -1,17 +1,13 @@
 package android.ly.business.api;
 
 import android.content.Context;
-import android.ly.business.domain.Entity;
-import android.ly.business.domain.ListResult;
+import android.ly.business.domain.Gank;
+import android.ly.business.domain.ListEntity;
 import android.ly.business.domain.PageEntity;
-
-import com.leftcoding.network.rxjava.RxApiManager;
-import com.leftcoding.network.rxjava.RxConsumer;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
@@ -42,58 +38,36 @@ public class GankServer {
         return gankServer;
     }
 
-    public void androids(final String requestTag, final int page, final int limit, final RxConsumer<PageEntity<Entity>> consumer) {
-        convert(gankApi.androids(page, limit), requestTag, consumer);
+    public Observable<PageEntity<Gank>> androids(final int page, final int limit) {
+        return gankApi.androids(page, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
+                    @Override
+                    public PageEntity<Gank> apply(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
+                        if (pageEntityResponse == null) {
+                            return null;
+                        }
+                        return pageEntityResponse.body();
+                    }
+                });
     }
 
-    public Observable<Response<PageEntity<Entity>>> ios(int page, int limit) {
+    public Observable<Response<PageEntity<Gank>>> ios(int page, int limit) {
         return gankApi.ios(page, limit)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Response<ListResult<Entity>>> allGoods(int limit, int page) {
+    public Observable<Response<ListEntity<Gank>>> allGoods(int limit, int page) {
         return gankApi.allGoods(limit, page);
     }
 
-    public Observable<Response<ListResult<Entity>>> images(int limit, int page) {
+    public Observable<Response<ListEntity<Gank>>> images(int limit, int page) {
         return gankApi.images(limit, page);
     }
 
-    public Observable<Response<ListResult<Entity>>> videos(int limit, int page) {
+    public Observable<Response<ListEntity<Gank>>> videos(int limit, int page) {
         return gankApi.videos(limit, page);
-    }
-
-    private <T> void convert(Observable<Response<T>> observable, String tag, final RxConsumer<T> consumer) {
-        Disposable disposable = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Response<T>>() {
-                    @Override
-                    public void accept(Response<T> response) throws Exception {
-                        if (consumer != null) {
-                            if (response == null) {
-                                consumer.onError(new Throwable("response is null"));
-                            } else {
-                                if (response.isSuccessful()) {
-                                    consumer.next(response.body());
-                                } else {
-                                    consumer.onError(new Throwable(response.toString()));
-                                }
-                            }
-                        }
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        if (consumer != null) {
-                            consumer.onError(throwable);
-                        }
-                    }
-                });
-        addRxManager(tag, disposable);
-    }
-
-    private void addRxManager(String tag, Disposable disposable) {
-        RxApiManager.get().add(tag, disposable);
     }
 }

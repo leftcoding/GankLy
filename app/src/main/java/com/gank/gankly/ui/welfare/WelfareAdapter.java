@@ -3,6 +3,7 @@ package com.gank.gankly.ui.welfare;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.ly.business.domain.Gank;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.ArrayMap;
@@ -28,7 +29,6 @@ import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
-import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.ArrayList;
@@ -39,10 +39,9 @@ import butterknife.ButterKnife;
 
 /**
  * Create by LingYan on 2016-04-06
- * Email:137387869@qq.com
  */
 public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsViewHolder> {
-    private List<ResultsBean> mResults;
+    private List<Gank> mResults;
     private Activity mActivity;
     private LayoutInflater inflater;
     private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
@@ -72,7 +71,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
 
     @Override
     public void onBindViewHolder(final GoodsViewHolder holder, int position) {
-        final ResultsBean bean = mResults.get(position);
+        final Gank bean = mResults.get(position);
         final String url = bean.url;
         RequestBuilder<Bitmap> requestBuilder = ImageLoaderUtil.getInstance()
                 .glideAsBitmap(mContext, url);
@@ -209,7 +208,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         return mResults.size();
     }
 
-    public void refillItems(List<ResultsBean> goods) {
+    public void refillItems(List<Gank> goods) {
         clear();
         appendItems(goods);
     }
@@ -221,7 +220,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         notifyItemRangeRemoved(0, size);
     }
 
-    public void appendItems(List<ResultsBean> goods) {
+    public void appendItems(List<Gank> goods) {
         mResults.addAll(goods);
         notifyItemRangeInserted(mResults.size(), goods.size());
     }

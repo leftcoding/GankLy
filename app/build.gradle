@@ -85,6 +85,7 @@ dependencies {
     implementation project(':support-ly-business')
     implementation project(':support-ly-rxbus')
     implementation project(':superplayerlibrary')
+    implementation project(':support-ly-ui')
 
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
@@ -132,6 +133,6 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
     implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
-    implementation project(':support-ly-ui')
+
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 }

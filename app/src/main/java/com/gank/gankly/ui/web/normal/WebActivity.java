@@ -46,7 +46,6 @@ import butterknife.BindView;
 /**
  * 普通webView
  * Create by LingYan on 2016-5-10
- * Email:137387869@qq.com
  */
 public class WebActivity extends BaseActivity implements WebContract.View {
     public static final int FROM_MAIN = 0;
@@ -470,6 +469,9 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     protected void onDestroy() {
         if (mWebView != null) {
             mWebView.destroy();
+            mWebView.clearFormData();
+            mWebView.clearHistory();
+            mWebView = null;
         }
         super.onDestroy(); // All you have to do is destroy() the WebView before Activity finishes
     }

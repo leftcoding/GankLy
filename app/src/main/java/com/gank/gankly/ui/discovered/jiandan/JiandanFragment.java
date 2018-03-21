@@ -74,7 +74,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         mSwipeRefreshLayout.getRecyclerView().setHasFixedSize(true);
         mSwipeRefreshLayout.getRecyclerView().addItemDecoration(new MyDecoration(mActivity, LinearLayoutManager.HORIZONTAL));
 //        mSwipeRefreshLayout.setColorSchemeColors(App.getAppColor(R.color.colorPrimary));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mPresenter.fetchNew();

@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.ios;
 
 import android.content.Context;
+import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +17,6 @@ import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -56,7 +56,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
         swipeRefresh.setAdapter(iosAdapter);
         swipeRefresh.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-        swipeRefresh.setOnScrollListener(onSwipeRefRecyclerViewListener);
+        swipeRefresh.setOnScrollListener(onSwipeRefreshListener);
 
         RecyclerView recyclerView = swipeRefresh.getRecyclerView();
         recyclerView.setHasFixedSize(true);
@@ -76,7 +76,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         refreshIos();
     }
 
-    private LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener onSwipeRefRecyclerViewListener = new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+    private LySwipeRefreshLayout.OnSwipeRefreshListener onSwipeRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
         @Override
         public void onRefresh() {
             refreshIos();
@@ -89,8 +89,8 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     };
 
     private final ItemCallBack mItemCallBack = (view, position, object) -> {
-        if (object instanceof ResultsBean) {
-            ResultsBean bean = (ResultsBean) object;
+        if (object instanceof Gank) {
+            Gank bean = (Gank) object;
             Bundle bundle = new Bundle();
             bundle.putString(WebActivity.TITLE, bean.desc);
             bundle.putString(WebActivity.URL, bean.url);
@@ -158,7 +158,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void refreshIosSuccess(List<ResultsBean> list) {
+    public void refreshIosSuccess(List<Gank> list) {
         if (iosAdapter != null) {
             iosAdapter.fillItems(list);
         }
@@ -177,7 +177,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void appendIosSuccess(List<ResultsBean> list) {
+    public void appendIosSuccess(List<Gank> list) {
         if (iosAdapter != null) {
             iosAdapter.appendItems(list);
         }

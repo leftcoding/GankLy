@@ -1,11 +1,11 @@
 package com.gank.gankly.ui.android;
 
 import android.content.Context;
+import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -15,11 +15,11 @@ import java.util.List;
 
 public interface AndroidContract {
     interface View extends SupportView {
-        void refreshAndroidSuccess(List<ResultsBean> list);
+        void refreshAndroidSuccess(List<Gank> list);
 
         void refreshAndroidFailure(String msg);
 
-        void appendAndroidSuccess(List<ResultsBean> list);
+        void appendAndroidSuccess(List<Gank> list);
 
         void appendAndroidFailure(String msg);
     }
@@ -30,8 +30,8 @@ public interface AndroidContract {
             super(context, view);
         }
 
-        protected abstract void refreshAndroid();
+        protected abstract void refreshAndroid(int page);
 
-        protected abstract void appendAndroid();
+        protected abstract void appendAndroid(int page);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.javalib;
 
+import java.util.UUID;
+
 /**
  * Create by LingYan on 2017-10-17
  */
@@ -64,8 +66,11 @@ public class A {
     }
 
     public static void main(String[] args) {
-        B b = new A().new E();
-        A.getA().getB().change("333");
+//        B b = new A().new E();
+//        A.getA().getB().change("333");
+        for (int i = 0; i < 1000; i++) {
+            System.out.println("xxx:" + UUID.randomUUID().toString());
+        }
     }
 }
 

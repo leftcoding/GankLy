@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.girls.pure;
 
 import android.content.Context;
+import android.ly.business.domain.PageConfig;
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,7 +11,6 @@ import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.StringUtils;
-import com.leftcoding.network.domain.PageConfig;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;
@@ -52,10 +52,10 @@ public class PurePresenter extends PureContract.Presenter {
     PurePresenter(Context context, PureContract.View view) {
         super(context, view);
         mPageConfig = new PageConfig();
-        mPageConfig.mLimit = 24;
+        mPageConfig.limit = 24;
         urlIndex = 0;
         for (int i = 11; i < 43; i++) {
-            remoteUrl.add(mContext.getString(R.string.url_format, URL, i));
+            remoteUrl.add(this.context.getString(R.string.url_format, URL, i));
         }
     }
 
@@ -71,7 +71,7 @@ public class PurePresenter extends PureContract.Presenter {
 
     private void fetchData(int index) {
         MeiziDataSource.getInstance().fetchPure(remoteUrl.get(index))
-                .doFinally(() -> mView.hideProgress())
+                .doFinally(() -> view.hideProgress())
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onSubscribe(Disposable d) {

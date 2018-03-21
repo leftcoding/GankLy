@@ -27,7 +27,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView mRecyclerView;
-    private OnSwipeRefRecyclerViewListener mOnSwipeRefRecyclerViewListener;
+    private OnSwipeRefreshListener mOnSwipeRefreshListener;
     private Context mContext;
     private int mCurManager = 1;
     private int mState;
@@ -67,7 +67,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && mOnSwipeRefRecyclerViewListener != null
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && mOnSwipeRefreshListener != null
                         && !isRefreshing()) {
                     int count = recyclerView.getAdapter().getItemCount() - 1;
                     switch (mCurManager) {
@@ -107,7 +107,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     }
 
     public void loadMore() {
-        mOnSwipeRefRecyclerViewListener.onLoadMore();
+        mOnSwipeRefreshListener.onLoadMore();
     }
 
     public void setLayoutManager(RecyclerView.LayoutManager layoutManager) {
@@ -122,8 +122,8 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
-    public void setOnScrollListener(OnSwipeRefRecyclerViewListener listener) {
-        this.mOnSwipeRefRecyclerViewListener = listener;
+    public void setOnScrollListener(OnSwipeRefreshListener listener) {
+        this.mOnSwipeRefreshListener = listener;
         super.setOnRefreshListener(listener);
     }
 
@@ -154,7 +154,7 @@ public class LySwipeRefreshLayout extends SwipeRefreshLayout {
     /**
      * 刷新和加载更多的监听
      */
-    public interface OnSwipeRefRecyclerViewListener extends OnRefreshListener {
+    public interface OnSwipeRefreshListener extends OnRefreshListener {
         void onRefresh();
 
         void onLoadMore();

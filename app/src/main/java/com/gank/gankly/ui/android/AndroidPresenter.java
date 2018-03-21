@@ -1,145 +1,128 @@
 package com.gank.gankly.ui.android;
 
 import android.content.Context;
-import android.ly.business.domain.Entity;
-import android.ly.business.domain.PageConfig;
+import android.ly.business.api.GankServer;
+import android.ly.business.domain.Gank;
+import android.ly.business.domain.PageEntity;
 
-import com.gank.gankly.R;
+import com.gank.gankly.mvp.observer.PageOnObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
-import com.leftcoding.rxbus.RxManager;
+import com.leftcoding.rxbus.RxApiManager;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Create by LingYan on 2016-10-25
  */
 class AndroidPresenter extends Presenter {
-    private static final String TAG = "android_presenter";
-    private static final int INIT_PAGE = 1;
-
-    private PageResult<Entity> pageResult;
-    private PageConfig pageConfig;
+    // 请求个数
+    private static final int INIT_LIMIT = 20;
+    private final AtomicBoolean destroyTag = new AtomicBoolean(false);
 
     AndroidPresenter(Context context, AndroidContract.View view) {
         super(context, view);
-        pageConfig = new PageConfig();
     }
 
     @Override
-    protected void refreshAndroid() {
-        fetchAndroid(INIT_PAGE);
+    protected void refreshAndroid(int page) {
+        fetchAndroid(page);
     }
 
     @Override
-    protected void appendAndroid() {
-        if (pageResult != null && !pageResult.hasNoMore(pageConfig.mLimit)) {
-            fetchAndroid(pageResult.nextPage);
-        }
+    protected void appendAndroid(int page) {
+        fetchAndroid(page);
     }
 
     @Override
     public void unSubscribe() {
+        if (destroyTag.compareAndSet(false, true)) {
+            RxApiManager.get().clear(requestTag);
+        }
         super.unSubscribe();
-        RxManager.get().clear(TAG);
-        pageResult = null;
     }
 
     private void fetchAndroid(final int curPage) {
-        pageConfig.mCurPage = curPage;
-
-        GankServerManager.with(mContext)
-                .androids(curPage, pageConfig.mLimit)
-                .doOnSubscribe(disposable -> {
-                    if (isActivityLife()) {
-                        mView.showProgress();
-                    }
-                })
-                .doFinally(() -> {
-                    if (isActivityLife()) {
-                        mView.hideProgress();
-                    }
-                })
-                .subscribe(new PageSubscribe());
-    }
-
-    private class PageSubscribe extends PageObserver<PageResult<ResultsBean>> {
-        PageSubscribe() {
-            this(isRefreshRequest());
-        }
-
-        PageSubscribe(boolean isFirst) {
-            super(TAG, isFirst);
-        }
-
-        @Override
-        public void onNext(PageResult<ResultsBean> results) {
-            super.onNext(results);
-            parseAndroidData(results);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            super.onError(e);
-        }
-
-        @Override
-        protected void refreshEmpty() {
-            if (isActivityLife()) {
-                mView.showEmpty();
-            }
-        }
-
-        @Override
-        protected void appendEmpty() {
-            if (isActivityLife()) {
-                mView.hasNoMoreDate();
-            }
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
-
-        @Override
-        protected void refreshError() {
-            super.refreshError();
-            if (isActivityLife()) {
-                mView.showError();
-            }
-        }
-
-        @Override
-        protected void appendError() {
-            super.appendError();
-            if (isActivityLife()) {
-                mView.showShortToast(mContext.getString(R.string.loading_error));
-            }
-        }
-    }
-
-    private void parseAndroidData(final PageResult<ResultsBean> result) {
-        if (!isActivityLife()) {
+        if (destroyTag.get()) {
             return;
         }
 
-        pageResult = result;
-        pageResult.nextPage = getNextPage();
-        mView.showContent();
-        if (isRefreshRequest()) {
-            mView.refreshAndroidSuccess(result.results);
-        } else {
-            mView.appendAndroidSuccess(result.results);
+        GankServer.get(context)
+                .androids(curPage, INIT_LIMIT)
+                .doOnSubscribe(disposable -> {
+                    if (isViewLife()) {
+                        view.showProgress();
+                    }
+                })
+                .doFinally(() -> {
+                    if (isViewLife()) {
+                        view.hideProgress();
+                    }
+                })
+                .subscribe(new PageSubscribe(requestTag, view, isFirst(curPage))
+                        .limit(INIT_LIMIT));
+    }
+
+    private boolean isFirst(int curPage) {
+        return curPage == 1;
+    }
+
+    private static class PageSubscribe extends PageOnObserver<PageEntity<Gank>, AndroidContract.View> {
+        PageSubscribe(String requestTag, AndroidContract.View view, boolean isFirst) {
+            super(requestTag, view, isFirst);
         }
-    }
 
-    private int getNextPage() {
-        return getCurPage() + 1;
-    }
+        public PageSubscribe limit(int limit) {
+            this.limit = limit;
+            return this;
+        }
 
-    private boolean isRefreshRequest() {
-        return pageConfig.isFirstRequest();
-    }
+        @Override
+        protected void loadMoreSuccess(PageEntity<Gank> gankPageEntity) {
+            if (view == null) {
+                return;
+            }
 
-    private int getCurPage() {
-        return pageConfig.mCurPage;
+            if (gankPageEntity.results == null) {
+                view.appendAndroidFailure(gankPageEntity.msg);
+                return;
+            }
+
+            if (gankPageEntity.hasNoMore(limit)) {
+                view.hasNoMoreDate();
+            }
+
+            view.appendAndroidSuccess(gankPageEntity.results);
+        }
+
+        @Override
+        protected void loadMoreFailure() {
+            if (view != null) {
+                view.appendAndroidFailure(null);
+            }
+        }
+
+        @Override
+        protected void onRefreshSuccess(PageEntity<Gank> gankPageEntity) {
+            if (view == null) {
+                return;
+            }
+
+            if (gankPageEntity.results == null) {
+                view.refreshAndroidFailure(gankPageEntity.msg);
+                view.showEmpty();
+                return;
+            }
+
+            view.showContent();
+            view.refreshAndroidSuccess(gankPageEntity.results);
+        }
+
+        @Override
+        protected void onRefreshFailure() {
+            if (view != null) {
+                view.refreshAndroidFailure(null);
+                view.showEmpty();
+            }
+        }
     }
 }

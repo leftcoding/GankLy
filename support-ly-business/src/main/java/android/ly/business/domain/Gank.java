@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Entity implements Parcelable {
+public class Gank implements Parcelable {
     @SerializedName("_id")
     public String id;
     public String createdAt;
@@ -22,7 +22,7 @@ public class Entity implements Parcelable {
     public boolean isLoaded;
     public List<String> images;
 
-    public Entity() {
+    public Gank() {
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Entity implements Parcelable {
         dest.writeStringList(this.images);
     }
 
-    protected Entity(Parcel in) {
+    protected Gank(Parcel in) {
         this.id = in.readString();
         this.createdAt = in.readString();
         this.desc = in.readString();
@@ -59,15 +59,15 @@ public class Entity implements Parcelable {
         this.images = in.createStringArrayList();
     }
 
-    public static final Creator<Entity> CREATOR = new Creator<Entity>() {
+    public static final Creator<Gank> CREATOR = new Creator<Gank>() {
         @Override
-        public Entity createFromParcel(Parcel source) {
-            return new Entity(source);
+        public Gank createFromParcel(Parcel source) {
+            return new Gank(source);
         }
 
         @Override
-        public Entity[] newArray(int size) {
-            return new Entity[size];
+        public Gank[] newArray(int size) {
+            return new Gank[size];
         }
     };
 

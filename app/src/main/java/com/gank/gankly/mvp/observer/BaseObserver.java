@@ -1,7 +1,8 @@
 package com.gank.gankly.mvp.observer;
 
-import com.leftcoding.rxbus.RxManager;
-import com.socks.library.KLog;
+import android.lectcoding.ui.logcat.Logcat;
+
+import com.leftcoding.rxbus.RxApiManager;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
@@ -12,31 +13,18 @@ import io.reactivex.disposables.Disposable;
  */
 
 public abstract class BaseObserver<T> implements Observer<T> {
-    private final String mTag;
+    private String observerTag;
 
-    BaseObserver(String tag) {
-        this.mTag = tag;
+    BaseObserver(String requestTag) {
+        this.observerTag = requestTag;
     }
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-        RxManager.get().add(mTag, d);
+        RxApiManager.get().add(observerTag, d);
     }
 
-    @Override
-    public void onError(@NonNull Throwable e) {
-        KLog.e(e);
+    protected void onErrorException(Throwable e) {
+        Logcat.e(e);
     }
-
-    protected abstract void onSuccessEmpty();
-
-    protected abstract void refreshEmpty();
-
-    protected abstract void appendEmpty();
-
-    protected abstract void onErrorException();
-
-    protected abstract void refreshError();
-
-    protected abstract void appendError();
 }

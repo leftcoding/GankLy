@@ -130,7 +130,7 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
         float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager left margin
         mRecyclerView.setPadding((int) leftPadding, 0, 0, 0);
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
 
             @Override
             public void onRefresh() {

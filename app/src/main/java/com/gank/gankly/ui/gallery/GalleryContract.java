@@ -1,8 +1,9 @@
 package com.gank.gankly.ui.gallery;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.mvp.ILoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
 public interface GalleryContract {
 
     interface View extends SupportView {
-        void appendData(List<ResultsBean> list);
+        void appendData(List<Gank> list);
 
         void sysNumText();
     }

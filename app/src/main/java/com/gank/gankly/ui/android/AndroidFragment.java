@@ -2,12 +2,13 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.ly.business.domain.Gank;
+import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.gank.gankly.R;
@@ -17,12 +18,8 @@ import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
-import com.gank.gankly.utils.ToastUtils;
-import com.gank.gankly.utils.theme.RecyclerViewColor;
-import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -39,13 +36,12 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout swipeRefreshLayout;
 
-    private RecyclerView mRecyclerView;
-
-    private MainActivity mActivity;
-    private AndroidAdapter mAdapter;
-    private AndroidContract.Presenter mPresenter;
+    private Context context;
+    private AndroidAdapter androidAdapter;
+    private AndroidContract.Presenter androidPresenter;
 
     private AtomicBoolean firstRefresh = new AtomicBoolean(true);
+    private PageConfig pageConfig;
 
     @Override
     protected int getLayoutId() {
@@ -55,23 +51,25 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity = (MainActivity) context;
+        this.context = context;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        pageConfig = new PageConfig();
+
         initRecycler();
 
-        mAdapter.setOnItemClickListener(itemCallBack);
+        androidAdapter.setOnItemClickListener(itemCallBack);
         multipleStatusView.setListener(onMultipleClick);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new AndroidPresenter(getBaseContext(), this);
-        mPresenter.refreshAndroid();
+        androidPresenter = new AndroidPresenter(getBaseContext(), this);
+        initLoadAndroid();
     }
 
     @Override
@@ -80,65 +78,77 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     private void initRecycler() {
-        mAdapter = new AndroidAdapter(getBaseContext());
-        swipeRefreshLayout.setAdapter(mAdapter);
-        mRecyclerView = swipeRefreshLayout.getRecyclerView();
+        androidAdapter = new AndroidAdapter(getBaseContext());
+        swipeRefreshLayout.setAdapter(androidAdapter);
         swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
         swipeRefreshLayout.setOnScrollListener(onRefreshListener);
     }
 
     private final ItemCallBack itemCallBack = (view, position, object) -> {
-        if (object instanceof ResultsBean) {
-            ResultsBean resultsBean = (ResultsBean) object;
+        if (object instanceof Gank) {
+            Gank resultsBean = (Gank) object;
             Bundle bundle = new Bundle();
             bundle.putString(WebActivity.TITLE, resultsBean.desc);
             bundle.putString(WebActivity.URL, resultsBean.url);
             bundle.putString(WebActivity.TYPE, Constants.ANDROID);
             bundle.putString(WebActivity.AUTHOR, resultsBean.who);
-            Intent intent = new Intent(mActivity, WebActivity.class);
+            Intent intent = new Intent(context, WebActivity.class);
             intent.putExtras(bundle);
-            CircularAnimUtils.startActivity(mActivity, intent, view, R.color.white_half);
+            CircularAnimUtils.startActivity((MainActivity) context, intent, view, R.color.white_half);
         }
     };
 
-    private final LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener onRefreshListener = new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+    private final LySwipeRefreshLayout.OnSwipeRefreshListener onRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
         @Override
         public void onRefresh() {
-            mPresenter.refreshAndroid();
+            initLoadAndroid();
         }
 
         @Override
         public void onLoadMore() {
-            mPresenter.appendAndroid();
+            androidPresenter.appendAndroid(pageConfig.curPage);
         }
     };
 
-    private final MultipleStatusView.OnMultipleClick onMultipleClick = new MultipleStatusView.OnMultipleClick() {
-        @Override
-        public void retry(View v) {
-            showLoading();
-            mPresenter.refreshAndroid();
-        }
+    private final MultipleStatusView.OnMultipleClick onMultipleClick = v -> {
+        showLoading();
+        initLoadAndroid();
     };
+
+    private void initLoadAndroid() {
+        androidPresenter.refreshAndroid(pageConfig.initPage);
+    }
 
     @Override
-    public void refreshAndroidSuccess(List<ResultsBean> list) {
-        mAdapter.fillItems(list);
+    public void refreshAndroidSuccess(List<Gank> list) {
+        if (pageConfig != null) {
+            pageConfig.curPage += 1;
+        }
+        if (androidAdapter != null) {
+            androidAdapter.fillItems(list);
+            androidAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void refreshAndroidFailure(String msg) {
-
+        showShortToast(msg);
     }
 
     @Override
-    public void appendAndroidSuccess(List<ResultsBean> list) {
-        mAdapter.appendItems(list);
+    public void appendAndroidSuccess(List<Gank> list) {
+        if (pageConfig != null) {
+            pageConfig.curPage += 1;
+        }
+        if (androidAdapter != null) {
+            androidAdapter.appendItems(list);
+            androidAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void appendAndroidFailure(String msg) {
-
+        showShortToast(msg);
     }
 
     @Override
@@ -203,11 +213,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         }
     }
 
-    @Override
-    public void showShortToast(String str) {
-        ToastUtils.showToast(str);
-    }
-
     public static AndroidFragment newInstance() {
         AndroidFragment fragment = new AndroidFragment();
         Bundle args = new Bundle();
@@ -218,27 +223,14 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mAdapter != null) {
-            mAdapter.destroy();
-            mAdapter = null;
+        if (androidAdapter != null) {
+            androidAdapter.destroy();
+            androidAdapter = null;
         }
 
-        if (mPresenter != null) {
-            mPresenter.unSubscribe();
-            mPresenter = null;
+        if (androidPresenter != null) {
+            androidPresenter.unSubscribe();
+            androidPresenter = null;
         }
-    }
-
-    protected void callBackRefreshUi() {
-        ThemeColor themeColor = new ThemeColor(this);
-        RecyclerViewColor mRecycler = new RecyclerViewColor(mRecyclerView);
-        mRecycler.setItemColor(R.id.title, R.attr.baseAdapterItemTextColor);
-        mRecycler.setItemColor(R.id.time, R.attr.textSecondaryColor);
-        mRecycler.setItemBackgroundColor(R.id.android_rl, R.attr.lyItemSelectBackground);
-
-        themeColor.setBackgroundResource(R.attr.themeBackground, mRecyclerView);
-        themeColor.swipeRefresh(swipeRefreshLayout);
-        themeColor.recyclerViewColor(mRecycler);
-        themeColor.start();
     }
 }

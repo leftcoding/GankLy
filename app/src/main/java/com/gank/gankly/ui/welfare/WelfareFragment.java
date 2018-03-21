@@ -2,6 +2,7 @@ package com.gank.gankly.ui.welfare;
 
 import android.content.Context;
 import android.content.Intent;
+import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,7 +24,6 @@ import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefRecyclerViewListener() {
+        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
                 mSwipeRefreshLayout.setRefreshing(true);
@@ -172,12 +172,12 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     }
 
     @Override
-    public void refreshData(List<ResultsBean> list) {
+    public void refreshData(List<Gank> list) {
         mWelfareAdapter.refillItems(list);
     }
 
     @Override
-    public void appendData(List<ResultsBean> list) {
+    public void appendData(List<Gank> list) {
         mWelfareAdapter.appendItems(list);
     }
 

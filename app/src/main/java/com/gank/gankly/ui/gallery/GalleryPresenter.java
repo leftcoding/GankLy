@@ -1,12 +1,13 @@
 package com.gank.gankly.ui.gallery;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
-import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class GalleryPresenter extends FetchPresenter implements GalleryContract.
 
                         @Override
                         public void onNext(GankResult gankResult) {
-                            List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
+                            List<Gank> list = filterData(gankResult.getResults(), mModelView);
                             if (ListUtils.getSize(list) > 0) {
                                 mModelView.appendData(list);
                                 mModelView.sysNumText();

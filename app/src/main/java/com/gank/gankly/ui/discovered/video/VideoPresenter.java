@@ -1,10 +1,11 @@
 package com.gank.gankly.ui.discovered.video;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
-import com.leftcoding.network.domain.ResultsBean;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class VideoPresenter extends FetchPresenter implements VideoContract.Pres
 
             @Override
             public void onNext(GankResult gankResult) {
-                List<ResultsBean> list = filterData(gankResult.getResults(), mModelView);
+                List<Gank> list = filterData(gankResult.getResults(), mModelView);
                 if (list != null) {
                     if (page == 1) {
                         mModelView.refillData(list);

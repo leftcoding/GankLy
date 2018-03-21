@@ -1,8 +1,9 @@
 package com.gank.gankly.ui.welfare;
 
+import android.ly.business.domain.Gank;
+
 import com.gank.gankly.mvp.ILoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 
 public class WelfareContract {
     interface View extends SupportView {
-        void refreshData(List<ResultsBean> list);
+        void refreshData(List<Gank> list);
 
-        void appendData(List<ResultsBean> list);
+        void appendData(List<Gank> list);
 
         void refershDataFailure(String msg);
 

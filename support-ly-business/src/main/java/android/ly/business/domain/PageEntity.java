@@ -4,7 +4,7 @@ package android.ly.business.domain;
  * Create by LingYan on 2017-10-12
  */
 
-public class PageEntity<T> extends ListResult<T> {
+public class PageEntity<T> extends ListEntity<T> {
     public int nextPage;
 
     public boolean hasNoMore(int limit) {

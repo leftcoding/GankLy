@@ -4,6 +4,7 @@ import android.content.Context;
 import android.lectcoding.ui.adapter.BaseAdapter;
 import android.lectcoding.ui.adapter.BasicItem;
 import android.lectcoding.ui.adapter.Item;
+import android.ly.business.domain.Gank;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -13,7 +14,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeHolder;
 import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.DateUtils;
-import com.leftcoding.network.domain.ResultsBean;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,7 @@ import butterknife.BindView;
  * Create by LingYan on 2016-04-25
  */
 class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
-    private final List<ResultsBean> resultsBeans = new ArrayList<>();
+    private final List<Gank> resultsBeans = new ArrayList<>();
     private final List<Item> itemList = new ArrayList<>();
 
     private Context context;
@@ -45,7 +45,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
             super.onChanged();
             itemList.clear();
             if (!resultsBeans.isEmpty()) {
-                for (ResultsBean resultsBean : resultsBeans) {
+                for (Gank resultsBean : resultsBeans) {
                     itemList.add(new TextItem(resultsBean));
                 }
             }
@@ -92,12 +92,12 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         return resultsBeans.size();
     }
 
-    void fillItems(List<ResultsBean> results) {
+    void fillItems(List<Gank> results) {
         resultsBeans.clear();
         appendItems(results);
     }
 
-    public void appendItems(List<ResultsBean> results) {
+    public void appendItems(List<Gank> results) {
         resultsBeans.addAll(results);
         this.notifyDataSetChanged();
     }
@@ -136,7 +136,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
 
         @Override
         public void bindItem(TextItem item) {
-            final ResultsBean resultsBean = item.getResultsBean();
+            final Gank resultsBean = item.getResultsBean();
 
             time.setText(item.getTime());
             title.setText(resultsBean.desc);
@@ -151,13 +151,13 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     class TextItem extends BasicItem {
-        private ResultsBean resultsBean;
+        private Gank resultsBean;
 
-        TextItem(ResultsBean resultsBean) {
+        TextItem(Gank resultsBean) {
             this.resultsBean = resultsBean;
         }
 
-        ResultsBean getResultsBean() {
+        Gank getResultsBean() {
             return resultsBean;
         }
 

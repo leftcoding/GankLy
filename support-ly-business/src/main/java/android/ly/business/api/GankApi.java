@@ -1,8 +1,8 @@
 package android.ly.business.api;
 
-import android.ly.business.domain.ListResult;
+import android.ly.business.domain.ListEntity;
 import android.ly.business.domain.PageEntity;
-import android.ly.business.domain.Entity;
+import android.ly.business.domain.Gank;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -16,32 +16,32 @@ import retrofit2.http.Path;
 
 public interface GankApi {
     @GET("Android/{limit}/{page}")
-    Observable<Response<PageEntity<Entity>>> androids(
+    Observable<Response<PageEntity<Gank>>> androids(
             @Path("page") int page,
             @Path("limit") int limit
     );
 
     @GET("iOS/{limit}/{page}")
-    Observable<Response<PageEntity<Entity>>> ios(
+    Observable<Response<PageEntity<Gank>>> ios(
             @Path("page") int page,
             @Path("limit") int limit
 
     );
 
     @GET("all/{limit}/{page}")
-    Observable<Response<ListResult<Entity>>> allGoods(
+    Observable<Response<ListEntity<Gank>>> allGoods(
             @Path("page") int page,
             @Path("limit") int limit
     );
 
     @GET("福利/{limit}/{page}")
-    Observable<Response<ListResult<Entity>>> images(
+    Observable<Response<ListEntity<Gank>>> images(
             @Path("page") int page,
             @Path("limit") int limit
     );
 
     @GET("休息视频/{limit}/{page}")
-    Observable<Response<ListResult<Entity>>> videos(
+    Observable<Response<ListEntity<Gank>>> videos(
             @Path("page") int page,
             @Path("limit") int limit
     );

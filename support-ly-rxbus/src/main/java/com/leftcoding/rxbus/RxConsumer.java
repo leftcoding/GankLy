@@ -1,4 +1,4 @@
-package com.leftcoding.network.rxjava;
+package com.leftcoding.rxbus;
 
 /**
  * Create by LingYan on 2018-03-20

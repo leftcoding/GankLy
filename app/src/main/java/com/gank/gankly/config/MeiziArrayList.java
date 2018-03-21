@@ -1,6 +1,6 @@
 package com.gank.gankly.config;
 
-import android.ly.business.domain.Entity;
+import android.ly.business.domain.Gank;
 
 import com.gank.gankly.utils.ListUtils;
 
@@ -12,8 +12,8 @@ import java.util.List;
  */
 public class MeiziArrayList {
     private static MeiziArrayList sMeiziArrayList;
-    private List<Entity> mOneItemsList;
-    private List<Entity> mMeiziList;
+    private List<Gank> mOneItemsList;
+    private List<Gank> mMeiziList;
     private int mPage = 0;
 
     private MeiziArrayList() {
@@ -28,24 +28,24 @@ public class MeiziArrayList {
         return sMeiziArrayList;
     }
 
-    public void refillOneItems(List<Entity> list) {
+    public void refillOneItems(List<Gank> list) {
         if (ListUtils.isListEmpty(mOneItemsList)) {
             mOneItemsList.addAll(list);
         }
     }
 
-    public void addImages(List<Entity> list, int page) {
+    public void addImages(List<Gank> list, int page) {
         if (mPage < page) {
             mMeiziList.addAll(list);
             mPage = page;
         }
     }
 
-    public List<Entity> getImagesList() {
+    public List<Gank> getImagesList() {
         return mMeiziList;
     }
 
-    public List<Entity> getOneItemsList() {
+    public List<Gank> getOneItemsList() {
         return mOneItemsList;
     }
 
@@ -57,7 +57,7 @@ public class MeiziArrayList {
         return mPage;
     }
 
-    public Entity getResultBean(int position) {
+    public Gank getResultBean(int position) {
         if (ListUtils.isListEmpty(mMeiziList)) {
             return null;
         }
