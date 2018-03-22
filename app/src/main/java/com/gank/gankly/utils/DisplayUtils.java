@@ -8,17 +8,15 @@ package com.gank.gankly.utils;
 
 import android.content.Context;
 
-import com.gank.gankly.AppConfig;
-
 public class DisplayUtils {
 
 
-    public static float px2dp(final float px) {
-        return px / AppConfig.getAppResources().getDisplayMetrics().density;
+    public static float px2dp(Context context, final float px) {
+        return px / context.getResources().getDisplayMetrics().density;
     }
 
-    public static float dp2px(final float dp) {
-        return dp * AppConfig.getAppResources().getDisplayMetrics().density;
+    public static float dp2px(Context context, final float dp) {
+        return dp * context.getResources().getDisplayMetrics().density;
     }
 
     /**

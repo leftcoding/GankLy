@@ -16,7 +16,6 @@ import io.reactivex.ObservableOnSubscribe;
 
 /**
  * Create by LingYan on 2016-10-26
- * Email:137387869@qq.com
  */
 
 public class MeiZiTuDataSource extends BaseDataSourceModel {

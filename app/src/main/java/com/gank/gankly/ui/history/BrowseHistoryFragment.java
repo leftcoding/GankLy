@@ -15,7 +15,6 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
@@ -29,7 +28,6 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-10-31
- * Email:137387869@qq.com
  */
 
 public class BrowseHistoryFragment extends SupportFragment implements BrowseHistoryContract.View, ItemClick {
@@ -90,12 +88,12 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }
@@ -103,8 +101,8 @@ public class BrowseHistoryFragment extends SupportFragment implements BrowseHist
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new BrowseHistoryPresenter(LocalDataSource.getInstance(), this);
-        mPresenter.fetchNew();
+//        mPresenter = new BrowseHistoryPresenter(LocalDataSource.getInstance(), this);
+//        mPresenter.fetchNew();
     }
 
     @Override

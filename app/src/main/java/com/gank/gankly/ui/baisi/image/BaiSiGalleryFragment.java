@@ -26,7 +26,6 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-12-05
- * Email:137387869@qq.com
  */
 
 public class BaiSiGalleryFragment extends SupportFragment {

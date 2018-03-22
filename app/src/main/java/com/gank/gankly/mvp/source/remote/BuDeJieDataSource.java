@@ -10,7 +10,6 @@ import io.reactivex.Observable;
 
 /**
  * Create by LingYan on 2016-11-30
- * Email:137387869@qq.com
  */
 
 public class BuDeJieDataSource extends BaseDataSourceModel {

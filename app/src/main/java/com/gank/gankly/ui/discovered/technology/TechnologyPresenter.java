@@ -1,7 +1,8 @@
 package com.gank.gankly.ui.discovered.technology;
 
+import android.content.Context;
+
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.TechnologyDataSource;
 import com.socks.library.KLog;
 
@@ -16,22 +17,20 @@ import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-11-23
- * Email:137387869@qq.com
  */
 
-public class TechnologyPresenter extends FetchPresenter implements TechnologyContract.Presenter {
+public class TechnologyPresenter extends TechnologyContract.Presenter {
     private TechnologyDataSource mTask;
     private TechnologyContract.View mView;
 
-    public TechnologyPresenter(TechnologyDataSource task, TechnologyContract.View view) {
-        mTask = task;
-        mView = view;
+    public TechnologyPresenter(Context context, TechnologyContract.View view) {
+        super(context, view);
     }
 
-    @Override
-    public void fetchNew() {
-        fetchData(getInitPage());
-    }
+//    @Override
+//    public void fetchNew() {
+//        fetchData(getInitPage());
+//    }
 
     private void fetchData(int page) {
         mTask.fetchData(page).subscribe(new Observer<Document>() {
@@ -45,8 +44,8 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
             public void onComplete() {
                 mView.showContent();
                 mView.hideProgress();
-                int nextPage = getFetchPage() + 1;
-                setFetchPage(nextPage);
+//                int nextPage = getFetchPage() + 1;
+//                setFetchPage(nextPage);
             }
 
             @Override
@@ -56,14 +55,14 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
 
             @Override
             public void onNext(Document document) {
-                List<JianDanBean> list = parseDocument(document);
-                if (list.size() > 0) {
-                    if (getFetchPage() > 1) {
-                        mView.appendData(list);
-                    } else {
-                        mView.refillData(list);
-                    }
-                }
+//                List<JianDanBean> list = parseDocument(document);
+//                if (list.size() > 0) {
+//                    if (getFetchPage() > 1) {
+//                        mView.appendData(list);
+//                    } else {
+//                        mView.refillData(list);
+//                    }
+//                }
             }
         });
     }
@@ -90,13 +89,13 @@ public class TechnologyPresenter extends FetchPresenter implements TechnologyCon
         return jiandanBeen;
     }
 
-    @Override
-    public void fetchMore() {
-        if (hasMore()) {
-            mView.showProgress();
-            fetchData(getFetchPage());
-        }
-    }
+//    @Override
+//    public void fetchMore() {
+//        if (hasMore()) {
+//            mView.showProgress();
+//            fetchData(getFetchPage());
+//        }
+//    }
 
     @Override
     public void unSubscribe() {

@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.web.normal;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -15,10 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.ReadHistory;
@@ -29,7 +28,6 @@ import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.ToastUtils;
-import com.socks.library.KLog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.sdk.CookieSyncManager;
 import com.tencent.smtt.sdk.ValueCallback;
@@ -82,7 +80,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     private ValueCallback<Uri> uploadFile;
 
     @Override
-    public void showShortToast(String string) {
+    public void shortToast(String string) {
 
     }
 
@@ -110,17 +108,16 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void initTheme() {
         super.initTheme();
-        if (AppConfig.isNight()) {
-            setTheme(R.style.AppTheme_Night_NoActionBar);
-        } else {
-            setTheme(R.style.AppTheme_light_NoActionBar);
-        }
+//        if (AppConfig.isNight()) {
+//            setTheme(R.style.AppTheme_Night_NoActionBar);
+//        } else {
+//            setTheme(R.style.AppTheme_light_NoActionBar);
+//        }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void initViews() {
-        mWebView = new WebView(this, null);
+        mWebView = new WebView(getApplicationContext(), null);
 
         mWebParent.addView(mWebView, new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
@@ -245,7 +242,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
                 isCollect = !isCollect;
                 mPresenter.collectAction(isCollect);
-                showSnackbar(mView, resText, AppConfig.getAppColor(resColor));
+                showSnackbar(mView, resText, getResources().getColor(resColor));
                 switchCollectIcon(isCollect);
                 return true;
             case R.id.welfare_share:
@@ -253,7 +250,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
                 return true;
             case R.id.welfare_copy_url:
                 AppUtils.copyText(this, mWebView.getUrl());
-                ToastUtils.showToast(R.string.tip_copy_success);
+                ToastUtils.showToast(getBaseContext(), R.string.tip_copy_success);
                 return true;
             case R.id.welfare_refresh:
                 mWebView.reload();
@@ -287,7 +284,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         if (intent.resolveActivity(WebActivity.this.getPackageManager()) != null) {
             WebActivity.this.startActivity(intent);
         } else {
-            ToastUtils.showToast(R.string.web_open_failed);
+            ToastUtils.showToast(getBaseContext(), R.string.web_open_failed);
         }
     }
 
@@ -392,7 +389,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         @Override
         public boolean onShowFileChooser(WebView arg0,
                                          ValueCallback<Uri[]> arg1, WebChromeClient.FileChooserParams arg2) {
-            KLog.e("onShowFileChooser");
             return super.onShowFileChooser(arg0, arg1, arg2);
         }
 
@@ -409,23 +405,6 @@ public class WebActivity extends BaseActivity implements WebContract.View {
         @Override
         public boolean onJsAlert(WebView arg0, String arg1, String arg2, com.tencent.smtt.export.external.interfaces.JsResult
                 arg3) {
-            /**
-             * 这里写入你自定义的window alert
-             */
-            // AlertDialog.Builder builder = new Builder(getContext());
-            // builder.setTitle("X5内核");
-            // builder.setPositiveButton("确定", new
-            // DialogInterface.OnClickListener() {
-            //
-            // @Override
-            // public void onClick(DialogInterface dialog, int which) {
-            // dialog.dismiss();
-            // }
-            // });
-            // builder.show();
-            // arg3.confirm();
-            // return true;
-            KLog.d("setX5webview = null");
             return super.onJsAlert(null, "www.baidu.com", "aa", arg3);
         }
 
@@ -468,9 +447,17 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     @Override
     protected void onDestroy() {
         if (mWebView != null) {
-            mWebView.destroy();
+            ViewParent viewParent = mWebView.getParent();
+            if (viewParent != null) {
+                ((ViewGroup) viewParent).removeView(mWebView);
+            }
+            mWebView.stopLoading();
+            mWebView.getSettings().setJavaScriptEnabled(false);
+            mWebView.clearView();
             mWebView.clearFormData();
             mWebView.clearHistory();
+            mWebView.removeAllViews();
+            mWebView.destroy();
             mWebView = null;
         }
         super.onDestroy(); // All you have to do is destroy() the WebView before Activity finishes

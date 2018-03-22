@@ -5,5 +5,5 @@ package com.gank.gankly.mvp.base;
  */
 
 public interface BaseView extends BaseContract.View {
-    public void showShortToast(String string);
+    public void shortToast(String string);
 }

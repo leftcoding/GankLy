@@ -1,7 +1,8 @@
 package com.gank.gankly.ui.discovered.teamBlog;
 
+import android.content.Context;
+
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
 import com.socks.library.KLog;
@@ -19,18 +20,12 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-11-23
  */
 
-public class TeamBlogPresenter extends FetchPresenter implements TechnologyContract.Presenter {
+public class TeamBlogPresenter extends TechnologyContract.Presenter {
     private TeamBlogDataSource mTask;
     private TechnologyContract.View mView;
 
-    TeamBlogPresenter(TeamBlogDataSource task, TechnologyContract.View view) {
-        mTask = task;
-        mView = view;
-    }
-
-    @Override
-    public void fetchNew() {
-        fetchData(getInitPage());
+    TeamBlogPresenter(Context context, TechnologyContract.View view) {
+        super(context, view);
     }
 
     private void fetchData(int page) {
@@ -39,8 +34,6 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
             public void onComplete() {
                 mView.showContent();
                 mView.hideProgress();
-                int nextPage = getFetchPage() + 1;
-                setFetchPage(nextPage);
             }
 
             @Override
@@ -57,13 +50,6 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
             @Override
             public void onNext(Document document) {
                 List<JianDanBean> list = parseDocument(document);
-                if (list.size() > 0) {
-                    if (getFetchPage() > 1) {
-                        mView.appendData(list);
-                    } else {
-                        mView.refillData(list);
-                    }
-                }
             }
         });
     }
@@ -88,14 +74,6 @@ public class TeamBlogPresenter extends FetchPresenter implements TechnologyContr
             }
         }
         return jiandanBeen;
-    }
-
-    @Override
-    public void fetchMore() {
-        if (hasMore()) {
-            mView.showProgress();
-            fetchData(getFetchPage());
-        }
     }
 
     @Override

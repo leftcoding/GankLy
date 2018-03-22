@@ -1,14 +1,10 @@
 package com.gank.gankly.ui.welfare;
 
-import android.ly.business.domain.Gank;
+import android.content.Context;
 
 import com.gank.gankly.bean.GankResult;
-import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.socks.library.KLog;
-
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -17,22 +13,21 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-12-23
  */
 
-public class WelfarePresenter extends FetchPresenter implements WelfareContract.Presenter {
+public class WelfarePresenter extends WelfareContract.Presenter {
     private WelfareContract.View mModelView;
     private GankDataSource mTask;
 
-    WelfarePresenter(GankDataSource task, WelfareContract.View view) {
-        mTask = task;
-        mModelView = view;
+    WelfarePresenter(Context context, WelfareContract.View view) {
+        super(context, view);
     }
 
-    @Override
+    //    @Override
     public void fetchNew() {
-        fetchData(getInitPage());
+//        fetchData(getInitPage());
     }
 
     private void fetchData(final int page) {
-        mTask.fetchWelfare(page, getFetchLimit())
+        mTask.fetchWelfare(page, 20)
                 .subscribe(new Observer<GankResult>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -41,36 +36,36 @@ public class WelfarePresenter extends FetchPresenter implements WelfareContract.
 
                     @Override
                     public void onNext(GankResult gankResult) {
-                        List<Gank> list = filterData(gankResult.getResults(), mModelView);
-                        if (list != null) {
-                            if (page == 1) {
-                                mModelView.refreshData(list);
-                            } else {
-                                mModelView.appendData(list);
-                            }
-                            MeiziArrayList.getInstance().addImages(list, page);
-                        }
+//                        List<Gank> list = filterData(gankResult.getResults(), mModelView);
+//                        if (list != null) {
+//                            if (page == 1) {
+//                                mModelView.refreshData(list);
+//                            } else {
+//                                mModelView.appendData(list);
+//                            }
+//                            MeiziArrayList.getInstance().addImages(list, page);
+//                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         KLog.e(e);
-                        parseError(mModelView);
+//                        parseError(mModelView);
                     }
 
                     @Override
                     public void onComplete() {
-                        setFetchPage(page + 1);
+//                        setFetchPage(page + 1);
                     }
                 });
     }
 
-    @Override
+    //    @Override
     public void fetchMore() {
-        if (hasMore()) {
-            mModelView.showProgress();
-            fetchData(getFetchPage());
-        }
+//        if (hasMore()) {
+//            mModelView.showProgress();
+//            fetchData(getFetchPage());
+//        }
     }
 
     @Override

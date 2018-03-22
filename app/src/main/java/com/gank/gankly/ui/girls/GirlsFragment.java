@@ -1,25 +1,18 @@
 package com.gank.gankly.ui.girls;
 
-import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
-import com.gank.gankly.ui.girls.cure.CureFragment;
-import com.gank.gankly.ui.girls.pure.PureFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.cure.CureFragment;
+import com.gank.gankly.ui.pure.PureFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +27,10 @@ import io.reactivex.disposables.Disposable;
 public class GirlsFragment extends SupportFragment implements ViewPager.OnPageChangeListener {
     @BindView(R.id.girl_tabLayout)
     TabLayout mTabLayout;
+
     @BindView(R.id.girl_view_pager)
     ViewPager mViewPager;
 
-    private MainActivity mActivity;
     private GirlsAdapter mPagerAdapter;
     private Disposable mDisposable;
 
@@ -66,11 +59,6 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
         mViewPager.setCurrentItem(0);
 
         initTabLayout();
-
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> {
-                    refreshUi();
-                });
     }
 
     @Override
@@ -85,15 +73,7 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
-    }
-
-    private void refreshUi() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
-        int background = typedValue.data;
-        mTabLayout.setBackgroundColor(background);
+        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
     }
 
     @Override
@@ -106,11 +86,5 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrollStateChanged(int state) {
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
     }
 }

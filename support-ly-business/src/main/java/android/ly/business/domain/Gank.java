@@ -2,13 +2,12 @@ package android.ly.business.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Gank implements Parcelable {
+public class Gank extends BaseEntity implements Parcelable {
     @SerializedName("_id")
     public String id;
     public String createdAt;
@@ -73,9 +72,5 @@ public class Gank implements Parcelable {
 
     public boolean isImagesEmpty() {
         return images == null || images.isEmpty();
-    }
-
-    public String getWho() {
-        return TextUtils.isEmpty(who) ? "佚名" : who;
     }
 }

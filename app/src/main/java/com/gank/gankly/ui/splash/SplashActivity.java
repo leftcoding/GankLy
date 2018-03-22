@@ -22,7 +22,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
  * Create by LingYan on 2016-06-01
- * Email:137387869@qq.com
  */
 public class SplashActivity extends BaseActivity {
     @BindView(R.id.splash_main)

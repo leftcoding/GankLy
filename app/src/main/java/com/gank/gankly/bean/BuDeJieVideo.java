@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-12-13
- * Email:137387869@qq.com
  */
 
 public class BuDeJieVideo {

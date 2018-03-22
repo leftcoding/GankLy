@@ -1,5 +1,6 @@
 package com.gank.gankly.utils.gilde;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
@@ -18,15 +19,17 @@ import static com.gank.gankly.config.Preferences.SETTING_WIFI_ONLY;
 
 public class WifiOnlyLoader implements ModelLoader<GlideUrl, InputStream> {
     private final ModelLoader<GlideUrl, InputStream> defaultLoader;
+    private final Context context;
 
-    public WifiOnlyLoader(ModelLoader<GlideUrl, InputStream> loader) {
+    public WifiOnlyLoader(Context context, ModelLoader<GlideUrl, InputStream> loader) {
+        this.context = context;
         defaultLoader = loader;
     }
 
     @Nullable
     @Override
     public LoadData<InputStream> buildLoadData(GlideUrl glideUrl, int width, int height, Options options) {
-        SharedPreferences prefs = GanklyPreferences.getDefaultPreference();
+        SharedPreferences prefs = GanklyPreferences.getDefaultPreference(context);
         if (prefs.getBoolean(SETTING_WIFI_ONLY, true)) {
             return new NetworkDisablingLoader().buildLoadData(glideUrl, width, height, options);
         } else {
@@ -40,9 +43,15 @@ public class WifiOnlyLoader implements ModelLoader<GlideUrl, InputStream> {
     }
 
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
+        private final Context context;
+
+        public Factory(Context context) {
+            this.context = context;
+        }
+
         @Override
         public ModelLoader<GlideUrl, InputStream> build(MultiModelLoaderFactory multiFactory) {
-            return new WifiOnlyLoader(new HttpGlideUrlLoader(new ModelCache<>(500)));
+            return new WifiOnlyLoader(context, new HttpGlideUrlLoader(new ModelCache<>(500)));
         }
 
         @Override

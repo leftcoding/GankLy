@@ -9,12 +9,11 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
-import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.widget.SpaceItemDecoration;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.SpaceItemDecoration;
 
 import java.util.List;
 
@@ -22,7 +21,6 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-12-05
- * Email:137387869@qq.com
  */
 
 public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContract.View {
@@ -44,7 +42,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     @Override
     protected void initLazy() {
         mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     @Override
@@ -63,12 +61,12 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }
@@ -76,7 +74,7 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new BaiSiImagePresenter(BuDeJieDataSource.getInstance(), this);
+//        mPresenter = new BaiSiImagePresenter(BuDeJieDataSource.getInstance(), this);
     }
 
     @Override

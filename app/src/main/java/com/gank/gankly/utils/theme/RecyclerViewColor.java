@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-11-28
- * Email:137387869@qq.com
  */
 
 public class RecyclerViewColor {

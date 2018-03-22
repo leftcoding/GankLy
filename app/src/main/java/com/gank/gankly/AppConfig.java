@@ -1,21 +1,18 @@
 package com.gank.gankly;
 
 import android.app.Application;
-import android.content.Context;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.ly.business.api.InitGankServer;
+import android.util.Log;
 
-import com.gank.gankly.config.Preferences;
+import com.facebook.stetho.Stetho;
+import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.DaoMaster;
-import com.gank.gankly.data.DaoSession;
-import com.gank.gankly.ui.base.InitializeService;
-import com.gank.gankly.ui.more.SettingFragment;
-import com.gank.gankly.utils.GanklyPreferences;
-import com.gank.gankly.utils.NetworkUtils;
 import com.leftcoding.network.intercept.HttpLogging;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.smtt.sdk.QbSdk;
 
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -23,15 +20,8 @@ import static de.greenrobot.dao.test.DbTest.DB_NAME;
 
 /**
  * Create by LingYan on 2016-04-01
- * Email:137387869@qq.com
  */
 public class AppConfig extends Application {
-    private static final int PREFERENCES_VERSION = 1;
-    private static Context mContext;
-    private static DaoSession daoSession;
-    private static boolean isNight;
-
-    private RefWatcher mRefWatcher;
 
     public AppConfig() {
     }
@@ -39,80 +29,64 @@ public class AppConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mContext = this;
-        // leakCanary -- start
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        mRefWatcher = LeakCanary.install(this);
-        // leakCanary -- end
+        setupLeakCanary();
+        setupStetho();
+        setupBugly();
+        setupX5WebView();
 
         InitGankServer.init(AppConfig.this)
                 .baseUrl(BuildConfig.GANK_SERVER_ULR)
                 .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build());
 
-        initPreferences();
-
-        InitializeService.start(getApplicationContext());
-
-        // GreenDao -- start
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
-        daoSession = daoMaster.newSession();
-        // GreenDao -- end
+//        daoSession = daoMaster.newSession();
     }
 
-    private void initPreferences() {
-        int version = GanklyPreferences.getInt(Preferences.APP_VERSION, 1);
+    /**
+     * 数据库Chrome上调试
+     */
+    private void setupStetho() {
+        Stetho.initializeWithDefaults(AppConfig.this);
+    }
 
-        if (version < PREFERENCES_VERSION) {
-            GanklyPreferences.clear();
-            GanklyPreferences.putInt(Preferences.APP_VERSION, PREFERENCES_VERSION);
+    /**
+     * Bugly 测试
+     */
+    private void setupBugly() {
+        Beta.autoDownloadOnWifi = true;
+//        Beta.autoCheckUpgrade = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
+        Bugly.init(AppConfig.this, Constants.CRASH_LOG_ID, false);
+    }
+
+    /**
+     * x5 搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+     */
+    private void setupX5WebView() {
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                Log.e("app", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(AppConfig.this, cb);
+    }
+
+    /**
+     * 内存监视
+     */
+    private void setupLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
         }
-
-        isNight = GanklyPreferences.getBoolean(SettingFragment.IS_NIGHT, false);
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-    }
-
-    public static Context getGankContext() {
-        return mContext.getApplicationContext();
-    }
-
-    public static Resources getAppResources() {
-        return getGankContext().getResources();
-    }
-
-    public static int getAppColor(int id) {
-        return getAppResources().getColor(id);
-    }
-
-    public static String getAppString(int res) {
-        return getAppResources().getString(res);
-    }
-
-    public static DaoSession getDaoSession() {
-        return daoSession;
-    }
-
-    public static boolean isNight() {
-        return isNight;
-    }
-
-    public static void setIsNight(boolean isNight) {
-        AppConfig.isNight = isNight;
-    }
-
-    public static boolean isNetConnect() {
-        return NetworkUtils.isNetworkAvailable();
-    }
-
-    public RefWatcher getRefWatcher() {
-        return mRefWatcher;
+        LeakCanary.install(this);
     }
 }

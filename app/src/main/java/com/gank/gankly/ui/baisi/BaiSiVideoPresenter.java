@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.baisi;
 
 import com.gank.gankly.bean.BuDeJieVideo;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
@@ -15,7 +14,7 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-11-30
  */
 
-public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoContract.Presenter {
+public class BaiSiVideoPresenter implements BaiSiVideoContract.Presenter {
     private final BuDeJieDataSource mTask;
     private final BaiSiVideoContract.View mView;
     private int mNextPage;
@@ -47,7 +46,6 @@ public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoCon
             @Override
             public void onComplete() {
                 mView.hideProgress();
-                setFetchPage(getFetchPage() + 1);
             }
 
             @Override
@@ -68,10 +66,5 @@ public class BaiSiVideoPresenter extends FetchPresenter implements BaiSiVideoCon
                 }
             }
         });
-    }
-
-    @Override
-    public void unSubscribe() {
-
     }
 }

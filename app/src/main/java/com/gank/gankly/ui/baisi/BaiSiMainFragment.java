@@ -12,11 +12,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
 
 import java.util.ArrayList;
@@ -99,7 +98,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
     }
 
     /**

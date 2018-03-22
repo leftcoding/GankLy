@@ -62,7 +62,7 @@ public class WebVideoViewActivity extends BaseActivity {
         if (!TextUtils.isEmpty(mUrl)) {
             mWebView.loadUrl(mUrl);
         } else {
-            ToastUtils.showToast(R.string.tip_server_error);
+            ToastUtils.showToast(getBaseContext(), R.string.tip_server_error);
         }
     }
 

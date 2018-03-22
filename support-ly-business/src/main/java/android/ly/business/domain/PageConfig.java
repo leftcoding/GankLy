@@ -29,4 +29,8 @@ public class PageConfig {
         this.initPage = initPage;
         this.curPage = curPage;
     }
+
+    public boolean isFirst() {
+        return initPage == curPage;
+    }
 }

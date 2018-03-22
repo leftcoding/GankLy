@@ -3,7 +3,6 @@ package com.gank.gankly.ui.android;
 import android.content.Context;
 import android.content.Intent;
 import android.ly.business.domain.Gank;
-import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
@@ -40,8 +38,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     private AndroidAdapter androidAdapter;
     private AndroidContract.Presenter androidPresenter;
 
-    private AtomicBoolean firstRefresh = new AtomicBoolean(true);
-    private PageConfig pageConfig;
+    private AtomicBoolean isFirst = new AtomicBoolean(true);
 
     @Override
     protected int getLayoutId() {
@@ -57,8 +54,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pageConfig = new PageConfig();
-
         initRecycler();
 
         androidAdapter.setOnItemClickListener(itemCallBack);
@@ -68,7 +63,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        androidPresenter = new AndroidPresenter(getBaseContext(), this);
+        androidPresenter = new AndroidPresenter(context, this);
         initLoadAndroid();
     }
 
@@ -84,14 +79,14 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         swipeRefreshLayout.setOnScrollListener(onRefreshListener);
     }
 
-    private final ItemCallBack itemCallBack = (view, position, object) -> {
-        if (object instanceof Gank) {
-            Gank resultsBean = (Gank) object;
+    private final AndroidAdapter.ItemCallback itemCallBack = new AndroidAdapter.ItemCallback() {
+        @Override
+        public void onItemClick(View view, Gank gank) {
             Bundle bundle = new Bundle();
-            bundle.putString(WebActivity.TITLE, resultsBean.desc);
-            bundle.putString(WebActivity.URL, resultsBean.url);
+            bundle.putString(WebActivity.TITLE, gank.desc);
+            bundle.putString(WebActivity.URL, gank.url);
             bundle.putString(WebActivity.TYPE, Constants.ANDROID);
-            bundle.putString(WebActivity.AUTHOR, resultsBean.who);
+            bundle.putString(WebActivity.AUTHOR, gank.who);
             Intent intent = new Intent(context, WebActivity.class);
             intent.putExtras(bundle);
             CircularAnimUtils.startActivity((MainActivity) context, intent, view, R.color.white_half);
@@ -106,7 +101,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
 
         @Override
         public void onLoadMore() {
-            androidPresenter.appendAndroid(pageConfig.curPage);
+            androidPresenter.appendAndroid();
         }
     };
 
@@ -116,14 +111,20 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     };
 
     private void initLoadAndroid() {
-        androidPresenter.refreshAndroid(pageConfig.initPage);
+        androidPresenter.refreshAndroid();
     }
 
     @Override
-    public void refreshAndroidSuccess(List<Gank> list) {
-        if (pageConfig != null) {
-            pageConfig.curPage = pageConfig.initPage + 1;
+    public void refreshSuccess(List<Gank> list) {
+        showContent();
+
+        if (isFirst.compareAndSet(true, false)) {
+            if (list == null || list.isEmpty()) {
+                showEmpty();
+                return;
+            }
         }
+
         if (androidAdapter != null) {
             androidAdapter.fillItems(list);
             androidAdapter.notifyDataSetChanged();
@@ -131,15 +132,12 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void refreshAndroidFailure(String msg) {
-        showShortToast(msg);
+    public void refreshFailure(String msg) {
+        shortToast(msg);
     }
 
     @Override
-    public void appendAndroidSuccess(List<Gank> list) {
-        if (pageConfig != null) {
-            pageConfig.curPage += 1;
-        }
+    public void appendSuccess(List<Gank> list) {
         if (androidAdapter != null) {
             androidAdapter.appendItems(list);
             androidAdapter.notifyDataSetChanged();
@@ -147,15 +145,17 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void appendAndroidFailure(String msg) {
-        showShortToast(msg);
+    public void appendFailure(String msg) {
+        shortToast(msg);
     }
 
     @Override
     public void showProgress() {
-        if (firstRefresh.get()) {
-            showLoading();
-            return;
+        if (isFirst.get()) {
+            if (swipeRefreshLayout != null && !swipeRefreshLayout.isRefreshing()) {
+                showLoading();
+                return;
+            }
         }
 
         if (swipeRefreshLayout != null) {
@@ -177,10 +177,6 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
 
     @Override
     public void showContent() {
-        if (firstRefresh.get()) {
-            firstRefresh.set(false);
-        }
-
         if (multipleStatusView != null) {
             multipleStatusView.showContent();
         }
@@ -225,12 +221,10 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         super.onDestroyView();
         if (androidAdapter != null) {
             androidAdapter.destroy();
-            androidAdapter = null;
         }
 
         if (androidPresenter != null) {
             androidPresenter.unSubscribe();
-            androidPresenter = null;
         }
     }
 }

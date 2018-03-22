@@ -12,7 +12,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
 
@@ -48,7 +47,7 @@ public class AboutFragment extends SupportFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCollapsingToolbarLayout.setTitle(AppConfig.getAppString(R.string.navigation_about));
+        mCollapsingToolbarLayout.setTitle(getContext().getString(R.string.navigation_about));
         mActivity.setSupportActionBar(mToolbar);
         ActionBar bar = mActivity.getSupportActionBar();
         if (bar != null) {

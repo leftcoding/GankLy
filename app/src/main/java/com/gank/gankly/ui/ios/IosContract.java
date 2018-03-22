@@ -5,24 +5,14 @@ import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
-import com.gank.gankly.mvp.base.SupportView;
-
-import java.util.List;
+import com.gank.gankly.mvp.base.PageView;
 
 /**
  * Create by LingYan on 2016-12-20
- * Email:137387869@qq.com
  */
 
 public interface IosContract {
-    interface View extends SupportView {
-        void refreshIosSuccess(List<Gank> list);
-
-        void refreshIosFailure(String msg);
-
-        void appendIosSuccess(List<Gank> list);
-
-        void appendIosFailure(String msg);
+    interface View extends PageView<Gank> {
     }
 
     abstract class Presenter extends LoadMorePresenter<View> {

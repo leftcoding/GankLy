@@ -8,7 +8,6 @@ import android.view.View;
 
 /**
  * Create by LingYan on 2016-04-05
- * Email:137387869@qq.com
  */
 public abstract class BaseSwipeRefreshFragment extends BaseThemeFragment {
 

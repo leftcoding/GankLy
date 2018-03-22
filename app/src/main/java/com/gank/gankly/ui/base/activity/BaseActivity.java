@@ -17,7 +17,6 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 import butterknife.ButterKnife;
@@ -193,11 +192,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void initPresenter() {}
 
     protected void initTheme() {
-        if (AppConfig.isNight()) {
-            setTheme(R.style.AppTheme_Night);
-        } else {
-            setTheme(R.style.AppTheme_light);
-        }
+//        if (AppConfig.isNight()) {
+//            setTheme(R.style.AppTheme_Night);
+//        } else {
+//            setTheme(R.style.AppTheme_light);
+//        }
     }
 
     public void gotoActivity(Class<? extends Activity> cls, boolean isFinish) {
@@ -230,7 +229,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ((AppConfig) this.getApplication()).getRefWatcher().watch(this);
+//        ((AppConfig) this.getApplication()).getRefWatcher().watch(this);
         if (mUnBinder != null) {
             mUnBinder.unbind();
             mUnBinder = null;

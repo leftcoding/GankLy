@@ -6,7 +6,6 @@ import com.gank.gankly.ui.base.activity.BaseActivity;
 /**
  * 百思不得姐
  * Create by LingYan on 2016-11-29
- * Email:137387869@qq.com
  */
 
 public class BaiSiActivity extends BaseActivity {

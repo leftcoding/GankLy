@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.welfare;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.ly.business.domain.Gank;
@@ -42,29 +41,30 @@ import butterknife.ButterKnife;
  */
 public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsViewHolder> {
     private List<Gank> mResults;
-    private Activity mActivity;
     private LayoutInflater inflater;
-    private int mScreenWidth = AppUtils.getDisplayWidth() / 2;
-    private int mScreenHeight = AppUtils.getDisplayWidth() / 2;
+    private int mScreenWidth;
+    private int mScreenHeight;
     private ArrayMap<String, Integer> heights = new ArrayMap<>();
 
     private ItemCallBack itemCallBack;
-    private Context mContext;
+    private Context context;
 
     public void setMeiZiOnClick(ItemCallBack itemCallBack) {
         this.itemCallBack = itemCallBack;
     }
 
-    public WelfareAdapter(Activity activity) {
+    public WelfareAdapter(Context context) {
         setHasStableIds(true);
-        inflater = LayoutInflater.from(activity);
-        mActivity = activity;
+        this.context = context;
         mResults = new ArrayList<>();
+        inflater = LayoutInflater.from(context);
+        mScreenWidth = AppUtils.getDisplayWidth(context) / 2;
+        mScreenHeight = AppUtils.getDisplayWidth(context) / 2;
     }
 
     @Override
     public GoodsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        mContext = parent.getContext();
+        context = parent.getContext();
         View view = inflater.inflate(R.layout.adapter_meizi, parent, false);
         return new GoodsViewHolder(view);
     }
@@ -74,7 +74,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         final Gank bean = mResults.get(position);
         final String url = bean.url;
         RequestBuilder<Bitmap> requestBuilder = ImageLoaderUtil.getInstance()
-                .glideAsBitmap(mContext, url);
+                .glideAsBitmap(context, url);
         requestBuilder
                 .listener(new RequestListener<Bitmap>() {
 
@@ -121,7 +121,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
                 }
                 holder.imgMeizi.showLoading();
                 ImageLoaderUtil.getInstance()
-                        .loadAsImage(mContext, url)
+                        .loadAsImage(context, url)
                         .apply(new RequestOptions()
                                 .fitCenter()
                         )
@@ -150,7 +150,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     @Override
     public void onViewRecycled(GoodsViewHolder holder) {
         super.onViewRecycled(holder);
-        Glide.get(mActivity).clearMemory();//view recycled,clear image request
+        Glide.get(context).clearMemory();//view recycled,clear image request
         holder.mImageView.setImageBitmap(null);
     }
 
@@ -235,7 +235,7 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
         public GoodsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mImageView = new ImageView(mContext);
+            mImageView = new ImageView(context);
             mImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imgMeizi.setFrameLayout(mImageView);
         }

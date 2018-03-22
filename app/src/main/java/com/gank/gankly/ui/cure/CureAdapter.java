@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.girls.cure;
+package com.gank.gankly.ui.cure;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

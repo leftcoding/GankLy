@@ -16,7 +16,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.JiandanDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.JiandanWebActivity;
@@ -60,7 +59,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     @Override
     protected void initLazy() {
         mMultipleStatusView.showLoading();
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     @Override
@@ -77,12 +76,12 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }
@@ -90,7 +89,7 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new JiandanPresenter(JiandanDataSource.getInstance(), this);
+//        mPresenter = new JiandanPresenter(JiandanDataSource.getInstance(), this);
     }
 
     protected void callBackRefreshUi() {

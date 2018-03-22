@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.util.DisplayMetrics;
 
-import com.gank.gankly.AppConfig;
 import com.socks.library.KLog;
 
 import java.util.List;
@@ -71,13 +70,13 @@ public class AppUtils {
         return appVersionName;
     }
 
-    public static int getDisplayWidth() {
-        DisplayMetrics dm = AppConfig.getGankContext().getResources().getDisplayMetrics();
+    public static int getDisplayWidth(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
         return dm.widthPixels;
     }
 
-    public static int getDisplayHeight() {
-        DisplayMetrics dm = AppConfig.getGankContext().getResources().getDisplayMetrics();
+    public static int getDisplayHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
         return dm.heightPixels;
     }
 

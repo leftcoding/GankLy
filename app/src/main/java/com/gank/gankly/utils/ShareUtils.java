@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 /**
@@ -28,7 +27,7 @@ public class ShareUtils {
 
     public void shareText(Context context, String title, String share) {
         if (TextUtils.isEmpty(share)) {
-            ToastUtils.showToast(R.string.tip_share_empty_text);
+            ToastUtils.showToast(context, R.string.tip_share_empty_text);
             return;
         }
         share = title + "! " + share + " [Gankly]";
@@ -36,7 +35,7 @@ public class ShareUtils {
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.putExtra(Intent.EXTRA_TEXT, share);
         shareIntent.setType("text/plain");
-        context.startActivity(Intent.createChooser(shareIntent, AppConfig.getAppString(R.string.share_to)));
+        context.startActivity(Intent.createChooser(shareIntent, context.getString(R.string.share_to)));
     }
 
     public static void shareSingleImage(Context context, Uri result) {

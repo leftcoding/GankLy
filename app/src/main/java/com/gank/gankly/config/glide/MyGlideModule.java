@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class MyGlideModule extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
-        registry.append(GlideUrl.class, InputStream.class, new WifiOnlyLoader.Factory());
+        registry.append(GlideUrl.class, InputStream.class, new WifiOnlyLoader.Factory(context));
     }
 
     @Override

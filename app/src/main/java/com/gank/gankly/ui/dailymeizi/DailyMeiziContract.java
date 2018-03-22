@@ -1,8 +1,11 @@
-package com.gank.gankly.ui.girls.cure;
+package com.gank.gankly.ui.dailymeizi;
+
+import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.ArrayList;
@@ -12,7 +15,7 @@ import java.util.List;
  * Create by LingYan on 2016-10-26
  */
 
-public interface CureContract {
+public interface DailyMeiziContract {
     interface View extends SupportView {
         void refillData(List<DailyMeiziBean> list);
 
@@ -25,7 +28,11 @@ public interface CureContract {
         void openBrowseActivity(ArrayList<GiftBean> list);
     }
 
-    interface Presenter extends ILoadMorePresenter {
-        void girlsImages(String url);
+    abstract class Presenter extends LoadMorePresenter<View> {
+        public Presenter(@NonNull Context context, View view) {
+            super(context, view);
+        }
+
+        abstract void girlsImages(String url);
     }
 }

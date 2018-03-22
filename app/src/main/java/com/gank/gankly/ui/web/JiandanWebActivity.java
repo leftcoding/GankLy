@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.data.entity.UrlCollect;
@@ -157,7 +156,7 @@ public class JiandanWebActivity extends BaseActivity {
             mFromWay = bundle.getInt(FROM_WAY);
         }
 
-        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
+//        mUrlCollectDao = AppConfig.getDaoSession().getUrlCollectDao();
         List<UrlCollect> list = mUrlCollectDao.queryBuilder().where(UrlCollectDao.Properties.Url.eq(mUrl)).list();
         if (!ListUtils.isListEmpty(list)) {
             isInitCollect = true;
@@ -355,7 +354,7 @@ public class JiandanWebActivity extends BaseActivity {
                 return true;
             case R.id.welfare_copy_url:
                 AppUtils.copyText(this, mUrl);
-                ToastUtils.showToast(R.string.tip_copy_success);
+                ToastUtils.showToast(getBaseContext(), R.string.tip_copy_success);
                 return true;
             case R.id.welfare_refresh:
                 mWebView.reload();
@@ -385,7 +384,7 @@ public class JiandanWebActivity extends BaseActivity {
         if (intent.resolveActivity(JiandanWebActivity.this.getPackageManager()) != null) {
             JiandanWebActivity.this.startActivity(intent);
         } else {
-            ToastUtils.showToast(R.string.web_open_failed);
+            ToastUtils.showToast(getBaseContext(), R.string.web_open_failed);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.girls.cure;
+package com.gank.gankly.ui.cure;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,12 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
@@ -42,7 +40,7 @@ import io.reactivex.disposables.Disposable;
 public class CureFragment extends LazyFragment implements CureContract.View, ItemClick {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @BindView(R.id.meizi_swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private CureAdapter mCureAdapter;
@@ -85,7 +83,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new CurePresenter(MeiziDataSource.getInstance(), this);
+//        mPresenter = new CurePresenter(MeiziDataSource.getInstance(), this);
     }
 
     @Override
@@ -123,7 +121,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
             mDialog = new ProgressDialog(mActivity);
         }
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(AppConfig.getAppString(R.string.loading_meizi_images));
+        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());

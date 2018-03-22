@@ -1,7 +1,10 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
+import android.content.Context;
+import android.support.annotation.NonNull;
+
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.ILoadMorePresenter;
+import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
@@ -17,7 +20,10 @@ public interface JiandanContract {
         void appendMoreDate(List<JianDanBean> list);
     }
 
-    interface Presenter extends ILoadMorePresenter {
+    abstract class Presenter extends LoadMorePresenter<View> {
 
+        public Presenter(@NonNull Context context, View view) {
+            super(context, view);
+        }
     }
 }

@@ -18,7 +18,6 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by LingYan on 2016-10-26
- * Email:137387869@qq.com
  */
 
 public class BaseDataSourceModel {

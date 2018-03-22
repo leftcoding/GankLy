@@ -7,13 +7,13 @@ import android.lectcoding.ui.adapter.Item;
 import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeHolder;
-import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ import butterknife.BindView;
  * Create by LingYan on 2016-04-25
  */
 class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
-    private ItemCallBack itemCallBack;
+    private ItemCallback itemCallback;
     private Context context;
 
     private final List<Gank> resultsBeans = new ArrayList<>();
@@ -66,8 +66,8 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     public ButterKnifeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ButterKnifeHolder defaultHolder;
         switch (viewType) {
-            case TextKnifeHolder.LAYOUT:
-                defaultHolder = new TextKnifeHolder(parent, itemCallBack);
+            case NormalViewHolder.LAYOUT:
+                defaultHolder = new NormalViewHolder(parent, itemCallback);
                 break;
             default:
                 defaultHolder = null;
@@ -80,8 +80,8 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     public void onBindViewHolder(ButterKnifeHolder holder, int position) {
         final Item item = itemList.get(position);
         switch (holder.getItemViewType()) {
-            case TextKnifeHolder.LAYOUT:
-                ((TextKnifeHolder) holder).bindItem((TextItem) item);
+            case NormalViewHolder.LAYOUT:
+                ((NormalViewHolder) holder).bindHolder((TextItem) item);
                 break;
         }
     }
@@ -111,8 +111,8 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         resultsBeans.addAll(results);
     }
 
-    public void setOnItemClickListener(ItemCallBack itemCallBack) {
-        this.itemCallBack = itemCallBack;
+    public void setOnItemClickListener(ItemCallback itemCallBack) {
+        this.itemCallback = itemCallBack;
     }
 
     @Override
@@ -146,11 +146,11 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
 
         @Override
         public int getViewType() {
-            return TextKnifeHolder.LAYOUT;
+            return NormalViewHolder.LAYOUT;
         }
     }
 
-    static class TextKnifeHolder extends ButterKnifeHolder<TextItem> {
+    static class NormalViewHolder extends ButterKnifeHolder<TextItem> {
         static final int LAYOUT = R.layout.adapter_android;
 
         @BindView(R.id.author_name)
@@ -164,23 +164,27 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
 
         private Gank resultsBean;
 
-        TextKnifeHolder(ViewGroup parent, final ItemCallBack itemCallBack) {
+        NormalViewHolder(ViewGroup parent, final ItemCallback itemCallBack) {
             super(parent, R.layout.adapter_android);
             itemView.setOnClickListener(v -> {
                 if (itemCallBack != null && resultsBean != null) {
-                    itemCallBack.onClick(v, getAdapterPosition(), resultsBean);
+                    itemCallBack.onItemClick(v, resultsBean);
                 }
             });
         }
 
         @Override
-        public void bindItem(TextItem item) {
+        public void bindHolder(TextItem item) {
             final Gank resultsBean = item.getResultsBean();
             this.resultsBean = resultsBean;
 
             time.setText(item.getTime());
             title.setText(resultsBean.desc);
-            authorName.setText(resultsBean.getWho());
+            authorName.setText(resultsBean.who);
         }
+    }
+
+    public interface ItemCallback {
+        void onItemClick(View view, Gank gank);
     }
 }

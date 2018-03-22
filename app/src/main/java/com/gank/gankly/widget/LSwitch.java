@@ -3,11 +3,11 @@ package com.gank.gankly.widget;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 
 /**
@@ -50,12 +50,13 @@ public class LSwitch extends SwitchCompat {
 
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
-        if (AppConfig.isNight()) {
-            mColor = R.color.switch_thumb_disabled_dark;
-        } else {
-            mColor = R.color.colorAccent;
-        }
-        colors[1] = AppConfig.getAppColor(mColor);
+//        if (AppConfig.isNight()) {
+//            mColor = R.color.switch_thumb_disabled_dark;
+//        } else {
+        mColor = R.color.colorAccent;
+//        }
+
+        colors[1] = getContext().getResources().getColor(mColor);
 
         // Unchecked enabled state state
         states[2] = new int[0];
@@ -75,9 +76,9 @@ public class LSwitch extends SwitchCompat {
         // Checked state
         states[1] = new int[]{android.R.attr.state_checked};
         colors[1] = Color.argb(0x4D, // 30% alpha
-                Color.red(AppConfig.getAppColor(mColor)),
-                Color.green(AppConfig.getAppColor(mColor)),
-                Color.blue(AppConfig.getAppColor(mColor)));
+                Color.red(ContextCompat.getColor(getContext(), mColor)),
+                Color.green(ContextCompat.getColor(getContext(),mColor)),
+                Color.blue(ContextCompat.getColor(getContext(),mColor)));
 
         // Unchecked enabled state state
         states[2] = new int[0];

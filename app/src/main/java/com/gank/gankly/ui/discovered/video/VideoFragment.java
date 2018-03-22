@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
@@ -73,12 +72,12 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }
@@ -86,11 +85,11 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
+//        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
     }
 
     private void onLoading() {
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     protected void callBackRefreshUi() {
@@ -132,7 +131,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 
     @Override
     protected void initLazy() {
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     @Override

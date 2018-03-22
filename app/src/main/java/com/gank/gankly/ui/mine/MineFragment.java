@@ -14,11 +14,10 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
@@ -38,7 +37,6 @@ import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
 /**
  * 我的
  * Create by LingYan on 2016-09-21
- * Email:137387869@qq.com
  */
 
 public class MineFragment extends ButterKnifeFragment {
@@ -78,8 +76,8 @@ public class MineFragment extends ButterKnifeFragment {
     }
 
     private void selectTheme(boolean isChecked) {
-        AppConfig.setIsNight(isChecked);
-        GanklyPreferences.putBoolean(IS_NIGHT, isChecked);
+//        AppConfig.setIsNight(isChecked);
+        GanklyPreferences.putBoolean(context, IS_NIGHT, isChecked);
 
         if (isChecked) {
             mActivity.setTheme(R.style.AppTheme_Night);
@@ -113,7 +111,7 @@ public class MineFragment extends ButterKnifeFragment {
         ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
             @Override
             public void apply(@NonNull TextView view, int index) {
-                view.setTextColor(AppConfig.getAppColor(itemTextColor));
+                view.setTextColor(context.getResources().getColor(itemTextColor));
             }
         });
 
@@ -126,8 +124,8 @@ public class MineFragment extends ButterKnifeFragment {
     }
 
     private void selectItemSwitch() {
-        boolean isNight = AppConfig.isNight();
-        themeSwitch.setChecked(isNight);
+//        boolean isNight = AppConfig.isNight();
+//        themeSwitch.setChecked(isNight);
     }
 
 
@@ -156,7 +154,7 @@ public class MineFragment extends ButterKnifeFragment {
 
     @OnClick(R.id.mine_rl_night)
     void onNight() {
-        isNight = !AppConfig.isNight();
+//        isNight = !AppConfig.isNight();
         selectTheme(isNight);
     }
 

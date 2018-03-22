@@ -1,31 +1,19 @@
-package com.gank.gankly.ui.girls.pure;
+package com.gank.gankly.ui.pure;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.utils.DisplayUtils;
-import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -36,23 +24,19 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 
 /**
  * 清纯妹子
  * Create by LingYan on 2016-05-17
- * Email:137387869@qq.com
  */
 public class PureFragment extends LazyFragment implements ItemClick, PureContract.View {
-    @BindView(R.id.meizi_swipe_refresh)
-    LySwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.multiple_status_view)
-    MultipleStatusView mMultipleStatusView;
+    @BindView(R.id.swipe_refresh)
+    LySwipeRefreshLayout swipeRefresh;
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.multiple_status_view)
+    MultipleStatusView multipleStatusView;
+
     private PureAdapter mAdapter;
-    private MainActivity mActivity;
-    private Disposable mDisposable;
 
     private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
     private ProgressDialog mDialog;
@@ -73,9 +57,6 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         initRecycler();
 
         mAdapter.setOnItemClickListener(this);
-
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> changeUi());
     }
 
     @Override
@@ -91,46 +72,18 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     }
 
     private void initRefresh() {
-        mMultipleStatusView.showLoading();
+        multipleStatusView.showLoading();
         mPresenter.refreshPure();
     }
 
-    private void changeUi() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.baseAdapterItemBackground, typedValue, true);
-        int background = typedValue.data;
-        TypedValue textValue = new TypedValue();
-        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
-        int textColor = textValue.data;
-        theme.resolveAttribute(R.attr.themeBackground, textValue, true);
-        int recyclerColor = textValue.data;
-        mRecyclerView.setBackgroundColor(recyclerColor);
-
-        int childCount = mRecyclerView.getChildCount();
-        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
-            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
-            title.setTextColor(textColor);
-            View rlView = childView.findViewById(R.id.goods_rl_title);
-            rlView.setBackgroundColor(background);
-        }
-
-        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
-    }
-
     private void initRecycler() {
-        mAdapter = new PureAdapter(mActivity);
-        mSwipeRefreshLayout.setAdapter(mAdapter);
+        mAdapter = new PureAdapter(context);
+        swipeRefresh.setAdapter(mAdapter);
 
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
+        swipeRefresh.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
 
-        float leftPadding = DisplayUtils.dp2px(8);// because StaggeredGridLayoutManager left margin
-        mRecyclerView.setPadding((int) leftPadding, 0, 0, 0);
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -147,11 +100,11 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     private void showDialog() {
         if (mDialog == null) {
-            mDialog = new ProgressDialog(mActivity);
+            mDialog = new ProgressDialog(context);
         }
 
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(AppConfig.getAppString(R.string.loading_meizi_images));
+        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());
@@ -181,12 +134,6 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (MainActivity) context;
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
@@ -195,16 +142,16 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     @Override
     public void showProgress() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        swipeRefresh.setRefreshing(true);
     }
 
     @Override
     public void hideProgress() {
-        if (mSwipeRefreshLayout != null) {
-            mSwipeRefreshLayout.setRefreshing(false);
+        if (swipeRefresh != null) {
+            swipeRefresh.setRefreshing(false);
         }
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showContent();
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
         }
     }
 
@@ -215,27 +162,27 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     @Override
     public void showContent() {
-        mMultipleStatusView.showContent();
+        multipleStatusView.showContent();
     }
 
     @Override
     public void showEmpty() {
-        mMultipleStatusView.showEmpty();
+        multipleStatusView.showEmpty();
     }
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
+        multipleStatusView.showDisNetwork();
     }
 
     @Override
     public void showError() {
-        mMultipleStatusView.showError();
+        multipleStatusView.showError();
     }
 
     private void showLoading() {
-        if (mMultipleStatusView != null) {
-            mMultipleStatusView.showLoading();
+        if (multipleStatusView != null) {
+            multipleStatusView.showLoading();
         }
     }
 
@@ -252,13 +199,13 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     @Override
     public void openGalleryActivity(ArrayList<GiftBean> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        Intent intent = new Intent(context, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(mActivity,
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(context,
                 R.anim.alpha_in, R.anim.alpha_out);
-        mActivity.startActivity(intent, compat.toBundle());
+        context.startActivity(intent, compat.toBundle());
     }
 
     @Override
@@ -271,8 +218,5 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
     }
 }

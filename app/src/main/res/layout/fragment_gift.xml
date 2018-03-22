@@ -7,7 +7,7 @@
     android:layout_below="@id/main_appbar">
 
     <com.gank.gankly.widget.LySwipeRefreshLayout
-        android:id="@+id/meizi_swipe_refresh"
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/themeBackground"

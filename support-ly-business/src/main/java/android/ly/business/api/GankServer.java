@@ -53,10 +53,19 @@ public class GankServer {
                 });
     }
 
-    public Observable<Response<PageEntity<Gank>>> ios(int page, int limit) {
+    public Observable<PageEntity<Gank>> ios(int page, int limit) {
         return gankApi.ios(page, limit)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
+                    @Override
+                    public PageEntity<Gank> apply(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
+                        if (pageEntityResponse == null) {
+                            return null;
+                        }
+                        return pageEntityResponse.body();
+                    }
+                });
     }
 
     public Observable<Response<ListEntity<Gank>>> allGoods(int limit, int page) {

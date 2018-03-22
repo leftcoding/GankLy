@@ -1,45 +1,33 @@
 package com.gank.gankly.ui.gallery;
 
-import android.ly.business.domain.Gank;
+import android.content.Context;
 
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.utils.CrashUtils;
-import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
-
-import java.util.List;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2017-01-16
- * Email:137387869@qq.com
  */
 
-public class GalleryPresenter extends FetchPresenter implements GalleryContract.Presenter {
+public class GalleryPresenter extends GalleryContract.Presenter {
     private GankDataSource mTask;
     private GalleryContract.View mModelView;
     private boolean isFetch;
 
-    public GalleryPresenter(GankDataSource task, GalleryContract.View view) {
-        mTask = task;
-        mModelView = view;
+    public GalleryPresenter(Context context, GalleryContract.View view) {
+        super(context, view);
     }
 
-    @Override
-    public void fetchNew() {
-
-    }
-
-    @Override
     public void fetchMore() {
         if (!isFetch) {
             int nextPage = MeiziArrayList.getInstance().getPage() + 1;
-            mTask.fetchWelfare(nextPage, getFetchLimit())
+            mTask.fetchWelfare(nextPage,20)
                     .subscribe(new Observer<GankResult>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -48,19 +36,19 @@ public class GalleryPresenter extends FetchPresenter implements GalleryContract.
 
                         @Override
                         public void onNext(GankResult gankResult) {
-                            List<Gank> list = filterData(gankResult.getResults(), mModelView);
-                            if (ListUtils.getSize(list) > 0) {
-                                mModelView.appendData(list);
-                                mModelView.sysNumText();
-                                MeiziArrayList.getInstance().addImages(gankResult.getResults(), nextPage);
-                            }
+//                            List<Gank> list = filterData(gankResult.getResults(), mModelView);
+//                            if (ListUtils.getSize(list) > 0) {
+//                                mModelView.appendData(list);
+//                                mModelView.sysNumText();
+//                                MeiziArrayList.getInstance().addImages(gankResult.getResults(), nextPage);
+//                            }
                         }
 
                         @Override
                         public void onError(Throwable e) {
                             KLog.e(e);
                             CrashUtils.crashReport(e);
-                            parseError(mModelView);
+//                            parseError(mModelView);
                         }
 
                         @Override

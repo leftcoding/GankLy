@@ -3,28 +3,24 @@ package com.gank.gankly.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.gank.gankly.AppConfig;
-
 import javax.annotation.Nullable;
 
 
 /**
- * 偏好设置
  * Create by LingYan on 2016-06-01
- * Email:137387869@qq.com
  */
 public class GanklyPreferences {
-    public static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
+    private static final String PREFERENCES_NAME_DEFAULT = "gankly_config";
     private volatile static SharedPreferences mSharedPreferences;
     private volatile static SharedPreferences.Editor sEditor;
 
-    public static SharedPreferences getDefaultPreference() {
-        return initPreference(PREFERENCES_NAME_DEFAULT);
+    public static SharedPreferences getDefaultPreference(Context context) {
+        return initPreference(context, PREFERENCES_NAME_DEFAULT);
     }
 
-    public static SharedPreferences.Editor getDefaultEditor() {
+    public static SharedPreferences.Editor getDefaultEditor(Context context) {
         if (mSharedPreferences == null) {
-            initPreference(PREFERENCES_NAME_DEFAULT);
+            initPreference(context, PREFERENCES_NAME_DEFAULT);
         }
 
         if (sEditor == null) {
@@ -37,55 +33,55 @@ public class GanklyPreferences {
         return sEditor;
     }
 
-    public static SharedPreferences getPreference(String name) {
-        return initPreference(name);
+    public static SharedPreferences getPreference(Context context, String name) {
+        return initPreference(context, name);
     }
 
-    public static SharedPreferences initPreference(String name) {
+    public static SharedPreferences initPreference(Context context, String name) {
         if (mSharedPreferences == null) {
             synchronized (GanklyPreferences.class) {
                 if (mSharedPreferences == null) {
-                    mSharedPreferences = AppConfig.getGankContext().getSharedPreferences(name, Context.MODE_PRIVATE);
+                    mSharedPreferences = context.getSharedPreferences(name, Context.MODE_PRIVATE);
                 }
             }
         }
         return mSharedPreferences;
     }
 
-    public static void clear() {
-        getDefaultPreference().edit().clear().commit();
+    public static void clear(Context context) {
+        getDefaultPreference(context).edit().clear().commit();
     }
 
-    public static int getInt(String key, int defValue) {
-        return getDefaultPreference().getInt(key, defValue);
+    public static int getInt(Context context, String key, int defValue) {
+        return getDefaultPreference(context).getInt(key, defValue);
     }
 
-    public static long getLong(String key, int defValue) {
-        return getDefaultPreference().getLong(key, defValue);
+    public static long getLong(Context context, String key, int defValue) {
+        return getDefaultPreference(context).getLong(key, defValue);
     }
 
-    public static boolean getBoolean(String key, boolean defValue) {
-        return getDefaultPreference().getBoolean(key, defValue);
+    public static boolean getBoolean(Context context, String key, boolean defValue) {
+        return getDefaultPreference(context).getBoolean(key, defValue);
     }
 
     @Nullable
-    public static String getString(String key, @Nullable String defValue) {
-        return getDefaultPreference().getString(key, defValue);
+    public static String getString(Context context, String key, @Nullable String defValue) {
+        return getDefaultPreference(context).getString(key, defValue);
     }
 
-    public static void putInt(String key, int value) {
-        getDefaultEditor().putInt(key, value).apply();
+    public static void putInt(Context context, String key, int value) {
+        getDefaultEditor(context).putInt(key, value).apply();
     }
 
-    public static void putLong(String key, long value) {
-        getDefaultEditor().putLong(key, value).apply();
+    public static void putLong(Context context, String key, long value) {
+        getDefaultEditor(context).putLong(key, value).apply();
     }
 
-    public static void putBoolean(String key, boolean value) {
-        getDefaultEditor().putBoolean(key, value).apply();
+    public static void putBoolean(Context context, String key, boolean value) {
+        getDefaultEditor(context).putBoolean(key, value).apply();
     }
 
-    public static void putString(String key, @Nullable String value) {
-        getDefaultEditor().putString(key, value).apply();
+    public static void putString(Context context, String key, @Nullable String value) {
+        getDefaultEditor(context).putString(key, value).apply();
     }
 }

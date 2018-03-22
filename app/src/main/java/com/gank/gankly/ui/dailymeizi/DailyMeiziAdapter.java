@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.girls.dailymeizi;
+package com.gank.gankly.ui.dailymeizi;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

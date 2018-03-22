@@ -1,7 +1,8 @@
 package com.gank.gankly.ui.baisi.image;
 
+import android.content.Context;
+
 import com.gank.gankly.bean.BuDeJieBean;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.socks.library.KLog;
 
@@ -12,26 +13,14 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-12-05
  */
 
-public class BaiSiImagePresenter extends FetchPresenter implements BaiSiImageContract.Presenter {
-    private final BuDeJieDataSource mTask;
-    private final BaiSiImageContract.View mView;
+public class BaiSiImagePresenter extends BaiSiImageContract.Presenter {
+    private BuDeJieDataSource mTask;
+    private BaiSiImageContract.View mView;
     private int np;
+    private Context context;
 
-    public BaiSiImagePresenter(BuDeJieDataSource task, BaiSiImageContract.View view) {
-        mTask = task;
-        mView = view;
-    }
-
-    @Override
-    public void fetchNew() {
-        np = 0;
-        fetchData();
-    }
-
-    @Override
-    public void fetchMore() {
-        mView.showProgress();
-        fetchData();
+    public BaiSiImagePresenter(Context context, BaiSiImageContract.View view) {
+        super(context, view);
     }
 
     private void fetchData() {

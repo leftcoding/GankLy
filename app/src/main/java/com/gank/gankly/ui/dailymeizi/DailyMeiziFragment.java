@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.girls.dailymeizi;
+package com.gank.gankly.ui.dailymeizi;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -14,14 +14,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
-import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.MeiziDataSource;
+import com.gank.gankly.rxjava.RxBus_;
+import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.MainActivity;
@@ -38,12 +36,11 @@ import io.reactivex.disposables.Disposable;
 /**
  * 妹子每日更新
  * Create by LingYan on 2016-07-01
- * Email:137387869@qq.com
  */
 public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContract.View, ItemClick {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
-    @BindView(R.id.meizi_swipe_refresh)
+    @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private DailyMeiziAdapter mDailyMeiziAdapter;
@@ -85,7 +82,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new DailyMeiziPresenter(MeiziDataSource.getInstance(), this);
+//        mPresenter = new DailyMeiziPresenter(MeiziDataSource.getInstance(), this);
     }
 
     @Override
@@ -123,7 +120,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
             mDialog = new ProgressDialog(mActivity);
         }
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(AppConfig.getAppString(R.string.loading_meizi_images));
+        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());

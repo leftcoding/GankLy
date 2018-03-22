@@ -15,7 +15,6 @@ import butterknife.OnClick;
 
 /**
  * Create by LingYan on 2016-12-02
- * Email:137387869@qq.com
  */
 
 public class DiscoveredMoreFragment extends LazyFragment {

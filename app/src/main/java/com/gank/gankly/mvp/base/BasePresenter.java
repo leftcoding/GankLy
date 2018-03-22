@@ -14,7 +14,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     protected E view;
     protected Context context;
     protected String requestTag = UUID.randomUUID().toString();
-    protected String errorTip;
+    private String errorTip;
 
     public BasePresenter(Context context, E view) {
         checkNotNull(context);

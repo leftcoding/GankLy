@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Preferences;
@@ -36,7 +35,6 @@ import butterknife.OnClick;
 /**
  * 设置
  * Create by LingYan on 2016-05-10
- * Email:137387869@qq.com
  */
 public class SettingFragment extends SupportFragment implements ILauncher {
     public static final String TAG = "SettingFragment";
@@ -90,11 +88,11 @@ public class SettingFragment extends SupportFragment implements ILauncher {
         }
         mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
 
-        String cacheSize = GlideCatchUtil.getInstance().getCacheSize();
+        String cacheSize = GlideCatchUtil.getInstance().getCacheSize(context);
         itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache, cacheSize));
 
-        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_AUTO_CHECK, isCheck));
-        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(Preferences.SETTING_WIFI_ONLY, isCheck));
+        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(context, Preferences.SETTING_AUTO_CHECK, isCheck));
+        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(context, Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override
@@ -105,7 +103,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
 
     private void initPreferences() {
-        String summary = AppConfig.getAppResources().getString(R.string.setting_current_version,
+        String summary = context.getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
         itemUpdate.setTextName(R.string.setting_check_version);
@@ -114,9 +112,9 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     }
 
     private void selectItemSwitch() {
-        boolean isAutoCheck = GanklyPreferences.getBoolean(Preferences.SETTING_AUTO_CHECK, true);
+        boolean isAutoCheck = GanklyPreferences.getBoolean(context, Preferences.SETTING_AUTO_CHECK, true);
         itemCheckSwitch.setSwitchChecked(isAutoCheck);
-        boolean isOnlyWifi = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
+        boolean isOnlyWifi = GanklyPreferences.getBoolean(context, Preferences.SETTING_WIFI_ONLY, false);
         itemOnlyWifi.setSwitchChecked(isOnlyWifi);
     }
 
@@ -127,7 +125,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
     @Override
     public void noNewVersion() {
-        ToastUtils.showToast(R.string.tip_no_new_version);
+        ToastUtils.showToast(context, R.string.tip_no_new_version);
     }
 
     private void showVersionDialog(String content) {
@@ -146,7 +144,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
             @Override
             public void submit() {
                 mVersionDialog.dismiss();
-                ToastUtils.showToast(R.string.update_downing);
+                ToastUtils.showToast(context, R.string.update_downing);
                 mPresenter.downloadApk();
             }
         });
@@ -158,7 +156,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mActivity);
         }
-        mProgressDialog.setMessage(AppConfig.getAppString(R.string.dialog_checking));
+        mProgressDialog.setMessage(context.getString(R.string.dialog_checking));
         mProgressDialog.show();
     }
 
@@ -190,7 +188,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
     @OnClick(R.id.setting_item_text_clean_cache)
     void onClickCache() {
-        GlideCatchUtil.getInstance().clearCacheDiskSelf();
+        GlideCatchUtil.getInstance().clearCacheDiskSelf(context);
         itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache_string));
     }
 

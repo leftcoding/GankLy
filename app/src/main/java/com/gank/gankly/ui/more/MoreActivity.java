@@ -10,7 +10,6 @@ import com.gank.gankly.ui.history.BrowseHistoryFragment;
 
 /**
  * Create by LingYan on 2016-09-21
- * Email:137387869@qq.com
  */
 
 public class MoreActivity extends BaseActivity {

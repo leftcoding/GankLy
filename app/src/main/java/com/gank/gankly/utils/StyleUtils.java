@@ -13,7 +13,6 @@ import java.lang.reflect.Method;
 
 /**
  * Create by LingYan on 2016-09-12
- * Email:137387869@qq.com
  */
 public class StyleUtils {
     public static void changeSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
@@ -24,13 +23,13 @@ public class StyleUtils {
         int progressColor = R.color.white;
         int schemeColor = R.color.colorAccent;
 
-        if (AppConfig.isNight()) {
-            progressColor = R.color.baseSwipeRefreshLayoutProgressSchemeColor;
-            schemeColor = R.color.baseSwipeRefreshLayoutSchemeColors;
-        }
+//        if (AppConfig.isNight()) {
+//            progressColor = R.color.baseSwipeRefreshLayoutProgressSchemeColor;
+//            schemeColor = R.color.baseSwipeRefreshLayoutSchemeColors;
+//        }
 
-        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(AppConfig.getAppColor(progressColor));
-        swipeRefreshLayout.setColorSchemeColors(AppConfig.getAppColor(schemeColor));
+        swipeRefreshLayout.setProgressBackgroundColorSchemeColor(swipeRefreshLayout.getContext().getResources().getColor(progressColor));
+        swipeRefreshLayout.setColorSchemeColors(swipeRefreshLayout.getContext().getResources().getColor(schemeColor));
     }
 
     //让 RecyclerView 缓存在 Pool 中的 Item 失效

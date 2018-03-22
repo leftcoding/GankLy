@@ -13,7 +13,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.TechnologyDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.ui.web.normal.WebActivity;
@@ -55,7 +54,7 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     @Override
     protected void initLazy() {
         showProgress();
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     @Override
@@ -67,7 +66,7 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new TechnologyPresenter(TechnologyDataSource.getInstance(), this);
+//        mPresenter = new TechnologyPresenter(TechnologyDataSource.getInstance(), this);
     }
 
     private void initValues() {
@@ -80,12 +79,12 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }

@@ -41,7 +41,6 @@ import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
@@ -75,7 +74,6 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 相册
  * Create by LingYan on 2016-4-25
- * Email:137387869@qq.com
  */
 public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
         GalleryContract.View {
@@ -138,7 +136,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     protected void initTheme() {
         super.initTheme();
         setTheme(R.style.BrowseThemeBase);
-        mPresenter = new GalleryPresenter(GankDataSource.getInstance(), this);
+//        mPresenter = new GalleryPresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
@@ -150,7 +148,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         if (EXTRA_GANK.equals(mViewsModel)) {
             boolean isFetch = isFetch();
             if (isFetch) {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         }
 
@@ -193,7 +191,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             if (size > 5) {
                 int point = size - 5;
                 if (mPosition >= point) {
-                    mPresenter.fetchMore();
+//                    mPresenter.fetchMore();
                 }
             }
         } else {
@@ -496,7 +494,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     @Override
-    public void showShortToast(String string) {
+    public void shortToast(String string) {
 
     }
 
@@ -583,7 +581,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                 .subscribe(new Observer<Bitmap>() {
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.showToast(R.string.meizi_wallpaper_failure);
+                        ToastUtils.showToast(getBaseContext(), R.string.meizi_wallpaper_failure);
                         KLog.e(e);
                         CrashUtils.crashReport(e);
                     }
@@ -626,7 +624,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     } finally {
                         mBitmap = null;
                     }
-                    ToastUtils.showToast(R.string.meizi_revoke_success);
+                    ToastUtils.showToast(getBaseContext(), R.string.meizi_revoke_success);
                 })
                 .show();
     }
@@ -650,7 +648,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     public void onError(Throwable e) {
                         KLog.e(e);
                         CrashUtils.crashReport(e);
-                        ToastUtils.showToast(e.getMessage());
+                        ToastUtils.showToast(getBaseContext(), e.getMessage());
                     }
 
                     @Override
@@ -667,14 +665,14 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                     public void onNext(Uri uri) {
                         String imgPath = getImagePath();
                         if (TextUtils.isEmpty(imgPath)) {
-                            ToastUtils.showToast(R.string.tip_img_path_error);
+                            ToastUtils.showToast(getBaseContext(), R.string.tip_img_path_error);
                             return;
                         }
                         if (isShare) {
                             ShareUtils.shareSingleImage(GalleryActivity.this, uri);
                         } else {
                             String msg = String.format(getString(R.string.meizi_picture_save_path), imgPath);
-                            ToastUtils.showToast(msg);
+                            ToastUtils.showToast(getBaseContext(), msg);
                         }
                     }
                 });

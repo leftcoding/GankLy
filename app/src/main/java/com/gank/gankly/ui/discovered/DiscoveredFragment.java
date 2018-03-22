@@ -10,12 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
+import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
 import com.gank.gankly.ui.discovered.more.DiscoveredAdapter;
 import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
@@ -94,7 +93,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
     }
 
     private void refreshUi() {

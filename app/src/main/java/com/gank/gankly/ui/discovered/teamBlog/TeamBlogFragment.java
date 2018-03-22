@@ -13,7 +13,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyContract;
 import com.gank.gankly.ui.main.MainActivity;
@@ -30,7 +29,6 @@ import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-11-23
- * Email:137387869@qq.com
  */
 
 public class TeamBlogFragment extends LazyFragment implements TechnologyContract.View, ItemClick {
@@ -53,7 +51,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     protected void initLazy() {
         showProgress();
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     @Override
@@ -65,7 +63,7 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new TeamBlogPresenter(TeamBlogDataSource.getInstance(), this);
+//        mPresenter = new TeamBlogPresenter(TeamBlogDataSource.getInstance(), this);
     }
 
     @Override
@@ -83,12 +81,12 @@ public class TeamBlogFragment extends LazyFragment implements TechnologyContract
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+//                mPresenter.fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+//                mPresenter.fetchMore();
             }
         });
     }

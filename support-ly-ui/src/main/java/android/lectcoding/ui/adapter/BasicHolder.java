@@ -14,5 +14,5 @@ public abstract class BasicHolder<II extends Item> extends RecyclerView.ViewHold
         super(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false));
     }
 
-    public abstract void bindItem(II item);
+    public abstract void bindHolder(II item);
 }

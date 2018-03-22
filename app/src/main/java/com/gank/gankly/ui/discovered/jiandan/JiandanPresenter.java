@@ -1,9 +1,9 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
+import android.content.Context;
+
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.JiandanDataSource;
-import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;
@@ -22,17 +22,15 @@ import io.reactivex.schedulers.Schedulers;
  * Create by LingYan on 2016-11-21
  */
 
-public class JiandanPresenter extends FetchPresenter implements JiandanContract.Presenter {
+public class JiandanPresenter extends JiandanContract.Presenter {
     private static final String BASE_URL = "http://i.jandan.net/page/";
     private static final int LIMIT = 24;
 
     private JiandanDataSource mJiandanDataSource;
     private JiandanContract.View mView;
 
-    public JiandanPresenter(JiandanDataSource jiandanDataSource, JiandanContract.View view) {
-        mJiandanDataSource = jiandanDataSource;
-        mView = view;
-        setFetchLimit(LIMIT);
+    public JiandanPresenter(Context context, JiandanContract.View view) {
+        super(context, view);
     }
 
     @Override
@@ -56,8 +54,8 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
                     @Override
                     public void onComplete() {
                         mView.showContent();
-                        int nextPage = getFetchPage() + 1;
-                        setFetchPage(nextPage);
+//                        int nextPage = getFetchPage() + 1;
+//                        setFetchPage(nextPage);
                     }
 
                     @Override
@@ -67,14 +65,14 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
 
                     @Override
                     public void onNext(List<JianDanBean> list) {
-                        list = filterData(list, mView);
-                        if (ListUtils.getSize(list) > 0) {
-                            if (getFetchPage() > 1) {
-                                mView.appendMoreDate(list);
-                            } else {
-                                mView.refillData(list);
-                            }
-                        }
+//                        list = filterData(list, mView);
+//                        if (ListUtils.getSize(list) > 0) {
+//                            if (getFetchPage() > 1) {
+//                                mView.appendMoreDate(list);
+//                            } else {
+//                                mView.refillData(list);
+//                            }
+//                        }
                     }
                 });
     }
@@ -106,16 +104,16 @@ public class JiandanPresenter extends FetchPresenter implements JiandanContract.
         return list;
     }
 
-    @Override
-    public void fetchNew() {
-        fetchData(getInitPage());
-    }
-
-    @Override
-    public void fetchMore() {
-        if (hasMore()) {
-            mView.showProgress();
-            fetchData(getFetchPage());
-        }
-    }
+//    @Override
+//    public void fetchNew() {
+//        fetchData(getInitPage());
+//    }
+//
+//    @Override
+//    public void fetchMore() {
+//        if (hasMore()) {
+//            mView.showProgress();
+//            fetchData(getFetchPage());
+//        }
+//    }
 }

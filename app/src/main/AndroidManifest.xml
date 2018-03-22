@@ -29,7 +29,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.light">
         <activity
             android:name="com.gank.gankly.ui.splash.SplashActivity"
             android:label="@string/app_name"
@@ -95,8 +95,6 @@
                 android:resource="@xml/provider_paths" />
         </provider>
         <!-- bugly end-->
-
-        <service android:name="com.gank.gankly.ui.base.InitializeService" />
 
         <!--&lt;!&ndash; Glide 默认配置 &ndash;&gt;-->
         <!--<meta-data-->

@@ -1,8 +1,9 @@
-package com.gank.gankly.ui.girls.dailymeizi;
+package com.gank.gankly.ui.cure;
+
+import android.content.Context;
 
 import com.gank.gankly.bean.DailyMeiziBean;
 import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.FetchPresenter;
 import com.gank.gankly.mvp.source.remote.MeiziDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
@@ -20,26 +21,36 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-10-26
  */
 
-public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziContract.Presenter {
-    private static final String MEIZI_FIRST_URL = "http://m.mzitu.com/all";
-    private final MeiziDataSource mTask;
-    private final DailyMeiziContract.View mModelView;
+class CurePresenter extends CureContract.Presenter {
+    private static final String MEIZI_FIRST_URL = "http://www.meizitu.com/a/qingchun_3_";
+    private static final int LIMIT = 30;
+
+    private MeiziDataSource mTask;
+    private final CureContract.View mModelView;
+
     private ArrayList<GiftBean> imagesList;
     private int max;
 
-    public DailyMeiziPresenter(MeiziDataSource task, DailyMeiziContract.View view) {
-        mTask = task;
+    CurePresenter(Context context, CureContract.View view) {
+        super(context, view);
+//        mTask = task;
         mModelView = view;
     }
 
-    @Override
+    //    @Override
     public void fetchNew() {
-        setFetchLimit(24);
-        fetchData(MEIZI_FIRST_URL);
+//        String url = getMeiziUrl();
+//        setFetchLimit(LIMIT);
+//        fetchData(url);
     }
 
-    @Override
+    //    @Override
     public void fetchMore() {
+//        String url = getMeiziUrl();
+//        if (hasMore()) {
+//            mModelView.showProgress();
+//            fetchData(url);
+//        }
         //empty
     }
 
@@ -48,7 +59,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
-                        setFetchPage(getFetchPage() + 1);
+//                        setFetchPage(getFetchPage() + 1);
                         mModelView.showContent();
                         mModelView.hideProgress();
                     }
@@ -56,7 +67,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     @Override
                     public void onError(Throwable e) {
                         KLog.e(e);
-                        parseError(mModelView);
+//                        parseError(mModelView);
                     }
 
                     @Override
@@ -66,7 +77,7 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
 
                     @Override
                     public void onNext(Document document) {
-                        parseDocument(document);
+                        parseMeiZiTu(document);
                     }
                 });
     }
@@ -79,17 +90,11 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
     @Override
     public void girlsImages(final String url) {
         mTask.fetchDailyDays(url)
-                .map(document -> {
-                    max = getImageUrlsMax(document);
-                    if (max > 0) {
-                        return getImageUrl(url);
-                    }
-                    return null;
-                })
-                .subscribe(new Observer<String>() {
+                .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
-                        //empty
+                        mModelView.disProgressDialog();
+                        mModelView.openBrowseActivity(imagesList);
                     }
 
                     @Override
@@ -103,16 +108,32 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                     }
 
                     @Override
-                    public void onNext(String url) {
-                        mModelView.setMaxProgress(max);
-                        getImages(url);
+                    public void onNext(Document doc) {
+                        getImagesList(doc);
                     }
                 });
     }
 
+    private void getImagesList(Document doc) {
+        imagesList = new ArrayList<>();
+        if (doc != null) {
+            Elements imgs = doc.select("#picture img");
+            if (imgs != null && imgs.size() > 0) {
+                for (int i = 0; i < imgs.size(); i++) {
+                    String src = imgs.get(i).attr("src");
+                    imagesList.add(new GiftBean(src));
+                }
+            }
+        }
+    }
+
+//    private String getMeiziUrl() {
+//        return MEIZI_FIRST_URL + getFetchPage() + ".html";
+//    }
+
     private void getImages(String url) {
         mTask.fetchDailyDetailUrls(url)
-                .map(document -> getImageCountList(document))
+                .map(this::getImageCountList)
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {
@@ -166,14 +187,43 @@ public class DailyMeiziPresenter extends FetchPresenter implements DailyMeiziCon
                 });
     }
 
+    private void parseMeiZiTu(Document document) {
+        if (document != null) {
+            List<DailyMeiziBean> list = getColumnList(document);
+//            list = filterData(list, mModelView);
+            if (ListUtils.getSize(list) > 0) {
+//                if (getFetchPage() > 1) {
+//                    mModelView.appendItem(list);
+//                } else {
+//                    mModelView.refillData(list);
+//                }
+            }
+        }
+    }
+
     private void parseDocument(Document document) {
         if (document != null) {
             List<DailyMeiziBean> list = getDays(document);
-            list = filterData(list, mModelView);
+//            list = filterData(list, mModelView);
             if (ListUtils.getSize(list) > 0) {
                 mModelView.refillData(list);
             }
         }
+    }
+
+    private List<DailyMeiziBean> getColumnList(Document doc) {
+        List<DailyMeiziBean> list = new ArrayList<>();
+        if (doc != null) {
+            Elements times = doc.select(".con");
+            KLog.d("times" + times.size());
+            Elements imgs = doc.select(".con img");
+            Elements a_href = doc.select(".con .pic a");
+            for (int i = 0; i < times.size(); i++) {
+                KLog.d("href:" + a_href.get(i).attr("href"));
+                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), times.get(i).text()));
+            }
+        }
+        return list;
     }
 
     /**

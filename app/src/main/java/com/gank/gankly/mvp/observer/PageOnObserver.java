@@ -9,12 +9,8 @@ import com.gank.gankly.mvp.base.BaseView;
  */
 
 public abstract class PageOnObserver<T extends PageEntity, V extends BaseView> extends RefreshOnObserver<T, V> {
-    protected boolean isFirst = true;
-    protected int limit;
-
-    protected PageOnObserver(String requestTag, V v, boolean isFirst) {
+    protected PageOnObserver(String requestTag, V v) {
         super(requestTag, v);
-        this.isFirst = isFirst;
     }
 
     @Override
@@ -36,8 +32,10 @@ public abstract class PageOnObserver<T extends PageEntity, V extends BaseView> e
 
     protected abstract void loadMoreFailure();
 
+    protected abstract boolean isFirst();
+
     private void onSuccess(T t) {
-        if (isFirst) {
+        if (isFirst()) {
             onRefreshSuccess(t);
         } else {
             loadMoreSuccess(t);
@@ -45,7 +43,7 @@ public abstract class PageOnObserver<T extends PageEntity, V extends BaseView> e
     }
 
     private void onFailure() {
-        if (isFirst) {
+        if (isFirst()) {
             onRefreshFailure();
         } else {
             loadMoreFailure();

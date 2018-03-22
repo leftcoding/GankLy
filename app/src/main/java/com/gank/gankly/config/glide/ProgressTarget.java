@@ -3,10 +3,8 @@ package com.gank.gankly.config.glide;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.gank.gankly.AppConfig;
 
 public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements OkHttpProgressGlideModule.UIProgressListener {
     private T model;
@@ -26,7 +24,6 @@ public abstract class ProgressTarget<T, Z> extends WrappingTarget<Z> implements 
     }
 
     public final void setModel(T model) {
-        Glide.get(AppConfig.getGankContext()).clearMemory();
         this.model = model;
     }
 

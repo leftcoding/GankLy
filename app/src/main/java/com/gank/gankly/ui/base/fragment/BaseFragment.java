@@ -9,10 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.gank.gankly.AppConfig;
-
-
 /**
  * Create by LingYan on 2016-04-05
  */
@@ -46,7 +42,6 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ((AppConfig) activity.getApplication()).getRefWatcher().watch(this);
     }
 
     public Context getBaseContext() {

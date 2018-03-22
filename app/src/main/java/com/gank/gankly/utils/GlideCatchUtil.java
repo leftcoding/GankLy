@@ -1,9 +1,9 @@
 package com.gank.gankly.utils;
 
+import android.content.Context;
 import android.os.Looper;
 
 import com.bumptech.glide.Glide;
-import com.gank.gankly.AppConfig;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -19,9 +19,9 @@ public class GlideCatchUtil {
     }
 
     // 获取Glide磁盘缓存大小
-    public String getCacheSize() {
+    public String getCacheSize(Context context) {
         try {
-            return getFormatSize(getFolderSize(new File(FileUtils.getGlideDefaultPath(AppConfig.getGankContext()))));
+            return getFormatSize(getFolderSize(new File(FileUtils.getGlideDefaultPath(context))));
         } catch (Exception e) {
             e.printStackTrace();
             return "获取失败";
@@ -29,17 +29,17 @@ public class GlideCatchUtil {
     }
 
     // 清除Glide磁盘缓存，自己获取缓存文件夹并删除方法
-    public boolean cleanCatchDisk() {
-        return deleteFolderFile(FileUtils.getGlideDefaultPath(AppConfig.getGankContext()), true);
+    public boolean cleanCatchDisk(Context context) {
+        return deleteFolderFile(FileUtils.getGlideDefaultPath(context), true);
     }
 
     // 清除图片磁盘缓存，调用Glide自带方法
-    public boolean clearCacheDiskSelf() {
+    public boolean clearCacheDiskSelf(Context context) {
         try {
             if (Looper.myLooper() == Looper.getMainLooper()) {
-                new Thread(() -> Glide.get(AppConfig.getGankContext()).clearDiskCache()).start();
+                new Thread(() -> Glide.get(context).clearDiskCache()).start();
             } else {
-                Glide.get(AppConfig.getGankContext()).clearDiskCache();
+                Glide.get(context).clearDiskCache();
             }
             return true;
         } catch (Exception e) {
@@ -49,10 +49,10 @@ public class GlideCatchUtil {
     }
 
     // 清除Glide内存缓存
-    public boolean clearCacheMemory() {
+    public boolean clearCacheMemory(Context context) {
         try {
             if (Looper.myLooper() == Looper.getMainLooper()) { //只能在主线程执行
-                Glide.get(AppConfig.getGankContext()).clearMemory();
+                Glide.get(context).clearMemory();
                 return true;
             }
         } catch (Exception e) {

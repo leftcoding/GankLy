@@ -12,7 +12,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
@@ -101,7 +100,7 @@ public class IndexFragment extends SupportFragment implements ViewPager.OnPageCh
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(AppConfig.getAppColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
     }
 
     /**

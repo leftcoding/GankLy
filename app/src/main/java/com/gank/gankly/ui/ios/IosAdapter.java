@@ -6,13 +6,13 @@ import android.lectcoding.ui.adapter.BasicItem;
 import android.lectcoding.ui.adapter.Item;
 import android.ly.business.domain.Gank;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeHolder;
-import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
 
     private Context context;
 
-    private ItemCallBack itemCallBack;
+    private ItemCallback itemCallBack;
 
     IosAdapter(Context context) {
         this.context = context;
@@ -56,8 +56,8 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     public ButterKnifeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ButterKnifeHolder defaultHolder;
         switch (viewType) {
-            case TextHolder.LAYOUT:
-                defaultHolder = new TextHolder(parent, itemCallBack);
+            case NormalViewHolder.LAYOUT:
+                defaultHolder = new NormalViewHolder(parent, itemCallBack);
                 break;
             default:
                 defaultHolder = null;
@@ -70,8 +70,8 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     public void onBindViewHolder(ButterKnifeHolder holder, int position) {
         final Item item = itemList.get(position);
         switch (holder.getItemViewType()) {
-            case TextHolder.LAYOUT:
-                ((TextHolder) holder).bindItem((TextItem) item);
+            case NormalViewHolder.LAYOUT:
+                ((NormalViewHolder) holder).bindHolder((TextItem) item);
                 break;
         }
     }
@@ -99,7 +99,6 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
 
     public void appendItems(List<Gank> results) {
         resultsBeans.addAll(results);
-        this.notifyDataSetChanged();
     }
 
     @Override
@@ -112,11 +111,11 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         unregisterAdapterDataObserver(mObserver);
     }
 
-    public void setOnItemClickListener(ItemCallBack itemCallBack) {
+    public void setOnItemClickListener(ItemCallback itemCallBack) {
         this.itemCallBack = itemCallBack;
     }
 
-    static class TextHolder extends ButterKnifeHolder<TextItem> {
+    static class NormalViewHolder extends ButterKnifeHolder<TextItem> {
         static final int LAYOUT = R.layout.adapter_ios;
         @BindView(R.id.author_name)
         TextView authorName;
@@ -127,30 +126,30 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         @BindView(R.id.title)
         TextView title;
 
-        ItemCallBack itemCallBack;
+        ItemCallback itemCallBack;
 
-        TextHolder(ViewGroup parent, ItemCallBack itemCallBack) {
+        NormalViewHolder(ViewGroup parent, ItemCallback itemCallBack) {
             super(parent, LAYOUT);
             this.itemCallBack = itemCallBack;
         }
 
         @Override
-        public void bindItem(TextItem item) {
+        public void bindHolder(TextItem item) {
             final Gank resultsBean = item.getResultsBean();
 
             time.setText(item.getTime());
             title.setText(resultsBean.desc);
-            authorName.setText(resultsBean.getWho());
+            authorName.setText(resultsBean.who);
 
             itemView.setOnClickListener(v -> {
                 if (itemCallBack != null) {
-                    itemCallBack.onClick(v, getAdapterPosition(), resultsBean);
+                    itemCallBack.onItemClick(v, resultsBean);
                 }
             });
         }
     }
 
-    class TextItem extends BasicItem {
+    static class TextItem extends BasicItem {
         private Gank resultsBean;
 
         TextItem(Gank resultsBean) {
@@ -168,7 +167,11 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
 
         @Override
         public int getViewType() {
-            return TextHolder.LAYOUT;
+            return NormalViewHolder.LAYOUT;
         }
+    }
+
+    public interface ItemCallback {
+        void onItemClick(View view, Gank gank);
     }
 }

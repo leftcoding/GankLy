@@ -13,10 +13,8 @@ import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
-import com.gank.gankly.AppConfig;
 import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemCallBack;
-import com.gank.gankly.mvp.source.remote.GankDataSource;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.ui.main.MainActivity;
@@ -89,7 +87,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new WelfarePresenter(GankDataSource.getInstance(), this);
+//        mPresenter = new WelfarePresenter(GankDataSource.getInstance(), this);
     }
 
     @Override
@@ -101,7 +99,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void hasNoMoreDate() {
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
-                .setActionTextColor(AppConfig.getAppColor(R.color.Blue))
+                .setActionTextColor(context.getResources().getColor(R.color.Blue))
                 .show();
     }
 
@@ -119,11 +117,11 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     };
 
     private void fetchNew() {
-        mPresenter.fetchNew();
+//        mPresenter.fetchNew();
     }
 
     private void fetchMore() {
-        mPresenter.fetchMore();
+//        mPresenter.fetchMore();
     }
 
     @Override
@@ -194,7 +192,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     private void showSnackbar(String msg) {
         if (mSwipeRefreshLayout != null) {
             Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(AppConfig.getAppColor(R.color.Blue))
+                    .setActionTextColor(context.getResources().getColor(R.color.Blue))
                     .setAction(R.string.retry, v -> fetchMore()).show();
         }
     }

@@ -5,14 +5,12 @@ import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -37,7 +35,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     private IosAdapter iosAdapter;
     private IosContract.Presenter iosPresenter;
 
-    private final AtomicBoolean first = new AtomicBoolean(true);
+    private final AtomicBoolean isFirst = new AtomicBoolean(true);
 
     @Override
     protected int getLayoutId() {
@@ -88,16 +86,13 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
     };
 
-    private final ItemCallBack mItemCallBack = (view, position, object) -> {
-        if (object instanceof Gank) {
-            Gank bean = (Gank) object;
-            Bundle bundle = new Bundle();
-            bundle.putString(WebActivity.TITLE, bean.desc);
-            bundle.putString(WebActivity.URL, bean.url);
-            bundle.putString(WebActivity.AUTHOR, bean.who);
-            bundle.putString(WebActivity.TYPE, Constants.IOS);
-            WebActivity.startWebActivity(getBaseContext(), bundle);
-        }
+    private final IosAdapter.ItemCallback mItemCallBack = (view, gank) -> {
+        Bundle bundle = new Bundle();
+        bundle.putString(WebActivity.TITLE, gank.desc);
+        bundle.putString(WebActivity.URL, gank.url);
+        bundle.putString(WebActivity.AUTHOR, gank.who);
+        bundle.putString(WebActivity.TYPE, Constants.IOS);
+        WebActivity.startWebActivity(getBaseContext(), bundle);
     };
 
     @Override
@@ -116,9 +111,11 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void showProgress() {
-        if (first.get()) {
+        if (isFirst.get()) {
             if (multipleStatusView != null) {
-                multipleStatusView.showLoading();
+                if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
+                    multipleStatusView.showLoading();
+                }
             }
         }
 
@@ -140,7 +137,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void hasNoMoreDate() {
-        showSnackBar(getBaseContext().getString(R.string.loading_all_over));
+        shortToast(getBaseContext().getString(R.string.loading_all_over));
     }
 
     @Override
@@ -155,37 +152,6 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         if (multipleStatusView != null) {
             multipleStatusView.showDisNetwork();
         }
-    }
-
-    @Override
-    public void refreshIosSuccess(List<Gank> list) {
-        if (iosAdapter != null) {
-            iosAdapter.fillItems(list);
-        }
-    }
-
-    @Override
-    public void refreshIosFailure(String msg) {
-        showSnackBar(msg);
-    }
-
-    private void showSnackBar(String msg) {
-        if (swipeRefresh != null) {
-            Snackbar.make(swipeRefresh, msg, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.retry, v -> loadMoreIos());
-        }
-    }
-
-    @Override
-    public void appendIosSuccess(List<Gank> list) {
-        if (iosAdapter != null) {
-            iosAdapter.appendItems(list);
-        }
-    }
-
-    @Override
-    public void appendIosFailure(String msg) {
-        showSnackBar(msg);
     }
 
     public static IosFragment newInstance() {
@@ -215,15 +181,38 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         }
     }
 
-//    protected void callBackRefreshUi() {
-//        ThemeColor themeColor = new ThemeColor(this);
-//        RecyclerViewColor mRecycler = new RecyclerViewColor(recyclerView);
-//        mRecycler.setItemColor(R.id.title, R.attr.baseAdapterItemTextColor);
-//        mRecycler.setItemColor(R.id.time, R.attr.textSecondaryColor);
-//
-//        themeColor.setBackgroundResource(R.attr.themeBackground, recyclerView);
-//        themeColor.swipeRefresh(swipeRefresh);
-//        themeColor.recyclerViewColor(mRecycler);
-//        themeColor.start();
-//    }
+    @Override
+    public void refreshSuccess(List<Gank> list) {
+        showContent();
+
+        if (isFirst.compareAndSet(true, false)) {
+            if (list == null || list.isEmpty()) {
+                showEmpty();
+                return;
+            }
+        }
+
+        if (iosAdapter != null) {
+            iosAdapter.fillItems(list);
+            iosAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void refreshFailure(String msg) {
+        shortToast(msg);
+    }
+
+    @Override
+    public void appendSuccess(List<Gank> list) {
+        if (iosAdapter != null) {
+            iosAdapter.appendItems(list);
+            iosAdapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void appendFailure(String msg) {
+        shortToast(msg);
+    }
 }

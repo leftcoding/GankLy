@@ -4,7 +4,6 @@ import java.util.List;
 
 /**
  * Create by LingYan on 2016-12-07
- * Email:137387869@qq.com
  */
 
 public class BuDeJieBean {

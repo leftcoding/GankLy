@@ -2,7 +2,6 @@ package com.gank.gankly.bean;
 
 /**
  * Create by LingYan on 2016-12-12
- * Email:137387869@qq.com
  */
 
 public class GallerySize {

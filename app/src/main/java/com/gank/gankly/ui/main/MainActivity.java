@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity {
                 return false;
             } else if ((System.currentTimeMillis() - mKeyDownTime) > 2000) {
                 mKeyDownTime = System.currentTimeMillis();
-                ToastUtils.shortBottom(R.string.app_again_out);
+                ToastUtils.shortBottom(getBaseContext(), R.string.app_again_out);
                 return false;
             } else {
                 finish();

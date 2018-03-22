@@ -1,4 +1,4 @@
-package com.gank.gankly.ui.girls.pure;
+package com.gank.gankly.ui.pure;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

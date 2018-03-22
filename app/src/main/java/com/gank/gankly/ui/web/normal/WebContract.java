@@ -9,7 +9,6 @@ import com.gank.gankly.mvp.base.BaseView;
 
 /**
  * Create by LingYan on 2016-10-27
- * Email:137387869@qq.com
  */
 
 public interface WebContract {

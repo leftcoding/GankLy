@@ -52,7 +52,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public RequestBuilder<Drawable> loadWifiImage(Context context, String url) {
-        return getImageCache(context, url, isAllowDown());
+        return getImageCache(context, url, isAllowDown(context));
     }
 
     @Override
@@ -126,7 +126,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public RequestBuilder<Bitmap> glideAsBitmap(Context context, String imgUrl) {
-        if (isAllowDown()) {
+        if (isAllowDown(context)) {
             return Glide.with(context)
                     .asBitmap()
                     .load(imgUrl)
@@ -204,11 +204,11 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
                 .into(imageView);
     }
 
-    private boolean isAllowDown() {
+    private boolean isAllowDown(Context context) {
         boolean allowDownload = true;
-        boolean isOnlyWif = GanklyPreferences.getBoolean(Preferences.SETTING_WIFI_ONLY, false);
+        boolean isOnlyWif = GanklyPreferences.getBoolean(context, Preferences.SETTING_WIFI_ONLY, false);
         if (isOnlyWif) {
-            if (!NetworkUtils.isWiFi()) {
+            if (!NetworkUtils.isWiFi(context)) {
                 allowDownload = false;
             }
         }
