@@ -1,10 +1,10 @@
 package com.gank.gankly.ui.dailymeizi;
 
 import android.content.Context;
+import android.ly.business.domain.Gift;
+import android.ly.jsoup.JsoupServer;
 
-import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.source.remote.MeiziDataSource;
+import android.ly.business.domain.DailyMeizi;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
@@ -23,9 +23,8 @@ import io.reactivex.disposables.Disposable;
 
 public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
     private static final String MEIZI_FIRST_URL = "http://m.mzitu.com/all";
-    private MeiziDataSource mTask;
     private final DailyMeiziContract.View mModelView;
-    private ArrayList<GiftBean> imagesList;
+    private ArrayList<Gift> imagesList;
     private int max;
 
     public DailyMeiziPresenter(Context context, DailyMeiziContract.View view) {
@@ -45,7 +44,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
     }
 
     private void fetchData(String url) {
-        mTask.fetchDaily(url)
+        JsoupServer.rxConnect(url).build()
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
@@ -79,7 +78,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
 
     @Override
     public void girlsImages(final String url) {
-        mTask.fetchDailyDays(url)
+        JsoupServer.rxConnect(url).build()
                 .map(document -> {
                     max = getImageUrlsMax(document);
                     if (max > 0) {
@@ -112,7 +111,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
     }
 
     private void getImages(String url) {
-        mTask.fetchDailyDetailUrls(url)
+        JsoupServer.rxConnect(url).build()
                 .map(document -> getImageCountList(document))
                 .subscribe(new Observer<String>() {
                     @Override
@@ -161,7 +160,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
                                 number = String.valueOf(i);
                             }
                             lastUrl = baseUrl + name + number + endType;
-                            imagesList.add(new GiftBean(lastUrl));
+                            imagesList.add(new Gift(lastUrl));
                         }
                     }
                 });
@@ -169,7 +168,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
 
     private void parseDocument(Document document) {
         if (document != null) {
-            List<DailyMeiziBean> list = getDays(document);
+            List<DailyMeizi> list = getDays(document);
 //            list = filterData(list, mModelView);
             if (ListUtils.getSize(list) > 0) {
                 mModelView.refillData(list);
@@ -180,13 +179,13 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
     /**
      * 筛选过滤得到月份集合
      */
-    private List<DailyMeiziBean> getDays(Document doc) {
-        List<DailyMeiziBean> list = new ArrayList<>();
+    private List<DailyMeizi> getDays(Document doc) {
+        List<DailyMeizi> list = new ArrayList<>();
         if (doc != null) {
             Elements times = doc.select(".post-content .archive-brick");
             Elements a_href = doc.select(".post-content .archive-brick a");
             for (int i = 0; i < a_href.size(); i++) {
-                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), times.get(i).text()));
+                list.add(new DailyMeizi(a_href.get(i).attr("href"), times.get(i).text()));
             }
         }
         return list;

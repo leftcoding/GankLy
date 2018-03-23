@@ -2,7 +2,6 @@ package com.gank.gankly.mvp.source.remote;
 
 import com.gank.gankly.bean.GankResult;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.mvp.source.BaseDataSourceModel;
 import com.gank.gankly.network.api.ApiManager;
 import com.gank.gankly.network.service.GankService;
 
@@ -13,7 +12,7 @@ import io.reactivex.Observable;
  * Create by LingYan on 2016-10-25
  */
 
-public class GankDataSource extends BaseDataSourceModel {
+public class GankDataSource {
     private static final String BASE_URL = "http://gank.io/api/data/";
     private GankService mGankService;
 
@@ -45,33 +44,33 @@ public class GankDataSource extends BaseDataSourceModel {
         final Observable<GankResult> androidGoods = mGankService.fetchAndroid(limit, page);
         final Observable<GankResult> images = mGankService.fetchImages(limit, page);
 
-        return toObservable(Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
+        return Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
             MeiziArrayList.getInstance().refillOneItems(images1.getResults());
             return androidGoods1;
-        }));
+        });
     }
 
     public Observable<GankResult> fetchAndroid(final int page, final int limit) {
-        return toObservable(mGankService.fetchAndroid(limit, page));
+        return mGankService.fetchAndroid(limit, page);
     }
 
 
     public Observable<GankResult> fetchIos(final int page, final int limit) {
-        return toObservable(mGankService.fetchIosGoods(limit, page));
+        return mGankService.fetchIosGoods(limit, page);
     }
 
     /**
      * 干货图片
      */
     public Observable<GankResult> fetchWelfare(final int page, final int limit) {
-        return toObservable(mGankService.fetchImages(limit, page));
+        return mGankService.fetchImages(limit, page);
     }
 
     /**
      * 视频
      */
     public Observable<GankResult> fetchVideo(final int page, final int limit) {
-        return toObservable(mGankService.fetchVideo(limit, page));
+        return mGankService.fetchVideo(limit, page);
     }
 
     /**
@@ -81,9 +80,9 @@ public class GankDataSource extends BaseDataSourceModel {
         final Observable<GankResult> androidGoods = mGankService.fetchVideo(limit, page);
         final Observable<GankResult> images = mGankService.fetchImages(limit, page);
 
-        return toObservable(Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
+        return Observable.zip(androidGoods, images, (androidGoods1, images1) -> {
             MeiziArrayList.getInstance().refillOneItems(images1.getResults());
             return androidGoods1;
-        }));
+        });
     }
 }

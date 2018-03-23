@@ -21,5 +21,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    api project(':support-ly-network')
+
+    api "org.jsoup:jsoup:${jsoup}"
+    implementation project(':support-ly-rxbus')
 }

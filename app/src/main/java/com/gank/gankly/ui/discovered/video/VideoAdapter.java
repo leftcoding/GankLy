@@ -111,11 +111,11 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.GankViewHold
     }
 
     class GankViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.goods_txt_title)
+        @BindView(R.id.title)
         TextView txtDesc;
-        @BindView(R.id.goods_img_bg)
+        @BindView(R.id.goods_background)
         ImageView mImageView;
-        @BindView(R.id.video_txt_author)
+        @BindView(R.id.author)
         TextView txtAuthor;
 
         public GankViewHolder(View itemView) {

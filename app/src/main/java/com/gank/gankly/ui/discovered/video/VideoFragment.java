@@ -107,7 +107,7 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         for (int childIndex = 0; childIndex < childCount; childIndex++) {
             ViewGroup childView = (ViewGroup) mRecyclerView.getChildAt(childIndex);
             View view = childView.findViewById(R.id.goods_rl_title);
-            TextView title = (TextView) childView.findViewById(R.id.goods_txt_title);
+            TextView title = (TextView) childView.findViewById(R.id.title);
             view.setBackgroundResource(background);
             title.setTextColor(textColor);
         }

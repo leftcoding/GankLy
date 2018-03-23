@@ -1,9 +1,9 @@
 package com.gank.gankly.ui.discovered.jiandan;
 
 import android.content.Context;
+import android.ly.jsoup.JsoupServer;
 
 import com.gank.gankly.bean.JianDanBean;
-import com.gank.gankly.mvp.source.remote.JiandanDataSource;
 import com.socks.library.KLog;
 
 import org.jsoup.nodes.Document;
@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -26,7 +24,6 @@ public class JiandanPresenter extends JiandanContract.Presenter {
     private static final String BASE_URL = "http://i.jandan.net/page/";
     private static final int LIMIT = 24;
 
-    private JiandanDataSource mJiandanDataSource;
     private JiandanContract.View mView;
 
     public JiandanPresenter(Context context, JiandanContract.View view) {
@@ -40,10 +37,7 @@ public class JiandanPresenter extends JiandanContract.Presenter {
 
     public void fetchData(int page) {
         String url = BASE_URL + page;
-        mJiandanDataSource.jsoupUrlData(url)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        JsoupServer.rxConnect(url).build()
                 .map(document -> mapResult(document))
                 .subscribe(new Observer<List<JianDanBean>>() {
                     @Override

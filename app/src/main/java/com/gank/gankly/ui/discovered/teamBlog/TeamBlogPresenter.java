@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.discovered.teamBlog;
 
 import android.content.Context;
+import android.ly.jsoup.JsoupServer;
 
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.mvp.source.remote.TeamBlogDataSource;
@@ -29,7 +30,8 @@ public class TeamBlogPresenter extends TechnologyContract.Presenter {
     }
 
     private void fetchData(int page) {
-        mTask.fetchData(page).subscribe(new Observer<Document>() {
+        String url = "";
+        JsoupServer.rxConnect(url).build().subscribe(new Observer<Document>() {
             @Override
             public void onComplete() {
                 mView.showContent();

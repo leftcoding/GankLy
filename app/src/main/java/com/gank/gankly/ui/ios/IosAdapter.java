@@ -2,8 +2,8 @@ package com.gank.gankly.ui.ios;
 
 import android.content.Context;
 import android.lectcoding.ui.adapter.BaseAdapter;
-import android.lectcoding.ui.adapter.BasicItem;
-import android.lectcoding.ui.adapter.Item;
+import android.lectcoding.ui.adapter.BasicViewItem;
+import android.lectcoding.ui.adapter.ViewItem;
 import android.ly.business.domain.Gank;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -26,7 +26,7 @@ import butterknife.BindView;
  */
 class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     private final List<Gank> resultsBeans = new ArrayList<>();
-    private final List<Item> itemList = new ArrayList<>();
+    private final List<ViewItem> viewItemList = new ArrayList<>();
 
     private Context context;
 
@@ -43,10 +43,10 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         @Override
         public void onChanged() {
             super.onChanged();
-            itemList.clear();
+            viewItemList.clear();
             if (!resultsBeans.isEmpty()) {
                 for (Gank resultsBean : resultsBeans) {
-                    itemList.add(new TextItem(resultsBean));
+                    viewItemList.add(new TextViewItem(resultsBean));
                 }
             }
         }
@@ -68,17 +68,17 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
 
     @Override
     public void onBindViewHolder(ButterKnifeHolder holder, int position) {
-        final Item item = itemList.get(position);
+        final ViewItem viewItem = viewItemList.get(position);
         switch (holder.getItemViewType()) {
             case NormalViewHolder.LAYOUT:
-                ((NormalViewHolder) holder).bindHolder((TextItem) item);
+                ((NormalViewHolder) holder).bindHolder((TextViewItem) viewItem);
                 break;
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return itemList.get(position).getViewType();
+        return viewItemList.get(position).getViewType();
     }
 
     @Override
@@ -115,8 +115,9 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         this.itemCallBack = itemCallBack;
     }
 
-    static class NormalViewHolder extends ButterKnifeHolder<TextItem> {
+    static class NormalViewHolder extends ButterKnifeHolder<TextViewItem> {
         static final int LAYOUT = R.layout.adapter_ios;
+
         @BindView(R.id.author_name)
         TextView authorName;
 
@@ -134,7 +135,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         }
 
         @Override
-        public void bindHolder(TextItem item) {
+        public void bindHolder(TextViewItem item) {
             final Gank resultsBean = item.getResultsBean();
 
             time.setText(item.getTime());
@@ -149,10 +150,10 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         }
     }
 
-    static class TextItem extends BasicItem {
+    static class TextViewItem extends BasicViewItem {
         private Gank resultsBean;
 
-        TextItem(Gank resultsBean) {
+        TextViewItem(Gank resultsBean) {
             this.resultsBean = resultsBean;
         }
 

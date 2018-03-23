@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/goods_img_bg"
+                android:id="@+id/goods_background"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
@@ -30,7 +30,7 @@
                 android:src="@drawable/item_default_img"/>
 
             <TextView
-                android:id="@+id/video_txt_author"
+                android:id="@+id/author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -60,7 +60,7 @@
             android:paddingTop="10dp">
 
             <TextView
-                android:id="@+id/goods_txt_title"
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"

@@ -1,10 +1,10 @@
 package com.gank.gankly.ui.cure;
 
 import android.content.Context;
+import android.ly.business.domain.Gift;
+import android.ly.jsoup.JsoupServer;
 
-import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.mvp.source.remote.MeiziDataSource;
+import android.ly.business.domain.DailyMeizi;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
@@ -25,16 +25,11 @@ class CurePresenter extends CureContract.Presenter {
     private static final String MEIZI_FIRST_URL = "http://www.meizitu.com/a/qingchun_3_";
     private static final int LIMIT = 30;
 
-    private MeiziDataSource mTask;
-    private final CureContract.View mModelView;
-
-    private ArrayList<GiftBean> imagesList;
+    private ArrayList<Gift> imagesList;
     private int max;
 
     CurePresenter(Context context, CureContract.View view) {
         super(context, view);
-//        mTask = task;
-        mModelView = view;
     }
 
     //    @Override
@@ -55,13 +50,13 @@ class CurePresenter extends CureContract.Presenter {
     }
 
     private void fetchData(String url) {
-        mTask.fetchDaily(url)
+        JsoupServer.rxConnect(url).build()
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
 //                        setFetchPage(getFetchPage() + 1);
-                        mModelView.showContent();
-                        mModelView.hideProgress();
+//                        mModelView.showContent();
+//                        mModelView.hideProgress();
                     }
 
                     @Override
@@ -89,12 +84,12 @@ class CurePresenter extends CureContract.Presenter {
 
     @Override
     public void girlsImages(final String url) {
-        mTask.fetchDailyDays(url)
+        JsoupServer.rxConnect(url).build()
                 .subscribe(new Observer<Document>() {
                     @Override
                     public void onComplete() {
-                        mModelView.disProgressDialog();
-                        mModelView.openBrowseActivity(imagesList);
+//                        mModelView.disProgressDialog();
+//                        mModelView.openBrowseActivity(imagesList);
                     }
 
                     @Override
@@ -121,29 +116,25 @@ class CurePresenter extends CureContract.Presenter {
             if (imgs != null && imgs.size() > 0) {
                 for (int i = 0; i < imgs.size(); i++) {
                     String src = imgs.get(i).attr("src");
-                    imagesList.add(new GiftBean(src));
+                    imagesList.add(new Gift(src));
                 }
             }
         }
     }
 
-//    private String getMeiziUrl() {
-//        return MEIZI_FIRST_URL + getFetchPage() + ".html";
-//    }
-
     private void getImages(String url) {
-        mTask.fetchDailyDetailUrls(url)
+        JsoupServer.rxConnect(url).build()
                 .map(this::getImageCountList)
                 .subscribe(new Observer<String>() {
                     @Override
                     public void onComplete() {
-                        mModelView.disProgressDialog();
-                        mModelView.openBrowseActivity(imagesList);
+//                        mModelView.disProgressDialog();
+//                        mModelView.openBrowseActivity(imagesList);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mModelView.disProgressDialog();
+//                        mModelView.disProgressDialog();
                         KLog.e(e);
                     }
 
@@ -181,7 +172,7 @@ class CurePresenter extends CureContract.Presenter {
                                 number = String.valueOf(i);
                             }
                             lastUrl = baseUrl + name + number + endType;
-                            imagesList.add(new GiftBean(lastUrl));
+                            imagesList.add(new Gift(lastUrl));
                         }
                     }
                 });
@@ -189,7 +180,7 @@ class CurePresenter extends CureContract.Presenter {
 
     private void parseMeiZiTu(Document document) {
         if (document != null) {
-            List<DailyMeiziBean> list = getColumnList(document);
+            List<DailyMeizi> list = getColumnList(document);
 //            list = filterData(list, mModelView);
             if (ListUtils.getSize(list) > 0) {
 //                if (getFetchPage() > 1) {
@@ -203,16 +194,16 @@ class CurePresenter extends CureContract.Presenter {
 
     private void parseDocument(Document document) {
         if (document != null) {
-            List<DailyMeiziBean> list = getDays(document);
+            List<DailyMeizi> list = getDays(document);
 //            list = filterData(list, mModelView);
             if (ListUtils.getSize(list) > 0) {
-                mModelView.refillData(list);
+//                mModelView.refillData(list);
             }
         }
     }
 
-    private List<DailyMeiziBean> getColumnList(Document doc) {
-        List<DailyMeiziBean> list = new ArrayList<>();
+    private List<DailyMeizi> getColumnList(Document doc) {
+        List<DailyMeizi> list = new ArrayList<>();
         if (doc != null) {
             Elements times = doc.select(".con");
             KLog.d("times" + times.size());
@@ -220,7 +211,7 @@ class CurePresenter extends CureContract.Presenter {
             Elements a_href = doc.select(".con .pic a");
             for (int i = 0; i < times.size(); i++) {
                 KLog.d("href:" + a_href.get(i).attr("href"));
-                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), times.get(i).text()));
+                list.add(new DailyMeizi(a_href.get(i).attr("href"), times.get(i).text()));
             }
         }
         return list;
@@ -229,13 +220,13 @@ class CurePresenter extends CureContract.Presenter {
     /**
      * 筛选过滤得到月份集合
      */
-    private List<DailyMeiziBean> getDays(Document doc) {
-        List<DailyMeiziBean> list = new ArrayList<>();
+    private List<DailyMeizi> getDays(Document doc) {
+        List<DailyMeizi> list = new ArrayList<>();
         if (doc != null) {
             Elements times = doc.select(".post-content .archive-brick");
             Elements a_href = doc.select(".post-content .archive-brick a");
             for (int i = 0; i < a_href.size(); i++) {
-                list.add(new DailyMeiziBean(a_href.get(i).attr("href"), times.get(i).text()));
+                list.add(new DailyMeizi(a_href.get(i).attr("href"), times.get(i).text()));
             }
         }
         return list;

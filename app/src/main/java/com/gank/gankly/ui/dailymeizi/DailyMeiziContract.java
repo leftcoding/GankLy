@@ -1,10 +1,10 @@
 package com.gank.gankly.ui.dailymeizi;
 
 import android.content.Context;
+import android.ly.business.domain.Gift;
 import android.support.annotation.NonNull;
 
-import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
+import android.ly.business.domain.DailyMeizi;
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
 
@@ -17,15 +17,15 @@ import java.util.List;
 
 public interface DailyMeiziContract {
     interface View extends SupportView {
-        void refillData(List<DailyMeiziBean> list);
+        void refillData(List<DailyMeizi> list);
 
-        void appendItem(List<DailyMeiziBean> list);
+        void appendItem(List<DailyMeizi> list);
 
         void setMaxProgress(int value);
 
         void disProgressDialog();
 
-        void openBrowseActivity(ArrayList<GiftBean> list);
+        void openBrowseActivity(ArrayList<Gift> list);
     }
 
     abstract class Presenter extends LoadMorePresenter<View> {

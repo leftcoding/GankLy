@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
+import android.ly.business.domain.DailyMeizi;
 import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
@@ -130,7 +130,7 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     }
 
     @Override
-    public void openBrowseActivity(@NonNull ArrayList<GiftBean> list) {
+    public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(mActivity, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
@@ -182,8 +182,8 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
 
     @Override
     public void onClick(int position, Object object) {
-        DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
-        String url = dailyMeiziBean.getUrl();
+        DailyMeizi dailyMeizi = (DailyMeizi) object;
+        String url = dailyMeizi.getUrl();
         if (!TextUtils.isEmpty(url)) {
             showLoadingDialog();
             mPresenter.girlsImages(url);
@@ -202,12 +202,12 @@ public class DailyMeiziFragment extends LazyFragment implements DailyMeiziContra
     }
 
     @Override
-    public void refillData(List<DailyMeiziBean> list) {
+    public void refillData(List<DailyMeizi> list) {
         mDailyMeiziAdapter.refillItem(list);
     }
 
     @Override
-    public void appendItem(List<DailyMeiziBean> list) {
+    public void appendItem(List<DailyMeizi> list) {
         mDailyMeiziAdapter.appendItem(list);
     }
 

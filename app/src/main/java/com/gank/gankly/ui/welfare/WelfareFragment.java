@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 干货福利妹子
+ * 干货 - 妹子
  * Create by LingYan on 2016-5-12
  */
 public class WelfareFragment extends LazyFragment implements WelfareContract.View {

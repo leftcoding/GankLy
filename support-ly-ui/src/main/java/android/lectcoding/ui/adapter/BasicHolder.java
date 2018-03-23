@@ -9,7 +9,7 @@ import android.view.ViewGroup;
  * Create by LingYan on 2017-11-27
  */
 
-public abstract class BasicHolder<II extends Item> extends RecyclerView.ViewHolder {
+public abstract class BasicHolder<II extends ViewItem> extends RecyclerView.ViewHolder {
     public BasicHolder(ViewGroup parent, @LayoutRes int layout) {
         super(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false));
     }

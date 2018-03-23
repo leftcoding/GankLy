@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.ly.business.domain.Gank;
+import android.ly.business.domain.Gift;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,7 +40,6 @@ import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.utils.CrashUtils;
@@ -118,7 +118,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     private Disposable subscription;
     private Disposable autoTipable;
 
-    private List<GiftBean> mGiftList;
+    private List<Gift> mGiftList;
     private Bitmap mBitmap;
     private String mViewsModel = EXTRA_GANK;
     private boolean isCanPlay = true;
@@ -260,15 +260,15 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
-    private List<GiftBean> changeImageList(List<Gank> resultsBeen) {
-        List<GiftBean> list = new ArrayList<>();
+    private List<Gift> changeImageList(List<Gank> resultsBeen) {
+        List<Gift> list = new ArrayList<>();
         if (!ListUtils.isListEmpty(resultsBeen)) {
             Gank resultsBean;
             String url;
             for (int i = 0; i < resultsBeen.size(); i++) {
                 resultsBean = resultsBeen.get(i);
                 url = resultsBean.url;
-                list.add(new GiftBean(url));
+                list.add(new Gift(url));
             }
         }
         return list;

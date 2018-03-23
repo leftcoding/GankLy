@@ -2,6 +2,7 @@ package com.gank.gankly.ui.pure;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,8 +11,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.listener.ItemClick;
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -26,21 +25,20 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
- * 清纯妹子
+ * 妹子 - 清纯
  * Create by LingYan on 2016-05-17
  */
-public class PureFragment extends LazyFragment implements ItemClick, PureContract.View {
+public class PureFragment extends LazyFragment implements PureContract.View {
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout swipeRefresh;
 
     @BindView(R.id.multiple_status_view)
     MultipleStatusView multipleStatusView;
 
-    private PureAdapter mAdapter;
+    private PureAdapter pureAdapter;
+    private PureContract.Presenter purePresenter;
 
-    private ArrayList<GiftBean> mImageCountList = new ArrayList<>();
-    private ProgressDialog mDialog;
-    private PureContract.Presenter mPresenter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected int getLayoutId() {
@@ -56,13 +54,13 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         super.onViewCreated(view, savedInstanceState);
         initRecycler();
 
-        mAdapter.setOnItemClickListener(this);
+        pureAdapter.setOnItemClickListener(pureCallback);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mPresenter = new PurePresenter(getContext(), this);
+        purePresenter = new PurePresenter(getContext(), this);
         initRefresh();
     }
 
@@ -71,14 +69,26 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
         initRefresh();
     }
 
+    private final PureAdapter.ItemClickCallback pureCallback = new PureAdapter.ItemClickCallback() {
+        @Override
+        public void onItemClick(final Gift gift) {
+            showDialog();
+            Observable.just(gift)
+                    .throttleFirst(100, TimeUnit.MILLISECONDS)
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(giftBean1 -> purePresenter.refreshImages(giftBean1.getUrl()));
+        }
+    };
+
     private void initRefresh() {
         multipleStatusView.showLoading();
-        mPresenter.refreshPure();
+        purePresenter.refreshPure();
     }
 
     private void initRecycler() {
-        mAdapter = new PureAdapter(context);
-        swipeRefresh.setAdapter(mAdapter);
+        pureAdapter = new PureAdapter(context);
+        swipeRefresh.setAdapter(pureAdapter);
 
         swipeRefresh.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
@@ -87,50 +97,31 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
             @Override
             public void onRefresh() {
-                mPresenter.refreshPure();
+                purePresenter.refreshPure();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.appendPure();
+                purePresenter.appendPure();
             }
         });
     }
 
 
     private void showDialog() {
-        if (mDialog == null) {
-            mDialog = new ProgressDialog(context);
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
         }
 
-        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
-        mDialog.setIndeterminate(true);
-        mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage(context.getString(R.string.loading_meizi_images));
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(true);
+        progressDialog.setOnCancelListener(dialog -> purePresenter.unSubscribe());
 
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
         }
-
-        if (!mDialog.isShowing()) {
-            mDialog.show();
-        }
-    }
-
-    @Override
-    public void onClick(int position, Object object) {
-        showDialog();
-        final GiftBean giftBean = (GiftBean) object;
-        Observable.just(giftBean)
-                .throttleFirst(100, TimeUnit.MILLISECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(giftBean1 -> mPresenter.refreshImages(giftBean1.getUrl()));
-    }
-
-    public List<GiftBean> getList() {
-        return mImageCountList;
     }
 
     @Override
@@ -187,17 +178,23 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
     }
 
     @Override
-    public void refillData(List<GiftBean> list) {
-        mAdapter.refillItems(list);
+    public void refillData(List<Gift> list) {
+        if (pureAdapter != null) {
+            pureAdapter.refillItems(list);
+            pureAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
-    public void appendData(List<GiftBean> list) {
-        mAdapter.appedItems(list);
+    public void appendData(List<Gift> list) {
+        if (pureAdapter != null) {
+            pureAdapter.appendItems(list);
+            pureAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
-    public void openGalleryActivity(ArrayList<GiftBean> list) {
+    public void openGalleryActivity(ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
         Intent intent = new Intent(context, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
@@ -210,13 +207,16 @@ public class PureFragment extends LazyFragment implements ItemClick, PureContrac
 
     @Override
     public void disLoadingDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (pureAdapter != null) {
+            pureAdapter.destroy();
+        }
     }
 }

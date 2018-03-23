@@ -1,6 +1,6 @@
 package com.gank.gankly.bean;
 
-import com.gank.gankly.utils.ListUtils;
+import android.ly.business.domain.Gift;
 
 import java.util.List;
 
@@ -9,30 +9,10 @@ import java.util.List;
  */
 public class GiftResult {
     private int num;
-    private List<GiftBean> mList;
+    private List<Gift> mList;
 
-    public GiftResult(int num, List<GiftBean> list) {
+    public GiftResult(int num, List<Gift> list) {
         this.num = num;
         mList = list;
-    }
-
-    public List<GiftBean> getList() {
-        return mList;
-    }
-
-    public void setList(List<GiftBean> list) {
-        mList = list;
-    }
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public int getSize() {
-        return ListUtils.getSize(mList);
     }
 }

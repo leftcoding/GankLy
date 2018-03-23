@@ -1,9 +1,9 @@
 package com.gank.gankly.ui.pure;
 
 import android.content.Context;
+import android.ly.business.domain.Gift;
 import android.support.annotation.NonNull;
 
-import com.gank.gankly.bean.GiftBean;
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.SupportView;
 
@@ -16,11 +16,11 @@ import java.util.List;
 
 public interface PureContract {
     interface View extends SupportView {
-        void refillData(List<GiftBean> list);
+        void refillData(List<Gift> list);
 
-        void appendData(List<GiftBean> list);
+        void appendData(List<Gift> list);
 
-        void openGalleryActivity(ArrayList<GiftBean> list);
+        void openGalleryActivity(ArrayList<Gift> list);
 
         void disLoadingDialog();
     }

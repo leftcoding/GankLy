@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.discovered.technology;
 
 import android.content.Context;
+import android.ly.jsoup.JsoupServer;
 
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.mvp.source.remote.TechnologyDataSource;
@@ -33,28 +34,31 @@ public class TechnologyPresenter extends TechnologyContract.Presenter {
 //    }
 
     private void fetchData(int page) {
-        mTask.fetchData(page).subscribe(new Observer<Document>() {
-            @Override
-            public void onError(Throwable e) {
-                mView.hideProgress();
-                KLog.e(e);
-            }
+        JsoupServer
+                .rxConnect("")
+                .build()
+                .subscribe(new Observer<Document>() {
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.hideProgress();
+                        KLog.e(e);
+                    }
 
-            @Override
-            public void onComplete() {
-                mView.showContent();
-                mView.hideProgress();
+                    @Override
+                    public void onComplete() {
+                        mView.showContent();
+                        mView.hideProgress();
 //                int nextPage = getFetchPage() + 1;
 //                setFetchPage(nextPage);
-            }
+                    }
 
-            @Override
-            public void onSubscribe(Disposable d) {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            }
+                    }
 
-            @Override
-            public void onNext(Document document) {
+                    @Override
+                    public void onNext(Document document) {
 //                List<JianDanBean> list = parseDocument(document);
 //                if (list.size() > 0) {
 //                    if (getFetchPage() > 1) {
@@ -63,8 +67,8 @@ public class TechnologyPresenter extends TechnologyContract.Presenter {
 //                        mView.refillData(list);
 //                    }
 //                }
-            }
-        });
+                    }
+                });
     }
 
     private List<JianDanBean> parseDocument(Document document) {

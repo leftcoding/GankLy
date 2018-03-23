@@ -1,29 +1,21 @@
 package com.gank.gankly.ui.cure;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.ly.business.domain.Gift;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.bean.DailyMeiziBean;
-import com.gank.gankly.bean.GiftBean;
-import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.rxjava.theme.ThemeEvent;
+
+import android.ly.business.domain.DailyMeizi;
+
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.MainActivity;
-import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -31,22 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import io.reactivex.disposables.Disposable;
 
 /**
- * 妹子每日更新
+ * 妹子 - 清纯
  * Create by LingYan on 2016-07-01
  */
-public class CureFragment extends LazyFragment implements CureContract.View, ItemClick {
+public class CureFragment extends LazyFragment implements CureContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
+
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout swipeRefresh;
 
     private CureAdapter mCureAdapter;
-    private CurePresenter mPresenter;
-    private MainActivity mActivity;
-    private Disposable mDisposable;
+    private CurePresenter curePresenter;
 
     private ProgressDialog mDialog;
 
@@ -59,90 +49,79 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mCureAdapter = new CureAdapter();
-        mSwipeRefreshLayout.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.VERTICAL, false));
-        mSwipeRefreshLayout.setAdapter(mCureAdapter);
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        swipeRefresh.setAdapter(mCureAdapter);
 
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.fetchNew();
+                onRefresh();
             }
 
             @Override
             public void onLoadMore() {
-                mPresenter.fetchMore();
+                curePresenter.fetchMore();
             }
         });
 
-        mCureAdapter.setOnItemClickListener(this);
-
-        mDisposable = RxBus_.getInstance().toObservable(ThemeEvent.class)
-                .subscribe(themeEvent -> changeUi());
+        mCureAdapter.setOnItemClickListener(cureCallback);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mPresenter = new CurePresenter(MeiziDataSource.getInstance(), this);
+        curePresenter = new CurePresenter(context, this);
     }
+
+    private final CureAdapter.ItemCallback cureCallback = new CureAdapter.ItemCallback() {
+        @Override
+        public void onItemClick(final DailyMeizi dailyMeizi) {
+            final String url = dailyMeizi.url;
+            if (!TextUtils.isEmpty(url)) {
+                showLoadingDialog();
+                curePresenter.girlsImages(url);
+            }
+        }
+    };
 
     @Override
     protected void initLazy() {
-        mMultipleStatusView.showLoading();
-        mPresenter.fetchNew();
+        onRefresh();
     }
 
-    private void changeUi() {
-        TypedValue typedValue = new TypedValue();
-        Resources.Theme theme = mActivity.getTheme();
-        theme.resolveAttribute(R.attr.meiziDailyItemBackground, typedValue, true);
-        int background = typedValue.data;
-        TypedValue textValue = new TypedValue();
-        theme.resolveAttribute(R.attr.baseAdapterItemTextColor, textValue, true);
-        int textColor = textValue.data;
-        theme.resolveAttribute(R.attr.themeBackground, textValue, true);
-        int recyclerColor = textValue.data;
-        mSwipeRefreshLayout.getRecyclerView().setBackgroundColor(recyclerColor);
-
-        int childCount = mSwipeRefreshLayout.getRecyclerView().getChildCount();
-        for (int childIndex = 0; childIndex < childCount; childIndex++) {
-            ViewGroup childView = (ViewGroup) mSwipeRefreshLayout.getRecyclerView().getChildAt(childIndex);
-            childView.setBackgroundColor(background);
-            TextView title = (TextView) childView.findViewById(R.id.daily_meizi_title);
-            title.setTextColor(textColor);
+    void onRefresh() {
+        if (curePresenter != null) {
+            curePresenter.fetchNew();
         }
-
-        StyleUtils.clearRecyclerViewItem(mSwipeRefreshLayout.getRecyclerView());
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
     }
 
     private void showLoadingDialog() {
         if (mDialog == null) {
-            mDialog = new ProgressDialog(mActivity);
+            mDialog = new ProgressDialog(context);
         }
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mDialog.setMessage(context.getString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(dialog -> mPresenter.unSubscribe());
+        mDialog.setOnCancelListener(dialog -> curePresenter.unSubscribe());
         if (!mDialog.isShowing()) {
             mDialog.show();
         }
     }
 
     @Override
-    public void openBrowseActivity(@NonNull ArrayList<GiftBean> list) {
+    public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(mActivity, GalleryActivity.class);
+        Intent intent = new Intent(context, GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        mActivity.startActivity(intent);
+        context.startActivity(intent);
     }
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefresh.setRefreshing(false);
     }
 
     @Override
@@ -152,7 +131,7 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
 
     @Override
     public void showProgress() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        swipeRefresh.setRefreshing(true);
     }
 
     @Override
@@ -176,33 +155,12 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     }
 
     @Override
-    public void onClick(int position, Object object) {
-        DailyMeiziBean dailyMeiziBean = (DailyMeiziBean) object;
-        String url = dailyMeiziBean.getUrl();
-        if (!TextUtils.isEmpty(url)) {
-            showLoadingDialog();
-            mPresenter.girlsImages(url);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        mActivity = (MainActivity) context;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void refillData(List<DailyMeiziBean> list) {
+    public void refillData(List<DailyMeizi> list) {
         mCureAdapter.refillItem(list);
     }
 
     @Override
-    public void appendItem(List<DailyMeiziBean> list) {
+    public void appendItem(List<DailyMeizi> list) {
         mCureAdapter.appendItem(list);
     }
 
@@ -223,8 +181,5 @@ public class CureFragment extends LazyFragment implements CureContract.View, Ite
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mDisposable != null && !mDisposable.isDisposed()) {
-            mDisposable.dispose();
-        }
     }
 }

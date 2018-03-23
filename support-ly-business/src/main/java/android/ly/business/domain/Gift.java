@@ -1,4 +1,4 @@
-package com.gank.gankly.bean;
+package android.ly.business.domain;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -6,18 +6,18 @@ import android.os.Parcelable;
 /**
  * Create by LingYan on 2016-05-18
  */
-public class GiftBean implements Parcelable {
+public class Gift implements Parcelable {
     private String imgUrl;
     private String url;
     private String time;
     private String views;
     private String title;
 
-    public GiftBean(String imgUrl) {
+    public Gift(String imgUrl) {
         this.imgUrl = imgUrl;
     }
 
-    public GiftBean(String imgUrl, String url, String time, String views, String title) {
+    public Gift(String imgUrl, String url, String time, String views, String title) {
         this.imgUrl = imgUrl;
         this.url = url;
         this.time = time;
@@ -25,7 +25,7 @@ public class GiftBean implements Parcelable {
         this.title = title;
     }
 
-    protected GiftBean(Parcel in) {
+    protected Gift(Parcel in) {
         imgUrl = in.readString();
         url = in.readString();
         time = in.readString();
@@ -33,15 +33,15 @@ public class GiftBean implements Parcelable {
         title = in.readString();
     }
 
-    public static final Creator<GiftBean> CREATOR = new Creator<GiftBean>() {
+    public static final Creator<Gift> CREATOR = new Creator<Gift>() {
         @Override
-        public GiftBean createFromParcel(Parcel in) {
-            return new GiftBean(in);
+        public Gift createFromParcel(Parcel in) {
+            return new Gift(in);
         }
 
         @Override
-        public GiftBean[] newArray(int size) {
-            return new GiftBean[size];
+        public Gift[] newArray(int size) {
+            return new Gift[size];
         }
     };
 
