@@ -1,4 +1,4 @@
-# Gank
+# Gank（重构ing）
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/leftcoding/GankLy#声明)
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
