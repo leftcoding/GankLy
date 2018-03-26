@@ -1,4 +1,4 @@
-# Gank
+# Gank（项目在重构ing，可以在branch - dev 分支中查看最新重构代码）
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/leftcoding/GankLy#声明)
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
