@@ -11,8 +11,8 @@ import butterknife.ButterKnife;
  * Create by LingYan on 2017-10-13
  */
 
-public abstract class ButterKnifeHolder<II extends ViewItem> extends BasicHolder<II> {
-    public ButterKnifeHolder(ViewGroup parent, @LayoutRes int layoutRes) {
+public abstract class BindViewHolder<II extends ViewItem> extends BasicHolder<II> {
+    public BindViewHolder(ViewGroup parent, @LayoutRes int layoutRes) {
         super(parent, layoutRes);
         ButterKnife.bind(this, itemView);
     }

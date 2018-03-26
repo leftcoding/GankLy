@@ -75,7 +75,7 @@ public class BrowseHistoryAdapter extends RecyclerView.Adapter<BrowseHistoryAdap
     }
 
     public class BrowseHolder extends BaseHolder implements View.OnClickListener {
-        @BindView(R.id.daily_meizi_title)
+        @BindView(R.id.title)
         TextView mTitle;
         ReadHistory mReadHistory;
         @BindView(R.id.daily_meizi_ll_body)

@@ -11,9 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.gank.gankly.R;
-
-import android.ly.business.domain.DailyMeizi;
-
 import com.gank.gankly.ui.base.fragment.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -30,15 +27,15 @@ import butterknife.BindView;
  */
 public class CureFragment extends LazyFragment implements CureContract.View {
     @BindView(R.id.multiple_status_view)
-    MultipleStatusView mMultipleStatusView;
+    MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout swipeRefresh;
 
-    private CureAdapter mCureAdapter;
-    private CurePresenter curePresenter;
+    private CureAdapter cureAdapter;
+    private CureContract.Presenter curePresenter;
 
-    private ProgressDialog mDialog;
+    private ProgressDialog progressDialog;
 
     @Override
     protected int getLayoutId() {
@@ -48,23 +45,28 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCureAdapter = new CureAdapter();
+        cureAdapter = new CureAdapter();
+        cureAdapter.setOnItemClickListener(cureCallback);
         swipeRefresh.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        swipeRefresh.setAdapter(mCureAdapter);
+        swipeRefresh.setAdapter(cureAdapter);
 
         swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                onRefresh();
+                initCureRefresh();
             }
 
             @Override
             public void onLoadMore() {
-                curePresenter.fetchMore();
+                curePresenter.appendGirls();
             }
         });
+    }
 
-        mCureAdapter.setOnItemClickListener(cureCallback);
+    private void initCureRefresh() {
+        if (curePresenter != null) {
+            curePresenter.refreshGirls();
+        }
     }
 
     @Override
@@ -75,37 +77,31 @@ public class CureFragment extends LazyFragment implements CureContract.View {
 
     private final CureAdapter.ItemCallback cureCallback = new CureAdapter.ItemCallback() {
         @Override
-        public void onItemClick(final DailyMeizi dailyMeizi) {
-            final String url = dailyMeizi.url;
+        public void onItemClick(final String url) {
             if (!TextUtils.isEmpty(url)) {
                 showLoadingDialog();
-                curePresenter.girlsImages(url);
+                curePresenter.loadImages(url);
             }
         }
     };
 
     @Override
     protected void initLazy() {
-        onRefresh();
-    }
-
-    void onRefresh() {
-        if (curePresenter != null) {
-            curePresenter.fetchNew();
-        }
+        initCureRefresh();
     }
 
     private void showLoadingDialog() {
-        if (mDialog == null) {
-            mDialog = new ProgressDialog(context);
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage(context.getString(R.string.loading_meizi_images));
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(true);
+            progressDialog.setOnCancelListener(dialog -> curePresenter.unSubscribe());
         }
-        mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
-        mDialog.setIndeterminate(true);
-        mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(dialog -> curePresenter.unSubscribe());
-        if (!mDialog.isShowing()) {
-            mDialog.show();
+
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
         }
     }
 
@@ -121,7 +117,9 @@ public class CureFragment extends LazyFragment implements CureContract.View {
 
     @Override
     public void hideProgress() {
-        swipeRefresh.setRefreshing(false);
+        if (swipeRefresh != null && swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
     }
 
     @Override
@@ -131,12 +129,16 @@ public class CureFragment extends LazyFragment implements CureContract.View {
 
     @Override
     public void showProgress() {
-        swipeRefresh.setRefreshing(true);
+        if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
     }
 
     @Override
     public void showContent() {
-        mMultipleStatusView.showContent();
+        if (multipleStatusView != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
@@ -155,31 +157,57 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     }
 
     @Override
-    public void refillData(List<DailyMeizi> list) {
-        mCureAdapter.refillItem(list);
-    }
-
-    @Override
-    public void appendItem(List<DailyMeizi> list) {
-        mCureAdapter.appendItem(list);
-    }
-
-    @Override
     public void setMaxProgress(int value) {
-        if (mDialog != null) {
-            mDialog.setMax(value);
+        if (progressDialog != null) {
+            progressDialog.setMax(value);
         }
     }
 
     @Override
     public void disProgressDialog() {
-        if (mDialog != null && mDialog.isShowing()) {
-            mDialog.dismiss();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (cureAdapter != null) {
+            cureAdapter.destroy();
+        }
+        if (curePresenter != null) {
+            curePresenter.unSubscribe();
+        }
+    }
+
+    @Override
+    public void refreshSuccess(List<Gift> list) {
+        if (list != null) {
+            if (cureAdapter != null) {
+                cureAdapter.refillItem(list);
+                cureAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void refreshFailure(String msg) {
+        shortToast(msg);
+    }
+
+    @Override
+    public void appendSuccess(List<Gift> list) {
+        if (cureAdapter != null) {
+            if (list != null) {
+                cureAdapter.appendItem(list);
+                cureAdapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void appendFailure(String msg) {
+        shortToast(msg);
     }
 }

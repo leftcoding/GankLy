@@ -511,7 +511,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
         @Override
         public Fragment getItem(int position) {
-            return GalleryFragment.newInstance(mGiftList.get(position).getImgUrl());
+            return GalleryFragment.newInstance(mGiftList.get(position).imgUrl);
         }
     }
 
@@ -635,7 +635,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         if (EXTRA_GANK.equals(mViewsModel)) {
             mUrl = MeiziArrayList.getInstance().getResultBean(position).url;
         } else {
-            mUrl = mGiftList.get(position).getImgUrl();
+            mUrl = mGiftList.get(position).imgUrl;
         }
         return mUrl;
     }

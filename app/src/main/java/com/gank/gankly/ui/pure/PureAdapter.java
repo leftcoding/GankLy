@@ -17,7 +17,7 @@ import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
-import com.gank.gankly.butterknife.ButterKnifeHolder;
+import com.gank.gankly.butterknife.BindViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,10 +164,10 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
             super.bindHolder(item, callback);
             final Gift gift = item.gift;
             final Context context = itemView.getContext();
-            title.setText(gift.getTitle());
-            author.setText(gift.getTime());
+            title.setText(gift.title);
+            author.setText(gift.time);
 
-            final GlideUrl glideUrl = new GlideUrl(gift.getImgUrl(), new LazyHeaders.Builder()
+            final GlideUrl glideUrl = new GlideUrl(gift.imgUrl, new LazyHeaders.Builder()
                     .addHeader("referer", "http://www.mzitu.com/mm/")
                     .build());
 
@@ -201,7 +201,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
         }
     }
 
-    abstract static class PureViewHolder<II extends ViewItem> extends ButterKnifeHolder<II> {
+    abstract static class PureViewHolder<II extends ViewItem> extends BindViewHolder<II> {
 
         PureViewHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);

@@ -77,7 +77,7 @@ public class PureFragment extends LazyFragment implements PureContract.View {
                     .throttleFirst(100, TimeUnit.MILLISECONDS)
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(giftBean1 -> purePresenter.refreshImages(giftBean1.getUrl()));
+                    .subscribe(giftBean1 -> purePresenter.refreshImages(giftBean1.url));
         }
     };
 

@@ -1,10 +1,10 @@
-package com.gank.gankly.ui.dailymeizi;
+package com.gank.gankly.ui.daily;
 
 import android.content.Context;
 import android.ly.business.domain.Gift;
 import android.ly.jsoup.JsoupServer;
 
-import android.ly.business.domain.DailyMeizi;
+import android.ly.business.domain.Girl;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
 
@@ -21,13 +21,13 @@ import io.reactivex.disposables.Disposable;
  * Create by LingYan on 2016-10-26
  */
 
-public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
+public class DailyGirlPresenter extends DailyGirlContract.Presenter {
     private static final String MEIZI_FIRST_URL = "http://m.mzitu.com/all";
-    private final DailyMeiziContract.View mModelView;
+    private final DailyGirlContract.View mModelView;
     private ArrayList<Gift> imagesList;
     private int max;
 
-    public DailyMeiziPresenter(Context context, DailyMeiziContract.View view) {
+    public DailyGirlPresenter(Context context, DailyGirlContract.View view) {
         super(context, view);
         mModelView = view;
     }
@@ -168,7 +168,7 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
 
     private void parseDocument(Document document) {
         if (document != null) {
-            List<DailyMeizi> list = getDays(document);
+            List<Girl> list = getDays(document);
 //            list = filterData(list, mModelView);
             if (ListUtils.getSize(list) > 0) {
                 mModelView.refillData(list);
@@ -179,13 +179,13 @@ public class DailyMeiziPresenter extends DailyMeiziContract.Presenter {
     /**
      * 筛选过滤得到月份集合
      */
-    private List<DailyMeizi> getDays(Document doc) {
-        List<DailyMeizi> list = new ArrayList<>();
+    private List<Girl> getDays(Document doc) {
+        List<Girl> list = new ArrayList<>();
         if (doc != null) {
             Elements times = doc.select(".post-content .archive-brick");
             Elements a_href = doc.select(".post-content .archive-brick a");
             for (int i = 0; i < a_href.size(); i++) {
-                list.add(new DailyMeizi(a_href.get(i).attr("href"), times.get(i).text()));
+                list.add(new Girl(a_href.get(i).attr("href"), times.get(i).text()));
             }
         }
         return list;

@@ -1,44 +1,56 @@
 package com.gank.gankly.ui.cure;
 
-import android.ly.business.domain.DailyMeizi;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.lectcoding.ui.adapter.BaseAdapter;
+import android.lectcoding.ui.adapter.BasicViewItem;
+import android.ly.business.domain.Gift;
+import android.support.annotation.IntDef;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gank.gankly.R;
+import com.gank.gankly.butterknife.BindViewHolder;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import static com.gank.gankly.ui.cure.CureAdapter.ViewType.VIEW_TYPE_CURE;
 
 /**
  * Create by LingYan on 2016-07-05
  */
-public class CureAdapter extends RecyclerView.Adapter<CureAdapter.DailyMeiziHolder> {
+public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
     private ItemCallback itemCallback;
-    private List<DailyMeizi> mDailyMeiziList;
+    private List<Gift> gifts = new ArrayList<>();
+    private final List<CureItem> items = new ArrayList<>();
 
     CureAdapter() {
         setHasStableIds(true);
-        mDailyMeiziList = new ArrayList<>();
     }
 
     @Override
-    public CureAdapter.DailyMeiziHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_dailymeizi, parent, false);
-        return new DailyMeiziHolder(view);
+    public CureAdapter.NormalViewHolder onCreateViewHolder(ViewGroup parent, @ViewType.CureViewType int viewType) {
+        NormalViewHolder viewHolder;
+        switch (viewType) {
+            case VIEW_TYPE_CURE:
+                viewHolder = new CureHolder(parent);
+                break;
+            default:
+                viewHolder = null;
+                break;
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(CureAdapter.DailyMeiziHolder holder, int position) {
-        DailyMeizi dailyMeizi = mDailyMeiziList.get(position);
-        holder.dailyMeizi = dailyMeizi;
-        if (dailyMeizi != null) {
-            holder.txtTitle.setText(dailyMeizi.title);
+    public void onBindViewHolder(NormalViewHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case VIEW_TYPE_CURE:
+                ((CureHolder) holder).bindHolder(items.get(position), itemCallback);
+                break;
         }
     }
 
@@ -47,8 +59,16 @@ public class CureAdapter extends RecyclerView.Adapter<CureAdapter.DailyMeiziHold
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (!items.isEmpty()) {
+            return items.get(position).getViewType();
+        }
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public int getItemCount() {
-        return mDailyMeiziList.size();
+        return gifts.size();
     }
 
     @Override
@@ -56,38 +76,94 @@ public class CureAdapter extends RecyclerView.Adapter<CureAdapter.DailyMeiziHold
         return position;
     }
 
-    void refillItem(List<DailyMeizi> dailyMeiziList) {
-        int size = mDailyMeiziList.size();
-        mDailyMeiziList.clear();
-        notifyItemRangeRemoved(0, size);
-        appendItem(dailyMeiziList);
+    void refillItem(List<Gift> dailyGirlList) {
+        gifts.clear();
+        appendItem(dailyGirlList);
     }
 
-    public void appendItem(List<DailyMeizi> dailyMeiziList) {
-        mDailyMeiziList.addAll(dailyMeiziList);
-        notifyItemRangeInserted(getItemCount(), dailyMeiziList.size());
+    public void appendItem(List<Gift> dailyGirlList) {
+        int startIndex = items.size();
+        gifts.addAll(dailyGirlList);
+        changeItems(startIndex);
     }
 
-    public class DailyMeiziHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView(R.id.daily_meizi_title)
-        TextView txtTitle;
-        DailyMeizi dailyMeizi;
-
-        DailyMeiziHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-            ButterKnife.bind(this, itemView);
-        }
-
-        @Override
-        public void onClick(View v) {
-            if (itemCallback != null) {
-                itemCallback.onItemClick(dailyMeizi);
+    private void changeItems(int startIndex) {
+        for (int i = startIndex, size = gifts.size(); i < size; i++) {
+            final Gift gift = gifts.get(i);
+            if (gift != null) {
+                items.add(new CureItem(gift));
             }
         }
     }
 
+    @Override
+    public void destroy() {
+        items.clear();
+        gifts.clear();
+        itemCallback = null;
+    }
+
+    static class CureHolder extends NormalViewHolder<CureItem> {
+        @BindView(R.id.title)
+        TextView title;
+
+        CureHolder(ViewGroup parent) {
+            super(parent, R.layout.adapter_daily_girl);
+        }
+
+        @Override
+        void bindHolder(CureItem item, ItemCallback callback) {
+            super.bindHolder(item, callback);
+            final Gift gift = item.gift;
+            title.setText(gift.title);
+
+            itemView.setOnClickListener(v -> {
+                if (callback != null) {
+                    callback.onItemClick(gift.url);
+                }
+            });
+        }
+    }
+
+    static class CureItem extends BasicViewItem {
+        final Gift gift;
+
+        CureItem(Gift gift) {
+            this.gift = gift;
+        }
+
+        @Override
+        public int getViewType() {
+            return VIEW_TYPE_CURE;
+        }
+    }
+
     interface ItemCallback {
-        void onItemClick(DailyMeizi dailyMeizi);
+        void onItemClick(String url);
+    }
+
+    abstract static class NormalViewHolder<TT extends BasicViewItem> extends BindViewHolder<TT> {
+
+        NormalViewHolder(ViewGroup parent, int layoutRes) {
+            super(parent, layoutRes);
+        }
+
+        void bindHolder(TT item, ItemCallback callback) {
+
+        }
+
+        @Override
+        public void bindHolder(TT item) {
+
+        }
+    }
+
+    interface ViewType {
+        int VIEW_TYPE_CURE = 1;
+
+        @IntDef(VIEW_TYPE_CURE)
+        @Retention(RetentionPolicy.SOURCE)
+        @interface CureViewType {
+        }
     }
 }

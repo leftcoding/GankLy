@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.butterknife.ButterKnifeHolder;
+import com.gank.gankly.butterknife.BindViewHolder;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-04-25
  */
-class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
+class AndroidAdapter extends BaseAdapter<BindViewHolder> {
     private ItemCallback itemCallback;
     private Context context;
 
@@ -63,8 +63,8 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     @Override
-    public ButterKnifeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ButterKnifeHolder defaultHolder;
+    public BindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BindViewHolder defaultHolder;
         switch (viewType) {
             case NormalViewHolder.LAYOUT:
                 defaultHolder = new NormalViewHolder(parent, itemCallback);
@@ -77,7 +77,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ButterKnifeHolder holder, int position) {
+    public void onBindViewHolder(BindViewHolder holder, int position) {
         final ViewItem viewItem = viewItemList.get(position);
         switch (holder.getItemViewType()) {
             case NormalViewHolder.LAYOUT:
@@ -87,7 +87,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     @Override
-    public void onViewRecycled(ButterKnifeHolder holder) {
+    public void onViewRecycled(BindViewHolder holder) {
         super.onViewRecycled(holder);
         Glide.get(context).clearMemory();
     }
@@ -150,7 +150,7 @@ class AndroidAdapter extends BaseAdapter<ButterKnifeHolder> {
         }
     }
 
-    static class NormalViewHolder extends ButterKnifeHolder<TextViewItem> {
+    static class NormalViewHolder extends BindViewHolder<TextViewItem> {
         static final int LAYOUT = R.layout.adapter_android;
 
         @BindView(R.id.author_name)

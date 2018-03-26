@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
-import com.gank.gankly.butterknife.ButterKnifeHolder;
+import com.gank.gankly.butterknife.BindViewHolder;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ import butterknife.BindView;
 /**
  * Create by LingYan on 2016-04-25
  */
-class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
+class IosAdapter extends BaseAdapter<BindViewHolder> {
     private final List<Gank> resultsBeans = new ArrayList<>();
     private final List<ViewItem> viewItemList = new ArrayList<>();
 
@@ -53,8 +53,8 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     };
 
     @Override
-    public ButterKnifeHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ButterKnifeHolder defaultHolder;
+    public BindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BindViewHolder defaultHolder;
         switch (viewType) {
             case NormalViewHolder.LAYOUT:
                 defaultHolder = new NormalViewHolder(parent, itemCallBack);
@@ -67,7 +67,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ButterKnifeHolder holder, int position) {
+    public void onBindViewHolder(BindViewHolder holder, int position) {
         final ViewItem viewItem = viewItemList.get(position);
         switch (holder.getItemViewType()) {
             case NormalViewHolder.LAYOUT:
@@ -82,7 +82,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
     }
 
     @Override
-    public void onViewRecycled(ButterKnifeHolder holder) {
+    public void onViewRecycled(BindViewHolder holder) {
         super.onViewRecycled(holder);
         Glide.get(context).clearMemory();
     }
@@ -115,7 +115,7 @@ class IosAdapter extends BaseAdapter<ButterKnifeHolder> {
         this.itemCallBack = itemCallBack;
     }
 
-    static class NormalViewHolder extends ButterKnifeHolder<TextViewItem> {
+    static class NormalViewHolder extends BindViewHolder<TextViewItem> {
         static final int LAYOUT = R.layout.adapter_ios;
 
         @BindView(R.id.author_name)

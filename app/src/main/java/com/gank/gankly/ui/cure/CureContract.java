@@ -4,23 +4,17 @@ import android.content.Context;
 import android.ly.business.domain.Gift;
 import android.support.annotation.NonNull;
 
-import android.ly.business.domain.DailyMeizi;
 import com.gank.gankly.mvp.base.LoadMorePresenter;
-import com.gank.gankly.mvp.base.SupportView;
+import com.gank.gankly.mvp.base.PageView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create by LingYan on 2016-10-26
  */
 
 public interface CureContract {
-    interface View extends SupportView {
-        void refillData(List<DailyMeizi> list);
-
-        void appendItem(List<DailyMeizi> list);
-
+    interface View extends PageView<Gift> {
         void setMaxProgress(int value);
 
         void disProgressDialog();
@@ -33,6 +27,10 @@ public interface CureContract {
             super(context, view);
         }
 
-        abstract void girlsImages(String url);
+        abstract void refreshGirls();
+
+        abstract void appendGirls();
+
+        abstract void loadImages(String url);
     }
 }
