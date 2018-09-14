@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.main;
 
 import android.content.res.Resources;
+import android.lectcoding.ui.logcat.Logcat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -130,6 +131,9 @@ public class MainActivity extends BaseActivity {
         return fragments;
     }
 
+    public void testMy() {
+        Logcat.d(">>test");
+    }
 
     public void changeBottomBar() {
         TypedValue typedValue = new TypedValue();

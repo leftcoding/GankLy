@@ -11,4 +11,5 @@
     <dimen name="heavySize">34sp</dimen>
     <dimen name="superSize">45sp</dimen>
     <dimen name="superBigSize">56sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

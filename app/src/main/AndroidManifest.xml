@@ -7,11 +7,11 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <!-- 设为壁纸 start -->
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <!-- 设为壁纸 end -->
+
 
     <!-- Bugly start -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -19,11 +19,12 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- Bugly end -->
 
+
     <!-- 硬件加速对X5视频播放非常重要，建议开启 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
-        android:name="com.gank.gankly.AppConfig"
+        android:name=".TestConfig"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -31,60 +32,61 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.light">
         <activity
-            android:name="com.gank.gankly.ui.splash.SplashActivity"
+            android:name=".ui.splash.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.gank.gankly.ui.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:alwaysRetainTaskState="true"
             android:configChanges="orientation|fontScale|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gank.gankly.ui.web.normal.WebActivity"
+            android:name=".ui.web.normal.WebActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/MyAppTheme" />
-
         <activity
-            android:name="com.gank.gankly.ui.web.JiandanWebActivity"
+            android:name=".ui.web.JiandanWebActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gank.gankly.ui.gallery.GalleryActivity"
+            android:name=".ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gank.gankly.ui.web.WebVideoViewActivity"
+            android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape" />
         <activity
-            android:name="com.gank.gankly.ui.more.MoreActivity"
+            android:name=".ui.more.MoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gank.gankly.ui.baisi.BaiSiActivity"
+            android:name=".ui.baisi.BaiSiActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.gank.gankly.ui.baisi.BaiSiVideoPreViewActivity"
+            android:name=".ui.baisi.BaiSiVideoPreViewActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.light.NoActionBar" />
 
-        <!-- bugly start-->
+        <!-- bugly start -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.gank.gankly.fileProvider"
@@ -94,21 +96,24 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <!-- bugly end-->
+        <!-- bugly end -->
 
-        <!--&lt;!&ndash; Glide 默认配置 &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.gank.gankly.config.glide.MyGlideModule"-->
-            <!--android:value="GlideModule" />-->
-        <!--&lt;!&ndash; 进度条 &ndash;&gt;-->
-        <!--<meta-data-->
-            <!--android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule"-->
-            <!--android:value="GlideModule" />-->
-        <!--&lt;!&ndash;OkHttp3 &ndash;&gt;-->
 
-        <!--<meta-data-->
-            <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
-            <!--android:value="GlideModule" />-->
+        <!-- &lt;!&ndash; Glide 默认配置 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.gank.gankly.config.glide.MyGlideModule" -->
+        <!-- android:value="GlideModule" /> -->
+        <!-- &lt;!&ndash; 进度条 &ndash;&gt; -->
+        <!-- <meta-data -->
+        <!-- android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule" -->
+        <!-- android:value="GlideModule" /> -->
+        <!-- &lt;!&ndash;OkHttp3 &ndash;&gt; -->
+
+
+        <!-- <meta-data -->
+        <!-- android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule" -->
+        <!-- android:value="GlideModule" /> -->
 
     </application>
+
 </manifest>

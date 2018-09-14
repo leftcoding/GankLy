@@ -111,4 +111,5 @@
 
     <!-- 电影 -->
     <string name="url_format">%1$s_%2$d.html</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
