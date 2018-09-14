@@ -2,8 +2,8 @@ package com.gank.gankly.ui.daily;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.ly.business.domain.Girl;
 import android.ly.business.domain.Gift;
+import android.ly.business.domain.Girl;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -47,7 +47,7 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         dailyGirlAdapter = new DailyGirlAdapter();
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         swipeRefresh.setAdapter(dailyGirlAdapter);
 
         swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
@@ -70,28 +70,16 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        dailyPresenter = new DailyGirlPresenter(context, this);
-    }
-
-    @Override
-    protected void initLazy() {
-        multipleStatusView.showLoading();
-        dailyPresenter.fetchNew();
-    }
-
     private void showLoadingDialog() {
         if (mDialog == null) {
-            mDialog = new ProgressDialog(context);
+            mDialog = new ProgressDialog(getContext());
         }
 
         mDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mDialog.setMessage(context.getString(R.string.loading_meizi_images));
+        mDialog.setMessage(getContext().getString(R.string.loading_meizi_images));
         mDialog.setIndeterminate(true);
         mDialog.setCanceledOnTouchOutside(true);
-        mDialog.setOnCancelListener(dialog -> dailyPresenter.unSubscribe());
+        mDialog.setOnCancelListener(dialog -> dailyPresenter.destroy());
 
         if (!mDialog.isShowing()) {
             mDialog.show();
@@ -101,11 +89,11 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
     @Override
     public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(context, GalleryActivity.class);
+        Intent intent = new Intent(getContext(), GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        context.startActivity(intent);
+        getContext().startActivity(intent);
     }
 
     @Override
@@ -189,5 +177,17 @@ public class DailyGirlFragment extends LazyFragment implements DailyGirlContract
         if (dailyGirlAdapter != null) {
             dailyGirlAdapter.destroy();
         }
+    }
+
+    @Override
+    public void onLazyActivityCreate() {
+        dailyPresenter = new DailyGirlPresenter(getContext(), this);
+        multipleStatusView.showLoading();
+        dailyPresenter.fetchNew();
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

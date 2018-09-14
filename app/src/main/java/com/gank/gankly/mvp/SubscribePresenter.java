@@ -15,4 +15,9 @@ public class SubscribePresenter<E extends BaseView> extends BasePresenter<E> {
     public SubscribePresenter(@NonNull Context context, @NonNull E view) {
         super(context, view);
     }
+
+    @Override
+    protected void onDestroy() {
+
+    }
 }

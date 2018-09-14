@@ -16,8 +16,9 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.CheckVersion;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.network.DownloadProgressListener;
+import com.gank.gankly.ui.MainActivity;
 import com.gank.gankly.ui.android.AndroidFragment;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.ios.IosFragment;
 import com.gank.gankly.ui.welfare.WelfareFragment;
@@ -100,7 +101,7 @@ public class IndexFragment extends SupportFragment implements ViewPager.OnPageCh
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
     }
 
     /**

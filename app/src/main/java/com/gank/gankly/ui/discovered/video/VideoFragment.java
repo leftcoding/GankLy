@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.listener.MeiziOnClick;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.WebVideoViewActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -32,8 +32,8 @@ import butterknife.BindView;
  * 休息视频
  * Create by LingYan on 2016-04-25
  */
-public class VideoFragment extends LazyFragment implements MeiziOnClick,
-        SwipeRefreshLayout.OnRefreshListener, VideoContract.View {
+public class VideoFragment extends LazyFragment implements MeiziOnClick, SwipeRefreshLayout.OnRefreshListener,
+        VideoContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
     @BindView(R.id.swipe_refresh)
@@ -88,6 +88,11 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
 //        mPresenter = new VideoPresenter(GankDataSource.getInstance(), this);
     }
 
+    @Override
+    public void onLazyActivityCreate() {
+
+    }
+
     private void onLoading() {
 //        mPresenter.fetchNew();
     }
@@ -127,11 +132,6 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
     @Override
     public void onRefresh() {
         onLoading();
-    }
-
-    @Override
-    protected void initLazy() {
-//        mPresenter.fetchNew();
     }
 
     @Override
@@ -183,5 +183,10 @@ public class VideoFragment extends LazyFragment implements MeiziOnClick,
         if (mMultipleStatusView != null) {
             mMultipleStatusView.showLoading();
         }
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

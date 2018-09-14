@@ -10,7 +10,7 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.SpaceItemDecoration;
@@ -37,12 +37,6 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     public void onAttach(Context context) {
         super.onAttach(context);
         mActivity = (BaiSiActivity) context;
-    }
-
-    @Override
-    protected void initLazy() {
-        mSwipeRefreshLayout.setRefreshing(true);
-//        mPresenter.fetchNew();
     }
 
     @Override
@@ -78,6 +72,11 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
+    public void onLazyActivityCreate() {
+        mSwipeRefreshLayout.setRefreshing(true);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.layout_swipe_normal;
     }
@@ -93,6 +92,31 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     }
 
     @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
     public void refillData(List<BuDeJieBean.ListBean> list) {
         mAdapter.refillItems(list);
     }
@@ -100,5 +124,10 @@ public class BaiSiImageFragment extends LazyFragment implements BaiSiImageContra
     @Override
     public void appendData(List<BuDeJieBean.ListBean> list) {
         mAdapter.appendItems(list);
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

@@ -72,8 +72,13 @@ public class DailyGirlPresenter extends DailyGirlContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
         //empty
+    }
+
+    @Override
+    protected void onDestroy() {
+
     }
 
     @Override

@@ -17,22 +17,14 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     private String errorTip;
 
     public BasePresenter(Context context, E view) {
-        checkNotNull(context);
-        checkNotNull(view);
         this.view = view;
         this.context = context;
         errorTip = context.getString(R.string.loading_error);
     }
 
-    @SuppressWarnings("used")
-    private <T> void checkNotNull(T reference) {
-        if (reference == null) {
-            throw new NullPointerException();
-        }
-    }
-
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+        onDestroy();
         view = null;
         context = null;
     }
@@ -40,4 +32,6 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     protected boolean isViewLife() {
         return view != null;
     }
+
+    protected abstract void onDestroy();
 }

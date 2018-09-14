@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.more;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import com.gank.gankly.R;
@@ -29,20 +30,11 @@ public class MoreActivity extends BaseActivity {
     }
 
     @Override
-    protected void initValues() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         parseIntent();
         Fragment fragment = getFragment(mType);
         addFragment(fragment);
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
     }
 
     private void parseIntent() {

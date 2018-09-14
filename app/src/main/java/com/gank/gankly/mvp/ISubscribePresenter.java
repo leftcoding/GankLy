@@ -5,5 +5,5 @@ package com.gank.gankly.mvp;
  */
 
 public interface ISubscribePresenter {
-    void unSubscribe();
+    void destroy();
 }

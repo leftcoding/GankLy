@@ -13,7 +13,7 @@ import com.gank.gankly.bean.BuDeJieVideo;
 import com.gank.gankly.bean.GallerySize;
 import com.gank.gankly.mvp.source.remote.BuDeJieDataSource;
 import com.gank.gankly.rxjava.RxBus_;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 import com.gank.gankly.widget.SpaceItemDecoration;
@@ -61,7 +61,7 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     }
 
     @Override
-    protected void initLazy() {
+    public void onLazyActivityCreate() {
 
     }
 
@@ -112,6 +112,31 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     }
 
     @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
     public void refillData(List<BuDeJieVideo.ListBean> list) {
         mBaiSiVideoAdapter.updateItems(list);
     }
@@ -134,5 +159,10 @@ public class BaiSiVideoFragment extends LazyFragment implements BaiSiVideoContra
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

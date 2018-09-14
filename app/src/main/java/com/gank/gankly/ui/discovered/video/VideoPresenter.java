@@ -57,7 +57,12 @@ public class VideoPresenter extends VideoContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
 
     }
 }

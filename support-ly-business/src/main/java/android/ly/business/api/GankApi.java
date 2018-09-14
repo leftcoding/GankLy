@@ -15,12 +15,18 @@ import retrofit2.http.Path;
  */
 
 public interface GankApi {
+    /**
+     * android 资源
+     */
     @GET("Android/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> androids(
             @Path("page") int page,
             @Path("limit") int limit
     );
 
+    /**
+     * ios 资源
+     */
     @GET("iOS/{limit}/{page}")
     Observable<Response<PageEntity<Gank>>> ios(
             @Path("page") int page,
@@ -34,8 +40,11 @@ public interface GankApi {
             @Path("limit") int limit
     );
 
+    /**
+     * 福利 - 图片
+     */
     @GET("福利/{limit}/{page}")
-    Observable<Response<ListEntity<Gank>>> images(
+    Observable<Response<PageEntity<Gank>>> images(
             @Path("page") int page,
             @Path("limit") int limit
     );

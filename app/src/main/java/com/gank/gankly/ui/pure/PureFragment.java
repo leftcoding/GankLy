@@ -11,7 +11,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -64,11 +64,6 @@ public class PureFragment extends LazyFragment implements PureContract.View {
         initRefresh();
     }
 
-    @Override
-    protected void initLazy() {
-        initRefresh();
-    }
-
     private final PureAdapter.ItemClickCallback pureCallback = new PureAdapter.ItemClickCallback() {
         @Override
         public void onItemClick(final Gift gift) {
@@ -87,7 +82,7 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     }
 
     private void initRecycler() {
-        pureAdapter = new PureAdapter(context);
+        pureAdapter = new PureAdapter(getContext());
         swipeRefresh.setAdapter(pureAdapter);
 
         swipeRefresh.setLayoutManager(new StaggeredGridLayoutManager(2,
@@ -110,14 +105,14 @@ public class PureFragment extends LazyFragment implements PureContract.View {
 
     private void showDialog() {
         if (progressDialog == null) {
-            progressDialog = new ProgressDialog(context);
+            progressDialog = new ProgressDialog(getContext());
         }
 
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage(context.getString(R.string.loading_meizi_images));
+        progressDialog.setMessage(getContext().getString(R.string.loading_meizi_images));
         progressDialog.setIndeterminate(true);
         progressDialog.setCanceledOnTouchOutside(true);
-        progressDialog.setOnCancelListener(dialog -> purePresenter.unSubscribe());
+        progressDialog.setOnCancelListener(dialog -> purePresenter.destroy());
 
         if (!progressDialog.isShowing()) {
             progressDialog.show();
@@ -196,13 +191,13 @@ public class PureFragment extends LazyFragment implements PureContract.View {
     @Override
     public void openGalleryActivity(ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(context, GalleryActivity.class);
+        Intent intent = new Intent(getContext(), GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_GIFT);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(context,
+        ActivityOptionsCompat compat = ActivityOptionsCompat.makeCustomAnimation(getContext(),
                 R.anim.alpha_in, R.anim.alpha_out);
-        context.startActivity(intent, compat.toBundle());
+        getContext().startActivity(intent, compat.toBundle());
     }
 
     @Override
@@ -218,5 +213,15 @@ public class PureFragment extends LazyFragment implements PureContract.View {
         if (pureAdapter != null) {
             pureAdapter.destroy();
         }
+    }
+
+    @Override
+    public void onLazyActivityCreate() {
+
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

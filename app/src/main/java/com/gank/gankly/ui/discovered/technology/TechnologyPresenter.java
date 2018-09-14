@@ -102,7 +102,12 @@ public class TechnologyPresenter extends TechnologyContract.Presenter {
 //    }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
 
     }
 }

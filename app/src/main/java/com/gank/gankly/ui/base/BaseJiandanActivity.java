@@ -13,21 +13,6 @@ public abstract class BaseJiandanActivity extends BaseActivity implements ISwipe
     }
 
     @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
-    }
-
-    @Override
-    protected void initValues() {
-
-    }
-
-    @Override
     public void hideRefresh() {
 
     }

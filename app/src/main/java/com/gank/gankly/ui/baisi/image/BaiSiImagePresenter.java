@@ -56,7 +56,12 @@ public class BaiSiImagePresenter extends BaiSiImageContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
 
     }
 }

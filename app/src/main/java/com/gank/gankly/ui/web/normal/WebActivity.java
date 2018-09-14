@@ -97,26 +97,8 @@ public class WebActivity extends BaseActivity implements WebContract.View {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         parseBundle();
         super.onCreate(savedInstanceState);
-        initTheme();
-    }
-
-    @Override
-    protected void initPresenter() {
         mPresenter = new WebPresenter(LocalDataSource.getInstance(), this);
-    }
 
-    @Override
-    protected void initTheme() {
-        super.initTheme();
-//        if (AppConfig.isNight()) {
-//            setTheme(R.style.AppTheme_Night_NoActionBar);
-//        } else {
-//            setTheme(R.style.AppTheme_light_NoActionBar);
-//        }
-    }
-
-    @Override
-    protected void initViews() {
         mWebView = new WebView(getApplicationContext(), null);
 
         mWebParent.addView(mWebView, new FrameLayout.LayoutParams(
@@ -156,10 +138,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
         CookieSyncManager.createInstance(this);
         CookieSyncManager.getInstance().sync();
-    }
 
-    @Override
-    protected void bindListener() {
         setTitle(mTitle);
         setSupportActionBar(mToolbar);
         ActionBar bar = getSupportActionBar();
@@ -168,10 +147,7 @@ public class WebActivity extends BaseActivity implements WebContract.View {
             bar.setDisplayHomeAsUpEnabled(true);
         }
         mToolbar.setNavigationOnClickListener(v -> CircularAnimUtils.actionVisible_(false, WebActivity.this, v, mView, 0, 618));
-    }
 
-    @Override
-    protected void initValues() {
         isInitCollect = true;
         if (!TextUtils.isEmpty(mUrl)) {
             if (mPresenter != null) {

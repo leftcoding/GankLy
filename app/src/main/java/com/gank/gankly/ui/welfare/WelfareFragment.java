@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.welfare;
 
-import android.content.Context;
 import android.content.Intent;
 import android.ly.business.domain.Gank;
 import android.os.Bundle;
@@ -15,9 +14,8 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemCallBack;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.ui.main.MainActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -34,14 +32,16 @@ import butterknife.BindView;
 public class WelfareFragment extends LazyFragment implements WelfareContract.View {
     @BindView(R.id.multiple_status_view)
     MultipleStatusView mMultipleStatusView;
+
     @BindView(R.id.swipe_refresh)
     LySwipeRefreshLayout mSwipeRefreshLayout;
 
     private WelfareAdapter mWelfareAdapter;
-    private MainActivity mActivity;
     private RecyclerView mRecyclerView;
 
-    private WelfareContract.Presenter mPresenter;
+    private WelfareContract.Presenter presenter;
+
+    private int page = 1;
 
     @Override
     protected int getLayoutId() {
@@ -58,7 +58,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mWelfareAdapter = new WelfareAdapter(mActivity);
+        mWelfareAdapter = new WelfareAdapter(getActivity());
         mWelfareAdapter.setMeiZiOnClick(itemCallBack);
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
         ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -67,39 +67,29 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
             @Override
             public void onRefresh() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                fetchNew();
             }
 
             @Override
             public void onLoadMore() {
-                fetchMore();
             }
         });
         mSwipeRefreshLayout.setAdapter(mWelfareAdapter);
 
         mMultipleStatusView.setListener(v -> {
             mMultipleStatusView.showLoading();
-            fetchNew();
         });
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-//        mPresenter = new WelfarePresenter(GankDataSource.getInstance(), this);
-    }
-
-    @Override
-    protected void initLazy() {
-        mMultipleStatusView.showLoading();
-        fetchNew();
+    public void onLazyActivityCreate() {
+        presenter = new WelfarePresenter(getContext(), this);
+        presenter.loadWelfare(page);
     }
 
     @Override
     public void hasNoMoreDate() {
         Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
-                .setActionTextColor(context.getResources().getColor(R.color.Blue))
+                .setActionTextColor(getResources().getColor(R.color.Blue))
                 .show();
     }
 
@@ -108,21 +98,13 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         public void onClick(View view, int position, Object object) {
             Bundle bundle = new Bundle();
             bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
-            Intent intent = new Intent(mActivity, GalleryActivity.class);
+            Intent intent = new Intent(getContext(), GalleryActivity.class);
             intent.putExtra(GalleryActivity.TYPE, 1);
             intent.putExtras(bundle);
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity);
-            mActivity.startActivity(intent, activityOptionsCompat.toBundle());
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity());
+            startActivity(intent, activityOptionsCompat.toBundle());
         }
     };
-
-    private void fetchNew() {
-//        mPresenter.fetchNew();
-    }
-
-    private void fetchMore() {
-//        mPresenter.fetchMore();
-    }
 
     @Override
     public void hideProgress() {
@@ -154,11 +136,7 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         mMultipleStatusView.showError();
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (MainActivity) context;
-    }
+
 
     protected void callBackRefreshUi() {
         ThemeColor themeColor = new ThemeColor(this);
@@ -170,17 +148,17 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     }
 
     @Override
-    public void refreshData(List<Gank> list) {
+    public void loadWelfareSuccess(int page, List<Gank> list) {
         mWelfareAdapter.refillItems(list);
     }
 
     @Override
-    public void appendData(List<Gank> list) {
-        mWelfareAdapter.appendItems(list);
+    public void loadWelfareFailure(String msg) {
+
     }
 
     @Override
-    public void refershDataFailure(String msg) {
+    public void loadDataFailure(String msg) {
         showSnackbar(msg);
     }
 
@@ -192,8 +170,13 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     private void showSnackbar(String msg) {
         if (mSwipeRefreshLayout != null) {
             Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(context.getResources().getColor(R.color.Blue))
-                    .setAction(R.string.retry, v -> fetchMore()).show();
+                    .setActionTextColor(getResources().getColor(R.color.Blue))
+                    .setAction(R.string.retry, null).show();
         }
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

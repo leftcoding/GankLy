@@ -10,6 +10,7 @@ import android.ly.business.domain.Gift;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -133,10 +134,41 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     @Override
-    protected void initTheme() {
-        super.initTheme();
-        setTheme(R.style.BrowseThemeBase);
-//        mPresenter = new GalleryPresenter(GankDataSource.getInstance(), this);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        parseBundle();
+        activityAnimation();
+        getGiftList();
+
+        mPagerAdapter = new PagerAdapter();
+        mViewPager.setAdapter(mPagerAdapter);
+
+        mToolbar.setTitle(R.string.app_name);
+        setSupportActionBar(mToolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
+        }
+
+        setNumberText(mPosition);
+
+        mViewPager.setPageTransformer(true, new ZoomOutSlideTransformer());
+        mViewPager.setOffscreenPageLimit(1);
+        mViewPager.setCurrentItem(mPosition);
+        mViewPager.addOnPageChangeListener(this);
+        mPagerAdapter.notifyDataSetChanged();
+
+        try {
+            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
+            mScroller.setAccessible(true);
+            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new LinearInterpolator());
+            // scroller.setFixedDuration(5000);
+            mScroller.set(mViewPager, scroller);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            KLog.e(e);
+        }
+
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     @Override
@@ -173,13 +205,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         String imgSize = String.valueOf(size);
         String p = String.valueOf(position + 1);
         txtLimit.setText(StringHtml.getStringSize(p, imgSize, "/", NUMBER_COLOR, 22));
-    }
-
-    @Override
-    protected void initValues() {
-        parseBundle();
-        activityAnimation();
-        getGiftList();
     }
 
     private void getGiftList() {
@@ -222,42 +247,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
             transition_code = bundle.getInt(TYPE, -1);
         }
-    }
-
-    @Override
-    protected void initViews() {
-        mPagerAdapter = new PagerAdapter();
-        mViewPager.setAdapter(mPagerAdapter);
-
-        mToolbar.setTitle(R.string.app_name);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
-        }
-
-        setNumberText(mPosition);
-
-        mViewPager.setPageTransformer(true, new ZoomOutSlideTransformer());
-        mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setCurrentItem(mPosition);
-        mViewPager.addOnPageChangeListener(this);
-        mPagerAdapter.notifyDataSetChanged();
-
-        try {
-            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new LinearInterpolator());
-            // scroller.setFixedDuration(5000);
-            mScroller.set(mViewPager, scroller);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-            KLog.e(e);
-        }
-    }
-
-    @Override
-    protected void bindListener() {
-        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
     }
 
     private List<Gift> changeImageList(List<Gank> resultsBeen) {

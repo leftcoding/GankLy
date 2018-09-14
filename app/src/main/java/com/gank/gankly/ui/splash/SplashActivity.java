@@ -12,7 +12,7 @@ import android.view.WindowManager;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.activity.BaseActivity;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,30 +33,12 @@ public class SplashActivity extends BaseActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+        start();
     }
 
     @Override
     protected int getContentId() {
         return R.layout.activity_splash;
-    }
-
-    @Override
-    protected void initViews() {
-    }
-
-    @Override
-    protected void bindListener() {
-
-    }
-
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-    }
-
-    @Override
-    protected void initValues() {
-        start();
     }
 
     private void start() {

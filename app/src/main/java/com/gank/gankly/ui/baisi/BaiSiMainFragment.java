@@ -15,7 +15,7 @@ import android.view.View;
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.ui.baisi.image.BaiSiImageFragment;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.main.GankPagerAdapter;
 
 import java.util.ArrayList;
@@ -98,7 +98,7 @@ public class BaiSiMainFragment extends ButterKnifeFragment implements ViewPager.
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(getResources().getColor(R.color.white));
     }
 
     /**

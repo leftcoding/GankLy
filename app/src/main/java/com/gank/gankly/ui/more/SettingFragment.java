@@ -88,11 +88,11 @@ public class SettingFragment extends SupportFragment implements ILauncher {
         }
         mToolbar.setNavigationOnClickListener(v -> mActivity.onBackPressed());
 
-        String cacheSize = GlideCatchUtil.getInstance().getCacheSize(context);
+        String cacheSize = GlideCatchUtil.getInstance().getCacheSize(getContext());
         itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache, cacheSize));
 
-        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(context, Preferences.SETTING_AUTO_CHECK, isCheck));
-        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(context, Preferences.SETTING_WIFI_ONLY, isCheck));
+        itemCheckSwitch.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(getContext(), Preferences.SETTING_AUTO_CHECK, isCheck));
+        itemOnlyWifi.setSwitchListener(isCheck -> GanklyPreferences.putBoolean(getContext(), Preferences.SETTING_WIFI_ONLY, isCheck));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
 
     private void initPreferences() {
-        String summary = context.getString(R.string.setting_current_version,
+        String summary = getContext().getString(R.string.setting_current_version,
                 AppUtils.getVersionName(mActivity));
         itemUpdate.setTextSummary(summary);
         itemUpdate.setTextName(R.string.setting_check_version);
@@ -112,9 +112,9 @@ public class SettingFragment extends SupportFragment implements ILauncher {
     }
 
     private void selectItemSwitch() {
-        boolean isAutoCheck = GanklyPreferences.getBoolean(context, Preferences.SETTING_AUTO_CHECK, true);
+        boolean isAutoCheck = GanklyPreferences.getBoolean(getContext(), Preferences.SETTING_AUTO_CHECK, true);
         itemCheckSwitch.setSwitchChecked(isAutoCheck);
-        boolean isOnlyWifi = GanklyPreferences.getBoolean(context, Preferences.SETTING_WIFI_ONLY, false);
+        boolean isOnlyWifi = GanklyPreferences.getBoolean(getContext(), Preferences.SETTING_WIFI_ONLY, false);
         itemOnlyWifi.setSwitchChecked(isOnlyWifi);
     }
 
@@ -125,7 +125,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
     @Override
     public void noNewVersion() {
-        ToastUtils.showToast(context, R.string.tip_no_new_version);
+        ToastUtils.showToast(getContext(), R.string.tip_no_new_version);
     }
 
     private void showVersionDialog(String content) {
@@ -144,7 +144,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
             @Override
             public void submit() {
                 mVersionDialog.dismiss();
-                ToastUtils.showToast(context, R.string.update_downing);
+                ToastUtils.showToast(getContext(), R.string.update_downing);
                 mPresenter.downloadApk();
             }
         });
@@ -156,7 +156,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(mActivity);
         }
-        mProgressDialog.setMessage(context.getString(R.string.dialog_checking));
+        mProgressDialog.setMessage(getContext().getString(R.string.dialog_checking));
         mProgressDialog.show();
     }
 
@@ -188,7 +188,7 @@ public class SettingFragment extends SupportFragment implements ILauncher {
 
     @OnClick(R.id.setting_item_text_clean_cache)
     void onClickCache() {
-        GlideCatchUtil.getInstance().clearCacheDiskSelf(context);
+        GlideCatchUtil.getInstance().clearCacheDiskSelf(getContext());
         itemCleanCache.setTextSummary(mActivity.getResources().getString(R.string.setting_picture_cache_string));
     }
 

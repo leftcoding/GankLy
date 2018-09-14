@@ -11,7 +11,7 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -50,10 +50,10 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        iosAdapter = new IosAdapter(getBaseContext());
+        iosAdapter = new IosAdapter(getContext());
 
         swipeRefresh.setAdapter(iosAdapter);
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext()));
         swipeRefresh.setOnScrollListener(onSwipeRefreshListener);
 
         RecyclerView recyclerView = swipeRefresh.getRecyclerView();
@@ -64,13 +64,8 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        iosPresenter = new IosPresenter(getBaseContext(), this);
-    }
-
-    @Override
-    protected void initLazy() {
+    public void onLazyActivityCreate() {
+        iosPresenter = new IosPresenter(getContext(), this);
         refreshIos();
     }
 
@@ -92,7 +87,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         bundle.putString(WebActivity.URL, gank.url);
         bundle.putString(WebActivity.AUTHOR, gank.who);
         bundle.putString(WebActivity.TYPE, Constants.IOS);
-        WebActivity.startWebActivity(getBaseContext(), bundle);
+        WebActivity.startWebActivity(getContext(), bundle);
     };
 
     @Override
@@ -137,7 +132,7 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void hasNoMoreDate() {
-        shortToast(getBaseContext().getString(R.string.loading_all_over));
+        shortToast(getString(R.string.loading_all_over));
     }
 
     @Override
@@ -177,9 +172,10 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     public void onDestroyView() {
         super.onDestroyView();
         if (iosPresenter != null) {
-            iosPresenter.unSubscribe();
+            iosPresenter.destroy();
         }
     }
+
 
     @Override
     public void refreshSuccess(List<Gank> list) {
@@ -214,5 +210,10 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void appendFailure(String msg) {
         shortToast(msg);
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

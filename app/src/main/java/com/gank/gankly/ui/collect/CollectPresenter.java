@@ -146,7 +146,7 @@ public class CollectPresenter extends CollectContract.Presenter implements ISubs
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
 
     }
 }

@@ -2,11 +2,12 @@ package com.gank.gankly;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
-import android.ly.business.api.InitGankServer;
+import android.ly.business.api.GankServerHelper;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
+import com.gank.gankly.config.HttpUrlConfig;
 import com.gank.gankly.data.DaoMaster;
 import com.leftcoding.network.intercept.HttpLogging;
 import com.squareup.leakcanary.LeakCanary;
@@ -34,8 +35,8 @@ public class AppConfig extends Application {
 //        setupBugly();
         setupX5WebView();
 
-        InitGankServer.init(AppConfig.this)
-                .baseUrl(BuildConfig.GANK_SERVER_ULR)
+        GankServerHelper.init(AppConfig.this)
+                .baseUrl(HttpUrlConfig.GANK_URL)
                 .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build());
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);

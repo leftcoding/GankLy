@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.gank.gankly.R;
+import com.gank.gankly.ui.MainActivity;
 import com.gank.gankly.ui.baisi.BaiSiActivity;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.utils.theme.ThemeColor;
 
 import butterknife.BindView;
@@ -47,7 +47,7 @@ public class DiscoveredMoreFragment extends LazyFragment {
     }
 
     @Override
-    protected void initLazy() {
+    public void onLazyActivityCreate() {
 
     }
 }

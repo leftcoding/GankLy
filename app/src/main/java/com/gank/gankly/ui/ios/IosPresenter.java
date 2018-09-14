@@ -39,7 +39,7 @@ public class IosPresenter extends IosContract.Presenter {
         if (destroyFlag.get()) {
             return;
         }
-        GankServer.get(context)
+        GankServer.with(context)
                 .ios(pageConfig.curPage, pageConfig.limit)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {
@@ -55,10 +55,15 @@ public class IosPresenter extends IosContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
         if (destroyFlag.compareAndSet(false, true)) {
             RxApiManager.get().clear(requestTag);
         }
-        super.unSubscribe();
+        super.destroy();
+    }
+
+    @Override
+    protected void onDestroy() {
+
     }
 }

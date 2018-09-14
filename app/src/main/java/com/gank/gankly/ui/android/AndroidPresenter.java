@@ -36,11 +36,16 @@ class AndroidPresenter extends Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
         if (destroyTag.compareAndSet(false, true)) {
             RxApiManager.get().clear(requestTag);
         }
-        super.unSubscribe();
+        super.destroy();
+    }
+
+    @Override
+    protected void onDestroy() {
+
     }
 
     private void fetchAndroid() {
@@ -48,7 +53,7 @@ class AndroidPresenter extends Presenter {
             return;
         }
 
-        GankServer.get(context)
+        GankServer.with(context)
                 .androids(pageConfig.curPage, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {

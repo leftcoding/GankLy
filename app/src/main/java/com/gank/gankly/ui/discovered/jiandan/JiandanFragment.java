@@ -16,8 +16,8 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.JiandanWebActivity;
 import com.gank.gankly.utils.StyleUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -57,12 +57,6 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     }
 
     @Override
-    protected void initLazy() {
-        mMultipleStatusView.showLoading();
-//        mPresenter.fetchNew();
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAdapter = new JiandanAdapter();
@@ -90,6 +84,11 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        mPresenter = new JiandanPresenter(JiandanDataSource.getInstance(), this);
+    }
+
+    @Override
+    public void onLazyActivityCreate() {
+
     }
 
     protected void callBackRefreshUi() {
@@ -181,5 +180,10 @@ public class JiandanFragment extends LazyFragment implements JiandanContract.Vie
         bundle.putString(JiandanWebActivity.TYPE, Constants.JIANDAN);
         bundle.putString(JiandanWebActivity.AUTHOR, bean.getType());
         JiandanWebActivity.startWebActivity(mActivity, bundle);
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

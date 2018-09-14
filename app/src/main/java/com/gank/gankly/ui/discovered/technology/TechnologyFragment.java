@@ -13,8 +13,8 @@ import com.gank.gankly.R;
 import com.gank.gankly.bean.JianDanBean;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.listener.ItemClick;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.theme.RecyclerViewColor;
 import com.gank.gankly.utils.theme.ThemeColor;
@@ -52,12 +52,6 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     }
 
     @Override
-    protected void initLazy() {
-        showProgress();
-//        mPresenter.fetchNew();
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initValues();
@@ -67,6 +61,11 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 //        mPresenter = new TechnologyPresenter(TechnologyDataSource.getInstance(), this);
+    }
+
+    @Override
+    public void onLazyActivityCreate() {
+
     }
 
     private void initValues() {
@@ -97,6 +96,31 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
     @Override
     public void hideProgress() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void hasNoMoreDate() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showDisNetWork() {
+
+    }
+
+    @Override
+    public void showError() {
+
     }
 
     @Override
@@ -133,5 +157,10 @@ public class TechnologyFragment extends LazyFragment implements TechnologyContra
         themeColor.swipeRefresh(mSwipeRefreshLayout);
         themeColor.recyclerViewColor(recyclerViewColor);
         themeColor.start();
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

@@ -1,10 +1,10 @@
 package com.gank.gankly.ui.web;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -99,13 +99,17 @@ public class JiandanWebActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentId() {
-        return R.layout.activity_web;
-    }
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setTitle(mTitle);
+        setSupportActionBar(mToolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
+            bar.setDisplayHomeAsUpEnabled(true);
+        }
+        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-    @SuppressLint("SetJavaScriptEnabled")
-    @Override
-    protected void initViews() {
         mWebView = new WebView(this, null);
 
         mViewParent.addView(mWebView, new FrameLayout.LayoutParams(
@@ -131,22 +135,7 @@ public class JiandanWebActivity extends BaseActivity {
         settings.setDefaultTextEncodingName("utf-8");//设置编码格式
         mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
-    }
 
-    @Override
-    protected void bindListener() {
-        setTitle(mTitle);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setHomeAsUpIndicator(R.drawable.ic_toolbar_close);
-            bar.setDisplayHomeAsUpEnabled(true);
-        }
-        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
-    }
-
-    @Override
-    protected void initValues() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             mUrl = bundle.getString(URL);
@@ -165,6 +154,11 @@ public class JiandanWebActivity extends BaseActivity {
         }
 
         parseLoadUrlData(filterUrl(mUrl));
+    }
+
+    @Override
+    protected int getContentId() {
+        return R.layout.activity_web;
     }
 
     private String filterUrl(String url) {

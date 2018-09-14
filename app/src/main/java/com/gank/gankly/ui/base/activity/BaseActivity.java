@@ -27,20 +27,16 @@ import butterknife.Unbinder;
  * Create by LingYan on 2016-04-05
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    private static final int contentAreaId = R.id.main_frame_layout;
+    private static final int contentResId = R.id.main_frame_layout;
     private long mLastTime;
     protected Unbinder mUnBinder;
-    FragmentTransaction mFragmentTransaction;
+    protected FragmentTransaction mFragmentTransaction;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        initTheme();
         super.onCreate(savedInstanceState);
         setContentView(getContentId());
         mUnBinder = ButterKnife.bind(this);
-        initValues();
-        initViews();
-        bindListener();
         changeThemes();
         mFragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
@@ -55,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addHideFragment(Fragment from, Fragment to) {
-        addHideFragment(from, to, contentAreaId, null, "", false);
+        addHideFragment(from, to, contentResId, null, "", false);
     }
 
     public void addHideFragment(Fragment from, Fragment to, String Tag, int contentAreaId) {
@@ -63,11 +59,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void addAnimFragment(Fragment from, Fragment to, boolean isAnim) {
-        addHideFragment(from, to, contentAreaId, null, "", isAnim);
+        addHideFragment(from, to, contentResId, null, "", isAnim);
     }
 
     public void addAnimFragment(Fragment from, Fragment to, String tag, boolean isAnim) {
-        addHideFragment(from, to, contentAreaId, null, tag, isAnim);
+        addHideFragment(from, to, contentResId, null, tag, isAnim);
     }
 
     public void transitionHideFragment(Fragment from, Fragment to, int contentAreaId,
@@ -176,28 +172,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         if (!fragment.isAdded()) {
-            mFragmentTransaction.add(contentAreaId, fragment);
+            mFragmentTransaction.add(contentResId, fragment);
         }
         mFragmentTransaction.commitAllowingStateLoss();
     }
 
     protected abstract int getContentId();
-
-    protected abstract void initValues();
-
-    protected abstract void initViews();
-
-    protected abstract void bindListener();
-
-    protected void initPresenter() {}
-
-    protected void initTheme() {
-//        if (AppConfig.isNight()) {
-//            setTheme(R.style.AppTheme_Night);
-//        } else {
-//            setTheme(R.style.AppTheme_light);
-//        }
-    }
 
     public void gotoActivity(Class<? extends Activity> cls, boolean isFinish) {
         Intent intent = new Intent(this, cls);

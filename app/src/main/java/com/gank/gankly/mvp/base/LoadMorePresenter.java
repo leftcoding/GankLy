@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
  */
 
 public abstract class LoadMorePresenter<E extends BaseView> extends BasePresenter<E> {
+
     public LoadMorePresenter(@NonNull Context context, E view) {
         super(context, view);
     }

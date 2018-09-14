@@ -11,7 +11,7 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
@@ -47,7 +47,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
         super.onViewCreated(view, savedInstanceState);
         cureAdapter = new CureAdapter();
         cureAdapter.setOnItemClickListener(cureCallback);
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
+        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         swipeRefresh.setAdapter(cureAdapter);
 
         swipeRefresh.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
@@ -72,7 +72,7 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        curePresenter = new CurePresenter(context, this);
+        curePresenter = new CurePresenter(getContext(), this);
     }
 
     private final CureAdapter.ItemCallback cureCallback = new CureAdapter.ItemCallback() {
@@ -85,19 +85,14 @@ public class CureFragment extends LazyFragment implements CureContract.View {
         }
     };
 
-    @Override
-    protected void initLazy() {
-        initCureRefresh();
-    }
-
     private void showLoadingDialog() {
         if (progressDialog == null) {
-            progressDialog = new ProgressDialog(context);
+            progressDialog = new ProgressDialog(getContext());
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setMessage(context.getString(R.string.loading_meizi_images));
+            progressDialog.setMessage(getContext().getString(R.string.loading_meizi_images));
             progressDialog.setIndeterminate(true);
             progressDialog.setCanceledOnTouchOutside(true);
-            progressDialog.setOnCancelListener(dialog -> curePresenter.unSubscribe());
+            progressDialog.setOnCancelListener(dialog -> curePresenter.destroy());
         }
 
         if (!progressDialog.isShowing()) {
@@ -108,11 +103,11 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void openBrowseActivity(@NonNull ArrayList<Gift> list) {
         Bundle bundle = new Bundle();
-        Intent intent = new Intent(context, GalleryActivity.class);
+        Intent intent = new Intent(getContext(), GalleryActivity.class);
         bundle.putString(GalleryActivity.EXTRA_MODEL, GalleryActivity.EXTRA_DAILY);
         intent.putExtra(GalleryActivity.EXTRA_LIST, list);
         intent.putExtras(bundle);
-        context.startActivity(intent);
+        getContext().startActivity(intent);
     }
 
     @Override
@@ -177,8 +172,13 @@ public class CureFragment extends LazyFragment implements CureContract.View {
             cureAdapter.destroy();
         }
         if (curePresenter != null) {
-            curePresenter.unSubscribe();
+            curePresenter.destroy();
         }
+    }
+
+    @Override
+    public void onLazyActivityCreate() {
+        initCureRefresh();
     }
 
     @Override
@@ -209,5 +209,10 @@ public class CureFragment extends LazyFragment implements CureContract.View {
     @Override
     public void appendFailure(String msg) {
         shortToast(msg);
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

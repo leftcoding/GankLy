@@ -15,11 +15,11 @@ import java.util.List;
 
 public interface WelfareContract {
     interface View extends SupportView {
-        void refreshData(List<Gank> list);
+        void loadWelfareSuccess(int page, List<Gank> list);
 
-        void appendData(List<Gank> list);
+        void loadWelfareFailure(String msg);
 
-        void refershDataFailure(String msg);
+        void loadDataFailure(String msg);
 
         void appendWelfareFailure(String msg);
     }
@@ -29,5 +29,7 @@ public interface WelfareContract {
         public Presenter(@NonNull Context context, View view) {
             super(context, view);
         }
+
+        public abstract void loadWelfare(int page);
     }
 }

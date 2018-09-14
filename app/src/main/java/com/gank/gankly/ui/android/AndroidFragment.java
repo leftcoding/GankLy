@@ -12,8 +12,8 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.utils.CircularAnimUtils;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
@@ -61,19 +61,13 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onLazyActivityCreate() {
         androidPresenter = new AndroidPresenter(context, this);
         initLoadAndroid();
     }
 
-    @Override
-    protected void initLazy() {
-
-    }
-
     private void initRecycler() {
-        androidAdapter = new AndroidAdapter(getBaseContext());
+        androidAdapter = new AndroidAdapter(getContext());
         swipeRefreshLayout.setAdapter(androidAdapter);
         swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
         swipeRefreshLayout.setOnScrollListener(onRefreshListener);
@@ -224,7 +218,12 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
         }
 
         if (androidPresenter != null) {
-            androidPresenter.unSubscribe();
+            androidPresenter.destroy();
         }
+    }
+
+    @Override
+    public void shortToast(String string) {
+
     }
 }

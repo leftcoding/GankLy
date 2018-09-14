@@ -112,4 +112,9 @@ public class LauncherPresenter extends BasePresenter<ILauncher> {
         intent.setDataAndType(Uri.parse("file://" + file.getAbsolutePath()), "application/vnd.android.package-archive");
         context.startActivity(intent);
     }
+
+    @Override
+    protected void onDestroy() {
+
+    }
 }

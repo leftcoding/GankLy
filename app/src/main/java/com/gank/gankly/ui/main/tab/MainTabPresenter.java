@@ -16,6 +16,11 @@ public class MainTabPresenter extends MainTabContract.Presenter {
     }
 
     @Override
+    protected void onDestroy() {
+
+    }
+
+    @Override
     public void loadPicture() {
 
     }

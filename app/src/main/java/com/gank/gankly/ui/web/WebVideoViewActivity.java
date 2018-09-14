@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,13 @@ public class WebVideoViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void initViews() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mUrl = bundle.getString(URL);
+        }
+
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
@@ -64,19 +71,8 @@ public class WebVideoViewActivity extends BaseActivity {
         } else {
             ToastUtils.showToast(getBaseContext(), R.string.tip_server_error);
         }
-    }
 
-    @Override
-    protected void bindListener() {
 
-    }
-
-    @Override
-    protected void initValues() {
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            mUrl = bundle.getString(URL);
-        }
     }
 
     public static void startWebActivity(Context packageContext, Bundle bundle) {

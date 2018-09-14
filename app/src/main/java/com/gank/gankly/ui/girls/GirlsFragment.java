@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.base.fragment.SupportFragment;
 import com.gank.gankly.ui.cure.CureFragment;
 import com.gank.gankly.ui.pure.PureFragment;
@@ -73,7 +73,7 @@ public class GirlsFragment extends SupportFragment implements ViewPager.OnPageCh
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(getContext().getResources().getColor(R.color.white));
     }
 
     @Override

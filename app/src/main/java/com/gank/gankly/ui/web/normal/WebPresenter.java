@@ -180,6 +180,6 @@ public class WebPresenter implements WebContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
     }
 }

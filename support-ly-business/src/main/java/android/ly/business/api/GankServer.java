@@ -22,12 +22,12 @@ public class GankServer {
     private Context context;
 
     private GankServer(Context context) {
-        gankApi = InitGankServer.init(context)
+        gankApi = GankServerHelper.init(context)
                 .newRetrofit()
                 .create(GankApi.class);
     }
 
-    public static GankServer get(Context context) {
+    public static GankServer with(Context context) {
         if (gankServer == null) {
             synchronized (GankServer.class) {
                 if (gankServer == null) {
@@ -72,8 +72,19 @@ public class GankServer {
         return gankApi.allGoods(limit, page);
     }
 
-    public Observable<Response<ListEntity<Gank>>> images(int limit, int page) {
-        return gankApi.images(limit, page);
+    public Observable<PageEntity<Gank>> images(int limit, int page) {
+        return gankApi.images(page, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(new Function<Response<PageEntity<Gank>>, PageEntity<Gank>>() {
+                    @Override
+                    public PageEntity<Gank> apply(Response<PageEntity<Gank>> pageEntityResponse) throws Exception {
+                        if (pageEntityResponse == null) {
+                            return null;
+                        }
+                        return pageEntityResponse.body();
+                    }
+                });
     }
 
     public Observable<Response<ListEntity<Gank>>> videos(int limit, int page) {

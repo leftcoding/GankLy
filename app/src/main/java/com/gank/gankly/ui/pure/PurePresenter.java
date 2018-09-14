@@ -209,7 +209,12 @@ public class PurePresenter extends PureContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
 
     }
 

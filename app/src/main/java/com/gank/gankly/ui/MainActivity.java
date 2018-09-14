@@ -1,7 +1,6 @@
-package com.gank.gankly.ui.main;
+package com.gank.gankly.ui;
 
 import android.content.res.Resources;
-import android.lectcoding.ui.logcat.Logcat;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +14,7 @@ import com.gank.gankly.rxjava.theme.ThemeEvent;
 import com.gank.gankly.ui.base.activity.BaseActivity;
 import com.gank.gankly.ui.discovered.DiscoveredFragment;
 import com.gank.gankly.ui.girls.GirlsFragment;
+import com.gank.gankly.ui.main.IndexFragment;
 import com.gank.gankly.ui.mine.MineFragment;
 import com.gank.gankly.utils.AppUtils;
 import com.gank.gankly.utils.ToastUtils;
@@ -48,8 +48,15 @@ public class MainActivity extends BaseActivity {
         return R.layout.fragment_main_bottom_navigation;
     }
 
+
     @Override
-    protected void initViews() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            isRestore = savedInstanceState.getBoolean("isRestore");
+            mIndex = savedInstanceState.getInt("index");
+        }
+        super.onCreate(savedInstanceState);
+
         PermissionUtils.requestAllPermissions(this);
 
         if (mFragmentList == null) {
@@ -61,19 +68,16 @@ public class MainActivity extends BaseActivity {
 
         RxBus_.getInstance().toObservable(ThemeEvent.class)
                 .subscribe(themeEvent -> changeBottomBar());
+
+        mBottomBar.setOnTabSelectListener(tabId -> {
+            mIndex = getFragmentIndex(tabId);
+            openFragment(mIndex);
+        });
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
-    protected void bindListener() {
-        mBottomBar.setOnTabSelectListener(tabId -> {
-            mIndex = getFragmentIndex(tabId);
-            openFragment(mIndex);
-        });
     }
 
     private int getFragmentIndex(int tabId) {
@@ -113,15 +117,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void initValues() {
-    }
-
-    @Override
-    protected void initPresenter() {
-        super.initPresenter();
-    }
-
     private List<Fragment> getFragmentList() {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
@@ -129,10 +124,6 @@ public class MainActivity extends BaseActivity {
         fragments.add(new GirlsFragment());
         fragments.add(new MineFragment());
         return fragments;
-    }
-
-    public void testMy() {
-        Logcat.d(">>test");
     }
 
     public void changeBottomBar() {
@@ -171,14 +162,6 @@ public class MainActivity extends BaseActivity {
         RxBus_.getInstance().removeAllStickyEvents();// 移除所有Sticky事件
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            isRestore = savedInstanceState.getBoolean("isRestore");
-            mIndex = savedInstanceState.getInt("index");
-        }
-        super.onCreate(savedInstanceState);
-    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {

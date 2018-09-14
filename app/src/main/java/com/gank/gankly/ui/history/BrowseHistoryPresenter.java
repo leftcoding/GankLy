@@ -72,7 +72,12 @@ public class BrowseHistoryPresenter extends BrowseHistoryContract.Presenter {
     }
 
     @Override
-    public void unSubscribe() {
+    public void destroy() {
+
+    }
+
+    @Override
+    protected void onDestroy() {
 
     }
 

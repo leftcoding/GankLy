@@ -1,5 +1,8 @@
 package com.gank.gankly.ui.baisi;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.activity.BaseActivity;
 
@@ -17,23 +20,14 @@ public class BaiSiActivity extends BaseActivity {
     }
 
     @Override
-    protected void initValues() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if (mBaiSiMainFragment == null) {
             mBaiSiMainFragment = new BaiSiMainFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.setting_frame_layout, mBaiSiMainFragment)
                     .commitAllowingStateLoss();
         }
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
     }
 
     @Override

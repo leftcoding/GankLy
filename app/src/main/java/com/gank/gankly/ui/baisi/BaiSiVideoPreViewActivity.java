@@ -1,6 +1,8 @@
 package com.gank.gankly.ui.baisi;
 
 import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -48,7 +50,8 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
     }
 
     @Override
-    protected void initValues() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mDisposable = RxBus_.getInstance()
                 .toObservableSticky(GallerySize.class)
                 .subscribe(gallerySize -> {
@@ -61,10 +64,7 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
                         mFrom = gallerySize.getFrom();
                     }
                 });
-    }
 
-    @Override
-    protected void initViews() {
         setSupportActionBar(mToolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -73,10 +73,7 @@ public class BaiSiVideoPreViewActivity extends BaseActivity implements SuperPlay
         }
 
         mToolbar.setNavigationOnClickListener(v -> finish());
-    }
 
-    @Override
-    protected void bindListener() {
         mSuperPlayer.setLive(false);
         mSuperPlayer.setOnNetChangeListener(this);//实现网络变化的回调
         mSuperPlayer.play(mUrl);

@@ -5,18 +5,4 @@ package com.gank.gankly.ui.base.activity;
  */
 
 public abstract class SupportActivity extends BaseActivity {
-    @Override
-    protected void initValues() {
-
-    }
-
-    @Override
-    protected void initViews() {
-
-    }
-
-    @Override
-    protected void bindListener() {
-
-    }
 }

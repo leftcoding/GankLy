@@ -18,7 +18,7 @@ import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.main.MainActivity;
+import com.gank.gankly.ui.MainActivity;
 import com.gank.gankly.ui.more.MoreActivity;
 import com.gank.gankly.utils.GanklyPreferences;
 import com.gank.gankly.widget.LSwitch;
@@ -77,7 +77,7 @@ public class MineFragment extends ButterKnifeFragment {
 
     private void selectTheme(boolean isChecked) {
 //        AppConfig.setIsNight(isChecked);
-        GanklyPreferences.putBoolean(context, IS_NIGHT, isChecked);
+        GanklyPreferences.putBoolean(getContext(), IS_NIGHT, isChecked);
 
         if (isChecked) {
             mActivity.setTheme(R.style.AppTheme_Night);
@@ -111,7 +111,7 @@ public class MineFragment extends ButterKnifeFragment {
         ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
             @Override
             public void apply(@NonNull TextView view, int index) {
-                view.setTextColor(context.getResources().getColor(itemTextColor));
+                view.setTextColor(getContext().getResources().getColor(itemTextColor));
             }
         });
 

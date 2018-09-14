@@ -14,14 +14,14 @@ import com.gank.gankly.R;
 import com.gank.gankly.butterknife.ButterKnifeFragment;
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.rxjava.theme.ThemeEvent;
-import com.gank.gankly.ui.base.fragment.LazyFragment;
+import com.gank.gankly.ui.MainActivity;
+import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.discovered.jiandan.JiandanFragment;
 import com.gank.gankly.ui.discovered.more.DiscoveredAdapter;
 import com.gank.gankly.ui.discovered.more.DiscoveredMoreFragment;
 import com.gank.gankly.ui.discovered.teamBlog.TeamBlogFragment;
 import com.gank.gankly.ui.discovered.technology.TechnologyFragment;
 import com.gank.gankly.ui.discovered.video.VideoFragment;
-import com.gank.gankly.ui.main.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +93,7 @@ public class DiscoveredFragment extends ButterKnifeFragment implements ViewPager
 
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
-        mTabLayout.setSelectedTabIndicatorColor(context.getResources().getColor(R.color.white));
+        mTabLayout.setSelectedTabIndicatorColor(getContext().getResources().getColor(R.color.white));
     }
 
     private void refreshUi() {
