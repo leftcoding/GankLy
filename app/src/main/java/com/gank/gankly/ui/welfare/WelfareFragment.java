@@ -16,8 +16,6 @@ import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.utils.StyleUtils;
-import com.gank.gankly.utils.theme.ThemeColor;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
 
@@ -31,13 +29,13 @@ import butterknife.BindView;
  */
 public class WelfareFragment extends LazyFragment implements WelfareContract.View {
     @BindView(R.id.multiple_status_view)
-    MultipleStatusView mMultipleStatusView;
+    MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout mSwipeRefreshLayout;
+    LySwipeRefreshLayout swipeRefreshLayout;
 
-    private WelfareAdapter mWelfareAdapter;
-    private RecyclerView mRecyclerView;
+    private WelfareAdapter welfareAdapter;
+    private RecyclerView recyclerView;
 
     private WelfareContract.Presenter presenter;
 
@@ -58,25 +56,17 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mWelfareAdapter = new WelfareAdapter(getActivity());
-        mWelfareAdapter.setMeiZiOnClick(itemCallBack);
-        mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
-        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        mSwipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
+        welfareAdapter = new WelfareAdapter(getActivity());
+        welfareAdapter.setMeiZiOnClick(itemCallBack);
+        recyclerView = swipeRefreshLayout.getRecyclerView();
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        swipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
                 StaggeredGridLayoutManager.VERTICAL));
-        mSwipeRefreshLayout.setOnScrollListener(new LySwipeRefreshLayout.OnSwipeRefreshListener() {
-            @Override
-            public void onRefresh() {
-            }
+        swipeRefreshLayout.setOnScrollListener(onSwipeRefreshListener);
+        swipeRefreshLayout.setAdapter(welfareAdapter);
 
-            @Override
-            public void onLoadMore() {
-            }
-        });
-        mSwipeRefreshLayout.setAdapter(mWelfareAdapter);
-
-        mMultipleStatusView.setListener(v -> {
-            mMultipleStatusView.showLoading();
+        multipleStatusView.setListener(v -> {
+            multipleStatusView.showLoading();
         });
     }
 
@@ -88,10 +78,27 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void hasNoMoreDate() {
-        Snackbar.make(mSwipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
+        Snackbar.make(swipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
                 .setActionTextColor(getResources().getColor(R.color.Blue))
                 .show();
     }
+
+    private final LySwipeRefreshLayout.OnSwipeRefreshListener onSwipeRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
+        @Override
+        public void onRefresh() {
+            page = 1;
+            if (presenter != null) {
+                presenter.loadWelfare(page);
+            }
+        }
+
+        @Override
+        public void onLoadMore() {
+            if (presenter != null) {
+                presenter.loadWelfare(page);
+            }
+        }
+    };
 
     private final ItemCallBack itemCallBack = new ItemCallBack() {
         @Override
@@ -108,48 +115,51 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     @Override
     public void hideProgress() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override
     public void showProgress() {
-        mSwipeRefreshLayout.setRefreshing(true);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
     }
 
     @Override
     public void showContent() {
-        mMultipleStatusView.showContent();
+        if (swipeRefreshLayout != null) {
+            multipleStatusView.showContent();
+        }
     }
 
     @Override
     public void showDisNetWork() {
-        mMultipleStatusView.showDisNetwork();
+        if (swipeRefreshLayout != null) {
+            multipleStatusView.showDisNetwork();
+        }
     }
 
     @Override
     public void showEmpty() {
-        mMultipleStatusView.showEmpty();
+        if (swipeRefreshLayout != null) {
+            multipleStatusView.showEmpty();
+        }
     }
 
     @Override
     public void showError() {
-        mMultipleStatusView.showError();
-    }
-
-
-
-    protected void callBackRefreshUi() {
-        ThemeColor themeColor = new ThemeColor(this);
-        int resource = themeColor.getResourceId(R.attr.themeBackground);
-        mRecyclerView.setBackgroundResource(resource);
-
-        StyleUtils.clearRecyclerViewItem(mRecyclerView);
-        StyleUtils.changeSwipeRefreshLayout(mSwipeRefreshLayout);
+        if (swipeRefreshLayout != null) {
+            multipleStatusView.showError();
+        }
     }
 
     @Override
     public void loadWelfareSuccess(int page, List<Gank> list) {
-        mWelfareAdapter.refillItems(list);
+        if (welfareAdapter != null) {
+            welfareAdapter.refillItems(list);
+        }
     }
 
     @Override
@@ -168,8 +178,8 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     }
 
     private void showSnackbar(String msg) {
-        if (mSwipeRefreshLayout != null) {
-            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
+        if (swipeRefreshLayout != null) {
+            Snackbar.make(swipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
                     .setActionTextColor(getResources().getColor(R.color.Blue))
                     .setAction(R.string.retry, null).show();
         }
