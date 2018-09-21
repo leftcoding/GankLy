@@ -1,4 +1,4 @@
-package com.gank.gankly.mvp.base;
+package android.lectcoding.ui.base;
 
 /**
  * Create by LingYan on 2017-09-30

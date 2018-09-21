@@ -251,7 +251,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
     private List<Gift> changeImageList(List<Gank> resultsBeen) {
         List<Gift> list = new ArrayList<>();
-        if (!ListUtils.isListEmpty(resultsBeen)) {
+        if (!ListUtils.isEmpty(resultsBeen)) {
             Gank resultsBean;
             String url;
             for (int i = 0; i < resultsBeen.size(); i++) {
@@ -479,7 +479,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private boolean isEmpty() {
-        return ListUtils.isListEmpty(mGiftList);
+        return ListUtils.isEmpty(mGiftList);
     }
 
     @Override

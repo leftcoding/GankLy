@@ -29,7 +29,7 @@ public class MeiziArrayList {
     }
 
     public void refillOneItems(List<Gank> list) {
-        if (ListUtils.isListEmpty(mOneItemsList)) {
+        if (ListUtils.isEmpty(mOneItemsList)) {
             mOneItemsList.addAll(list);
         }
     }
@@ -58,7 +58,7 @@ public class MeiziArrayList {
     }
 
     public Gank getResultBean(int position) {
-        if (ListUtils.isListEmpty(mMeiziList)) {
+        if (ListUtils.isEmpty(mMeiziList)) {
             return null;
         }
         return mMeiziList.get(position);

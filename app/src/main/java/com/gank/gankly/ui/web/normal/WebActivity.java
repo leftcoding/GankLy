@@ -84,6 +84,26 @@ public class WebActivity extends BaseActivity implements WebContract.View {
 
     }
 
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showEmpty() {
+
+    }
+
+    @Override
+    public void showContent() {
+
+    }
+
     enum CollectStates {
         NORMAL, COLLECT, UN_COLLECT
     }

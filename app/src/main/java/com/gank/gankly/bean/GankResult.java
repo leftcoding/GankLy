@@ -40,7 +40,7 @@ public class GankResult extends BaseResult implements Parcelable {
     }
 
     public boolean isEmpty() {
-        return ListUtils.isListEmpty(results);
+        return ListUtils.isEmpty(results);
     }
 
     public int getSize() {

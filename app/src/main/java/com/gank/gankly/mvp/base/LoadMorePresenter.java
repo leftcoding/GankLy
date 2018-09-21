@@ -1,6 +1,7 @@
 package com.gank.gankly.mvp.base;
 
 import android.content.Context;
+import android.lectcoding.ui.base.BaseView;
 import android.support.annotation.NonNull;
 
 /**

@@ -3,7 +3,6 @@ package com.gank.gankly.ui.collect;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.ISubscribePresenter;
 import com.gank.gankly.mvp.source.LocalDataSource;
 import com.gank.gankly.utils.ListUtils;
 import com.socks.library.KLog;
@@ -19,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Create by LingYan on 2016-05-12
  */
-public class CollectPresenter extends CollectContract.Presenter implements ISubscribePresenter {
+public class CollectPresenter extends CollectContract.Presenter {
     private static final int LIMIT = 10;
 
     @NonNull
@@ -145,7 +144,6 @@ public class CollectPresenter extends CollectContract.Presenter implements ISubs
         });
     }
 
-    @Override
     public void destroy() {
 
     }

@@ -1,16 +1,17 @@
 package com.gank.gankly.mvp.base;
 
 import android.content.Context;
+import android.lectcoding.ui.base.BaseContract;
+import android.lectcoding.ui.base.BaseView;
 
 import com.gank.gankly.R;
-import com.gank.gankly.mvp.ISubscribePresenter;
 
 import java.util.UUID;
 
 /**
  * Create by LingYan on 2016-05-12
  */
-public abstract class BasePresenter<E extends BaseView> extends BaseContract.Presenter implements ISubscribePresenter {
+public abstract class BasePresenter<E extends BaseView> extends BaseContract.Presenter {
     protected E view;
     protected Context context;
     protected String requestTag = UUID.randomUUID().toString();
@@ -22,11 +23,26 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
         errorTip = context.getString(R.string.loading_error);
     }
 
-    @Override
     public void destroy() {
         onDestroy();
         view = null;
         context = null;
+    }
+
+    protected void showProgress() {
+        showProgress(true);
+    }
+
+    protected void showProgress(boolean useProgress) {
+        if (useProgress && view != null) {
+            view.showProgress();
+        }
+    }
+
+    protected void hideProgress() {
+        if (view != null) {
+            view.hideProgress();
+        }
     }
 
     protected boolean isViewLife() {

@@ -2,7 +2,7 @@ package com.gank.gankly.mvp.observer;
 
 import android.ly.business.domain.BaseEntity;
 
-import com.gank.gankly.mvp.base.BaseView;
+import android.lectcoding.ui.base.BaseView;
 
 /**
  * Create by LingYan on 2017-11-19

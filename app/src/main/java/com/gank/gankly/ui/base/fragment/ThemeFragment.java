@@ -41,7 +41,7 @@ public abstract class ThemeFragment extends ButterKnifeFragment {
     }
 
     public void setItemSelectBackground(@NonNull List<View> list) {
-        if (!ListUtils.isListEmpty(list)) {
+        if (!ListUtils.isEmpty(list)) {
             int[] attrs = new int[]{R.attr.selectableItemBackground};
             TypedArray typedArray = getActivity().obtainStyledAttributes(attrs);
             final int backgroundResource = typedArray.getResourceId(0, 0);
@@ -56,7 +56,7 @@ public abstract class ThemeFragment extends ButterKnifeFragment {
     }
 
     public void setItemBackground(@NonNull List<LYRelativeLayoutRipple> list) {
-        if (!ListUtils.isListEmpty(list)) {
+        if (!ListUtils.isEmpty(list)) {
             final int backgroundResource = R.attr.lyItemSelectBackground;
             ButterKnife.apply(list, new ButterKnife.Action<LYRelativeLayoutRipple>() {
                 @Override

@@ -9,7 +9,6 @@ import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.HttpUrlConfig;
 import com.gank.gankly.data.DaoMaster;
-import com.leftcoding.network.intercept.HttpLogging;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
@@ -37,7 +36,7 @@ public class AppConfig extends Application {
 
         GankServerHelper.init(AppConfig.this)
                 .baseUrl(HttpUrlConfig.GANK_URL)
-                .addNetworkInterceptor(HttpLogging.get().setLevel(HttpLoggingInterceptor.Level.HEADERS).build());
+                .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
         SQLiteDatabase db = helper.getWritableDatabase();

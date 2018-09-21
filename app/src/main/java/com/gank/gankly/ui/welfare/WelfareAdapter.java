@@ -26,6 +26,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.utils.AppUtils;
+import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.gilde.ImageLoaderUtil;
 import com.gank.gankly.widget.ImageDefaultView;
 import com.socks.library.KLog;
@@ -221,8 +222,10 @@ public class WelfareAdapter extends RecyclerView.Adapter<WelfareAdapter.GoodsVie
     }
 
     public void appendItems(List<Gank> goods) {
-        mResults.addAll(goods);
-        notifyItemRangeInserted(mResults.size(), goods.size());
+        if (!ListUtils.isEmpty(goods)) {
+            mResults.addAll(goods);
+            notifyItemRangeInserted(mResults.size(), goods.size());
+        }
     }
 
     class GoodsViewHolder extends RecyclerView.ViewHolder {

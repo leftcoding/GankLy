@@ -10,7 +10,7 @@ public class ListUtils {
         return list == null ? 0 : list.size();
     }
 
-    public static <E> boolean isListEmpty(List<E> list) {
+    public static <E> boolean isEmpty(List<E> list) {
         return list == null || list.isEmpty();
     }
 }

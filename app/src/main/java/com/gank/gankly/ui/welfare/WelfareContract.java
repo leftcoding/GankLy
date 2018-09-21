@@ -1,11 +1,11 @@
 package com.gank.gankly.ui.welfare;
 
 import android.content.Context;
+import android.lectcoding.ui.base.BaseView;
 import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
-import com.gank.gankly.mvp.base.SupportView;
 
 import java.util.List;
 
@@ -14,14 +14,10 @@ import java.util.List;
  */
 
 public interface WelfareContract {
-    interface View extends SupportView {
+    interface View extends BaseView {
         void loadWelfareSuccess(int page, List<Gank> list);
 
         void loadWelfareFailure(String msg);
-
-        void loadDataFailure(String msg);
-
-        void appendWelfareFailure(String msg);
     }
 
     public abstract class Presenter extends LoadMorePresenter<View> {

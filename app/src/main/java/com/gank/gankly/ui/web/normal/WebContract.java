@@ -1,11 +1,10 @@
 package com.gank.gankly.ui.web.normal;
 
+import android.lectcoding.ui.base.BaseView;
 import android.support.annotation.NonNull;
 
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;
-import com.gank.gankly.mvp.ISubscribePresenter;
-import com.gank.gankly.mvp.base.BaseView;
 
 /**
  * Create by LingYan on 2016-10-27
@@ -22,7 +21,7 @@ public interface WebContract {
         void setCollectIcon(boolean isCollect);
     }
 
-    interface Presenter extends ISubscribePresenter {
+    interface Presenter {
         void findCollectUrl(@NonNull String url);
 
         void insetHistoryUrl(@NonNull ReadHistory readHistory);

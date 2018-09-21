@@ -5,10 +5,9 @@ import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
@@ -16,8 +15,9 @@ import com.gank.gankly.R;
 import com.gank.gankly.listener.ItemCallBack;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.gallery.GalleryActivity;
-import com.gank.gankly.widget.LySwipeRefreshLayout;
+import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
 
@@ -32,18 +32,19 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout swipeRefreshLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private WelfareAdapter welfareAdapter;
-    private RecyclerView recyclerView;
-
     private WelfareContract.Presenter presenter;
 
-    private int page = 1;
+    private int pageEntry = 1;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_swipe_normal;
+        return R.layout.fragment_welfare;
     }
 
     public static WelfareFragment newInstance() {
@@ -58,45 +59,44 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         super.onViewCreated(view, savedInstanceState);
         welfareAdapter = new WelfareAdapter(getActivity());
         welfareAdapter.setMeiZiOnClick(itemCallBack);
-        recyclerView = swipeRefreshLayout.getRecyclerView();
-        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
-        swipeRefreshLayout.setLayoutManager(new StaggeredGridLayoutManager(2,
-                StaggeredGridLayoutManager.VERTICAL));
-        swipeRefreshLayout.setOnScrollListener(onSwipeRefreshListener);
-        swipeRefreshLayout.setAdapter(welfareAdapter);
 
-        multipleStatusView.setListener(v -> {
-            multipleStatusView.showLoading();
-        });
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL));
+        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
+        scrollListener.setOnScrollListener(onRecyclerViewListener);
+        recyclerView.addOnScrollListener(scrollListener);
+        recyclerView.setAdapter(welfareAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
+
+        multipleStatusView.setListener(onMultipleClick);
     }
 
     @Override
     public void onLazyActivityCreate() {
         presenter = new WelfarePresenter(getContext(), this);
-        presenter.loadWelfare(page);
+        presenter.loadWelfare(pageEntry);
     }
 
-    @Override
-    public void hasNoMoreDate() {
-        Snackbar.make(swipeRefreshLayout, R.string.tip_no_more_load, Snackbar.LENGTH_LONG)
-                .setActionTextColor(getResources().getColor(R.color.Blue))
-                .show();
-    }
-
-    private final LySwipeRefreshLayout.OnSwipeRefreshListener onSwipeRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
-        @Override
-        public void onRefresh() {
-            page = 1;
-            if (presenter != null) {
-                presenter.loadWelfare(page);
-            }
-        }
-
+    private final OnFlexibleScrollListener.OnRecyclerViewListener onRecyclerViewListener = new OnFlexibleScrollListener.OnRecyclerViewListener() {
         @Override
         public void onLoadMore() {
-            if (presenter != null) {
-                presenter.loadWelfare(page);
-            }
+            loadWelfare();
+        }
+    };
+
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            pageEntry = 1;
+            loadWelfare();
+        }
+    };
+
+    private final MultipleStatusView.OnMultipleClick onMultipleClick = new MultipleStatusView.OnMultipleClick() {
+        @Override
+        public void retry(View v) {
+            multipleStatusView.showLoading();
         }
     };
 
@@ -113,6 +113,12 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         }
     };
 
+    private void loadWelfare() {
+        if (presenter != null) {
+            presenter.loadWelfare(pageEntry);
+        }
+    }
+
     @Override
     public void hideProgress() {
         if (swipeRefreshLayout != null) {
@@ -127,66 +133,47 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         }
     }
 
-    @Override
     public void showContent() {
-        if (swipeRefreshLayout != null) {
+        if (multipleStatusView != null) {
             multipleStatusView.showContent();
         }
     }
 
-    @Override
-    public void showDisNetWork() {
-        if (swipeRefreshLayout != null) {
-            multipleStatusView.showDisNetwork();
-        }
-    }
-
-    @Override
     public void showEmpty() {
-        if (swipeRefreshLayout != null) {
+        if (multipleStatusView != null) {
             multipleStatusView.showEmpty();
-        }
-    }
-
-    @Override
-    public void showError() {
-        if (swipeRefreshLayout != null) {
-            multipleStatusView.showError();
         }
     }
 
     @Override
     public void loadWelfareSuccess(int page, List<Gank> list) {
         if (welfareAdapter != null) {
-            welfareAdapter.refillItems(list);
+
+            if (page == 1 && ListUtils.isEmpty(list)) {
+                showEmpty();
+                return;
+            }
+
+            pageEntry = page + 1;
+            showContent();
+            if (page == 1) {
+                welfareAdapter.refillItems(list);
+            } else {
+                welfareAdapter.appendItems(list);
+            }
         }
     }
 
     @Override
     public void loadWelfareFailure(String msg) {
-
+        shortToast(msg);
     }
 
     @Override
-    public void loadDataFailure(String msg) {
-        showSnackbar(msg);
-    }
-
-    @Override
-    public void appendWelfareFailure(String msg) {
-        showSnackbar(msg);
-    }
-
-    private void showSnackbar(String msg) {
-        if (swipeRefreshLayout != null) {
-            Snackbar.make(swipeRefreshLayout, msg, Snackbar.LENGTH_LONG)
-                    .setActionTextColor(getResources().getColor(R.color.Blue))
-                    .setAction(R.string.retry, null).show();
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (presenter != null) {
+            presenter.destroy();
         }
-    }
-
-    @Override
-    public void shortToast(String string) {
-
     }
 }

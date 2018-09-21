@@ -56,7 +56,7 @@ public class BaiSiVideoPresenter implements BaiSiVideoContract.Presenter {
             @Override
             public void onNext(BuDeJieVideo baiSiBean) {
                 List<BuDeJieVideo.ListBean> list = baiSiBean.getList();
-                if (!ListUtils.isListEmpty(list)) {
+                if (!ListUtils.isEmpty(list)) {
                     if (mNextPage == 0) {
                         mView.refillData(list);
                     } else {
