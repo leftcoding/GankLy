@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.cure;
 
 import android.lectcoding.ui.adapter.BaseAdapter;
-import android.lectcoding.ui.adapter.BasicViewItem;
 import android.ly.business.domain.Gift;
 import android.support.annotation.IntDef;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.BindViewHolder;
+import com.gank.gankly.butterknife.ItemModel;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -125,7 +125,7 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
         }
     }
 
-    static class CureItem extends BasicViewItem {
+    static class CureItem extends ItemModel {
         final Gift gift;
 
         CureItem(Gift gift) {
@@ -142,7 +142,7 @@ public class CureAdapter extends BaseAdapter<CureAdapter.NormalViewHolder> {
         void onItemClick(String url);
     }
 
-    abstract static class NormalViewHolder<TT extends BasicViewItem> extends BindViewHolder<TT> {
+    abstract static class NormalViewHolder<TT extends ItemModel> extends BindViewHolder<TT> {
 
         NormalViewHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);

@@ -1,7 +1,6 @@
 package com.gank.gankly.ui.daily;
 
 import android.lectcoding.ui.adapter.BaseAdapter;
-import android.lectcoding.ui.adapter.BasicViewItem;
 import android.ly.business.domain.Girl;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.BindViewHolder;
+import com.gank.gankly.butterknife.ItemModel;
 import com.gank.gankly.listener.ItemClick;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHol
         }
     }
 
-    static class NormalItem extends BasicViewItem {
+    static class NormalItem extends ItemModel {
 
         @Override
         public int getViewType() {
@@ -98,7 +98,7 @@ public class DailyGirlAdapter extends BaseAdapter<DailyGirlAdapter.NormalViewHol
         }
     }
 
-    abstract static class NormalViewHolder<TT extends NormalItem> extends BindViewHolder<TT> {
+    abstract static class NormalViewHolder<TT extends ItemModel> extends BindViewHolder<TT> {
 
         public NormalViewHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);

@@ -1,62 +1,39 @@
 package com.gank.gankly.ui.ios;
 
 import android.content.Context;
-import android.lectcoding.ui.adapter.BaseAdapter;
-import android.lectcoding.ui.adapter.BasicViewItem;
-import android.lectcoding.ui.adapter.ViewItem;
 import android.ly.business.domain.Gank;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.support.annotation.NonNull;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.gank.gankly.R;
 import com.gank.gankly.butterknife.BindViewHolder;
-import com.gank.gankly.utils.DateUtils;
+import com.gank.gankly.butterknife.ItemModel;
+import com.gank.gankly.ui.base.DiffAdapter;
+import com.gank.gankly.utils.ListUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Create by LingYan on 2016-04-25
  */
-class IosAdapter extends BaseAdapter<BindViewHolder> {
-    private final List<Gank> resultsBeans = new ArrayList<>();
-    private final List<ViewItem> viewItemList = new ArrayList<>();
+class IosAdapter extends DiffAdapter<BindViewHolder> {
+    private List<ItemModel> itemModels = new ArrayList<>();
+    private List<Gank> curGank;
 
     private Context context;
-
     private ItemCallback itemCallBack;
 
     IosAdapter(Context context) {
+        super(context);
         this.context = context;
-        setHasStableIds(true);
-
-        registerAdapterDataObserver(mObserver);
     }
 
-    private RecyclerView.AdapterDataObserver mObserver = new RecyclerView.AdapterDataObserver() {
-        @Override
-        public void onChanged() {
-            super.onChanged();
-            viewItemList.clear();
-            if (!resultsBeans.isEmpty()) {
-                for (Gank resultsBean : resultsBeans) {
-                    viewItemList.add(new TextViewItem(resultsBean));
-                }
-            }
-        }
-    };
-
     @Override
-    public BindViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BindViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         BindViewHolder defaultHolder;
         switch (viewType) {
-            case NormalViewHolder.LAYOUT:
+            case ViewType.NORMAL:
                 defaultHolder = new NormalViewHolder(parent, itemCallBack);
                 break;
             default:
@@ -67,112 +44,61 @@ class IosAdapter extends BaseAdapter<BindViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BindViewHolder holder, int position) {
-        final ViewItem viewItem = viewItemList.get(position);
-        switch (holder.getItemViewType()) {
-            case NormalViewHolder.LAYOUT:
-                ((NormalViewHolder) holder).bindHolder((TextViewItem) viewItem);
+    public void onBindViewHolder(@NonNull BindViewHolder holder, int position) {
+        final ItemModel viewItem = itemModels.get(position);
+        switch (viewItem.getViewType()) {
+            case ViewType.NORMAL:
+                ((NormalViewHolder) holder).bindHolder((TextViewModel) viewItem);
                 break;
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return viewItemList.get(position).getViewType();
+        return itemModels.get(position).getViewType();
     }
 
     @Override
-    public void onViewRecycled(BindViewHolder holder) {
+    public void onViewRecycled(@NonNull BindViewHolder holder) {
         super.onViewRecycled(holder);
         Glide.get(context).clearMemory();
     }
 
     @Override
     public int getItemCount() {
-        return resultsBeans.size();
+        return itemModels.size();
     }
 
-    void fillItems(List<Gank> results) {
-        resultsBeans.clear();
-        appendItems(results);
+    void setItems(@NonNull List<Gank> list) {
+        curGank = list;
     }
 
-    public void appendItems(List<Gank> results) {
-        resultsBeans.addAll(results);
+    void clearItems() {
+        itemModels.clear();
+        curGank = null;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    /**
+     * 在主线程进行列表差异结果比较，不适合大型数据量
+     */
+    public void update() {
+        final List<ItemModel> newModels = new ArrayList<>(itemModels);
+        if (!ListUtils.isEmpty(curGank)) {
+            for (Gank gank : curGank) {
+                newModels.add(new TextViewModel(gank));
+            }
+        }
+
+        updateAdapter(itemModels, newModels);
     }
 
     @Override
     public void destroy() {
-        unregisterAdapterDataObserver(mObserver);
+        clearItems();
+        itemCallBack = null;
     }
 
     public void setOnItemClickListener(ItemCallback itemCallBack) {
         this.itemCallBack = itemCallBack;
-    }
-
-    static class NormalViewHolder extends BindViewHolder<TextViewItem> {
-        static final int LAYOUT = R.layout.adapter_ios;
-
-        @BindView(R.id.author_name)
-        TextView authorName;
-
-        @BindView(R.id.time)
-        TextView time;
-
-        @BindView(R.id.title)
-        TextView title;
-
-        ItemCallback itemCallBack;
-
-        NormalViewHolder(ViewGroup parent, ItemCallback itemCallBack) {
-            super(parent, LAYOUT);
-            this.itemCallBack = itemCallBack;
-        }
-
-        @Override
-        public void bindHolder(TextViewItem item) {
-            final Gank resultsBean = item.getResultsBean();
-
-            time.setText(item.getTime());
-            title.setText(resultsBean.desc);
-            authorName.setText(resultsBean.who);
-
-            itemView.setOnClickListener(v -> {
-                if (itemCallBack != null) {
-                    itemCallBack.onItemClick(v, resultsBean);
-                }
-            });
-        }
-    }
-
-    static class TextViewItem extends BasicViewItem {
-        private Gank resultsBean;
-
-        TextViewItem(Gank resultsBean) {
-            this.resultsBean = resultsBean;
-        }
-
-        Gank getResultsBean() {
-            return resultsBean;
-        }
-
-        public String getTime() {
-            Date date = DateUtils.formatToDate(resultsBean.publishedAt);
-            return DateUtils.formatString(date, DateUtils.MM_DD);
-        }
-
-        @Override
-        public int getViewType() {
-            return NormalViewHolder.LAYOUT;
-        }
-    }
-
-    public interface ItemCallback {
-        void onItemClick(View view, Gank gank);
     }
 }

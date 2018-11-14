@@ -13,6 +13,7 @@ import java.util.List;
  */
 public class WelfareViewManager extends BaseViewManager {
     private List<Gank> list = new ArrayList<>();
+    private ItemClickListener itemClickListener;
 
     public WelfareViewManager() {
 
@@ -31,8 +32,17 @@ public class WelfareViewManager extends BaseViewManager {
         for (Gank gank : list) {
             ImageViewModel imageViewModel = new ImageViewModel();
             imageViewModel.setData(gank);
+            imageViewModel.setListener(itemClickListener);
             viewModels.add(imageViewModel);
         }
         return viewModels;
+    }
+
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItem(int position);
     }
 }

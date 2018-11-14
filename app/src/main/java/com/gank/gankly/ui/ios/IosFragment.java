@@ -5,6 +5,7 @@ import android.ly.business.domain.Gank;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,11 +14,10 @@ import com.gank.gankly.R;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.ui.base.LazyFragment;
 import com.gank.gankly.ui.web.normal.WebActivity;
-import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.gank.gankly.widget.recyclerview.OnFlexibleScrollListener;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import butterknife.BindView;
 
@@ -30,16 +30,17 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     MultipleStatusView multipleStatusView;
 
     @BindView(R.id.swipe_refresh)
-    LySwipeRefreshLayout swipeRefresh;
+    SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
 
     private IosAdapter iosAdapter;
     private IosContract.Presenter iosPresenter;
 
-    private final AtomicBoolean isFirst = new AtomicBoolean(true);
-
     @Override
     protected int getLayoutId() {
-        return R.layout.layout_swipe_normal;
+        return R.layout.fragment_welfare;
     }
 
     @Override
@@ -51,15 +52,15 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         iosAdapter = new IosAdapter(getContext());
+        iosAdapter.setOnItemClickListener(onItemClickListener);
 
-        swipeRefresh.setAdapter(iosAdapter);
-        swipeRefresh.setLayoutManager(new LinearLayoutManager(getContext()));
-        swipeRefresh.setOnScrollListener(onSwipeRefreshListener);
+        OnFlexibleScrollListener scrollListener = new OnFlexibleScrollListener();
+        scrollListener.setOnScrollListener(onRecyclerViewListener);
+        recyclerView.addOnScrollListener(scrollListener);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(iosAdapter);
 
-        RecyclerView recyclerView = swipeRefresh.getRecyclerView();
-        recyclerView.setHasFixedSize(true);
-
-        iosAdapter.setOnItemClickListener(mItemCallBack);
+        swipeRefreshLayout.setOnRefreshListener(onRefreshListener);
         multipleStatusView.setListener(v -> refreshIos());
     }
 
@@ -69,19 +70,21 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         refreshIos();
     }
 
-    private LySwipeRefreshLayout.OnSwipeRefreshListener onSwipeRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
-        @Override
-        public void onRefresh() {
-            refreshIos();
-        }
-
+    private final OnFlexibleScrollListener.OnRecyclerViewListener onRecyclerViewListener = new OnFlexibleScrollListener.OnRecyclerViewListener() {
         @Override
         public void onLoadMore() {
             loadMoreIos();
         }
     };
 
-    private final IosAdapter.ItemCallback mItemCallBack = (view, gank) -> {
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            refreshIos();
+        }
+    };
+
+    private final ItemCallback onItemClickListener = (view, gank) -> {
         Bundle bundle = new Bundle();
         bundle.putString(WebActivity.TITLE, gank.desc);
         bundle.putString(WebActivity.URL, gank.url);
@@ -106,27 +109,15 @@ public class IosFragment extends LazyFragment implements IosContract.View {
 
     @Override
     public void showProgress() {
-        if (isFirst.get()) {
-            if (multipleStatusView != null) {
-                if (swipeRefresh != null && !swipeRefresh.isRefreshing()) {
-                    multipleStatusView.showLoading();
-                }
-            }
-        }
-
-        if (swipeRefresh != null) {
-            swipeRefresh.setRefreshing(true);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
         }
     }
 
     @Override
     public void hideProgress() {
-        if (multipleStatusView != null) {
-            multipleStatusView.showContent();
-        }
-
-        if (swipeRefresh != null) {
-            swipeRefresh.setRefreshing(false);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 
@@ -174,23 +165,24 @@ public class IosFragment extends LazyFragment implements IosContract.View {
         if (iosPresenter != null) {
             iosPresenter.destroy();
         }
+        if (iosAdapter != null) {
+            iosAdapter.destroy();
+        }
     }
-
 
     @Override
     public void refreshSuccess(List<Gank> list) {
         showContent();
 
-        if (isFirst.compareAndSet(true, false)) {
-            if (list == null || list.isEmpty()) {
-                showEmpty();
-                return;
-            }
+        if (list == null || list.isEmpty()) {
+            showEmpty();
+            return;
         }
 
         if (iosAdapter != null) {
-            iosAdapter.fillItems(list);
-            iosAdapter.notifyDataSetChanged();
+            iosAdapter.clearItems();
+            iosAdapter.setItems(list);
+            iosAdapter.update();
         }
     }
 
@@ -202,18 +194,13 @@ public class IosFragment extends LazyFragment implements IosContract.View {
     @Override
     public void appendSuccess(List<Gank> list) {
         if (iosAdapter != null) {
-            iosAdapter.appendItems(list);
-            iosAdapter.notifyDataSetChanged();
+            iosAdapter.setItems(list);
+            iosAdapter.update();
         }
     }
 
     @Override
     public void appendFailure(String msg) {
         shortToast(msg);
-    }
-
-    @Override
-    public void shortToast(String string) {
-
     }
 }

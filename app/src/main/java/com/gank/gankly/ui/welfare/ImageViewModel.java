@@ -34,12 +34,18 @@ public class ImageViewModel extends BaseViewModel<ImageViewModel.ViewHolder> {
 
     private Gank gank;
 
+    private WelfareViewManager.ItemClickListener itemClickListener;
+
     ImageViewModel() {
 
     }
 
     public void setData(Gank gank) {
         this.gank = gank;
+    }
+
+    public void setListener(WelfareViewManager.ItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
     }
 
     private void setCardViewLayoutParams(ImageDefaultView mImageView, int width, int height) {
@@ -55,7 +61,7 @@ public class ImageViewModel extends BaseViewModel<ImageViewModel.ViewHolder> {
     }
 
     @Override
-    public void bindView(ViewHolder viewHolder) {
+    public void bindView(final ViewHolder viewHolder) {
         super.bindView(viewHolder);
         final String url = gank.url;
 
@@ -88,6 +94,13 @@ public class ImageViewModel extends BaseViewModel<ImageViewModel.ViewHolder> {
                 }
             }));
         }
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onItem(viewHolder.getLayoutPosition());
+            }
+        });
     }
 
     @Override

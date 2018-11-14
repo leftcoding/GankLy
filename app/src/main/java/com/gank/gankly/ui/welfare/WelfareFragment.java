@@ -12,9 +12,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.gank.gankly.R;
-import com.gank.gankly.listener.ItemCallBack;
+import com.gank.gankly.config.MeiziArrayList;
 import com.gank.gankly.ui.base.LazyFragment;
-import com.gank.gankly.ui.base.adapter.BaseAdapter;
 import com.gank.gankly.ui.base.adapter.ViewModelAdapter;
 import com.gank.gankly.ui.gallery.GalleryActivity;
 import com.gank.gankly.utils.ListUtils;
@@ -59,8 +58,9 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        BaseAdapter welfareAdapter = new ViewModelAdapter();
+        ViewModelAdapter welfareAdapter = new ViewModelAdapter();
         itemManager = new WelfareViewManager();
+        itemManager.setClickListener(itemClickListener);
         welfareAdapter.setViewManager(itemManager);
 
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,
@@ -103,9 +103,9 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
         }
     };
 
-    private final ItemCallBack itemCallBack = new ItemCallBack() {
+    private final WelfareViewManager.ItemClickListener itemClickListener = new WelfareViewManager.ItemClickListener() {
         @Override
-        public void onClick(View view, int position, Object object) {
+        public void onItem(int position) {
             Bundle bundle = new Bundle();
             bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
             Intent intent = new Intent(getContext(), GalleryActivity.class);
@@ -156,10 +156,11 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
                 return;
             }
 
-            curPage = page + 1;
             showContent();
+            curPage = page + 1;
             itemManager.setData(page, list);
             itemManager.notifyDataSetChanged();
+            MeiziArrayList.getInstance().addImages(list, page);
         }
     }
 

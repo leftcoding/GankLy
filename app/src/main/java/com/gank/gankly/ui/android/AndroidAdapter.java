@@ -2,8 +2,6 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 import android.lectcoding.ui.adapter.BaseAdapter;
-import android.lectcoding.ui.adapter.BasicViewItem;
-import android.lectcoding.ui.adapter.ViewItem;
 import android.ly.business.domain.Gank;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.BindViewHolder;
+import com.gank.gankly.butterknife.ItemModel;
 import com.gank.gankly.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -31,7 +30,7 @@ class AndroidAdapter extends BaseAdapter<BindViewHolder> {
     private Context context;
 
     private final List<Gank> resultsBeans = new ArrayList<>();
-    private final List<ViewItem> viewItemList = new ArrayList<>();
+    private final List<ItemModel> viewItemList = new ArrayList<>();
 
     AndroidAdapter(@NonNull Context context) {
         this.context = context;
@@ -78,7 +77,7 @@ class AndroidAdapter extends BaseAdapter<BindViewHolder> {
 
     @Override
     public void onBindViewHolder(BindViewHolder holder, int position) {
-        final ViewItem viewItem = viewItemList.get(position);
+        final ItemModel viewItem = viewItemList.get(position);
         switch (holder.getItemViewType()) {
             case NormalViewHolder.LAYOUT:
                 ((NormalViewHolder) holder).bindHolder((TextViewItem) viewItem);
@@ -128,7 +127,7 @@ class AndroidAdapter extends BaseAdapter<BindViewHolder> {
         unregisterAdapterDataObserver(dataObserver);
     }
 
-    private static class TextViewItem extends BasicViewItem {
+    private static class TextViewItem extends ItemModel {
         private Gank resultsBean;
 
         TextViewItem(Gank resultsBean) {

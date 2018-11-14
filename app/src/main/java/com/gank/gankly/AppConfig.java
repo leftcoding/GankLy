@@ -1,22 +1,18 @@
 package com.gank.gankly;
 
 import android.app.Application;
-import android.database.sqlite.SQLiteDatabase;
 import android.ly.business.api.GankServerHelper;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.gank.gankly.config.Constants;
 import com.gank.gankly.config.HttpUrlConfig;
-import com.gank.gankly.data.DaoMaster;
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.smtt.sdk.QbSdk;
 
 import okhttp3.logging.HttpLoggingInterceptor;
-
-import static de.greenrobot.dao.test.DbTest.DB_NAME;
 
 /**
  * Create by LingYan on 2016-04-01
@@ -29,19 +25,13 @@ public class AppConfig extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        setupLeakCanary();
         setupStetho();
-//        setupBugly();
         setupX5WebView();
 
         GankServerHelper.init(AppConfig.this)
                 .baseUrl(HttpUrlConfig.GANK_URL)
                 .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(getApplicationContext(), DB_NAME, null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-//        daoSession = daoMaster.newSession();
     }
 
     /**

@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
  * Create by LingYan on 2018-03-23
  */
 
-public abstract class ObserverAdapter<VH extends RecyclerView.ViewHolder> extends BaseAdapter<VH> {
+public abstract class  ObserverAdapter<VH extends RecyclerView.ViewHolder> extends BaseAdapter<VH> {
     public ObserverAdapter() {
         if (!isObserverNull()) {
             registerAdapterDataObserver(getObserver());

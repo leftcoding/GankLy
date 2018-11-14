@@ -1,9 +1,7 @@
 package com.gank.gankly.ui.pure;
 
 import android.content.Context;
-import android.lectcoding.ui.adapter.BasicViewItem;
 import android.lectcoding.ui.adapter.ObserverAdapter;
-import android.lectcoding.ui.adapter.ViewItem;
 import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +16,7 @@ import com.bumptech.glide.load.model.LazyHeaders;
 import com.bumptech.glide.request.RequestOptions;
 import com.gank.gankly.R;
 import com.gank.gankly.butterknife.BindViewHolder;
+import com.gank.gankly.butterknife.ItemModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
     private final List<Gift> gifts = new ArrayList<>();
     private ItemClickCallback callback;
     private Context mContext;
-    private final List<ViewItem> items = new ArrayList<>();
+    private final List<ItemModel> items = new ArrayList<>();
 
     PureAdapter(Context context) {
         setHasStableIds(true);
@@ -188,7 +187,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
         }
     }
 
-    static class GiftViewItem extends BasicViewItem {
+    static class GiftViewItem extends ItemModel {
         final Gift gift;
 
         GiftViewItem(Gift gift) {
@@ -201,7 +200,7 @@ public class PureAdapter extends ObserverAdapter<PureAdapter.PureViewHolder> {
         }
     }
 
-    abstract static class PureViewHolder<II extends ViewItem> extends BindViewHolder<II> {
+    abstract static class PureViewHolder<II extends ItemModel> extends BindViewHolder<II> {
 
         PureViewHolder(ViewGroup parent, int layoutRes) {
             super(parent, layoutRes);

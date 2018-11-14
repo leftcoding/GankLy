@@ -3,6 +3,7 @@ package android.lectcoding.ui.adapter;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 /**
@@ -10,9 +11,16 @@ import android.view.ViewGroup;
  */
 
 public abstract class BasicHolder<II extends ViewItem> extends RecyclerView.ViewHolder {
-    public BasicHolder(ViewGroup parent, @LayoutRes int layout) {
-        super(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false));
+    public BasicHolder(View view) {
+        super(view);
     }
 
+    @LayoutRes
+    public abstract int getLayoutRes();
+
     public abstract void bindHolder(II item);
+
+    protected View createView(ViewGroup parent) {
+        return LayoutInflater.from(parent.getContext()).inflate(getLayoutRes(), parent, false);
+    }
 }
