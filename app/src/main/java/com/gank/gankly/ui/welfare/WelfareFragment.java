@@ -105,13 +105,15 @@ public class WelfareFragment extends LazyFragment implements WelfareContract.Vie
 
     private final WelfareViewManager.ItemClickListener itemClickListener = new WelfareViewManager.ItemClickListener() {
         @Override
-        public void onItem(int position) {
+        public void onItem(View view, int position) {
+            Intent intent = new Intent(getContext(), GalleryActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt(GalleryActivity.EXTRA_POSITION, position);
-            Intent intent = new Intent(getContext(), GalleryActivity.class);
-            intent.putExtra(GalleryActivity.TYPE, 1);
+            bundle.putInt(GalleryActivity.TYPE, GalleryActivity.TYPE_INDEX);
             intent.putExtras(bundle);
-            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity());
+//            startActivity(intent);
+
+            ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), view, getString(R.string.transition_welfare_image));
             startActivity(intent, activityOptionsCompat.toBundle());
         }
     };

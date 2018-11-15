@@ -107,11 +107,9 @@ public class WheelView extends ScrollView {
         scrollerTask = new Runnable() {
             public void run() {
                 int newY = getScrollY();
-//                KLog.d("newY:" + newY);
                 if (initialY - newY == 0) { // stopped
                     final int remainder = initialY % itemHeight;
                     final int divided = initialY / itemHeight;
-//                    KLog.d(TAG, "initialY: " + initialY);
                     if (remainder == 0) {
                         selectedIndex = divided + offset;
                         onSeletedCallBack();
@@ -173,7 +171,6 @@ public class WheelView extends ScrollView {
         tv.setPadding(padding, padding, padding, padding);
         if (0 == itemHeight) {
             itemHeight = getViewMeasuredHeight(tv);
-//            KLog.d(TAG, "itemHeight: " + itemHeight);
             views.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, itemHeight * displayItemCount));
             LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) this.getLayoutParams();
             this.setLayoutParams(new LinearLayout.LayoutParams(lp.width, itemHeight * displayItemCount));
@@ -185,7 +182,6 @@ public class WheelView extends ScrollView {
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
-//        KLog.d(TAG, "l: " + l + ", t: " + t + ", oldl: " + oldl + ", oldt: " + oldt);
         refreshItemView(t);
     }
 
@@ -268,7 +264,6 @@ public class WheelView extends ScrollView {
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-//        KLog.d(TAG, "w: " + w + ", h: " + h + ", oldw: " + oldw + ", oldh: " + oldh);
         viewWidth = w;
         setBackground(null);
     }

@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.gallery;
 
-import android.animation.Animator;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,26 +11,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -42,7 +29,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.config.MeiziArrayList;
-import com.gank.gankly.ui.base.activity.BaseActivity;
+import com.gank.gankly.ui.base.activity.SupportActivity;
 import com.gank.gankly.utils.CrashUtils;
 import com.gank.gankly.utils.ListUtils;
 import com.gank.gankly.utils.RxSaveImage;
@@ -50,13 +37,10 @@ import com.gank.gankly.utils.ShareUtils;
 import com.gank.gankly.utils.StringHtml;
 import com.gank.gankly.utils.ToastUtils;
 import com.gank.gankly.widget.WheelView;
-import com.gank.gankly.widget.transforms.FixedSpeedScroller;
-import com.gank.gankly.widget.transforms.ZoomOutSlideTransformer;
 import com.socks.library.KLog;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -76,57 +60,40 @@ import io.reactivex.schedulers.Schedulers;
  * 相册
  * Create by LingYan on 2016-4-25
  */
-public class GalleryActivity extends BaseActivity implements ViewPager.OnPageChangeListener,
-        GalleryContract.View {
-    private static final int SYSTEM_UI_BASE_VISIBILITY = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-
-    private static final int SYSTEM_UI_IMMERSIVE = View.SYSTEM_UI_FLAG_IMMERSIVE
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            | View.SYSTEM_UI_FLAG_FULLSCREEN;
-
-    public static final String TAG = "BrowseActivity";
+public class GalleryActivity extends SupportActivity {
     private static final String FILE_PATH = "GankLy_pic";
+    private static final int INTERVALS = 3000;
+    private static final int INITIAL_DELAY = 1000;
+
+    public static final int TYPE_INDEX = 1;
+
+    public static final String TYPE = "Type";
     public static final String EXTRA_GANK = "Gank";
     public static final String EXTRA_GIFT = "Gift";
     public static final String EXTRA_DAILY = "Daily";
     public static final String EXTRA_MODEL = "Model";
     public static final String EXTRA_POSITION = "Position";
     public static final String EXTRA_LIST = "Extra_List";
-
-    public static final String TYPE = "Type";
-    // 转场动画
-    public static final int TYPE_TRANSITION = 1;
     private static final String NUMBER_COLOR = "#8b0000";
 
-    @BindView(R.id.progress_txt_page)
-    TextView txtLimit;
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.pager)
-    ViewPager mViewPager;
-    @BindView(R.id.browse_rl)
-    RelativeLayout mRelativeLayout;
-    @BindView(R.id.brose_img_auto)
-    ImageView imgAuto;
-    @BindView(R.id.browse_txt_auto_tip)
-    TextView txtAutoTip;
+    @BindView(R.id.progress_page)
+    TextView progressPage;
 
-    private GalleryContract.Presenter mPresenter;
-    private PagerAdapter mPagerAdapter;
-    private WallpaperManager myWallpaperManager;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
+
+    @BindView(R.id.browse_auto)
+    ImageView browseAuto;
+
+    private GalleryPagerAdapter pagerAdapter;
+    private WallpaperManager wallpaperManager;
     private Disposable subscription;
-    private Disposable autoTipable;
 
-    private List<Gift> mGiftList;
-    private Bitmap mBitmap;
-    private String mViewsModel = EXTRA_GANK;
+    private List<Gift> gifts;
+    private Bitmap bitmap;
+    private String browseModel = EXTRA_GANK;
     private boolean isCanPlay = true;
-    private int mPosition;
-    private int curItem = -1;
-    private int transition_code;
-    private int getTipWidth;
+    private int position;
 
     @Override
     protected int getContentId() {
@@ -137,115 +104,64 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         parseBundle();
-        activityAnimation();
-        getGiftList();
+        gifts = getGiftList();
+        setupPageNumber(position);
 
-        mPagerAdapter = new PagerAdapter();
-        mViewPager.setAdapter(mPagerAdapter);
+        pagerAdapter = new GalleryPagerAdapter(getSupportFragmentManager());
+        pagerAdapter.setGifts(gifts);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setCurrentItem(position);
+        viewPager.addOnPageChangeListener(onPageChangeListener);
+        pagerAdapter.notifyDataSetChanged();
+    }
 
-        mToolbar.setTitle(R.string.app_name);
-        setSupportActionBar(mToolbar);
-        ActionBar bar = getSupportActionBar();
-        if (bar != null) {
-            bar.setDisplayHomeAsUpEnabled(true); //显示返回箭头
+    private final ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int i, float v, int i1) {
+
         }
 
-        setNumberText(mPosition);
-
-        mViewPager.setPageTransformer(true, new ZoomOutSlideTransformer());
-        mViewPager.setOffscreenPageLimit(1);
-        mViewPager.setCurrentItem(mPosition);
-        mViewPager.addOnPageChangeListener(this);
-        mPagerAdapter.notifyDataSetChanged();
-
-        try {
-            Field mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            FixedSpeedScroller scroller = new FixedSpeedScroller(mViewPager.getContext(), new LinearInterpolator());
-            // scroller.setFixedDuration(5000);
-            mScroller.set(mViewPager, scroller);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
-            KLog.e(e);
+        @Override
+        public void onPageSelected(int _position) {
+            position = _position;
+            setupPageNumber(position);
         }
 
-        mToolbar.setNavigationOnClickListener(v -> onBackPressed());
-    }
+        @Override
+        public void onPageScrollStateChanged(int state) {
+            if (state == ViewPager.SCROLL_STATE_DRAGGING) {
+                stopBrowse();
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (EXTRA_GANK.equals(mViewsModel)) {
-            boolean isFetch = isFetch();
-            if (isFetch) {
-//                mPresenter.fetchMore();
-            }
-        }
-
-        mPosition = position;
-        setNumberText(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-        if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-            hideSystemUi();
-            stopBrowse();
-
-            if (isPositionEnd()) {
-                showSnackbar(mRelativeLayout, R.string.loading_all_over, ContextCompat.getColor(this, R.color.white));
-            }
-        }
-    }
-
-    private void setNumberText(int position) {
-        int size = getAapterCount();
-        String imgSize = String.valueOf(size);
-        String p = String.valueOf(position + 1);
-        txtLimit.setText(StringHtml.getStringSize(p, imgSize, "/", NUMBER_COLOR, 22));
-    }
-
-    private void getGiftList() {
-        mGiftList = new ArrayList<>();
-        if (EXTRA_GANK.equals(mViewsModel)) {
-            List<Gank> giftBeen = MeiziArrayList.getInstance().getImagesList();
-            mGiftList = changeImageList(giftBeen);
-            int size = ListUtils.getSize(giftBeen);
-            if (size > 5) {
-                int point = size - 5;
-                if (mPosition >= point) {
-//                    mPresenter.fetchMore();
+                if (isPositionEnd()) {
+                    shortToast(getString(R.string.loading_all_over));
                 }
             }
-        } else {
-            mGiftList = getIntent().getParcelableArrayListExtra(EXTRA_LIST);
         }
+    };
+
+    private void setupPageNumber(int position) {
+        int size = gifts == null ? 0 : gifts.size();
+        String giftSize = String.valueOf(size);
+        String index = String.valueOf(position + 1);
+        progressPage.setText(StringHtml.getStringSize(index, giftSize, getString(R.string.page_format_mark), NUMBER_COLOR, 22));
     }
 
-    private void activityAnimation() {
-        Transition transition = null;
-        switch (transition_code) {
-            case TYPE_TRANSITION:
-                transition = TransitionInflater.from(this).inflateTransition(R.transition.gallery_mid);
-                break;
-            default:
-                break;
+    private List<Gift> getGiftList() {
+        List<Gift> gifts;
+        if (EXTRA_GANK.equals(browseModel)) {
+            List<Gank> giftBeen = MeiziArrayList.getInstance().getImagesList();
+            gifts = changeImageList(giftBeen);
+        } else {
+            gifts = getIntent().getParcelableArrayListExtra(EXTRA_LIST);
         }
-
-        if (transition != null) {
-            getWindow().setEnterTransition(transition);
-            getWindow().setExitTransition(transition);
-        }
+        return gifts == null ? new ArrayList<>() : gifts;
     }
 
     private void parseBundle() {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            mPosition = bundle.getInt(EXTRA_POSITION, 0);
-            mViewsModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
-            transition_code = bundle.getInt(TYPE, -1);
+            position = bundle.getInt(EXTRA_POSITION, 0);
+            browseModel = bundle.getString(EXTRA_MODEL, EXTRA_GANK);
         }
     }
 
@@ -261,51 +177,6 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             }
         }
         return list;
-    }
-
-    public void appendData(List<Gank> list) {
-        mGiftList.addAll(changeImageList(list));
-        mPagerAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void sysNumText() {
-        setNumberText(mPosition);
-    }
-
-    @Override
-    public void showProgress() {
-
-    }
-
-    @Override
-    public void hideProgress() {
-
-    }
-
-    @Override
-    public void hasNoMoreDate() {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showEmpty() {
-
-    }
-
-    @Override
-    public void showDisNetWork() {
-
-    }
-
-    @Override
-    public void showError() {
-
     }
 
     @Override
@@ -332,20 +203,17 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.brose_img_auto)
+    @OnClick(R.id.browse_auto)
     void onBrowseAuto() {
         changeBrowse();
     }
 
     private void changeBrowse() {
-        disposeAutoTips();
-
         if (isCanPlay) {
             isCanPlay = false;
-            hideSystemUi();
 
             if (!isPositionEnd()) {
-                imgAuto.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery_stop, getTheme()));
+                browseAuto.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery_stop, getTheme()));
                 timerBrowse();
             } else {
                 stopBrowse();
@@ -353,96 +221,27 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         } else {
             stopBrowse();
         }
-
-        delayShowAutoTips(isCanPlay);
-    }
-
-    private void disposeAutoTips() {
-        if (autoTipable != null && !autoTipable.isDisposed()) {
-            autoTipable.dispose();
-        }
-    }
-
-    private void delayShowAutoTips(boolean isCanPlay) {
-        autoTipable = Observable.create((ObservableOnSubscribe<String>) e -> {
-            e.onNext("");
-            e.onComplete();
-        })
-                .delay(800, TimeUnit.MILLISECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {
-                    if (!isCanPlay) {
-                        animAutoTips();
-                    }
-                });
-    }
-
-    private void animAutoTips() {
-        txtAutoTip.animate().translationX(-getTipWidth).setDuration(800).setListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                txtAutoTip.setAlpha(1);
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                txtAutoTip.animate().alpha(0).translationX(0).setDuration(800).setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
-                    }
-                }).setStartDelay(1500).start();
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        }).start();
     }
 
     private void stopBrowse() {
         isCanPlay = true;
-        imgAuto.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery_play, getTheme()));
+        browseAuto.setImageDrawable(getResources().getDrawable(R.drawable.ic_gallery_play));
         unSubscribeTime();
     }
 
-    @OnClick(R.id.progress_txt_page)
+    @OnClick(R.id.progress_page)
     void onPageClick() {
+        stopBrowse();
         ArrayList<String> list = getSelectList();
         if (list != null) {
-            stopBrowse();
-            curItem = mPosition;
-            View outerView = LayoutInflater.from(this).inflate(R.layout.view_wheel, mRelativeLayout, false);
-            WheelView wv = (WheelView) outerView.findViewById(R.id.wheel_view_wv);
-            wv.setOffset(1);
+            View outerView = View.inflate(this, R.layout.view_wheel, null);
+            final WheelView wv = outerView.findViewById(R.id.wheel_view_wv);
             wv.setItems(list);
-            wv.setSeletion(curItem);
+            wv.setSeletion(position);
             wv.setOnWheelViewListener(new WheelView.OnWheelViewListener() {
                 @Override
                 public void onSelected(int selectedIndex, String item) {
-                    curItem = selectedIndex - 1;
+                    position = selectedIndex - 1;
                 }
             });
 
@@ -450,22 +249,16 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
             dialog.setTitle(R.string.gallery_page_select);
             dialog.setView(outerView);
             dialog.setPositiveButton(R.string.dialog_ok, (dialog1, which) -> {
-                mViewPager.setCurrentItem(curItem);
                 dialog1.dismiss();
+                viewPager.setCurrentItem(position);
             });
             dialog.show();
         }
     }
 
-    private boolean isFetch() {
-        int curPosition = mViewPager.getCurrentItem() + 1;
-        int p = getGiftSize() - curPosition;
-        return p <= 5;
-    }
-
     private ArrayList<String> getSelectList() {
         ArrayList<String> list = null;
-        if (!isEmpty()) {
+        if (!ListUtils.isEmpty(gifts)) {
             list = new ArrayList<>();
             for (int i = 0; i < getGiftSize(); i++) {
                 list.add(i, String.valueOf(i + 1));
@@ -475,52 +268,27 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private int getGiftSize() {
-        return mGiftList == null ? 0 : mGiftList.size();
+        return gifts == null ? 0 : gifts.size();
     }
 
-    private boolean isEmpty() {
-        return ListUtils.isEmpty(mGiftList);
-    }
 
-    @Override
-    public void shortToast(String string) {
-
-    }
-
-    private class PagerAdapter extends FragmentStatePagerAdapter {
-
-        public PagerAdapter() {
-            super(getSupportFragmentManager());
-        }
-
-        @Override
-        public int getCount() {
-            return getGiftSize();
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return GalleryFragment.newInstance(mGiftList.get(position).imgUrl);
-        }
-    }
-
-    private int getAapterCount() {
-        return mPagerAdapter == null ? 0 : mPagerAdapter.getCount();
+    private int getAdapterCount() {
+        return pagerAdapter == null ? 0 : pagerAdapter.getCount();
     }
 
     private boolean isPositionEnd() {
-        return getAapterCount() == mPosition + 1;
+        return getAdapterCount() == position + 1;
     }
 
     private void timerBrowse() {
-        subscription = Observable.interval(1000, 2000, TimeUnit.MILLISECONDS)
+        subscription = Observable.interval(INITIAL_DELAY, INTERVALS, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aLong -> {
-                    if (aLong >= getAapterCount()) {
+                    if (aLong >= getAdapterCount()) {
                         stopBrowse();
                     } else {
-                        int next = mPosition + 1;
-                        mViewPager.setCurrentItem(next, true);
+                        int next = position + 1;
+                        viewPager.setCurrentItem(next, true);
                     }
                     if (isPositionEnd()) {
                         stopBrowse();
@@ -556,7 +324,7 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
                                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                                 .skipMemoryCache(true)
                         )
-                        .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .submit(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
                         .get();
             } catch (InterruptedException | ExecutionException e) {
                 KLog.e(e);
@@ -587,12 +355,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
 
                     @Override
                     public void onNext(Bitmap bitmap) {
-                        myWallpaperManager = WallpaperManager
+                        wallpaperManager = WallpaperManager
                                 .getInstance(getApplicationContext());
                         try {
-                            Drawable wallpaperDrawable = myWallpaperManager.getDrawable();
-                            mBitmap = ((BitmapDrawable) wallpaperDrawable).getBitmap();
-                            myWallpaperManager.setBitmap(bitmap);
+                            Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+                            GalleryActivity.this.bitmap = ((BitmapDrawable) wallpaperDrawable).getBitmap();
+                            wallpaperManager.setBitmap(bitmap);
                         } catch (IOException e) {
                             KLog.e(e);
                             CrashUtils.crashReport(e);
@@ -602,16 +370,16 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private void revokeWallpaper() {
-        Snackbar.make(mViewPager, R.string.meizi_wallpaper_success, Snackbar.LENGTH_LONG)
+        Snackbar.make(viewPager, R.string.meizi_wallpaper_success, Snackbar.LENGTH_LONG)
                 .setAction(R.string.revoke, v -> {
                     try {
-                        if (mBitmap != null) {
-                            myWallpaperManager.setBitmap(mBitmap);
+                        if (bitmap != null) {
+                            wallpaperManager.setBitmap(bitmap);
                         }
                     } catch (IOException e) {
                         KLog.e(e);
                     } finally {
-                        mBitmap = null;
+                        bitmap = null;
                     }
                     ToastUtils.showToast(getBaseContext(), R.string.meizi_revoke_success);
                 })
@@ -619,12 +387,12 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     private String getImageUrl() {
-        int position = mViewPager.getCurrentItem();
+        int position = viewPager.getCurrentItem();
         String mUrl;
-        if (EXTRA_GANK.equals(mViewsModel)) {
+        if (EXTRA_GANK.equals(browseModel)) {
             mUrl = MeiziArrayList.getInstance().getResultBean(position).url;
         } else {
-            mUrl = mGiftList.get(position).imgUrl;
+            mUrl = gifts.get(position).imgUrl;
         }
         return mUrl;
     }
@@ -672,61 +440,9 @@ public class GalleryActivity extends BaseActivity implements ViewPager.OnPageCha
         return appDir.getAbsolutePath();
     }
 
-    private void hideSystemUi() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-        mToolbar.animate()
-                .translationY(-mToolbar.getHeight())
-                .setDuration(400)
-                .setInterpolator(new DecelerateInterpolator(2))
-                .start();
-    }
-
-    private void showSystemUi() {
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-        mToolbar.animate()
-                .translationY(0)
-                .setDuration(400)
-                .setInterpolator(new DecelerateInterpolator(2))
-                .start();
-    }
-
-    public void switchToolbar() {
-        if (mToolbar.getTranslationY() == 0) {
-            hideSystemUi();
-        } else {
-            showSystemUi();
-            stopBrowse();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
-    }
-
     @Override
     protected void onDestroy() {
         unSubscribeTime();
-        txtAutoTip.animate().cancel();
         super.onDestroy();
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        getTipWidth = txtAutoTip.getWidth();
-//        KLog.d(getTipWidth);
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-            finishAfterTransition();
-            overridePendingTransition(R.anim.alpha_in, R.anim.alpha_out);
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

@@ -17,7 +17,7 @@
     <string name="navigation_other">其他</string>
     <string name="navigation_video">视频</string>
     <string name="navigation_news">发现</string>
-    <string name="navigation_gift">妹子</string>
+    <string name="navigation_gift">美图</string>
     <string name="navigation_home">首页</string>
     <string name="navigation_about">关于</string>
     <string name="navigation_jiandan">煎蛋杂集</string>
@@ -112,4 +112,6 @@
     <!-- 电影 -->
     <string name="url_format">%1$s_%2$d.html</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="page_format_mark">/</string>
+    <string name="transition_welfare_image">share_welfare_image</string>
 </resources>

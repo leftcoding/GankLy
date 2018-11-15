@@ -98,7 +98,7 @@ public class ImageViewModel extends BaseViewModel<ImageViewModel.ViewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.onItem(viewHolder.getLayoutPosition());
+                itemClickListener.onItem(viewHolder.imgMeizi, viewHolder.getLayoutPosition());
             }
         });
     }

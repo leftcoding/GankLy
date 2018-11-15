@@ -16,7 +16,6 @@
     <!-- Bugly start -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
     <!-- Bugly end -->
 
 
@@ -61,7 +60,8 @@
         <activity
             android:name=".ui.gallery.GalleryActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Black" />
         <activity
             android:name=".ui.web.WebVideoViewActivity"
             android:launchMode="singleTask"
@@ -80,7 +80,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.light.NoActionBar" />
-
         <!-- bugly start -->
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
@@ -97,23 +96,5 @@
                 android:resource="@xml/provider_paths" />
         </provider>
         <!-- bugly end -->
-
-
-        <!-- &lt;!&ndash; Glide 默认配置 &ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="com.gank.gankly.config.glide.MyGlideModule" -->
-        <!-- android:value="GlideModule" /> -->
-        <!-- &lt;!&ndash; 进度条 &ndash;&gt; -->
-        <!-- <meta-data -->
-        <!-- android:name="com.gank.gankly.config.glide.OkHttpProgressGlideModule" -->
-        <!-- android:value="GlideModule" /> -->
-        <!-- &lt;!&ndash;OkHttp3 &ndash;&gt; -->
-
-
-        <!-- <meta-data -->
-        <!-- android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule" -->
-        <!-- android:value="GlideModule" /> -->
-
     </application>
-
 </manifest>

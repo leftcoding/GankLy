@@ -77,4 +77,17 @@
     <style name="AppTheme.light.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.light.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BottomTextAppearance">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:color">@color/text_9f9fa6</item>
+    </style>
+
+    <style name="AppTheme.Black.WindowStyle" parent="android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/alpha_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/alpha_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/alpha_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/alpha_out</item>
+    </style>
 </resources>

@@ -17,8 +17,6 @@ public interface GalleryContract {
 
     interface View extends SupportView {
         void appendData(List<Gank> list);
-
-        void sysNumText();
     }
 
     abstract class Presenter extends LoadMorePresenter<View> {

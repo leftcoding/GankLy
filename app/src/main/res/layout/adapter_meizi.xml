@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="5dp">
+    android:layout_marginTop="5dp"
+    android:layout_marginRight="4dp">
 
     <com.gank.gankly.widget.ImageDefaultView
         android:id="@+id/img_meizi"
@@ -15,5 +15,5 @@
         android:elevation="@dimen/activity_horizontal_margin"
         android:foreground="?android:attr/selectableItemBackground"
         android:scaleType="centerCrop"
-        android:transitionName="welfare_image" />
+        android:transitionName="@string/transition_welfare_image" />
 </RelativeLayout>

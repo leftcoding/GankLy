@@ -11,6 +11,7 @@
     <color name="text_555555">#ff555555</color>
     <color name="text_666666">#666666</color>
     <color name="text_333333">#333333</color>
+    <color name="text_9f9fa6">#9f9fa6</color>
     <!-- 全局颜色 end-->
     <color name="dark_color">#ff00A0DC</color>
 
@@ -42,16 +43,12 @@
 
     <color name="collect_snackbar_text_color">#4093c6</color>
 
-    <!-- light theme color start -->
-    <!--<color name="colorPrimary">#3F51B5</color>-->
-    <!--<color name="colorPrimaryDark">#303F9F</color>-->
-    <!--<color name="colorAccent">#5C6BC0</color>-->
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorPrimary">#009688</color>
     <color name="colorAccent">#009688</color>
     <color name="aboutBackground_light">#EFEEF4</color>
     <color name="collect_background_light">#F1F3F6</color>
-    <color name="refresh_background_light">#f8f8f8</color><!--#f2f4f7-->
+    <color name="refresh_background_light">#f8f8f8</color>
     <color name="meizi_item_background_light">#fefefe</color>
     <color name="colorControlHighlight_light">#33000000</color>
     <color name="text_blue">#4093c6</color>

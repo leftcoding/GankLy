@@ -4,21 +4,21 @@
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_bottom_bar_home"
         id="@+id/tab_home"
-        title="干货"/>
+        title="@string/navigation_home" />
     <tab
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_bottom_bar_news"
         id="@+id/tab_news"
-        title="@string/navigation_news"/>
+        title="@string/navigation_news" />
     <tab
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_bottom_bar_image"
         id="@+id/tab_image"
-        title="@string/navigation_gift"/>
+        title="@string/navigation_gift" />
 
     <tab
         barColorWhenSelected="@color/colorPrimary"
         icon="@drawable/ic_bottom_bar_more"
         id="@+id/tab_more"
-        title="@string/navigation_mine"/>
+        title="@string/navigation_mine" />
 </tabs>

@@ -1,6 +1,5 @@
 package com.gank.gankly.ui.gallery;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,16 +20,12 @@ public class GalleryFragment extends SupportFragment implements ProgressImageVie
 
     @BindView(R.id.progress_img)
     ProgressImageView mProgressImageView;
-    private GalleryActivity mActivity;
+
     private String mUrl;
 
-    public GalleryFragment() {
-    }
-
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity = (GalleryActivity) context;
+    protected int getLayoutId() {
+        return R.layout.fragment_browse_picture;
     }
 
     @Override
@@ -61,11 +56,6 @@ public class GalleryFragment extends SupportFragment implements ProgressImageVie
         }
     }
 
-    @Override
-    protected int getLayoutId() {
-        return R.layout.fragment_browse_picture;
-    }
-
     public static GalleryFragment newInstance(String url) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle args = new Bundle();
@@ -76,6 +66,5 @@ public class GalleryFragment extends SupportFragment implements ProgressImageVie
 
     @Override
     public void onImageClick(View v) {
-        mActivity.switchToolbar();
     }
 }

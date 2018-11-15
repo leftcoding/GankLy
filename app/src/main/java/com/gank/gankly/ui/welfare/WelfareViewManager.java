@@ -1,6 +1,7 @@
 package com.gank.gankly.ui.welfare;
 
 import android.ly.business.domain.Gank;
+import android.view.View;
 
 import com.gank.gankly.ui.base.adapter.BaseViewManager;
 import com.gank.gankly.ui.base.adapter.ViewModel;
@@ -43,6 +44,6 @@ public class WelfareViewManager extends BaseViewManager {
     }
 
     public interface ItemClickListener {
-        void onItem(int position);
+        void onItem(View view, int position);
     }
 }
