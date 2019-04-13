@@ -1,0 +1,8 @@
+kind: pipeline
+name: default
+
+steps:
+- name: check
+  image: runmymind/docker-android-sdk
+  commands:
+  - ./gradlew clean check

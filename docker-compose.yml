@@ -1,0 +1,31 @@
+﻿# 版本
+version: "3.7"
+
+# 服务
+services:
+  drone-server:
+    container_name: drone.lingyan
+    image: drone/drone:1.0.0
+    restart: always
+    volumes:
+    - ./:/data
+    environment:
+    - DRONE_TLS_AUTOCERT=false
+    - DRONE_RUNNER_CAPACITY=2
+      - DRONE_SERVER_HOST=cloud.drone.io
+      - DRONE_SERVER_PROTO=https
+      - DRONE_GITHUB_SERVER=https://github.com
+      - DRONE_GITHUB_CLIENT_ID=b1700953b846cc841faf
+      - DRONE_GITHUB_CLIENT_SECRET=420c8669af0cb55116466efc8db5ea3499ace5e4
+
+  drone-agent:
+    image: drone/agent:1.0.0-rc.1
+    restart: always
+    depends_on:
+    - drone-server
+    volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+    - DRONE_RPC_SERVER=http://drone-server
+    - DRONE_RUNNER_CAPACITY=3
+
