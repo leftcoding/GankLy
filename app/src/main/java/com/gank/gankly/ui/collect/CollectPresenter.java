@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.collect;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.data.entity.UrlCollect;
 import com.gank.gankly.mvp.source.LocalDataSource;

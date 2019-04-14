@@ -2,7 +2,7 @@ package com.gank.gankly.ui.ios;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;

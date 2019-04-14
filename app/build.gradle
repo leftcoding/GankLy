@@ -1,8 +1,5 @@
 apply plugin: 'com.android.application'
 
-//findbugs
-apply plugin: "findbugs"
-
 android {
     compileSdkVersion rootProject.compileSdkVersion
     defaultConfig {
@@ -18,7 +15,7 @@ android {
         }
 
         buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testOptions.unitTests.includeAndroidResources = true
     }
 
@@ -61,42 +58,21 @@ android {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'META-INF/rxjava.properties'
     }
-
-    apply plugin: 'findbugs'
-    task findbugs(type: FindBugs) {
-        ignoreFailures = false
-        effort = "default"
-        reportLevel = "medium"
-        excludeFilter = new File("${project.rootDir}/findbugs/findbugs-filter.xml")
-        classes = files("${project.rootDir}/app/build/intermediates/classes")
-        source = fileTree('src/main/java/')
-        classpath = files()
-        reports {
-            xml.enabled = true
-            html.enabled = true
-            xml {
-                destination "$project.buildDir/findbugs/findbugs-output.xml"
-            }
-            html {
-                destination "$project.buildDir/findbugs/findbugs-output.html"
-            }
-        }
-    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
     //
-    implementation project(':android-coding-business')
-    implementation project(':android-coding-rxbus')
+    implementation project(':support-coding-business')
+    implementation project(':support-coding-rxbus')
     implementation project(':superplayerlibrary')
-    implementation project(':android-coding-ui')
-    implementation project(':android-coding-jsoup')
-    implementation "com.android.support:appcompat-v7:${supportVersion}"
-    implementation "com.android.support:design:${supportVersion}"
-    implementation "com.android.support:cardview-v7:${supportVersion}"
-    implementation "com.android.support:recyclerview-v7:${supportVersion}"
+    implementation project(':support-coding-ui')
+    implementation project(':support-coding-jsoup')
+    implementation "androidx.appcompat:appcompat:${supportVersion}"
+    implementation "com.google.android.material:material:${supportVersion}"
+    implementation "androidx.cardview:cardview:${supportVersion}"
+    implementation "androidx.recyclerview:recyclerview:${supportVersion}"
     implementation "com.github.zhaokaiqiang.klog:library:${klogVersion}"
     implementation "com.jakewharton:butterknife:${butterknife}"
     annotationProcessor "com.jakewharton:butterknife-compiler:${butterknife}"
@@ -123,10 +99,12 @@ dependencies {
     implementation "com.facebook.stetho:stetho-okhttp3:${stethoOkhttp3}"
 
     // recyclerview-animators
-    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
+//    implementation 'jp.wasabeef:recyclerview-animators:2.2.3'
 
     //底部导航  https://github.com/roughike/BottomBar
-    implementation "com.roughike:bottom-bar:${bottomBar}"
+    implementation ("com.roughike:bottom-bar:${bottomBar}"){
+        exclude group: 'com.android.support'
+    }
 
     //大图库
     implementation("com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}") {
@@ -137,5 +115,5 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${rxjava}"
     implementation "io.reactivex.rxjava2:rxandroid:${rxandroid}"
     implementation "com.tencent.bugly:crashreport_upgrade:${crashreportUpgrade}"
-    implementation "com.android.support.constraint:constraint-layout:${constraintLayout}"
+    implementation "androidx.constraintlayout:constraintlayout:${constraintLayout}"
 }

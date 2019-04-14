@@ -1,7 +1,7 @@
 package com.gank.gankly.config.glide;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;

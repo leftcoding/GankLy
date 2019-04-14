@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.widget.LinearLayoutCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -26,9 +21,13 @@ import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.LinearLayoutCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
 import butterknife.BindView;
 import butterknife.BindViews;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.gank.gankly.ui.more.SettingFragment.IS_NIGHT;
@@ -101,26 +100,26 @@ public class MineFragment extends ButterKnifeFragment {
 
 //        setItemBackground(mViewList);
 
-        ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
-            @Override
-            public void apply(@NonNull LSwitch view, int index) {
-                view.changeTheme();
-            }
-        });
-
-        ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
-            @Override
-            public void apply(@NonNull TextView view, int index) {
-                view.setTextColor(getContext().getResources().getColor(itemTextColor));
-            }
-        });
-
-        ButterKnife.apply(mLinearLayoutCompatList, new ButterKnife.Action<LinearLayoutCompat>() {
-            @Override
-            public void apply(@NonNull LinearLayoutCompat view, int index) {
-                view.setBackgroundResource(itemBackground);
-            }
-        });
+//        ButterKnife.apply(mSwitchList, new ButterKnife.Action<LSwitch>() {
+//            @Override
+//            public void apply(@NonNull LSwitch view, int index) {
+//                view.changeTheme();
+//            }
+//        });
+//
+//        ButterKnife.apply(mTextViewList, new ButterKnife.Action<TextView>() {
+//            @Override
+//            public void apply(@NonNull TextView view, int index) {
+//                view.setTextColor(getContext().getResources().getColor(itemTextColor));
+//            }
+//        });
+//
+//        ButterKnife.apply(mLinearLayoutCompatList, new ButterKnife.Action<LinearLayoutCompat>() {
+//            @Override
+//            public void apply(@NonNull LinearLayoutCompat view, int index) {
+//                view.setBackgroundResource(itemBackground);
+//            }
+//        });
     }
 
     private void selectItemSwitch() {

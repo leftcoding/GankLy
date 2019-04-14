@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.baisi.image;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.bean.BuDeJieBean;
 import com.gank.gankly.mvp.base.LoadMorePresenter;

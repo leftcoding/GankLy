@@ -1,6 +1,6 @@
 package com.gank.gankly.mvp.source;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.ReadHistoryDao;

@@ -1,6 +1,6 @@
 package com.gank.gankly.ui.web.normal;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.rxjava.RxBus_;
 import com.gank.gankly.bean.RxCollect;

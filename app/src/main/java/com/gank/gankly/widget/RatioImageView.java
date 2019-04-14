@@ -44,7 +44,7 @@ import android.util.AttributeSet;
  * pick from drakeet https://github.com/drakeet
  * Create by LingYan on 2016-4-19
  */
-public class RatioImageView extends android.support.v7.widget.AppCompatImageView {
+public class RatioImageView extends androidx.appcompat.widget.AppCompatImageView {
 
     private int originalWidth;
     private int originalHeight;

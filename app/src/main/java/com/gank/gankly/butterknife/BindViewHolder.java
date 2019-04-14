@@ -1,6 +1,6 @@
 package com.gank.gankly.butterknife;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;

@@ -3,8 +3,6 @@ package com.gank.gankly.ui.baisi.image;
 import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -22,6 +20,8 @@ import com.socks.library.KLog;
 
 import java.io.File;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 
 /**
@@ -82,7 +82,7 @@ public class BaiSiGalleryFragment extends SupportFragment {
         if (url.endsWith(IMAGE_GIF)) {
             sliderIv.setVisibility(View.GONE);
             mImageView.setVisibility(View.VISIBLE);
-            Glide.with(this)
+            Glide.with(getContext())
                     .asGif()
                     .load(mUrl)
 //                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -92,7 +92,7 @@ public class BaiSiGalleryFragment extends SupportFragment {
             layoutParams.width = 1080;
             sliderIv.setLayoutParams(layoutParams);
 
-            Glide.with(this).load(mUrl).downloadOnly(new SimpleTarget<File>() {
+            Glide.with(getContext()).load(mUrl).downloadOnly(new SimpleTarget<File>() {
                 @Override
                 public void onResourceReady(File resource, Transition<? super File> transition) {
                     //设置图片初始化状态 = 从顶部开始加载

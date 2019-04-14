@@ -3,7 +3,7 @@ package com.gank.gankly.ui.welfare;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.ly.business.domain.Gank;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.util.ArrayMap;
 import android.view.View;
 import android.view.ViewGroup;

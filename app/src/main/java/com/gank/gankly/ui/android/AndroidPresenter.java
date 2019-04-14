@@ -2,13 +2,12 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 import android.ly.business.api.GankServer;
-import android.ly.business.domain.PageConfig;
+import android.ly.business.domain.Gank;
+import android.ly.business.domain.PageEntity;
 
+import com.gank.gankly.mvp.observer.RefreshOnObserver;
 import com.gank.gankly.ui.android.AndroidContract.Presenter;
-import com.gank.gankly.mvp.subseribe.PageSubscribe;
 import com.leftcoding.rxbus.RxApiManager;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Create by LingYan on 2016-10-25
@@ -16,45 +15,19 @@ import java.util.concurrent.atomic.AtomicBoolean;
 class AndroidPresenter extends Presenter {
     // 请求个数
     private static final int INIT_LIMIT = 20;
-    private final AtomicBoolean destroyTag = new AtomicBoolean(false);
-    private PageConfig pageConfig;
 
     AndroidPresenter(Context context, AndroidContract.View view) {
         super(context, view);
-        pageConfig = new PageConfig();
     }
 
     @Override
-    protected void refreshAndroid() {
-        pageConfig.curPage = 1;
-        fetchAndroid();
-    }
-
-    @Override
-    protected void appendAndroid() {
-        fetchAndroid();
-    }
-
-    @Override
-    public void destroy() {
-        if (destroyTag.compareAndSet(false, true)) {
-            RxApiManager.get().clear(requestTag);
-        }
-        super.destroy();
-    }
-
-    @Override
-    protected void onDestroy() {
-
-    }
-
-    private void fetchAndroid() {
-        if (destroyTag.get()) {
+    public void loadAndroid(int page) {
+        if (isDestroy()) {
             return;
         }
 
         GankServer.with(context)
-                .androids(pageConfig.curPage, INIT_LIMIT)
+                .androids(page, INIT_LIMIT)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {
                         view.showProgress();
@@ -65,6 +38,40 @@ class AndroidPresenter extends Presenter {
                         view.hideProgress();
                     }
                 })
-                .subscribe(new PageSubscribe(requestTag, view, pageConfig));
+                .subscribe(new RefreshOnObserver<PageEntity<Gank>>(requestTag) {
+                    @Override
+                    protected void onSuccess(PageEntity<Gank> entity) {
+                        if (isViewLife()) {
+                            if (entity != null) {
+                                view.refreshSuccess(entity.results);
+                                return;
+                            }
+                            view.refreshFailure("");
+                        }
+                    }
+
+                    @Override
+                    protected void onFailure() {
+                        if (isViewLife()) {
+                            view.refreshFailure("");
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        RxApiManager.get().clear(requestTag);
+    }
+
+    @Override
+    protected void onDestroy() {
+
+    }
+
+    private void fetchAndroid() {
+
+
     }
 }

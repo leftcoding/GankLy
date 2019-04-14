@@ -2,7 +2,7 @@ package com.gank.gankly.ui.daily;
 
 import android.content.Context;
 import android.ly.business.domain.Gift;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import android.ly.business.domain.Girl;
 import com.gank.gankly.mvp.base.LoadMorePresenter;

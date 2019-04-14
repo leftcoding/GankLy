@@ -3,7 +3,7 @@ package com.gank.gankly.ui.welfare;
 import android.content.Context;
 import android.lectcoding.ui.base.BaseView;
 import android.ly.business.domain.Gank;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 

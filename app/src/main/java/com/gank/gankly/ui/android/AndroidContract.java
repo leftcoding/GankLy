@@ -2,7 +2,7 @@ package com.gank.gankly.ui.android;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.PageView;
@@ -21,8 +21,6 @@ public interface AndroidContract {
             super(context, view);
         }
 
-        protected abstract void refreshAndroid();
-
-        protected abstract void appendAndroid();
+        public abstract void loadAndroid(int page);
     }
 }

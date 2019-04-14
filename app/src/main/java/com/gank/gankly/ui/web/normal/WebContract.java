@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.web.normal;
 
 import android.lectcoding.ui.base.BaseView;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.data.entity.ReadHistory;
 import com.gank.gankly.data.entity.UrlCollect;

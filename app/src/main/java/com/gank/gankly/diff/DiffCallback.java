@@ -1,6 +1,6 @@
 package com.gank.gankly.diff;
 
-import android.support.v7.util.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil;
 
 import com.gank.gankly.ui.base.adapter.ItemComparator;
 

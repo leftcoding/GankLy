@@ -40,14 +40,13 @@ class CurePresenter extends CureContract.Presenter {
 
     @Override
     void refreshGirls() {
-        pageConfig.curPage = 1;
-        fetchData(getUrl(pageConfig.curPage));
+        fetchData(getUrl(pageConfig.getCurPage()));
     }
 
     @Override
     void appendGirls() {
-        if (maxPageNumber >= pageConfig.curPage) {
-            fetchData(getUrl(pageConfig.curPage));
+        if (maxPageNumber >= pageConfig.getCurPage()) {
+            fetchData(getUrl(pageConfig.getCurPage()));
         }
     }
 
@@ -92,7 +91,6 @@ class CurePresenter extends CureContract.Presenter {
                             } else {
                                 view.appendSuccess(gifts);
                             }
-                            pageConfig.curPage++;
                         }
                     }
                 }, Logcat::e);

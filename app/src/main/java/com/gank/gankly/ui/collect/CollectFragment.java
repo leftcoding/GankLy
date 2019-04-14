@@ -2,16 +2,7 @@ package com.gank.gankly.ui.collect;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 
 import com.gank.gankly.R;
 import com.gank.gankly.bean.RxCollect;
@@ -24,12 +15,19 @@ import com.gank.gankly.ui.web.normal.WebActivity;
 import com.gank.gankly.widget.LyRecyclerView;
 import com.gank.gankly.widget.LySwipeRefreshLayout;
 import com.gank.gankly.widget.MultipleStatusView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
-import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 /**
  * 收藏
@@ -138,7 +136,7 @@ public class CollectFragment extends SupportFragment implements CollectContract.
 
         mRecyclerView = mSwipeRefreshLayout.getRecyclerView();
 //        mRecyclerView.addItemDecoration(new RecycleViewDivider(mActivity, R.drawable.shape_item_divider));
-        mRecyclerView.setItemAnimator(new FadeInUpAnimator(new OvershootInterpolator(1f)));
+//        mRecyclerView.setItemAnimator(new FadeInUpAnimator(new OvershootInterpolator(1f)));
         mRecyclerView.getItemAnimator().setAddDuration(150);
         mRecyclerView.getItemAnimator().setRemoveDuration(150);
     }

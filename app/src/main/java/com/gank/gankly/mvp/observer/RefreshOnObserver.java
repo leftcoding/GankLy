@@ -2,35 +2,28 @@ package com.gank.gankly.mvp.observer;
 
 import android.ly.business.domain.BaseEntity;
 
-import android.lectcoding.ui.base.BaseView;
-
 /**
  * Create by LingYan on 2017-11-19
  */
 
-public abstract class RefreshOnObserver<T extends BaseEntity, V extends BaseView> extends BaseObserver<T> {
-    protected V view;
+public abstract class RefreshOnObserver<T extends BaseEntity> extends BaseObserver<T> {
 
-    RefreshOnObserver(String requestTag, V v) {
+    public RefreshOnObserver(String requestTag) {
         super(requestTag);
-        this.view = v;
     }
 
-    protected abstract void onRefreshSuccess(T t);
+    protected abstract void onSuccess(T t);
 
-    protected abstract void onRefreshFailure();
+    protected abstract void onFailure();
 
     @Override
     public void onNext(T t) {
-        if (t == null) {
-            onRefreshFailure();
-        }
+        onSuccess(t);
     }
 
     @Override
     public void onError(Throwable e) {
-        onErrorException(e);
-        onRefreshFailure();
+        onFailure();
     }
 
     @Override

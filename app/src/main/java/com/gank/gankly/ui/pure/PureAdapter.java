@@ -4,7 +4,7 @@ import android.content.Context;
 import android.lectcoding.ui.adapter.ObserverAdapter;
 import android.lectcoding.ui.logcat.Logcat;
 import android.ly.business.domain.Gift;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;

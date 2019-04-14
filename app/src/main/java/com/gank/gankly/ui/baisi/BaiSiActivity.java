@@ -1,7 +1,7 @@
 package com.gank.gankly.ui.baisi;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.gank.gankly.R;
 import com.gank.gankly.ui.base.activity.BaseActivity;

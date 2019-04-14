@@ -2,7 +2,7 @@ package com.gank.gankly.ui.cure;
 
 import android.lectcoding.ui.adapter.BaseAdapter;
 import android.ly.business.domain.Gift;
-import android.support.annotation.IntDef;
+import androidx.annotation.IntDef;
 import android.view.ViewGroup;
 import android.widget.TextView;
 

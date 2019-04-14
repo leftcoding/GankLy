@@ -1,7 +1,5 @@
 package com.gank.gankly.config.glide;
 
-import android.support.annotation.Nullable;
-
 import com.bumptech.glide.load.Options;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.model.GlideUrl;
@@ -11,6 +9,7 @@ import com.bumptech.glide.load.model.MultiModelLoaderFactory;
 
 import java.io.InputStream;
 
+import androidx.annotation.Nullable;
 import okhttp3.OkHttpClient;
 
 /**

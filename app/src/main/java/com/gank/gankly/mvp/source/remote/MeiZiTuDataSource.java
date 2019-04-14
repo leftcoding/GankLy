@@ -1,6 +1,6 @@
 package com.gank.gankly.mvp.source.remote;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Create by LingYan on 2016-10-26

@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        versionCode rootProject.normalVersionCode
+        versionName rootProject.normalVersionName
+
+        buildConfigField("String", "GANK_SERVER_ULR", "\"${gank_server_url}\"")
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    // Gson
+    api "com.google.code.gson:gson:${gsonVersion}"
+
+    // Retrofit
+    api "com.squareup.okhttp3:logging-interceptor:${loggingInterceptor}"
+
+    api "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    api "com.squareup.retrofit2:converter-gson:${converterGson}"
+    api "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
+    // RxJava2
+    api project(':support-coding-rxbus')
+}

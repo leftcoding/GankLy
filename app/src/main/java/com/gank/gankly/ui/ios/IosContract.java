@@ -2,7 +2,7 @@ package com.gank.gankly.ui.ios;
 
 import android.content.Context;
 import android.ly.business.domain.Gank;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.gank.gankly.mvp.base.LoadMorePresenter;
 import com.gank.gankly.mvp.base.PageView;

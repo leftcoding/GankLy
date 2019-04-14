@@ -1,6 +1,6 @@
 package com.gank.gankly.rxjava.rxclick;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.view.View;
 
 import io.reactivex.Observable;

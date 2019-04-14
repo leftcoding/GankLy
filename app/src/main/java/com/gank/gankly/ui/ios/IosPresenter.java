@@ -2,13 +2,17 @@ package com.gank.gankly.ui.ios;
 
 import android.content.Context;
 import android.ly.business.api.GankServer;
+import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageConfig;
-import android.support.annotation.NonNull;
+import android.ly.business.domain.PageEntity;
+import androidx.annotation.NonNull;
 
-import com.gank.gankly.mvp.subseribe.PageSubscribe;
 import com.leftcoding.rxbus.RxApiManager;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -26,7 +30,6 @@ public class IosPresenter extends IosContract.Presenter {
 
     @Override
     void refreshIos() {
-        pageConfig.curPage = 1;
         fetchData();
     }
 
@@ -40,7 +43,7 @@ public class IosPresenter extends IosContract.Presenter {
             return;
         }
         GankServer.with(context)
-                .ios(pageConfig.curPage, pageConfig.limit)
+                .ios(pageConfig.getCurPage(), pageConfig.limit)
                 .doOnSubscribe(disposable -> {
                     if (isViewLife()) {
                         view.showProgress();
@@ -51,7 +54,27 @@ public class IosPresenter extends IosContract.Presenter {
                         view.hideProgress();
                     }
                 })
-                .subscribe(new PageSubscribe(requestTag, view, pageConfig));
+                .subscribe(new Observer<PageEntity<Gank>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PageEntity<Gank> gankPageEntity) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

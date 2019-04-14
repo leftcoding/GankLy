@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.gank.gankly">
 
     <uses-permission android:name="com.company.app.fileprovider.READ" />
@@ -87,7 +88,7 @@
             android:theme="@android:style/Theme.Translucent" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.gank.gankly.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">

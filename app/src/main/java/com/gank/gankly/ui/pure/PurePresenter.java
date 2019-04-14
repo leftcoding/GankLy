@@ -46,7 +46,7 @@ public class PurePresenter extends PureContract.Presenter {
 
     @Override
     public void appendPure() {
-        int page = pageConfig.curPage;
+        int page = pageConfig.getNextPage();
         if (page < maxPageNumber) {
             fetchData(page);
         }
@@ -85,7 +85,6 @@ public class PurePresenter extends PureContract.Presenter {
 
                     @Override
                     public void onComplete() {
-                        pageConfig.curPage++;
                     }
                 });
     }

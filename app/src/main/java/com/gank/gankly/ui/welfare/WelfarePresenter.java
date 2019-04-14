@@ -6,7 +6,8 @@ import android.ly.business.api.GankServer;
 import android.ly.business.domain.Gank;
 import android.ly.business.domain.PageEntity;
 
-import com.leftcoding.network.base.Server;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Create by LingYan on 2016-12-23
@@ -23,27 +24,37 @@ public class WelfarePresenter extends WelfareContract.Presenter {
     public void loadWelfare(final int page) {
         showProgress();
         GankServer.with(context)
-                .images(requestTag, page, DEFAULT_LIMIT, new Server.ConsumerCall<PageEntity<Gank>>() {
+                .images(page, DEFAULT_LIMIT)
+                .subscribe(new Observer<PageEntity<Gank>>() {
                     @Override
-                    public void onNext(PageEntity<Gank> pageEntity) throws Exception {
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(PageEntity<Gank> pageEntity) {
                         hideProgress();
                         if (pageEntity != null) {
                             view.loadWelfareSuccess(page, pageEntity.results);
                             return;
                         }
-
                         if (view != null) {
                             view.loadWelfareFailure("获取数据失败");
                         }
                     }
 
                     @Override
-                    public void accept(Throwable throwable) {
+                    public void onError(Throwable e) {
                         hideProgress();
-                        Logcat.e(throwable);
+                        Logcat.e(e);
                         if (view != null) {
                             view.loadWelfareFailure("获取数据失败");
                         }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
                     }
                 });
     }

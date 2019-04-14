@@ -3,11 +3,12 @@ package com.gank.gankly.ui.android;
 import android.content.Context;
 import android.content.Intent;
 import android.ly.business.domain.Gank;
+import android.ly.business.domain.PageConfig;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.gank.gankly.R;
@@ -39,6 +40,7 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     private AndroidContract.Presenter androidPresenter;
 
     private AtomicBoolean isFirst = new AtomicBoolean(true);
+    private PageConfig pageConfig;
 
     @Override
     protected int getLayoutId() {
@@ -63,11 +65,11 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     @Override
     public void onLazyActivityCreate() {
         androidPresenter = new AndroidPresenter(context, this);
-        initLoadAndroid();
+        loadAndroid(PageConfig.starPage());
     }
 
     private void initRecycler() {
-        androidAdapter = new AndroidAdapter(getContext());
+        androidAdapter = new AndroidAdapter(context);
         swipeRefreshLayout.setAdapter(androidAdapter);
         swipeRefreshLayout.setLayoutManager(new LinearLayoutManager(getContext()));
         swipeRefreshLayout.setOnScrollListener(onRefreshListener);
@@ -90,22 +92,24 @@ public class AndroidFragment extends LazyFragment implements AndroidContract.Vie
     private final LySwipeRefreshLayout.OnSwipeRefreshListener onRefreshListener = new LySwipeRefreshLayout.OnSwipeRefreshListener() {
         @Override
         public void onRefresh() {
-            initLoadAndroid();
+            loadAndroid(PageConfig.starPage());
         }
 
         @Override
         public void onLoadMore() {
-            androidPresenter.appendAndroid();
+            if (pageConfig != null) {
+                loadAndroid(pageConfig.getNextPage());
+            }
         }
     };
 
     private final MultipleStatusView.OnMultipleClick onMultipleClick = v -> {
         showLoading();
-        initLoadAndroid();
+        loadAndroid(PageConfig.starPage());
     };
 
-    private void initLoadAndroid() {
-        androidPresenter.refreshAndroid();
+    private void loadAndroid(int page) {
+        androidPresenter.loadAndroid(page);
     }
 
     @Override

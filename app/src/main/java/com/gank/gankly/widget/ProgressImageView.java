@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.support.v4.app.Fragment;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,8 @@ import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.Target;
 import com.gank.gankly.R;
 import com.gank.gankly.config.glide.ProgressTarget;
+
+import androidx.fragment.app.Fragment;
 
 /**
  * Glide image with progress
@@ -107,7 +108,7 @@ public class ProgressImageView extends RelativeLayout {
                     .addHeader("referer", "http://www.mzitu.com/mm/")
                     .build());
 
-            Glide.with(fragment)
+            Glide.with(fragment.getContext())
                     .asBitmap()
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -118,7 +119,7 @@ public class ProgressImageView extends RelativeLayout {
                     .load(glideUrl)
                     .into(target);
         } else {
-            Glide.with(fragment)
+            Glide.with(fragment.getContext())
                     .asBitmap()
                     .apply(new RequestOptions()
                             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)

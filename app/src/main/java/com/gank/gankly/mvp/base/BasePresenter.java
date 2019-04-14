@@ -7,6 +7,7 @@ import android.lectcoding.ui.base.BaseView;
 import com.gank.gankly.R;
 
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Create by LingYan on 2016-05-12
@@ -15,6 +16,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     protected E view;
     protected Context context;
     protected String requestTag = UUID.randomUUID().toString();
+    private AtomicBoolean isDestroy = new AtomicBoolean(false);
     private String errorTip;
 
     public BasePresenter(Context context, E view) {
@@ -25,6 +27,7 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
 
     public void destroy() {
         onDestroy();
+        isDestroy.set(true);
         view = null;
         context = null;
     }
@@ -50,4 +53,8 @@ public abstract class BasePresenter<E extends BaseView> extends BaseContract.Pre
     }
 
     protected abstract void onDestroy();
+
+    protected boolean isDestroy() {
+        return isDestroy.get();
+    }
 }

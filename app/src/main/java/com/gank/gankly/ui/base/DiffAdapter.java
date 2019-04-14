@@ -2,9 +2,9 @@ package com.gank.gankly.ui.base;
 
 import android.content.Context;
 import android.lectcoding.ui.adapter.BaseAdapter;
-import android.support.v7.util.DiffUtil;
-import android.support.v7.util.ListUpdateCallback;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListUpdateCallback;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.gank.gankly.butterknife.ItemModel;
 import com.gank.gankly.diff.DiffCallback;

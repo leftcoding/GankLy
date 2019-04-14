@@ -1,1 +1,1 @@
-include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':android-coding-network', ':android-coding-rxbus', ':android-coding-ui', ':android-coding-business', ':android-coding-jsoup'
+include ':app', ':superplayerlibrary', ':ijkplayerlibrary', ':support-coding-network', ':support-coding-rxbus', ':support-coding-ui', ':support-coding-business', ':support-coding-jsoup'

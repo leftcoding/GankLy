@@ -1,8 +1,8 @@
 package com.gank.gankly.ui.baisi.image;
 
 import android.content.Context;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.widget.RecyclerView;
+import androidx.collection.ArrayMap;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;

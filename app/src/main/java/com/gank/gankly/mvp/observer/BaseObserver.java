@@ -24,7 +24,8 @@ public abstract class BaseObserver<T> implements Observer<T> {
         RxApiManager.get().add(observerTag, d);
     }
 
-    protected void onErrorException(Throwable e) {
+    @Override
+    public void onError(Throwable e) {
         Logcat.e(e);
     }
 }

@@ -2,9 +2,6 @@ package com.gank.gankly.ui.base.fragment;
 
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.gank.gankly.R;
@@ -14,7 +11,9 @@ import com.gank.gankly.widget.LYRelativeLayoutRipple;
 
 import java.util.List;
 
-import butterknife.ButterKnife;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 /**
  * Create by LingYan on 2016-10-21
@@ -46,24 +45,24 @@ public abstract class ThemeFragment extends ButterKnifeFragment {
             TypedArray typedArray = getActivity().obtainStyledAttributes(attrs);
             final int backgroundResource = typedArray.getResourceId(0, 0);
 
-            ButterKnife.apply(list, new ButterKnife.Action<View>() {
-                @Override
-                public void apply(@NonNull View view, int index) {
-                    view.setBackgroundResource(backgroundResource);
-                }
-            });
+//            ButterKnife.apply(list, new ButterKnife.Action<View>() {
+//                @Override
+//                public void apply(@NonNull View view, int index) {
+//                    view.setBackgroundResource(backgroundResource);
+//                }
+//            });
         }
     }
 
     public void setItemBackground(@NonNull List<LYRelativeLayoutRipple> list) {
         if (!ListUtils.isEmpty(list)) {
             final int backgroundResource = R.attr.lyItemSelectBackground;
-            ButterKnife.apply(list, new ButterKnife.Action<LYRelativeLayoutRipple>() {
-                @Override
-                public void apply(@NonNull LYRelativeLayoutRipple view, int index) {
-                    view.setCustomBackgroundResource(backgroundResource);
-                }
-            });
+//            ButterKnife.apply(list, new ButterKnife.Action<LYRelativeLayoutRipple>() {
+//                @Override
+//                public void apply(@NonNull LYRelativeLayoutRipple view, int index) {
+//                    view.setCustomBackgroundResource(backgroundResource);
+//                }
+//            });
         }
     }
 }
