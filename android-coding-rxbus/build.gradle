@@ -8,20 +8,19 @@ android {
         targetSdkVersion rootProject.targetSdkVersion
         versionCode rootProject.normalVersionCode
         versionName rootProject.normalVersionName
-    }
 
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
-    api "org.jsoup:jsoup:${jsoup}"
-    implementation project(':support-ly-rxbus')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api "io.reactivex.rxjava2:rxjava:${rxjava}"
+    api "io.reactivex.rxjava2:rxandroid:${rxandroid}"
 }

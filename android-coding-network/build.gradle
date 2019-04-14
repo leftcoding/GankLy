@@ -2,7 +2,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -25,7 +24,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    api fileTree(include: ['*.jar'], dir: 'libs')
     // Gson
     api "com.google.code.gson:gson:${gsonVersion}"
 
@@ -36,5 +35,5 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:${converterGson}"
     api "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
     // RxJava2
-    api project(':support-ly-rxbus')
+    api project(':android-coding-rxbus')
 }

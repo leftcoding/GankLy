@@ -5,14 +5,12 @@ apply plugin: "findbugs"
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
     defaultConfig {
         applicationId "com.gank.gankly"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 4
         versionName "2.1.1"
-        // 4 2.1.1
         multiDexEnabled true
         ndk {
             // 设置支持的SO库架构
@@ -88,13 +86,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     //
-    implementation project(':support-ly-business')
-    implementation project(':support-ly-rxbus')
+    implementation project(':android-coding-business')
+    implementation project(':android-coding-rxbus')
     implementation project(':superplayerlibrary')
-    implementation project(':support-ly-ui')
-    implementation project(':support-ly-jsoup')
+    implementation project(':android-coding-ui')
+    implementation project(':android-coding-jsoup')
     implementation "com.android.support:appcompat-v7:${supportVersion}"
     implementation "com.android.support:design:${supportVersion}"
     implementation "com.android.support:cardview-v7:${supportVersion}"
@@ -109,8 +107,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:${adapterRxjava2}"
     implementation "com.squareup.okhttp3:okhttp:${okhttp}"
     implementation "com.squareup.okhttp3:logging-interceptor:${okhttp}"
-    debugCompile "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${leakcanaryandroid}"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:${leakcanaryandroid}"
     implementation "com.github.bumptech.glide:glide:${glide}"
     implementation "com.github.bumptech.glide:annotations:${glide}"
     implementation "com.github.bumptech.glide:okhttp3-integration:${glide}"
@@ -131,7 +129,9 @@ dependencies {
     implementation "com.roughike:bottom-bar:${bottomBar}"
 
     //大图库
-    implementation "com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}"
+    implementation("com.davemorrissey.labs:subsampling-scale-image-view:${subsamplingVersion}") {
+        exclude group: 'com.android.support'
+    }
 
     //rxjava2   https://github.com/ReactiveX/RxJava
     implementation "io.reactivex.rxjava2:rxjava:${rxjava}"

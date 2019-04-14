@@ -2,13 +2,12 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode rootProject.normalVersionCode
+        versionName rootProject.normalVersionName
     }
 
     buildTypes {
@@ -21,7 +20,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:recyclerview-v7:${supportVersion}"
-    api "com.android.support:appcompat-v7:${supportVersion}"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    api "org.jsoup:jsoup:${jsoup}"
+    implementation project(':android-coding-rxbus')
 }
